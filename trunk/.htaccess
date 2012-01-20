@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^([^\=\&\-]+)(?:\-([^=\-]+=.+))?\.json$ index.php?module=remote&action=$1&format=json&$2&%{QUERY_STRING} [L,E=json:1]
+RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^=\-]+=.+))?\.html$ index.php?module=$1&$2&%{QUERY_STRING} [L,E=rewritten:1]
+RewriteRule ^([a-zA-Z0-9_]+)\-([^\=\&\-]+)(?:\-([^=\-]+=.+))?\.html$ index.php?module=$1&action=$2&$3&%{QUERY_STRING} [L,E=rewritten:1]
