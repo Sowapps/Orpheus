@@ -12,7 +12,6 @@ error_reporting(E_ALL | E_STRICT);//Development
 // error_reporting(0);//Production
 
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {
-	//Récupère les erreurs et le renvoie en exceptions.
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 set_error_handler('exception_error_handler');
