@@ -19,9 +19,10 @@ define('LOGSPATH',		'logs'.DS);
 define('JSPATH',		'js'.DS);
 define('THEMESPATH',		'themes'.DS);
 
+//Miscelanous
+
 define('DEFAULTMOD',		'js'.DS);
 
-//Configuration constante du site.
 define('SITENAME',				'My FrameWork');
 
 define('SYSLOGFILENAME',		'.system');
