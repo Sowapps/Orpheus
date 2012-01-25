@@ -41,7 +41,8 @@ function __autoload($className) {
 	}
 }
 
-require_once CONFIGPATH."global.php";
+Config::build('engine');
+//require_once CONFIGPATH."global.php";
 
 includeDir(CONFPATH);
 includeDir(LIBSPATH);
