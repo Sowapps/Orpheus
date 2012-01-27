@@ -1,6 +1,5 @@
 <?php
 class Hook {
-	//private $final='self';
 	
 	protected static $hooks = array();
 	

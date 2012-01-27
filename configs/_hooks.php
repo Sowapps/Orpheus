@@ -1,4 +1,5 @@
 <?php
+Hook::create('startSession');
 Hook::create('checkModule');
-Hook::create('beforeLoad');
+Hook::create('runModule');
 Hook::create('showRendering');

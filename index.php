@@ -38,14 +38,13 @@ function __autoload($className) {
 	}
 }
 
-Hook::trigger('loadEngineConfig');
-
 Config::build('engine');
 
 includeDir(CONFPATH);
 includeDir(LIBSPATH);
 
-Hook::trigger('checkModule');
+//Here start Hooks and Session too.
+Hook::trigger('startSession');
 
 session_start();
 
@@ -53,16 +52,6 @@ session_start();
 $Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
 
 $Page = '';
-
-// if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
-// 	if( user_access($_GET['module']) ) {
-// 		$Module = $_GET['module'];
-// 	} else {
-// 		$Module = 'access_denied';
-// 	}
-// } else {
-// 	$Module = DEFAULTMOD;
-// }
 
 Hook::trigger('checkModule');
 
