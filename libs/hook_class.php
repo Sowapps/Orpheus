@@ -1,6 +1,6 @@
 <?php
 class Hook {
-	private $final='self';
+	//private $final='self';
 	
 	protected static $hooks = array();
 	
@@ -19,12 +19,18 @@ class Hook {
 		if( in_array($callback, $this->callbacks) ) {
 			throw new Exception('Callback already registered');
 		}
+		$this->callbacks[] = $callback;
 	}
 	
-	public function triggerHook() {
+	public function triggerHook($params=NULL) {
+		$pType = gettype($params);
 		foreach($this->callbacks as $callback) {
-			call_user_func($callback);
+			$r = call_user_func_array($callback, $params);
+			if( isset($r) && gettype($r) === $pType ) {
+				$params = $r;
+			}
 		}
+		return $params;
 	}
 	
 	protected static function slug($name) {
@@ -45,11 +51,11 @@ class Hook {
 		return static::$hook[$name]->registerHook($callback);
 	}
 	
-	public static function trigger($name) {
+	public static function trigger($name, $params=NULL) {
 		$name = static::slug($name);
 		if( empty(static::$hook[$name]) ) {
 			throw new Exception('No hook with this name');
 		}
-		return static::$hook[$name]->triggerHook();
+		return static::$hook[$name]->triggerHook($params);
 	}
 }

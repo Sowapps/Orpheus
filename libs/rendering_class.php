@@ -16,4 +16,8 @@ abstract class Rendering {
 		static::display($env, static::$SHOWMODEL);
 		exit();
 	}
+	
+	final private static function doShow() {
+		${Config::get('default_rendering')}::show();
+	}
 }
