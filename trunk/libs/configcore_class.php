@@ -13,6 +13,7 @@ abstract class ConfigCore {
 		if( !$minor ) {
 			if( !isset(static::$main) ) {
 				static::$main = $this;
+				$GLOBALS['CONFIG'] = &$main;
 			}
 			static::$main->add(static::load($source));
 		} else {

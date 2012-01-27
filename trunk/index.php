@@ -1,22 +1,19 @@
 <?php
 /* index.php
  * PHP File for the Index: The WebSite Core.
- * Index, moteur, coeur principal du site
  *
  * Auteur: Florent Hazard.
- * Revision: 1
- * Dernière édition: 20/01/2012
  */
 
-error_reporting(E_ALL | E_STRICT);//Development
-// error_reporting(0);//Production
+//Edit it according system context (OS, directory tree ...).
+require_once 'config/constants.php';
+
+error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 set_error_handler('exception_error_handler');
-
-require_once 'config'.DIRECTORY_SEPARATOR.'constants.php';
 
 function includeDir($dir) {
 	$files = scandir($dir);
@@ -41,11 +38,14 @@ function __autoload($className) {
 	}
 }
 
+Hook::trigger('loadEngineConfig');
+
 Config::build('engine');
-//require_once CONFIGPATH."global.php";
 
 includeDir(CONFPATH);
 includeDir(LIBSPATH);
+
+Hook::trigger('checkModule');
 
 session_start();
 
@@ -64,18 +64,15 @@ $Page = '';
 // 	$Module = DEFAULTMOD;
 // }
 
+Hook::trigger('checkModule');
+
 if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
 	$Module = $_GET['module'];
 } else {
 	$Module = DEFAULTMOD;
 }
 
-//L'utilisateur ne passe pas par la réécriture d'URL et la page demandée n'est pas la racine.
-if( empty($_SERVER['REDIRECT_rewritten']) && $_SERVER['REQUEST_URI'] != '/' && $Module != 'remote' ) {
-	header('HTTP/1.1 301 Moved Permanently', false, 301);
-	header('Location: '.$Module.'.html');
-	exit();
-}
+$Module = Hook::trigger('runModule', $Module);
 
 try {
 	ob_start();
@@ -88,5 +85,7 @@ try {
 	$Page = '
 <span class="error">Une erreur fatale est survenue et ne peut pas être prise en charge, <a href="'.DEFAULTLINK.'">il est impossible de continuer dans cette situation.</a</span>';
 }
-HTMLRendering::show();
+
+Hook::trigger('showRendering');
+Rendering::doShow();//Generic final display.
 ?>
