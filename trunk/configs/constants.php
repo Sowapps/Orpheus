@@ -15,12 +15,12 @@ define('DS', DIRECTORY_SEPARATOR);
 define('INSIDE', true);
 
 //Useful paths.
-define('CONFPATH',		'config'.DS);
+define('CONFPATH',		'configs'.DS);
 define('MODPATH',		'modules'.DS);
 define('LIBSPATH',		'libs'.DS);
 define('LOGSPATH',		'logs'.DS);
 define('JSPATH',		'js'.DS);
-define('THEMESPATH',		'themes'.DS);
+define('THEMESPATH',	'themes'.DS);
 
 //Miscelanous
 
