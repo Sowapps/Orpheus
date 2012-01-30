@@ -3,17 +3,18 @@ abstract class Rendering {
 	
 	protected static $SHOWMODEL = 'show';
 	
-	public abstract static function render($env, $model=null);
+	public abstract function render($env, $model=null);
 	
-	public static function display($env, $model=null) {
-		echo static::render($env);
+	public function display($env, $model=null) {
+		echo $this->render($env);
 	}
 	
 	public static function show($env=null) {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
 		}
-		static::display($env, static::$SHOWMODEL);
+		$r = new static();
+		$r->display($env, static::$SHOWMODEL);
 		exit();
 	}
 	
