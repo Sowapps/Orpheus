@@ -9,7 +9,7 @@ abstract class Rendering {
 		echo $this->render($env);
 	}
 	
-	public static function show($env=null) {
+	private static function show($env=null) {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
 		}
@@ -18,7 +18,7 @@ abstract class Rendering {
 		exit();
 	}
 	
-	final private static function doShow() {
+	final public static function doShow() {
 		${Config::get('default_rendering')}::show();
 	}
 }
