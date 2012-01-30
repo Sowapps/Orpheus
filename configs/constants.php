@@ -24,8 +24,8 @@ define('THEMESPATH',	'themes'.DS);
 
 //Miscelanous
 
-define('DEFAULTMOD',		'js'.DS);
+define('DEFAULTMOD',	'');
 
-define('SITENAME',				'My FrameWork');
+define('SITENAME',		'Orpheus');
 
-define('SYSLOGFILENAME',		'.system');
+define('SYSLOGFILENAME','.system');
