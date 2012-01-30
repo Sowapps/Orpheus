@@ -38,8 +38,8 @@ class Hook {
 	
 	public static function create($name) {
 		$name = static::slug($name);
-		static::$hook[$name] = new static($name);
-		return self::$hook[$name];
+		static::$hooks[$name] = new static($name);
+		return self::$hooks[$name];
 	}
 	
 	public static function register($name, $callback) {
