@@ -19,6 +19,7 @@ abstract class Rendering {
 	}
 	
 	final public static function doShow() {
-		${Config::get('default_rendering')}::show();
+		$c = Config::get('default_rendering');
+		$c::show();
 	}
 }
