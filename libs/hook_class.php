@@ -31,7 +31,7 @@ class Hook {
 				$params[0] = $r;
 			}
 		}
-		return $params[0];
+		return (isset($params[0])) ? $params[0] : null;
 	}
 	
 	protected static function slug($name) {
@@ -61,9 +61,10 @@ class Hook {
 		if( func_num_args() > 1 ) {
 			$params = func_get_args();
 			unset($params[0]);
+			$params = array_values($params);
 		}
 		echo "trigger($name):<br />";
 		var_dump($params); echo "<br />";
-		return static::$hooks[$name]->triggerHook(array_values($params));
+		return static::$hooks[$name]->triggerHook($params);
 	}
 }
