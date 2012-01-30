@@ -26,7 +26,7 @@ abstract class ConfigCore {
 		}
 	}
 	
-	public function get($key) {
+	public static function get($key) {
 		if( !isset(static::$main) ) {
 			throw new Exception('No Main Config');
 		}
