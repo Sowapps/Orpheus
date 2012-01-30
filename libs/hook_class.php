@@ -64,6 +64,6 @@ class Hook {
 		}
 		echo "trigger($name):<br />";
 		var_dump($params); echo "<br />";
-		return static::$hooks[$name]->triggerHook($params);
+		return static::$hooks[$name]->triggerHook(array_values($params));
 	}
 }
