@@ -44,17 +44,17 @@ class Hook {
 	
 	public static function register($name, $callback) {
 		$name = static::slug($name);
-		if( empty(static::$hook[$name]) ) {
+		if( empty(static::$hooks[$name]) ) {
 			throw new Exception('No hook with this name');
 		}
-		return static::$hook[$name]->registerHook($callback);
+		return static::$hooks[$name]->registerHook($callback);
 	}
 	
 	public static function trigger($name, $params=NULL) {
 		$name = static::slug($name);
-		if( empty(static::$hook[$name]) ) {
+		if( empty(static::$hooks[$name]) ) {
 			throw new Exception('No hook with this name');
 		}
-		return static::$hook[$name]->triggerHook($params);
+		return static::$hooks[$name]->triggerHook($params);
 	}
 }
