@@ -18,15 +18,6 @@ if( !empty($METAPROP) ) {
 	}
 }
 ?>
-
-<link rel="stylesheet" href="<?php echo CSSPATH; ?>style.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="<?php echo CSSPATH; ?>booklet.css" type="text/css" media="screen" />
-<script type="text/javascript" src="<?php echo JSPATH; ?>jquery.js"></script>
-<script type="text/javascript" src="<?php echo JSPATH; ?>jquery-ui.js"></script>
-<script type="text/javascript" src="<?php echo JSPATH; ?>jquery.easing.js"></script>
-<script type="text/javascript" src="<?php echo JSPATH; ?>jquery.booklet.js"></script>
-<script type="text/javascript" src="<?php echo JSPATH; ?>jquery.tools.js"></script>
-<script type="text/javascript" src="<?php echo JSPATH; ?>script.js"></script>
 </head>
 
 <body class="<?php echo $Module.' '.$BODYCLASSES;?>">
