@@ -3,8 +3,8 @@
  * PHP File for the Index: The WebSite Core.
  *
  * @Author		Florent Hazard.
- * @copyright	Copyright (C) 2012 Florent HAZARD, All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright	Copyright (C) 2012 Florent HAZARD
+ * @license		The MIT License, see LICENSE.txt
  */
 
 //Edit it according system context (OS, directory tree ...).
