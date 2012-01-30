@@ -28,10 +28,10 @@ class Hook {
 			var_dump($params); echo "<br />";
 			$r = call_user_func_array($callback, $params);
 			if( isset($r) && gettype($r) === $pType ) {
-				$params = $r;
+				$params[0] = $r;
 			}
 		}
-		return $params;
+		return $params[0];
 	}
 	
 	protected static function slug($name) {
