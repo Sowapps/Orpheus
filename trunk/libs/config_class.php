@@ -1,5 +1,4 @@
 <?php
-echo "Config - Start<br />";
 class Config extends ConfigCore {
 	
 	public function load($source) {
@@ -7,4 +6,3 @@ class Config extends ConfigCore {
 	}
 	
 }
-echo "Config - End<br />";
