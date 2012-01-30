@@ -14,7 +14,7 @@ class HTMLRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env);
-		include static::getModelsPath().$model;
+		include static::getModelsPath().$model.'.php';
 	}
 	
 	public static function getModelsPath() {
