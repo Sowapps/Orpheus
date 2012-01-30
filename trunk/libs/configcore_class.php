@@ -21,9 +21,9 @@ abstract class ConfigCore {
 				static::$main = $newConf;
 				$GLOBALS['CONFIG'] = &$main;
 			}
-			static::$main->add(static::load($source));
+			static::$main->load($source);
 		} else {
-			$newConf->add(static::load($source));
+			$newConf->load($source);
 		}
 	}
 	
@@ -34,6 +34,6 @@ abstract class ConfigCore {
 		return static::$main->$key;
 	}
 	
-	public abstract static function load($source);
+	public abstract function load($source);
 }
 echo "Config - End<br />";
