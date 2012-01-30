@@ -24,7 +24,7 @@ define('THEMESPATH',	'themes'.DS);
 
 //Miscelanous
 
-define('DEFAULTMOD',	'');
+define('DEFAULTMOD',	'home');
 
 define('SITENAME',		'Orpheus');
 
