@@ -50,10 +50,15 @@ class Hook {
 		return static::$hooks[$name]->registerHook($callback);
 	}
 	
-	public static function trigger($name, $params=NULL) {
+	public static function trigger($name) {
 		$name = static::slug($name);
 		if( empty(static::$hooks[$name]) ) {
 			throw new Exception('No hook with this name');
+		}
+		$params = null;
+		if( func_num_args() > 1 ) {
+			$params = func_get_args();
+			unset($params[0]);
 		}
 		return static::$hooks[$name]->triggerHook($params);
 	}
