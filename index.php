@@ -2,7 +2,9 @@
 /* index.php
  * PHP File for the Index: The WebSite Core.
  *
- * Auteur: Florent Hazard.
+ * @Author		Florent Hazard.
+ * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 //Edit it according system context (OS, directory tree ...).
@@ -48,7 +50,7 @@ Hook::trigger('startSession');
 
 session_start();
 
-//On récupère l'action s'il y a en vérifiant qu'elle soit valide.
+//Check and Get Action.
 $Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
 
 $Page = '';
