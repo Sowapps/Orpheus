@@ -9,7 +9,7 @@ class HTMLRendering extends Rendering {
 	public static $cssPath = 'css/';//Static reject DS
 	public static $modelsPath = '';//Static reject DS
 	
-	public abstract function render($env, $model=null) {
+	public function render($env, $model=null) {
 		if( !isset($model) ) {
 			throw new Exception("Invalid Rendering Model");
 		}
