@@ -3,7 +3,7 @@
  * PHP File for the Index: The WebSite Core.
  *
  * @Author		Florent Hazard.
- * @copyright	Copyright (C) 2005 - 2011 Open Source Matters, Inc. All rights reserved.
+ * @copyright	Copyright (C) 2012 Florent HAZARD, All rights reserved.
  * @license		GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -30,7 +30,9 @@ function includeDir($dir) {
 }
 
 function __autoload($className) {
+	echo "autoload()<br />";
 	$bFile = strtolower($className);
+	echo "bFile = $bFile<br />";
 	if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
 		require_once LIBSPATH.$bFile.'_class.php';
 	} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
