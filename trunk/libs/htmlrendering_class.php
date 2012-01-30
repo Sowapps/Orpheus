@@ -1,7 +1,7 @@
 <?php
 class HTMLRendering extends Rendering {
 	
-	protected static $SHOWMODEL = 'page_structure';
+	protected static $SHOWMODEL = 'page_skeleton';
 	
 	public static $theme = 'default';
 	
