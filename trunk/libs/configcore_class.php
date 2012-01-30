@@ -3,21 +3,26 @@ abstract class ConfigCore {
 	
 	protected static $main;
 	
-	protected $config;
+	protected $config = array();
 	
 	public function __get($key) {
 		return (isset($this->config[$key])) ? $this->config[$key] : NULL;
 	}
 	
+	public function add($conf) {
+		$this->config += $conf;
+	}
+	
 	public static function build($source, $minor=false) {
+		$newConf = new static();
 		if( !$minor ) {
 			if( !isset(static::$main) ) {
-				static::$main = $this;
+				static::$main = $newConf;
 				$GLOBALS['CONFIG'] = &$main;
 			}
 			static::$main->add(static::load($source));
 		} else {
-			$this->add(static::load($file));
+			$newConf->add(static::load($source));
 		}
 	}
 	
