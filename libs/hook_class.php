@@ -24,6 +24,8 @@ class Hook {
 	public function triggerHook($params=NULL) {
 		$pType = gettype($params);
 		foreach($this->callbacks as $callback) {
+			echo "triggerHook: <br />";
+			var_dump($params); echo "<br />";
 			$r = call_user_func_array($callback, $params);
 			if( isset($r) && gettype($r) === $pType ) {
 				$params = $r;
@@ -60,6 +62,8 @@ class Hook {
 			$params = func_get_args();
 			unset($params[0]);
 		}
+		echo "trigger($name):<br />";
+		var_dump($params); echo "<br />";
 		return static::$hooks[$name]->triggerHook($params);
 	}
 }
