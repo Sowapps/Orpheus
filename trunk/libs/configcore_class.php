@@ -1,4 +1,5 @@
 <?php
+echo "Config - Start<br />";
 abstract class ConfigCore {
 	
 	protected static $main;
@@ -35,3 +36,4 @@ abstract class ConfigCore {
 	
 	public abstract static function load($source);
 }
+echo "Config - End<br />";
