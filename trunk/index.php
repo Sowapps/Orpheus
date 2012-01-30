@@ -31,17 +31,21 @@ function includeDir($dir) {
 
 function __autoload($className) {
 	echo "autoload()<br />";
-	$bFile = strtolower($className);
-	echo "bFile = $bFile<br />";
-	if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
-		echo "Found in libs<br />";
-		require_once LIBSPATH.$bFile.'_class.php';
-	} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
-		echo "Found in subfoler in libs<br />";
-		require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
-	} else {
-		echo "Unable to load lib<br />";
-		throw new Exception("Unable to load lib \"{$className}\"");
+	try {
+		$bFile = strtolower($className);
+		echo "bFile = $bFile<br />";
+		if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
+			echo "Found in libs<br />";
+			require_once LIBSPATH.$bFile.'_class.php';
+		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
+			echo "Found in subfoler in libs<br />";
+			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
+		} else {
+			echo "Unable to load lib<br />";
+			throw new Exception("Unable to load lib \"{$className}\"");
+		}
+	} catch( Exception $e ) {
+		die($e);
 	}
 }
 
