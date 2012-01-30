@@ -6,7 +6,7 @@ abstract class Rendering {
 	public abstract function render($env, $model=null);
 	
 	public function display($env, $model=null) {
-		echo $this->render($env);
+		echo $this->render($env, $model);
 	}
 	
 	private static function show($env=null) {
