@@ -17,7 +17,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 }
 set_error_handler('exception_error_handler');
 
-function includeDir($dir) {
+function includeDir($dir='./') {
 	$files = scandir($dir);
 	$i=0;
 	foreach($files as $file) {
@@ -29,6 +29,7 @@ function includeDir($dir) {
 	return $i;
 }
 
+//TODO: Add Array mapping
 function __autoload($className) {
 	try {
 		$bFile = strtolower($className);
@@ -37,7 +38,12 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
 		} else {
-			throw new Exception("Unable to load lib \"{$className}\"");
+			list($dir) = explode('_', $className, 1);
+			if( is_readable(LIBSPATH.$dir.DS.$bFile.'_class.php') ) {
+				require_once LIBSPATH.$dir.DS.$bFile.'_class.php';
+			} else {
+				throw new Exception("Unable to load lib \"{$className}\"");
+			}
 		}
 	} catch( Exception $e ) {
 		die($e);
