@@ -1,11 +1,11 @@
 <?php
-/* index.php
- * PHP File for the Index: The WebSite Core.
- *
- *
- * \Author		Florent Hazard.
- * \copyright	Copyright (C) 2012 Florent HAZARD
- * \license		The MIT License, see LICENSE.txt
+/*!
+	\file index.php
+	\brief The WebSite Core.
+	\author		Florent Hazard.
+	\copyright	The MIT License, see LICENSE.txt
+	
+	PHP File for the website core.
  */
 
 //Edit it according system context (OS, directory tree ...).
