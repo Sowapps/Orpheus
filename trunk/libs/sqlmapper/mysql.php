@@ -1,9 +1,13 @@
 <?php
-class SQLMapper_MySQL {
+//! The MYSQL Mapper for class
+/*!
+	This class is the sql mapper for MySQL.
+*/
+class SQLMapper_MySQL extends SQLMapper {
 	
 	protected static $IDFIELD = 'id';
 	
-	//Defaults for selecting
+	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '*',//* => All fields
 			'whereclause'	=> '',//Additionnal Whereclause
@@ -12,7 +16,8 @@ class SQLMapper_MySQL {
 			'offset'		=> 0,//0 => The start
 			'output'		=> '2',//2 => ARR_ASSOC
 	);
-	//Defaults for updating
+	
+	//! Defaults for updating
 	protected static $updateDefaults = array(
 			'lowpriority'	=> false,//false => Not low priority
 			'ignore'		=> false,//false => Not ignore errors
@@ -20,12 +25,15 @@ class SQLMapper_MySQL {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
-			'output'		=> '2',//2 => ARR_ASSOC
 	);
 	
-	/*!
-	 * \sa http://dev.mysql.com/doc/refman/5.0/en/select.html
-	*/
+	//! The function to use for SELECT queries
+    /*!
+		Using pdo_query(), It parses the query from an array to a SELECT query.
+		\param $options The options used to build the query.
+		\return Mixed return, depending on the 'output' option.
+	 	\sa http://dev.mysql.com/doc/refman/5.0/en/select.html
+    */
 	public static function select(array $options=array()) {
 		$options += self::$selectDefaults;
 		if( empty($options['table']) ) {
@@ -53,9 +61,14 @@ class SQLMapper_MySQL {
 		return $results;
 	}
 	
+	
+	//! The function to use for UPDATE queries
 	/*!
-	 * \sa http://dev.mysql.com/doc/refman/5.0/en/update.html
-	 */
+	 Using pdo_query(), It parses the query from an array to a UPDATE query.
+	\param $options The options used to build the query.
+	\return The number of affected rows.
+	\sa http://dev.mysql.com/doc/refman/5.0/en/update.html
+	*/
 	public static function update(array $options=array()) {
 		$options += self::$updateDefaults;
 		if( empty($options['table']) ) {
@@ -78,11 +91,5 @@ class SQLMapper_MySQL {
 			return $QUERY;
 		}
 		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
-		if( $options['output'] == static::ARR_OBJECTS ) {
-			foreach($results as &$r) {
-				$r = (object)$r;//stdClass 
-			}
-		}
-		return $results;
 	}
 }
