@@ -40,7 +40,7 @@ function lang($k) {
 }
 
 function sendResponse($Code, $Other='', $lang=null) {
-	$lang = ( isset($lang) ) ? $lang : $GLOBALS['AJAXRESP'];
+	$lang = ( isset($lang) ) ? $lang : ( ( !empty($GLOBALS['AJAXRESP']) ) ? $GLOBALS['AJAXRESP'] : array() );
 	die( json_encode(
 		array(
 			'code'			=> $Code,
