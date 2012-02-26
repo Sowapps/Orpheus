@@ -2,9 +2,10 @@
 /* index.php
  * PHP File for the Index: The WebSite Core.
  *
- * @Author		Florent Hazard.
- * @copyright	Copyright (C) 2012 Florent HAZARD
- * @license		The MIT License, see LICENSE.txt
+ *
+ * \Author		Florent Hazard.
+ * \copyright	Copyright (C) 2012 Florent HAZARD
+ * \license		The MIT License, see LICENSE.txt
  */
 
 //Edit it according system context (OS, directory tree ...).
