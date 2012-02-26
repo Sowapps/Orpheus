@@ -1,5 +1,5 @@
 <?php
-//! The MYSQL Mapper for class
+//! The MYSQL Mapper class
 /*!
 	This class is the sql mapper for MySQL.
 */
