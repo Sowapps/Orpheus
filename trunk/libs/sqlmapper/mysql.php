@@ -29,10 +29,12 @@ class SQLMapper_MySQL extends SQLMapper {
 	
 	//! The function to use for SELECT queries
     /*!
-		Using pdo_query(), It parses the query from an array to a SELECT query.
 		\param $options The options used to build the query.
 		\return Mixed return, depending on the 'output' option.
 	 	\sa http://dev.mysql.com/doc/refman/5.0/en/select.html
+	 	\sa SQLMapper::select()
+	 	
+		Using pdo_query(), It parses the query from an array to a SELECT query.
     */
 	public static function select(array $options=array()) {
 		$options += self::$selectDefaults;
@@ -64,10 +66,11 @@ class SQLMapper_MySQL extends SQLMapper {
 	
 	//! The function to use for UPDATE queries
 	/*!
-	 Using pdo_query(), It parses the query from an array to a UPDATE query.
-	\param $options The options used to build the query.
-	\return The number of affected rows.
-	\sa http://dev.mysql.com/doc/refman/5.0/en/update.html
+		\param $options The options used to build the query.
+		\return The number of affected rows.
+		\sa http://dev.mysql.com/doc/refman/5.0/en/update.html
+		
+		Using pdo_query(), It parses the query from an array to a UPDATE query.
 	*/
 	public static function update(array $options=array()) {
 		$options += self::$updateDefaults;

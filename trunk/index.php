@@ -13,11 +13,22 @@ require_once 'configs/constants.php';
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
+//! Error Handler
+/*!
+	System function to handle PHP errors and convert it into exceptions.
+*/
 function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 }
 set_error_handler('exception_error_handler');
 
+//! Include a directory
+/*!
+	\param $dir The directory to include.
+	\return The number of files included.
+	
+	Include all files with a name beginning by '_' in the directory $dir. 
+*/
 function includeDir($dir='./') {
 	$files = scandir($dir);
 	$i=0;
@@ -30,7 +41,18 @@ function includeDir($dir='./') {
 	return $i;
 }
 
-//TODO: Add Array mapping
+
+//! Class autoload function
+/*!
+	\param $className The classname not loaded yet.
+	\todo Add Array mapping
+	
+	Include the file according to the classname in lowercase and suffixed by '_class.php'.
+	First, search in the libs directory, then, always in subdirectory, in the eponym directory.
+	And finally, in the parent directory (replace first '_' by '/')
+	e.g For Parent_MyClass, it searches 'libs/parent_myclass_class.php', 'libs/parent_myclass/parent_myclass_class.php', 'libs/parent/myclass_class.php'
+	The script stops if the class file is not found.
+*/
 function __autoload($className) {
 	try {
 		$bFile = strtolower($className);
@@ -39,9 +61,9 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
 		} else {
-			list($dir) = explode('_', $className, 1);
-			if( is_readable(LIBSPATH.$dir.DS.$bFile.'_class.php') ) {
-				require_once LIBSPATH.$dir.DS.$bFile.'_class.php';
+			list($dir, $cfile) = explode('_', $bFile, 1);
+			if( !empty($dir) && is_readable(LIBSPATH.$dir.DS.$cfile.'_class.php') ) {
+				require_once LIBSPATH.$dir.DS.$cfile.'_class.php';
 			} else {
 				throw new Exception("Unable to load lib \"{$className}\"");
 			}
