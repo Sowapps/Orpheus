@@ -1,13 +1,12 @@
 <?php
-/* sqlmapper/_pdo.php
- * PHP File for included functions: PDO
- * [EN] Library of PDO functions to use ODBC.
- *
- * Auteur: Florent Hazard.
- * Revision: 24
- * Last edition: 19/08/2011
+/*!
+	\file _pdo.php
+	\brief Library to easily use PDO
+	\author Florent Hazard
+	\copyright The MIT License, see LICENSE.txt
+	
+Library of PDO functions to easily use ODBC.
 
-Required constants
 LOGSPATH
 PDOLOGFILENAME
 
@@ -15,7 +14,7 @@ PDODEFDBSFILE	Required only if DBS file not included
 INCPATH			Useful only if DBS file not included
 
 Required functions:
-bintest() (lib system)
+bintest() (_core.php)
 */
 if( !defined("INSIDE") ) {
 	return;
@@ -32,18 +31,15 @@ define('PDOFETCHALL', PDOQUERY | 1<<2);//Query and Fetch All (Set of all results
 define('PDOFETCHALLCOL', PDOQUERY | 0<<3);//All columns
 define('PDOFETCHFIRSTCOL', PDOQUERY | 1<<3);//Only the first column
 
+//! Ensure to be connected to the database.
 /*
-Description: [String] ensure_pdoinstance( [$Instance=null] )
-Ensures to provide a valid and connected instance of PDO, here are the steps:
-If it is not loaded, this function attempts to load the database configuration file.
-If not supplied as a parameter, this function attempts to determine an existing instance name.
-If the instance is not connected, this function attempts to connect.
+	\param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
+	\return	Instance ID used.
 
-List of parameters:
-- $Instance: If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
-
-Return values:
-Instance ID used.
+	Ensures to provide a valid and connected instance of PDO, here are the steps:
+	If it is not loaded, this function attempts to load the database configuration file.
+	If not supplied as a parameter, this function attempts to determine an existing instance name.
+	If the instance is not connected, this function attempts to connect.
 */
 function ensure_pdoinstance($Instance=null) {
 	global $pdoInstances, $DBS;
@@ -113,17 +109,14 @@ function ensure_pdoinstance($Instance=null) {
 	return $Instance;
 }
 
+//! Execute $Query
 /*
-Description: [Array | PDOStatement Object] pdo_query( $Query[, $Fetch = PDOQUERY[, $Instance=null]] )
-Execute la requete $Query sur la base de donnees instanciee.
-
-Liste de parametres:
-- $Query: La requete a executer.
-- $Fetch: Voir les constantes PDO ci-dessus. Optionnel, PDOQUERY par defaut.
-- $Instance: Si donnée, il s'agit de l'instance à utiliser pour exécuter la requête. Optionnel, constante PDODEFINSTNAME par défaut ou racine de $DBS.
-
-Valeurs de retour:
-Le resultat de la requete, du type defini par $Fetch.
+	\param $Query The query to execute.
+	\param $Fetch See PDO constants above. Optionnal, default is PDOQUERY.
+	\param $Instance The instance to use to execute the query. Optionnal, default is defined by ensure_pdoinstance().
+	\return The result of the query, of type defined by $Fetch.
+	
+	Execute $Query on the instanciated database.
 */
 function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
@@ -189,16 +182,12 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or it is not implemented yet.', 'Driver Definition');
 }
 
+//! Log a PDO error
 /*
-Description: void pdo_error( $PDOReport[, $Action=''] )
-Enregistre le rapport d'erreur $PDOReport dans le fichier de log et termine l'exécution du script.
+	\param $PDOReport The PDO report to save.
+	\param $Action Optionnal information about what the script was doing.
 
-Liste de parametres:
-- $PDOReport: Le rapport à enregistrer dans le fichier.
-- $Action: Note d'action en cours à enregistrer. Optionnel, Vide par defaut.
-
-Valeurs de retour:
-Rien, le script est termine.
+	Save the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='') {
 	if( function_exists('log') ) {
@@ -210,15 +199,12 @@ function pdo_error($PDOReport, $Action='') {
 	die("An error has occured with the database, retry later please.");
 }
 
+//! Quote and Escape
 /*
-Description: String pdo_select( String $String )
-Securise $String a la sauce PDO avec la methode quote().
+	\param $String The value to escape.
+	\return The quoted and escaped value.
 
-Liste de parametres:
-- $String: La chaine de caractere a securiser.
-
-Valeurs de retour:
-La chaine protegee.
+	Places quotes around the input string and escapes special characters within the input string, using the current instance.
 */
 function pdo_quote($String) {
 	global $pdoInstances;
