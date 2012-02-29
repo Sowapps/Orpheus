@@ -1,9 +1,9 @@
 <?php
 /*!
 	\file index.php
-	\brief The WebSite Core.
-	\author		Florent Hazard.
-	\copyright	The MIT License, see LICENSE.txt
+	\brief The WebSite Core
+	\author Florent Hazard
+	\copyright The MIT License, see LICENSE.txt
 	
 	PHP File for the website core.
  */
