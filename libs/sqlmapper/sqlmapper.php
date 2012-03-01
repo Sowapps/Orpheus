@@ -13,6 +13,12 @@ abstract class SQLMapper {
 	//! Defaults for updating
 	protected static $updateDefaults = array();
 	
+	//! Defaults for deleting
+	protected static $deleteDefaults = array();
+	
+	//! Defaults for inserting
+	protected static $insertDefaults = array();
+	
 	//List of outputs for getting list
 	const ARR_OBJECTS	= 1;//!< Array of objects
 	const ARR_ASSOC		= 2;//!< Associative array
@@ -37,6 +43,24 @@ abstract class SQLMapper {
 		It parses the query from an array to a UPDATE query.
 	*/
 	public abstract static function update(array $options=array());
+	
+	//! The function to use for DELETE queries
+	/*!
+		\param $options The options used to build the query.
+		\return The number of deleted rows.
+		
+		It parses the query from an array to a DELETE query.
+	*/
+	public abstract static function delete(array $options=array());
+	
+	//! The function to use for INSERT queries
+	/*!
+		\param $options The options used to build the query.
+		\return The number of inserted rows.
+		
+		It parses the query from an array to a INSERT query.
+	*/
+	public abstract static function insert(array $options=array());
 }
 
 includeDir();

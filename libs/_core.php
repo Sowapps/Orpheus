@@ -239,3 +239,20 @@ function iURLEncode($u) {
 function iURLDecode($u) {
 	return urldecode(str_replace(":46", ".", $u));
 }
+
+
+
+//! Parse Fields array to string
+/*!
+	\param $fields The fields array.
+	\return A string as fields list.
+	
+	It parses a field array to a fields list for queries.
+*/
+function parseFields(array $fields) {
+	$list = '';
+	foreach($fields as $key => $value) {
+		$list .= (!empty($list) ? ', ' : '').$key.'='.$value;
+	}
+	return $list;
+}

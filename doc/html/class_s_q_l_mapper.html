@@ -107,6 +107,10 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for SELECT queries.  <a href="#a5e9b4aba95dfa1fcac3703e2074c6cb4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a660d85be1eebffd7ccec2b1afa0bfb18">update</a> (array $options=array())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for UPDATE queries.  <a href="#a660d85be1eebffd7ccec2b1afa0bfb18"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961">delete</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for DELETE queries.  <a href="#ad12496940845d45eaf877016e7355961"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d">insert</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#ad2148bcfce7b81ee530b23617520518d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">ARR_OBJECTS</a> = 1</td></tr>
@@ -124,10 +128,68 @@ Static Protected Attributes</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for selecting.  <a href="#a123841ad7adddcb80ebfc382e155823a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af08c5fdc7d581911eb8538db33a5834e">$updateDefaults</a> = array()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for updating.  <a href="#af08c5fdc7d581911eb8538db33a5834e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#abd9a5ea19fdd8ccbab574f8cf4df094e">$deleteDefaults</a> = array()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for deleting.  <a href="#abd9a5ea19fdd8ccbab574f8cf4df094e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a3616bde6895d72b6c161aa8abe71e16e">$insertDefaults</a> = array()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for inserting.  <a href="#a3616bde6895d72b6c161aa8abe71e16e"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class is the mother sql mapper inherited for specific DBMS. </p>
 </div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ad12496940845d45eaf877016e7355961"></a><!-- doxytag: member="SQLMapper::delete" ref="ad12496940845d45eaf877016e7355961" args="(array $options=array())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961">SQLMapper::delete</a> </td>
+          <td>(</td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
+          <td><code> [static, abstract]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$options</td><td>The options used to build the query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The number of deleted rows.</dd></dl>
+<p>It parses the query from an array to a DELETE query. </p>
+
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a61c99821b59d6008f0ea5556164bb8e9">SQLMapper_MySQL</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad2148bcfce7b81ee530b23617520518d"></a><!-- doxytag: member="SQLMapper::insert" ref="ad2148bcfce7b81ee530b23617520518d" args="(array $options=array())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d">SQLMapper::insert</a> </td>
+          <td>(</td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
+          <td><code> [static, abstract]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$options</td><td>The options used to build the query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The number of inserted rows.</dd></dl>
+<p>It parses the query from an array to a INSERT query. </p>
+
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a82c937163391569fc5d8f63e1e8a293f">SQLMapper_MySQL</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a5e9b4aba95dfa1fcac3703e2074c6cb4"></a><!-- doxytag: member="SQLMapper::select" ref="a5e9b4aba95dfa1fcac3703e2074c6cb4" args="(array $options=array())" -->
 <div class="memitem">
 <div class="memproto">
@@ -183,6 +245,21 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="abd9a5ea19fdd8ccbab574f8cf4df094e"></a><!-- doxytag: member="SQLMapper::$deleteDefaults" ref="abd9a5ea19fdd8ccbab574f8cf4df094e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SQLMapper::$deleteDefaults = array()<code> [static, protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253">SQLMapper_MySQL</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aa321c20c3b6649216beee7d31ce8162c"></a><!-- doxytag: member="SQLMapper::$IDFIELD" ref="aa321c20c3b6649216beee7d31ce8162c" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -195,6 +272,21 @@ Static Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a63c48101c1f9f65b44377c1236a3283e">SQLMapper_MySQL</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3616bde6895d72b6c161aa8abe71e16e"></a><!-- doxytag: member="SQLMapper::$insertDefaults" ref="a3616bde6895d72b6c161aa8abe71e16e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">SQLMapper::$insertDefaults = array()<code> [static, protected]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a5f7ecfd0849fadbf5d79b1908b0c127c">SQLMapper_MySQL</a>.</p>
 
 </div>
 </div>
@@ -301,7 +393,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 27 2012 17:19:49 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 1 2012 10:05:02 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
