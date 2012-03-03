@@ -29,8 +29,7 @@ set_error_handler('exception_error_handler');
 	
 	Include all files with a name beginning by '_' in the directory $dir. 
 */
-function includeDir($dir='./') {
-	echo getcwd().'<br />';
+function includeDir($dir) {
 	$files = scandir($dir);
 	$i=0;
 	foreach($files as $file) {

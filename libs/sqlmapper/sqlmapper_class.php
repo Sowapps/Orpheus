@@ -116,4 +116,4 @@ abstract class SQLMapper {
 	}
 }
 
-includeDir();
+includeDir(LIBSPATH.'sqlmapper/');
