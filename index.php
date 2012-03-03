@@ -61,12 +61,12 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
 		} else {
-			@list($dir, $cfile) = explode('_', $bFile, 1);
-			if( !empty($dir) && !empty($cfile) && is_readable(LIBSPATH.$dir.DS.$cfile.'_class.php') ) {
-				require_once LIBSPATH.$dir.DS.$cfile.'_class.php';
-			} else {
-				throw new Exception("Unable to load lib \"{$className}\"");
+			$classExp = explode('_', $bFile, 1);
+			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php') ) {
+				require_once LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php';
+				return;
 			}
+			throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
 		die($e);
