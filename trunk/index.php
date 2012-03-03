@@ -61,8 +61,8 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
 		} else {
-			list($dir, $cfile) = explode('_', $bFile, 1);
-			if( !empty($dir) && is_readable(LIBSPATH.$dir.DS.$cfile.'_class.php') ) {
+			@list($dir, $cfile) = explode('_', $bFile, 1);
+			if( !empty($dir) && !empty($cfile) && is_readable(LIBSPATH.$dir.DS.$cfile.'_class.php') ) {
 				require_once LIBSPATH.$dir.DS.$cfile.'_class.php';
 			} else {
 				throw new Exception("Unable to load lib \"{$className}\"");
