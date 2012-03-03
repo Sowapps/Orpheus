@@ -107,7 +107,7 @@ try {
 	@ob_end_clean();
 	sys_error("$e", "running_".$Module);
 	$Page = '
-<span class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue</a></span>';
+<span class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></span>';
 }
 
 Hook::trigger('showRendering');

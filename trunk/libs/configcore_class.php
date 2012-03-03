@@ -22,7 +22,7 @@ abstract class ConfigCore {
 	*/
 	public function __get($key) {
 		if( $key == 'all' ) {
-			return $config;
+			return $this->config;
 		}
 		return (isset($this->config[$key])) ? $this->config[$key] : NULL;
 	}
