@@ -12,5 +12,6 @@ var searchData=
   ['pdofetchfirstcol',['PDOFETCHFIRSTCOL',['../__pdo_8php.html#a350f5a2acc85f9ceb53af0efc95441d4',1,'_pdo.php']]],
   ['pdonostmt',['PDONOSTMT',['../__pdo_8php.html#a2879793e1d4b285979f69d185255f3db',1,'_pdo.php']]],
   ['pdoquery',['PDOQUERY',['../__pdo_8php.html#a5fba72619544fc174cf6f05f86a5a62c',1,'_pdo.php']]],
-  ['pdostmt',['PDOSTMT',['../__pdo_8php.html#a910bb72df5340dc292fcccc386564cf3',1,'_pdo.php']]]
+  ['pdostmt',['PDOSTMT',['../__pdo_8php.html#a910bb72df5340dc292fcccc386564cf3',1,'_pdo.php']]],
+  ['prepare',['prepare',['../class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f',1,'SQLMapper']]]
 ];

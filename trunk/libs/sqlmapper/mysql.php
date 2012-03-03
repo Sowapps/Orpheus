@@ -55,7 +55,7 @@ class SQLMapper_MySQL extends SQLMapper {
 	 	
 		Using pdo_query(), It parses the query from an array to a SELECT query.
     */
-	public static function select(array $options=array()) {
+	public function select(array $options=array()) {
 		$options += self::$selectDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception("Empty table");
@@ -90,7 +90,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		
 		Using pdo_query(), It parses the query from an array to a UPDATE query.
 	*/
-	public static function update(array $options=array()) {
+	public function update(array $options=array()) {
 		$options += self::$updateDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception("Empty table");
@@ -119,9 +119,9 @@ class SQLMapper_MySQL extends SQLMapper {
 		\param $options The options used to build the query.
 		\return The number of deleted rows.
 	
-	It parses the query from an array to a DELETE query.
+		It parses the query from an array to a DELETE query.
 	*/
-	public static function delete(array $options=array()) {
+	public function delete(array $options=array()) {
 		$options += self::$deleteDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception("Empty table");
@@ -152,7 +152,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		It parses the query from an array to a INSERT query.
 		Accept only the String syntax for what option.
 	*/
-	public static function insert(array $options=array()) {
+	public function insert(array $options=array()) {
 		$options += self::$insertDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception("Empty table");
