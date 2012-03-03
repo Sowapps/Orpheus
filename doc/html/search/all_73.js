@@ -1,13 +1,13 @@
 var searchData=
 [
   ['save',['save',['../class_abstract_table.html#aac3479b117112246eb549b1add191fcd',1,'AbstractTable']]],
-  ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper.html#a5e9b4aba95dfa1fcac3703e2074c6cb4',1,'SQLMapper\select(array $options=array())'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select(array $options=array())']]],
+  ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
   ['sendresponse',['sendResponse',['../__core_8php.html#ab27aefd881f4e0d1730555767d48a395',1,'_core.php']]],
   ['setdata',['setData',['../class_abstract_table.html#a2b1231fe0dfc5329a261bfa97222803f',1,'AbstractTable']]],
   ['sitename',['SITENAME',['../constants_8php.html#a00baad183eb99f91c7bd05f7d772004e',1,'constants.php']]],
   ['slug',['slug',['../class_hook.html#a3bf465684fb291a0da9c6964710a9e5f',1,'Hook']]],
   ['sqlmapper',['SQLMapper',['../class_s_q_l_mapper.html',1,'']]],
-  ['sqlmapper_2ephp',['sqlmapper.php',['../sqlmapper_8php.html',1,'']]],
+  ['sqlmapper_5fclass_2ephp',['sqlmapper_class.php',['../sqlmapper__class_8php.html',1,'']]],
   ['sqlmapper_5fmysql',['SQLMapper_MySQL',['../class_s_q_l_mapper___my_s_q_l.html',1,'']]],
   ['sqlquery',['SQLQUERY',['../class_abstract_table.html#ab4a672578ac1c2eb6e425ab193c39243',1,'AbstractTable\SQLQUERY()'],['../class_s_q_l_mapper.html#a0b2e09b44dd58179ce4c84ca1fc8c9ca',1,'SQLMapper\SQLQUERY()']]],
   ['ssh2_5frun',['ssh2_run',['../__core_8php.html#a23f9517830f7d777d047fd28fd3891dd',1,'_core.php']]],

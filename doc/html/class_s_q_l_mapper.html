@@ -114,14 +114,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#aa1cdf54e11d69c59795ec82d17a8a745"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a5e9b4aba95dfa1fcac3703e2074c6cb4">select</a> (array $options=array())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for SELECT queries in global context.  <a href="#a5e9b4aba95dfa1fcac3703e2074c6cb4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a660d85be1eebffd7ccec2b1afa0bfb18">update</a> (array $options=array())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for UPDATE queries in global context.  <a href="#a660d85be1eebffd7ccec2b1afa0bfb18"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961">delete</a> (array $options=array())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for DELETE queries in global context.  <a href="#ad12496940845d45eaf877016e7355961"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d">insert</a> (array $options=array())</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for INSERT queries in global context.  <a href="#ad2148bcfce7b81ee530b23617520518d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a333c4d974b46eca05d6be3e990fc244e">doSelect</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for SELECT queries in global context.  <a href="#a333c4d974b46eca05d6be3e990fc244e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a3c89cad951a119746412b8d4a4cc418f">doUpdate</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for UPDATE queries in global context.  <a href="#a3c89cad951a119746412b8d4a4cc418f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a5fabfae1b12ed46a60e49e2d64257c87">doDelete</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for DELETE queries in global context.  <a href="#a5fabfae1b12ed46a60e49e2d64257c87"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2">doInsert</a> (array $options=array())</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for INSERT queries in global context.  <a href="#af869e9ca6655fe97fe451ec2fb2312c2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f">prepare</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -149,32 +149,12 @@ Static Protected Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class is the mother sql mapper inherited for specific DBMS. </p>
 </div><hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad12496940845d45eaf877016e7355961"></a><!-- doxytag: member="SQLMapper::delete" ref="ad12496940845d45eaf877016e7355961" args="(array $options=array())" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961">SQLMapper::delete</a> </td>
-          <td>(</td>
-          <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961" title="The static function to use for DELETE queries in global context.">SQLMapper::delete()</a> </dd></dl>
-
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59">SQLMapper_MySQL</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a5976d0ffdba9b5e1c2daa988bf8e1384"></a><!-- doxytag: member="SQLMapper::delete" ref="a5976d0ffdba9b5e1c2daa988bf8e1384" args="(array $options=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#ad12496940845d45eaf877016e7355961">SQLMapper::delete</a> </td>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384">SQLMapper::delete</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
@@ -196,12 +176,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad2148bcfce7b81ee530b23617520518d"></a><!-- doxytag: member="SQLMapper::insert" ref="ad2148bcfce7b81ee530b23617520518d" args="(array $options=array())" -->
+<a class="anchor" id="a5fabfae1b12ed46a60e49e2d64257c87"></a><!-- doxytag: member="SQLMapper::doDelete" ref="a5fabfae1b12ed46a60e49e2d64257c87" args="(array $options=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d">SQLMapper::insert</a> </td>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a5fabfae1b12ed46a60e49e2d64257c87">SQLMapper::doDelete</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
@@ -210,9 +190,61 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d" title="The static function to use for INSERT queries in global context.">SQLMapper::insert()</a> </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384" title="The function to use for DELETE queries.">SQLMapper::delete()</a> </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee">SQLMapper_MySQL</a>.</p>
+</div>
+</div>
+<a class="anchor" id="af869e9ca6655fe97fe451ec2fb2312c2"></a><!-- doxytag: member="SQLMapper::doInsert" ref="af869e9ca6655fe97fe451ec2fb2312c2" args="(array $options=array())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2">SQLMapper::doInsert</a> </td>
+          <td>(</td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745" title="The function to use for INSERT queries.">SQLMapper::insert()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a333c4d974b46eca05d6be3e990fc244e"></a><!-- doxytag: member="SQLMapper::doSelect" ref="a333c4d974b46eca05d6be3e990fc244e" args="(array $options=array())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a333c4d974b46eca05d6be3e990fc244e">SQLMapper::doSelect</a> </td>
+          <td>(</td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff" title="The function to use for SELECT queries.">select()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3c89cad951a119746412b8d4a4cc418f"></a><!-- doxytag: member="SQLMapper::doUpdate" ref="a3c89cad951a119746412b8d4a4cc418f" args="(array $options=array())" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a3c89cad951a119746412b8d4a4cc418f">SQLMapper::doUpdate</a> </td>
+          <td>(</td>
+          <td class="paramtype">array $&#160;</td>
+          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#ae0a02c6ca82d7f9ae3ac5e27db011b34" title="The function to use for UPDATE queries.">update()</a> </dd></dl>
 
 </div>
 </div>
@@ -221,7 +253,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#ad2148bcfce7b81ee530b23617520518d">SQLMapper::insert</a> </td>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745">SQLMapper::insert</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
@@ -259,32 +291,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5e9b4aba95dfa1fcac3703e2074c6cb4"></a><!-- doxytag: member="SQLMapper::select" ref="a5e9b4aba95dfa1fcac3703e2074c6cb4" args="(array $options=array())" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a5e9b4aba95dfa1fcac3703e2074c6cb4">SQLMapper::select</a> </td>
-          <td>(</td>
-          <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#a5e9b4aba95dfa1fcac3703e2074c6cb4" title="The static function to use for SELECT queries in global context.">select()</a> </dd></dl>
-
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29">SQLMapper_MySQL</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a933609594a936784f56e008e241fbeff"></a><!-- doxytag: member="SQLMapper::select" ref="a933609594a936784f56e008e241fbeff" args="(array $options=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#a5e9b4aba95dfa1fcac3703e2074c6cb4">SQLMapper::select</a> </td>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff">SQLMapper::select</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
@@ -306,32 +318,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a660d85be1eebffd7ccec2b1afa0bfb18"></a><!-- doxytag: member="SQLMapper::update" ref="a660d85be1eebffd7ccec2b1afa0bfb18" args="(array $options=array())" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a660d85be1eebffd7ccec2b1afa0bfb18">SQLMapper::update</a> </td>
-          <td>(</td>
-          <td class="paramtype">array $&#160;</td>
-          <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
-          <td><code> [static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#a660d85be1eebffd7ccec2b1afa0bfb18" title="The static function to use for UPDATE queries in global context.">update()</a> </dd></dl>
-
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a1b25835ce0141248793212005ebb1383">SQLMapper_MySQL</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="ae0a02c6ca82d7f9ae3ac5e27db011b34"></a><!-- doxytag: member="SQLMapper::update" ref="ae0a02c6ca82d7f9ae3ac5e27db011b34" args="(array $options=array())" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#a660d85be1eebffd7ccec2b1afa0bfb18">SQLMapper::update</a> </td>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#ae0a02c6ca82d7f9ae3ac5e27db011b34">SQLMapper::update</a> </td>
           <td>(</td>
           <td class="paramtype">array $&#160;</td>
           <td class="paramname"><em>options</em> = <code>array()</code></td><td>)</td>
@@ -495,7 +487,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>libs/sqlmapper/<a class="el" href="sqlmapper_8php.html">sqlmapper.php</a></li>
+<li>libs/sqlmapper/<a class="el" href="sqlmapper__class_8php.html">sqlmapper_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- window showing the filter options -->
@@ -515,7 +507,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Mar 3 2012 14:38:40 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 3 2012 22:08:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
