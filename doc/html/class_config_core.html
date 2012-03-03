@@ -87,13 +87,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ConfigCore Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="ConfigCore" --><div class="dynheader">
+<!-- doxytag: class="ConfigCore" -->
+<p>The <a class="el" href="class_config.html" title="The Config class.">Config</a> Core class.  
+ <a href="class_config_core.html#details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for ConfigCore:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_config_core.png" usemap="#ConfigCore_map" alt=""/>
   <map id="ConfigCore_map" name="ConfigCore_map">
-<area href="class_config.html" alt="Config" shape="rect" coords="0,56,77,80"/>
+<area href="class_config.html" title="The Config class." alt="Config" shape="rect" coords="0,56,77,80"/>
 </map>
  </div></div>
 
@@ -102,20 +105,29 @@ Inheritance diagram for ConfigCore:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#a8765323ec3197b2a709f1157521cbe8c">__get</a> ($key)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The magic function to get config.  <a href="#a8765323ec3197b2a709f1157521cbe8c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#af4c77a2d9a33a2a7334e847d7c11493f">add</a> ($conf)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add configuration to this object.  <a href="#af4c77a2d9a33a2a7334e847d7c11493f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#af35a1aa3896406323b1a686f10c7110a">load</a> ($source)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load new configuration source.  <a href="#af35a1aa3896406323b1a686f10c7110a"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#a4a508ff48f2b9c9875346af536cc5ff5">build</a> ($source, $minor=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build new configuration source.  <a href="#a4a508ff48f2b9c9875346af536cc5ff5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#a4bcb7f4e5aa87651dcba4ced7962a61f">get</a> ($key)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get configuration from the main configuration object.  <a href="#a4bcb7f4e5aa87651dcba4ced7962a61f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#a25913a2b3800e144c11c115159e603f3">$config</a> = array()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the configuration for this <a class="el" href="class_config.html" title="The Config class.">Config</a> Object. Must be inherited from <a class="el" href="class_config_core.html" title="The Config Core class.">ConfigCore</a>.  <a href="#a25913a2b3800e144c11c115159e603f3"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_config_core.html#aa7c65b7d0852adbb68fd652d904722ce">$main</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the main configuration, reachable from everywhere.  <a href="#aa7c65b7d0852adbb68fd652d904722ce"></a><br/></td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>This class is the core for config classes inherited from custom configuration. </p>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a8765323ec3197b2a709f1157521cbe8c"></a><!-- doxytag: member="ConfigCore::__get" ref="a8765323ec3197b2a709f1157521cbe8c" args="($key)" -->
 <div class="memitem">
 <div class="memproto">
@@ -130,6 +142,17 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$key</td><td>The key to get the value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A config value.</dd></dl>
+<p>Returns the configuration item with key $key. Except for:</p>
+<ul>
+<li>'all' : It returns an array containing all configuration items. </li>
+</ul>
 
 </div>
 </div>
@@ -147,6 +170,13 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$conf</td><td>The configuration array to add to the current object.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Add the configuration array $conf to this configuration. </p>
 
 </div>
 </div>
@@ -174,6 +204,14 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$source</td><td>An identifier to build the source. </td></tr>
+    <tr><td class="paramname">$minor</td><td>Specify if this is a minor configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Build a configuration from $source using <a class="el" href="class_config_core.html#af35a1aa3896406323b1a686f10c7110a" title="Load new configuration source.">load()</a> method. If it is not a minor configuration, that new configuration is added to the main configuration. </p>
 
 </div>
 </div>
@@ -191,6 +229,14 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$key</td><td>The key to get the value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>A config value.</dd></dl>
+<p>Call <a class="el" href="class_config_core.html#a8765323ec3197b2a709f1157521cbe8c" title="The magic function to get config.">__get()</a> method from main configuration object. </p>
 
 </div>
 </div>
@@ -208,6 +254,13 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$source</td><td>An identifier to get the source.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Load a configuration from a source identified with $source. </p>
 
 <p>Reimplemented in <a class="el" href="class_config.html#a92b7efc06eac2cb6497747de7df654ee">Config</a>.</p>
 
@@ -261,7 +314,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 1 2012 10:05:02 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Mar 3 2012 14:38:40 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

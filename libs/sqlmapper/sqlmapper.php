@@ -5,6 +5,8 @@
 */
 abstract class SQLMapper {
 	
+	protected static $Mapper;
+	
 	protected static $IDFIELD;
 	
 	//! Defaults for selecting
@@ -26,6 +28,43 @@ abstract class SQLMapper {
 	const SQLQUERY		= 4;//!< Query String
 	
 	
+	//! The static function to use for SELECT queries in global context.
+	/*!
+	 	\sa select()
+	*/
+	public static function select(array $options=array()) {
+		self::prepare();
+		return self::$Mapper->select($options);
+	}
+	
+	//! The static function to use for UPDATE queries in global context.
+	/*!
+		\sa update()
+	*/
+	public static function update(array $options=array()) {
+		self::prepare();
+		return self::$Mapper->update($options);
+	}
+	
+	//! The static function to use for DELETE queries in global context.
+	/*!
+		\sa SQLMapper::delete()
+	*/
+	public static function delete(array $options=array()) {
+		self::prepare();
+		return self::$Mapper->delete($options);
+	}
+	
+	//! The static function to use for INSERT queries in global context.
+	/*!
+		\sa SQLMapper::insert()
+	*/
+	public static function insert(array $options=array()) {
+		self::prepare();
+		return self::$Mapper->insert($options);
+	}
+	
+	
 	//! The function to use for SELECT queries
 	/*!
 		\param $options The options used to build the query.
@@ -33,7 +72,7 @@ abstract class SQLMapper {
 		
 		It parses the query from an array to a SELECT query.
 	*/
-	public abstract static function select(array $options=array());
+	public abstract function select(array $options=array());
 	
 	//! The function to use for UPDATE queries
 	/*!
@@ -42,7 +81,7 @@ abstract class SQLMapper {
 		
 		It parses the query from an array to a UPDATE query.
 	*/
-	public abstract static function update(array $options=array());
+	public abstract function update(array $options=array());
 	
 	//! The function to use for DELETE queries
 	/*!
@@ -51,7 +90,7 @@ abstract class SQLMapper {
 		
 		It parses the query from an array to a DELETE query.
 	*/
-	public abstract static function delete(array $options=array());
+	public abstract function delete(array $options=array());
 	
 	//! The function to use for INSERT queries
 	/*!
@@ -60,7 +99,21 @@ abstract class SQLMapper {
 		
 		It parses the query from an array to a INSERT query.
 	*/
-	public abstract static function insert(array $options=array());
+	public abstract function insert(array $options=array());
+	
+	public static function prepare() {
+		if( self::$Mapper != null ) {
+			return;
+		}
+		global $DBS;
+		$Instance = ensure_pdoinstance();
+		if( empty($DBS[$Instance]) ) {
+			throw new Exception("Mapper unable to connect to the database.");
+		}
+		$mapperClass = 'SQLMapper_'.$DBS[$Instance]['driver'];
+		self::$Mapper = new $mapperClass();
+		//$pdoInstances[$Instance]->getAttribute(PDO::ATTR_DRIVER_NAME);
+	}
 }
 
 includeDir();

@@ -73,9 +73,6 @@ function __autoload($className) {
 	}
 }
 
-// require_once LIBSPATH.'configcore_class.php';
-// require_once LIBSPATH.'config_class.php';
-
 Config::build('engine');
 
 includeDir(CONFPATH);

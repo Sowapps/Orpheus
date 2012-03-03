@@ -10,9 +10,6 @@ Library of PDO functions to easily use ODBC.
 LOGSPATH
 PDOLOGFILENAME
 
-PDODEFDBSFILE	Required only if DBS file not included
-INCPATH			Useful only if DBS file not included
-
 Required functions:
 bintest() (_core.php)
 */
@@ -46,22 +43,8 @@ function ensure_pdoinstance($Instance=null) {
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
-		if( !defined('PDODEFDBSFILE') ) {
-			pdo_error('Constant "PDODEFDBSFILE" must be defined.', 'Getting DB Settings');
-		} else {
-			if( defined('INCPATH') && is_readable(INCPATH.PDODEFDBSFILE) ) {
-				$DBsFile = INCPATH.PDODEFDBSFILE;
-				require_once INCPATH.PDODEFDBSFILE;
-			} elseif( is_readable(PDODEFDBSFILE) ) {
-				$DBsFile = PDODEFDBSFILE;
-				require_once PDODEFDBSFILE;
-			} else {
-				pdo_error('File '.PDODEFDBSFILE.' must exist and be readable.', 'Getting DB Settings');
-			}
-			if( empty($DBS) || !is_array($DBS) ) {
-				pdo_error('$DBS is empty in '.$DBsFile.' or it is not an Array.', 'Getting DB Settings');
-			}
-		}
+		$config = Config::build('database', true);
+		$DBS = $config->all;
 	}
 	
 	//Checking instance and getting its settings
@@ -69,13 +52,17 @@ function ensure_pdoinstance($Instance=null) {
 		if( defined('PDODEFINSTNAME') ) {
 			$Instance = PDODEFINSTNAME;
 		} else if( !empty($DBS) && is_array($DBS) ) {
-			$Instance = 'default';
-			$DBS[$Instance] = $DBS;
+			if( is_array(current($DBS)) ) {
+				$Instance = key($DBS);
+			} else {
+				$Instance = 'default';
+				$DBS[$Instance] = $DBS;
+			}
 		} else {
-			pdo_error('No instance given in parameter #3 and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
+			pdo_error('No instance given in parameter and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
 		}
 	} else if( empty($DBS[$Instance]) ) {
-		pdo_error('Parameter Instance is wrong.', 'Instance Setting Definition');
+		pdo_error('Parameter Instance is unknown.', 'Instance Setting Definition');
 	}
 	$InstSettings = $DBS[$Instance];
 	

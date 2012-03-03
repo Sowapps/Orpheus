@@ -12,6 +12,7 @@ var searchData=
   ['_24insertdefaults',['$insertDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a5f7ecfd0849fadbf5d79b1908b0c127c',1,'SQLMapper_MySQL\$insertDefaults()'],['../class_s_q_l_mapper.html#a3616bde6895d72b6c161aa8abe71e16e',1,'SQLMapper\$insertDefaults()']]],
   ['_24listdefaults',['$listDefaults',['../class_abstract_table.html#afcf03bcf17e67b6001c0e1e3b0fa99cb',1,'AbstractTable']]],
   ['_24main',['$main',['../class_config_core.html#aa7c65b7d0852adbb68fd652d904722ce',1,'ConfigCore']]],
+  ['_24mapper',['$Mapper',['../class_s_q_l_mapper.html#a70d29b1a0c024eb2f11e7e1ec7966430',1,'SQLMapper']]],
   ['_24modelspath',['$modelsPath',['../class_h_t_m_l_rendering.html#a68e88bd0fb36b18faf700e30a2b86619',1,'HTMLRendering']]],
   ['_24modfields',['$modFields',['../class_abstract_table.html#a88c322abe346c261c479fed5300093e2',1,'AbstractTable']]],
   ['_24name',['$name',['../class_hook.html#ab9a65229758172a559bdb2a91042cdf1',1,'Hook']]],
