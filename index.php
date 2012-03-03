@@ -61,7 +61,7 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
 		} else {
-			$classExp = explode('_', $bFile, 1);
+			$classExp = explode('_', $bFile, 2);
 			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php') ) {
 				require_once LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php';
 				return;
