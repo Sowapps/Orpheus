@@ -32,7 +32,7 @@ abstract class SQLMapper {
 	/*!
 	 	\sa select()
 	*/
-	public static function select(array $options=array()) {
+	public static function doSelect(array $options=array()) {
 		self::prepare();
 		return self::$Mapper->select($options);
 	}
@@ -41,7 +41,7 @@ abstract class SQLMapper {
 	/*!
 		\sa update()
 	*/
-	public static function update(array $options=array()) {
+	public static function doUpdate(array $options=array()) {
 		self::prepare();
 		return self::$Mapper->update($options);
 	}
@@ -50,7 +50,7 @@ abstract class SQLMapper {
 	/*!
 		\sa SQLMapper::delete()
 	*/
-	public static function delete(array $options=array()) {
+	public static function doDelete(array $options=array()) {
 		self::prepare();
 		return self::$Mapper->delete($options);
 	}
@@ -59,7 +59,7 @@ abstract class SQLMapper {
 	/*!
 		\sa SQLMapper::insert()
 	*/
-	public static function insert(array $options=array()) {
+	public static function doInsert(array $options=array()) {
 		self::prepare();
 		return self::$Mapper->insert($options);
 	}
