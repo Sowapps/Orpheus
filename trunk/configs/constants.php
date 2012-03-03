@@ -25,7 +25,7 @@ define('THEMESPATH',	'themes'.DS);
 //Miscelanous
 
 define('DEFAULTMOD',	'home');
-define('DEFAULTLINK',	'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']).'/');
+define('DEFAULTLINK',	'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
 
 define('AUTHORNAME',	'Florent HAZARD');
 define('SITENAME',		'Orpheus');
