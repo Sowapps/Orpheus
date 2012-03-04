@@ -177,10 +177,10 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	Save the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='') {
-	if( function_exists('log') ) {
+	if( function_exists('log_error') ) {
 		log_error($PDOReport, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $Action);
 	}
-	$Error = array("time" => TIME, "pdo_report" => $PDOReport, "Action" => $Action);
+	$Error = array("date" => date('c'), "pdo_report" => $PDOReport, "Action" => $Action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').( (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error');
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	die("An error has occured with the database, retry later please.");

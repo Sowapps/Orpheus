@@ -21,21 +21,7 @@ abstract class AbstractTable {
 	protected static $fields = array();
 	protected static $userEditableFields = array();
 	protected static $IDFIELD = 'id';
-	//Defaults for getting list
-	protected static $listDefaults = array(
-		'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
-		'number'		=> -1,//-1 => All
-		'offset'		=> 0,//0 => The start
-		'fields'		=> '*',//* => All fields
-		'output'		=> '2',//2 => ARR_ASSOC
-		'whereclause'	=> '',//Additionnal Whereclause
-	);
-	//List of outputs for getting list
-	const ARR_OBJECTS	= 1;
-	const ARR_ASSOC		= 2;
-	const STATEMENT		= 3;
-	const SQLQUERY		= 4;
-
+	
 	// *** OVERLOADED METHODS ***
 	
 	public function __construct($data) {
@@ -123,10 +109,15 @@ abstract class AbstractTable {
 				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.pdo_quote($this->$fieldname);
 			}
 		}
-		$table=static::$table;
 		$IDFIELD=static::$IDFIELD;
 		$this->modFields = array();
-		return pdo_query("UPDATE {$table} SET {$updQ} WHERE {$IDFIELD}={$this->{$IDFIELD}} LIMIT 1", PDOEXEC);
+		$options = array(
+			'what'	=> $updQ,
+			'table'	=> static::$table,
+			'where'	=> "{$IDFIELD}={$this->{$IDFIELD}}",
+			'number'=> 1,
+		);
+		return SQLMapper::doUpdate($options);
 	}
 	
 	private function addModFields($field) {
@@ -176,42 +167,35 @@ abstract class AbstractTable {
 		if( !ctype_digit("$id") ) {
 			throw new UserException('invalidID');
 		}
-		$table=static::$table;
 		$IDFIELD=static::$IDFIELD;
-		$data = pdo_query("SELECT * FROM {$table} WHERE {$IDFIELD}={$id} LIMIT 1", PDOFETCH);
+		$options = array(
+			'table'	=> static::$table,
+			'number'=> 1,
+			'where'	=> "{$IDFIELD}={$id}",
+		);
+		$data = SQLMapper::doSelect($options);
 		if( empty($data) ) {
 			throw new UserException('inexistantEntry');
 		}
-		return new static($data);
+		return new static($data[0]);
 	}
 	
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
 			throw new UserException('invalidID');
 		}
-		$table=static::$table;
 		$IDFIELD=static::$IDFIELD;
-		return pdo_query("DELETE FROM {$table} WHERE {$IDFIELD}={$id} LIMIT 1", PDOEXEC);
+		$options = array(
+			'table'	=> static::$table,
+			'number'=> 1,
+			'where'	=> "{$IDFIELD}={$id}",
+		);
+		return SQLMapper::doDelete($options);
 	}
 	
 	public static function get(array $options=array()) {
-		//Si besoin les descendants doivent surcharger cette méthode, surcharger les valeurs par défaut n'est pas suffisant.
-		$options += self::$listDefaults;
-		$table = static::$table;
-		$WC = ( !empty($options['whereclause']) ) ? 'WHERE '.$options['whereclause'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
-		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
-		$QUERY = "SELECT {$options['fields']} FROM {$table} {$WC} {$ORDERBY} {$LIMIT};";
-		if( $options['output'] == self::SQLQUERY ) {
-			return $QUERY;
-		}
-		$results = pdo_query($QUERY, ($options['output'] == self::STATEMENT) ? PDOSTMT : PDOFETCHALL );
-		if( $options['output'] == self::ARR_OBJECTS ) {
-			foreach($results as &$r) {
-				$r = new static($r);
-			}
-		}
-		return $results;
+		$options['table'] = static::$table;
+		return SQLMapper::doSelect($options);
 	}
 	
 	public static function create($inputData) {
@@ -229,17 +213,16 @@ abstract class AbstractTable {
 		foreach($data as $fieldname => $fieldvalue) {
 			$insertQ .= ( (!empty($insertQ)) ? ', ' : '').$fieldname.'='.pdo_quote($fieldvalue);
 		}
-		$table=static::$table;
-		pdo_query("INSERT INTO {$table} SET {$insertQ}", PDOEXEC);
-		$LastInsert = pdo_query("SELECT LAST_INSERT_ID();", PDOFETCH);
+		$options = array(
+			'table'	=> static::$table,
+			'what'=> $insertQ,
+		);
+		SQLMapper::doInsert($options);
+		$LastInsert = pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 		//To do after insertion
-		static::applyToEntry($data, $LastInsert['LAST_INSERT_ID()']);
-		return $LastInsert['LAST_INSERT_ID()'];
+		static::applyToEntry($data, $LastInsert);//old ['LAST_INSERT_ID()']
+		return $LastInsert;
 	}
-	
-	public static function runForEntry(&$data) { }
-	
-	public static function applyToEntry(&$data, $id) { }
 	
 	public static function getLogEvent($event, $time=null, $addIP=null) {
 		if( !isset($time) ) {
@@ -267,6 +250,10 @@ abstract class AbstractTable {
 		}
 		return $data;
 	}
+	
+	public static function runForEntry(&$data) { }
+	
+	public static function applyToEntry(&$data, $id) { }
 	
 	// 		** CHECK METHODS **
 	
