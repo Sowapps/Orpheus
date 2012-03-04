@@ -26,6 +26,7 @@ abstract class SQLMapper {
 	const ARR_ASSOC		= 2;//!< Associative array
 	const STATEMENT		= 3;//!< SQL Statement
 	const SQLQUERY		= 4;//!< Query String
+	const NUMBER		= 5;//!< Number
 	
 	
 	//! The static function to use for SELECT queries in global context.

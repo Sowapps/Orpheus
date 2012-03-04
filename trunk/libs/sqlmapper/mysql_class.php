@@ -14,7 +14,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
-			'output'		=> '2',//2 => ARR_ASSOC
+			'output'		=> SQLMapper::ARR_ASSOC,//Associative Array
 	);
 	
 	//! Defaults for updating
@@ -25,6 +25,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
+			'output'		=> SQLMapper::NUMBER,//Number of updated lines
 	);
 	
 	//! Defaults for deleting
@@ -36,6 +37,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
+			'output'		=> SQLMapper::NUMBER,//Number of deleted lines
 	);
 	
 	//! Defaults for inserting
@@ -44,6 +46,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'delayed'		=> false,//false => Not delayed
 			'ignore'		=> false,//false => Not ignore errors
 			'into'			=> true,//true => INSERT INTO
+			'output'		=> SQLMapper::NUMBER,//Number of inserted lines
 	);
 	
 	//! The function to use for SELECT queries
@@ -107,11 +110,11 @@ class SQLMapper_MySQL extends SQLMapper {
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
 	
-		$QUERY = "UPDATE {$OPTIONS} {$options['table']} {$WHAT} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY = "UPDATE {$OPTIONS} {$options['table']} SET {$WHAT} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOEXEC );
+		return pdo_query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for DELETE queries
@@ -139,7 +142,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOEXEC );
+		return pdo_query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for INSERT queries
@@ -189,6 +192,6 @@ class SQLMapper_MySQL extends SQLMapper {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOEXEC );
+		return pdo_query($QUERY, PDOEXEC);
 	}
 }
