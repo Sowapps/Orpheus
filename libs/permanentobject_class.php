@@ -386,7 +386,7 @@ abstract class PermanentObject {
 		\return The class.
 	*/
 	public static function getClass() {
-		return __CLASS__;
+		return get_class(new static());
 	}
 	
 	//! Run for object
