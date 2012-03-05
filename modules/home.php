@@ -20,10 +20,10 @@ if( !empty($_POST['data']) ) {
 	}
 	
 }
-var_dump(SQLMapper::doSelect(array('table'=>'test')));
+//var_dump(SQLMapper::doSelect(array('table'=>'test')));
 ?>
 Try to create you own DemoTest object:<br />
-<form>
+<form method="POST">
 
 <label for="name">Name: </label><input type="text" name="data[name]" value="A new value" /><br />
 <input type="submit" value="Insert it !"/>
