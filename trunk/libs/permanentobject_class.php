@@ -88,7 +88,11 @@ abstract class PermanentObject {
 		The object's value when casting to string.
 	*/
 	public function __toString() {
-		return '#'.$this->{static::$IDFIELD}.' ('.static::getClass().')';
+		try {
+			return '#'.$this->{static::$IDFIELD}.' ('.static::getClass().')';
+		} catch( Exception $e ) {
+			die("FATAL EXCEPTION: <br />{$e}");
+		}
 	}
 	
 	// *** USER METHODS ***
