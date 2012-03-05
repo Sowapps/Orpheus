@@ -88,8 +88,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="PermanentObject" -->
-<p>The Permanent Object class.  
+<p>The permanent object class.  
  <a href="class_permanent_object.html#details">More...</a></p>
+<div class="dynheader">
+Inheritance diagram for PermanentObject:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_permanent_object.png" usemap="#PermanentObject_map" alt=""/>
+  <map id="PermanentObject_map" name="PermanentObject_map">
+<area href="class_demo_test.html" title="A sample demo test class." alt="DemoTest" shape="rect" coords="0,56,109,80"/>
+</map>
+ </div></div>
 
 <p><a href="class_permanent_object-members.html">List of all members.</a></p>
 <table class="memberdecls">
@@ -339,6 +348,8 @@ Static Protected Attributes</h2></td></tr>
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93" title="Create a new permanent object.">create()</a></dd></dl>
 <p>This function is called by <a class="el" href="class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93" title="Create a new permanent object.">create()</a> after checking user input data and before running for them. In this base class, this method does nothing. </p>
 
+<p>Reimplemented in <a class="el" href="class_demo_test.html#ac051bd2b2953fbbf02c64805568703bf">DemoTest</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a82c4831ed48eb9955cef4f618b301c27"></a><!-- doxytag: member="PermanentObject::checkUserInput" ref="a82c4831ed48eb9955cef4f618b301c27" args="($uInputData)" -->
@@ -364,6 +375,8 @@ Static Protected Attributes</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The valid data. </dd></dl>
 <dl class="attention"><dt><b>Attention:</b></dt><dd>This method require to be overridden.</dd></dl>
 <p>Check if the class could generate a valid object from $uInputData. The method could modify the user input to fix them but it must return the data. </p>
+
+<p>Reimplemented in <a class="el" href="class_demo_test.html#acc3b56101b008867cc005b8eb83c3cd8">DemoTest</a>.</p>
 
 </div>
 </div>
@@ -808,9 +821,11 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>1 in case of success, else 0. </dd></dl>
-<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Run for Update.">runForUpdate()</a> </dd></dl>
-<dl class="attention"><dt><b>Attention:</b></dt><dd>This method require to be overridden.</dd></dl>
+<dl class="attention"><dt><b>Attention:</b></dt><dd>This method require to be overridden. </dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Run for Update.">runForUpdate()</a></dd></dl>
 <p>This method require to be overridden but it still be called too by the child classes. Here $uInputData is not used, it is reserved for child classes. $data must contain a filled array of new data. This method update the EDIT event log. Before saving, <a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Run for Update.">runForUpdate()</a> is called to let child classes to run custom instructions. </p>
+
+<p>Reimplemented in <a class="el" href="class_demo_test.html#aec631e8e802dbe1bf092e011a422af34">DemoTest</a>.</p>
 
 </div>
 </div>
@@ -838,6 +853,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_demo_test.html#af4e2bf5f0fcfb1d8cfe32f53636888c7">DemoTest</a>.</p>
 
 </div>
 </div>
@@ -878,6 +895,8 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
+<p>Reimplemented in <a class="el" href="class_demo_test.html#a5da3f6867e5020c1fc3e24d5bb2a9424">DemoTest</a>.</p>
+
 </div>
 </div>
 <a class="anchor" id="a08aafd00fb3e7627f5f9213b4bb4e5c9"></a><!-- doxytag: member="PermanentObject::$userEditableFields" ref="a08aafd00fb3e7627f5f9213b4bb4e5c9" args="" -->
@@ -890,6 +909,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="class_demo_test.html#a76ff4a67c42db0f79ffb496ff8b64c18">DemoTest</a>.</p>
 
 </div>
 </div>
@@ -914,7 +935,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 5 2012 18:25:14 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 5 2012 21:55:16 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

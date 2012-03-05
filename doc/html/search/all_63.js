@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['checkforobject',['checkForObject',['../class_permanent_object.html#ab0b736721d3e6e90ae3b1e7944b22567',1,'PermanentObject']]],
+  ['checkforobject',['checkForObject',['../class_demo_test.html#ac051bd2b2953fbbf02c64805568703bf',1,'DemoTest\checkForObject()'],['../class_permanent_object.html#ab0b736721d3e6e90ae3b1e7944b22567',1,'PermanentObject\checkForObject()']]],
+  ['checkname',['checkName',['../class_demo_test.html#a3e216d89c38a3ac77fceab28be50824a',1,'DemoTest']]],
   ['checksecuritycode',['checkSecurityCode',['../__core_8php.html#aedb4c1550fe180fffab74d7ea2ae8d3c',1,'_core.php']]],
-  ['checkuserinput',['checkUserInput',['../class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27',1,'PermanentObject']]],
+  ['checkuserinput',['checkUserInput',['../class_demo_test.html#acc3b56101b008867cc005b8eb83c3cd8',1,'DemoTest\checkUserInput()'],['../class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27',1,'PermanentObject\checkUserInput()']]],
   ['cleanscandir',['cleanscandir',['../__core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f',1,'_core.php']]],
   ['codegen',['codeGen',['../__core_8php.html#aa62ed577438c3cc225c38ea0e3695def',1,'_core.php']]],
   ['completefields',['completeFields',['../class_permanent_object.html#acf2c222cbb6dbc04b81200cf857eec18',1,'PermanentObject']]],
