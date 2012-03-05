@@ -73,6 +73,8 @@ class SQLMapper_MySQL extends SQLMapper {
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
 		
 		$QUERY = "SELECT {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
+		text("query: {$QUERY}");
+		text("output: {$options['output']}");
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
