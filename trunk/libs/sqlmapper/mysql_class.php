@@ -149,8 +149,6 @@ class SQLMapper_MySQL extends SQLMapper {
 	/*!
 		\param $options The options used to build the query.
 		\return The number of inserted rows.
-		\todo Implement Array syntax for SET.
-		\todo Implement Array syntax for VALUES.
 		
 		It parses the query from an array to a INSERT query.
 		Accept only the String syntax for what option.
