@@ -298,8 +298,6 @@ abstract class PermanentObject {
 		Get an objects' list using this class' table.
 	*/
 	public static function get(array $options=array()) {
-		text("options:");
-		text($options);
 		$options['table'] = static::$table;
 		return SQLMapper::doSelect($options);
 	}
