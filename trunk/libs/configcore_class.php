@@ -1,5 +1,5 @@
 <?php
-//! The Config Core class
+//! The config core class
 /*!
 	This class is the core for config classes inherited from custom configuration.
 */

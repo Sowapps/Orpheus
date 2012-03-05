@@ -26,5 +26,5 @@
  * 
  * Unpack the archive and integrate it into your web application (or create it first).
  *
- * \section install_sec Getting started
+ * \section start Getting started
  */

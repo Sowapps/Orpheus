@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['checkforentry',['checkForEntry',['../class_permanent_object.html#aa75ce3a2a29c599269b238d590856145',1,'PermanentObject']]],
+  ['checkforobject',['checkForObject',['../class_permanent_object.html#ab0b736721d3e6e90ae3b1e7944b22567',1,'PermanentObject']]],
   ['checksecuritycode',['checkSecurityCode',['../__core_8php.html#aedb4c1550fe180fffab74d7ea2ae8d3c',1,'_core.php']]],
   ['checkuserinput',['checkUserInput',['../class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27',1,'PermanentObject']]],
   ['cleanscandir',['cleanscandir',['../__core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f',1,'_core.php']]],

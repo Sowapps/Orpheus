@@ -1,5 +1,5 @@
 <?php
-//! The Config class
+//! The config class
 /*!
 	This class is the main way to get configuration.
 */
