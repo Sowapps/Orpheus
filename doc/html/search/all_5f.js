@@ -1,11 +1,11 @@
 var searchData=
 [
   ['_5f_5fautoload',['__autoload',['../index_8php.html#a2ecfde85f554ea0b3fef0993aef304a9',1,'index.php']]],
-  ['_5f_5fconstruct',['__construct',['../class_abstract_table.html#a11e0a673231abe8245e6f4d5e60d3114',1,'AbstractTable\__construct()'],['../class_field_not_found_exception.html#a9337586d1e8631828aa9f782e812d20f',1,'FieldNotFoundException\__construct()'],['../class_hook.html#a6e4e36711212d2c7c33c7b3848a83a6b',1,'Hook\__construct()']]],
-  ['_5f_5fdestruct',['__destruct',['../class_abstract_table.html#a4ded20669bc1c884d2c1f2125c8fc21f',1,'AbstractTable']]],
-  ['_5f_5fget',['__get',['../class_abstract_table.html#a6fdf798bed9ab1bd08a640c2197d7947',1,'AbstractTable\__get()'],['../class_config_core.html#a8765323ec3197b2a709f1157521cbe8c',1,'ConfigCore\__get()']]],
-  ['_5f_5fset',['__set',['../class_abstract_table.html#af4182459e3c485dd8b76599c9c7b88e6',1,'AbstractTable']]],
-  ['_5f_5ftostring',['__toString',['../class_abstract_table.html#a92721e768f3ed73cd6db325d03ac80b2',1,'AbstractTable']]],
+  ['_5f_5fconstruct',['__construct',['../class_field_not_found_exception.html#a9337586d1e8631828aa9f782e812d20f',1,'FieldNotFoundException\__construct()'],['../class_hook.html#a6e4e36711212d2c7c33c7b3848a83a6b',1,'Hook\__construct()'],['../class_permanent_object.html#aa4c70b4f04985d9f57dad8ad9a28e66f',1,'PermanentObject\__construct()']]],
+  ['_5f_5fdestruct',['__destruct',['../class_permanent_object.html#a520b557bc39ce59d09f8102ce5e103cf',1,'PermanentObject']]],
+  ['_5f_5fget',['__get',['../class_config_core.html#a8765323ec3197b2a709f1157521cbe8c',1,'ConfigCore\__get()'],['../class_permanent_object.html#aa64b78f3ef35f14360e0b949100e6c2f',1,'PermanentObject\__get()']]],
+  ['_5f_5fset',['__set',['../class_permanent_object.html#a0b914244f21862f00b48b1877f394b5f',1,'PermanentObject']]],
+  ['_5f_5ftostring',['__toString',['../class_permanent_object.html#a433585a43dc638fc2cce540271a202d7',1,'PermanentObject']]],
   ['_5fcore_2ephp',['_core.php',['../__core_8php.html',1,'']]],
   ['_5fhooks_2ephp',['_hooks.php',['../libs_2__hooks_8php.html',1,'']]],
   ['_5fhooks_2ephp',['_hooks.php',['../configs_2__hooks_8php.html',1,'']]],

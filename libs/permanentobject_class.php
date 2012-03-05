@@ -96,7 +96,7 @@ abstract class PermanentObject {
 	//! Update object
 	/*!
 		\param $uInputData The input data we will check and extract, used by children.
-		\param $uInputData The data from wich it will update this object, used by parents, including this one.
+		\param $data The data from wich it will update this object, used by parents, including this one.
 		\return 1 in case of success, else 0.
 		\sa runForUpdate()
 		
