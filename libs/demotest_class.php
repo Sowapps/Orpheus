@@ -72,6 +72,7 @@ class DemoTest extends PermanentObject {
 		if( empty($data) ) {
 			return;//No data got
 		}
+		var_dump($data);
 		throw new UserException("existingObject");
 	}
 }
