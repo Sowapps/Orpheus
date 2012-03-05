@@ -6,7 +6,7 @@ var searchData=
   ['_24csspath',['$cssPath',['../class_h_t_m_l_rendering.html#a9e5f31a5f837bfeb0ca01d6c284291d9',1,'HTMLRendering']]],
   ['_24data',['$data',['../class_permanent_object.html#a609502fd2d70bc4b8cf376a73cbdf031',1,'PermanentObject']]],
   ['_24deletedefaults',['$deleteDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253',1,'SQLMapper_MySQL\$deleteDefaults()'],['../class_s_q_l_mapper.html#abd9a5ea19fdd8ccbab574f8cf4df094e',1,'SQLMapper\$deleteDefaults()']]],
-  ['_24fields',['$fields',['../class_permanent_object.html#a63c9e24b092b59f9c2668b5f8ecc3d5d',1,'PermanentObject']]],
+  ['_24fields',['$fields',['../class_demo_test.html#af4e2bf5f0fcfb1d8cfe32f53636888c7',1,'DemoTest\$fields()'],['../class_permanent_object.html#a63c9e24b092b59f9c2668b5f8ecc3d5d',1,'PermanentObject\$fields()']]],
   ['_24hooks',['$hooks',['../class_hook.html#ae7cf0eff20192a4caca44d35720d6ba8',1,'Hook']]],
   ['_24idfield',['$IDFIELD',['../class_permanent_object.html#a47707b9409888e2500aba53deda123b2',1,'PermanentObject\$IDFIELD()'],['../class_s_q_l_mapper___my_s_q_l.html#a63c48101c1f9f65b44377c1236a3283e',1,'SQLMapper_MySQL\$IDFIELD()'],['../class_s_q_l_mapper.html#aa321c20c3b6649216beee7d31ce8162c',1,'SQLMapper\$IDFIELD()']]],
   ['_24insertdefaults',['$insertDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a5f7ecfd0849fadbf5d79b1908b0c127c',1,'SQLMapper_MySQL\$insertDefaults()'],['../class_s_q_l_mapper.html#a3616bde6895d72b6c161aa8abe71e16e',1,'SQLMapper\$insertDefaults()']]],
@@ -18,9 +18,9 @@ var searchData=
   ['_24page',['$Page',['../index_8php.html#aab089c55bd2018e10a58f9c478b9440e',1,'index.php']]],
   ['_24selectdefaults',['$selectDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a8c645a79d0a52df73e482461c04a24b0',1,'SQLMapper_MySQL\$selectDefaults()'],['../class_s_q_l_mapper.html#a123841ad7adddcb80ebfc382e155823a',1,'SQLMapper\$selectDefaults()']]],
   ['_24showmodel',['$SHOWMODEL',['../class_h_t_m_l_rendering.html#a9e0e017435626e7ec1372f265447a920',1,'HTMLRendering\$SHOWMODEL()'],['../class_rendering.html#a92d2f2c2ef7c306a692a0e2306330c3d',1,'Rendering\$SHOWMODEL()']]],
-  ['_24table',['$table',['../class_permanent_object.html#af057e309374920db081c3310fd79b9b5',1,'PermanentObject']]],
+  ['_24table',['$table',['../class_demo_test.html#a5da3f6867e5020c1fc3e24d5bb2a9424',1,'DemoTest\$table()'],['../class_permanent_object.html#af057e309374920db081c3310fd79b9b5',1,'PermanentObject\$table()']]],
   ['_24theme',['$theme',['../class_h_t_m_l_rendering.html#a4d77c906a100ef0bca1192aca3a6eafe',1,'HTMLRendering']]],
   ['_24themespath',['$themesPath',['../class_h_t_m_l_rendering.html#a68467eb4799dfc74347b490bdd340e05',1,'HTMLRendering']]],
   ['_24updatedefaults',['$updateDefaults',['../class_s_q_l_mapper___my_s_q_l.html#aeba0fa7e8ee9329dbbb719adcbe32a37',1,'SQLMapper_MySQL\$updateDefaults()'],['../class_s_q_l_mapper.html#af08c5fdc7d581911eb8538db33a5834e',1,'SQLMapper\$updateDefaults()']]],
-  ['_24usereditablefields',['$userEditableFields',['../class_permanent_object.html#a08aafd00fb3e7627f5f9213b4bb4e5c9',1,'PermanentObject']]]
+  ['_24usereditablefields',['$userEditableFields',['../class_demo_test.html#a76ff4a67c42db0f79ffb496ff8b64c18',1,'DemoTest\$userEditableFields()'],['../class_permanent_object.html#a08aafd00fb3e7627f5f9213b4bb4e5c9',1,'PermanentObject\$userEditableFields()']]]
 ];
