@@ -324,7 +324,7 @@ abstract class PermanentObject {
 		}
 		$options = array(
 			'table'	=> static::$table,
-			'what'=> $insertQ,
+			'what'=> 'SET '.$insertQ,
 		);
 		SQLMapper::doInsert($options);
 		$LastInsert = pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
