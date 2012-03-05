@@ -1,5 +1,5 @@
 <?php
-//! The Permanent Object class
+//! The permanent object class
 /*!
 	Create permanent object using the SQL Mapper.
 */
@@ -93,14 +93,15 @@ abstract class PermanentObject {
 	
 	// *** USER METHODS ***
 	
-	//! Update object
+	//! Update this permanent object
 	/*!
 		\param $uInputData The input data we will check and extract, used by children.
 		\param $data The data from wich it will update this object, used by parents, including this one.
 		\return 1 in case of success, else 0.
+		\overrideit
 		\sa runForUpdate()
 		
-		This method require to be overrided but it still be called too by the child classes.
+		This method require to be overridden but it still be called too by the child classes.
 		Here $uInputData is not used, it is reserved for child classes.
 		$data must contain a filled array of new data.
 		This method update the EDIT event log.
@@ -111,7 +112,7 @@ abstract class PermanentObject {
 			if( empty($data) ) {
 				throw new UserException('updateEmptyData');
 			}
-			static::checkForEntry(static::completeFields($data));
+			static::checkForObject(static::completeFields($data));
 		} catch(UserException $e) { addUserError($e); return 0; }
 		
 		foreach($data as $fieldname => $fieldvalue) {
@@ -135,7 +136,7 @@ abstract class PermanentObject {
 	*/
 	public function runForUpdate() { }
 	
-	//! Save object
+	//! Save this permanent object
 	/*!
 		\return 1 in case of success, else 0.
 		
@@ -240,23 +241,37 @@ abstract class PermanentObject {
 	
 	// *** STATIC METHODS ***
 	
+	//! Load a permanent object
+	/*!
+		\param $id The object ID to load.
+		\return The object.
+		\sa get()
+	
+		Load the object with the ID $id
+	*/
 	public static function load($id) {
 		if( !ctype_digit("$id") ) {
 			throw new UserException('invalidID');
 		}
 		$IDFIELD=static::$IDFIELD;
 		$options = array(
-			'table'	=> static::$table,
 			'number'=> 1,
 			'where'	=> "{$IDFIELD}={$id}",
 		);
-		$data = SQLMapper::doSelect($options);
+		$data = static::get($options);
 		if( empty($data) ) {
-			throw new UserException('inexistantEntry');
+			throw new UserException('inexistantobject');
 		}
 		return new static($data[0]);
 	}
 	
+	//! Delete a permanent object
+	/*!
+		\param $id The object ID to delete.
+		\return 1 in case of success, else 0.
+		
+		Delete the object with the ID $id
+	*/
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
 			throw new UserException('invalidID');
@@ -270,11 +285,26 @@ abstract class PermanentObject {
 		return SQLMapper::doDelete($options);
 	}
 	
+	//! Get some permanent objects
+	/*!
+		\param $options The options used to get the permanents object.
+		\return An array of array containing object's data.
+		\sa SQLMapper::doSelect()
+		
+		Get an objects' list using this class' table.
+	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
 		return SQLMapper::doSelect($options);
 	}
 	
+	//! Create a new permanent object
+	/*!
+		\param $inputData The input data we will check, extract and create the new object.
+		\return The ID of the new permanent object.
+		
+		Create a new permanent object from ths input data.
+	*/
 	public static function create($inputData) {
 		$data = static::checkUserInput($inputData);
 		
@@ -282,9 +312,9 @@ abstract class PermanentObject {
 			$data += static::getLogEvent('create');
 		}
 		//Check if entry already exist
-		static::checkForEntry($data);
+		static::checkForObject($data);
 		//Other Checks and to do before insertion
-		static::runForEntry($data);
+		static::runForObject($data);
 		
 		$insertQ = '';
 		foreach($data as $fieldname => $fieldvalue) {
@@ -297,10 +327,17 @@ abstract class PermanentObject {
 		SQLMapper::doInsert($options);
 		$LastInsert = pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 		//To do after insertion
-		static::applyToEntry($data, $LastInsert);//old ['LAST_INSERT_ID()']
+		static::applyToObject($data, $LastInsert);//old ['LAST_INSERT_ID()']
 		return $LastInsert;
 	}
 	
+	//! Complete missing fields
+	/*!
+		\param $data The data array to complete.
+		\return The completed data array.
+		
+		Complete an array of data of an object of this class by setting missing fields with empty string.
+	*/
 	public static function completeFields($data) {
 		foreach( static::$fields as $fieldname ) {
 			if( !isset($data[$fieldname]) ) {
@@ -310,36 +347,88 @@ abstract class PermanentObject {
 		return $data;
 	}
 	
-	public static function getLogEvent($event, $time=null, $addIP=null) {
-		if( !isset($time) ) {
-			$time=time();
-		}
-		if( !isset($addIP) ) {
-			$addIP=$_SERVER['REMOTE_ADDR'];
-		}
-		return array($event.'_time' => $time, $event.'_ip' => $addIP);
+	//! Get the log of an event
+	/*!
+		\param $event The event to log in this object.
+		\param $time A specified time to use for logging event.
+		\param $ipAdd A specified IP Adress to use for logging event.
+		\sa logEvent()
+		
+		Build a new log event for $event for this time and the user IP adress.
+	*/
+	public static function getLogEvent($event, $time=null, $ipAdd=null) {
+		return array(
+			$event.'_time' => (isset($time)) ? $time : time(),
+			$event.'_ip' => (isset($ipAdd)) ? $ipAdd : $_SERVER['REMOTE_ADDR'],
+		);
 	}
 	
+	//! Get the table of this class
+	/*!
+		\return The table of this class.
+	*/
 	public static function getTable() {
 		return static::$table;
 	}
 	
+	//! Get the ID field name of this class
+	/*!
+		\return The ID field of this class.
+	*/
 	public static function getIDField() {
 		return static::$IDFIELD;
 	}
 	
+	//! Get the name of this class
+	/*!
+		\return The class.
+	*/
 	public static function getClass() {
 		return __CLASS__;
 	}
 	
-	public static function runForEntry(&$data) { }
+	//! Run for object
+	/*!
+		\param $data The new data to process.
+		\sa create()
+		
+		This function is called by create() after checking new data and before inserting them.
+		In this base class, this method does nothing.
+	*/
+	public static function runForObject(&$data) { }
 	
-	public static function applyToEntry(&$data, $id) { }
+	//! Apply for object
+	/*!
+		\param $data The new data to process.
+		\param $id The ID of the new object.
+		\sa create()
+		
+		This function is called by create() after inserting new data.
+		In this base class, this method does nothing.
+	*/
+	public static function applyToObject(&$data, $id) { }
 	
 	// 		** CHECK METHODS **
 	
+	//! Check user input
+	/*!
+		\param $uInputData The user input data to check.
+		\return The valid data.
+		\overrideit
+		
+		Check if the class could generate a valid object from $uInputData.
+		The method could modify the user input to fix them but it must return the data.
+	*/
 	public static function checkUserInput($uInputData) { }
 	
-	public static function checkForEntry($data) { }
+	//! Check for object
+	/*!
+		\param $data The new data to process.
+		\sa create()
+		
+		This function is called by create() after checking user input data and before running for them.
+		In this base class, this method does nothing.
+	*/
+	public static function checkForObject($data) { }
 }
 ?>
