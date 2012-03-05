@@ -68,11 +68,12 @@ class DemoTest extends PermanentObject {
 			'number'=> 1,
 			'where'	=> "name='{$data['name']}'",
 		);
+		text(static::get($options+array('ouput'=>SQLMapper::SQLQUERY)));
 		$data = static::get($options);
 		if( empty($data) ) {
 			return;//No data got
 		}
-		var_dump($data);
+		text($data);
 		throw new UserException("existingObject");
 	}
 }
