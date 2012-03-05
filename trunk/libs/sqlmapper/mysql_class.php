@@ -10,7 +10,7 @@ class SQLMapper_MySQL extends SQLMapper {
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '*',//* => All fields
-			'whereclause'	=> '',//Additionnal Whereclause
+			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
@@ -21,7 +21,7 @@ class SQLMapper_MySQL extends SQLMapper {
 	protected static $updateDefaults = array(
 			'lowpriority'	=> false,//false => Not low priority
 			'ignore'		=> false,//false => Not ignore errors
-			'whereclause'	=> '',//Additionnal Whereclause
+			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
@@ -33,7 +33,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'lowpriority'	=> false,//false => Not low priority
 			'quick'			=> false,//false => Not merge index leaves
 			'ignore'		=> false,//false => Not ignore errors
-			'whereclause'	=> '',//Additionnal Whereclause
+			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
@@ -67,7 +67,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			throw new Exception("No selection");
 		}
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
-		$WC = ( !empty($options['whereclause']) ) ? 'WHERE '.$options['whereclause'] : '';
+		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
@@ -107,7 +107,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
 		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
-		$WC = ( !empty($options['whereclause']) ) ? 'WHERE '.$options['whereclause'] : '';
+		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
@@ -135,7 +135,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
 		$OPTIONS .= (!empty($options['quick'])) ? ' QUICK' : '';
 		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
-		$WC = ( !empty($options['whereclause']) ) ? 'WHERE '.$options['whereclause'] : '';
+		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
 			( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';

@@ -68,7 +68,7 @@ class DemoTest extends PermanentObject {
 			'number'=> 1,
 			'where'	=> "name='{$data['name']}'",
 		);
-		text(static::get($options+array('ouput'=>SQLMapper::SQLQUERY)));
+		text(static::get($options+array('output'=>SQLMapper::SQLQUERY)));
 		$data = static::get($options);
 		if( empty($data) ) {
 			return;//No data got
