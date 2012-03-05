@@ -89,7 +89,7 @@ abstract class PermanentObject {
 	*/
 	public function __toString() {
 		try {
-			return '#'.$this->{static::$IDFIELD}.' ('.static::getClass().')';
+			return '#'.$this->{static::$IDFIELD}.' ('.get_class($this).')';
 		} catch( Exception $e ) {
 			die("FATAL EXCEPTION: <br />{$e}");
 		}
@@ -225,7 +225,7 @@ abstract class PermanentObject {
 		Compare the class and the ID field value of the 2 objects.
 	*/
 	public function equals(PermanentObject $o) {
-		return (static::getClass()==$o::getClass() && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
+		return (get_class($this)==$o::getClass() && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
 	}
 	
 	//! Log an event
@@ -384,15 +384,7 @@ abstract class PermanentObject {
 	public static function getIDField() {
 		return static::$IDFIELD;
 	}
-	
-	//! Get the name of this class
-	/*!
-		\return The class.
-	*/
-	public static function getClass() {
-		return get_class(new static());
-	}
-	
+		
 	//! Run for object
 	/*!
 		\param $data The new data to process.
