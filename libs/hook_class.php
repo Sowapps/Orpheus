@@ -1,16 +1,32 @@
 <?php
+//! The hook class
+/*!
+	This class is used by the core to trigger event with custom callbacks.
+*/
 class Hook {
 	
-	protected static $hooks = array();
+	protected static $hooks = array();//< A global array containing all registered hooks.
 	
 	protected $name;
 	protected $callbacks = array();
 	
-	
+	//! Constructor
+	/*!
+		\param $name The name of the new hook.
+	*/
 	protected function __construct($name) {
 		$this->name = $name;
 	}
 	
+	//! Register a new callback for this hook.
+	/*!
+		\param $callback A callback.
+		\sa register()
+		\sa http://php.net/manual/en/language.pseudo-types.php#language.types.callback
+		
+		Register the $callback associating with this hook.
+		The callback will be called when this hook will be triggered.
+	*/
 	public function registerHook($callback) {
 		if( !is_callable($callback) ) {
 			throw new Exception('Callback not callable');
@@ -21,29 +37,64 @@ class Hook {
 		$this->callbacks[] = $callback;
 	}
 	
+	//! Trigger this hook.
+	/*!
+		\param $params A callback.
+		\return The first param as result.
+		\sa trigger()
+		
+		Trigger this hook calling all associated callbacks.
+		$params array is passed to the callback as its arguments.
+		The first parameter, $params[0], is considered as the result of the trigger.
+		If $params is not an array, its value is assigned to the second value of a new $params array.
+	*/
 	public function triggerHook($params=NULL) {
-		$pType = gettype($params);
+		if( isset($params) && !is_array($params) ) {
+			$params = array(
+				0 => null,
+				1 => $params,
+			); 
+		}
+		$Params = array();
+		foreach($params as $k => &$params){
+			$Params[$k] = &$params;
+		}
 		foreach($this->callbacks as $callback) {
-			//echo "triggerHook: <br />";
-			//var_dump($params); echo "<br />";
-			$r = call_user_func_array($callback, $params);
-			if( isset($r) && gettype($r) === $pType ) {
-				$params[0] = $r;
-			}
+			$params[0] = call_user_func_array($callback, $params);
 		}
 		return (isset($params[0])) ? $params[0] : null;
 	}
 	
+	//! Get slug
+	/*!
+		\param $name The hook name.
+		\return The slug name.
+	
+		Extract the slug of a hook name.
+	*/
 	protected static function slug($name) {
 		return strtolower($name);
 	}
 	
+	//! Create new Hook
+	/*!
+		\param $name The new hook name.
+		\return The new hook.
+	*/
 	public static function create($name) {
 		$name = static::slug($name);
 		static::$hooks[$name] = new static($name);
 		return self::$hooks[$name];
 	}
 	
+	//! Register a callback
+	/*!
+		\param $name The hook name.
+		\param $callback The new callback.
+		\return The registerHook() result, usually null.
+		
+		Add the callback to those of the hook.
+	*/
 	public static function register($name, $callback) {
 		$name = static::slug($name);
 		if( empty(static::$hooks[$name]) ) {
@@ -52,6 +103,14 @@ class Hook {
 		return static::$hooks[$name]->registerHook($callback);
 	}
 	
+	//! Trigger a hook
+	/*!
+		\param $name The hook name.
+		\return The triggerHook() result, usually the first parameter.
+		
+		Trigger the hook named $name.
+		e.g trigger('MyHook', $parameter1, $parameter2)
+	*/
 	public static function trigger($name) {
 		$name = static::slug($name);
 		if( empty(static::$hooks[$name]) ) {
@@ -63,8 +122,6 @@ class Hook {
 			unset($params[0]);
 			$params = array_values($params);
 		}
-		//echo "trigger($name):<br />";
-		//var_dump($params); echo "<br />";
 		return static::$hooks[$name]->triggerHook($params);
 	}
 }
