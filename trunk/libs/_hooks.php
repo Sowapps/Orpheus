@@ -1,5 +1,11 @@
 <?php
+/*!
+	\brief The hooks' default callbacks
+	
+	PHP File containing default registering of hooks' callbacks.
+ */
 
+//! New callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
 	//If user try to override url rewriting.
 	if( empty($_SERVER['REDIRECT_rewritten']) && $_SERVER['REQUEST_URI'] != '/' && $Module != 'remote' ) {
