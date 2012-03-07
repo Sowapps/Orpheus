@@ -87,13 +87,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">HTMLRendering Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="HTMLRendering" --><!-- doxytag: inherits="Rendering" --><div class="dynheader">
+<!-- doxytag: class="HTMLRendering" --><!-- doxytag: inherits="Rendering" -->
+<p>The HTML rendering class.  
+ <a href="class_h_t_m_l_rendering.html#details">More...</a></p>
+<div class="dynheader">
 Inheritance diagram for HTMLRendering:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="class_h_t_m_l_rendering.png" usemap="#HTMLRendering_map" alt=""/>
   <map id="HTMLRendering_map" name="HTMLRendering_map">
-<area href="class_rendering.html" alt="Rendering" shape="rect" coords="0,0,104,24"/>
+<area href="class_rendering.html" title="The rendering class." alt="Rendering" shape="rect" coords="0,0,104,24"/>
 </map>
  </div></div>
 
@@ -102,10 +105,13 @@ Inheritance diagram for HTMLRendering:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_t_m_l_rendering.html#a0c8fcdad1f14ac9f5759b64a0efd1f06">render</a> ($env, $model=null)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Render the model.  <a href="#a0c8fcdad1f14ac9f5759b64a0efd1f06"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_t_m_l_rendering.html#a9297da2127f74dba376661c577f634f9">getModelsPath</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the models path.  <a href="#a9297da2127f74dba376661c577f634f9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_t_m_l_rendering.html#a59ab6f1a8ab47432b14811a3eba088e1">getCSSPath</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the CSS files path.  <a href="#a59ab6f1a8ab47432b14811a3eba088e1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_t_m_l_rendering.html#a4d77c906a100ef0bca1192aca3a6eafe">$theme</a> = 'default'</td></tr>
@@ -116,7 +122,9 @@ Static Public Attributes</h2></td></tr>
 Static Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_h_t_m_l_rendering.html#a9e0e017435626e7ec1372f265447a920">$SHOWMODEL</a> = 'page_skeleton'</td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>A class to render HTML using PHP scripts. </p>
+</div><hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a59ab6f1a8ab47432b14811a3eba088e1"></a><!-- doxytag: member="HTMLRendering::getCSSPath" ref="a59ab6f1a8ab47432b14811a3eba088e1" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -130,6 +138,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="return"><dt><b>Returns:</b></dt><dd>The CSS path.</dd></dl>
+<p>Get the path to the CSS files. </p>
 
 </div>
 </div>
@@ -146,6 +156,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="return"><dt><b>Returns:</b></dt><dd>The models path.</dd></dl>
+<p>Get the path to the models. </p>
 
 </div>
 </div>
@@ -173,7 +185,16 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-
+<p>Render the model. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$env</td><td>An environment variable, commonly an array but depends on the rendering class used. </td></tr>
+    <tr><td class="paramname">$model</td><td>The model to use, default use is defined by child.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Render the model using $env. This function does not display the result, see <a class="el" href="class_rendering.html#a63c95040f0a6cfc837cf79de7f9b36a0" title="Display rendering.">display()</a>. </p>
+ 
 <p>Reimplemented from <a class="el" href="class_rendering.html#ab51f389d09b02eb3ad923771e57baea9">Rendering</a>.</p>
 
 </div>
@@ -267,7 +288,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 6 2012 20:55:50 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 7 2012 08:34:12 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
