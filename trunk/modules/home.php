@@ -16,7 +16,7 @@ if( !empty($_POST['data']) ) {
 	<div class=\"success\">Object deleted.</div>";
 	} catch (UserException $e) {
 		echo "
-	<div class=\"error\">$e</div>";
+	<div class=\"error\">{$e->getMessage()}</div>";
 	}
 	
 }
