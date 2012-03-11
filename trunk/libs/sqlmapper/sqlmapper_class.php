@@ -115,6 +115,10 @@ abstract class SQLMapper {
 		self::$Mapper = new $mapperClass();
 		//$pdoInstances[$Instance]->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
+	
+	public static function quote($String) {
+		return "'".addslashes($String)."'";
+	}
 }
 
 includeDir(LIBSPATH.'sqlmapper/');

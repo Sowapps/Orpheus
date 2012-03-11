@@ -66,7 +66,7 @@ class DemoTest extends PermanentObject {
 		}
 		$options = array(
 			'number'=> 1,
-			'where'	=> 'name='.pdo_quote($data['name']),
+			'where'	=> 'name='.SQLMapper::quote($data['name']),
 		);
 		$data = static::get($options);
 		if( empty($data) ) {
