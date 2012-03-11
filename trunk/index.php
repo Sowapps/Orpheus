@@ -99,7 +99,9 @@ if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$
 $Module = Hook::trigger('runModule', $Module);
 $debug = '';
 $debug .= "
-$Module \"{$Module}\"";
+Module: \"{$Module}\"";
+$debug .= "
+ob_get_level() out: \"".ob_get_level()."\"<br />";
 
 try {
 	if( strpos($Module, DS) !== false ) {
@@ -114,7 +116,7 @@ try {
 	ob_end_clean();
 } catch(Exception $e) {
 	$debug .= "
-ob_get_level() \"".ob_get_level()."\"<br />";
+ob_get_level() exc: \"".ob_get_level()."\"<br />";
 	if( ob_get_level() ) {
 		ob_end_clean();
 	}
