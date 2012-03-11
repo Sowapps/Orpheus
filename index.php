@@ -99,6 +99,12 @@ if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$
 $Module = Hook::trigger('runModule', $Module);
 
 try {
+	if( strpos($Module, DS) !== false ) {
+		throw new Exception("invalidModuleName");
+	}
+	if( !is_readable(MODPATH.$Module.'.php') ) {
+		throw new Exception("inexistantModule");
+	}
 	ob_start();
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();

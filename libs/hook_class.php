@@ -55,8 +55,7 @@ class Hook {
 			);
 		} else if( !is_array($params) ) {
 			$params = array(
-				0 => null,
-				1 => $params,
+				0 => $params,
 			); 
 		}
 		/*
