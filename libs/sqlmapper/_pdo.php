@@ -17,6 +17,8 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
+text('PDO file');
+
 //Constantes PDO
 define('PDOQUERY', 0);//Simple Query (SELECT ...). Returns a result set.
 define('PDOEXEC', 1);//Simple Execution (INSERT INTO, UPDATA, DELETE ...). Returns the number of affected lines.
@@ -194,9 +196,8 @@ function pdo_error($PDOReport, $Action='') {
 	Places quotes around the input string and escapes special characters within the input string, using the current instance.
 */
 function pdo_quote($String) {
-	return "'".addslashes($String)."'";
 	//Old version, does not protect against SQL Injection.
-	//global $pdoInstances;
-	//$Instance = ensure_pdoinstance();
-	//return $pdoInstances[$Instance]->quote($String);
+	global $pdoInstances;
+	$Instance = ensure_pdoinstance();
+	return $pdoInstances[$Instance]->quote($String);
 }
