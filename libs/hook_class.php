@@ -49,16 +49,23 @@ class Hook {
 		If $params is not an array, its value is assigned to the second value of a new $params array.
 	*/
 	public function triggerHook($params=NULL) {
-		if( isset($params) && !is_array($params) ) {
+		if( !isset($params) ) {
+			$params = array(
+				0 => null,
+			);
+		} else if( !is_array($params) ) {
 			$params = array(
 				0 => null,
 				1 => $params,
 			); 
 		}
+		/*
+		//Not used yet.
 		$Params = array();
 		foreach($params as $k => &$params){
 			$Params[$k] = &$params;
 		}
+		*/
 		foreach($this->callbacks as $callback) {
 			$params[0] = call_user_func_array($callback, $params);
 		}
