@@ -110,6 +110,7 @@ try {
 	if( !is_readable(MODPATH.$Module.'.php') ) {
 		throw new Exception("inexistantModule");
 	}
+	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();
@@ -117,15 +118,15 @@ try {
 } catch(Exception $e) {
 	$debug .= "
 ob_get_level() exc: \"".ob_get_level()."\"<br />";
-	if( ob_get_level() ) {
+	if( ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
 	}
 	sys_error("$e", "running_".$Module);
 	$Page = '
 <div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
 <div class="logs" style="display: none;">
-Error is \''.$e->getMessage().'\'.<br />
-Debug is:'.$debug.'\'.<br />
+Error is \''.$e->getMessage().'\'.
+Debug is:'.$debug.'.
 </div>';
 }
 
