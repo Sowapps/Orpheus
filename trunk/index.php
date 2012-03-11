@@ -97,7 +97,7 @@ if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$
 }
 
 $Module = Hook::trigger('runModule', $Module);
-echo "$Module \"{$Module}\"";
+echo "$Module \"{$Module}\"<br />";
 
 try {
 	if( strpos($Module, DS) !== false ) {
@@ -111,7 +111,9 @@ try {
 	$Page = ob_get_contents();
 	ob_end_clean();
 } catch(Exception $e) {
-	@ob_end_clean();
+	if( ob_get_level() ) {
+		ob_end_clean();
+	}
 	sys_error("$e", "running_".$Module);
 	$Page = '
 <div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
