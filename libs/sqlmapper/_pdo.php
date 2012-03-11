@@ -194,7 +194,9 @@ function pdo_error($PDOReport, $Action='') {
 	Places quotes around the input string and escapes special characters within the input string, using the current instance.
 */
 function pdo_quote($String) {
-	global $pdoInstances;
-	$Instance = ensure_pdoinstance();
-	return $pdoInstances[$Instance]->quote($String);
+	return "'".addslashes($String)."'";
+	//Old version, does not protect against SQL Injection.
+	//global $pdoInstances;
+	//$Instance = ensure_pdoinstance();
+	//return $pdoInstances[$Instance]->quote($String);
 }
