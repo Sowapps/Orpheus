@@ -17,8 +17,6 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
-text('PDO file');
-
 //Constantes PDO
 define('PDOQUERY', 0);//Simple Query (SELECT ...). Returns a result set.
 define('PDOEXEC', 1);//Simple Execution (INSERT INTO, UPDATA, DELETE ...). Returns the number of affected lines.
