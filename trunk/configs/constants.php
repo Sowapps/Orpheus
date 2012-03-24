@@ -1,5 +1,5 @@
 <?php
-/* includes/constants.php -> CONSTANTS
+/* configs/constants.php -> CONSTANTS
  * All web site constants.
  * Required for initialization.
  *
