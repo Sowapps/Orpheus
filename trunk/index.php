@@ -30,11 +30,12 @@ set_error_handler('exception_error_handler');
 	Include all files with a name beginning by '_' in the directory $dir. 
 */
 function includeDir($dir) {
+	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
 	foreach($files as $file) {
 		if( $file[0] == '_' ) {
-			require_once $dir.DS.$file;
+			require_once $dir.'/'.$file;
 			$i++;
 		}
 	}
