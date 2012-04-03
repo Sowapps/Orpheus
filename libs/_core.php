@@ -117,68 +117,6 @@ function log_error($report, $file, $Action='') {
 function sys_error($report, $Action='') {
 	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $Action);
 }
-/* codeGen([$size])
- * Génère un code de longueur $size.
- */
-function codeGen($size=10) {
-	$charList = "0123456789ABCDEFGHIJKLMNOPGRSTUVWXYZ";
-	$code = "";
-	for($i=0; $i<=$size-1; $i++) {
-		$code .= $charList[mt_rand(0, strlen($charList)-1)];
-	}
-	return $code;
-}
-
-/* genSecurityCode([$domain[, $max]])
- * Génère un code de sécurité, l'enregistre en session en bouclant sur le max $max et retourne le code.
- * $max représente donc le nombre de code valable simultanément, cela peut représenter le nombre maximum
- * d'onglet ouvrable simultanément.
- */
-function genSecurityCode($domain="global", $max=0) {
-	if( !isset($_SESSION['SECURITY']) ) {
-		$_SESSION['SECURITY'] = array();
-	}
-	if( !isset($_SESSION['SECURITY'][$domain]) ) {
-		$_SESSION['SECURITY'][$domain] = array('current'=>-1, 'list'=>array());
-	}
-	$_SESSION['SECURITY'][$domain]['current']++;
-	if( $max > 0 ) {
-		$_SESSION['SECURITY'][$domain]['current'] %= $max;
-	}
-	$code = codeGen();
-	$_SESSION['SECURITY'][$domain]['list'][$_SESSION['SECURITY'][$domain]['current']] = hash_m02($code);
-	return $code;
-}
-
-/* checkSecurityCode($code, [$domain])
- * Vérifie qu'un code a bien été généré avec genSecurityCode() et qu'il est toujours valide.
- */
-function checkSecurityCode($code, $domain="global") {
-	if( !isset($_SESSION['SECURITY'], $_SESSION['SECURITY'][$domain], $_SESSION['SECURITY'][$domain]['list']) ) {
-		return false;
-	}
-//	text($code);
-//	text($_SESSION['SECURITY'][$domain]['list']);
-	return in_array($code, $_SESSION['SECURITY'][$domain]['list']);
-}
-
-/* deleteSecurityCode($code, [$domain])
- * Vérifie qu'un code a bien été généré avec genSecurityCode() et qu'il est toujours valide.
- */
-function deleteSecurityCode($code, $domain="global") {
-	if( !isset($_SESSION['SECURITY'], $_SESSION['SECURITY'][$domain], $_SESSION['SECURITY'][$domain]['list']) ) {
-		return false;
-	}
-	if( ($k = array_search($code, $_SESSION['SECURITY'][$domain]['list'])) === false ) {
-		return false;
-	}
-	unset($_SESSION['SECURITY'][$domain]['list'][$k]);
-	return true;
-}
-
-function hash_m02($str) {
-	return sha1(hash('ripemd160', $str));
-}
 
 function addUserError($e) {
 	global $USERERRORS;
@@ -240,8 +178,6 @@ function iURLDecode($u) {
 	return urldecode(str_replace(":46", ".", $u));
 }
 
-
-
 //! Parse Fields array to string
 /*!
 	\param $fields The fields array.
@@ -255,4 +191,28 @@ function parseFields(array $fields) {
 		$list .= (!empty($list) ? ', ' : '').$key.'='.$value;
 	}
 	return $list;
+}
+
+//! Imports the required class(es).
+/*!
+	\param $pkgPath A package path.
+	\warning You should only use lowercase for package names.
+
+	Includes the package page from the libs/ directory.
+	e.g: "package.myclass", "package.other.*"
+*/
+//TODO: Faire un test unitaire.
+function using($pkgPath) {
+	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	if( substr($pkgPath, -2) == '.*' ) {
+		$dir = substr($pkgPath, 0, -2);
+		$files = scandir($dir);
+		foreach($files as $file) {
+			//$file[0] != '.' 
+			if( preg_match("#^[^\.].*_class.php$#", $file) ) {
+				require_once $dir.'/'.$file;
+			}
+		}
+	}
+	require_once $pkgPath.'_class.php';
 }
