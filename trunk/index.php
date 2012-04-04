@@ -8,8 +8,12 @@
 	PHP File for the website core.
  */
 
+if( !defined('ORPHEUSPATH') ) {
+	defined('ORPHEUSPATH', './');
+}
+
 //Edit it according system context (OS, directory tree ...).
-require_once 'configs/constants.php';
+require_once ORPHEUSPATH.'configs/constants.php';
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
