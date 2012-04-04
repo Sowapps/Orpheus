@@ -14,16 +14,20 @@ define('TIME', $_SERVER['REQUEST_TIME']);
 define('DS', DIRECTORY_SEPARATOR);
 define('INSIDE', true);
 
+
 //Useful paths.
-define('CONFPATH',		'configs'.DS);
-define('MODPATH',		'modules'.DS);
-define('LIBSPATH',		'libs'.DS);
-define('LOGSPATH',		'logs'.DS);
+define('CONFPATH',		ORPHEUSPATH.'configs'.DS);
+define('MODPATH',		ORPHEUSPATH.'modules'.DS);
+define('LIBSPATH',		ORPHEUSPATH.'libs'.DS);
+define('LOGSPATH',		ORPHEUSPATH.'logs'.DS);
+define('THEMESPATH',	ORPHEUSPATH.'themes'.DS);
+
+
+//Static medias
 define('JSPATH',		'js'.DS);
-define('THEMESPATH',	'themes'.DS);
+
 
 //Miscelanous
-
 define('DEFAULTMOD',	'home');
 define('DEFAULTLINK',	'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
 
