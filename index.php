@@ -42,10 +42,10 @@ function includeDir($dir) {
 		if( $file[0] == '_' ) {
 			//We don't check infinite file system loops.
 			if( !is_dir($dir) ) {
-				require_once $dir.'/'.$file;
+				require_once $dir.$file;
 				$i++;
 			} else if( is_readable($dir) ) {
-				$i += includeDir($dir.'/'.$file);
+				$i += includeDir($dir.$file);
 			}
 		}
 	}
