@@ -30,6 +30,21 @@ abstract class PermanentObject {
 		$this->modFields = array();
 	}
 	
+	//! Destructor
+	/*!
+		If something was modified, it saves the new data.
+	*/
+	public function __destruct() {
+		if( !empty($this->modFields) ) {
+			try {
+				$this->save();
+			} catch(Exception $e) {
+				text('An error occured while saving (__destruct):');
+				text($e->getMessage());
+			}
+		}
+	}
+	
 	//! Magic getter
 	/*!
 		\param $name Name of the property to get.
@@ -63,21 +78,6 @@ abstract class PermanentObject {
 			 * the data does not exist but private is private.
 			 */
 			throw $e;
-		}
-	}
-	
-	//! Destructor
-	/*!
-		If something was modified, it saves the new data.
-	*/
-	public function __destruct() {
-		if( !empty($this->modFields) ) {
-			try {
-				$this->save();
-			} catch(Exception $e) {
-				text('An error occured while saving (__destruct):');
-				text($e->getMessage());
-			}
 		}
 	}
 	
