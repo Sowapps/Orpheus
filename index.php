@@ -34,7 +34,7 @@ set_error_handler('exception_error_handler');
 	Include all files with a name beginning by '_' in the directory $dir. 
 */
 function includeDir($dir) {
-	text("scanning dir: $dir");
+	echo "scanning dir: $dir <br />";
 	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
