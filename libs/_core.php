@@ -198,7 +198,7 @@ function parseFields(array $fields) {
 	\param $pkgPath A package path.
 	\warning You should only use lowercase for package names.
 
-	Includes the package page from the libs/ directory.
+	Includes the package page from the libs directory.
 	e.g: "package.myclass", "package.other.*"
 */
 //TODO: Faire un test unitaire.
@@ -215,4 +215,31 @@ function using($pkgPath) {
 		}
 	}
 	require_once $pkgPath.'_class.php';
+}
+
+//! Adds a class to the autoload.
+/*!
+	\param $className The class name.
+	\param $classPath The class path. (cf. description)
+
+	Adds the class to the autoload list, associated with its file.
+	The semi relative path syntax has priority over the full relative path syntax.
+	e.g: ("MyClass", "mylib/myClass") => libs/mylib/myClass_class.php
+	or ("MyClass2", "mylib/myClass2.php") => libs/mylib/myClass.php
+*/
+function addAutoload($className, $classPath) {
+	global $AUTOLOADS;
+	if( !empty($AUTOLOADS[$className]) ) {
+		return false;
+	}
+	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
+		$AUTOLOADS[$className] = $classPath.'_class.php';
+		
+	} else if( is_readable(LIBSPATH.$classPath) ) {
+		$AUTOLOADS[$className] = $classPath;
+		
+	} else {
+		throw new Exception("Class file of \"{$className}\" not found.");
+	}
+	return true;
 }

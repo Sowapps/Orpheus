@@ -31,10 +31,9 @@ set_error_handler('exception_error_handler');
 	\param $dir The directory to include.
 	\return The number of files included.
 	
-	Include all files with a name beginning by '_' in the directory $dir. 
+	Include all files with a name beginning by '_' in the directory $dir.
 */
 function includeDir($dir) {
-	echo "scanning dir: $dir <br />";
 	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
@@ -66,8 +65,14 @@ function includeDir($dir) {
 */
 function __autoload($className) {
 	try {
+		global $AUTOLOADS;
 		$bFile = strtolower($className);
-		if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
+		if( !empty($AUTOLOADS[$className]) ) {
+			if( is_readable(LIBSPATH.$AUTOLOADS[$className]) ) {
+				require_once LIBSPATH.$AUTOLOADS[$className];
+			}
+			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
+		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.'_class.php';
 		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
@@ -83,6 +88,7 @@ function __autoload($className) {
 		die($e);
 	}
 }
+$AUTOLOADS = array();
 
 Config::build('engine');
 
