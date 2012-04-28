@@ -9,7 +9,7 @@
  */
 
 if( !defined('ORPHEUSPATH') ) {
-	defined('ORPHEUSPATH', './');
+	define('ORPHEUSPATH', './');
 }
 
 //Edit it according system context (OS, directory tree ...).
