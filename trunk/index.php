@@ -41,10 +41,10 @@ function includeDir($dir) {
 	foreach($files as $file) {
 		if( $file[0] == '_' ) {
 			//We don't check infinite file system loops.
-			if( !is_dir($dir) ) {
+			if( !is_dir($dir.$file) ) {
 				require_once $dir.$file;
 				$i++;
-			} else if( is_readable($dir) ) {
+			} else if( is_readable($dir.$file) ) {
 				$i += includeDir($dir.$file);
 			}
 		}
