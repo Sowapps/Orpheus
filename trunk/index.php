@@ -39,6 +39,7 @@ function includeDir($dir) {
 	$i=0;
 	foreach($files as $file) {
 		if( $file[0] == '_' ) {
+			echo "including $file from $dir<br />";
 			//We don't check infinite file system loops.
 			if( !is_dir($dir.$file) ) {
 				require_once $dir.$file;
