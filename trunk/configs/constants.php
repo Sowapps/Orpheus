@@ -16,15 +16,15 @@ define('INSIDE', true);
 
 
 //Useful paths.
-define('CONFPATH',		ORPHEUSPATH.'configs'.DS);
-define('MODPATH',		ORPHEUSPATH.'modules'.DS);
-define('LIBSPATH',		ORPHEUSPATH.'libs'.DS);
-define('LOGSPATH',		ORPHEUSPATH.'logs'.DS);
-define('THEMESPATH',	ORPHEUSPATH.'themes'.DS);
+define('CONFPATH',		ORPHEUSPATH.'configs/');
+define('MODPATH',		ORPHEUSPATH.'modules/');
+define('LIBSPATH',		ORPHEUSPATH.'libs/');
+define('LOGSPATH',		ORPHEUSPATH.'logs/');
+define('THEMESPATH',	ORPHEUSPATH.'themes/');
 
 
 //Static medias
-define('JSPATH',		'js'.DS);
+define('JSPATH',		'js/');
 
 
 //Miscelanous
