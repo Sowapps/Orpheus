@@ -11,7 +11,7 @@ define('ERROR_LEVEL', E_ALL | E_STRICT);//Development
 //define('ERROR_LEVEL', 0);//Production
 
 define('TIME', $_SERVER['REQUEST_TIME']);
-define('DS', DIRECTORY_SEPARATOR);
+//define('DS', DIRECTORY_SEPARATOR);
 define('INSIDE', true);
 
 
