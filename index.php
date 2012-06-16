@@ -45,7 +45,7 @@ function includeDir($dir) {
 				require_once $dir.$file;
 				$i++;
 			} else if( is_readable($dir.$file) ) {
-				$i += includeDir($dir.$file);
+				$i += includeDir($dir.$file.'/');
 			}
 		}
 	}
@@ -75,12 +75,12 @@ function __autoload($className) {
 			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
 		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.'_class.php';
-		} else if( is_readable(LIBSPATH.$bFile.DS.$bFile.'_class.php') ) {
-			require_once LIBSPATH.$bFile.DS.$bFile.'_class.php';
+		} else if( is_readable(LIBSPATH.$bFile.'/'.$bFile.'_class.php') ) {
+			require_once LIBSPATH.$bFile.'/'.$bFile.'_class.php';
 		} else {
 			$classExp = explode('_', $bFile, 2);
-			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php') ) {
-				require_once LIBSPATH.$classExp[0].DS.$classExp[1].'_class.php';
+			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php') ) {
+				require_once LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php';
 				return;
 			}
 			throw new Exception("Unable to load lib \"{$className}\"");
@@ -122,7 +122,7 @@ $debug .= "
 ob_get_level() out: \"".ob_get_level()."\"<br />";
 
 try {
-	if( strpos($Module, DS) !== false ) {
+	if( strpos($Module, '/') !== false ) {
 		throw new Exception("invalidModuleName");
 	}
 	if( !is_readable(MODPATH.$Module.'.php') ) {
