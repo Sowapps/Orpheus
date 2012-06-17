@@ -166,7 +166,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
 		$OPTIONS .= (!empty($options['into'])) ? ' INTO' : '';
 		
-		$COLS = '';
+		$COLS = $WHAT = '';
 		//Is an array
 		if( is_array($options['what']) ) {
 			//Is an indexed array of fields Arrays
