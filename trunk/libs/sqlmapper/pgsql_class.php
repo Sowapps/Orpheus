@@ -156,8 +156,9 @@ class SQLMapper_PgSQL extends SQLMapper {
 				$options['what'][0] = $options['what'];
 			}// Else it's an indexed array of fields Arrays
 			$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
-			die();
 			foreach($options['what'] as $row) {
+				text($row);
+				die();
 				$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
 			}
 			$WHAT = 'VALUES '.$WHAT;
