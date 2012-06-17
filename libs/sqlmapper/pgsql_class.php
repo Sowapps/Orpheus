@@ -149,16 +149,11 @@ class SQLMapper_PgSQL extends SQLMapper {
 		//Is an array
 		if( is_array($options['what']) ) {
 			//Is associative fields Arrays
-			text($options['what']);
-			text((empty($options['what'][0])) ? "No first row" : "First row ok." );
 			if( empty($options['what'][0]) ) {
-				text("We got an assoc array");
 				$options['what'] = array($options['what']);
 			}// Else it's an indexed array of fields Arrays
 			$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
 			foreach($options['what'] as $row) {
-				text($row);
-				die();
 				$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
 			}
 			$WHAT = 'VALUES '.$WHAT;
