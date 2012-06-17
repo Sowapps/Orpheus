@@ -320,13 +320,18 @@ abstract class PermanentObject {
 		//Other Checks and to do before insertion
 		static::runForObject($data);
 		
+		/*
 		$insertQ = '';
 		foreach($data as $fieldname => $fieldvalue) {
 			$insertQ .= ( (!empty($insertQ)) ? ', ' : '').$fieldname.'='.pdo_quote($fieldvalue);
 		}
+		*/
+		foreach($data as $fieldname => &$fieldvalue) {
+			$fieldvalue = pdo_quote($fieldvalue);
+		}
 		$options = array(
 			'table'	=> static::$table,
-			'what'=> 'SET '.$insertQ,
+			'what'=> $data,
 		);
 		SQLMapper::doInsert($options);
 		$LastInsert = pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
