@@ -112,6 +112,7 @@ abstract class SQLMapper {
 			throw new Exception("Mapper unable to connect to the database.");
 		}
 		$mapperClass = 'SQLMapper_'.$DBS[$Instance]['driver'];
+		text("mapper: ".$mapperClass);
 		self::$Mapper = new $mapperClass();
 		//$pdoInstances[$Instance]->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
