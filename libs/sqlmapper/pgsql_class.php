@@ -170,4 +170,15 @@ class SQLMapper_PgSQL extends SQLMapper {
 		}
 		return pdo_query($QUERY, PDOEXEC);
 	}
+	
+	//! The function to get the last inserted ID
+	/*!
+		\param $table The table to get the last inserted id.
+		\return The last inserted id value.
+		
+		It requires a successful call of insert() !
+	*/
+	public function lastID($table, $idfield='id') {
+		return pdo_query("SELECT currval('{$table}_{$idfield}_seq'::regclass)", PDOFETCHFIRSTCOL);
+	}
 }

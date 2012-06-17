@@ -65,6 +65,15 @@ abstract class SQLMapper {
 		return self::$Mapper->insert($options);
 	}
 	
+	//! The static function to use to get last isnert id in global context.
+	/*!
+		\sa SQLMapper::lastID()
+	*/
+	public static function doLastID($table) {
+		self::prepare();
+		return self::$Mapper->lastID($table);
+	}
+	
 	
 	//! The function to use for SELECT queries
 	/*!
@@ -102,6 +111,15 @@ abstract class SQLMapper {
 	*/
 	public abstract function insert(array $options=array());
 	
+	//! The function to get the last inserted ID
+	/*!
+		\param $table The table to get the last inserted id.
+		\return The last inserted id value.
+		
+		It requires a successful call of insert() !
+	*/
+	public abstract function lastID($table);
+	
 	public static function prepare() {
 		if( self::$Mapper != null ) {
 			return;
@@ -112,7 +130,6 @@ abstract class SQLMapper {
 			throw new Exception("Mapper unable to connect to the database.");
 		}
 		$mapperClass = 'SQLMapper_'.$DBS[$Instance]['driver'];
-		text("mapper: ".$mapperClass);
 		self::$Mapper = new $mapperClass();
 		//$pdoInstances[$Instance]->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
