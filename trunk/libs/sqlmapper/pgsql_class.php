@@ -145,7 +145,7 @@ class SQLMapper_PgSQL extends SQLMapper {
 		}
 		$OPTIONS = '';
 		
-		$COLS = '';
+		$COLS = $WHAT = '';
 		//Is an array
 		if( is_array($options['what']) ) {
 			//Is associative fields Arrays
