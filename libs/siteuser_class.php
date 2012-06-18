@@ -1,26 +1,12 @@
 <?php
-/* class/siteuser_class.php
- * PHP File for class: Site User
- * Classe d'utilisation et de gestion d'un utilisateur.
- *
- * Auteur: Florent Hazard (Cartman34).
- * Version: 26
+//! The site user class
+/*!
+ * The site user class represents an user known by the current website as a permanent object.
+ * This class is commonly inherited by a user class for registered users.
+ * But a site user can be a Facebook user too for example.
  * 
- * Requiert:
- * is_id()
- * is_name()
- * is_email()
- * pdo_query()
- * user_can()
+ * Require core plugin.
  * 
- */
-
-/* Statuable require:
- * - $status attribute to determine known status with first status in first.
- * - field 'status'
- * 
- * Common example:
- * private static $status = array('draft'=>array('waiting'), 'waiting'=>array('approved', 'rejected'), 'approved'=>array('rejected'), 'rejected'=>array('approved'));
  */
 class SiteUser extends AbstractStatus {
 	
@@ -92,10 +78,6 @@ class SiteUser extends AbstractStatus {
 			return true;
 		}
 		return $this->checkPerm((int) $GLOBALS['ACCESS'][$module]);
-	}
-	
-	public static function getClass() {
-		return __CLASS__;
 	}
 	
 	public function update($uInputData, array $data=array()) {
@@ -172,10 +154,15 @@ class SiteUser extends AbstractStatus {
 	public static function userLogin($data) {
 		self::checkName($data);
 		self::checkPassword($data, false);
-		
 		//self::checkForEntry() does not return password and id now.
-		$table=static::$table;
-		$user = pdo_query("SELECT id, name, password FROM {$table} WHERE name LIKE ".pdo_quote($data['name'])." LIMIT 1", PDOFETCH);
+		
+		$user = SQLMapper::doSelect(array(
+			'table' => static::$table,
+			'what' => 'id, name, password',
+			'where' => 'name = '.SQLMapper::quote($data['name']),
+			'number' => 1
+		));
+		//$table=static::$table;
 		if( empty($user) )  {
 			throw new UserException("unknownName");
 		}
@@ -260,8 +247,12 @@ class SiteUser extends AbstractStatus {
 		if( empty($data['name']) && empty($data['email']) ) {
 			return;//Nothing to check.
 		}
-		$table=static::$table;
-		$user = pdo_query("SELECT name, email FROM {$table} WHERE name LIKE ".pdo_quote($data['name'])." OR email LIKE ".pdo_quote($data['email'])." LIMIT 1", PDOFETCH);
+		$user = SQLMapper::doSelect(array(
+			'table' => static::$table,
+			'what' => 'name, email',
+			'where' => 'name LIKE '.SQLMapper::quote($data['name']).' OR email LIKE '.SQLMapper::quote($data['email']),
+			'number' => 1
+		));
 		if( !empty($user) ) {
 			if( $user['email'] == $data['email'] ) {
 				throw new UserException("emailAlreadyUsed");

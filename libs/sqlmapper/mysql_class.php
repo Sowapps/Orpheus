@@ -82,7 +82,7 @@ class SQLMapper_MySQL extends SQLMapper {
 				$r = (object)$r;//stdClass
 			}
 		}
-		return $results;
+		return ($options['output'] == static::ARR_ASSOC && $options['number'] == 1) ? $results[0] : $results;
 	}
 	
 	//! The function to use for UPDATE queries

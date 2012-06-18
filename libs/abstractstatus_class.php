@@ -1,24 +1,19 @@
 <?php
-/* class/abstractstatus_class.php
- * PHP File for class: AbstractStatus
- * Classe abstraite implémentant un système de status à la classe AbstractTable.
+//! The abstract status class
+/*!
+ * Abstract class implementing a status system to the PermanentObject class.
+ * It makes the object as "statuable", it can own a managed status.
  *
- * Author: Florent Hazard (Cartman34).
- * Revision: 3
+ * Require core plugin
  * 
- * Requiert:
- * is_id()
- * user_can()
- */
- 
-/* Statuable require:
- * - $status attribute to determine known status with first status in first.
+ * Statuable require:
+ * - $status attribute to determine known statuses with first status in first.
  * - field 'status' VARCHAR(20)
  * 
- * Common example:
+ * Common example for publications:
  * private static $status = array('draft'=>array('waiting'), 'waiting'=>array('approved', 'rejected'), 'approved'=>array('rejected'), 'rejected'=>array('approved'));
+ * Here default is 'draft' (the first in the list), 'draft' only unlock 'waiting' status (waiting for moderation).
  */
-
 abstract class AbstractStatus extends PermanentObject {
 	
 	//Attributes
@@ -31,10 +26,6 @@ abstract class AbstractStatus extends PermanentObject {
 	
 	public function getAvailableStatus() {
 		return static::$status[$this->status];
-	}
-	
-	public static function getClass() {
-		return __CLASS__;
 	}
 	
 	// *** METHODES STATIQUES ***

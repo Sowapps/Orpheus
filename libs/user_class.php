@@ -1,12 +1,9 @@
 <?php
-/* class/user_class.php
- * PHP File for class: User
- * Classe d'utilisation et de gestion d'un utilisateur pour CE site web.
- *
- * Auteur: Florent Hazard (Cartman34).
- * Version: 24
+//! The abstract status class
+/*!
+ * An "user" is a registered user.
  * 
- * Requiert:
+ * Require:
  * is_id()
  * is_email()
  * pdo_query()
@@ -17,7 +14,7 @@ class User extends SiteUser {
 	
 	//Attributes
 	protected static $fields = array(
-		'fullname', 'contact_time'
+		'fullname'
 	);
 	protected static $userEditableFields = array(
 		'fullname'
@@ -54,10 +51,6 @@ class User extends SiteUser {
 	}
 	
 	public function runForUpdate() {
-		if( !empty($this->modFields) && in_array('fullname', $this->modFields) ) {
-			$table=Anecdote::getTable();
-			pdo_query("UPDATE {$table} SET user_name='{$this->fullname}' WHERE user_id={$this->id}", PDOEXEC);
-		}
 	}
 	
 	// 		** METHODES DE VERIFICATION **
