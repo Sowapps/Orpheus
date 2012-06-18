@@ -1,36 +1,25 @@
 <?php
-/* class/abstractpublication_class.php
- * PHP File for class: AbstractPublication
- * Classe abstraite implémentant un système de publication à la classe AbstractStatus.
- * Cette classe est essentiellement destinée aux articles et aux publications en tout genre.
+//! The site user class
+/*!
+ * This class implements a publication system to the abstract status class.
+ * Its purpose is to be used for articles, posts, comments and other publications.
+ * It manages a cache for user editable contents and register automatically some events.
+ * The status of the publication can also be managed easily by automations or administrators.
+ * Finally, it implements an anti-flood system to avoid spam of publications.
  *
- * Author: Florent Hazard (Cartman34).
- * Revision: 2
- * 
- * Requiert:
- * is_id()
+ * Require core plugin.
  * 
  * Events:
  * - 'create'	: When the new publication is created.
  * - 'edit'		: When the publication is edited.
- */
- 
-/* Statuable require:
- * - $status attribute to determine known status with first status in first.
- * - field 'status'
  * 
- * Common example:
- * private static $status = array('draft'=>array('waiting'), 'waiting'=>array('approved', 'rejected'), 'approved'=>array('rejected'), 'rejected'=>array('approved'));
- */
-
-/* AbstractStatus fields:
+ * AbstractStatus fields:
  * status.
  * 
  * Publication fields (from AbstractStatus):
  * name, user_id, published, cache, create_time, create_ip, edit_time, edit_ip.
  * 
  */
-
 abstract class AbstractPublication extends AbstractStatus {
 	
 	//Attributes
@@ -82,10 +71,6 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	// *** METHODES STATIQUES ***
 	
-	public static function getClass() {
-		return __CLASS__;
-	}
-	
 	public static function eraseAllCache() {
 		$table=static::$table;
 		return pdo_query("UPDATE {$table} SET cache=''", PDOEXEC);
@@ -131,11 +116,14 @@ abstract class AbstractPublication extends AbstractStatus {
 			return;//Nothing to check.
 		}
 		$ucheck = ($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'";
-		$table = static::$table;
-		$publication = pdo_query("SELECT name FROM {$table} WHERE
-			name LIKE ".pdo_quote($data['name'])." OR
-			( {$ucheck} AND create_time >= ".(time()-static::$floodDelay).")
-			LIMIT 1", PDOFETCH);
+		
+		$publication = SQLMapper::doSelect(array(
+			'table' => static::$table,
+			'what' => 'name',
+			'where' => 'name = '.SQLMapper::quote($data['name']).' OR
+				( '.$ucheck.' AND create_time >= '.(time()-static::$floodDelay).')',
+			'number' => 1
+		));
 		if( empty($publication) ) {
 			return;
 		}

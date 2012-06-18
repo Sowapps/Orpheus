@@ -225,7 +225,7 @@ abstract class PermanentObject {
 		Compare the class and the ID field value of the 2 objects.
 	*/
 	public function equals(PermanentObject $o) {
-		return (get_class($this)==$o::getClass() && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
+		return (get_class($this)==get_class($o) && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
 	}
 	
 	//! Log an event
