@@ -266,7 +266,7 @@ abstract class PermanentObject {
 		if( empty($data) ) {
 			throw new UserException('inexistantobject');
 		}
-		return new static($data[0]);
+		return new static($data);
 	}
 	
 	//! Delete a permanent object
