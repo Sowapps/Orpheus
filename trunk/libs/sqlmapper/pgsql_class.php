@@ -164,7 +164,6 @@ class SQLMapper_PgSQL extends SQLMapper {
 		}
 		
 		$QUERY = "INSERT INTO {$options['table']} {$COLS} {$WHAT};";
-		text("pgsql insert query: ".$QUERY);
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}

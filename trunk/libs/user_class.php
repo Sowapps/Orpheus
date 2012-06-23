@@ -174,11 +174,13 @@ class User extends AbstractStatus {
 	}
 	
 	public static function hashPassword($str) {
-		return md5(hash('ripemd160', $str));
+		//http://www.php.net/manual/en/faq.passwords.php
+		$salt = (defined('USER_SALT')) ? USER_SALT : '1$@g&';
+		return md5($salt.$str.'7');
 	}
 	
 	public static function is_login() {
-		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof SiteUser );
+		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User );
 	}
 	
 	public static function load($id) {
