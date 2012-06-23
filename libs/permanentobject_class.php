@@ -1,5 +1,5 @@
 <?php
-import('sqlmapper.SQLMapper');
+using('sqlmapper.SQLMapper');
 
 //! The permanent object class
 /*!
