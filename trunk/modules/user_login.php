@@ -28,7 +28,6 @@ if( !empty($_POST['submitLogin']) ) {
 		<input class="input" id="name" type="text" name="data[name]" placeholder="User name" required="required" />
 	</div>
 	<div class="password">
-		<label for="password">Mot de passe </label> 
 		<input class="input" id="password" type="password" name="data[password]" placeholder="Password" required="required" />
 	</div>
 	<div class="loginSubmit">

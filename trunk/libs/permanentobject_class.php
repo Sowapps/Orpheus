@@ -153,7 +153,7 @@ abstract class PermanentObject {
 		$updQ = '';
 		foreach($this->modFields as $fieldname) {
 			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.pdo_quote($this->$fieldname);
+				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.SQLMapper::quote($this->$fieldname);
 			}
 		}
 		$IDFIELD=static::$IDFIELD;
@@ -323,11 +323,11 @@ abstract class PermanentObject {
 		/*
 		$insertQ = '';
 		foreach($data as $fieldname => $fieldvalue) {
-			$insertQ .= ( (!empty($insertQ)) ? ', ' : '').$fieldname.'='.pdo_quote($fieldvalue);
+			$insertQ .= ( (!empty($insertQ)) ? ', ' : '').$fieldname.'='.SQLMapper::quote($fieldvalue);
 		}
 		*/
 		foreach($data as $fieldname => &$fieldvalue) {
-			$fieldvalue = pdo_quote($fieldvalue);
+			$fieldvalue = SQLMapper::quote($fieldvalue);
 		}
 		$options = array(
 			'table'	=> static::$table,
