@@ -73,5 +73,5 @@ class SiteUser extends User {
 		self::$userEditableFields = array_unique(array_merge(self::$userEditableFields,parent::$userEditableFields));
 	}
 }
-User::init();
+SiteUser::init();
 ?>
