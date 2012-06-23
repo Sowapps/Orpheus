@@ -184,7 +184,7 @@ class User extends AbstractStatus {
 	}
 	
 	public static function load($id) {
-		if( $GLOBALS['USER'] && $GLOBALS['USER'] instanceof SiteUser && $GLOBALS['USER']->id == $id) {
+		if( !empty($GLOBALS['USER']) && $GLOBALS['USER'] instanceof User && $GLOBALS['USER']->id == $id) {
 			return $GLOBALS['USER'];
 		}
 		return parent::load($id);

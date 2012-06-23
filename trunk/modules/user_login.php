@@ -1,4 +1,5 @@
-<a href="./">Basic demo</a>
+<a href="./">Basic demo</a><br />
+<br />
 <?php
 $formRegData = array();
 if( !empty($_POST['submitLogin']) ) {
