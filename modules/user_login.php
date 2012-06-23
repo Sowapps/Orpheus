@@ -21,6 +21,9 @@ if( !empty($_POST['submitLogin']) ) {
 		echo '<span class="error">'.error($e, 'user').'</span><br />';
 	}
 }
+if( SiteUser::is_login() ) {
+	echo "Welcome {$_SESSION['USER']->name} !<br />";
+}
 ?>
 <h2>Login</h2>
 <form method="POST">
