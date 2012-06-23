@@ -4,7 +4,7 @@ $formRegData = array();
 if( !empty($_POST['submitLogin']) ) {
 	
 	try {
-		User::userLogin($_POST['data']);
+		SiteUser::userLogin($_POST['data']);
 		$_SESSION['welcome'] = 3;
 		echo '<span class="success">You\'re successfully loggued in.</span><br />';
 		
@@ -14,7 +14,7 @@ if( !empty($_POST['submitLogin']) ) {
 } else if( !empty($_POST['submitRegister']) ) {
 	try {
 		$formRegData = $_POST['regdata'];
-		$Membre = User::create($formRegData);
+		$Membre = SiteUser::create($formRegData);
 		echo '<span class="success">You\'re successfully registered.</span><br />';
 	} catch(UserException $e) {
 		echo '<span class="error">'.error($e, 'user').'</span><br />';
@@ -25,12 +25,11 @@ if( !empty($_POST['submitLogin']) ) {
 <form method="POST">
 <div class="loginform form">
 	<div class="username">
-		<label for="name">Nom d'utilisateur </label> 
-		<input class="input" id="name" type="text" name="data[name]" required="required" />
+		<input class="input" id="name" type="text" name="data[name]" placeholder="User name" required="required" />
 	</div>
 	<div class="password">
 		<label for="password">Mot de passe </label> 
-		<input class="input" id="password" type="password" name="data[password]" required="required" />
+		<input class="input" id="password" type="password" name="data[password]" placeholder="Password" required="required" />
 	</div>
 	<div class="loginSubmit">
 		<input class="submit" type="submit" name="submitLogin" value="Se connecter"/>
@@ -59,11 +58,11 @@ if( !empty($_POST['submitLogin']) ) {
 		<input class="checkbox" id="email_public" name="regdata[email_public]" type="checkbox"/>
 	</div>
 	<div class="password">
-		<label for="password">Mot de passe</label>
+		<label for="password">Password</label>
 		<input class="input" id="password" type="password" name="regdata[password]" required="required"/>
 	</div>
 	<div class="password_conf">
-		<label for="password_conf">Confirmation du Mot de passe</label>
+		<label for="password_conf">Confirm</label>
 		<input class="input" id="password_conf" type="password" name="regdata[password_conf]" required="required"/>
 	</div>
 	<div class="registerSubmit">

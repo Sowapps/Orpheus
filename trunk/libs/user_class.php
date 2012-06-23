@@ -8,7 +8,7 @@
  * Require core plugin.
  * 
  */
-class SiteUser extends AbstractStatus {
+class User extends AbstractStatus {
 	
 	//Attributes
 	protected static $table = 'users';
