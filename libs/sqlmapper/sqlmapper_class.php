@@ -140,3 +140,4 @@ abstract class SQLMapper {
 }
 
 includeDir(LIBSPATH.'sqlmapper/');
+ensure_pdoinstance();
