@@ -1,4 +1,6 @@
 <?php
+import('sqlmapper.SQLMapper');
+
 //! The permanent object class
 /*!
 	Create permanent object using the SQL Mapper.
