@@ -97,6 +97,7 @@ Inheritance diagram for SQLMapper:</div>
   <img src="class_s_q_l_mapper.png" usemap="#SQLMapper_map" alt=""/>
   <map id="SQLMapper_map" name="SQLMapper_map">
 <area href="class_s_q_l_mapper___my_s_q_l.html" title="The MYSQL Mapper class." alt="SQLMapper_MySQL" shape="rect" coords="0,56,131,80"/>
+<area href="class_s_q_l_mapper___pg_s_q_l.html" title="The MYSQL Mapper class." alt="SQLMapper_PgSQL" shape="rect" coords="141,56,272,80"/>
 </map>
  </div></div>
 
@@ -112,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for DELETE queries.  <a href="#a5976d0ffdba9b5e1c2daa988bf8e1384"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745">insert</a> (array $options=array())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#aa1cdf54e11d69c59795ec82d17a8a745"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e">lastID</a> ($table, $idfield)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to get the last inserted ID.  <a href="#ae180b8c24fd116b8092b8a4c2797ba8e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a333c4d974b46eca05d6be3e990fc244e">doSelect</a> (array $options=array())</td></tr>
@@ -122,7 +125,10 @@ Static Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for DELETE queries in global context.  <a href="#a5fabfae1b12ed46a60e49e2d64257c87"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2">doInsert</a> (array $options=array())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for INSERT queries in global context.  <a href="#af869e9ca6655fe97fe451ec2fb2312c2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad95c71c230f1df4c0faa0da1fafbabb4">doLastID</a> ($table)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use to get last isnert id in global context.  <a href="#ad95c71c230f1df4c0faa0da1fafbabb4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f">prepare</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af15c1243e3ae1a02bd2be4facdc8635e">quote</a> ($String)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">ARR_OBJECTS</a> = 1</td></tr>
@@ -174,7 +180,7 @@ Static Protected Attributes</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The number of deleted rows.</dd></dl>
 <p>It parses the query from an array to a DELETE query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a75e6e4d7f4316f1a5bacec285bba92fe">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -211,6 +217,24 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 <dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745" title="The function to use for INSERT queries.">SQLMapper::insert()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad95c71c230f1df4c0faa0da1fafbabb4"></a><!-- doxytag: member="SQLMapper::doLastID" ref="ad95c71c230f1df4c0faa0da1fafbabb4" args="($table)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#ad95c71c230f1df4c0faa0da1fafbabb4">SQLMapper::doLastID</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>table</em></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e" title="The function to get the last inserted ID.">SQLMapper::lastID()</a> </dd></dl>
 
 </div>
 </div>
@@ -273,7 +297,45 @@ Static Protected Attributes</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The number of inserted rows.</dd></dl>
 <p>It parses the query from an array to a INSERT query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a6244fbe3fe0f921f0bd15071510403e5">SQLMapper_PgSQL</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae180b8c24fd116b8092b8a4c2797ba8e"></a><!-- doxytag: member="SQLMapper::lastID" ref="ae180b8c24fd116b8092b8a4c2797ba8e" args="($table, $idfield)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e">SQLMapper::lastID</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>idfield</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [abstract]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$table</td><td>The table to get the last inserted id. </td></tr>
+    <tr><td class="paramname">$idfield</td><td>The field id name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The last inserted id value.</dd></dl>
+<p>It requires a successful call of <a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745" title="The function to use for INSERT queries.">insert()</a> ! </p>
+
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#ae50549a7ef045b5f8ed662995ec527bd">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -285,6 +347,23 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f">SQLMapper::prepare</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="af15c1243e3ae1a02bd2be4facdc8635e"></a><!-- doxytag: member="SQLMapper::quote" ref="af15c1243e3ae1a02bd2be4facdc8635e" args="($String)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_s_q_l_mapper.html#af15c1243e3ae1a02bd2be4facdc8635e">SQLMapper::quote</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>String</em></td><td>)</td>
           <td><code> [static]</code></td>
         </tr>
       </table>
@@ -316,7 +395,7 @@ Static Protected Attributes</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>Mixed return, depending on the mapper.</dd></dl>
 <p>It parses the query from an array to a SELECT query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -343,7 +422,7 @@ Static Protected Attributes</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd>The number of affected rows.</dd></dl>
 <p>It parses the query from an array to a UPDATE query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a1b25835ce0141248793212005ebb1383">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a1b25835ce0141248793212005ebb1383">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#afccae08c6d6829bc2b8903ebbeef6c4c">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -359,7 +438,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#abc8de894949856f7c2f078e4064aa957">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -374,7 +453,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a63c48101c1f9f65b44377c1236a3283e">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a63c48101c1f9f65b44377c1236a3283e">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a70e0fc4ef977ef7337a2514f0c8a5e04">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -389,7 +468,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a5f7ecfd0849fadbf5d79b1908b0c127c">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a5f7ecfd0849fadbf5d79b1908b0c127c">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#acf8642e17f34e93193d342fa003ec86c">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -417,7 +496,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a8c645a79d0a52df73e482461c04a24b0">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a8c645a79d0a52df73e482461c04a24b0">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a5e50ef988c28fa1504392a59ba232202">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -432,7 +511,7 @@ Static Protected Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#aeba0fa7e8ee9329dbbb719adcbe32a37">SQLMapper_MySQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#aeba0fa7e8ee9329dbbb719adcbe32a37">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a90d976b54a3b194f1db56d8c05d82a25">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
@@ -522,7 +601,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 7 2012 08:34:12 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 23 2012 17:19:57 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

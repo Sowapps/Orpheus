@@ -1,11 +1,21 @@
 var searchData=
 [
   ['save',['save',['../class_permanent_object.html#aa161262d8e6640659f93eb70e00d8d67',1,'PermanentObject']]],
-  ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
+  ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb',1,'SQLMapper_PgSQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
+  ['send',['send',['../class_email.html#aeff0b41b4d792c8e52c08f088fdc70a4',1,'Email']]],
   ['sendresponse',['sendResponse',['../__core_8php.html#ab27aefd881f4e0d1730555767d48a395',1,'_core.php']]],
+  ['setaltbody',['setAltBody',['../class_email.html#a2a618da95e293da3e5e93662d6eccef8',1,'Email']]],
+  ['setheader',['setHeader',['../class_email.html#a6b96d29cb1773a336a6687526234bc94',1,'Email']]],
+  ['sethtmlbody',['setHTMLBody',['../class_email.html#a02b93c9ff2e15025ccb4239fb6f2fdb7',1,'Email']]],
+  ['setreplyto',['setReplyTo',['../class_email.html#a3358fc044a4878c373c4d98e8b3576b8',1,'Email']]],
+  ['setsender',['setSender',['../class_email.html#a222b434ba8bc182be0d4e428e6797b19',1,'Email']]],
+  ['setsubject',['setSubject',['../class_email.html#a6ecd8877938ad840384c69e9e651ff97',1,'Email']]],
+  ['settextbody',['setTEXTBody',['../class_email.html#a2b4d36da7cba6986dad33eec31885fac',1,'Email']]],
+  ['settype',['setType',['../class_email.html#aed46d83df3197fe96ec398ccb86eb32d',1,'Email']]],
   ['setvalue',['setValue',['../class_permanent_object.html#a7ea07b0b92ab5bdb9942a3ffab60934e',1,'PermanentObject']]],
   ['slug',['slug',['../class_hook.html#a3bf465684fb291a0da9c6964710a9e5f',1,'Hook']]],
   ['ssh2_5frun',['ssh2_run',['../__core_8php.html#a23f9517830f7d777d047fd28fd3891dd',1,'_core.php']]],
+  ['status',['status',['../class_abstract_status.html#a13065df944948731acc20a3237f0601a',1,'AbstractStatus']]],
   ['str_5flimit',['str_limit',['../__core_8php.html#a8fc39868ac0b4d986fa2a55bff229768',1,'_core.php']]],
   ['sys_5ferror',['sys_error',['../__core_8php.html#afe9353395a545e2eaeeb91eab56c32ed',1,'_core.php']]]
 ];

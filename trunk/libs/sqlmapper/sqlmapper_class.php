@@ -114,11 +114,12 @@ abstract class SQLMapper {
 	//! The function to get the last inserted ID
 	/*!
 		\param $table The table to get the last inserted id.
+		\param $idfield The field id name.
 		\return The last inserted id value.
 		
 		It requires a successful call of insert() !
 	*/
-	public abstract function lastID($table);
+	public abstract function lastID($table, $idfield);
 	
 	public static function prepare() {
 		if( self::$Mapper != null ) {

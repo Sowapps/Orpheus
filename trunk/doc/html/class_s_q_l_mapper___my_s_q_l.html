@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for DELETE queries.  <a href="#ae6485f01a1fd88810ca7d334f6611b59"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee">insert</a> (array $options=array())</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#a782651f9a6f5f686d07f352ce332d7ee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192">lastID</a> ($table, $idfield='id')</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to get the last inserted ID.  <a href="#a96eebb1ea0fe901ba6dd59fa11322192"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a63c48101c1f9f65b44377c1236a3283e">$IDFIELD</a> = 'id'</td></tr>
@@ -176,6 +178,44 @@ Static Protected Attributes</h2></td></tr>
 <p>It parses the query from an array to a INSERT query. Accept only the String syntax for what option. </p>
 
 <p>Reimplemented from <a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745">SQLMapper</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a96eebb1ea0fe901ba6dd59fa11322192"></a><!-- doxytag: member="SQLMapper_MySQL::lastID" ref="a96eebb1ea0fe901ba6dd59fa11322192" args="($table, $idfield='id')" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192">SQLMapper_MySQL::lastID</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>idfield</em> = <code>'id'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$table</td><td>The table to get the last inserted id. </td></tr>
+    <tr><td class="paramname">$idfield</td><td>The field id name. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>The last inserted id value.</dd></dl>
+<p>It requires a successful call of <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee" title="The function to use for INSERT queries.">insert()</a> ! </p>
+
+<p>Reimplemented from <a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e">SQLMapper</a>.</p>
 
 </div>
 </div>
@@ -368,7 +408,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Mar 7 2012 08:34:12 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Jun 23 2012 17:19:57 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

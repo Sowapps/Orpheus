@@ -15,5 +15,7 @@ var searchData=
   ['pdostmt',['PDOSTMT',['../__pdo_8php.html#a910bb72df5340dc292fcccc386564cf3',1,'_pdo.php']]],
   ['permanentobject',['PermanentObject',['../class_permanent_object.html',1,'']]],
   ['permanentobject_5fclass_2ephp',['permanentobject_class.php',['../permanentobject__class_8php.html',1,'']]],
+  ['permanentredirectto',['permanentRedirectTo',['../__core_8php.html#a973d52414ec8f58ea670703c01c3691d',1,'_core.php']]],
+  ['pgsql_5fclass_2ephp',['pgsql_class.php',['../pgsql__class_8php.html',1,'']]],
   ['prepare',['prepare',['../class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f',1,'SQLMapper']]]
 ];
