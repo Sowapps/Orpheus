@@ -19,6 +19,11 @@ function redirectTo($Destination='') {
 	die();
 }
 
+function permanentRedirectTo($Destination='') {
+	header('HTTP/1.1 301 Moved Permanently', false, 301);
+	redirectTo($Destination);
+}
+
 function htmlRedirectTo($dest, $time=3, $die=0) {
 	echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"{$time} ; URL={$dest}\">";
 	if( !empty($die) ) {
@@ -201,7 +206,6 @@ function parseFields(array $fields) {
 	Includes the package page from the libs directory.
 	e.g: "package.myclass", "package.other.*"
 */
-//TODO: Faire un test unitaire.
 function using($pkgPath) {
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
 	if( substr($pkgPath, -2) == '.*' ) {
