@@ -140,4 +140,4 @@ abstract class SQLMapper {
 }
 
 includeDir(LIBSPATH.'sqlmapper/');
-self::prepare();
+SQLMapper::prepare();
