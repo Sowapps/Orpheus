@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['abstracttable',['AbstractTable',['../class_abstract_table.html',1,'']]]
+  ['abstractpublication',['AbstractPublication',['../class_abstract_publication.html',1,'']]],
+  ['abstractstatus',['AbstractStatus',['../class_abstract_status.html',1,'']]]
 ];
