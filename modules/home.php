@@ -1,7 +1,7 @@
 <?php 
 ?>
 This page is an example of Home using Orpheus.<br />
-<a href="user_login.html">Try user system ! (Publisher Plugin)</a>
+<a href="user_login.html">Try user system ! (Publisher Plugin)</a><br />
 <br />
 <?php
 if( !empty($_POST['data']) ) {
