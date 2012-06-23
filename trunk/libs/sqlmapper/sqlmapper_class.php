@@ -140,4 +140,4 @@ abstract class SQLMapper {
 }
 
 includeDir(LIBSPATH.'sqlmapper/');
-SQLMapper::prepare();
+SQLMapper::prepare();//Object destruction can not load libs and load DB config.
