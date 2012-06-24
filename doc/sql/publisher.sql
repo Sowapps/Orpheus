@@ -30,11 +30,11 @@ CREATE TABLE users (
     create_time integer DEFAULT 0 NOT NULL,
     create_ip character varying(40) NOT NULL,
     activation_time integer DEFAULT 0 NOT NULL,
-    activation_ip character varying(40) NOT NULL,
+    activation_ip character varying(40),
     login_time integer DEFAULT 0 NOT NULL,
-    login_ip character varying(40) NOT NULL,
+    login_ip character varying(40),
     activity_time integer DEFAULT 0 NOT NULL,
-    activity_ip character varying(40) NOT NULL,
+    activity_ip character varying(40),
     status character varying(20) NOT NULL
 );
 

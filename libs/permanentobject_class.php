@@ -24,7 +24,8 @@ abstract class PermanentObject {
 	 */
 	public function __construct(array $data) {
 		foreach( static::$fields as $fieldname ) {
-			if( !isset($data[$fieldname]) ) {
+			// We condiser null as a valid value.
+			if( !array_key_exists($fieldname, $data) ) {
 				throw new FieldNotFoundException($fieldname);
 			}
 			$this->data[$fieldname] = $data[$fieldname];
