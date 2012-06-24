@@ -72,8 +72,10 @@ abstract class AbstractPublication extends AbstractStatus {
 	// *** METHODES STATIQUES ***
 	
 	public static function eraseAllCache() {
-		$table=static::$table;
-		return pdo_query("UPDATE {$table} SET cache=''", PDOEXEC);
+		return SQLMapper::doUpdate(array(
+			'table' => static::$table,
+			'what' => "cache=''",
+		));
 	}
 	
 	// 		** METHODES DE VERIFICATION **
