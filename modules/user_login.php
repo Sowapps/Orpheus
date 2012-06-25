@@ -35,7 +35,7 @@ if( User::is_login() ) {
 		<input class="input" id="password" type="password" name="data[password]" placeholder="Password" required="required" />
 	</div>
 	<div class="loginSubmit">
-		<input class="submit" type="submit" name="submitLogin" value="Se connecter"/>
+		<input class="submit" type="submit" name="submitLogin" value="Login"/>
 	</div>
 </div>
 </form>
@@ -69,7 +69,7 @@ if( User::is_login() ) {
 		<input class="input" id="password_conf" type="password" name="regdata[password_conf]" required="required"/>
 	</div>
 	<div class="registerSubmit">
-		<input class="submit" type="submit" name="submitRegister" value="S'enregistrer"/>
+		<input class="submit" type="submit" name="submitRegister" value="Register"/>
 	</div>
 </div>
 </form>
