@@ -7,20 +7,26 @@ if( !empty($_POST['submitLogin']) ) {
 	try {
 		SiteUser::userLogin($_POST['data']);
 		$_SESSION['welcome'] = 3;
-		echo '<span class="success">You\'re successfully loggued in.</span><br />';
+		reportSuccess('You\'re successfully loggued in.');
 		
 	} catch(UserException $e) {
-		echo '<span class="error">'.error($e, 'user').'</span><br />';
+		reportError($e);
 	}
 } else if( !empty($_POST['submitRegister']) ) {
 	try {
 		$formRegData = $_POST['regdata'];
 		$Membre = SiteUser::create($formRegData);
 		echo '<span class="success">You\'re successfully registered.</span><br />';
+		reportSuccess('You\'re successfully registered.');
 	} catch(UserException $e) {
-		echo '<span class="error">'.error($e, 'user').'</span><br />';
+		reportError($e);
 	}
 }
+echo '
+<div class="reports">
+'.getReportsHTML().'
+</div>';
+
 if( User::is_login() ) {
 	echo "Welcome {$USER->fullname} !<br />";
 }

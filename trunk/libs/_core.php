@@ -101,6 +101,7 @@ function cleanscandir($dir, $sorting_order = 0) {
 	return $result;
 }
 
+/*
 function error($e, $domain=null) {
 	global $ERRORS;
 	$msg = ($e instanceof Exception) ? $e->getMessage() : "$e";
@@ -112,6 +113,7 @@ function error($e, $domain=null) {
 	}
 	return $msg;
 }
+*/
 
 function log_error($report, $file, $Action='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'Action' => $Action);
@@ -253,21 +255,8 @@ function addReport($message, $type, $domain='global') {
 	if( !isset($REPORTS[$domain]) ) {
 		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
 	}
+	// Require use of a translator system.
 	$REPORTS[$domain][$type][] = $message;
-}
-
-function getReportsHTML($domain='global') {
-	global $REPORTS;
-	if( empty($REPORTS[$domain]) ) {
-		return '';
-	}
-	$report = '';
-	foreach( $REPORTS[$domain] as $type => $reports ) {
-		foreach( $reports as $message) {
-			$report .= '<div class="report '.$type.'">'.$message.'</div>';
-		}
-	}
-	return $report;
 }
 
 function reportSuccess($message, $domain='global') {
@@ -275,5 +264,24 @@ function reportSuccess($message, $domain='global') {
 }
 
 function reportError($message, $domain='global') {
+	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
 	return addReport($message, 'error', $domain);
+}
+
+function getReportsHTML($domain='global', $delete=1) {
+	global $REPORTS;
+	if( empty($REPORTS[$domain]) ) {
+		return '';
+	}
+	$report = '';
+	foreach( $REPORTS[$domain] as $type => &$reports ) {
+		foreach( $reports as $message) {
+			$report .= '
+		<div class="report '.$type.'">'.$message.'</div>';
+		}
+		if( $delete ) {
+			$reports = array();
+		}
+	}
+	return $report;
 }
