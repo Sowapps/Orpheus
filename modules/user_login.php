@@ -22,7 +22,7 @@ if( !empty($_POST['submitLogin']) ) {
 	}
 }
 if( SiteUser::is_login() ) {
-	echo "Welcome {$_SESSION['USER']->fullname} !<br />";
+	echo "Welcome {$USER->fullname} !<br />";
 }
 ?>
 <h2>Login</h2>
