@@ -22,8 +22,7 @@ if( !empty($_POST['submitLogin']) ) {
 	}
 }
 if( User::is_login() ) {
-	var_dump($USER);
-	//echo "Welcome {$USER->fullname} !<br />";
+	echo "Welcome {$USER->fullname} !<br />";
 }
 ?>
 <h2>Login</h2>
