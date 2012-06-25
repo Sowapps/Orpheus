@@ -247,3 +247,33 @@ function addAutoload($className, $classPath) {
 	}
 	return true;
 }
+
+function addReport($message, $type, $domain='global') {
+	global $REPORTS;
+	if( !isset($REPORTS[$domain]) ) {
+		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
+	}
+	$REPORTS[$domain][$type][] = $message;
+}
+
+function getReportsHTML($domain='global') {
+	global $REPORTS;
+	if( empty($REPORTS[$domain]) ) {
+		return '';
+	}
+	$report = '';
+	foreach( $REPORTS[$domain] as $type => $reports ) {
+		foreach( $reports as $message) {
+			$report .= '<div class="report '.$type.'">'.$message.'</div>';
+		}
+	}
+	return $report;
+}
+
+function reportSuccess($message, $domain='global') {
+	return addReport($message, 'success', $domain);
+}
+
+function reportError($message, $domain='global') {
+	return addReport($message, 'error', $domain);
+}
