@@ -27,7 +27,7 @@ Hook::register('checkModule', function () {
 		text("user is login");
 		global $USER;
 		text("Session user:");
-		text($_SESSION['USER']);
+		var_dump($_SESSION['USER']);
 		$USER = &$_SESSION['USER'];
 	}
 });
