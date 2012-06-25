@@ -28,8 +28,10 @@ Hook::register('checkModule', function () {
 		global $USER;
 		text("Session user:");
 		var_dump($_SESSION['USER']);
+		text();
 		$USER = &$_SESSION['USER'];
 		var_dump($USER);
+		text();
 	}
 });
 
