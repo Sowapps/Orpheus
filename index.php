@@ -90,6 +90,7 @@ function __autoload($className) {
 }
 $AUTOLOADS = array();
 
+$coreAction = 'initializing_core';
 try {
 	Config::build('engine');
 	
@@ -114,16 +115,7 @@ try {
 		$Module = DEFAULTMOD;
 	}
 
-} catch(Exception $e) {
-	sys_error("$e", "initializing_core");
-	$Page = '
-<div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
-<div class="logs" style="display: none;">
-Error is \''.$e->getMessage().'\'.
-</div>';
-}
-
-try {
+	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', $Module);
 	
 	if( strpos($Module, '/') !== false ) {
@@ -138,10 +130,10 @@ try {
 	$Page = ob_get_contents();
 	ob_end_clean();
 } catch(Exception $e) {
-	if( ob_get_level() > OBLEVEL_INIT ) {
+	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
 	}
-	sys_error("$e", "running_".$Module);
+	sys_error("$e", $coreAction);
 	$Page = '
 <div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
 <div class="logs" style="display: none;">
