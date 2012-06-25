@@ -21,7 +21,8 @@ if( !empty($_POST['submitLogin']) ) {
 		echo '<span class="error">'.error($e, 'user').'</span><br />';
 	}
 }
-if( SiteUser::is_login() ) {
+if( User::is_login() ) {
+	var_dump($USER);
 	echo "Welcome {$USER->fullname} !<br />";
 }
 ?>
