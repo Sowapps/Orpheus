@@ -109,9 +109,6 @@ try {
 	$Page = '';
 	
 	Hook::trigger('checkModule');
-	text("Trigerred");
-	var_dump($USER);
-	text();
 	
 	if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
 		$Module = $_GET['module'];
