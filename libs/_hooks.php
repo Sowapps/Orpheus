@@ -24,14 +24,8 @@ Hook::register('runModule', function ($Module) {
 
 Hook::register('checkModule', function () {
 	if( User::is_login() ) {
-		text("user is login");
-		//global $USER;
-		text("Session user:");
-		var_dump($_SESSION['USER']);
-		text();
+		//global $USER;// Do not work in this context.
 		$GLOBALS['USER'] = &$_SESSION['USER'];
-		var_dump($GLOBALS['USER']);
-		text();
 	}
 });
 
