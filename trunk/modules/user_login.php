@@ -22,10 +22,7 @@ if( !empty($_POST['submitLogin']) ) {
 		reportError($e);
 	}
 }
-echo '
-<div class="reports">
-'.getReportsHTML().'
-</div>';
+displayReportsHTML();
 
 if( User::is_login() ) {
 	echo "Welcome {$USER->fullname} !<br />";

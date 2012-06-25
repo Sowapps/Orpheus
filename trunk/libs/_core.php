@@ -285,3 +285,10 @@ function getReportsHTML($domain='global', $delete=1) {
 	}
 	return $report;
 }
+
+function displayReportsHTML($domain='global', $delete=1) {
+	echo '
+	<div class="reports '.$domain.'">
+	'.getReportsHTML($domain, $delete).'
+	</div>';
+}
