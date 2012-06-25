@@ -29,6 +29,7 @@ Hook::register('checkModule', function () {
 		text("Session user:");
 		var_dump($_SESSION['USER']);
 		$USER = &$_SESSION['USER'];
+		var_dump($USER);
 	}
 });
 

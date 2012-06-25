@@ -130,10 +130,6 @@ try {
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();
 	ob_end_clean();
-	
-	$coreAction = 'displaying_'.$Module;
-	Hook::trigger('showRendering');
-	Rendering::doShow();//Generic final display.
 } catch(Exception $e) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
@@ -144,5 +140,14 @@ try {
 <div class="logs" style="display: none;">
 Error is \''.$e->getMessage().'\'.
 </div>';
+}
+
+try {
+	$coreAction = 'displaying_'.$Module;
+	Hook::trigger('showRendering');
+	Rendering::doShow();//Generic final display.
+} catch(Exception $e) {
+	@sys_error("$e", $coreAction);
+	die('A fatal display error occured.');
 }
 ?>
