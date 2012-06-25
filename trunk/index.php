@@ -130,6 +130,10 @@ try {
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();
 	ob_end_clean();
+	
+	$coreAction = 'displaying_'.$Module;
+	Hook::trigger('showRendering');
+	Rendering::doShow();//Generic final display.
 } catch(Exception $e) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
@@ -141,7 +145,4 @@ try {
 Error is \''.$e->getMessage().'\'.
 </div>';
 }
-
-Hook::trigger('showRendering');
-Rendering::doShow();//Generic final display.
 ?>

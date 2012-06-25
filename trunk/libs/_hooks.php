@@ -24,7 +24,10 @@ Hook::register('runModule', function ($Module) {
 
 Hook::register('checkModule', function () {
 	if( User::is_login() ) {
+		text("user is login");
 		global $USER;
+		text("Session user:");
+		text($_SESSION['USER']);
 		$USER = &$_SESSION['USER'];
 	}
 });
