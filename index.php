@@ -89,6 +89,7 @@ function __autoload($className) {
 	}
 }
 $AUTOLOADS = array();
+$Module = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 try {
