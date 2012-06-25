@@ -12,11 +12,11 @@ class FieldNotFoundException extends Exception {
 		\param $fieldname The name of the missing field.
 	*/
 	public function __construct($fieldname) {
-		parent::__construct('fieldNotFound', 1001);
+		parent::__construct('fieldNotFound['.$fieldname.']', 1001);
 		$this->fieldname = (string) $fieldname;
 	}
 	
-	//! Get the field name
+	//! Gets the field name
 	/*!
 		\return The field name.
 	*/

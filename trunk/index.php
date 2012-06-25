@@ -90,32 +90,42 @@ function __autoload($className) {
 }
 $AUTOLOADS = array();
 
-Config::build('engine');
+try {
+	Config::build('engine');
+	
+	includeDir(CONFPATH);
+	includeDir(LIBSPATH);
+	
+	//Here start Hooks and Session too.
+	Hook::trigger('startSession');
+	
+	session_start();
+	
+	//Check and Get Action.
+	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
+	
+	$Page = '';
+	
+	Hook::trigger('checkModule');
+	
+	if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
+		$Module = $_GET['module'];
+	} else {
+		$Module = DEFAULTMOD;
+	}
 
-includeDir(CONFPATH);
-includeDir(LIBSPATH);
-
-//Here start Hooks and Session too.
-Hook::trigger('startSession');
-
-session_start();
-
-//Check and Get Action.
-$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
-
-$Page = '';
-
-Hook::trigger('checkModule');
-
-if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
-	$Module = $_GET['module'];
-} else {
-	$Module = DEFAULTMOD;
+} catch(Exception $e) {
+	sys_error("$e", "initializing_core");
+	$Page = '
+<div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
+<div class="logs" style="display: none;">
+Error is \''.$e->getMessage().'\'.
+</div>';
 }
 
-$Module = Hook::trigger('runModule', $Module);
-
 try {
+	$Module = Hook::trigger('runModule', $Module);
+	
 	if( strpos($Module, '/') !== false ) {
 		throw new Exception("invalidModuleName");
 	}
