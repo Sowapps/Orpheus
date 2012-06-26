@@ -16,7 +16,6 @@ if( !empty($_POST['submitLogin']) ) {
 	try {
 		$formRegData = $_POST['regdata'];
 		$Membre = SiteUser::create($formRegData);
-		echo '<span class="success">You\'re successfully registered.</span><br />';
 		reportSuccess('You\'re successfully registered.');
 	} catch(UserException $e) {
 		reportError($e);
