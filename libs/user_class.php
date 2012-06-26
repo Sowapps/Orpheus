@@ -176,7 +176,7 @@ class User extends AbstractStatus {
 	public static function hashPassword($str) {
 		//http://www.php.net/manual/en/faq.passwords.php
 		$salt = (defined('USER_SALT')) ? USER_SALT : '1$@g&';
-		return md5($salt.$str.'7');
+		return hash('sha512', $salt.$str.'7');
 	}
 	
 	public static function is_login() {
