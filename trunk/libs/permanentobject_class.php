@@ -330,7 +330,9 @@ abstract class PermanentObject {
 		}
 		*/
 		foreach($data as $fieldname => &$fieldvalue) {
-			$fieldvalue = SQLMapper::quote($fieldvalue);
+			if( in_array($fieldvalue, static::$fields) ) {
+				$fieldvalue = SQLMapper::quote($fieldvalue);
+			}
 		}
 		$options = array(
 			'table'	=> static::$table,
