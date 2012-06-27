@@ -67,9 +67,9 @@ function __autoload($className) {
 	try {
 		global $AUTOLOADS;
 		$bFile = strtolower($className);
-		if( !empty($AUTOLOADS[$className]) ) {
-			if( is_readable(LIBSPATH.$AUTOLOADS[$className]) ) {
-				require_once LIBSPATH.$AUTOLOADS[$className];
+		if( !empty($AUTOLOADS[$bFile]) ) {
+			if( is_readable(LIBSPATH.$AUTOLOADS[$bFile]) ) {
+				require_once LIBSPATH.$AUTOLOADS[$bFile];
 			}
 			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
 		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
