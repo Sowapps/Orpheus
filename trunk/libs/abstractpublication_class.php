@@ -36,7 +36,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		return $this->getHTML();
 	}
 	
-	// *** METHODES UTILISATEUR ***
+	// *** USER METHODS ***
 	
 	public function update($uInputData, array $data=array()) {
 		if( !user_can(static::$table.'_edit') ) {
@@ -69,7 +69,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	abstract public function generateHTML();
 	abstract public function getPermalink();
 	
-	// *** METHODES STATIQUES ***
+	// *** STATIC METHODS ***
 	
 	public static function eraseAllCache() {
 		return SQLMapper::doUpdate(array(
@@ -78,7 +78,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		));
 	}
 	
-	// 		** METHODES DE VERIFICATION **
+	// 		** CHECK METHODS **
 	
 	public static function checkName($inputData) {
 		if( empty($inputData['name']) ) {
@@ -94,7 +94,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		return (int) $inputData['user_id'];
 	}
 	
-	//Correspond à User::checkFullName($inputData)
+	// Similar to User::checkFullName($inputData)
 	public static function checkUserName($inputData) {
 		if( empty($inputData['user_name']) ) {
 			throw new UserException('invalidUserName');

@@ -235,6 +235,7 @@ function using($pkgPath) {
 */
 function addAutoload($className, $classPath) {
 	global $AUTOLOADS;
+	$className = strtolower($className);
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
