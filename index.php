@@ -86,7 +86,8 @@ function __autoload($className) {
 			throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
-		die($e);
+		@sys_error("$e", 'loading_class_'.$className);
+		die('A fatal error occured loading libraries.');
 	}
 }
 $AUTOLOADS = array();
