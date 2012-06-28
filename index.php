@@ -70,6 +70,7 @@ function __autoload($className) {
 		if( !empty($AUTOLOADS[$bFile]) ) {
 			if( is_readable(LIBSPATH.$AUTOLOADS[$bFile]) ) {
 				require_once LIBSPATH.$AUTOLOADS[$bFile];
+				return;
 			}
 			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
 		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
