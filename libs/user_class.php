@@ -24,10 +24,12 @@ class User extends AbstractStatus {
 
 	// *** METHODES SURCHARGEES ***
 	
+	//! ToString method for implicit conversions.
 	public function __toString() {
 		return $this->name;
 	}
 	
+	//! Method when this object is unserialized.
 	public function __wakeup() {
 		if( $this->login ) {
 			static::logEvent('activity');
@@ -36,6 +38,7 @@ class User extends AbstractStatus {
 	
 	// *** METHODES UTILISATEUR ***
 	
+	//! Log in this user to the current session.
 	public function login() {
 		if( static::is_login() ) {
 			throw new UserException('alreadyLogguedIn');
@@ -47,19 +50,20 @@ class User extends AbstractStatus {
 		static::logEvent('activity');
 	}
 	
+	//! Log out this user from the current session.
 	public function logout() {
 		global $USER;
 		$this->login = 0;//Au cas où l'utilisateur est pointé ailleurs.
 		$_SESSION['USER'] = $USER = null;
 	}
 
-	public function checkPermToMod($ModType, $Mod) {
-		if( empty($ModsList[$ModType]) || !isset($ModsList[$ModType][$Mod]) ) {
-			throw new UserException('modNotExisting');
-		}
-		return ( $this->accesslevel >= $ModsList[$ModType][$Mod] );
-	}
-	
+	//! Checks permissions
+	/*!
+	 * \param $right The right to compare, can be the right string to look for or an integer.
+	 * \return True if this user has enough acess level.
+	 * 
+	 * Compares the accesslevel of this user to the incoming right.
+	 */
 	public function checkPerm($right) {
 		//$right peut être un entier ou une chaine de caractère correspondant à un droit.
 		//Dans ce dernier cas, on va chercher l'entier correspondant.
@@ -72,6 +76,12 @@ class User extends AbstractStatus {
 		return ( $this->accesslevel >= $right );
 	}
 	
+	//! Checks access permissions
+	/*!
+	 * \param $module The module to check.
+	 * \return True if this user has enough acess level to access to this module.
+	 * \sa checkPerm()
+	 */
 	public function checkAccess($module) {
 		//$module pdoit être un nom de module.
 		if( !isset($GLOBALS['ACCESS'][$module]) ) {
@@ -80,6 +90,35 @@ class User extends AbstractStatus {
 		return $this->checkPerm((int) $GLOBALS['ACCESS'][$module]);
 	}
 	
+	//! Checks if current loggued user can edit this one.
+	/*!
+	 * \param $inputData The input data.
+	 */
+	public function checkPermissions($inputData ) {
+		global $USER;
+		/* Vérifie:
+		 * - Si l'utilisateur courant a les droits de modifications.
+		 * - Si l'utilisateur courant a strictement plus de permissions que l'utilisateur à éditer.
+		 * - Si l'utilisateur courant ne tente pas de donner plus de droits qu'il n'en possède lui même.
+		 */
+		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 200 ) {
+			throw new UserException('invalidAccessLevel');
+		}
+		if( $inputData['accesslevel'] == $this->accesslevel ) {
+			throw new UserException('sameAccessLevel');
+		}
+		if( user_can('rights_grant', $this) || $USER->accesslevel <= $this->accesslevel || $USER->accesslevel <= $inputData['accesslevel'] ) {
+			throw new UserException('forbiddenGrant');
+		}
+		return (int) ( !empty($inputData['accesslevel']) );
+	}
+	
+	//! Checks if this user can do $action on $user.
+	public function canOn($action, $user) {
+		return $this->checkPerm($action) && $user->accesslevel < $this->accesslevel;
+	}
+	
+	//! Update this user object from given data
 	public function update($uInputData, array $data=array()) {
 		
 		//Si aucun utilisateur n'est connecté ou qu'il n'est ni cet utilisateur ni ne possède les droits suffisants.
@@ -124,29 +163,6 @@ class User extends AbstractStatus {
 		} catch(UserException $e) { addUserError($e); }
 		
 		return parent::update($uInputData, $data);
-	}
-	
-	public function checkPermissions($inputData ) {
-		global $USER;
-		/* Vérifie:
-		 * - Si l'utilisateur courant a les droits de modifications.
-		 * - Si l'utilisateur courant a strictement plus de permissions que l'utilisateur à éditer.
-		 * - Si l'utilisateur courant ne tente pas de donner plus de droits qu'il n'en possède lui même.
-		 */
-		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 200 ) {
-			throw new UserException('invalidAccessLevel');
-		}
-		if( $inputData['accesslevel'] == $this->accesslevel ) {
-			throw new UserException('sameAccessLevel');
-		}
-		if( user_can('rights_grant', $this) || $USER->accesslevel <= $this->accesslevel || $USER->accesslevel <= $inputData['accesslevel'] ) {
-			throw new UserException('forbiddenGrant');
-		}
-		return (int) ( !empty($inputData['accesslevel']) );
-	}
-	
-	public function canOn($action, $user) {
-		return $this->checkPerm($action) && $user->accesslevel < $this->accesslevel;
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -196,6 +212,28 @@ class User extends AbstractStatus {
 		}
 		return parent::delete($id);
 	}
+	
+	public static function canAccessTo($Module) {
+		global $USER, $ACCESS;
+		return !isset($ACCESS[$module]) || (
+			( empty($USER) && $ACCESS[$module] < 0 ) ||
+			( !empty($USER) && $ACCESS[$module] >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
+		);
+	}
+	/*
+function user_can($action, $selfEditUser=null) {
+	global $USER;
+	return !empty($USER) && ( $USER instanceof SiteUser ) && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && ( $selfEditUser instanceof SiteUser ) && $selfEditUser->equals($USER) ) );
+}
+
+function user_access($module) {
+	global $USER;
+	return !isset($GLOBALS['ACCESS'][$module]) || (
+		( empty($USER) && $GLOBALS['ACCESS'][$module] < 0 ) ||
+		( !empty($USER) && $GLOBALS['ACCESS'][$module] >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
+	);
+}
+	 */
 	
 	// 		** METHODES DE VERIFICATION **
 	

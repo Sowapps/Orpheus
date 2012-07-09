@@ -55,19 +55,6 @@ function sendResponse($Code, $Other='', $lang=null) {
 	);
 }
 
-function user_can($action, $selfEditUser=null) {
-	global $USER;
-	return !empty($USER) && ( $USER instanceof SiteUser ) && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && ( $selfEditUser instanceof SiteUser ) && $selfEditUser->equals($USER) ) );
-}
-
-function user_access($module) {
-	global $USER;
-	return !isset($GLOBALS['ACCESS'][$module]) || (
-		( empty($USER) && $GLOBALS['ACCESS'][$module] < 0 ) ||
-		( !empty($USER) && $GLOBALS['ACCESS'][$module] >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
-	);
-}
-
 function ssh2_run($command, $SSH2S=null) {
 	if( !isset($SSH2S) ) {
 		global $SSH2S;
