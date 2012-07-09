@@ -112,21 +112,20 @@ try {
 	
 	Hook::trigger('checkModule');
 	
-	if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
-		$Module = $_GET['module'];
-	} else {
+	if( empty($_GET['module']) ) {
 		$Module = DEFAULTMOD;
+	} else {
+		$Module = $_GET['module'];
+	}
+	if( !is_name($_GET['module']) ) {
+		throw new Exception('invalidModuleName');
+	}
+	if( !is_readable(MODPATH.$Module.'.php') ) {
+		throw new Exception('inexistantModule');
 	}
 
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', $Module);
-	
-	if( strpos($Module, '/') !== false ) {
-		throw new Exception("invalidModuleName");
-	}
-	if( !is_readable(MODPATH.$Module.'.php') ) {
-		throw new Exception("inexistantModule");
-	}
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
 	require_once MODPATH.$Module.'.php';
