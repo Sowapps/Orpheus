@@ -32,15 +32,6 @@ Hook::register('checkModule', function () {
 
 Hook::register('runModule', function () {
 	if( !User::canAccess($GLOBALS['Module']) ) {
-		redirectTo(( defined('ACCESSDENIEDMOD') ) ? ACCESSDENIEDMOD : DEFAULTMOD);
+		redirectTo((( defined('ACCESSDENIEDMOD') ) ? ACCESSDENIEDMOD : DEFAULTMOD).'.html');
 	}
 });
-// if( !empty($_GET['module']) && is_name($_GET['module']) && file_exists(MODPATH.$_GET['module'].'.php') ) {
-// 	if( user_access($_GET['module']) ) {
-// 		$Module = $_GET['module'];
-// 	} else {
-// 		$Module = 'access_denied';
-// 	}
-// } else {
-// 	$Module = DEFAULTMOD;
-// }
