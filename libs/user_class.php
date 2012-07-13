@@ -213,7 +213,7 @@ class User extends AbstractStatus {
 		return parent::delete($id);
 	}
 	
-	public static function canAccessTo($Module) {
+	public static function canAccess($Module) {
 		global $USER, $ACCESS;
 		return !isset($ACCESS[$module]) || (
 			( empty($USER) && $ACCESS[$module] < 0 ) ||
