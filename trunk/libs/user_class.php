@@ -84,10 +84,10 @@ class User extends AbstractStatus {
 	 */
 	public function checkAccess($module) {
 		//$module pdoit être un nom de module.
-		if( !isset($GLOBALS['ACCESS'][$module]) ) {
+		if( !isset($GLOBALS['ACCESS']->$module) ) {
 			return true;
 		}
-		return $this->checkPerm((int) $GLOBALS['ACCESS'][$module]);
+		return $this->checkPerm((int) $GLOBALS['ACCESS']->$module);
 	}
 	
 	//! Checks if current loggued user can edit this one.
@@ -215,9 +215,9 @@ class User extends AbstractStatus {
 	
 	public static function canAccess($Module) {
 		global $USER, $ACCESS;
-		return !isset($ACCESS[$module]) || (
-			( empty($USER) && $ACCESS[$module] < 0 ) ||
-			( !empty($USER) && $ACCESS[$module] >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
+		return !isset($ACCESS->$module) || (
+			( empty($USER) && $ACCESS->$module < 0 ) ||
+			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
 		);
 	}
 	/*
