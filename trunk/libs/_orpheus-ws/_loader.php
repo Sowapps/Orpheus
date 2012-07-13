@@ -8,3 +8,4 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
+addAutoload('SiteUser', '_orpheus-ws/siteuser_class.php');
