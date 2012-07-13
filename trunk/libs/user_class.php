@@ -1,9 +1,9 @@
 <?php
-//! The site user class
+//! The user class
 /*!
- * The site user class represents an user known by the current website as a permanent object.
+ * The user class represents an user known by the current website as a permanent object.
  * This class is commonly inherited by a user class for registered users.
- * But a site user can be a Facebook user too for example.
+ * But an user can be a Facebook user or a Site user for example.
  * 
  * Require core plugin.
  * 
@@ -220,22 +220,13 @@ class User extends AbstractStatus {
 			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
 		);
 	}
-	/*
-function user_can($action, $selfEditUser=null) {
-	global $USER;
-	return !empty($USER) && ( $USER instanceof SiteUser ) && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && ( $selfEditUser instanceof SiteUser ) && $selfEditUser->equals($USER) ) );
-}
-
-function user_access($module) {
-	global $USER;
-	return !isset($GLOBALS['ACCESS'][$module]) || (
-		( empty($USER) && $GLOBALS['ACCESS'][$module] < 0 ) ||
-		( !empty($USER) && $GLOBALS['ACCESS'][$module] >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
-	);
-}
-	 */
 	
-	// 		** METHODES DE VERIFICATION **
+	public static function canDo($action, $selfEditUser=null) {
+		global $USER;
+		return !empty($USER) && $USER instanceof SiteUser && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && $selfEditUser instanceof SiteUser && $selfEditUser->equals($USER) ) );
+	}
+	
+	// 		** Verification methods **
 	
 	public static function checkName($inputData) {
 		if( empty($inputData['name']) || !is_name($inputData['name']) ) {
@@ -310,5 +301,7 @@ function user_access($module) {
 		}
 		return parent::checkStatus($newStatus, $currentStatus);
 	}
+	
+	/* Website */
 }
 ?>
