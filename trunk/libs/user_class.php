@@ -215,7 +215,7 @@ class User extends AbstractStatus {
 	
 	public static function canAccess($module) {
 		global $USER, $ACCESS;
-		return !isset($ACCESS->$module) || (
+		return is_null($ACCESS->$module) || (
 			( empty($USER) && $ACCESS->$module < 0 ) ||
 			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
 		);
