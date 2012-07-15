@@ -323,14 +323,8 @@ abstract class PermanentObject {
 		//Other Checks and to do before insertion
 		static::runForObject($data);
 		
-		/*
-		$insertQ = '';
-		foreach($data as $fieldname => $fieldvalue) {
-			$insertQ .= ( (!empty($insertQ)) ? ', ' : '').$fieldname.'='.SQLMapper::quote($fieldvalue);
-		}
-		*/
 		foreach($data as $fieldname => &$fieldvalue) {
-			if( in_array($fieldvalue, static::$fields) ) {
+			if( in_array($fieldname, static::$fields) ) {
 				$fieldvalue = SQLMapper::quote($fieldvalue);
 			}
 		}
