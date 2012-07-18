@@ -81,6 +81,7 @@ class User extends AbstractStatus {
 	 * \param $module The module to check.
 	 * \return True if this user has enough acess level to access to this module.
 	 * \sa checkPerm()
+	 * \warning Obsolete
 	 */
 	public function checkAccess($module) {
 		//$module pdoit être un nom de module.
@@ -215,10 +216,9 @@ class User extends AbstractStatus {
 	
 	public static function canAccess($module) {
 		global $USER, $ACCESS;
-		return is_null($ACCESS->$module) || (
+		return is_null($ACCESS->$module) || 
 			( empty($USER) && $ACCESS->$module < 0 ) ||
-			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkAccess($module) )
-		);
+			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkPerm((int) $GLOBALS['ACCESS']->$module));
 	}
 	
 	public static function canDo($action, $selfEditUser=null) {
@@ -303,5 +303,9 @@ class User extends AbstractStatus {
 	}
 	
 	/* Website */
+	
+	public static function getProfile($name){
+		// empty by default, implement it in subclasses
+	}
 }
 ?>
