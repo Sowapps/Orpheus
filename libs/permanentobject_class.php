@@ -323,14 +323,15 @@ abstract class PermanentObject {
 		//Other Checks and to do before insertion
 		static::runForObject($data);
 		
-		foreach($data as $fieldname => &$fieldvalue) {
+		$what = array();
+		foreach($data as $fieldname => $fieldvalue) {
 			if( in_array($fieldname, static::$fields) ) {
-				$fieldvalue = SQLMapper::quote($fieldvalue);
+				$what[$fieldname] = SQLMapper::quote($fieldvalue);
 			}
 		}
 		$options = array(
 			'table'	=> static::$table,
-			'what'=> $data,
+			'what'=> $what,
 		);
 		SQLMapper::doInsert($options);
 		$LastInsert = SQLMapper::doLastID(static::$table, static::$IDFIELD);
