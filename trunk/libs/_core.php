@@ -102,8 +102,8 @@ function error($e, $domain=null) {
 }
 */
 
-function log_error($report, $file, $Action='') {
-	$Error = array('date' => date('c'), 'report' => $report, 'Action' => $Action);
+function log_error($report, $file, $action='') {
+	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 }
