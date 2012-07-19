@@ -302,7 +302,22 @@ abstract class PermanentObject {
 	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
-		return SQLMapper::doSelect($options);
+		//This method intercepts outputs of array of objects.
+		if( $options['output'] == SQLMapper::ARR_OBJECTS ) {
+			$options['output'] = SQLMapper::ARR_ASSOC;
+			$objects = 1;
+		}
+		$r = SQLMapper::doSelect($options);
+		if( isset($objects) ) {
+			if( !empty($r) && $options['number'] == 1 ) {
+				$r = new static($r);
+			} else {
+				foreach( $r as &$rdata ) {
+					$rdata = new static($rdata);
+				}
+			}
+		}
+		return $r;
 	}
 	
 	//! Create a new permanent object
