@@ -28,6 +28,7 @@ Hook::register('checkModule', function () {
 		$GLOBALS['USER'] = &$_SESSION['USER'];
 	}
 	$GLOBALS['ACCESS'] = Config::build('access', true);
+	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 });
 
 Hook::register('runModule', function () {
