@@ -68,10 +68,10 @@ class User extends AbstractStatus {
 		//$right peut être un entier ou une chaine de caractère correspondant à un droit.
 		//Dans ce dernier cas, on va chercher l'entier correspondant.
 		if( !ctype_digit("$right") && $right != -1 ) {
-			if( !isset($GLOBALS['RIGHTS'][$right]) ) {
+			if( is_null($GLOBALS['RIGHTS']->$right) ) {
 				throw new UnknownKeyException('unknownRight', $right);
 			}
-			$right = $GLOBALS['RIGHTS'][$right];
+			$right = $GLOBALS['RIGHTS']->$right;
 		}
 		return ( $this->accesslevel >= $right );
 	}
