@@ -309,7 +309,7 @@ abstract class PermanentObject {
 		}
 		$r = SQLMapper::doSelect($options);
 		if( isset($objects) ) {
-			if( !empty($r) && $options['number'] == 1 ) {
+			if( !empty($r) && isset($options['number']) && $options['number'] == 1 ) {
 				$r = new static($r);
 			} else {
 				foreach( $r as &$rdata ) {
