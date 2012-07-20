@@ -282,7 +282,7 @@ BODY;
 		} else {
 			foreach($ToAddress as $MailToData) {
 				$MailToEmail = '';
-				if( is_email($MailToData) ) {
+				if( self::is_email($MailToData) ) {
 					$MailToEmail = $MailToData;
 					
 				//More compatibilities with array of data.
