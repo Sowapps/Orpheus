@@ -280,16 +280,18 @@ BODY;
 				throw new Exception("ProblemSendingMail");
 			}
 		} else {
-			foreach($MailTo as $MailToData) {
+			foreach($ToAddress as $MailToData) {
 				$MailToEmail = '';
-				if( is_array($MailToData) ) {
+				if( is_email($MailToData) ) {
+					$MailToEmail = $MailToData;
+					
+				//More compatibilities with array of data.
+				} else if( is_array($MailToData) ) {
 					if( !empty($MailToData['mail']) && self::is_email($MailToData['mail']) ) {
 						$MailToEmail = $MailToData['mail'];
 					} elseif( !empty($MailToData['email']) && self::is_email($MailToData['email']) ) {
 						$MailToEmail = $MailToData['email'];
 					}
-				} elseif( is_email($MailToData) ) {
-					$MailToEmail = $MailToData;
 				}
 				if( empty($MailToEmail) ) {
 					throw new Exception("EmptyEmailAddress");
