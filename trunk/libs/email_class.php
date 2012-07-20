@@ -33,7 +33,6 @@ class Email {
 	private $AttFiles = array();
 	
 	private $Subject;
-	//Todo: Require a Text Body and a HTML Body !
 	private $Type=0;// Bit value, 1=>Text, 2=>HTML
 	private $MIMEBoundary = array();
 	
@@ -208,9 +207,6 @@ BODY;
 					$ContentsArr[] = array(
 						'headers' => array(
 							'Content-Type' => self::getMimeType($fileName).'; name="'.pathinfo($fileName, PATHINFO_BASENAME).'"',
-/*
-							'Content-Type' => self::getMimeType($fileName),
-*/
 							'Content-Transfer-Encoding' => 'base64',
 							'Content-Disposition' => 'attachment; filename="'.pathinfo($fileName, PATHINFO_BASENAME).'"',
 						),
@@ -271,10 +267,6 @@ BODY;
 			}
 		}
 		$Headers .= "\r\n";
-		/*echo nl2br("Headers:\n".htmlentities($Headers)."\n<<<\n\n");
-		echo nl2br("Body:\n".htmlentities($Body)."\n<<<\n\n");
-		text("Subject: ".$this->Subject);
-		text("To: ".$ToAddress);*/
 		if( !is_array($ToAddress) ) {
 			if( !mail($ToAddress, $this->Subject, $Body, $Headers) ) {
 				throw new Exception("ProblemSendingMail");
