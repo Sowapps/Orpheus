@@ -126,7 +126,7 @@ class Email {
 	}
 	
 	public function send($ToAddress) {
-		if( empty($ToAddress) || ( !self::is_email($ToAddress) && is_array($ToAddress) ) ) {
+		if( empty($ToAddress) || !self::is_email($ToAddress) || !is_array($ToAddress) ) {
 			throw new Exception('InvalidEmailAddress');
 		}
 		
@@ -202,7 +202,7 @@ BODY;
 				}
 				
 				foreach( $this->AttFiles as $fileName ) {
-					if( !file_exists($fileName) ) {
+					if( !is_readable($fileName) ) {
 						continue;
 					}
 					$ContentsArr[] = array(
@@ -346,7 +346,7 @@ BODY;
 		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
 		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
 		$regex = '/^' . $atom . '+(\.' . $atom . '+)*@(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
-		return preg_match($regex, $mail);
+		return is_string($mail) && preg_match($regex, $mail);
 	}
 
 	public static function getMimeType($FileName) {
