@@ -126,7 +126,7 @@ class Email {
 	}
 	
 	public function send($ToAddress) {
-		if( empty($ToAddress) || !self::is_email($ToAddress) || !is_array($ToAddress) ) {
+		if( empty($ToAddress) || (!self::is_email($ToAddress) && !is_array($ToAddress)) ) {
 			throw new Exception('InvalidEmailAddress');
 		}
 		
