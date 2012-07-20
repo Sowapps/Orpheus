@@ -303,7 +303,7 @@ abstract class PermanentObject {
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
 		//This method intercepts outputs of array of objects.
-		if( $options['output'] == SQLMapper::ARR_OBJECTS ) {
+		if( isset($options['output']) && $options['output'] == SQLMapper::ARR_OBJECTS ) {
 			$options['output'] = SQLMapper::ARR_ASSOC;
 			$objects = 1;
 		}
