@@ -21,7 +21,11 @@ if( !empty($METAPROP) ) {
 </head>
 <body class="<?php echo $Module; ?>">
 
-<?php echo $Page; ?>
+<?php
+echo $MENU['topmenu'];
+
+echo $Page;
+?>
 
 </body>
 </html>

@@ -12,6 +12,9 @@ class Config extends ConfigCore {
 		Load a configuration from a .ini file in CONFPATH.
 	*/
 	public function load($source) {
+		if( !is_readable(CONFPATH.$source.'.ini') ) {
+			return array();
+		}
 		$parsed = parse_ini_file(CONFPATH.$source.'.ini', true);
 		$this->add($parsed);
 		return $parsed;
