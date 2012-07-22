@@ -13,7 +13,7 @@ class HTMLRendering extends Rendering {
 	public static $cssPath = 'css/';
 	public static $modelsPath = '';
 	
-	//! Render the model.
+	//! Renders the model.
 	/*!
 		\copydoc Rendering::render()
 	*/
@@ -22,25 +22,40 @@ class HTMLRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env);
+		$MENUSCONF = Config::build('menus', 1);
+		$MENUS = array();
+		foreach( $MENUSCONF as $mName => $mModules ) {
+			$menu = '';
+			foreach( $mModules as $module ) {
+				$menu .= "
+<li class=\"item {$module}\">{$menu}
+</li>";
+			}
+			if( !empty($menu) ) {
+				$menu = "
+<ul class=\"menu {$mName}\">{$menu}
+</ul>";
+			}
+			$MENUS[$mName] = $menu;
+		}
 		include static::getModelsPath().$model.'.php';
 	}
 	
-	//! Get the models path.
+	//! Gets the models path.
 	/*!
 		\return The models path.
 		
-		Get the path to the models.
+		Gets the path to the models.
 	*/
 	public static function getModelsPath() {
 		return static::$themesPath.static::$theme.'/'.static::$modelsPath;
 	}
-	
-	
-	//! Get the CSS files path.
+
+	//! Gets the CSS files path.
 	/*!
 		\return The CSS path.
 		
-		Get the path to the CSS files.
+		Gets the path to the CSS files.
 	*/
 	public static function getCSSPath() {
 		return static::$themesPath.static::$theme.'/'.static::$cssPath;
