@@ -304,7 +304,7 @@ function getReportsHTML($domain='global', $delete=1) {
 	foreach( $REPORTS[$domain] as $type => &$reports ) {
 		foreach( $reports as $message) {
 			$report .= '
-		<div class="report '.$type.'">'.$message.'</div>';
+		<div class="report '.$type.'">'.t($message).'</div>';
 		}
 		if( $delete ) {
 			$reports = array();
@@ -319,12 +319,3 @@ function displayReportsHTML($domain='global', $delete=1) {
 	'.getReportsHTML($domain, $delete).'
 	</div>';
 }
-
-//! Translation function, do nothing for the moment.
-/* Use _() and gettext() instead.
-function _($k, $domain='global') {
-	global $LANG;
-	$kb64 = base64_encode($k);
-	return ( isset($LANG) && isset($LANG[$kb64]) ) ? $LANG[$kb64] : $k;
-}
-*/
