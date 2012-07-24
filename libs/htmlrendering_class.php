@@ -26,10 +26,15 @@ class HTMLRendering extends Rendering {
 		$MENUS = array();
 		foreach( $MENUSCONF as $mName => $mModules ) {
 			$menu = '';
-			foreach( $mModules as $module ) {
+			foreach( $mModules as $modData ) {
+				$modData = explode('-', $modData);
+				$module = $modData[0];
+				$action = ( count($modData) > 1 ) ? $modData[1] : '';
+				$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
+				$link = u($module, $action, $queryStr);
+				$CSSClasses = ($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : ''; 
 				$menu .= "
-<li class=\"item {$module}\">{$menu}
-</li>";
+<li class=\"item {$module} {$CSSClasses}\"><a href=\"{$link}\">{$menu}</a></li>";
 			}
 			if( !empty($menu) ) {
 				$menu = "

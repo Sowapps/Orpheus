@@ -112,6 +112,7 @@ function sys_error($report, $Action='') {
 	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $Action);
 }
 
+//! Obsolete, prefer reportError($message)
 function addUserError($e) {
 	global $USERERRORS;
 	if( !isset($USERERRORS) ) {
@@ -164,10 +165,24 @@ function escapeText($s) {
 	return htmlentities(str_replace("\'", "'", $s), ENT_NOQUOTES, 'UTF-8', false); 	
 }
 
+//! Encodes to an internal URL
+/*!
+	\param $u The URL to encode.
+	\return The encoded URL
+	
+	Encodes to URL and secures some more special characters.
+*/
 function iURLEncode($u) {
 	return str_replace(array(".", '%2F'), array(":46", ''), urlencode($u));
 }
 
+//! Decodes from an internal URL
+/*!
+	\param $u The URL to decode.
+	\return The decoded URL
+	
+	Decodes from URL.
+*/
 function iURLDecode($u) {
 	return urldecode(str_replace(":46", ".", $u));
 }
@@ -236,6 +251,30 @@ function addAutoload($className, $classPath) {
 		throw new Exception("Class file of \"{$className}\" not found.");
 	}
 	return true;
+}
+
+//! Gets the url of a module
+/*!
+	\param $module The module.
+	\param $action The action to use for this url.
+	\param $queryStr The query string to add to the url, can be an array.
+	\return The url of $module.
+
+	Gets url of a module, using default link for module defaut module.
+*/
+function u($module, $action='', $queryStr='') {
+	if( $module == DEFAULTMOD && empty($action) ) {
+		return DEFAULTLINK;
+	}
+	if( !empty($queryStr) ) {
+		if( is_array($queryStr) ) {
+			unset($queryStr['module'], $queryStr['action']);
+			$queryStr = http_build_query($queryStr, '', '&amp;');
+		} else {
+			$queryStr = str_replace('&', '&amp;');
+		}
+	}
+	return $module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
 }
 
 function addReport($message, $type, $domain='global') {
