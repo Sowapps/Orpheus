@@ -24,7 +24,7 @@ define('THEMESPATH',	ORPHEUSPATH.'themes/');
 
 // LIB Initernationalization
 define('LANGPATH',	ORPHEUSPATH.'languages/');
-define('LANG',	'fr_FR');
+define('LANG',	'en_US');
 
 
 //Static medias
