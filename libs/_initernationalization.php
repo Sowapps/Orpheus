@@ -12,7 +12,6 @@
  * You don't have to use this function explicitly.
  */
 function loadLangFile($domain=null) {
-	text("loading lang file for domain : $domain");
 	if( !empty($domain) && is_readable(LANGPATH.'/'.LANG.'/'.$domain.'.ini') ) {
 		$GLOBALS['LANG'][$domain] = parse_ini_file(LANGPATH.'/'.LANG.'/'.$domain.'.ini');
 		
