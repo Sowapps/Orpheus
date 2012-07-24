@@ -27,8 +27,5 @@ function t($k, $domain='global') {
 	if( !isset($LANG[$domain]) ) {
 		loadLangFile($domain);
 	}
-	$kb64 = base64_encode($k);
-	text("Domain contents");
-	text($LANG[$domain]);
-	return ( isset($LANG[$domain]) && isset($LANG[$domain][$kb64]) ) ? $LANG[$domain][$kb64] : $k;
+	return ( isset($LANG[$domain]) && isset($LANG[$domain][$k]) ) ? $LANG[$domain][$k] : $k;
 }
