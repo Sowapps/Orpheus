@@ -24,9 +24,7 @@ class HTMLRendering extends Rendering {
 		extract($env);
 		$MENUSCONF = Config::build('menus', 1);
 		$MENUS = array();
-		text($MENUSCONF);
 		foreach( $MENUSCONF->all as $mName => $mModules ) {
-			text($mName);
 			$menu = '';
 			foreach( $mModules as $modData ) {
 				$modData = explode('-', $modData);
