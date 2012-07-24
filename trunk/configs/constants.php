@@ -22,6 +22,10 @@ define('LIBSPATH',		ORPHEUSPATH.'libs/');
 define('LOGSPATH',		ORPHEUSPATH.'logs/');
 define('THEMESPATH',	ORPHEUSPATH.'themes/');
 
+// LIB Initernationalization
+define('LANGPATH',	ORPHEUSPATH.'languages/');
+define('LANG',	'fr_FR');
+
 
 //Static medias
 define('JSPATH',		'js/');
