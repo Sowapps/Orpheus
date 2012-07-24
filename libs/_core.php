@@ -319,3 +319,10 @@ function displayReportsHTML($domain='global', $delete=1) {
 	'.getReportsHTML($domain, $delete).'
 	</div>';
 }
+
+//! Translation function, do nothing for the moment.
+function _($k, $domain='global') {
+	global $LANG;
+	$kb64 = base64_encode($k);
+	return ( isset($LANG) && isset($LANG[$kb64]) ) ? $LANG[$kb64] : $k;
+}

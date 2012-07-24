@@ -34,7 +34,7 @@ class HTMLRendering extends Rendering {
 				$link = u($module, $action, $queryStr);
 				$CSSClasses = ($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : ''; 
 				$menu .= "
-<li class=\"item {$module} {$CSSClasses}\"><a href=\"{$link}\">{$menu}</a></li>";
+<li class=\"item {$module} {$CSSClasses}\"><a href=\"{$link}\">"._($module)."</a></li>";
 			}
 			if( !empty($menu) ) {
 				$menu = "
