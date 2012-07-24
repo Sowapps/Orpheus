@@ -12,6 +12,7 @@
  * You don't have to use this function explicitly.
  */
 function loadLangFile($domain=null) {
+	text("loading lang file for domain : $domain");
 	if( !empty($domain) && is_readable(LANGPATH.'/'.LANG.'/'.$domain.'.ini') ) {
 		$GLOBALS['LANG'][$domain] = parse_ini_file(LANGPATH.'/'.LANG.'/'.$domain.'.ini');
 		
@@ -27,5 +28,7 @@ function t($k, $domain='global') {
 		loadLangFile($domain);
 	}
 	$kb64 = base64_encode($k);
+	text("Domain contents");
+	text($LANG[$domain]);
 	return ( isset($LANG[$domain]) && isset($LANG[$domain][$kb64]) ) ? $LANG[$domain][$kb64] : $k;
 }
