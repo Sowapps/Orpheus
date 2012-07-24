@@ -22,7 +22,7 @@ if( !empty($METAPROP) ) {
 <body class="<?php echo $Module; ?>">
 
 <?php
-echo $MENU['topmenu'];
+echo $MENUS['topmenu'];
 
 echo $Page;
 ?>
