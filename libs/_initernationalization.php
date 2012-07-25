@@ -7,7 +7,7 @@
  */
 
 //! Loads a language ini file
-/*
+/*!
  * \param $domain The domain of the file to load.
  * 
  * Loads a language ini file from the file system.
@@ -22,7 +22,14 @@ function loadLangFile($domain=null) {
 	}
 }
 
-//! Translation function, do nothing very special for the moment.
+//! Text function, for translations.
+/*!
+ * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * \param $domain The domain to apply the Key. Default value is 'global'
+ * \return The translated human text.
+ * 
+ * This function try to translate the given key else the Key.
+ */
 function t($k, $domain='global') {
 	global $LANG;
 	if( !isset($LANG[$domain]) ) {
