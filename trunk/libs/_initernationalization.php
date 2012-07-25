@@ -2,6 +2,8 @@
 //! Initerlization
 /*!
  * Translation plugin using ini files
+ * 
+ * Require declaration of constants: LANGPATH, LANG.
  */
 
 //! Loads a language ini file

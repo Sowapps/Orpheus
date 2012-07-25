@@ -3,8 +3,6 @@
  * All web site constants.
  * Required for initialization.
  *
- * Auteur: Florent Hazard.
- * Revision: 1
  */
 
 define('ERROR_LEVEL', E_ALL | E_STRICT);//Development
