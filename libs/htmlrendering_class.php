@@ -29,12 +29,14 @@ class HTMLRendering extends Rendering {
 			foreach( $mModules as $modData ) {
 				$modData = explode('-', $modData);
 				$module = $modData[0];
-				$action = ( count($modData) > 1 ) ? $modData[1] : '';
-				$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
-				$link = u($module, $action, $queryStr);
-				$CSSClasses = ($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : ''; 
-				$menu .= "
+				if( User::canAccess($module) ) {
+					$action = ( count($modData) > 1 ) ? $modData[1] : '';
+					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
+					$link = u($module, $action, $queryStr);
+					$CSSClasses = ($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : ''; 
+					$menu .= "
 <li class=\"item {$module} {$CSSClasses}\"><a href=\"{$link}\">".t($module)."</a></li>";
+				}
 			}
 			if( !empty($menu) ) {
 				$menu = "
