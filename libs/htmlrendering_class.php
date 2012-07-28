@@ -28,15 +28,8 @@ class HTMLRendering extends Rendering {
 			$menu = '';
 			foreach( $mModules as $modData ) {
 				$CSSClasses = $Link = $Text = '';
-				text($modData);
-				text($modData[0]);
 				if( $modData[0] == '#' ) {
-					text(substr($modData, 1));
-					text(explode('|', substr($modData, 1)));
 					list($Link, $Text) = explode('|', substr($modData, 1));
-					text($Link);
-					text($Text);
-					continue;
 				} else {
 					$modData = explode('-', $modData);
 					$module = $modData[0];
