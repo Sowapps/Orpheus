@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['canaccess',['canAccess',['../class_user.html#a6881d8f41b2a7830ab9d51fe0c27bd76',1,'User']]],
+  ['cando',['canDo',['../class_user.html#a3562aba5c2e1164faa75918e8b8301f7',1,'User']]],
   ['canon',['canOn',['../class_user.html#a9dd0d7f2428dd5442f2d9026c033f4d0',1,'User']]],
   ['checkaccess',['checkAccess',['../class_user.html#a5ac267096a7c19f89ca55c7d1da68102',1,'User']]],
   ['checkemail',['checkEmail',['../class_user.html#a4d0237b7b3de4b4dd7af6a30cd29b087',1,'User']]],
@@ -10,11 +12,10 @@ var searchData=
   ['checkpassword',['checkPassword',['../class_user.html#a4b4d287724331151f8ca8343d62e5cfd',1,'User']]],
   ['checkperm',['checkPerm',['../class_user.html#a7cee8b78b21d4feb83b81d3b6dcf98fd',1,'User']]],
   ['checkpermissions',['checkPermissions',['../class_user.html#af22671725e0fbe9f308532ce48f51cfc',1,'User']]],
-  ['checkpermtomod',['checkPermToMod',['../class_user.html#a20719eb2a9c4f5b8c53a6396fc7811a7',1,'User']]],
   ['checkpublicemail',['checkPublicEmail',['../class_user.html#aa07188d06fe38b804e3124e776443907',1,'User']]],
   ['checkstatus',['checkStatus',['../class_abstract_status.html#ad3c46939a35a6d895e8b9922fb4417a2',1,'AbstractStatus\checkStatus()'],['../class_user.html#a2b0dcfc6103dfd779404dd5226fa8e6d',1,'User\checkStatus()']]],
   ['checkuserid',['checkUserID',['../class_abstract_publication.html#a2ed257056b096265f5f74c980270e726',1,'AbstractPublication']]],
-  ['checkuserinput',['checkUserInput',['../class_abstract_publication.html#aa93a45a94e47b448a37b37020a24b714',1,'AbstractPublication\checkUserInput()'],['../class_abstract_status.html#ab14eef7adf2dee1e17fcf54bbd5b8ac7',1,'AbstractStatus\checkUserInput()'],['../class_demo_test.html#acc3b56101b008867cc005b8eb83c3cd8',1,'DemoTest\checkUserInput()'],['../class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27',1,'PermanentObject\checkUserInput()'],['../class_site_user.html#a57020a8d90da2972124231047dc88c4e',1,'SiteUser\checkUserInput()'],['../class_user.html#a0a1a99afc77a3c35e3a3201a9be639a3',1,'User\checkUserInput()']]],
+  ['checkuserinput',['checkUserInput',['../class_site_user.html#a57020a8d90da2972124231047dc88c4e',1,'SiteUser\checkUserInput()'],['../class_abstract_publication.html#aa93a45a94e47b448a37b37020a24b714',1,'AbstractPublication\checkUserInput()'],['../class_abstract_status.html#ab14eef7adf2dee1e17fcf54bbd5b8ac7',1,'AbstractStatus\checkUserInput()'],['../class_demo_test.html#acc3b56101b008867cc005b8eb83c3cd8',1,'DemoTest\checkUserInput()'],['../class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27',1,'PermanentObject\checkUserInput()'],['../class_user.html#a0a1a99afc77a3c35e3a3201a9be639a3',1,'User\checkUserInput()']]],
   ['checkusername',['checkUserName',['../class_abstract_publication.html#a811baa8cf8b0324c05239a1c4c42c72a',1,'AbstractPublication']]],
   ['cleanscandir',['cleanscandir',['../__core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f',1,'_core.php']]],
   ['completefields',['completeFields',['../class_permanent_object.html#acf2c222cbb6dbc04b81200cf857eec18',1,'PermanentObject']]],

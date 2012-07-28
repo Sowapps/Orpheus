@@ -6,6 +6,7 @@ var searchData=
   ['demotest',['DemoTest',['../class_demo_test.html',1,'']]],
   ['demotest_5fclass_2ephp',['demotest_class.php',['../demotest__class_8php.html',1,'']]],
   ['display',['display',['../class_rendering.html#a63c95040f0a6cfc837cf79de7f9b36a0',1,'Rendering']]],
+  ['displayreportshtml',['displayReportsHTML',['../__core_8php.html#a65c125c3543769f92429954fcd066ae1',1,'_core.php']]],
   ['dodelete',['doDelete',['../class_s_q_l_mapper.html#a5fabfae1b12ed46a60e49e2d64257c87',1,'SQLMapper']]],
   ['doinsert',['doInsert',['../class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2',1,'SQLMapper']]],
   ['dolastid',['doLastID',['../class_s_q_l_mapper.html#ad95c71c230f1df4c0faa0da1fafbabb4',1,'SQLMapper']]],

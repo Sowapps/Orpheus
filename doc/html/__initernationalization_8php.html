@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Orpheus: D:/Workspaces/Orpheus/libs/hook_class.php File Reference</title>
+<title>Orpheus: D:/Workspaces/Orpheus/libs/_initernationalization.php File Reference</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -91,17 +91,82 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">D:/Workspaces/Orpheus/libs/hook_class.php File Reference</div>  </div>
+<div class="title">D:/Workspaces/Orpheus/libs/_initernationalization.php File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr><td colspan="2"><h2><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hook.html">Hook</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The hook class.  <a href="class_hook.html#details">More...</a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:af2dac6fa7635890828ec6fbbe06bc69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__initernationalization_8php.html#af2dac6fa7635890828ec6fbbe06bc69e">loadLangFile</a> ($domain=null)</td></tr>
+<tr class="memdesc:af2dac6fa7635890828ec6fbbe06bc69e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initerlization.  <a href="#af2dac6fa7635890828ec6fbbe06bc69e"></a><br/></td></tr>
+<tr class="memitem:aec922097f144aebde6e0474d1612dd08"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__initernationalization_8php.html#aec922097f144aebde6e0474d1612dd08">t</a> ($k, $domain='global')</td></tr>
+<tr class="memdesc:aec922097f144aebde6e0474d1612dd08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Text function, for translations.  <a href="#aec922097f144aebde6e0474d1612dd08"></a><br/></td></tr>
 </table>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="af2dac6fa7635890828ec6fbbe06bc69e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="__initernationalization_8php.html#af2dac6fa7635890828ec6fbbe06bc69e">loadLangFile</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>domain</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Translation plugin using ini files</p>
+<p>Require declaration of constants: LANGPATH, LANG. Loads a language ini file</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$domain</td><td>The domain of the file to load.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Loads a language ini file from the file system. You don't have to use this function explicitly. </p>
+
+</div>
+</div>
+<a class="anchor" id="aec922097f144aebde6e0474d1612dd08"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="__initernationalization_8php.html#aec922097f144aebde6e0474d1612dd08">t</a> </td>
+          <td>(</td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">$&#160;</td>
+          <td class="paramname"><em>domain</em> = <code>'global'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$k</td><td>The Key to translate, prefer to use an internal language (English CamelCase). </td></tr>
+    <tr><td class="paramname">$domain</td><td>The domain to apply the Key. Default value is 'global' </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns:</dt><dd>The translated human text.</dd></dl>
+<p>This function try to translate the given key else the Key. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 
 
