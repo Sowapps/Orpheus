@@ -1,7 +1,7 @@
 <?php
 /* libs/validators.php
  * PHP File for included functions: Checkers
- * [EN] Library of checkers functions.
+ * [EN] Library of checkers/validators functions.
  * [FR] Bibliothèque de fonctions de vérification/validation.
  *
  * Auteur: Florent Hazard.
@@ -45,6 +45,14 @@ function is_ID($Number) {
 	return ctype_digit("$Number");
 }
 
+//! Checks if the input is a date.
+/*!
+ * \param $Date The date to check.
+ * \return True if $Date si a valid date.
+ * 
+ * The date have to be well formatted and valid.
+ * The format is DD/MM/YYYY and separator can be '/', '-', ':', ';', ',', '|' or '#' 
+ */
 function is_date($Date) {
 	$DateFor = preg_replace('#^([0-9]{1,2})[\-\/:\;,|\#]([0-9]{1,2})[\-\/:\;,|\#]([0-9]{4})$#', '$1#$2#$3', $Date, -1, $Count);
 	if( !$Count ) {
@@ -54,36 +62,35 @@ function is_date($Date) {
 	return checkdate($Month, $Day, $Year);
 }
 
+//! Checks if the input is an url.
+/*!
+ * \param $Url The url to check.
+ * \param $protocol Not used yet.
+ * \return True if $Url si a valid url.
+ */
 function is_url($Url, $protocol='http') {
 	return filter_var($email, FILTER_VALIDATE_URL);
-/*
-	return preg_match("#^{$protocol}://[0-9a-z\.\-]+/[0-9a-z\\\/\?\=\%\_\.\,\;\!\+\(\)\#\&]*$#i", $Url);
-*/
-/*
-	if( $protocol == 'http' ) {
-		return preg_match("#^http://[0-9a-z\.\-]+/[0-9a-z\\\/\?\=\%\_\.\,\;\!\+\(\)\#\&]*$#i", $Url);
-	}
-*/
-/*
-	 else {
-		trigger_error(__FUNCTION__.'() Unknown protocol "'.$protocol.'"', E_USER_WARNING);
-		return false;
-	}
-*/
 }
 
-function is_date_format($format) {
-	return ( date($format) != $format );
-}
-
-function is_host($host) {
-	return preg_match("#^[0-9a-z\.\-]+$#i", $host);
-}
-
+//! Checks if the input is an ip address.
+/*!
+ * \param $ip The url to check.
+ * \return True if $ip si a valid ip address.
+ */
 function is_ip($ip) {
 	return filter_var($ip, FILTER_VALIDATE_IP);
 }
 
+//! Checks if the input is a phone number.
+/*!
+ * \param $number The phone number to check.
+ * \param $length The limit of length of the number. Default value is unlimited.
+ * \return True if $number si a valid phone number.
+ * 
+ * It can only validate french phone number.
+ * The separator can be '.', ' ' or '-', it can be ommitted.
+ * e.g: +336.12.34.56.78, 01-12-34-56-78
+ */
 function is_phone_number($number, $length=null) {
 	$number = str_replace(array('.', ' ', '-'), '', $number);
 	$length = ( isset($length) && $length > 1 ) ? '{'.($length-1).'}' : '+';

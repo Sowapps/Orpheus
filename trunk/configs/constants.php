@@ -1,8 +1,12 @@
 <?php
-/* configs/constants.php -> CONSTANTS
+/*! \file
  * All web site constants.
- * Required for initialization.
  *
+ * \page constants Constants
+ * 
+ * You'll may need configure some constants as AUTHORNAME and SITENAME.\n
+ * Configure others carefully and only if it's really necessary.\n
+ * Set ERROR_LEVEL to set your website in production (with no error reports to the user).
  */
 
 define('ERROR_LEVEL', E_ALL | E_STRICT);//Development
@@ -12,7 +16,6 @@ define('TIME', $_SERVER['REQUEST_TIME']);
 //define('DS', DIRECTORY_SEPARATOR);
 define('INSIDE', true);
 
-
 //Useful paths.
 define('CONFPATH',		ORPHEUSPATH.'configs/');
 define('MODPATH',		ORPHEUSPATH.'modules/');
@@ -20,13 +23,12 @@ define('LIBSPATH',		ORPHEUSPATH.'libs/');
 define('LOGSPATH',		ORPHEUSPATH.'logs/');
 define('THEMESPATH',	ORPHEUSPATH.'themes/');
 
+//Static medias
+define('JSPATH',		'js/');
+
 // LIB Initernationalization
 define('LANGPATH',	ORPHEUSPATH.'languages/');
 define('LANG',	'en_US');
-
-
-//Static medias
-define('JSPATH',		'js/');
 
 
 //Miscelanous

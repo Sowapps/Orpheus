@@ -1,6 +1,6 @@
 <?php
 /*!
- * \mainpage
+ * \mainpage Documentation
  * 
  * \section intro_sec Introduction
  *
@@ -15,16 +15,19 @@
  *
  * \subsection requirements Step 0: Requirements
  * 
- * This framework may be used for web  applications, so it requires a web server with PHP 5.3+
+ * This framework may be used for web applications, so it requires a web server with PHP 5.3+
  *
  * \subsection download Step 1: Download
  * 
- * Download The lastest release from our website.\n
- * %XDOWNLOAD_LINKX
+ * Download The lastest release from our website:\n
+ * http://orpheus.cartman34.fr/downloads/latest/\n
+ * (Take full package for all files)
  * 
  * \subsection embed Step 2: Embed
  * 
  * Unpack the archive and integrate it into your web application (or create it first).
  *
  * \section start Getting started
+ * 
+ * Configure constants: \ref constants
  */
