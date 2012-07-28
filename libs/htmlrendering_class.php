@@ -27,16 +27,24 @@ class HTMLRendering extends Rendering {
 		foreach( $MENUSCONF->all as $mName => $mModules ) {
 			$menu = '';
 			foreach( $mModules as $modData ) {
-				$modData = explode('-', $modData);
-				$module = $modData[0];
-				if( User::canAccess($module) ) {
+				$CSSClasses = $Link = $Text = '';
+				if( $modData[0] == '#' ) {
+					list($Link, $Text) = explode('|', substr($modData, 1));
+					continue;
+				} else {
+					$modData = explode('-', $modData);
+					$module = $modData[0];
+					if( !User::canAccess($module) ) {
+						continue;
+					}
 					$action = ( count($modData) > 1 ) ? $modData[1] : '';
 					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
-					$link = u($module, $action, $queryStr);
-					$CSSClasses = ($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : ''; 
-					$menu .= "
-<li class=\"item {$module} {$CSSClasses}\"><a href=\"{$link}\">".t($module)."</a></li>";
+					$Link = u($module, $action, $queryStr);
+					$CSSClasses = $module.' '.(($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : '');
+					$Text = $module;
 				}
+				$menu .= "
+<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";
 			}
 			if( !empty($menu) ) {
 				$menu = "
