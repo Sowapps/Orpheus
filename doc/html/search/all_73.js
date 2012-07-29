@@ -3,7 +3,7 @@ var searchData=
   ['save',['save',['../class_permanent_object.html#aa161262d8e6640659f93eb70e00d8d67',1,'PermanentObject']]],
   ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb',1,'SQLMapper_PgSQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
   ['send',['send',['../class_email.html#aeff0b41b4d792c8e52c08f088fdc70a4',1,'Email']]],
-  ['sendresponse',['sendResponse',['../__core_8php.html#ab27aefd881f4e0d1730555767d48a395',1,'_core.php']]],
+  ['sendresponse',['sendResponse',['../__core_8php.html#a5541f3d746d89fffa14f9a0fa9440e5b',1,'_core.php']]],
   ['setaltbody',['setAltBody',['../class_email.html#a2a618da95e293da3e5e93662d6eccef8',1,'Email']]],
   ['setheader',['setHeader',['../class_email.html#a6b96d29cb1773a336a6687526234bc94',1,'Email']]],
   ['sethtmlbody',['setHTMLBody',['../class_email.html#a02b93c9ff2e15025ccb4239fb6f2fdb7',1,'Email']]],
@@ -25,7 +25,7 @@ var searchData=
   ['ssh2_5frun',['ssh2_run',['../__core_8php.html#a23f9517830f7d777d047fd28fd3891dd',1,'_core.php']]],
   ['statement',['STATEMENT',['../class_s_q_l_mapper.html#a2c4194565a940222ee86efbc09a9daa5',1,'SQLMapper']]],
   ['status',['status',['../class_abstract_status.html#a13065df944948731acc20a3237f0601a',1,'AbstractStatus']]],
-  ['str_5flimit',['str_limit',['../__core_8php.html#a8fc39868ac0b4d986fa2a55bff229768',1,'_core.php']]],
-  ['sys_5ferror',['sys_error',['../__core_8php.html#afe9353395a545e2eaeeb91eab56c32ed',1,'_core.php']]],
+  ['str_5flimit',['str_limit',['../__core_8php.html#a0ff41c78802b3e48935a0c6a212f7454',1,'_core.php']]],
+  ['sys_5ferror',['sys_error',['../__core_8php.html#a211c992147daa63b42ade37dc9b72c13',1,'_core.php']]],
   ['syslogfilename',['SYSLOGFILENAME',['../constants_8php.html#a8b2fd83daa5f43be128fc86a5748a911',1,'constants.php']]]
 ];

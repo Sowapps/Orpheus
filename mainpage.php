@@ -6,7 +6,7 @@
  *
  * Orpheus is a free, open source, flexible, and smart framework meant to be embedded in web applications.\n
  * The purpose is to provide an easy to use library that is powerful, but that isn't weighed down by a large amount of rarely used features.\n
- * Development of Orpheus begun in January, 2012, with the first public release on %XMONTHX %XXth, 2012, with only the most basic of functionality.\n
+ * Development of Orpheus begun in January, 2012, with the first public release on july 28th, 2012, with only the most basic of functionalities.\n
  * The author is still dedicated to the continued improvement and growth of this framework.\n
  * \n
  * The official site for the library is http://orpheus.cartman34.fr/.\n

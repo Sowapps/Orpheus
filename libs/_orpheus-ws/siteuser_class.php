@@ -37,7 +37,7 @@ class SiteUser extends User {
 			if( $inputData['fullname'] != $this->fullname ) {
 				$data['fullname'] = $inputData['fullname'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 //		if( !empty($data['name']) ) {
 //			$name = $data['name'];

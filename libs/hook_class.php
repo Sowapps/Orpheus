@@ -18,13 +18,13 @@ class Hook {
 		$this->name = $name;
 	}
 	
-	//! Register a new callback for this hook.
+	//! Registers a new callback for this hook.
 	/*!
 		\param $callback A callback.
 		\sa register()
 		\sa http://php.net/manual/en/language.pseudo-types.php#language.types.callback
 		
-		Register the $callback associating with this hook.
+		Registers the $callback associating with this hook.
 		The callback will be called when this hook will be triggered.
 	*/
 	public function registerHook($callback) {
@@ -37,13 +37,13 @@ class Hook {
 		$this->callbacks[] = $callback;
 	}
 	
-	//! Trigger this hook.
+	//! Triggers this hook.
 	/*!
 		\param $params A callback.
 		\return The first param as result.
 		\sa trigger()
 		
-		Trigger this hook calling all associated callbacks.
+		Triggers this hook calling all associated callbacks.
 		$params array is passed to the callback as its arguments.
 		The first parameter, $params[0], is considered as the result of the trigger.
 		If $params is not an array, its value is assigned to the second value of a new $params array.
@@ -74,18 +74,18 @@ class Hook {
 		return (isset($params[0])) ? $params[0] : null;
 	}
 	
-	//! Get slug
+	//! Gets slug
 	/*!
 		\param $name The hook name.
 		\return The slug name.
 	
-		Extract the slug of a hook name.
+		Extracts the slug of a hook name.
 	*/
 	protected static function slug($name) {
 		return strtolower($name);
 	}
 	
-	//! Create new Hook
+	//! Creates new Hook
 	/*!
 		\param $name The new hook name.
 		\return The new hook.
@@ -96,13 +96,13 @@ class Hook {
 		return self::$hooks[$name];
 	}
 	
-	//! Register a callback
+	//! Registers a callback
 	/*!
 		\param $name The hook name.
 		\param $callback The new callback.
 		\return The registerHook() result, usually null.
 		
-		Add the callback to those of the hook.
+		Adds the callback to those of the hook.
 	*/
 	public static function register($name, $callback) {
 		$name = static::slug($name);
@@ -112,12 +112,12 @@ class Hook {
 		return static::$hooks[$name]->registerHook($callback);
 	}
 	
-	//! Trigger a hook
+	//! Triggers a hook
 	/*!
 		\param $name The hook name.
 		\return The triggerHook() result, usually the first parameter.
 		
-		Trigger the hook named $name.
+		Triggers the hook named $name.
 		e.g trigger('MyHook', $parameter1, $parameter2)
 	*/
 	public static function trigger($name) {

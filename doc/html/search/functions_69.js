@@ -2,7 +2,6 @@ var searchData=
 [
   ['includedir',['includeDir',['../index_8php.html#a467c5fe1a2ebb1b66c55fbd7534aa97a',1,'index.php']]],
   ['init',['init',['../class_site_user.html#aab677ce8b6af4beb70936a4448a55e18',1,'SiteUser\init()'],['../class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8',1,'AbstractPublication\init()']]],
-  ['initusererrors',['initUserErrors',['../__core_8php.html#a653f7eb12a0d997f7c70ccb4f5a69c88',1,'_core.php']]],
   ['insert',['insert',['../class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee',1,'SQLMapper_MySQL\insert()'],['../class_s_q_l_mapper___pg_s_q_l.html#a6244fbe3fe0f921f0bd15071510403e5',1,'SQLMapper_PgSQL\insert()'],['../class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745',1,'SQLMapper\insert()']]],
   ['is_5fdate',['is_date',['../__validators_8php.html#a0cafad5835e34bb480868dbc924690f0',1,'_validators.php']]],
   ['is_5femail',['is_email',['../class_email.html#abb78604c5fdf0ab1636ff8ae3a4af562',1,'Email\is_email()'],['../__validators_8php.html#ac305b25136d96c73f5c8100707d42ab3',1,'is_email():&#160;_validators.php']]],

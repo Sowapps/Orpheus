@@ -48,14 +48,14 @@ abstract class AbstractPublication extends AbstractStatus {
 			if( $inputData['name'] != $this->name ) {
 				$data['name'] = $inputData['name'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		try {
 			$inputData['user_name'] = self::checkUserName($uInputData);
 			if( $inputData['user_name'] != $this->user_name ) {
 				$data['user_name'] = $inputData['user_name'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		return parent::update($uInputData, $data);
 	}
