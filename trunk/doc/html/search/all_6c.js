@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['lang',['lang',['../__core_8php.html#a78a5bb845cc639d50049cc3b06603938',1,'lang($k):&#160;_core.php'],['../constants_8php.html#a04cd7d0c96284e40f226651cf74a2aa8',1,'LANG():&#160;constants.php']]],
+  ['lang',['LANG',['../constants_8php.html#a04cd7d0c96284e40f226651cf74a2aa8',1,'constants.php']]],
   ['langpath',['LANGPATH',['../constants_8php.html#aee44973e2e14bd16f0c2827005898742',1,'constants.php']]],
   ['lastid',['lastID',['../class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192',1,'SQLMapper_MySQL\lastID()'],['../class_s_q_l_mapper___pg_s_q_l.html#ae50549a7ef045b5f8ed662995ec527bd',1,'SQLMapper_PgSQL\lastID()'],['../class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e',1,'SQLMapper\lastID()']]],
   ['libspath',['LIBSPATH',['../constants_8php.html#a7287bcc561e6b1e87bcde36560df7dc8',1,'constants.php']]],

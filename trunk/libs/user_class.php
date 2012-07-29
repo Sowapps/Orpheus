@@ -132,21 +132,21 @@ class User extends AbstractStatus {
 			if( $inputData['name'] != $this->name ) {
 				$data['name'] = $inputData['name'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		try {
 			$inputData['email'] = self::checkEmail($uInputData);
 			if( $inputData['email'] != $this->email ) {
 				$data['email'] = $inputData['email'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		try {
 			$inputData['email_public'] = self::checkPublicEmail($uInputData);
 			if( $inputData['email_public'] != $this->email_public ) {
 				$data['email_public'] = $inputData['email_public'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		try {
 			//Un modérateur n'est pas obligé de fournir une confirmation.
@@ -154,14 +154,14 @@ class User extends AbstractStatus {
 			if( $inputData['password'] != $this->password ) {
 				$data['password'] = $inputData['password'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		try {
 			$inputData['accesslevel'] = $this->checkPermissions($uInputData);
 			if( $inputData['accesslevel'] != $this->accesslevel ) {
 				$data['accesslevel'] = $inputData['accesslevel'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		return parent::update($uInputData, $data);
 	}

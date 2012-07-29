@@ -11,50 +11,114 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
-function redirectTo($Destination='') {
-	if( empty($Destination) ) {
-		$Destination = $_SERVER['SCRIPT_NAME'];
+//! Redirects the client to a destination by HTTP
+/*!
+	\param $destination The destination to go. Default value is SCRIPT_NAME.
+	\sa permanentRedirectTo()
+
+	Redirects the client to a $destination using HTTP headers.
+	Stops the running script.
+*/
+function redirectTo($destination=null) {
+	if( !isset($destination) ) {
+		$destination = $_SERVER['SCRIPT_NAME'];
 	}
-	header('Location: '.$Destination);
+	header('Location: '.$destination);
 	die();
 }
 
-function permanentRedirectTo($Destination='') {
+//! Redirects permanently the client to a destination by HTTP
+/*!
+	\param $destination The destination to go. Default value is SCRIPT_NAME.
+	\sa redirectTo()
+
+	Redirects permanently the client to a $destination using the HTTP headers.
+	The only difference with redirectTo() is the status code sent to the client.
+*/
+function permanentRedirectTo($destination=null) {
 	header('HTTP/1.1 301 Moved Permanently', false, 301);
-	redirectTo($Destination);
+	redirectTo($destination);
 }
 
-function htmlRedirectTo($dest, $time=3, $die=0) {
-	echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"{$time} ; URL={$dest}\">";
-	if( !empty($die) ) {
+//! Redirects the client to a destination by HTML
+/*!
+	\param $destination The destination to go.
+	\param $time The time in seconds to wait before refresh.
+	\param $die True to stop the script.
+
+	Redirects the client to a $destination using the HTML meta tag.
+	Does not stop the running script, it only displays.
+*/
+function htmlRedirectTo($destination, $time=3, $die=0) {
+	echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"{$time} ; URL={$destination}\">";
+	if( !$die ) {
 		exit();
 	}
 }
 
-function text($message = '', $br = 1) {
-	$message = ( is_array($message) ) ? '<pre>'.print_r($message, 1).'</pre>' : $message;
-	echo $message.(($br && !defined("TERMINAL")) ? "<br />" : "" )."\n";
+//! Displays a variable as HTML
+/*!
+	\param $message The data to display. Default value is an empty string.
+	\param $html True to add html tags. Default value is True.
+	\warning Use it only for debugs.
+
+	Displays a variable as HTML.
+	If the constant TERMINAL is defined, parameter $html is forced to False.
+*/
+function text($message = '', $html = true) {
+	if( defined("TERMINAL") ) {
+		$html = false;
+	}
+	if( is_array($message) ) {
+		$message = print_r($message, 1);
+		if( $html ) {
+			$message = '<pre>'.$message.'</pre>';
+		}
+	}
+	echo $message.(($html) ? '<br />' : '')."\n";
 }
 
-function bintest($Variable, $Comparateur) {
-	return ( ($Variable & $Comparateur) == $Comparateur);
+//! Do a binary test
+/*!
+	\param $value The value to compare.
+	\param $reference The reference for the comparison.
+	\return True if $value is binary included in $reference.
+
+	Do a binary test, compare $value with $reference.
+	This function is very useful to do binary comparison for rights and inclusion in a value.
+*/
+function bintest($value, $reference) {
+	return ( ($variable & $reference) == $reference);
 }
 
-function lang($k) {
-	return $k;
+//! Sends a packaged response to the client.
+/*!
+	\param $code The response code.
+	\param $other Other data to send to the client. Default value is an empty string.
+	\param $domain The translation domain. Default value is 'global'.
+
+	The response code is a status code, commonly a string.
+	User $Other to send arrays and objects to the client.
+	The packaged reponse is a json string that very useful for AJAX request.
+	This function stops the running script.
+*/
+function sendResponse($code, $other='', $domain='global') {
+	die( json_encode( array(
+			'code'			=> $code,
+			'description'	=> t($code, $domain),
+			'other'			=> $other
+	) ) );
 }
 
-function sendResponse($Code, $Other='', $lang=null) {
-	$lang = ( isset($lang) ) ? $lang : ( ( !empty($GLOBALS['AJAXRESP']) ) ? $GLOBALS['AJAXRESP'] : array() );
-	die( json_encode(
-		array(
-			'code'			=> $Code,
-			'description'	=> ( ( !empty($lang[$Code]) ) ? $lang[$Code] : $Code ),
-			'other'			=> $Other
-		) )
-	);
-}
+//! Runs a SSH2 command.
+/*!
+	\param $command The command to execute.
+	\param $SSH2S Local settings for the connection.
+	\return The stream from ssh2_exec()
 
+	Runs a command on a SSH2 connection.
+	You can pass the connection settings array in argument but you can declare a global variable named $SSH2S too.
+*/
 function ssh2_run($command, $SSH2S=null) {
 	if( !isset($SSH2S) ) {
 		global $SSH2S;
@@ -73,12 +137,15 @@ function ssh2_run($command, $SSH2S=null) {
 	return $stream;
 }
 
-/*
-Nom: cleanscandir
-Données: (String) Chemin du répertoire à scanner[, (Boolean) si le résultat doit être inversé].
-Résultat: Le tableau listant les fichiers du répertoire donné selon l'ordre donné.
+//! Scans a directory cleanly.
+/*!
+	\param $dir The directory to scan.
+	\param $sorting_order True to reverse results order. Default value is False.
+	\return An array of the files in this directory.
+
+	Scans a directory and returns a clean result.
 */
-function cleanscandir($dir, $sorting_order = 0) {
+function cleanscandir($dir, $sorting_order=0) {
 	$result = scandir($dir);
 	unset($result[0]);
 	unset($result[1]);
@@ -88,65 +155,50 @@ function cleanscandir($dir, $sorting_order = 0) {
 	return $result;
 }
 
-/*
-function error($e, $domain=null) {
-	global $ERRORS;
-	$msg = ($e instanceof Exception) ? $e->getMessage() : "$e";
-	if( !empty($domain) && !empty($ERRORS[$domain]) && !empty($ERRORS[$domain][$msg]) ) {
-		return $ERRORS[$domain][$msg];
-	}
-	if( !empty($ERRORS['global'][$msg]) ) {
-		return $ERRORS['global'][$msg];
-	}
-	return $msg;
-}
-*/
+//! Logs an error in a file.
+/*!
+	\param $report The report to log.
+	\param $file The log file path.
+	\param $action The action associated to the report. Default value is an empty string.
+	\warning This function require a writable log file.
 
+	Logs an error in a file serializing data to JSON.
+	Each line of the file is a JSON string of the reports.
+	The log folder is the constant LOGSPATH or, if undefined, the current one.
+*/
 function log_error($report, $file, $action='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 }
 
-function sys_error($report, $Action='') {
-	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $Action);
+//! Logs a system error.
+/*!
+	\param $report The report to log.
+	\param $action The action associated to the report. Default value is an empty string.
+	\sa log_error()
+
+	Logs a system error.
+	The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
+*/
+function sys_error($report, $action='') {
+	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $action);
 }
 
-//! Obsolete, prefer reportError($message)
-function addUserError($e) {
-	global $USERERRORS;
-	if( !isset($USERERRORS) ) {
-		initUserErrors();
-	}
-	$USERERRORS[] = $e;
-}
+//! Limits the length of a string
+/*!
+	\param $string The string to limit length.
+	\param $max The maximum length of the string.
+	\param $strend A string to append to the shortened string.
+	\return The shortened string.
 
-function getUserErrors() {
-	global $USERERRORS;
-	if( !isset($USERERRORS) ) {
-		initUserErrors();
-	}
-	return $USERERRORS;
-}
-
-function initUserErrors() {
-	global $USERERRORS;
-	$USERERRORS = array();
-}
-
-/* str_limit($string, $max[, $strend])
- * Author: Florent HAZARD
- * 
- * Cette fonction raccourci la chaine de caractère $string en ajoutant
- * $strend si elle dépasse $max caractères.
- * Elle cherche à couper avant le dernier mot présent mais si celui-ci
- * est trop long, elle le coupe net.
- * $strend vaut par défaut "...".
- */
-function str_limit($string, $max, $strend = "...") {
+	Limits the length of a string and append $strend.
+	This function do it cleanly, it tries to cut before a word.
+*/
+function str_limit($string, $max, $strend='...') {
 	$max = (int) $max;
 	if( $max <= 0 ) {
-		return "";
+		return '';
 	}
 	if( strlen($string) <= $max ) {
 		return $string;
@@ -161,8 +213,16 @@ function str_limit($string, $max, $strend = "...") {
 	return $subStr.$strend;
 }
 
-function escapeText($s) {
-	return htmlentities(str_replace("\'", "'", $s), ENT_NOQUOTES, 'UTF-8', false); 	
+//! Escape a text
+/*!
+	\param $str The string to escape.
+	\return The escaped string.
+
+	Escape the text $str from special characters.
+	This function as the overall framework is made for UTF-8.
+*/
+function escapeText($str) {
+	return htmlentities(str_replace("\'", "'", $str), ENT_NOQUOTES, 'UTF-8', false); 	
 }
 
 //! Encodes to an internal URL
@@ -204,10 +264,10 @@ function parseFields(array $fields) {
 
 //! Imports the required class(es).
 /*!
-	\param $pkgPath A package path.
+	\param $pkgPath The package path.
 	\warning You should only use lowercase for package names.
 
-	Includes the package page from the libs directory.
+	Includes the package from the libs directory.
 	e.g: "package.myclass", "package.other.*"
 */
 function using($pkgPath) {
@@ -277,24 +337,54 @@ function u($module, $action='', $queryStr='') {
 	return $module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
 }
 
-function addReport($message, $type, $domain='global') {
+//! Adds a report
+/*!
+	\param $message The message to report.
+	\param $type The type of the message.
+	\sa reportSuccess(), reportError()
+
+	Adds the report $message to the list of reports for this $type.
+	The type of the message is commonly 'success' or 'error'.
+*/
+function addReport($message, $type) {
 	global $REPORTS;
 	if( !isset($REPORTS[$domain]) ) {
 		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
 	}
-	// Require use of a translator system.
 	$REPORTS[$domain][$type][] = $message;
 }
 
-function reportSuccess($message, $domain='global') {
-	return addReport($message, 'success', $domain);
+//! Reports a success
+/*!
+	\param $message The message to report.
+	\sa addReport()
+
+	Adds the report $message to the list of reports for this type 'success'.
+*/
+function reportSuccess($message) {
+	return addReport($message, 'success');
 }
 
-function reportError($message, $domain='global') {
+//! Reports an error
+/*!
+	\param $message The message to report.
+	\sa addReport()
+
+	Adds the report $message to the list of reports for this type 'error'.
+*/
+function reportError($message) {
 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
 	return addReport($message, 'error', $domain);
 }
 
+//! Gets reports as HTML
+/*!
+	\param $domain The translation domain and the domain of the report. Default value is 'global'.
+	\param $delete True to delete entries from the list.
+	\sa displayReportsHTML()
+
+	Gets all reports from the list of $domain and generates the HTML source to display.
+*/
 function getReportsHTML($domain='global', $delete=1) {
 	global $REPORTS;
 	if( empty($REPORTS[$domain]) ) {
@@ -304,7 +394,7 @@ function getReportsHTML($domain='global', $delete=1) {
 	foreach( $REPORTS[$domain] as $type => &$reports ) {
 		foreach( $reports as $message) {
 			$report .= '
-		<div class="report '.$type.'">'.t($message).'</div>';
+		<div class="report report_'.$domain.' '.$type.'">'.t($message).'</div>';
 		}
 		if( $delete ) {
 			$reports = array();
@@ -313,6 +403,15 @@ function getReportsHTML($domain='global', $delete=1) {
 	return $report;
 }
 
+
+//! Displays reports as HTML
+/*!
+	\param $domain The translation domain and the domain of the report. Default value is 'global'.
+	\param $delete True to delete entries from the list.
+	\sa getReportsHTML()
+
+	Displays all reports from the list of $domain and displays generated HTML source.
+*/
 function displayReportsHTML($domain='global', $delete=1) {
 	echo '
 	<div class="reports '.$domain.'">

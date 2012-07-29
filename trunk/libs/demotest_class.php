@@ -22,7 +22,7 @@ class DemoTest extends PermanentObject {
 			if( $inputData['name'] != $this->name ) {
 				$data['name'] = $inputData['name'];
 			}
-		} catch(UserException $e) { addUserError($e); }
+		} catch(UserException $e) { reportError($e); }
 		
 		return parent::update($uInputData, $data);
 	}

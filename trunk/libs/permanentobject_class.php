@@ -120,7 +120,7 @@ abstract class PermanentObject {
 				throw new UserException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data));
-		} catch(UserException $e) { addUserError($e); return 0; }
+		} catch(UserException $e) { reportError($e); return 0; }
 		
 		foreach($data as $fieldname => $fieldvalue) {
 			if( $fieldname != static::$IDFIELD && in_array($fieldname, static::$userEditableFields) ) {
