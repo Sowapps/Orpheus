@@ -16,7 +16,7 @@ class Email {
 		'Return-Path' => '',//Return Email Address
 		'Organization' => '',
 		'X-Priority' => '3',
-		'X-Mailer' => 'Florent Hazard\'s Mailer',
+		'X-Mailer' => 'Orpheus\'s Mailer',
 		'Bcc' => '',
 	);
 	
@@ -40,12 +40,19 @@ class Email {
 	public static $HTMLTYPE = 2;
 
 	//Methods
+	
+	//! Constructor
+	/*!
+		\param $TEXTBody The body of the text message. Default value is an empty string.
+		\param $Subject The subject of the mail. Default value is an empty string.
+	*/
 	public function __construct($TEXTBody='', $Subject='') { //Class' Constructor
 		$this->init();
 		$this->Subject = $Subject;
 		$this->setTEXTBody($TEXTBody);
 	}
 	
+	//! Initializes the object
 	private function init() {
 		$this->Headers['Date'] = date('r');
 		if( defined('ADMINEMAIL') ) {
@@ -57,6 +64,11 @@ class Email {
 		}
 	}
 	
+	//! Sets the value of a header
+	/*!
+		\param $Key The key of the header to set.
+		\param $Value The new value of the header.
+	*/
 	public function setHeader($Key, $Value) {
 		if( !isset($this->Headers[$Key]) ) {
 			throw new Exception('UnknownHeader');
@@ -65,6 +77,14 @@ class Email {
 		$this->Headers[$Key] = $Value;
 	}
 	
+	//! Sets the type of the mail
+	/*!
+		\param $Key The key of the header to set.
+		\param $Value The new value of the header.
+		
+		Sets the type of the mail.
+		It can be TEXTTYPE or HTMLTYPE. 
+	*/
 	public function setType($Type) {
 		$Type = (int) $Type;
 		if( $Type < 0 ) {
@@ -73,22 +93,39 @@ class Email {
 		}
 		if( !($Type & self::TEXTTYPE) && !($Type & self::HTMLTYPE) ) {
 			throw new Exception('InvalidType');
-			return false;
+			return;
 		}
 		$this->Type = ( empty($Substract) ) ? $this->Type | $Type : $this->Type ^ $Type;
 	}
 	
-	public function containFile($Filename) {
+	//! Checks if this file is in the files list
+	/*!
+		\param $Filename The file name.
+		\return True if this file is in the attached files list.
+	*/
+	public function containsFile($Filename) {
 		return in_array($Filename, $this->AttFiles);
 	}
 	
+	//! Adds a file to the files list
+	/*!
+		\param $Filename The file name.
+		
+		Adds $Filename to the attached files list.
+	*/
 	public function addFile($Filename) {
-		if( $this->containFile($Filename) ) {
+		if( $this->containsFile($Filename) ) {
 			throw new Exception('FileAlreadyContained');
 		}
 		$this->AttFiles[] = $Filename;
 	}
 	
+	//! Removes a file from the files list
+	/*!
+		\param $Filename The file name.
+		
+		Removes $Filename from the attached files list.
+	*/
 	public function removeFile($Filename) {
 		if( ($key = array_search($Filename, $this->AttFiles)) === false ) {
 			throw new Exception('FileNotContained');
@@ -96,6 +133,10 @@ class Email {
 		unset($this->AttFiles[$key]);
 	}
 	
+	//! Sets the subject of the mail
+	/*!
+		\param $Subject The new subject.
+	*/
 	public function setSubject($Subject) {
 		if( !is_string($Subject) ) {
 			throw new Exception('RequireStringParameter');
@@ -103,6 +144,10 @@ class Email {
 		$this->Subject = $Subject;
 	}
 	
+	//! Sets the text body of the mail
+	/*!
+		\param $Body The new body.
+	*/
 	public function setTEXTBody($Body) {
 		if( !is_string($Body) ) {
 			throw new Exception('RequireStringParameter');
@@ -110,6 +155,10 @@ class Email {
 		$this->TEXTBody = $Body;
 	}
 	
+	//! Sets the html body of the mail
+	/*!
+		\param $Body The new body.
+	*/
 	public function setHTMLBody($Body) {
 		if( !is_string($Body) ) {
 			throw new Exception('RequireStringParameter');
@@ -117,6 +166,10 @@ class Email {
 		$this->HTMLBody = $Body;
 	}
 	
+	//! Sets the alternative body of the mail
+	/*!
+		\param $Body The new body.
+	*/
 	public function setAltBody($Body) {
 		if( !is_string($Subject) ) {
 			throw new Exception('RequireStringParameter');
@@ -124,6 +177,13 @@ class Email {
 		$this->AltBody = $Body;
 	}
 	
+	//! Sends the mail to the given address
+	/*!
+		\param $ToAddress The email adress to send this mail
+		
+		Sends the mail to the given adress.
+		You can pass an array of address to send it to multiple recipients.
+	*/
 	public function send($ToAddress) {
 		if( empty($ToAddress) || (!self::is_email($ToAddress) && !is_array($ToAddress)) ) {
 			throw new Exception('InvalidEmailAddress');
@@ -296,59 +356,100 @@ BODY;
 		return true;
 	}
 	
-	public function setReplyTo($ReplyToEmailAdd) {
-		$this->setHeader('Return-Path', $ReplyToEmailAdd);
-		$this->setHeader('Reply-To', $ReplyToEmailAdd);
+	//! Sets the ReplyTo value of the mail
+	/*!
+		\param $Email The email adress to send this mail
+	*/
+	public function setReplyTo($Email) {
+		$this->setHeader('Return-Path', $Email);
+		$this->setHeader('Reply-To', $Email);
 	}
 	
+	//! Sets the Sender value of the mail
+	/*!
+		\param $Email The email adress to send this mail
+		
+		Sets the Sender value of the mail.
+		This function also sets the ReplyTo value if undefined.
+	*/
 	public function setSender($SendEmailAdd) {
-		$this->setHeader('From', $SendEmailAdd);
-		$this->setHeader('Sender', $SendEmailAdd);
+		$this->setHeader('From', $Email);
+		$this->setHeader('Sender', $Email);
 		if( empty($Headers['Return-Path']) ) {
-			$this->setReplyTo($SendEmailAdd);
+			$this->setReplyTo($Email);
 		}
 	}
 	
+	//! Gets a boundary
+	/*!
+		\param The index of the boundary to get. Default value is 0.
+		\return The value of the boundary.
+	*/
 	public function getBoundary($BoundaryInd=0) {
 		if( empty($this->MIMEBoundary[$BoundaryInd]) ) {
-			$this->MIMEBoundary[$BoundaryInd] = '-=%IGSTAFF_'.md5(microtime(1)+$BoundaryInd).'%=-';
+			$this->MIMEBoundary[$BoundaryInd] = '-=%ORPHEUS_'.md5(microtime(1)+$BoundaryInd).'%=-';
 		}
 		return $this->MIMEBoundary[$BoundaryInd];
 	}
 	
+	//! Checks if this mail is a HTML mail
+	/*!
+		\return True if this object has a HTML message.
+	*/
 	public function isHTML() {
 		return !empty($this->HTMLBody);
 	}
 	
+	//! Checks if this mail is a TEXT mail
+	/*!
+		\return True if this object has a TEXT message.
+	*/
 	public function isTEXT() {
 		return !empty($this->TEXTBody);
 	}
 	
+	//! Checks if this mail is an alternative mail
+	/*!
+		\return True if this object has an alternative message.
+	*/
 	public function isAlternative() {
 		return !empty($this->AltBody);
 	}
 	
-	public function containsFiles() {
-		return !empty($this->AttFiles);
-	}
-	
+	//! Checks if this mail contains mutiple contents
+	/*!
+		\return True if this object contains multiple contents.
+	*/
 	public function isMultiContent() {
 		return ( $this->isHTML() + $this->isTEXT() + $this->containsFiles() ) > 1;
 	}
 	
-	public static function is_email($mail) {
+	//! Checks if the given mail address is valid
+	/*!
+		\param $email The email address.
+		\return True if this email is valid.
+	*/
+	public static function is_email($email) {
+		return is_email($email);
+		/*
 		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
 		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
 		$regex = '/^' . $atom . '+(\.' . $atom . '+)*@(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
-		return is_string($mail) && preg_match($regex, $mail);
+		return is_string($email) && preg_match($regex, $email);
+		*/
 	}
 
-	public static function getMimeType($FileName) {
+	//! Gets the mime type of a file.
+	/*!
+		\param $FileName The file name.
+		\return The mime type of the file.
+	*/
+	public static function getMimeType($Filename) {
 		if( function_exists('finfo_open') ) {
 			$finfo = finfo_open(FILEINFO_MIME_TYPE);
-			return finfo_file($finfo, $FileName);
+			return finfo_file($finfo, $Filename);
 		}
-		return mime_content_type($FileName);
+		return mime_content_type($Filename);
 	}
 }
 ?>
