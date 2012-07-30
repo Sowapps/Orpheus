@@ -121,13 +121,17 @@ Inheritance diagram for AbstractStatus:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a512a92ba0dd08cb963d9c1dcb7866fea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a512a92ba0dd08cb963d9c1dcb7866fea">getAvailableStatus</a> ()</td></tr>
+<tr class="memdesc:a512a92ba0dd08cb963d9c1dcb7866fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets available status.  <a href="#a512a92ba0dd08cb963d9c1dcb7866fea"></a><br/></td></tr>
 <tr class="memitem:a13065df944948731acc20a3237f0601a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a> ($newStatus=null)</td></tr>
+<tr class="memdesc:a13065df944948731acc20a3237f0601a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets and sets the status of this object.  <a href="#a13065df944948731acc20a3237f0601a"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#ab14eef7adf2dee1e17fcf54bbd5b8ac7">checkUserInput</a> ($uInputData)</td></tr>
-<tr class="memdesc:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check user input.  <a href="#ab14eef7adf2dee1e17fcf54bbd5b8ac7"></a><br/></td></tr>
+<tr class="memdesc:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks user input.  <a href="#ab14eef7adf2dee1e17fcf54bbd5b8ac7"></a><br/></td></tr>
 <tr class="memitem:ad3c46939a35a6d895e8b9922fb4417a2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#ad3c46939a35a6d895e8b9922fb4417a2">checkStatus</a> ($newStatus, $currentStatus=null)</td></tr>
+<tr class="memdesc:ad3c46939a35a6d895e8b9922fb4417a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks a status.  <a href="#ad3c46939a35a6d895e8b9922fb4417a2"></a><br/></td></tr>
 <tr class="memitem:aa4399273f51a109e292556b4b1c575dc"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#aa4399273f51a109e292556b4b1c575dc">getDefaultStatus</a> ()</td></tr>
+<tr class="memdesc:aa4399273f51a109e292556b4b1c575dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default status.  <a href="#aa4399273f51a109e292556b4b1c575dc"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
 <tr class="memitem:a87ea9112380ac4c20067418524d98227"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a87ea9112380ac4c20067418524d98227">$status</a> = array('approved'=&gt;array('rejected'), 'rejected'=&gt;array('approved'))</td></tr>
@@ -167,6 +171,15 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$newStatus</td><td>The new status to set. </td></tr>
+    <tr><td class="paramname">$currentStatus</td><td>The current status. Default value is null. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns:</dt><dd>The $newStatus.</dd></dl>
+<p>Checks the $newStatus. If $currentStatus is null, its consider that the objet haven't it, like new one. </p>
 
 <p>Reimplemented in <a class="el" href="class_user.html#a2b0dcfc6103dfd779404dd5226fa8e6d">User</a>.</p>
 
@@ -186,15 +199,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">$uInputData</td><td>The user input data to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>The valid data. </dd></dl>
-<dl class="section attention"><dt>Attention:</dt><dd>This method require to be overridden.</dd></dl>
-<p>Check if the class could generate a valid object from $uInputData. The method could modify the user input to fix them but it must return the data. </p>
+<dl class="section see"><dt>See also:</dt><dd><a class="el" href="class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27" title="Checks user input.">PermanentObject::checkUserInput()</a> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27">PermanentObject</a>.</p>
 
@@ -215,6 +220,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="section return"><dt>Returns:</dt><dd>An array of the available statuses.</dd></dl>
+<p>Gets all available status for the current one. </p>
 
 </div>
 </div>
@@ -231,6 +238,8 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="section return"><dt>Returns:</dt><dd>The default status.</dd></dl>
+<p>Gets the default status, this is the first of the defined list. </p>
 
 </div>
 </div>
@@ -248,6 +257,14 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$newStatus</td><td>The new status to set. Default value is null. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns:</dt><dd>The status of this object.</dd></dl>
+<p>Gets the status of this object. Sets it if $newStatus is null. The return value is the final one. </p>
 
 </div>
 </div>
@@ -291,7 +308,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 29 2012 20:17:08 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 30 2012 15:46:37 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

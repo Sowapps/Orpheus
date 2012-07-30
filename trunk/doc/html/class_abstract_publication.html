@@ -122,7 +122,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2fc0026c34b76a335dd6d7112b911bc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a2fc0026c34b76a335dd6d7112b911bc0">__toString</a> ()</td></tr>
 <tr class="memdesc:a2fc0026c34b76a335dd6d7112b911bc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Magic toString.  <a href="#a2fc0026c34b76a335dd6d7112b911bc0"></a><br/></td></tr>
 <tr class="memitem:a0f031f844b0023dc0a838e10cc3165de"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a0f031f844b0023dc0a838e10cc3165de">update</a> ($uInputData, array $data=array())</td></tr>
-<tr class="memdesc:a0f031f844b0023dc0a838e10cc3165de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this permanent object.  <a href="#a0f031f844b0023dc0a838e10cc3165de"></a><br/></td></tr>
+<tr class="memdesc:a0f031f844b0023dc0a838e10cc3165de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates this permanent object.  <a href="#a0f031f844b0023dc0a838e10cc3165de"></a><br/></td></tr>
 <tr class="memitem:a55253f2feec765b230c520678650608e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a55253f2feec765b230c520678650608e">getHTML</a> ($cacheUpdate=0)</td></tr>
 <tr class="memitem:a8c9c398f8b2a1f013b7d6aa421875091"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a8c9c398f8b2a1f013b7d6aa421875091">generateHTML</a> ()</td></tr>
 <tr class="memitem:ac3d8552ba971cd6ec3e857860baa3689"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689">getPermalink</a> ()</td></tr>
@@ -133,7 +133,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a2ed257056b096265f5f74c980270e726"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a2ed257056b096265f5f74c980270e726">checkUserID</a> ($inputData)</td></tr>
 <tr class="memitem:a811baa8cf8b0324c05239a1c4c42c72a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a811baa8cf8b0324c05239a1c4c42c72a">checkUserName</a> ($inputData)</td></tr>
 <tr class="memitem:aa93a45a94e47b448a37b37020a24b714"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#aa93a45a94e47b448a37b37020a24b714">checkUserInput</a> ($uInputData)</td></tr>
-<tr class="memdesc:aa93a45a94e47b448a37b37020a24b714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check user input.  <a href="#aa93a45a94e47b448a37b37020a24b714"></a><br/></td></tr>
+<tr class="memdesc:aa93a45a94e47b448a37b37020a24b714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks user input.  <a href="#aa93a45a94e47b448a37b37020a24b714"></a><br/></td></tr>
 <tr class="memitem:a004f1da0d50508126a0f2df7dc6a196b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#a004f1da0d50508126a0f2df7dc6a196b">checkForEntry</a> ($data)</td></tr>
 <tr class="memitem:aefd4ad0b25e8970a0e35032720b4c4e8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8">init</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
@@ -240,15 +240,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">$uInputData</td><td>The user input data to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns:</dt><dd>The valid data. </dd></dl>
-<dl class="section attention"><dt>Attention:</dt><dd>This method require to be overridden.</dd></dl>
-<p>Check if the class could generate a valid object from $uInputData. The method could modify the user input to fix them but it must return the data. </p>
+<dl class="section see"><dt>See also:</dt><dd><a class="el" href="class_permanent_object.html#a82c4831ed48eb9955cef4f618b301c27" title="Checks user input.">PermanentObject::checkUserInput()</a> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="class_abstract_status.html#ab14eef7adf2dee1e17fcf54bbd5b8ac7">AbstractStatus</a>.</p>
 
@@ -385,8 +377,8 @@ Static Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns:</dt><dd>1 in case of success, else 0. </dd></dl>
 <dl class="section attention"><dt>Attention:</dt><dd>This method require to be overridden. </dd></dl>
-<dl class="section see"><dt>See also:</dt><dd><a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Run for Update.">runForUpdate()</a></dd></dl>
-<p>This method require to be overridden but it still be called too by the child classes. Here $uInputData is not used, it is reserved for child classes. $data must contain a filled array of new data. This method update the EDIT event log. Before saving, <a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Run for Update.">runForUpdate()</a> is called to let child classes to run custom instructions. </p>
+<dl class="section see"><dt>See also:</dt><dd><a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Runs for Update.">runForUpdate()</a></dd></dl>
+<p>This method require to be overridden but it still be called too by the child classes. Here $uInputData is not used, it is reserved for child classes. $data must contain a filled array of new data. This method update the EDIT event log. Before saving, <a class="el" href="class_permanent_object.html#a410146aae64feae05acfe03943f1ce07" title="Runs for Update.">runForUpdate()</a> is called to let child classes to run custom instructions. </p>
 
 <p>Reimplemented from <a class="el" href="class_permanent_object.html#af4abe7c2d7d44a94bc18e149a0cbcdc2">PermanentObject</a>.</p>
 
@@ -447,7 +439,7 @@ Static Protected Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 29 2012 20:17:08 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Jul 30 2012 15:46:37 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.0
 </small></address>

@@ -25,7 +25,6 @@ var searchData=
   ['configcore_5fclass_2ephp',['configcore_class.php',['../configcore__class_8php.html',1,'']]],
   ['confpath',['CONFPATH',['../constants_8php.html#ab2923e7229c819e74fa8a7d11cde5d8e',1,'constants.php']]],
   ['constants_2ephp',['constants.php',['../constants_8php.html',1,'']]],
-  ['containfile',['containFile',['../class_email.html#a79b16ad511640100a3b697425b112d2b',1,'Email']]],
-  ['containsfiles',['containsFiles',['../class_email.html#abf06726b70313b2445ea2ebfe60f7f21',1,'Email']]],
+  ['containsfile',['containsFile',['../class_email.html#aac98e123dee2736316a334ae2b028808',1,'Email']]],
   ['create',['create',['../class_hook.html#a76362d684f78293ed94c65ae2e1857d0',1,'Hook\create()'],['../class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93',1,'PermanentObject\create()']]]
 ];

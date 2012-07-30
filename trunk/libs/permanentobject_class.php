@@ -100,7 +100,7 @@ abstract class PermanentObject {
 	
 	// *** USER METHODS ***
 	
-	//! Update this permanent object
+	//! Updates this permanent object
 	/*!
 		\param $uInputData The input data we will check and extract, used by children.
 		\param $data The data from wich it will update this object, used by parents, including this one.
@@ -134,7 +134,7 @@ abstract class PermanentObject {
 		return $this->save();
 	}
 	
-	//! Run for Update
+	//! Runs for Update
 	/*!
 		\sa update()
 		
@@ -143,7 +143,7 @@ abstract class PermanentObject {
 	*/
 	public function runForUpdate() { }
 	
-	//! Save this permanent object
+	//! Saves this permanent object
 	/*!
 		\return 1 in case of success, else 0.
 		
@@ -170,11 +170,11 @@ abstract class PermanentObject {
 		return SQLMapper::doUpdate($options);
 	}
 	
-	//! Mark the field as modified
+	//! Marks the field as modified
 	/*!
 		\param $field The field to mark as modified.
 		
-		Add the $field to the modified fields array.
+		Adds the $field to the modified fields array.
 	*/
 	private function addModFields($field) {
 		if( !in_array($field, $this->modFields) ) {
@@ -182,11 +182,11 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Get one value or all values.
+	//! Gets one value or all values.
 	/*!
 		\param $key Name of the field to get.
 		
-		Get the value of field $key or all data values if $key is null.
+		Gets the value of field $key or all data values if $key is null.
 	*/
 	public function getValue($key=null) {
 		if( !empty($key) ) {
@@ -198,12 +198,12 @@ abstract class PermanentObject {
 		return $this->data;
 	}
 	
-	//! Set the value of a field
+	//! Sets the value of a field
 	/*!
 		\param $key Name of the field to set.
 		\param $value New value of the field.
 		
-		Set the field $key with the new $value.
+		Sets the field $key with the new $value.
 	*/
 	public function setValue($key, $value) {
 		if( !isset($key, $value) ) {
@@ -220,25 +220,25 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Verify equality
+	//! Verifies equality
 	/*!
 		\param $o The object to compare.
 		\return True if this object represents the same data, else False.
 		
-		Compare the class and the ID field value of the 2 objects.
+		Compares the class and the ID field value of the 2 objects.
 	*/
 	public function equals(PermanentObject $o) {
 		return (get_class($this)==get_class($o) && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
 	}
 	
-	//! Log an event
+	//! Logs an event
 	/*!
 		\param $event The event to log in this object.
 		\param $time A specified time to use for logging event.
 		\param $ipAdd A specified IP Adress to use for logging event.
 		\sa getLogEvent()
 		
-		Compare the class and the ID field value of the 2 objects.
+		Logs an event to this object's data.
 	*/
 	public function logEvent($event, $time=null, $ipAdd=null) {
 		$log = static::getLogEvent($event, $time, $ipAdd);
@@ -248,13 +248,13 @@ abstract class PermanentObject {
 	
 	// *** STATIC METHODS ***
 	
-	//! Load a permanent object
+	//! Loads a permanent object
 	/*!
 		\param $id The object ID to load.
 		\return The object.
 		\sa get()
 	
-		Load the object with the ID $id
+		Loads the object with the ID $id
 	*/
 	public static function load($id) {
 		if( !ctype_digit("$id") ) {
@@ -272,12 +272,12 @@ abstract class PermanentObject {
 		return new static($data);
 	}
 	
-	//! Delete a permanent object
+	//! Deletes a permanent object
 	/*!
 		\param $id The object ID to delete.
 		\return 1 in case of success, else 0.
 		
-		Delete the object with the ID $id
+		Deletes the object with the ID $id
 	*/
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
@@ -292,13 +292,13 @@ abstract class PermanentObject {
 		return SQLMapper::doDelete($options);
 	}
 	
-	//! Get some permanent objects
+	//! Gets some permanent objects
 	/*!
 		\param $options The options used to get the permanents object.
 		\return An array of array containing object's data.
 		\sa SQLMapper::doSelect()
 		
-		Get an objects' list using this class' table.
+		Gets an objects' list using this class' table.
 	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
@@ -320,12 +320,12 @@ abstract class PermanentObject {
 		return $r;
 	}
 	
-	//! Create a new permanent object
+	//! Creates a new permanent object
 	/*!
 		\param $inputData The input data we will check, extract and create the new object.
 		\return The ID of the new permanent object.
 		
-		Create a new permanent object from ths input data.
+		Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData) {
 		$data = static::checkUserInput($inputData);
@@ -355,12 +355,12 @@ abstract class PermanentObject {
 		return $LastInsert;
 	}
 	
-	//! Complete missing fields
+	//! Completes missing fields
 	/*!
 		\param $data The data array to complete.
 		\return The completed data array.
 		
-		Complete an array of data of an object of this class by setting missing fields with empty string.
+		Completes an array of data of an object of this class by setting missing fields with empty string.
 	*/
 	public static function completeFields($data) {
 		foreach( static::$fields as $fieldname ) {
@@ -371,14 +371,14 @@ abstract class PermanentObject {
 		return $data;
 	}
 	
-	//! Get the log of an event
+	//! Gets the log of an event
 	/*!
 		\param $event The event to log in this object.
 		\param $time A specified time to use for logging event.
 		\param $ipAdd A specified IP Adress to use for logging event.
 		\sa logEvent()
 		
-		Build a new log event for $event for this time and the user IP adress.
+		Builds a new log event for $event for this time and the user IP adress.
 	*/
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(
@@ -387,7 +387,7 @@ abstract class PermanentObject {
 		);
 	}
 	
-	//! Get the table of this class
+	//! Gets the table of this class
 	/*!
 		\return The table of this class.
 	*/
@@ -395,7 +395,7 @@ abstract class PermanentObject {
 		return static::$table;
 	}
 	
-	//! Get the ID field name of this class
+	//! Gets the ID field name of this class
 	/*!
 		\return The ID field of this class.
 	*/
@@ -403,7 +403,7 @@ abstract class PermanentObject {
 		return static::$IDFIELD;
 	}
 		
-	//! Run for object
+	//! Runs for object
 	/*!
 		\param $data The new data to process.
 		\sa create()
@@ -413,7 +413,7 @@ abstract class PermanentObject {
 	*/
 	public static function runForObject(&$data) { }
 	
-	//! Apply for object
+	//! Applies for object
 	/*!
 		\param $data The new data to process.
 		\param $id The ID of the new object.
@@ -426,7 +426,7 @@ abstract class PermanentObject {
 	
 	// 		** CHECK METHODS **
 	
-	//! Check user input
+	//! Checks user input
 	/*!
 		\param $uInputData The user input data to check.
 		\return The valid data.
@@ -437,7 +437,7 @@ abstract class PermanentObject {
 	*/
 	public static function checkUserInput($uInputData) { }
 	
-	//! Check for object
+	//! Checks for object
 	/*!
 		\param $data The new data to process.
 		\sa create()
