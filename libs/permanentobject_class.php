@@ -102,17 +102,17 @@ abstract class PermanentObject {
 	
 	//! Updates this permanent object
 	/*!
-		\param $uInputData The input data we will check and extract, used by children.
-		\param $data The data from wich it will update this object, used by parents, including this one.
-		\return 1 in case of success, else 0.
-		\overrideit
-		\sa runForUpdate()
-		
-		This method require to be overridden but it still be called too by the child classes.
-		Here $uInputData is not used, it is reserved for child classes.
-		$data must contain a filled array of new data.
-		This method update the EDIT event log.
-		Before saving, runForUpdate() is called to let child classes to run custom instructions.
+	* \param $uInputData The input data we will check and extract, used by children.
+	* \param $data The data from wich it will update this object, used by parents, including this one.
+	* \return 1 in case of success, else 0.
+	* \overrideit
+	* \sa runForUpdate()
+	* 
+	* This method require to be overridden but it still be called too by the child classes.
+	* Here $uInputData is not used, it is reserved for child classes.
+	* $data must contain a filled array of new data.
+	* This method update the EDIT event log.
+	* Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	*/
 	public function update($uInputData, array $data=array()) {
 		try {
@@ -432,7 +432,7 @@ abstract class PermanentObject {
 		\return The valid data.
 		\overrideit
 		
-		Check if the class could generate a valid object from $uInputData.
+		Checks if the class could generate a valid object from $uInputData.
 		The method could modify the user input to fix them but it must return the data.
 	*/
 	public static function checkUserInput($uInputData) { }

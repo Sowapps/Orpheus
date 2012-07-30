@@ -1,5 +1,5 @@
 <?php
-//! The site user class
+//! The abstract publication class
 /*!
  * This class implements a publication system to the abstract status class.
  * Its purpose is to be used for articles, posts, comments and other publications.
@@ -32,14 +32,26 @@ abstract class AbstractPublication extends AbstractStatus {
 
 	// *** METHODES SURCHARGEES ***
 	
+	//! Magic string conversion
+	/*!
+		\return The string valu of this object.
+		
+		The string value is the contents of the publication.
+	*/
 	public function __toString() {
 		return $this->getHTML();
 	}
 	
 	// *** USER METHODS ***
 	
+	//! Updates this publication object
+	/*!
+	 * \sa PermanentObject::update()
+	 * 
+	 * This update method manages 'name' and 'user_name' fields.
+	 */
 	public function update($uInputData, array $data=array()) {
-		if( !user_can(static::$table.'_edit') ) {
+		if( !User::canDo(static::$table.'_edit') ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		
@@ -60,17 +72,38 @@ abstract class AbstractPublication extends AbstractStatus {
 		return parent::update($uInputData, $data);
 	}
 	
+	//! Gets HTML contents
+	/*!
+	 * \param $cacheUpdate True to force the cache to update.
+	 * \return The cache content, the generated HTML.
+	 * \sa generateHTML()
+	 */
 	public function getHTML($cacheUpdate=0) {
-		if( !strlen($this->cache) ) {
+		if( !strlen($this->cache) || $cacheUpdate ) {
 			$this->cache = $this->generateHTML();
 		}
 		return $this->cache;
 	}
+	
+	//! Generate HTML contents
+	/*!
+	 * \return The generated HTML contents.
+	 * \overrideit
+	 */
 	abstract public function generateHTML();
+	
+	//! Gets permalink
+	/*!
+	 * \return The permalink.
+	 * \overrideit
+	 * 
+	 * Gets the unique and permanent link.
+	 */
 	abstract public function getPermalink();
 	
 	// *** STATIC METHODS ***
 	
+	//! Erase all cache for this publication type
 	public static function eraseAllCache() {
 		return SQLMapper::doUpdate(array(
 			'table' => static::$table,
@@ -80,6 +113,13 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	// 		** CHECK METHODS **
 	
+	//! Checks a name
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The stripped name.
+	 * 
+	 * Validates the name in array $inputData.
+	 */
 	public static function checkName($inputData) {
 		if( empty($inputData['name']) ) {
 			throw new UserException('invalidName');
@@ -87,6 +127,13 @@ abstract class AbstractPublication extends AbstractStatus {
 		return strip_tags($inputData['name']);
 	}
 	
+	//! Checks a user id
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The user id as integer.
+	 * 
+	 * Validates the user_id in array $inputData.
+	 */
 	public static function checkUserID($inputData) {
 		if( !isset($inputData['user_id']) || !is_ID($inputData['user_id']) ) {
 			throw new UserException('invalidUserID');
@@ -94,7 +141,13 @@ abstract class AbstractPublication extends AbstractStatus {
 		return (int) $inputData['user_id'];
 	}
 	
-	// Similar to User::checkFullName($inputData)
+	//! Checks a user name
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The stripped user name.
+	 * 
+	 * Validates the user_name in array $inputData.
+	 */
 	public static function checkUserName($inputData) {
 		if( empty($inputData['user_name']) ) {
 			throw new UserException('invalidUserName');
@@ -102,6 +155,10 @@ abstract class AbstractPublication extends AbstractStatus {
 		return strip_tags($inputData['user_name']);
 	}
 	
+	//! Checks user input
+	/*!
+	 * \sa PermanentObject::checkUserInput()
+	*/
 	public static function checkUserInput($uInputData) {
 		$data = array();
 		$data['name'] = self::checkName($uInputData);
@@ -113,7 +170,11 @@ abstract class AbstractPublication extends AbstractStatus {
 		return $data;
 	}
 	
-	public static function checkForEntry($data) {
+	//! Checks for object
+	/*!
+		\sa PermanentObject::checkForObject()
+	*/
+	public static function checkForObject($data) {
 		if( empty($data['name']) && empty($data['user_id']) && empty($data['create_ip']) ) {
 			return;//Nothing to check.
 		}
