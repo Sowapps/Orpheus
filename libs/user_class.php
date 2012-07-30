@@ -1,4 +1,4 @@
-<?php
+ <?php
 //! The user class
 /*!
  * The user class represents an user known by the current website as a permanent object.
@@ -24,7 +24,12 @@ class User extends AbstractStatus {
 
 	// *** METHODES SURCHARGEES ***
 	
-	//! ToString method for implicit conversions.
+	//! Magic string conversion
+	/*!
+		\return The string valu of this object.
+		
+		The string value is the contents of the publication.
+	*/
 	public function __toString() {
 		return $this->name;
 	}
@@ -114,12 +119,24 @@ class User extends AbstractStatus {
 		return (int) ( !empty($inputData['accesslevel']) );
 	}
 	
-	//! Checks if this user can do $action on $user.
+	//! Checks if this user can do a restricted action
+	/*!
+	 * \param $action The action to look for.
+	 * \param $user The user we want to edit.
+	 * \return True if this user has enough acess level to edit $user.
+	 * 
+	 * Checks if this user can do $action on $user.
+	 */
 	public function canOn($action, $user) {
 		return $this->checkPerm($action) && $user->accesslevel < $this->accesslevel;
 	}
 	
-	//! Update this user object from given data
+	//! Updates this publication object
+	/*!
+	 * \sa PermanentObject::update()
+	 * 
+	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
+	 */
 	public function update($uInputData, array $data=array()) {
 		
 		//Si aucun utilisateur n'est connecté ou qu'il n'est ni cet utilisateur ni ne possède les droits suffisants.
@@ -168,6 +185,13 @@ class User extends AbstractStatus {
 	
 	// *** METHODES STATIQUES ***
 	
+	//! Log in a user from data
+	/*!
+	 * \param $data The data for user authentification.
+	 * 
+	 * Log in a user from the given data.
+	 * It tries to validate given data, in case of errors, UserException are thrown.
+	 */
 	public static function userLogin($data) {
 		self::checkName($data);
 		self::checkPassword($data, false);
@@ -190,16 +214,37 @@ class User extends AbstractStatus {
 		$user->login();
 	}
 	
+	//! Hashes a password
+	/*!
+	 * \param $str The clear password.
+	 * \return The hashed string.
+	 * 
+	 * Hashes $str using a salt.
+	 * Define constant USER_SALT to use your own salt.
+	 */
 	public static function hashPassword($str) {
 		//http://www.php.net/manual/en/faq.passwords.php
 		$salt = (defined('USER_SALT')) ? USER_SALT : '1$@g&';
 		return hash('sha512', $salt.$str.'7');
 	}
 	
+	//! Checks if the client is loggued in
+	/*!
+	 * \return True if the current client is loggued in.
+	 * 
+	 * Checks if the client is loggued in.
+	 * It verifies if a valid session exist.
+	 */
 	public static function is_login() {
 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User );
 	}
 	
+	//! Loads an user object
+	/*!
+	 * \sa PermanentObject::load()
+	 * 
+	 * It tries to optimize by getting directly the loggued user if he has the same ID.
+	 */
 	public static function load($id) {
 		if( !empty($GLOBALS['USER']) && $GLOBALS['USER'] instanceof User && $GLOBALS['USER']->id == $id) {
 			return $GLOBALS['USER'];
@@ -207,13 +252,26 @@ class User extends AbstractStatus {
 		return parent::load($id);
 	}
 	
+	//! Deletes an user object
+	/*!
+	 * \sa PermanentObject::delete()
+	 * 
+	 * It tries to check current user rights.
+	 */
 	public static function delete($id) {
-		if( !user_can('users_delete') ) {
-			throw new OperationForbiddenException('users_delete');
+		if( !self::canDo('users_delete') ) {
+			throw new OperationForbiddenException('users_delete');//TODO: This Exception does not exist anymore.
 		}
 		return parent::delete($id);
 	}
 	
+	//! Checks if this user can access to a module
+	/*!
+	 * \param $module The module to look for.
+	 * \return True if this user can access to $module.
+	 * 
+	 * Checks if this user can access to $module.
+	 */
 	public static function canAccess($module) {
 		global $USER, $ACCESS;
 		return is_null($ACCESS->$module) || 
@@ -221,6 +279,14 @@ class User extends AbstractStatus {
 			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser && $USER->checkPerm((int) $GLOBALS['ACCESS']->$module));
 	}
 	
+	//! Checks if this user can do a restricted action
+	/*!
+	 * \param $action The action to look for.
+	 * \param $selfEditUser The user if editing one or null. Default value is null.
+	 * \return True if this user can do this $action.
+	 * 
+	 * Checks if this user can do $action.
+	 */
 	public static function canDo($action, $selfEditUser=null) {
 		global $USER;
 		return !empty($USER) && $USER instanceof SiteUser && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && $selfEditUser instanceof SiteUser && $selfEditUser->equals($USER) ) );
@@ -303,9 +369,5 @@ class User extends AbstractStatus {
 	}
 	
 	/* Website */
-	
-	public static function getProfile($name){
-		// empty by default, implement it in subclasses
-	}
 }
 ?>

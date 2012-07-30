@@ -7,12 +7,14 @@
 	
 Library of PDO functions to easily use ODBC.
 
+Useful constants:
 LOGSPATH
 PDOLOGFILENAME
 
 Required functions:
 bintest() (_core.php)
 */
+
 if( !defined("INSIDE") ) {
 	return;
 }
