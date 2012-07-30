@@ -197,6 +197,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		}
 	}
 	
+	//! Internal initialization
 	public static function init() {
 		self::$fields = array_unique(array_merge(self::$fields,parent::$fields));
 	}

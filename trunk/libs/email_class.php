@@ -1,5 +1,5 @@
 <?php
-//! The Email class
+//! The email class
 /*!
 	This class is a tool to send mails.
 */
