@@ -79,8 +79,7 @@ class Email {
 	
 	//! Sets the type of the mail
 	/*!
-		\param $Key The key of the header to set.
-		\param $Value The new value of the header.
+		\param $Type The new Type.
 		
 		Sets the type of the mail.
 		It can be TEXTTYPE or HTMLTYPE. 
@@ -372,7 +371,7 @@ BODY;
 		Sets the Sender value of the mail.
 		This function also sets the ReplyTo value if undefined.
 	*/
-	public function setSender($SendEmailAdd) {
+	public function setSender($Email) {
 		$this->setHeader('From', $Email);
 		$this->setHeader('Sender', $Email);
 		if( empty($Headers['Return-Path']) ) {
@@ -382,7 +381,7 @@ BODY;
 	
 	//! Gets a boundary
 	/*!
-		\param The index of the boundary to get. Default value is 0.
+		\param $BoundaryInd The index of the boundary to get. Default value is 0.
 		\return The value of the boundary.
 	*/
 	public function getBoundary($BoundaryInd=0) {
@@ -441,7 +440,7 @@ BODY;
 
 	//! Gets the mime type of a file.
 	/*!
-		\param $FileName The file name.
+		\param $Filename The file name.
 		\return The mime type of the file.
 	*/
 	public static function getMimeType($Filename) {

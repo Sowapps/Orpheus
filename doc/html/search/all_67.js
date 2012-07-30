@@ -11,7 +11,7 @@ var searchData=
   ['getidfield',['getIDField',['../class_permanent_object.html#a2a2d396a9fc3f4cdd42fa4704bb83f36',1,'PermanentObject']]],
   ['getkey',['getKey',['../class_unknown_key_exception.html#aed561ae95197be1bd8bc4f5ef1890fc2',1,'UnknownKeyException']]],
   ['getlogevent',['getLogEvent',['../class_permanent_object.html#a055f4cfa64e735122c75ba37b9b6813d',1,'PermanentObject']]],
-  ['getmimetype',['getMimeType',['../class_email.html#a76bc61f84d344ac06d066ff72e8e63f7',1,'Email']]],
+  ['getmimetype',['getMimeType',['../class_email.html#a28ee3cb86b885f7e444cc04cecee0d34',1,'Email']]],
   ['getmodelspath',['getModelsPath',['../class_h_t_m_l_rendering.html#a9297da2127f74dba376661c577f634f9',1,'HTMLRendering']]],
   ['getnicename',['getNicename',['../class_site_user.html#ae10728ed36d3780e14e6ec0301a08a2f',1,'SiteUser']]],
   ['getpermalink',['getPermalink',['../class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689',1,'AbstractPublication']]],

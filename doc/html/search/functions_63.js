@@ -19,7 +19,6 @@ var searchData=
   ['checkusername',['checkUserName',['../class_abstract_publication.html#a811baa8cf8b0324c05239a1c4c42c72a',1,'AbstractPublication']]],
   ['cleanscandir',['cleanscandir',['../__core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f',1,'_core.php']]],
   ['completefields',['completeFields',['../class_permanent_object.html#acf2c222cbb6dbc04b81200cf857eec18',1,'PermanentObject']]],
-  ['containfile',['containFile',['../class_email.html#a79b16ad511640100a3b697425b112d2b',1,'Email']]],
-  ['containsfiles',['containsFiles',['../class_email.html#abf06726b70313b2445ea2ebfe60f7f21',1,'Email']]],
+  ['containsfile',['containsFile',['../class_email.html#aac98e123dee2736316a334ae2b028808',1,'Email']]],
   ['create',['create',['../class_hook.html#a76362d684f78293ed94c65ae2e1857d0',1,'Hook\create()'],['../class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93',1,'PermanentObject\create()']]]
 ];
