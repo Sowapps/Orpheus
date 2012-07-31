@@ -38,7 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,10 +60,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,7 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a>  </div>
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_email-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Email Class Reference</div>  </div>
 </div><!--header-->
@@ -96,64 +97,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab14ab97eb202b67389aa84b8275254d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ab14ab97eb202b67389aa84b8275254d4">__construct</a> ($TEXTBody='', $Subject='')</td></tr>
-<tr class="memdesc:ab14ab97eb202b67389aa84b8275254d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab14ab97eb202b67389aa84b8275254d4"></a><br/></td></tr>
-<tr class="memitem:a398b99e2c4c45137ebbf0924a1da318a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a398b99e2c4c45137ebbf0924a1da318a">setHeader</a> ($Key, $Value)</td></tr>
-<tr class="memdesc:a398b99e2c4c45137ebbf0924a1da318a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a header.  <a href="#a398b99e2c4c45137ebbf0924a1da318a"></a><br/></td></tr>
-<tr class="memitem:a9807e61847bd53fbed55a66b8994a4fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a9807e61847bd53fbed55a66b8994a4fb">setType</a> ($Type)</td></tr>
-<tr class="memdesc:a9807e61847bd53fbed55a66b8994a4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the type of the mail.  <a href="#a9807e61847bd53fbed55a66b8994a4fb"></a><br/></td></tr>
-<tr class="memitem:ac8e2fdd54f871043d0954b2136dce6a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ac8e2fdd54f871043d0954b2136dce6a5">containsFile</a> ($Filename)</td></tr>
-<tr class="memdesc:ac8e2fdd54f871043d0954b2136dce6a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this file is in the files list.  <a href="#ac8e2fdd54f871043d0954b2136dce6a5"></a><br/></td></tr>
-<tr class="memitem:a4058a2f533ec191c9872c3e75b68a6ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a4058a2f533ec191c9872c3e75b68a6ca">addFile</a> ($Filename)</td></tr>
-<tr class="memdesc:a4058a2f533ec191c9872c3e75b68a6ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the files list.  <a href="#a4058a2f533ec191c9872c3e75b68a6ca"></a><br/></td></tr>
-<tr class="memitem:ad832bee9f798b300944e2dd4bdef5677"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ad832bee9f798b300944e2dd4bdef5677">removeFile</a> ($Filename)</td></tr>
-<tr class="memdesc:ad832bee9f798b300944e2dd4bdef5677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a file from the files list.  <a href="#ad832bee9f798b300944e2dd4bdef5677"></a><br/></td></tr>
-<tr class="memitem:abbc15d744a5e1131654b712b1e48150e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#abbc15d744a5e1131654b712b1e48150e">setSubject</a> ($Subject)</td></tr>
-<tr class="memdesc:abbc15d744a5e1131654b712b1e48150e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the subject of the mail.  <a href="#abbc15d744a5e1131654b712b1e48150e"></a><br/></td></tr>
-<tr class="memitem:a4bd27fb0c77c5b3a60cb66396de2415c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a4bd27fb0c77c5b3a60cb66396de2415c">setTEXTBody</a> ($Body)</td></tr>
-<tr class="memdesc:a4bd27fb0c77c5b3a60cb66396de2415c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text body of the mail.  <a href="#a4bd27fb0c77c5b3a60cb66396de2415c"></a><br/></td></tr>
-<tr class="memitem:aae3f29830b603685ecd01d5accb19395"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#aae3f29830b603685ecd01d5accb19395">setHTMLBody</a> ($Body)</td></tr>
-<tr class="memdesc:aae3f29830b603685ecd01d5accb19395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the html body of the mail.  <a href="#aae3f29830b603685ecd01d5accb19395"></a><br/></td></tr>
-<tr class="memitem:a0913662938563a47f343d5d0a18dff62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a0913662938563a47f343d5d0a18dff62">setAltBody</a> ($Body)</td></tr>
-<tr class="memdesc:a0913662938563a47f343d5d0a18dff62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the alternative body of the mail.  <a href="#a0913662938563a47f343d5d0a18dff62"></a><br/></td></tr>
-<tr class="memitem:af3eb39141e6c47075a8d30649d3ccca5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#af3eb39141e6c47075a8d30649d3ccca5">send</a> ($ToAddress)</td></tr>
-<tr class="memdesc:af3eb39141e6c47075a8d30649d3ccca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the mail to the given address.  <a href="#af3eb39141e6c47075a8d30649d3ccca5"></a><br/></td></tr>
-<tr class="memitem:ac503a5c7a87789aeb20991abd007c890"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ac503a5c7a87789aeb20991abd007c890">setReplyTo</a> ($<a class="el" href="class_email.html">Email</a>)</td></tr>
-<tr class="memdesc:ac503a5c7a87789aeb20991abd007c890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the ReplyTo value of the mail.  <a href="#ac503a5c7a87789aeb20991abd007c890"></a><br/></td></tr>
-<tr class="memitem:afbae53bb4110c6b0f40ce9cfb7167c53"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#afbae53bb4110c6b0f40ce9cfb7167c53">setSender</a> ($<a class="el" href="class_email.html">Email</a>)</td></tr>
-<tr class="memdesc:afbae53bb4110c6b0f40ce9cfb7167c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Sender value of the mail.  <a href="#afbae53bb4110c6b0f40ce9cfb7167c53"></a><br/></td></tr>
-<tr class="memitem:a263f7a214799c1c6d2cb23e6fb05108f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a263f7a214799c1c6d2cb23e6fb05108f">getBoundary</a> ($BoundaryInd=0)</td></tr>
-<tr class="memdesc:a263f7a214799c1c6d2cb23e6fb05108f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a boundary.  <a href="#a263f7a214799c1c6d2cb23e6fb05108f"></a><br/></td></tr>
-<tr class="memitem:a613657597b9aa1850e2a705ab2373e26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a613657597b9aa1850e2a705ab2373e26">isHTML</a> ()</td></tr>
-<tr class="memdesc:a613657597b9aa1850e2a705ab2373e26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is a HTML mail.  <a href="#a613657597b9aa1850e2a705ab2373e26"></a><br/></td></tr>
-<tr class="memitem:a7d6b30a37795f087289727a75b5980c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7d6b30a37795f087289727a75b5980c1">isTEXT</a> ()</td></tr>
-<tr class="memdesc:a7d6b30a37795f087289727a75b5980c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is a TEXT mail.  <a href="#a7d6b30a37795f087289727a75b5980c1"></a><br/></td></tr>
-<tr class="memitem:a5c6c7b7ec86d9ef40db661719c79ae96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a5c6c7b7ec86d9ef40db661719c79ae96">isAlternative</a> ()</td></tr>
-<tr class="memdesc:a5c6c7b7ec86d9ef40db661719c79ae96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is an alternative mail.  <a href="#a5c6c7b7ec86d9ef40db661719c79ae96"></a><br/></td></tr>
-<tr class="memitem:ab0cd4e6330bc04b0cb12400f1ee53a49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ab0cd4e6330bc04b0cb12400f1ee53a49">isMultiContent</a> ()</td></tr>
-<tr class="memdesc:ab0cd4e6330bc04b0cb12400f1ee53a49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail contains mutiple contents.  <a href="#ab0cd4e6330bc04b0cb12400f1ee53a49"></a><br/></td></tr>
+<tr class="memitem:a33eb5e6ebeb36002b04c3889c8d1964f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a33eb5e6ebeb36002b04c3889c8d1964f">__construct</a> ($TEXTBody='', $Subject='')</td></tr>
+<tr class="memdesc:a33eb5e6ebeb36002b04c3889c8d1964f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a33eb5e6ebeb36002b04c3889c8d1964f"></a><br/></td></tr>
+<tr class="memitem:a6b96d29cb1773a336a6687526234bc94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a6b96d29cb1773a336a6687526234bc94">setHeader</a> ($Key, $Value)</td></tr>
+<tr class="memdesc:a6b96d29cb1773a336a6687526234bc94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the value of a header.  <a href="#a6b96d29cb1773a336a6687526234bc94"></a><br/></td></tr>
+<tr class="memitem:aed46d83df3197fe96ec398ccb86eb32d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#aed46d83df3197fe96ec398ccb86eb32d">setType</a> ($Type)</td></tr>
+<tr class="memdesc:aed46d83df3197fe96ec398ccb86eb32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the type of the mail.  <a href="#aed46d83df3197fe96ec398ccb86eb32d"></a><br/></td></tr>
+<tr class="memitem:aac98e123dee2736316a334ae2b028808"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#aac98e123dee2736316a334ae2b028808">containsFile</a> ($Filename)</td></tr>
+<tr class="memdesc:aac98e123dee2736316a334ae2b028808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this file is in the files list.  <a href="#aac98e123dee2736316a334ae2b028808"></a><br/></td></tr>
+<tr class="memitem:ad84119c306ad05ad193ecf268c27ce5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ad84119c306ad05ad193ecf268c27ce5e">addFile</a> ($Filename)</td></tr>
+<tr class="memdesc:ad84119c306ad05ad193ecf268c27ce5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a file to the files list.  <a href="#ad84119c306ad05ad193ecf268c27ce5e"></a><br/></td></tr>
+<tr class="memitem:a46a15322af0364f1e5436a105157541b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a46a15322af0364f1e5436a105157541b">removeFile</a> ($Filename)</td></tr>
+<tr class="memdesc:a46a15322af0364f1e5436a105157541b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a file from the files list.  <a href="#a46a15322af0364f1e5436a105157541b"></a><br/></td></tr>
+<tr class="memitem:a6ecd8877938ad840384c69e9e651ff97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a6ecd8877938ad840384c69e9e651ff97">setSubject</a> ($Subject)</td></tr>
+<tr class="memdesc:a6ecd8877938ad840384c69e9e651ff97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the subject of the mail.  <a href="#a6ecd8877938ad840384c69e9e651ff97"></a><br/></td></tr>
+<tr class="memitem:a2b4d36da7cba6986dad33eec31885fac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a2b4d36da7cba6986dad33eec31885fac">setTEXTBody</a> ($Body)</td></tr>
+<tr class="memdesc:a2b4d36da7cba6986dad33eec31885fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text body of the mail.  <a href="#a2b4d36da7cba6986dad33eec31885fac"></a><br/></td></tr>
+<tr class="memitem:a02b93c9ff2e15025ccb4239fb6f2fdb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a02b93c9ff2e15025ccb4239fb6f2fdb7">setHTMLBody</a> ($Body)</td></tr>
+<tr class="memdesc:a02b93c9ff2e15025ccb4239fb6f2fdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the html body of the mail.  <a href="#a02b93c9ff2e15025ccb4239fb6f2fdb7"></a><br/></td></tr>
+<tr class="memitem:a2a618da95e293da3e5e93662d6eccef8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a2a618da95e293da3e5e93662d6eccef8">setAltBody</a> ($Body)</td></tr>
+<tr class="memdesc:a2a618da95e293da3e5e93662d6eccef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the alternative body of the mail.  <a href="#a2a618da95e293da3e5e93662d6eccef8"></a><br/></td></tr>
+<tr class="memitem:aeff0b41b4d792c8e52c08f088fdc70a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#aeff0b41b4d792c8e52c08f088fdc70a4">send</a> ($ToAddress)</td></tr>
+<tr class="memdesc:aeff0b41b4d792c8e52c08f088fdc70a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the mail to the given address.  <a href="#aeff0b41b4d792c8e52c08f088fdc70a4"></a><br/></td></tr>
+<tr class="memitem:a7d2cd08f3a1a3e554870775a9fa88f7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7d2cd08f3a1a3e554870775a9fa88f7f">setReplyTo</a> ($<a class="el" href="class_email.html">Email</a>)</td></tr>
+<tr class="memdesc:a7d2cd08f3a1a3e554870775a9fa88f7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the ReplyTo value of the mail.  <a href="#a7d2cd08f3a1a3e554870775a9fa88f7f"></a><br/></td></tr>
+<tr class="memitem:aaf2cf8f2eafe22cf70f9c59bebce581b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#aaf2cf8f2eafe22cf70f9c59bebce581b">setSender</a> ($<a class="el" href="class_email.html">Email</a>)</td></tr>
+<tr class="memdesc:aaf2cf8f2eafe22cf70f9c59bebce581b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Sender value of the mail.  <a href="#aaf2cf8f2eafe22cf70f9c59bebce581b"></a><br/></td></tr>
+<tr class="memitem:afddc024f9a3873b3f3c1746de0e2a259"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#afddc024f9a3873b3f3c1746de0e2a259">getBoundary</a> ($BoundaryInd=0)</td></tr>
+<tr class="memdesc:afddc024f9a3873b3f3c1746de0e2a259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a boundary.  <a href="#afddc024f9a3873b3f3c1746de0e2a259"></a><br/></td></tr>
+<tr class="memitem:a13b3127a4fabd43e9e3721aaa680e61a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a13b3127a4fabd43e9e3721aaa680e61a">isHTML</a> ()</td></tr>
+<tr class="memdesc:a13b3127a4fabd43e9e3721aaa680e61a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is a HTML mail.  <a href="#a13b3127a4fabd43e9e3721aaa680e61a"></a><br/></td></tr>
+<tr class="memitem:a7021c69f1b8083654ca3d8efb6c54642"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7021c69f1b8083654ca3d8efb6c54642">isTEXT</a> ()</td></tr>
+<tr class="memdesc:a7021c69f1b8083654ca3d8efb6c54642"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is a TEXT mail.  <a href="#a7021c69f1b8083654ca3d8efb6c54642"></a><br/></td></tr>
+<tr class="memitem:ae2917449f27ce11b9b75f21ec883d568"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ae2917449f27ce11b9b75f21ec883d568">isAlternative</a> ()</td></tr>
+<tr class="memdesc:ae2917449f27ce11b9b75f21ec883d568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail is an alternative mail.  <a href="#ae2917449f27ce11b9b75f21ec883d568"></a><br/></td></tr>
+<tr class="memitem:a7faca5d7ec75cbea331205c26d010547"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7faca5d7ec75cbea331205c26d010547">isMultiContent</a> ()</td></tr>
+<tr class="memdesc:a7faca5d7ec75cbea331205c26d010547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this mail contains mutiple contents.  <a href="#a7faca5d7ec75cbea331205c26d010547"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a716fd27f5989f9dca6c574f951587ce8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a716fd27f5989f9dca6c574f951587ce8">is_email</a> ($email)</td></tr>
-<tr class="memdesc:a716fd27f5989f9dca6c574f951587ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given mail address is valid.  <a href="#a716fd27f5989f9dca6c574f951587ce8"></a><br/></td></tr>
-<tr class="memitem:a7c0972f1c7253676e3705d3a253b15b2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7c0972f1c7253676e3705d3a253b15b2">getMimeType</a> ($Filename)</td></tr>
-<tr class="memdesc:a7c0972f1c7253676e3705d3a253b15b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mime type of a file.  <a href="#a7c0972f1c7253676e3705d3a253b15b2"></a><br/></td></tr>
+<tr class="memitem:a3e06cf42f718c5aadc2f0125423a5950"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a3e06cf42f718c5aadc2f0125423a5950">is_email</a> ($email)</td></tr>
+<tr class="memdesc:a3e06cf42f718c5aadc2f0125423a5950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given mail address is valid.  <a href="#a3e06cf42f718c5aadc2f0125423a5950"></a><br/></td></tr>
+<tr class="memitem:a28ee3cb86b885f7e444cc04cecee0d34"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a28ee3cb86b885f7e444cc04cecee0d34">getMimeType</a> ($Filename)</td></tr>
+<tr class="memdesc:a28ee3cb86b885f7e444cc04cecee0d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the mime type of a file.  <a href="#a28ee3cb86b885f7e444cc04cecee0d34"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:ab9a03f18d51eccfb128f4e6738e81292"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#ab9a03f18d51eccfb128f4e6738e81292">$TEXTTYPE</a> = 1</td></tr>
-<tr class="memitem:a894839731f88187d985c31359225e68a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a894839731f88187d985c31359225e68a">$HTMLTYPE</a> = 2</td></tr>
+<tr class="memitem:a7d07ae1b4cef0d503db1aedb2c06a054"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a7d07ae1b4cef0d503db1aedb2c06a054">$TEXTTYPE</a> = 1</td></tr>
+<tr class="memitem:a4f49ef4c5d2ffa82c368d237fd56012d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_email.html#a4f49ef4c5d2ffa82c368d237fd56012d">$HTMLTYPE</a> = 2</td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class is a tool to send mails. </p>
 </div><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab14ab97eb202b67389aa84b8275254d4"></a>
+<a class="anchor" id="a33eb5e6ebeb36002b04c3889c8d1964f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__construct </td>
+          <td class="memname">Email::__construct </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$TEXTBody</em> = <code>''</code>, </td>
@@ -182,12 +183,12 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2>Member Function Documentation</h2>
-<a class="anchor" id="a4058a2f533ec191c9872c3e75b68a6ca"></a>
+<a class="anchor" id="ad84119c306ad05ad193ecf268c27ce5e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">addFile </td>
+          <td class="memname">Email::addFile </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Filename</em></td><td>)</td>
@@ -205,12 +206,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8e2fdd54f871043d0954b2136dce6a5"></a>
+<a class="anchor" id="aac98e123dee2736316a334ae2b028808"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">containsFile </td>
+          <td class="memname">Email::containsFile </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Filename</em></td><td>)</td>
@@ -228,12 +229,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a263f7a214799c1c6d2cb23e6fb05108f"></a>
+<a class="anchor" id="afddc024f9a3873b3f3c1746de0e2a259"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">getBoundary </td>
+          <td class="memname">Email::getBoundary </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$BoundaryInd</em> = <code>0</code></td><td>)</td>
@@ -251,7 +252,7 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7c0972f1c7253676e3705d3a253b15b2"></a>
+<a class="anchor" id="a28ee3cb86b885f7e444cc04cecee0d34"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -259,7 +260,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static getMimeType </td>
+          <td class="memname">static Email::getMimeType </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Filename</em></td><td>)</td>
@@ -282,7 +283,7 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a716fd27f5989f9dca6c574f951587ce8"></a>
+<a class="anchor" id="a3e06cf42f718c5aadc2f0125423a5950"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -290,7 +291,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static is_email </td>
+          <td class="memname">static Email::is_email </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$email</em></td><td>)</td>
@@ -313,12 +314,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5c6c7b7ec86d9ef40db661719c79ae96"></a>
+<a class="anchor" id="ae2917449f27ce11b9b75f21ec883d568"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">isAlternative </td>
+          <td class="memname">Email::isAlternative </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -329,12 +330,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a613657597b9aa1850e2a705ab2373e26"></a>
+<a class="anchor" id="a13b3127a4fabd43e9e3721aaa680e61a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">isHTML </td>
+          <td class="memname">Email::isHTML </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -345,12 +346,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab0cd4e6330bc04b0cb12400f1ee53a49"></a>
+<a class="anchor" id="a7faca5d7ec75cbea331205c26d010547"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">isMultiContent </td>
+          <td class="memname">Email::isMultiContent </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -361,12 +362,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7d6b30a37795f087289727a75b5980c1"></a>
+<a class="anchor" id="a7021c69f1b8083654ca3d8efb6c54642"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">isTEXT </td>
+          <td class="memname">Email::isTEXT </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -377,12 +378,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad832bee9f798b300944e2dd4bdef5677"></a>
+<a class="anchor" id="a46a15322af0364f1e5436a105157541b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">removeFile </td>
+          <td class="memname">Email::removeFile </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Filename</em></td><td>)</td>
@@ -400,12 +401,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af3eb39141e6c47075a8d30649d3ccca5"></a>
+<a class="anchor" id="aeff0b41b4d792c8e52c08f088fdc70a4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">send </td>
+          <td class="memname">Email::send </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$ToAddress</em></td><td>)</td>
@@ -423,12 +424,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0913662938563a47f343d5d0a18dff62"></a>
+<a class="anchor" id="a2a618da95e293da3e5e93662d6eccef8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setAltBody </td>
+          <td class="memname">Email::setAltBody </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Body</em></td><td>)</td>
@@ -445,12 +446,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a398b99e2c4c45137ebbf0924a1da318a"></a>
+<a class="anchor" id="a6b96d29cb1773a336a6687526234bc94"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setHeader </td>
+          <td class="memname">Email::setHeader </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Key</em>, </td>
@@ -478,12 +479,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aae3f29830b603685ecd01d5accb19395"></a>
+<a class="anchor" id="a02b93c9ff2e15025ccb4239fb6f2fdb7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setHTMLBody </td>
+          <td class="memname">Email::setHTMLBody </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Body</em></td><td>)</td>
@@ -500,12 +501,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac503a5c7a87789aeb20991abd007c890"></a>
+<a class="anchor" id="a7d2cd08f3a1a3e554870775a9fa88f7f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setReplyTo </td>
+          <td class="memname">Email::setReplyTo </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Email</em></td><td>)</td>
@@ -522,12 +523,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afbae53bb4110c6b0f40ce9cfb7167c53"></a>
+<a class="anchor" id="aaf2cf8f2eafe22cf70f9c59bebce581b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setSender </td>
+          <td class="memname">Email::setSender </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Email</em></td><td>)</td>
@@ -545,12 +546,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abbc15d744a5e1131654b712b1e48150e"></a>
+<a class="anchor" id="a6ecd8877938ad840384c69e9e651ff97"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setSubject </td>
+          <td class="memname">Email::setSubject </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Subject</em></td><td>)</td>
@@ -567,12 +568,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4bd27fb0c77c5b3a60cb66396de2415c"></a>
+<a class="anchor" id="a2b4d36da7cba6986dad33eec31885fac"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setTEXTBody </td>
+          <td class="memname">Email::setTEXTBody </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Body</em></td><td>)</td>
@@ -589,12 +590,12 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9807e61847bd53fbed55a66b8994a4fb"></a>
+<a class="anchor" id="aed46d83df3197fe96ec398ccb86eb32d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">setType </td>
+          <td class="memname">Email::setType </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$Type</em></td><td>)</td>
@@ -612,8 +613,8 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<h2>Field Documentation</h2>
-<a class="anchor" id="a894839731f88187d985c31359225e68a"></a>
+<h2>Member Data Documentation</h2>
+<a class="anchor" id="a4f49ef4c5d2ffa82c368d237fd56012d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -621,7 +622,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$HTMLTYPE = 2</td>
+          <td class="memname">Email::$HTMLTYPE = 2</td>
         </tr>
       </table>
   </td>
@@ -633,7 +634,7 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab9a03f18d51eccfb128f4e6738e81292"></a>
+<a class="anchor" id="a7d07ae1b4cef0d503db1aedb2c06a054"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -641,7 +642,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$TEXTTYPE = 1</td>
+          <td class="memname">Email::$TEXTTYPE = 1</td>
         </tr>
       </table>
   </td>
@@ -654,12 +655,12 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/Workspaces/Orpheus/libs/<a class="el" href="email__class_8php.html">email_class.php</a></li>
+<li><a class="el" href="email__class_8php.html">email_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 31 2012 00:13:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 31 2012 08:45:03 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

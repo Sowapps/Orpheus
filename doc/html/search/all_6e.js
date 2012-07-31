@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['number',['NUMBER',['../class_s_q_l_mapper.html#af0ab3ab75e0ff56d8c02872bc91f68a2',1,'SQLMapper']]]
+  ['number',['NUMBER',['../class_s_q_l_mapper.html#a125a37f5a1315cb37032c5e342b8af69',1,'SQLMapper']]]
 ];

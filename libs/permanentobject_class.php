@@ -3,7 +3,7 @@ using('sqlmapper.SQLMapper');
 
 //! The permanent object class
 /*!
-	Create permanent object using the SQL Mapper.
+	 * Create permanent object using the SQL Mapper.
 */
 abstract class PermanentObject {
 	
@@ -20,7 +20,7 @@ abstract class PermanentObject {
 	
 	//! Constructor
 	/*!
-		\param $data An array of the object's data to construct. 
+	 * \param $data An array of the object's data to construct. 
 	 */
 	public function __construct(array $data) {
 		foreach( static::$fields as $fieldname ) {
@@ -35,7 +35,7 @@ abstract class PermanentObject {
 	
 	//! Destructor
 	/*!
-		If something was modified, it saves the new data.
+	 * If something was modified, it saves the new data.
 	*/
 	public function __destruct() {
 		if( !empty($this->modFields) ) {
@@ -50,10 +50,10 @@ abstract class PermanentObject {
 	
 	//! Magic getter
 	/*!
-		\param $name Name of the property to get.
-		\return The value of field $name.
-		
-		Get the value of field $name.
+	 * \param $name Name of the property to get.
+	 * \return The value of field $name.
+	 * 
+	 * Gets the value of field $name.
 	*/
 	public function __get($name) {
 		try {
@@ -68,10 +68,10 @@ abstract class PermanentObject {
 	
 	//! Magic setter
 	/*!
-		\param $name Name of the property to set.
-		\param $value New value of the property.
-		
-		Set the value of field $name.
+	 * \param $name Name of the property to set.
+	 * \param $value New value of the property.
+	 * 
+	 * Sets the value of field $name.
 	*/
 	public function __set($name, $value) {
 		try {
@@ -86,9 +86,9 @@ abstract class PermanentObject {
 	
 	//! Magic toString
 	/*!
-		\return The string value of the object.
-		
-		The object's value when casting to string.
+	 * \return The string value of the object.
+	 * 
+	 * The object's value when casting to string.
 	*/
 	public function __toString() {
 		try {
@@ -136,18 +136,18 @@ abstract class PermanentObject {
 	
 	//! Runs for Update
 	/*!
-		\sa update()
-		
-		This function is called by update() before saving new data.
-		In this base class, this method does nothing.
+	 * \sa update()
+	 * 
+	 * This function is called by update() before saving new data.
+	 * In this base class, this method does nothing.
 	*/
 	public function runForUpdate() { }
 	
 	//! Saves this permanent object
 	/*!
-		\return 1 in case of success, else 0.
-		
-		If some fields was modified, it saves these fields using the SQL Mapper.
+	 * \return 1 in case of success, else 0.
+	 * 
+	 * If some fields was modified, it saves these fields using the SQL Mapper.
 	*/
 	public function save() {
 		if( empty($this->modFields) ) {
@@ -172,9 +172,9 @@ abstract class PermanentObject {
 	
 	//! Marks the field as modified
 	/*!
-		\param $field The field to mark as modified.
-		
-		Adds the $field to the modified fields array.
+	 * \param $field The field to mark as modified.
+	 * 
+	 * Adds the $field to the modified fields array.
 	*/
 	private function addModFields($field) {
 		if( !in_array($field, $this->modFields) ) {
@@ -184,9 +184,9 @@ abstract class PermanentObject {
 	
 	//! Gets one value or all values.
 	/*!
-		\param $key Name of the field to get.
-		
-		Gets the value of field $key or all data values if $key is null.
+	 * \param $key Name of the field to get.
+	 * 
+	 * Gets the value of field $key or all data values if $key is null.
 	*/
 	public function getValue($key=null) {
 		if( !empty($key) ) {
@@ -200,10 +200,10 @@ abstract class PermanentObject {
 	
 	//! Sets the value of a field
 	/*!
-		\param $key Name of the field to set.
-		\param $value New value of the field.
-		
-		Sets the field $key with the new $value.
+	 * \param $key Name of the field to set.
+	 * \param $value New value of the field.
+	 * 
+	 * Sets the field $key with the new $value.
 	*/
 	public function setValue($key, $value) {
 		if( !isset($key, $value) ) {
@@ -222,10 +222,10 @@ abstract class PermanentObject {
 	
 	//! Verifies equality
 	/*!
-		\param $o The object to compare.
-		\return True if this object represents the same data, else False.
-		
-		Compares the class and the ID field value of the 2 objects.
+	 * \param $o The object to compare.
+	 * \return True if this object represents the same data, else False.
+	 * 
+	 * Compares the class and the ID field value of the 2 objects.
 	*/
 	public function equals(PermanentObject $o) {
 		return (get_class($this)==get_class($o) && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
@@ -233,12 +233,12 @@ abstract class PermanentObject {
 	
 	//! Logs an event
 	/*!
-		\param $event The event to log in this object.
-		\param $time A specified time to use for logging event.
-		\param $ipAdd A specified IP Adress to use for logging event.
-		\sa getLogEvent()
-		
-		Logs an event to this object's data.
+	 * \param $event The event to log in this object.
+	 * \param $time A specified time to use for logging event.
+	 * \param $ipAdd A specified IP Adress to use for logging event.
+	 * \sa getLogEvent()
+	 * 
+	 * Logs an event to this object's data.
 	*/
 	public function logEvent($event, $time=null, $ipAdd=null) {
 		$log = static::getLogEvent($event, $time, $ipAdd);
@@ -250,11 +250,11 @@ abstract class PermanentObject {
 	
 	//! Loads a permanent object
 	/*!
-		\param $id The object ID to load.
-		\return The object.
-		\sa get()
+	 * \param $id The object ID to load.
+	 * \return The object.
+	 * \sa get()
 	
-		Loads the object with the ID $id
+	 * Loads the object with the ID $id
 	*/
 	public static function load($id) {
 		if( !ctype_digit("$id") ) {
@@ -274,10 +274,10 @@ abstract class PermanentObject {
 	
 	//! Deletes a permanent object
 	/*!
-		\param $id The object ID to delete.
-		\return 1 in case of success, else 0.
-		
-		Deletes the object with the ID $id
+	 * \param $id The object ID to delete.
+	 * \return 1 in case of success, else 0.
+	 * 
+	 * Deletes the object with the ID $id
 	*/
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
@@ -294,11 +294,11 @@ abstract class PermanentObject {
 	
 	//! Gets some permanent objects
 	/*!
-		\param $options The options used to get the permanents object.
-		\return An array of array containing object's data.
-		\sa SQLMapper::doSelect()
-		
-		Gets an objects' list using this class' table.
+	 * \param $options The options used to get the permanents object.
+	 * \return An array of array containing object's data.
+	 * \sa SQLMapper::doSelect()
+	 * 
+	 * Gets an objects' list using this class' table.
 	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
@@ -322,10 +322,10 @@ abstract class PermanentObject {
 	
 	//! Creates a new permanent object
 	/*!
-		\param $inputData The input data we will check, extract and create the new object.
-		\return The ID of the new permanent object.
-		
-		Creates a new permanent object from ths input data.
+	 * \param $inputData The input data we will check, extract and create the new object.
+	 * \return The ID of the new permanent object.
+	 * 
+	 * Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData) {
 		$data = static::checkUserInput($inputData);
@@ -357,10 +357,10 @@ abstract class PermanentObject {
 	
 	//! Completes missing fields
 	/*!
-		\param $data The data array to complete.
-		\return The completed data array.
-		
-		Completes an array of data of an object of this class by setting missing fields with empty string.
+	 * \param $data The data array to complete.
+	 * \return The completed data array.
+	 * 
+	 * Completes an array of data of an object of this class by setting missing fields with empty string.
 	*/
 	public static function completeFields($data) {
 		foreach( static::$fields as $fieldname ) {
@@ -373,12 +373,12 @@ abstract class PermanentObject {
 	
 	//! Gets the log of an event
 	/*!
-		\param $event The event to log in this object.
-		\param $time A specified time to use for logging event.
-		\param $ipAdd A specified IP Adress to use for logging event.
-		\sa logEvent()
-		
-		Builds a new log event for $event for this time and the user IP adress.
+	 * \param $event The event to log in this object.
+	 * \param $time A specified time to use for logging event.
+	 * \param $ipAdd A specified IP Adress to use for logging event.
+	 * \sa logEvent()
+	 * 
+	 * Builds a new log event for $event for this time and the user IP adress.
 	*/
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(
@@ -389,7 +389,7 @@ abstract class PermanentObject {
 	
 	//! Gets the table of this class
 	/*!
-		\return The table of this class.
+	 * \return The table of this class.
 	*/
 	public static function getTable() {
 		return static::$table;
@@ -397,30 +397,30 @@ abstract class PermanentObject {
 	
 	//! Gets the ID field name of this class
 	/*!
-		\return The ID field of this class.
+	 * \return The ID field of this class.
 	*/
 	public static function getIDField() {
 		return static::$IDFIELD;
 	}
-		
+	
 	//! Runs for object
 	/*!
-		\param $data The new data to process.
-		\sa create()
-		
-		This function is called by create() after checking new data and before inserting them.
-		In this base class, this method does nothing.
+	 * \param $data The new data to process.
+	 * \sa create()
+	 * 
+	 * This function is called by create() after checking new data and before inserting them.
+	 * In this base class, this method does nothing.
 	*/
 	public static function runForObject(&$data) { }
 	
 	//! Applies for object
 	/*!
-		\param $data The new data to process.
-		\param $id The ID of the new object.
-		\sa create()
-		
-		This function is called by create() after inserting new data.
-		In this base class, this method does nothing.
+	 * \param $data The new data to process.
+	 * \param $id The ID of the new object.
+	 * \sa create()
+	 * 
+	 * This function is called by create() after inserting new data.
+	 * In this base class, this method does nothing.
 	*/
 	public static function applyToObject(&$data, $id) { }
 	
@@ -428,22 +428,22 @@ abstract class PermanentObject {
 	
 	//! Checks user input
 	/*!
-		\param $uInputData The user input data to check.
-		\return The valid data.
-		\overrideit
-		
-		Checks if the class could generate a valid object from $uInputData.
-		The method could modify the user input to fix them but it must return the data.
+	 * \param $uInputData The user input data to check.
+	 * \return The valid data.
+	 * \overrideit
+	 * 
+	 * Checks if the class could generate a valid object from $uInputData.
+	 * The method could modify the user input to fix them but it must return the data.
 	*/
 	public static function checkUserInput($uInputData) { }
 	
 	//! Checks for object
 	/*!
-		\param $data The new data to process.
-		\sa create()
-		
-		This function is called by create() after checking user input data and before running for them.
-		In this base class, this method does nothing.
+	 * \param $data The new data to process.
+	 * \sa create()
+	 * 
+	 * This function is called by create() after checking user input data and before running for them.
+	 * In this base class, this method does nothing.
 	*/
 	public static function checkForObject($data) { }
 }

@@ -30,7 +30,7 @@ define('PDOFETCHALL', PDOQUERY | 1<<2);//Query and Fetch All (Set of all results
 define('PDOFETCHALLCOL', PDOQUERY | 0<<3);//All columns
 define('PDOFETCHFIRSTCOL', PDOQUERY | 1<<3);//Only the first column
 
-//! Ensure to be connected to the database.
+//! Ensures to be connected to the database.
 /*
 	\param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
 	\return	Instance ID used.
@@ -118,14 +118,14 @@ function ensure_pdoinstance($Instance=null) {
 	return $Instance;
 }
 
-//! Execute $Query
+//! Executes $Query
 /*
 	\param $Query The query to execute.
 	\param $Fetch See PDO constants above. Optionnal, default is PDOQUERY.
 	\param $Instance The instance to use to execute the query. Optionnal, default is defined by ensure_pdoinstance().
 	\return The result of the query, of type defined by $Fetch.
 	
-	Execute $Query on the instanciated database.
+	Executes $Query on the instanciated database.
 */
 function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
@@ -191,12 +191,12 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or it is not implemented yet.', 'Driver Definition');
 }
 
-//! Log a PDO error
+//! Logs a PDO error
 /*
 	\param $PDOReport The PDO report to save.
 	\param $Action Optionnal information about what the script was doing.
 
-	Save the error report $PDOReport in the log file and exit script.
+	Saves the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='') {
 	if( function_exists('log_error') ) {
@@ -208,7 +208,7 @@ function pdo_error($PDOReport, $Action='') {
 	die("An error has occured with the database, retry later please.");
 }
 
-//! Quote and Escape
+//! Quotes and Escapes
 /*
 	\param $String The value to escape.
 	\return The quoted and escaped value.
