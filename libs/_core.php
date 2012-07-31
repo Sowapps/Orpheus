@@ -51,7 +51,7 @@ function permanentRedirectTo($destination=null) {
 */
 function htmlRedirectTo($destination, $time=3, $die=0) {
 	echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"{$time} ; URL={$destination}\">";
-	if( !$die ) {
+	if( $die ) {
 		exit();
 	}
 }
@@ -341,12 +341,13 @@ function u($module, $action='', $queryStr='') {
 /*!
 	\param $message The message to report.
 	\param $type The type of the message.
+	\param $domain The domain fo the message. Not used for translation. Default value is global.
 	\sa reportSuccess(), reportError()
 
 	Adds the report $message to the list of reports for this $type.
 	The type of the message is commonly 'success' or 'error'.
 */
-function addReport($message, $type) {
+function addReport($message, $type, $domain='global') {
 	global $REPORTS;
 	if( !isset($REPORTS[$domain]) ) {
 		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
@@ -357,22 +358,24 @@ function addReport($message, $type) {
 //! Reports a success
 /*!
 	\param $message The message to report.
+	\param $domain The domain fo the message. Not used for translation. Default value is global.
 	\sa addReport()
 
 	Adds the report $message to the list of reports for this type 'success'.
 */
-function reportSuccess($message) {
-	return addReport($message, 'success');
+function reportSuccess($message, $domain='global') {
+	return addReport($message, 'success', $domain);
 }
 
 //! Reports an error
 /*!
 	\param $message The message to report.
+	\param $domain The domain fo the message. Not used for translation. Default value is global.
 	\sa addReport()
 
 	Adds the report $message to the list of reports for this type 'error'.
 */
-function reportError($message) {
+function reportError($message, $domain='global') {
 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
 	return addReport($message, 'error', $domain);
 }
