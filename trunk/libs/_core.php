@@ -88,7 +88,7 @@ function text($message = '', $html = true) {
 	This function is very useful to do binary comparison for rights and inclusion in a value.
 */
 function bintest($value, $reference) {
-	return ( ($variable & $reference) == $reference);
+	return ( ($value & $reference) == $reference);
 }
 
 //! Sends a packaged response to the client.
