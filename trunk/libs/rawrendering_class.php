@@ -5,7 +5,7 @@
 */
 class RawRendering extends Rendering {
 	
-	//! Render the model.
+	//! Renders the model.
 	/*!
 		\copydoc Rendering::render()
 	*/

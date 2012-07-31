@@ -5,11 +5,11 @@
 */
 class Config extends ConfigCore {
 	
-	//!	Load new configuration source.
+	//!	Loads new configuration source.
 	/*!
 		\param $source An identifier to get the source.
 	
-		Load a configuration from a .ini file in CONFPATH.
+		Loads a configuration from a .ini file in CONFPATH.
 	*/
 	public function load($source) {
 		if( !is_readable(CONFPATH.$source.'.ini') ) {

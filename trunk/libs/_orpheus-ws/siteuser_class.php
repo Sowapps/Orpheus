@@ -1,7 +1,7 @@
 <?php
-//! The abstract status class
+//! The site user class
 /*!
- * An "user" is a registered user.
+ * A site user is a registered user.
  * 
  * Require:
  * is_id()

@@ -38,7 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -60,10 +60,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="classes.html"><span>Data&#160;Structure&#160;Index</span></a></li>
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -85,8 +85,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-attribs">Data Fields</a> &#124;
-<a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
+<a href="class_s_q_l_mapper-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SQLMapper Class Reference</div>  </div>
 </div><!--header-->
@@ -107,62 +108,62 @@ Inheritance diagram for SQLMapper:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4b47a5293b88f0b286240b28c16650f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a4b47a5293b88f0b286240b28c16650f9">select</a> (array $options=array())</td></tr>
-<tr class="memdesc:a4b47a5293b88f0b286240b28c16650f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for SELECT queries.  <a href="#a4b47a5293b88f0b286240b28c16650f9"></a><br/></td></tr>
-<tr class="memitem:a6c1a2e8bc7d7f783b479f8605e668b39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a6c1a2e8bc7d7f783b479f8605e668b39">update</a> (array $options=array())</td></tr>
-<tr class="memdesc:a6c1a2e8bc7d7f783b479f8605e668b39"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for UPDATE queries.  <a href="#a6c1a2e8bc7d7f783b479f8605e668b39"></a><br/></td></tr>
-<tr class="memitem:a14fcaf804c3491576d15890c9bf8fb39"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a14fcaf804c3491576d15890c9bf8fb39">delete</a> (array $options=array())</td></tr>
-<tr class="memdesc:a14fcaf804c3491576d15890c9bf8fb39"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for DELETE queries.  <a href="#a14fcaf804c3491576d15890c9bf8fb39"></a><br/></td></tr>
-<tr class="memitem:af51fb4755e8f274ace0331d3f8661272"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af51fb4755e8f274ace0331d3f8661272">insert</a> (array $options=array())</td></tr>
-<tr class="memdesc:af51fb4755e8f274ace0331d3f8661272"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#af51fb4755e8f274ace0331d3f8661272"></a><br/></td></tr>
-<tr class="memitem:a7246b80e6e88e49f9cd99bc98f95033b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a7246b80e6e88e49f9cd99bc98f95033b">lastID</a> ($table, $idfield)</td></tr>
-<tr class="memdesc:a7246b80e6e88e49f9cd99bc98f95033b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to get the last inserted ID.  <a href="#a7246b80e6e88e49f9cd99bc98f95033b"></a><br/></td></tr>
+<tr class="memitem:a933609594a936784f56e008e241fbeff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff">select</a> (array $options=array())</td></tr>
+<tr class="memdesc:a933609594a936784f56e008e241fbeff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for SELECT queries.  <a href="#a933609594a936784f56e008e241fbeff"></a><br/></td></tr>
+<tr class="memitem:ae0a02c6ca82d7f9ae3ac5e27db011b34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae0a02c6ca82d7f9ae3ac5e27db011b34">update</a> (array $options=array())</td></tr>
+<tr class="memdesc:ae0a02c6ca82d7f9ae3ac5e27db011b34"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for UPDATE queries.  <a href="#ae0a02c6ca82d7f9ae3ac5e27db011b34"></a><br/></td></tr>
+<tr class="memitem:a5976d0ffdba9b5e1c2daa988bf8e1384"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384">delete</a> (array $options=array())</td></tr>
+<tr class="memdesc:a5976d0ffdba9b5e1c2daa988bf8e1384"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for DELETE queries.  <a href="#a5976d0ffdba9b5e1c2daa988bf8e1384"></a><br/></td></tr>
+<tr class="memitem:aa1cdf54e11d69c59795ec82d17a8a745"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745">insert</a> (array $options=array())</td></tr>
+<tr class="memdesc:aa1cdf54e11d69c59795ec82d17a8a745"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to use for INSERT queries.  <a href="#aa1cdf54e11d69c59795ec82d17a8a745"></a><br/></td></tr>
+<tr class="memitem:ae180b8c24fd116b8092b8a4c2797ba8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e">lastID</a> ($table, $idfield)</td></tr>
+<tr class="memdesc:ae180b8c24fd116b8092b8a4c2797ba8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to get the last inserted ID.  <a href="#ae180b8c24fd116b8092b8a4c2797ba8e"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab33e23538c496d0ee6ddb2875c1df7c8"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ab33e23538c496d0ee6ddb2875c1df7c8">doSelect</a> (array $options=array())</td></tr>
-<tr class="memdesc:ab33e23538c496d0ee6ddb2875c1df7c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for SELECT queries in global context.  <a href="#ab33e23538c496d0ee6ddb2875c1df7c8"></a><br/></td></tr>
-<tr class="memitem:a636d9e0f4d64c6de3f2b774801004bae"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a636d9e0f4d64c6de3f2b774801004bae">doUpdate</a> (array $options=array())</td></tr>
-<tr class="memdesc:a636d9e0f4d64c6de3f2b774801004bae"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for UPDATE queries in global context.  <a href="#a636d9e0f4d64c6de3f2b774801004bae"></a><br/></td></tr>
-<tr class="memitem:a21b6adcab3ebdc3455433aecc8e5159f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a21b6adcab3ebdc3455433aecc8e5159f">doDelete</a> (array $options=array())</td></tr>
-<tr class="memdesc:a21b6adcab3ebdc3455433aecc8e5159f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for DELETE queries in global context.  <a href="#a21b6adcab3ebdc3455433aecc8e5159f"></a><br/></td></tr>
-<tr class="memitem:af406ca1237a4c28822076b70df046d2e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af406ca1237a4c28822076b70df046d2e">doInsert</a> (array $options=array())</td></tr>
-<tr class="memdesc:af406ca1237a4c28822076b70df046d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for INSERT queries in global context.  <a href="#af406ca1237a4c28822076b70df046d2e"></a><br/></td></tr>
-<tr class="memitem:ac7f57611f748c24d3e2b7d81681b6a90"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ac7f57611f748c24d3e2b7d81681b6a90">doLastID</a> ($table)</td></tr>
-<tr class="memdesc:ac7f57611f748c24d3e2b7d81681b6a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use to get last isnert id in global context.  <a href="#ac7f57611f748c24d3e2b7d81681b6a90"></a><br/></td></tr>
-<tr class="memitem:a7361b46e606bd077d7744f879b8e1675"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a7361b46e606bd077d7744f879b8e1675">prepare</a> ()</td></tr>
-<tr class="memitem:a588950e29942d349f167553e9c1a7bb5"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a588950e29942d349f167553e9c1a7bb5">quote</a> ($String)</td></tr>
+<tr class="memitem:a333c4d974b46eca05d6be3e990fc244e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a333c4d974b46eca05d6be3e990fc244e">doSelect</a> (array $options=array())</td></tr>
+<tr class="memdesc:a333c4d974b46eca05d6be3e990fc244e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for SELECT queries in global context.  <a href="#a333c4d974b46eca05d6be3e990fc244e"></a><br/></td></tr>
+<tr class="memitem:a3c89cad951a119746412b8d4a4cc418f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a3c89cad951a119746412b8d4a4cc418f">doUpdate</a> (array $options=array())</td></tr>
+<tr class="memdesc:a3c89cad951a119746412b8d4a4cc418f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for UPDATE queries in global context.  <a href="#a3c89cad951a119746412b8d4a4cc418f"></a><br/></td></tr>
+<tr class="memitem:a5fabfae1b12ed46a60e49e2d64257c87"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a5fabfae1b12ed46a60e49e2d64257c87">doDelete</a> (array $options=array())</td></tr>
+<tr class="memdesc:a5fabfae1b12ed46a60e49e2d64257c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for DELETE queries in global context.  <a href="#a5fabfae1b12ed46a60e49e2d64257c87"></a><br/></td></tr>
+<tr class="memitem:af869e9ca6655fe97fe451ec2fb2312c2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2">doInsert</a> (array $options=array())</td></tr>
+<tr class="memdesc:af869e9ca6655fe97fe451ec2fb2312c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use for INSERT queries in global context.  <a href="#af869e9ca6655fe97fe451ec2fb2312c2"></a><br/></td></tr>
+<tr class="memitem:ad95c71c230f1df4c0faa0da1fafbabb4"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ad95c71c230f1df4c0faa0da1fafbabb4">doLastID</a> ($table)</td></tr>
+<tr class="memdesc:ad95c71c230f1df4c0faa0da1fafbabb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use to get last isnert id in global context.  <a href="#ad95c71c230f1df4c0faa0da1fafbabb4"></a><br/></td></tr>
+<tr class="memitem:a8340245eee406507ee9220dffcde350f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f">prepare</a> ()</td></tr>
+<tr class="memitem:af15c1243e3ae1a02bd2be4facdc8635e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af15c1243e3ae1a02bd2be4facdc8635e">quote</a> ($String)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a35123caea02750a545868202aa0f74bc"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a35123caea02750a545868202aa0f74bc">ARR_OBJECTS</a> = 1</td></tr>
-<tr class="memdesc:a35123caea02750a545868202aa0f74bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of objects.  <a href="#a35123caea02750a545868202aa0f74bc"></a><br/></td></tr>
-<tr class="memitem:ac640cddb52671f9f215f8897077e33cb"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ac640cddb52671f9f215f8897077e33cb">ARR_ASSOC</a> = 2</td></tr>
-<tr class="memdesc:ac640cddb52671f9f215f8897077e33cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associative array.  <a href="#ac640cddb52671f9f215f8897077e33cb"></a><br/></td></tr>
-<tr class="memitem:a08d95da919ecb2350109abc7c0d78ee7"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a08d95da919ecb2350109abc7c0d78ee7">STATEMENT</a> = 3</td></tr>
-<tr class="memdesc:a08d95da919ecb2350109abc7c0d78ee7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SQL Statement.  <a href="#a08d95da919ecb2350109abc7c0d78ee7"></a><br/></td></tr>
-<tr class="memitem:ac4a7ccf976f98823baa8e57bfc2b12c6"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ac4a7ccf976f98823baa8e57bfc2b12c6">SQLQUERY</a> = 4</td></tr>
-<tr class="memdesc:ac4a7ccf976f98823baa8e57bfc2b12c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query String.  <a href="#ac4a7ccf976f98823baa8e57bfc2b12c6"></a><br/></td></tr>
-<tr class="memitem:af0ab3ab75e0ff56d8c02872bc91f68a2"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af0ab3ab75e0ff56d8c02872bc91f68a2">NUMBER</a> = 5</td></tr>
-<tr class="memdesc:af0ab3ab75e0ff56d8c02872bc91f68a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number.  <a href="#af0ab3ab75e0ff56d8c02872bc91f68a2"></a><br/></td></tr>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ae1b3c75c75438ff572d6f8f77abe059c"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">ARR_OBJECTS</a> = 1</td></tr>
+<tr class="memdesc:ae1b3c75c75438ff572d6f8f77abe059c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of objects.  <a href="#ae1b3c75c75438ff572d6f8f77abe059c"></a><br/></td></tr>
+<tr class="memitem:a75bd4d6dc792ff0ed3ab842db8ba3d28"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a75bd4d6dc792ff0ed3ab842db8ba3d28">ARR_ASSOC</a> = 2</td></tr>
+<tr class="memdesc:a75bd4d6dc792ff0ed3ab842db8ba3d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associative array.  <a href="#a75bd4d6dc792ff0ed3ab842db8ba3d28"></a><br/></td></tr>
+<tr class="memitem:a2c4194565a940222ee86efbc09a9daa5"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a2c4194565a940222ee86efbc09a9daa5">STATEMENT</a> = 3</td></tr>
+<tr class="memdesc:a2c4194565a940222ee86efbc09a9daa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">SQL Statement.  <a href="#a2c4194565a940222ee86efbc09a9daa5"></a><br/></td></tr>
+<tr class="memitem:a0b2e09b44dd58179ce4c84ca1fc8c9ca"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a0b2e09b44dd58179ce4c84ca1fc8c9ca">SQLQUERY</a> = 4</td></tr>
+<tr class="memdesc:a0b2e09b44dd58179ce4c84ca1fc8c9ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query String.  <a href="#a0b2e09b44dd58179ce4c84ca1fc8c9ca"></a><br/></td></tr>
+<tr class="memitem:a125a37f5a1315cb37032c5e342b8af69"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a125a37f5a1315cb37032c5e342b8af69">NUMBER</a> = 5</td></tr>
+<tr class="memdesc:a125a37f5a1315cb37032c5e342b8af69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number.  <a href="#a125a37f5a1315cb37032c5e342b8af69"></a><br/></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aa1b1dbba685ec998e5dede06b2ed72d6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#aa1b1dbba685ec998e5dede06b2ed72d6">$Mapper</a></td></tr>
-<tr class="memitem:adea173d9c34d5f0f82fe2834769b48d0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#adea173d9c34d5f0f82fe2834769b48d0">$IDFIELD</a></td></tr>
-<tr class="memitem:a5e8ddcc192e875a3ae368d76e03aa8f2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a5e8ddcc192e875a3ae368d76e03aa8f2">$selectDefaults</a> = array()</td></tr>
-<tr class="memdesc:a5e8ddcc192e875a3ae368d76e03aa8f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for selecting.  <a href="#a5e8ddcc192e875a3ae368d76e03aa8f2"></a><br/></td></tr>
-<tr class="memitem:a1347c69346ac9c0e71766b530022f4ab"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a1347c69346ac9c0e71766b530022f4ab">$updateDefaults</a> = array()</td></tr>
-<tr class="memdesc:a1347c69346ac9c0e71766b530022f4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for updating.  <a href="#a1347c69346ac9c0e71766b530022f4ab"></a><br/></td></tr>
-<tr class="memitem:afefc9782afadbb1be0a533c0b45f1fd0"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#afefc9782afadbb1be0a533c0b45f1fd0">$deleteDefaults</a> = array()</td></tr>
-<tr class="memdesc:afefc9782afadbb1be0a533c0b45f1fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for deleting.  <a href="#afefc9782afadbb1be0a533c0b45f1fd0"></a><br/></td></tr>
-<tr class="memitem:a4b18ef022b2f9c4ac89e1f5906693a1c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a4b18ef022b2f9c4ac89e1f5906693a1c">$insertDefaults</a> = array()</td></tr>
-<tr class="memdesc:a4b18ef022b2f9c4ac89e1f5906693a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for inserting.  <a href="#a4b18ef022b2f9c4ac89e1f5906693a1c"></a><br/></td></tr>
+<tr class="memitem:a70d29b1a0c024eb2f11e7e1ec7966430"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a70d29b1a0c024eb2f11e7e1ec7966430">$Mapper</a></td></tr>
+<tr class="memitem:aa321c20c3b6649216beee7d31ce8162c"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#aa321c20c3b6649216beee7d31ce8162c">$IDFIELD</a></td></tr>
+<tr class="memitem:a123841ad7adddcb80ebfc382e155823a"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a123841ad7adddcb80ebfc382e155823a">$selectDefaults</a> = array()</td></tr>
+<tr class="memdesc:a123841ad7adddcb80ebfc382e155823a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for selecting.  <a href="#a123841ad7adddcb80ebfc382e155823a"></a><br/></td></tr>
+<tr class="memitem:af08c5fdc7d581911eb8538db33a5834e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#af08c5fdc7d581911eb8538db33a5834e">$updateDefaults</a> = array()</td></tr>
+<tr class="memdesc:af08c5fdc7d581911eb8538db33a5834e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for updating.  <a href="#af08c5fdc7d581911eb8538db33a5834e"></a><br/></td></tr>
+<tr class="memitem:abd9a5ea19fdd8ccbab574f8cf4df094e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#abd9a5ea19fdd8ccbab574f8cf4df094e">$deleteDefaults</a> = array()</td></tr>
+<tr class="memdesc:abd9a5ea19fdd8ccbab574f8cf4df094e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for deleting.  <a href="#abd9a5ea19fdd8ccbab574f8cf4df094e"></a><br/></td></tr>
+<tr class="memitem:a3616bde6895d72b6c161aa8abe71e16e"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_mapper.html#a3616bde6895d72b6c161aa8abe71e16e">$insertDefaults</a> = array()</td></tr>
+<tr class="memdesc:a3616bde6895d72b6c161aa8abe71e16e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defaults for inserting.  <a href="#a3616bde6895d72b6c161aa8abe71e16e"></a><br/></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class is the mother sql mapper inherited for specific DBMS. </p>
 </div><h2>Member Function Documentation</h2>
-<a class="anchor" id="a14fcaf804c3491576d15890c9bf8fb39"></a>
+<a class="anchor" id="a5976d0ffdba9b5e1c2daa988bf8e1384"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -170,7 +171,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">delete </td>
+          <td class="memname">SQLMapper::delete </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -192,11 +193,11 @@ Static Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The number of deleted rows.</dd></dl>
 <p>It parses the query from an array to a DELETE query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a14fcaf804c3491576d15890c9bf8fb39">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a14fcaf804c3491576d15890c9bf8fb39">SQLMapper_PgSQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a75e6e4d7f4316f1a5bacec285bba92fe">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a21b6adcab3ebdc3455433aecc8e5159f"></a>
+<a class="anchor" id="a5fabfae1b12ed46a60e49e2d64257c87"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -204,7 +205,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static doDelete </td>
+          <td class="memname">static SQLMapper::doDelete </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -217,11 +218,11 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a14fcaf804c3491576d15890c9bf8fb39" title="The function to use for DELETE queries.">SQLMapper::delete()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384" title="The function to use for DELETE queries.">SQLMapper::delete()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="af406ca1237a4c28822076b70df046d2e"></a>
+<a class="anchor" id="af869e9ca6655fe97fe451ec2fb2312c2"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -229,7 +230,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static doInsert </td>
+          <td class="memname">static SQLMapper::doInsert </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -242,11 +243,11 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#af51fb4755e8f274ace0331d3f8661272" title="The function to use for INSERT queries.">SQLMapper::insert()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745" title="The function to use for INSERT queries.">SQLMapper::insert()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ac7f57611f748c24d3e2b7d81681b6a90"></a>
+<a class="anchor" id="ad95c71c230f1df4c0faa0da1fafbabb4"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -254,7 +255,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static doLastID </td>
+          <td class="memname">static SQLMapper::doLastID </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$table</em></td><td>)</td>
@@ -267,11 +268,11 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a7246b80e6e88e49f9cd99bc98f95033b" title="The function to get the last inserted ID.">SQLMapper::lastID()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e" title="The function to get the last inserted ID.">SQLMapper::lastID()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ab33e23538c496d0ee6ddb2875c1df7c8"></a>
+<a class="anchor" id="a333c4d974b46eca05d6be3e990fc244e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -279,7 +280,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static doSelect </td>
+          <td class="memname">static SQLMapper::doSelect </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -292,11 +293,11 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a4b47a5293b88f0b286240b28c16650f9" title="The function to use for SELECT queries.">select()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff" title="The function to use for SELECT queries.">select()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a636d9e0f4d64c6de3f2b774801004bae"></a>
+<a class="anchor" id="a3c89cad951a119746412b8d4a4cc418f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -304,7 +305,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static doUpdate </td>
+          <td class="memname">static SQLMapper::doUpdate </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -317,11 +318,11 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#a6c1a2e8bc7d7f783b479f8605e668b39" title="The function to use for UPDATE queries.">update()</a> </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html#ae0a02c6ca82d7f9ae3ac5e27db011b34" title="The function to use for UPDATE queries.">update()</a> </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="af51fb4755e8f274ace0331d3f8661272"></a>
+<a class="anchor" id="aa1cdf54e11d69c59795ec82d17a8a745"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -329,7 +330,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">insert </td>
+          <td class="memname">SQLMapper::insert </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -351,11 +352,11 @@ Static Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The number of inserted rows.</dd></dl>
 <p>It parses the query from an array to a INSERT query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#af51fb4755e8f274ace0331d3f8661272">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#af51fb4755e8f274ace0331d3f8661272">SQLMapper_PgSQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a6244fbe3fe0f921f0bd15071510403e5">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7246b80e6e88e49f9cd99bc98f95033b"></a>
+<a class="anchor" id="ae180b8c24fd116b8092b8a4c2797ba8e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -363,7 +364,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">lastID </td>
+          <td class="memname">SQLMapper::lastID </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$table</em>, </td>
@@ -394,13 +395,13 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The last inserted id value.</dd></dl>
-<p>It requires a successful call of <a class="el" href="class_s_q_l_mapper.html#af51fb4755e8f274ace0331d3f8661272" title="The function to use for INSERT queries.">insert()</a> ! </p>
+<p>It requires a successful call of <a class="el" href="class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745" title="The function to use for INSERT queries.">insert()</a> ! </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a4dadd60643ba100347d1e544ff0defb6">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a4dadd60643ba100347d1e544ff0defb6">SQLMapper_PgSQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#ae50549a7ef045b5f8ed662995ec527bd">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7361b46e606bd077d7744f879b8e1675"></a>
+<a class="anchor" id="a8340245eee406507ee9220dffcde350f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -408,7 +409,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static prepare </td>
+          <td class="memname">static SQLMapper::prepare </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -423,7 +424,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a588950e29942d349f167553e9c1a7bb5"></a>
+<a class="anchor" id="af15c1243e3ae1a02bd2be4facdc8635e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -431,7 +432,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static quote </td>
+          <td class="memname">static SQLMapper::quote </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$String</em></td><td>)</td>
@@ -447,7 +448,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4b47a5293b88f0b286240b28c16650f9"></a>
+<a class="anchor" id="a933609594a936784f56e008e241fbeff"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -455,7 +456,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">select </td>
+          <td class="memname">SQLMapper::select </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -477,11 +478,11 @@ Static Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Mixed return, depending on the mapper.</dd></dl>
 <p>It parses the query from an array to a SELECT query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a4b47a5293b88f0b286240b28c16650f9">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a4b47a5293b88f0b286240b28c16650f9">SQLMapper_PgSQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6c1a2e8bc7d7f783b479f8605e668b39"></a>
+<a class="anchor" id="ae0a02c6ca82d7f9ae3ac5e27db011b34"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -489,7 +490,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">update </td>
+          <td class="memname">SQLMapper::update </td>
           <td>(</td>
           <td class="paramtype">array&#160;</td>
           <td class="paramname"><em>$options</em> = <code>array()</code></td><td>)</td>
@@ -511,12 +512,12 @@ Static Protected Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The number of affected rows.</dd></dl>
 <p>It parses the query from an array to a UPDATE query. </p>
 
-<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a6c1a2e8bc7d7f783b479f8605e668b39">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#a6c1a2e8bc7d7f783b479f8605e668b39">SQLMapper_PgSQL</a>.</p>
+<p>Reimplemented in <a class="el" href="class_s_q_l_mapper___my_s_q_l.html#a1b25835ce0141248793212005ebb1383">SQLMapper_MySQL</a>, and <a class="el" href="class_s_q_l_mapper___pg_s_q_l.html#afccae08c6d6829bc2b8903ebbeef6c4c">SQLMapper_PgSQL</a>.</p>
 
 </div>
 </div>
-<h2>Field Documentation</h2>
-<a class="anchor" id="afefc9782afadbb1be0a533c0b45f1fd0"></a>
+<h2>Member Data Documentation</h2>
+<a class="anchor" id="abd9a5ea19fdd8ccbab574f8cf4df094e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -524,7 +525,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$deleteDefaults = array()</td>
+          <td class="memname">SQLMapper::$deleteDefaults = array()</td>
         </tr>
       </table>
   </td>
@@ -536,7 +537,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adea173d9c34d5f0f82fe2834769b48d0"></a>
+<a class="anchor" id="aa321c20c3b6649216beee7d31ce8162c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -544,7 +545,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$IDFIELD</td>
+          <td class="memname">SQLMapper::$IDFIELD</td>
         </tr>
       </table>
   </td>
@@ -556,7 +557,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4b18ef022b2f9c4ac89e1f5906693a1c"></a>
+<a class="anchor" id="a3616bde6895d72b6c161aa8abe71e16e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -564,7 +565,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$insertDefaults = array()</td>
+          <td class="memname">SQLMapper::$insertDefaults = array()</td>
         </tr>
       </table>
   </td>
@@ -576,7 +577,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa1b1dbba685ec998e5dede06b2ed72d6"></a>
+<a class="anchor" id="a70d29b1a0c024eb2f11e7e1ec7966430"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -584,7 +585,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$Mapper</td>
+          <td class="memname">SQLMapper::$Mapper</td>
         </tr>
       </table>
   </td>
@@ -596,7 +597,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5e8ddcc192e875a3ae368d76e03aa8f2"></a>
+<a class="anchor" id="a123841ad7adddcb80ebfc382e155823a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -604,7 +605,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$selectDefaults = array()</td>
+          <td class="memname">SQLMapper::$selectDefaults = array()</td>
         </tr>
       </table>
   </td>
@@ -616,7 +617,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1347c69346ac9c0e71766b530022f4ab"></a>
+<a class="anchor" id="af08c5fdc7d581911eb8538db33a5834e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -624,7 +625,7 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$updateDefaults = array()</td>
+          <td class="memname">SQLMapper::$updateDefaults = array()</td>
         </tr>
       </table>
   </td>
@@ -636,60 +637,60 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac640cddb52671f9f215f8897077e33cb"></a>
+<a class="anchor" id="a75bd4d6dc792ff0ed3ab842db8ba3d28"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const ARR_ASSOC = 2</td>
+          <td class="memname">const SQLMapper::ARR_ASSOC = 2</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a35123caea02750a545868202aa0f74bc"></a>
+<a class="anchor" id="ae1b3c75c75438ff572d6f8f77abe059c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const ARR_OBJECTS = 1</td>
+          <td class="memname">const SQLMapper::ARR_OBJECTS = 1</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="af0ab3ab75e0ff56d8c02872bc91f68a2"></a>
+<a class="anchor" id="a125a37f5a1315cb37032c5e342b8af69"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const NUMBER = 5</td>
+          <td class="memname">const SQLMapper::NUMBER = 5</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ac4a7ccf976f98823baa8e57bfc2b12c6"></a>
+<a class="anchor" id="a0b2e09b44dd58179ce4c84ca1fc8c9ca"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLQUERY = 4</td>
+          <td class="memname">const SQLMapper::SQLQUERY = 4</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a08d95da919ecb2350109abc7c0d78ee7"></a>
+<a class="anchor" id="a2c4194565a940222ee86efbc09a9daa5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const STATEMENT = 3</td>
+          <td class="memname">const SQLMapper::STATEMENT = 3</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -697,12 +698,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/Workspaces/Orpheus/libs/sqlmapper/<a class="el" href="sqlmapper__class_8php.html">sqlmapper_class.php</a></li>
+<li><a class="el" href="sqlmapper__class_8php.html">sqlmapper_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jul 31 2012 00:13:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 31 2012 08:45:03 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

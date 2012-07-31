@@ -27,30 +27,30 @@ abstract class ConfigCore {
 		return (isset($this->config[$key])) ? $this->config[$key] : NULL;
 	}
 	
-	//! Add configuration to this object.
+	//! Adds configuration to this object.
 	/*!
 		\param $conf The configuration array to add to the current object.
 		
-		Add the configuration array $conf to this configuration.
+		Adds the configuration array $conf to this configuration.
 	*/
 	public function add($conf) {
 		$this->config += $conf;
 	}
 	
-	//!	Load new configuration source.
+	//!	Loads new configuration source.
 	/*!
 		\param $source An identifier to get the source.
 		
-		Load a configuration from a source identified with $source.
+		Loads a configuration from a source identified with $source.
 	*/
 	public abstract function load($source);
 	
-	//!	Build new configuration source.
+	//!	Builds new configuration source.
 	/*!
 		\param $source An identifier to build the source.
 		\param $minor Specify if this is a minor configuration.
 		
-		Build a configuration from $source using load() method.
+		Builds a configuration from $source using load() method.
 		If it is not a minor configuration, that new configuration is added to the main configuration.
 	*/
 	public static function build($source, $minor=false) {
@@ -69,12 +69,12 @@ abstract class ConfigCore {
 		}
 	}
 	
-	//! Get configuration from the main configuration object.
+	//! Gets configuration from the main configuration object.
 	/*!
 		\param $key The key to get the value.
 		\return A config value.
 		
-		Call __get() method from main configuration object.
+		Calls __get() method from main configuration object.
 	*/
 	public static function get($key) {
 		if( !isset(static::$main) ) {

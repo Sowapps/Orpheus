@@ -294,6 +294,13 @@ class User extends AbstractStatus {
 	
 	// 		** Verification methods **
 	
+	//! Checks a name
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The stripped name.
+	 * 
+	 * Validates the name in array $inputData.
+	 */
 	public static function checkName($inputData) {
 		if( empty($inputData['name']) || !is_name($inputData['name']) ) {
 			throw new UserException('invalidName');
@@ -301,15 +308,30 @@ class User extends AbstractStatus {
 		return $inputData['name'];
 	}
 	
+	//! Checks a Password
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \param $withConfirmation True if the confirmation is required. Default value is true.
+	 * \return The hashed password string.
+	 * 
+	 * Validates the password in array $inputData.
+	 */
 	public static function checkPassword($inputData, $withConfirmation=1) {
-		if( empty($inputData['password']) || ( $withConfirmation && empty($inputData['password_conf']) ) ) {
+		if( empty($inputData['password']) ) {
 			throw new UserException('invalidPassword');
-		} else if( $withConfirmation && $inputData['password'] != $inputData['password_conf'] ) {
+		} else if( $withConfirmation && (empty($inputData['password_conf']) || $inputData['password'] != $inputData['password_conf']) ) {
 			throw new UserException('invalidPasswordConf');
 		}
 		return static::hashPassword($inputData['password']);
 	}
 	
+	//! Checks an Email address
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The email address.
+	 * 
+	 * Validates the email address in array $inputData.
+	 */
 	public static function checkEmail($inputData) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
 			throw new UserException('invalidEmail');
@@ -317,6 +339,15 @@ class User extends AbstractStatus {
 		return $inputData['email'];
 	}
 	
+	//! Checks a public Email address
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \return The public email address.
+	 * 
+	 * Validates the public email address in array $inputData.
+	 * This address is not required, you can use a checkbox to automatically use the real email address.
+	 * e.g The email is foo@bar.com and public_email is 'on', the returned public_email will be foo@bar.com.
+	 */
 	public static function checkPublicEmail($inputData) {
 		//Require checkEmail() before.
 		if( !empty($inputData['email_public']) ) {
@@ -331,6 +362,10 @@ class User extends AbstractStatus {
 		return $inputData['email_public'];
 	}
 	
+	//! Checks user input
+	/*!
+	 * \sa PermanentObject::checkUserInput()
+	*/
 	public static function checkUserInput($uInputData) {
 		$data = array();
 		$data['name'] = self::checkName($uInputData);
@@ -340,7 +375,11 @@ class User extends AbstractStatus {
 		return $data+parent::checkUserInput($uInputData);
 	}
 	
-	public static function checkForEntry($data) {
+	//! Checks for object
+	/*!
+		\sa PermanentObject::checkForObject()
+	*/
+	public static function checkForObject($data) {
 		if( empty($data['name']) && empty($data['email']) ) {
 			return;//Nothing to check.
 		}
@@ -361,6 +400,11 @@ class User extends AbstractStatus {
 	}
 	
 	// *** STATUS METHODS ***
+	
+	//! Checks a status
+	/*!
+		\sa AbstractStatus::checkStatus()
+	*/
 	public static function checkStatus($newStatus, $currentStatus=null) {
 		if( !user_can('users_status', 1) ) {
 			throw new UserException('forbiddenUStatus');
