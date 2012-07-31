@@ -113,13 +113,13 @@ class User extends AbstractStatus {
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
 			throw new UserException('sameAccessLevel');
 		}
-		if( user_can('rights_grant', $this) || $USER->accesslevel <= $this->accesslevel || $USER->accesslevel <= $inputData['accesslevel'] ) {
+		if( User::canDo('users_grants', $this) || $USER->accesslevel <= $this->accesslevel || $USER->accesslevel <= $inputData['accesslevel'] ) {
 			throw new UserException('forbiddenGrant');
 		}
 		return (int) ( !empty($inputData['accesslevel']) );
 	}
 	
-	//! Checks if this user can do a restricted action
+	//! Checks if this user can do a restricted action on an user
 	/*!
 	 * \param $action The action to look for.
 	 * \param $user The user we want to edit.
@@ -140,7 +140,7 @@ class User extends AbstractStatus {
 	public function update($uInputData, array $data=array()) {
 		
 		//Si aucun utilisateur n'est connecté ou qu'il n'est ni cet utilisateur ni ne possède les droits suffisants.
-		if( !user_can(static::$table.'_edit', $this) ) {
+		if( !User::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		
@@ -167,7 +167,7 @@ class User extends AbstractStatus {
 		
 		try {
 			//Un modérateur n'est pas obligé de fournir une confirmation.
-			$inputData['password'] = self::checkPassword($uInputData, !user_can(static::$table.'_edit') );
+			$inputData['password'] = self::checkPassword($uInputData, !User::canDo(static::$table.'_edit') );
 			if( $inputData['password'] != $this->password ) {
 				$data['password'] = $inputData['password'];
 			}
@@ -406,7 +406,7 @@ class User extends AbstractStatus {
 		\sa AbstractStatus::checkStatus()
 	*/
 	public static function checkStatus($newStatus, $currentStatus=null) {
-		if( !user_can('users_status', 1) ) {
+		if( !User::canDo('users_status', 1) ) {
 			throw new UserException('forbiddenUStatus');
 		}
 		return parent::checkStatus($newStatus, $currentStatus);
