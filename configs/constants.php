@@ -33,7 +33,8 @@ define('LANG',	'en_US');
 
 //Miscelanous
 define('DEFAULTMOD',	'home');
-define('DEFAULTLINK',	'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
+define('SITEROOT',		'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
+define('DEFAULTLINK',	SITEROOT);
 
 define('AUTHORNAME',	'Florent HAZARD');
 define('SITENAME',		'Orpheus');
