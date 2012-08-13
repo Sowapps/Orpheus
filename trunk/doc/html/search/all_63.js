@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['_5fhooks_2ephp',['_hooks.php',['../configs_2__hooks_8php.html',1,'']]],
   ['canaccess',['canAccess',['../class_user.html#a6881d8f41b2a7830ab9d51fe0c27bd76',1,'User']]],
   ['cando',['canDo',['../class_user.html#a3562aba5c2e1164faa75918e8b8301f7',1,'User']]],
   ['canon',['canOn',['../class_user.html#a9dd0d7f2428dd5442f2d9026c033f4d0',1,'User']]],
@@ -23,8 +22,7 @@ var searchData=
   ['config_5fclass_2ephp',['config_class.php',['../config__class_8php.html',1,'']]],
   ['configcore',['ConfigCore',['../class_config_core.html',1,'']]],
   ['configcore_5fclass_2ephp',['configcore_class.php',['../configcore__class_8php.html',1,'']]],
-  ['confpath',['CONFPATH',['../constants_8php.html#af9d274bc324bb83d1811e1297c2e74fd',1,'constants.php']]],
-  ['constants',['Constants',['../constants.html',1,'']]],
+  ['confpath',['CONFPATH',['../constants_8php.html#ab2923e7229c819e74fa8a7d11cde5d8e',1,'constants.php']]],
   ['constants_2ephp',['constants.php',['../constants_8php.html',1,'']]],
   ['containsfile',['containsFile',['../class_email.html#aac98e123dee2736316a334ae2b028808',1,'Email']]],
   ['create',['create',['../class_hook.html#a76362d684f78293ed94c65ae2e1857d0',1,'Hook\create()'],['../class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93',1,'PermanentObject\create()']]]

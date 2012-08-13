@@ -30,4 +30,6 @@
  * \section start Getting started
  * 
  * Configure constants: \ref constants
+ * Install the libraries you need and configure it.
+ * Don't forget to configure your database, menus and user rights.
  */
