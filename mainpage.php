@@ -29,7 +29,7 @@
  *
  * \section start Getting started
  * 
- * Configure constants: \ref constants
- * Install the libraries you need and configure it.
- * Don't forget to configure your database, menus and user rights.
+ * Configure constants: \ref constants\n
+ * Install the libraries you need and configure it.\n
+ * Don't forget to configure your database, menus and user rights.\n
  */
