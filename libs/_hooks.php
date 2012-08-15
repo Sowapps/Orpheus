@@ -5,7 +5,7 @@
 	PHP File containing default registering of hooks' callbacks.
  */
 
-//! New callback for Hook 'runModule'
+//! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
 	//If user try to override url rewriting and the requested page is not root.
 	if( empty($_SERVER['REDIRECT_rewritten']) && $_SERVER['REQUEST_URI'] != '/' && $Module != 'remote' ) {
@@ -22,6 +22,7 @@ Hook::register('runModule', function ($Module) {
 	}
 });
 
+//! Callback for Hook 'checkModule'
 Hook::register('checkModule', function () {
 	if( User::is_login() ) {
 		//global $USER;// Do not work in this context.
@@ -31,6 +32,9 @@ Hook::register('checkModule', function () {
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 });
 
+// Publisher library
+
+//! Callback for Hook 'runModule'
 Hook::register('runModule', function () {
 	if( !User::canAccess($GLOBALS['Module']) ) {
 		redirectTo((( defined('ACCESSDENIEDMOD') ) ? ACCESSDENIEDMOD : DEFAULTMOD).'.html');
