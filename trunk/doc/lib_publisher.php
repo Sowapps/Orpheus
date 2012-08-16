@@ -17,6 +17,5 @@
  * 
  * Copy all files from the archive into your website root directory.\n
  * Don't forget to import tables and fields into your database.\n
- * Edit the configs/database.ini file with your database settings.\n
  * For the user system, also edit the configs/access.ini and configs/rights.ini files according to your needs.\n
  */

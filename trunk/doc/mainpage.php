@@ -2,7 +2,7 @@
 /*!
  * \mainpage Documentation
  * 
- * \warning For the moment, The Orpheus demo website and the Orpheus framework uses the same repository but it's unsecure and not convenient.\n
+ * \warning For the moment, The Orpheus demo website and the Orpheus framework use the same repository but it's unsecure and not convenient.\n
  * This is why it will be changed soon and they will be separated.\n
  * 
  * \section intro_sec Introduction
@@ -43,7 +43,7 @@
  * \li \ref lib_config
  * \li \ref lib_core
  * \li \ref lib_hooks
- * \li \ref lib_initernalization
+ * \li \ref lib_initernationalization
  * \li \ref lib_publisher
  * \li \ref lib_rendering
  * \li \ref lib_route
