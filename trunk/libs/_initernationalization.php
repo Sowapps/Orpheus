@@ -1,5 +1,5 @@
 <?php
-//! Initerlization
+//! Initernationalization
 /*!
  * Translation plugin using ini files
  * 
