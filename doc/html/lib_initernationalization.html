@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Orpheus: lib_route.php File Reference</title>
+<title>Orpheus: Initernationalization Library</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -47,9 +47,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -68,19 +68,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
-    </ul>
-  </div>
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">lib_route.php File Reference</div>  </div>
+<div class="title">Initernationalization Library </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><h2><a class="anchor" id="intro_sec"></a>
+Introduction</h2>
+<p>The initernationalization library is a basic internationalization library using ini files.<br/>
+ The basic language is not english by default, but an internal language, called English CamelCase.<br/>
+ global.ini is the language file for the overall website, update it carefully.<br/>
+ Add one file per domain you want to translate, ie one or more per library you develop.<br/>
+ <br/>
+ This package is very recommended even if you don't use the internationalization because it's light and bring all required functions.<br/>
+</p>
+<h2><a class="anchor" id="install_sec"></a>
+Installation</h2>
+<p>Copy all files from the archive into your website root directory.<br/>
+ You need to configure LANGPATH and LANG constants to use it.<br/>
+ </p>
+</div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"

@@ -2,6 +2,9 @@
 /*!
  * \mainpage Documentation
  * 
+ * \warning For the moment, The Orpheus demo website and the Orpheus framework uses the same repository but it's unsecure and not convenient.\n
+ * This is why it will be changed soon and they will be separated.\n
+ * 
  * \section intro_sec Introduction
  *
  * Orpheus is a free, open source, flexible, and smart framework meant to be embedded in web applications.\n
