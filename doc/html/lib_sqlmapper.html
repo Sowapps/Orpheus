@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Orpheus: D:/workspace/Orpheus/libs/fieldnotfoundexception_class.php File Reference</title>
+<title>Orpheus: SQLMapper Library</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -47,9 +47,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -68,27 +68,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
-    </ul>
-  </div>
 </div>
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">D:/workspace/Orpheus/libs/fieldnotfoundexception_class.php File Reference</div>  </div>
+<div class="title"><a class="el" href="class_s_q_l_mapper.html" title="The main SQL Mapper class.">SQLMapper</a> Library </div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr><td colspan="2"><h2><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_field_not_found_exception.html">FieldNotFoundException</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The field not found exception class.  <a href="class_field_not_found_exception.html#details">More...</a><br/></td></tr>
-</table>
-</div><!-- contents -->
+<div class="textblock"><h2><a class="anchor" id="intro_sec"></a>
+Introduction</h2>
+<p>The <a class="el" href="class_s_q_l_mapper.html" title="The main SQL Mapper class.">SQLMapper</a> library is designed to map SQL entities into PHP OBbjects.<br/>
+ It includes a small PDO library to use easily PDO as procedural programming.<br/>
+ Each driver requires is own Mapper, inherited from the SQlMapper class.<br/>
+ Only the mappers for MySQL and PostgreSQL DBMS were developed for the moment.<br/>
+ <br/>
+ This package is often use by libraries, we recommend it.<br/>
+</p>
+<h2><a class="anchor" id="install_sec"></a>
+Installation</h2>
+<p>Copy all files from the archive into your website root directory.<br/>
+ Edit the configs/database.ini file with your database settings.<br/>
+ </p>
+</div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
