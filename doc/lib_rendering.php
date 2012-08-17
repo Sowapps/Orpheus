@@ -7,7 +7,7 @@
  * The rendering library is designed to allow the rendering of any types.\n
  * Each type should have a class as HTMLRendering.\n
  * HTMLRendering is for the rendering of HTML, using a theme.\n
- * RawRendering is for a the rendering of an unspecified type, it just displays the module's result without treatment.\n
+ * RawRendering is for the rendering of an unspecified type, it just displays the module's result without treatment.\n
  * \n
  * This package is required.\n
  * 
