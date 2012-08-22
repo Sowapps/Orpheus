@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['rendering_20library',['Rendering Library',['../lib_rendering.html',1,'']]],
+  ['route_20library',['Route Library',['../lib_route.html',1,'']]],
   ['rawrendering',['RawRendering',['../class_raw_rendering.html',1,'']]],
   ['rawrendering_5fclass_2ephp',['rawrendering_class.php',['../rawrendering__class_8php.html',1,'']]],
   ['redirectto',['redirectTo',['../__core_8php.html#aca286cbf530900cd28aa99dfebb54447',1,'_core.php']]],
