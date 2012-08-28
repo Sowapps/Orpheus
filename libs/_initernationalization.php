@@ -28,7 +28,7 @@ function loadLangFile($domain=null) {
  * \param $domain The domain to apply the Key. Default value is 'global'
  * \return The translated human text.
  * 
- * This function try to translate the given key else the Key.
+ * This function try to translate the given key, in case of failure, it just returns the Key.
  */
 function t($k, $domain='global') {
 	global $LANG;
