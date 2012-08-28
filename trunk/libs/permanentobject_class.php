@@ -54,10 +54,11 @@ abstract class PermanentObject {
 	 * \return The value of field $name.
 	 * 
 	 * Gets the value of field $name.
+	 * 'all' returns all fields.
 	*/
 	public function __get($name) {
 		try {
-			return $this->getValue($name);
+			return $this->getValue(($name == 'all') ? null : $name);
 		} catch(FieldNotFoundException $e) {
 			/* Previously, we got the attribute if
 			 * the data does not exist but private is private.
