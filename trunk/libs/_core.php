@@ -397,7 +397,7 @@ function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
 	$report = '';
 	foreach( $REPORTS[$domain] as $type => &$reports ) {
 		foreach( $reports as $message) {
-			if( !in_array($rejected) ) {
+			if( !in_array($message, $rejected) ) {
 				$report .= '
 		<div class="report report_'.$domain.' '.$type.'">'.t($message).'</div>';
 			}
