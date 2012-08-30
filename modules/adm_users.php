@@ -24,7 +24,7 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 		$formUserData = $user->getValue();
 	}
 	
-	displayReportsHTML();
+	displayReportsHTML($noReportErrors);
 ?>You are editing user #<?php echo $user->id; ?> named "<?php echo $user->name; ?>".<br />
 <form method="POST">
 	<label for="email">Email : </label> <input id="email" type="text" name="userdata[email]" <?php echo (!empty($formUserData['email'])) ? "value=\"{$formUserData['email']}\" " : ''; ?>/>
