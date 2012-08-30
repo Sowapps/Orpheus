@@ -43,6 +43,6 @@ foreach( $logs as $logID => $logData ) {
 			?>No entry in this log.<?php
 		}
 	} catch(Exception $e) {
-		t($e->__toString());
+		echo t($e->__toString());
 	}
 }
