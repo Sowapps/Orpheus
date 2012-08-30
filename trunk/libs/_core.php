@@ -409,7 +409,6 @@ function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
 	return $report;
 }
 
-
 //! Displays reports as HTML
 /*!
 	\param $domain The translation domain and the domain of the report. Default value is 'global'.
@@ -425,6 +424,6 @@ function displayReportsHTML($domain='global', $rejected=array(), $delete=1) {
 	}
 	echo '
 	<div class="reports '.$domain.'">
-	'.getReportsHTML($domain, $delete, $rejected).'
+	'.getReportsHTML($domain, $rejected, $delete).'
 	</div>';
 }
