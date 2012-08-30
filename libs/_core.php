@@ -421,6 +421,7 @@ function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
 function displayReportsHTML($domain='global', $rejected=array(), $delete=1) {
 	if( is_array($domain) && empty($rejected) ) {
 		$rejected = $domain;
+		$domain = 'global';
 	}
 	echo '
 	<div class="reports '.$domain.'">
