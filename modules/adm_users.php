@@ -1,8 +1,4 @@
 <?php
-if( !defined("INSIDE") ) {
-	return;
-}
-
 /*** EDITION ***/
 
 if( $Action == 'edit' && User::canDo('users_edit') ) {
@@ -29,16 +25,16 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 	}
 	
 	displayReportsHTML();
-?>Vous vous apprêtez à éditer l'utilisateur #<?php echo $user->id; ?> nommé "<?php echo $user->name; ?>".<br />
+?>You are editing user #<?php echo $user->id; ?> named "<?php echo $user->name; ?>".<br />
 <form method="POST">
 	<label for="email">Email : </label> <input id="email" type="text" name="userdata[email]" <?php echo (!empty($formUserData['email'])) ? "value=\"{$formUserData['email']}\" " : ''; ?>/>
-	<label for="email_public">Email Public : </label><input id="email_public" name="userdata[email_public]" type="text"<?php echo (!empty($formUserData['email_public'])) ? "value=\"{$formUserData['email_public']}\" " : ''; ?>/><br />
-	<label for="name">Nom d'utilisateur : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($formUserData['name'])) ? "value=\"{$formUserData['name']}\" " : ''; ?>/><br />
-	<label for="fullname">Nom affiché : </label> <input id="fullname" type="text" name="userdata[fullname]" <?php echo (!empty($formUserData['fullname'])) ? "value=\"{$formUserData['fullname']}\" " : ''; ?>/><br />
-	<label for="password">Mot de passe : </label> <input id="password" type="password" name="userdata[password]"/><br />
-	<label for="accesslevel">Accréditation : </label> <input id="accesslevel" type="text" name="userdata[accesslevel]" <?php echo (isset($formUserData['accesslevel'])) ? "value=\"{$formUserData['accesslevel']}\" " : ''; ?>/><br />
+	<label for="email_public">Public Email : </label><input id="email_public" name="userdata[email_public]" type="text"<?php echo (!empty($formUserData['email_public'])) ? "value=\"{$formUserData['email_public']}\" " : ''; ?>/><br />
+	<label for="name">User name : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($formUserData['name'])) ? "value=\"{$formUserData['name']}\" " : ''; ?>/><br />
+	<label for="fullname">Displayed name : </label> <input id="fullname" type="text" name="userdata[fullname]" <?php echo (!empty($formUserData['fullname'])) ? "value=\"{$formUserData['fullname']}\" " : ''; ?>/><br />
+	<label for="password">Password : </label> <input id="password" type="password" name="userdata[password]"/><br />
+	<label for="accesslevel">Access level : </label> <input id="accesslevel" type="text" name="userdata[accesslevel]" <?php echo (isset($formUserData['accesslevel'])) ? "value=\"{$formUserData['accesslevel']}\" " : ''; ?>/><br />
 
-	<input type="submit" name="submitEdituser" value="Modifier" /><br />
+	<input type="submit" name="submitEdituser" value="Save" /><br />
 </form>
 <?php
 	return;
@@ -72,7 +68,7 @@ $UsersArr = User::get(array('output'=>SQLMapper::ARR_OBJECTS));
 displayReportsHTML();
 ?>
 <form method="POST">
-<h3>Liste des utilisateurs</h3>
+<h3>User list</h3>
 <ul class="userslist">
 <?php
 foreach( $UsersArr as $user ) {
@@ -80,21 +76,21 @@ foreach( $UsersArr as $user ) {
 	<li>
 		<span>#{$user->id}</span>
 		<span>{$user->name}</span>".
-		( (User::canDo('users_delete', $user)) ? "<span><input type='submit' name='submitDeleteUser[{$user->id}]' value='Supprimer'/></span>" : '').
-		( (User::canDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Éditer</a></span>" : '').
+		( (User::canDo('users_delete', $user)) ? "<span><input type='submit' name='submitDeleteUser[{$user->id}]' value='Delete'/></span>" : '').
+		( (User::canDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Edit</a></span>" : '').
 		"
 	</li>";
 }
 ?>
 </ul>
 </form>
-<h3>Ajouter un nouvel utilisateur</h3>
+<h3>Add new user</h3>
 <form method="POST">
 	<label for="email">Email* : </label> <input id="email" type="text" name="regdata[email]" <?php echo (!empty($formRegData['email'])) ? "value=\"{$formRegData['email']}\" " : ''; ?>/>
 		<label for="email_public">Public : </label><input id="email_public" name="regdata[email_public]" type="checkbox"<?php echo (!empty($formRegData['email_public'])) ? 'checked="checked" ' : ''; ?>/><br />
-	<label for="name">Nom d'utilisateur* : </label> <input id="name" type="text" name="regdata[name]" <?php echo (!empty($formRegData['name'])) ? "value=\"{$formRegData['name']}\" " : ''; ?>/><br />
-	<label for="fullname">Nom d'affichage* : </label> <input id="fullname" type="text" name="regdata[fullname]" <?php echo (!empty($formRegData['fullname'])) ? "value=\"{$formRegData['fullname']}\" " : ''; ?>/><br />
-	<label for="password">Mot de passe* : </label> <input id="password" type="password" name="regdata[password]"/><br />
-	<label for="password_conf">Confirmation* : </label> <input id="password_conf" type="password" name="regdata[password_conf]"/><br />
-	<input type="submit" name="submitRegister" value="Enregistrer" /><br />
+	<label for="name">User name* : </label> <input id="name" type="text" name="regdata[name]" <?php echo (!empty($formRegData['name'])) ? "value=\"{$formRegData['name']}\" " : ''; ?>/><br />
+	<label for="fullname">Displayed name* : </label> <input id="fullname" type="text" name="regdata[fullname]" <?php echo (!empty($formRegData['fullname'])) ? "value=\"{$formRegData['fullname']}\" " : ''; ?>/><br />
+	<label for="password">Password* : </label> <input id="password" type="password" name="regdata[password]"/><br />
+	<label for="password_conf">Confirm* : </label> <input id="password_conf" type="password" name="regdata[password_conf]"/><br />
+	<input type="submit" name="submitRegister" value="Save" /><br />
 </form>
