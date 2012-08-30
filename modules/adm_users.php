@@ -29,8 +29,8 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 <form method="POST">
 	<label for="email">Email : </label> <input id="email" type="text" name="userdata[email]" <?php echo (!empty($formUserData['email'])) ? "value=\"{$formUserData['email']}\" " : ''; ?>/>
 	<label for="email_public">Public Email : </label><input id="email_public" name="userdata[email_public]" type="text"<?php echo (!empty($formUserData['email_public'])) ? "value=\"{$formUserData['email_public']}\" " : ''; ?>/><br />
-	<label for="name">User name : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($formUserData['name'])) ? "value=\"{$formUserData['name']}\" " : ''; ?>/><br />
 	<label for="fullname">Displayed name : </label> <input id="fullname" type="text" name="userdata[fullname]" <?php echo (!empty($formUserData['fullname'])) ? "value=\"{$formUserData['fullname']}\" " : ''; ?>/><br />
+	<label for="name">User name : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($formUserData['name'])) ? "value=\"{$formUserData['name']}\" " : ''; ?>/><br />
 	<label for="password">Password : </label> <input id="password" type="password" name="userdata[password]"/><br />
 	<label for="accesslevel">Access level : </label> <input id="accesslevel" type="text" name="userdata[accesslevel]" <?php echo (isset($formUserData['accesslevel'])) ? "value=\"{$formUserData['accesslevel']}\" " : ''; ?>/><br />
 
