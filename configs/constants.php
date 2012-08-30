@@ -39,4 +39,5 @@ define('DEFAULTLINK',	SITEROOT);
 define('AUTHORNAME',	'Florent HAZARD');
 define('SITENAME',		'Orpheus');
 
+define('PDOLOGFILENAME','.pdo_error');
 define('SYSLOGFILENAME','.system');
