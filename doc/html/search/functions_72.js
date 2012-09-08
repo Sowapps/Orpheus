@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['redirectto',['redirectTo',['../__core_8php.html#aca286cbf530900cd28aa99dfebb54447',1,'_core.php']]],
+  ['redirectto',['redirectTo',['../__core_8php.html#aafb49ba0e0b950559c79462b42918b07',1,'_core.php']]],
   ['register',['register',['../class_hook.html#a958a9fe3b5a655d8af47a32dcfc2ca21',1,'Hook']]],
   ['registerhook',['registerHook',['../class_hook.html#ad2a059f51c9fbe5f94d9736e8d1e51c7',1,'Hook']]],
   ['removefile',['removeFile',['../class_email.html#a46a15322af0364f1e5436a105157541b',1,'Email']]],

@@ -8,8 +8,10 @@ var searchData=
   ['addautoload',['addAutoload',['../__core_8php.html#adbe8bb82cc1c861256e95a790034cb3d',1,'_core.php']]],
   ['addfile',['addFile',['../class_email.html#ad84119c306ad05ad193ecf268c27ce5e',1,'Email']]],
   ['addreport',['addReport',['../__core_8php.html#a7b55a45c5c3eb90cc0016f8f91fbf069',1,'_core.php']]],
+  ['adm_5flogs_2ephp',['adm_logs.php',['../adm__logs_8php.html',1,'']]],
+  ['adm_5fusers_2ephp',['adm_users.php',['../adm__users_8php.html',1,'']]],
   ['applytoobject',['applyToObject',['../class_permanent_object.html#a11b43c8f6e4898f04d6f6ace10138d44',1,'PermanentObject']]],
   ['arr_5fassoc',['ARR_ASSOC',['../class_s_q_l_mapper.html#a75bd4d6dc792ff0ed3ab842db8ba3d28',1,'SQLMapper']]],
   ['arr_5fobjects',['ARR_OBJECTS',['../class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c',1,'SQLMapper']]],
-  ['authorname',['AUTHORNAME',['../constants_8php.html#a8fa0566a31541211c2e5a234127ebd25',1,'constants.php']]]
+  ['authorname',['AUTHORNAME',['../constants_8php.html#a891dd3fb880d113999709c38f7717208',1,'constants.php']]]
 ];

@@ -1,8 +1,8 @@
 <?php
 /*!
-	\brief The hooks' default callbacks
-	
-	PHP File containing default registering of hooks' callbacks.
+ * \brief The hooks' default callbacks
+ * 
+ * PHP File containing default registering of hooks' callbacks.
  */
 
 //! Callback for Hook 'runModule'

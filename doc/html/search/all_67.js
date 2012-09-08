@@ -15,7 +15,7 @@ var searchData=
   ['getmodelspath',['getModelsPath',['../class_h_t_m_l_rendering.html#a9297da2127f74dba376661c577f634f9',1,'HTMLRendering']]],
   ['getnicename',['getNicename',['../class_site_user.html#ae10728ed36d3780e14e6ec0301a08a2f',1,'SiteUser']]],
   ['getpermalink',['getPermalink',['../class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689',1,'AbstractPublication']]],
-  ['getreportshtml',['getReportsHTML',['../__core_8php.html#a03ca3fd04bb8c72a7fca53c0fbe0dccb',1,'_core.php']]],
+  ['getreportshtml',['getReportsHTML',['../__core_8php.html#a211771742c3a047e2de3d28fd7e39cd9',1,'_core.php']]],
   ['gettable',['getTable',['../class_permanent_object.html#a992bc5c66c015b0a330df437df1a41aa',1,'PermanentObject']]],
   ['getvalue',['getValue',['../class_permanent_object.html#a2c3772c84dce93dad42456f97ecc2043',1,'PermanentObject']]]
 ];
