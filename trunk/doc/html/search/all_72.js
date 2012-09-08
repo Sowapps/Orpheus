@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['rendering_20library',['Rendering Library',['../lib_rendering.html',1,'']]],
-  ['route_20library',['Route Library',['../lib_route.html',1,'']]],
   ['rawrendering',['RawRendering',['../class_raw_rendering.html',1,'']]],
   ['rawrendering_5fclass_2ephp',['rawrendering_class.php',['../rawrendering__class_8php.html',1,'']]],
-  ['redirectto',['redirectTo',['../__core_8php.html#aca286cbf530900cd28aa99dfebb54447',1,'_core.php']]],
+  ['redirectto',['redirectTo',['../__core_8php.html#aafb49ba0e0b950559c79462b42918b07',1,'_core.php']]],
   ['register',['register',['../class_hook.html#a958a9fe3b5a655d8af47a32dcfc2ca21',1,'Hook']]],
   ['registerhook',['registerHook',['../class_hook.html#ad2a059f51c9fbe5f94d9736e8d1e51c7',1,'Hook']]],
   ['removefile',['removeFile',['../class_email.html#a46a15322af0364f1e5436a105157541b',1,'Email']]],

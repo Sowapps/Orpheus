@@ -25,10 +25,7 @@ class Email {
 	private $AltBody;
 	
 	/* Attached Files
-	Content Array of form:
-	array(
-		'the_file_name',
-	)
+	Contains a list of file names
 	*/
 	private $AttFiles = array();
 	

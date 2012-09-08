@@ -1,15 +1,9 @@
 <?php
-/* ./core.php
- * PHP File for included functions: Core
- * [EN] Library of system functions.
- *
- * Author: Florent Hazard.
- * Revision: 8
- * Creation date: 19/08/2011
+/*!
+ * \brief The core functions
+ * 
+ * PHP File containing all system functions.
  */
-if( !defined("INSIDE") ) {
-	return;
-}
 
 //! Redirects the client to a destination by HTTP
 /*!

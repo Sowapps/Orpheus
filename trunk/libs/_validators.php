@@ -1,16 +1,9 @@
 <?php
-/* libs/validators.php
- * PHP File for included functions: Checkers
- * [EN] Library of checkers/validators functions.
- * [FR] Bibliothèque de fonctions de vérification/validation.
- *
- * Auteur: Florent Hazard.
- * Version: 11
- * Derniere edition: 19/08/2011
+/*!
+ * \brief The validators
+ * 
+ * PHP File containing all basic validators for a website.
  */
-if( !defined("INSIDE") ) {
-	return;
-}
 
 //! Checks if the input is an email address.
 /*!
