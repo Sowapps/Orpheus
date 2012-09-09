@@ -1,5 +1,5 @@
 <?php
 $USER->logout();
-htmlRedirectTo('./');
+htmlRedirectTo(SITEROOT);
 ?>
 You're already going away ?! :-(<br />
