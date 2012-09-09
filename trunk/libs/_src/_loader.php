@@ -6,3 +6,4 @@
  */
 
 addAutoload('SiteUser', '_src/siteuser_class.php');
+addAutoload('DemoTest', '_src/demotest_class.php');
