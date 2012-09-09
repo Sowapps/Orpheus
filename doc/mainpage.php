@@ -35,7 +35,7 @@
  * Configure constants: \ref constants\n
  * Install the libraries you need and configure it.\n
  * Don't forget to configure your database, menus and user rights.\n
- * You can create your own lib folder, we advise to name it like "_mydomain".\n
+ * To develop your own features, puts it in your source folder "libs/_src/".\n
  *
  * \section basic_lib Basic libraries
  * 
