@@ -1,27 +1,26 @@
-<?php 
-?>
 This page is an example of Home using Orpheus.<br />
 <a href="user_login.html">Try user system ! (Publisher Plugin)</a><br />
 <br />
 <?php
 if( !empty($_POST['data']) ) {
 	try {
+		
 		$tid = DemoTest::create($_POST['data']);
-		echo "
-	<div class=\"success\">Object created.</div>";
+		reportSuccess("Object created.");
+		
 		$test = DemoTest::load($tid);
-		echo "
-	<div class=\"success\">Object \"{$test}\" loaded, it's named \"{$test->name}\".</div>";
+		reportSuccess("Object \"{$test}\" loaded, it's named \"{$test->name}\".");
+		
 		DemoTest::delete($tid);
-		echo "
-	<div class=\"success\">Object deleted.</div>";
+		reportSuccess("Object deleted.");
+		
 	} catch (UserException $e) {
-		echo "
-	<div class=\"error\">{$e->getMessage()}</div>";
+		reportError($e);
 	}
 	
 }
-//var_dump(SQLMapper::doSelect(array('table'=>'test')));
+displayReportsHTML();
+
 ?>
 Try to create you own DemoTest object:<br />
 <form method="POST">
