@@ -1,6 +1,3 @@
-This page is an example of Home using Orpheus.<br />
-<a href="user_login.html">Try user system ! (Publisher Plugin)</a><br />
-<br />
 <?php
 if( !empty($_POST['data']) ) {
 	try {
@@ -19,8 +16,12 @@ if( !empty($_POST['data']) ) {
 	}
 	
 }
+?>
+This page is an example of Home using Orpheus.<br />
+<a href="user_login.html">Try user system ! (Publisher Plugin)</a><br />
+<br />
+<?php
 displayReportsHTML();
-
 ?>
 Try to create you own DemoTest object:<br />
 <form method="POST">
