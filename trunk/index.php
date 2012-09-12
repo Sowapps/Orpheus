@@ -37,9 +37,11 @@ function includeDir($dir) {
 	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
+	echo "Scanning $dir<br />";
 	foreach($files as $file) {
 		if( $file[0] == '_' ) {
 			//We don't check infinite file system loops.
+			echo "Importing {$dir}{$file}.<br />";
 			if( !is_dir($dir.$file) ) {
 				require_once $dir.$file;
 				$i++;
@@ -48,6 +50,7 @@ function includeDir($dir) {
 			}
 		}
 	}
+	echo "Imported $i files.<br />";
 	return $i;
 }
 
