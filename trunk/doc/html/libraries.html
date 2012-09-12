@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Orpheus: mainpage.php File Reference</title>
+<title>Orpheus: Libraries</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,9 +37,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -56,12 +56,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
           </span>
         </div>
       </li>
-    </ul>
-  </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="files.html"><span>File&#160;List</span></a></li>
-      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -81,10 +75,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">mainpage.php File Reference</div>  </div>
+<div class="title">Libraries </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
+Introduction</h1>
+<p>The framework manages libraries to seperate common sources from other features.<br/>
+ You can use it to import plugins and extensions for your application.<br/>
+</p>
+<h1><a class="anchor" id="import_sec"></a>
+Importing</h1>
+<p>There is several ways to import libraries, depending on the needs and the way you develop your application.<br/>
+</p>
+<h2><a class="anchor" id="boot_sub"></a>
+At boot loading</h2>
+<p>During the boot loading, it includes files from configs and libs directories.<br/>
+ If a file start with the "_" character, then the file is directly imported.<br/>
+ If the file is a folder, it tries to import he folder, the inclusion is called recursively.<br/>
+ In a package with some required classes, we conventionnaly use a <a class="el" href="__loader_8php.html">_loader.php</a> file to add customed libraries to the autoloads mapping list.<br/>
+</p>
+<h2><a class="anchor" id="autoloads_sub"></a>
+With autoloads</h2>
+<p>The framework uses PHP <a class="el" href="index_8php.html#a2ecfde85f554ea0b3fef0993aef304a9" title="Class autoload function.">__autoload()</a> to load required libraries.<br/>
+ It searches the file containing your class from all possibilities, in the priority order:<br/>
+ </p>
+<ul>
+<li>Paths specified with <a class="el" href="__core_8php.html#adbe8bb82cc1c861256e95a790034cb3d" title="Adds a class to the autoload.">addAutoload()</a> function. </li>
+<li>Paths loaded from the "autoload" config file (configs/autoload.ini). </li>
+<li>For MyClass, path as libs/myclass_class.php. </li>
+<li>For MyClass, path as libs/myclass/myclass_class.php. </li>
+<li>For Package_MyClass, path as libs/package/myclass_class.php.</li>
+</ul>
+<h2><a class="anchor" id="using_sub"></a>
+The "using" way</h2>
+<p>The <a class="el" href="__core_8php.html#a6c366c5bfd3fdec91cdd334d52f03ce3" title="Imports the required class(es).">using()</a> function is done to import classes as packages, as you can do with Java.<br/>
+ e.g using('orpheus.examples.myclass') (Import "orpheus/examples/myclass_class.php")<br/>
+ or using('orpheus.examples.*') (Import all classes from "orpheus/examples/")<br/>
+</p>
+<h1><a class="anchor" id="location_sec"></a>
+Location</h1>
+<p>All libraries are located in the "libs" folder.<br/>
+ You can change the name and the locaiton of this folder at your own risk.<br/>
+ To do it, you only should to edit the LIBSPATH constant in the constant file (default location "configs/constants.php").<br/>
+ </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Wed Sep 12 2012 14:54:34 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">

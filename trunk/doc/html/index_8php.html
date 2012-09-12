@@ -97,7 +97,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a57d34da3bd80860dfd34620af3c5d246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error Handler.  <a href="#a57d34da3bd80860dfd34620af3c5d246"></a><br/></td></tr>
 <tr class="separator:a57d34da3bd80860dfd34620af3c5d246"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a467c5fe1a2ebb1b66c55fbd7534aa97a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a467c5fe1a2ebb1b66c55fbd7534aa97a">includeDir</a> ($dir)</td></tr>
-<tr class="memdesc:a467c5fe1a2ebb1b66c55fbd7534aa97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Include a directory.  <a href="#a467c5fe1a2ebb1b66c55fbd7534aa97a"></a><br/></td></tr>
+<tr class="memdesc:a467c5fe1a2ebb1b66c55fbd7534aa97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Includes a directory.  <a href="#a467c5fe1a2ebb1b66c55fbd7534aa97a"></a><br/></td></tr>
 <tr class="separator:a467c5fe1a2ebb1b66c55fbd7534aa97a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ecfde85f554ea0b3fef0993aef304a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a2ecfde85f554ea0b3fef0993aef304a9">__autoload</a> ($className)</td></tr>
 <tr class="memdesc:a2ecfde85f554ea0b3fef0993aef304a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class autoload function.  <a href="#a2ecfde85f554ea0b3fef0993aef304a9"></a><br/></td></tr>
@@ -148,8 +148,10 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Add Array mapping</dd></dl>
-<p>Include the file according to the classname in lowercase and suffixed by '<em>class.php'. First, search in the libs directory, then, always in subdirectory, in the eponym directory. And finally, in the parent directory (replace first '</em>' by '/') e.g For Parent_MyClass, it searches 'libs/parent_myclass_class.php', 'libs/parent_myclass/parent_myclass_class.php', 'libs/parent/myclass_class.php' The script stops if the class file is not found. </p>
+<dl class="section see"><dt>See Also</dt><dd>The <a class="el" href="libraries.html">Libraries</a> documentation</dd></dl>
+<p>Includes the file according to the classname in lowercase and suffixed by '_class.php'.<br/>
+ The script stops if the class file is not found.<br/>
+ </p>
 
 </div>
 </div>
@@ -212,7 +214,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of files included.</dd></dl>
-<p>Include all files with a name beginning by '_' in the directory $dir. </p>
+<p>Includes all files with a name beginning by '_' in the directory $dir. </p>
 
 </div>
 </div>
@@ -325,14 +327,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line"> <a class="code" href="class_config_core.html#a4a508ff48f2b9c9875346af536cc5ff5" title="Builds new configuration source.">Config::build</a>(<span class="stringliteral">&#39;engine&#39;</span>)</div>
+<div class="line"> </div>
+<div class="line"> <a class="code" href="index_8php.html#a467c5fe1a2ebb1b66c55fbd7534aa97a" title="Includes a directory.">includeDir</a>(<a class="code" href="constants_8php.html#af9d274bc324bb83d1811e1297c2e74fd">CONFPATH</a>)</div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 12 2012 10:26:17 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 12 2012 14:54:34 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
