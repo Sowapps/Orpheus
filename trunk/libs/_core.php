@@ -266,6 +266,7 @@ function parseFields(array $fields) {
 */
 function using($pkgPath) {
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	text("pkgPath : $pkgPath");
 	if( substr($pkgPath, -2) == '.*' ) {
 		$dir = substr($pkgPath, 0, -2);
 		$files = scandir($dir);
@@ -275,6 +276,7 @@ function using($pkgPath) {
 			}
 		}
 	}
+	text('pkgLib : '.$pkgPath.'_class.php');
 	require_once $pkgPath.'_class.php';
 }
 
