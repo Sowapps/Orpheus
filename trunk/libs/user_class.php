@@ -139,7 +139,6 @@ class User extends AbstractStatus {
 	 */
 	public function update($uInputData, array $data=array()) {
 		
-		//Si aucun utilisateur n'est connecté ou qu'il n'est ni cet utilisateur ni ne possède les droits suffisants.
 		if( !User::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
@@ -185,7 +184,7 @@ class User extends AbstractStatus {
 	
 	// *** METHODES STATIQUES ***
 	
-	//! Log in a user from data
+	//! Logs in a user from data
 	/*!
 	 * \param $data The data for user authentification.
 	 * 
@@ -260,7 +259,7 @@ class User extends AbstractStatus {
 	 */
 	public static function delete($id) {
 		if( !self::canDo('users_delete') ) {
-			throw new OperationForbiddenException('users_delete');//TODO: This Exception does not exist anymore.
+			throw new OperationForbiddenException('users_delete');
 		}
 		return parent::delete($id);
 	}

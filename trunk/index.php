@@ -65,18 +65,41 @@ function includeDir($dir) {
 */
 function __autoload($className) {
 	try {
-		global $AUTOLOADS;
+		global $AUTOLOADS, $AUTOLOADSFROMCONF;
+		// In the first __autoload() call, we try to load the autoload config from file.
+		if( !isset($AUTOLOADSFROMCONF) ) {
+			$AUTOLOADS = array_merge($AUTOLOADS, Config::build('autoload'));
+			$AUTOLOADSFROMCONF = true;
+		}
+		// PHP's class name are not case sensitive.
 		$bFile = strtolower($className);
+		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
 			if( is_readable(LIBSPATH.$AUTOLOADS[$bFile]) ) {
-				require_once LIBSPATH.$AUTOLOADS[$bFile];
-				return;
+				// if the path is a directory, we search the class file into this directory.
+				if( is_dir(LIBSPATH.$AUTOLOADS[$bFile]) ) {
+					if( is_readable(LIBSPATH.$AUTOLOADS[$bFile].$bFile.'_class.php') ) {
+						require_once LIBSPATH.$AUTOLOADS[$bFile].$bFile.'_class.php';
+						return;
+					}
+				// if the path is a file, we include the class file.
+				} else {
+					require_once LIBSPATH.$AUTOLOADS[$bFile];
+					return;
+				}
 			}
 			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
+			
+		// If the class file is directly in the libs directory
 		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.'_class.php';
+			
+			
+		// If the class file is in a eponymous sub directory in the libs directory
 		} else if( is_readable(LIBSPATH.$bFile.'/'.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.'/'.$bFile.'_class.php';
+			
+		// If the class name is like Prefix_ClassName, we search the class file "classname" in the "prefix" directory in libs/.
 		} else {
 			$classExp = explode('_', $bFile, 2);
 			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php') ) {
@@ -131,6 +154,7 @@ try {
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();
 	ob_end_clean();
+	
 } catch(Exception $e) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
@@ -147,6 +171,7 @@ try {
 	$coreAction = 'displaying_'.$Module;
 	Hook::trigger('showRendering');
 	Rendering::doShow();//Generic final display.
+	
 } catch(Exception $e) {
 	@sys_error("$e", $coreAction);
 	die('A fatal display error occured.');

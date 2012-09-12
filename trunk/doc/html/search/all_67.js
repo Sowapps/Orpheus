@@ -2,6 +2,7 @@ var searchData=
 [
   ['generatehtml',['generateHTML',['../class_abstract_publication.html#a8c9c398f8b2a1f013b7d6aa421875091',1,'AbstractPublication']]],
   ['get',['get',['../class_config_core.html#a4bcb7f4e5aa87651dcba4ced7962a61f',1,'ConfigCore\get()'],['../class_permanent_object.html#a4c6aa9d927b84a9e5ad68a81c0205ed9',1,'PermanentObject\get()']]],
+  ['getaction',['getAction',['../class_operation_forbidden_exception.html#abfc3f14e79506ff0b390ecb148b7c1ac',1,'OperationForbiddenException']]],
   ['getavailablestatus',['getAvailableStatus',['../class_abstract_status.html#a512a92ba0dd08cb963d9c1dcb7866fea',1,'AbstractStatus']]],
   ['getboundary',['getBoundary',['../class_email.html#afddc024f9a3873b3f3c1746de0e2a259',1,'Email']]],
   ['getcsspath',['getCSSPath',['../class_h_t_m_l_rendering.html#a59ab6f1a8ab47432b14811a3eba088e1',1,'HTMLRendering']]],

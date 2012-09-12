@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jspath',['JSPATH',['../constants_8php.html#a8fe73f456d78bcb98ed0ad6aa1daae78',1,'constants.php']]]
+  ['jspath',['JSPATH',['../constants_8php.html#a71fdb814dec0eb69fd0112cb3ca9bf8d',1,'constants.php']]]
 ];
