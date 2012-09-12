@@ -118,11 +118,16 @@ $Module = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 try {
+	echo "Init<br />";
 	includeDir(CONFPATH);
+	echo "CONFPATH loaded<br />";
 	includeDir(LIBSPATH);
+	echo "libspath loaded<br />";
 	using('Config');
+	echo "Using Config lib<br />";
 	
 	Config::build('engine');
+	echo "Enfinge config builded.<br />";
 	
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
