@@ -12,7 +12,7 @@ if( !defined('ORPHEUSPATH') ) {
 	define('ORPHEUSPATH', './');
 }
 
-//Edit it according system context (OS, directory tree ...).
+// Edit the constant file according to the system context (OS, directory tree ...).
 require_once ORPHEUSPATH.'configs/constants.php';
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
@@ -70,8 +70,7 @@ function __autoload($className) {
 	try {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
-		if( !isset($AUTOLOADSFROMCONF) ) {
-			using('Config');
+		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
 			$AUTOLOADS = array_merge($AUTOLOADS, Config::build('autoload'));
 			$AUTOLOADSFROMCONF = true;
 		}
