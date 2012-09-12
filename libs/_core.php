@@ -270,7 +270,6 @@ function using($pkgPath) {
 		$dir = substr($pkgPath, 0, -2);
 		$files = scandir($dir);
 		foreach($files as $file) {
-			//$file[0] != '.' 
 			if( preg_match("#^[^\.].*_class.php$#", $file) ) {
 				require_once $dir.'/'.$file;
 			}
