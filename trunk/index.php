@@ -37,11 +37,9 @@ function includeDir($dir) {
 	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
-	echo "Scanning $dir<br />";
 	foreach($files as $file) {
 		if( $file[0] == '_' ) {
 			//We don't check infinite file system loops.
-			echo "Importing {$dir}{$file}.<br />";
 			if( !is_dir($dir.$file) ) {
 				require_once $dir.$file;
 				$i++;
@@ -50,7 +48,6 @@ function includeDir($dir) {
 			}
 		}
 	}
-	echo "Imported $i files.<br />";
 	return $i;
 }
 
@@ -122,16 +119,12 @@ $Module = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 try {
-	echo "Init<br />";
 	
-	includeDir(CONFPATH);//Require to be loaded before libraries to get hooks. 
-	echo "CONFPATH loaded<br />";
+	includeDir(CONFPATH);//Require to be loaded before libraries to get hooks.
 	
 	includeDir(LIBSPATH);//Require some hooks.
-	echo "LIBSPATH loaded<br />";
 	
 	Config::build('engine');
-	echo "Enfinge config builded.<br />";
 	
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
