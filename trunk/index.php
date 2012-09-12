@@ -71,6 +71,7 @@ function __autoload($className) {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
 		if( !isset($AUTOLOADSFROMCONF) ) {
+			using('Config');
 			$AUTOLOADS = array_merge($AUTOLOADS, Config::build('autoload'));
 			$AUTOLOADSFROMCONF = true;
 		}
@@ -126,14 +127,11 @@ try {
 	includeDir(LIBSPATH);
 	echo "libspath loaded<br />";
 	
-	using('Config');
-	echo "Using Config lib<br />";
+	includeDir(CONFPATH);
+	echo "CONFPATH loaded<br />";
 	
 	Config::build('engine');
 	echo "Enfinge config builded.<br />";
-	
-	includeDir(CONFPATH);
-	echo "CONFPATH loaded<br />";
 	
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
