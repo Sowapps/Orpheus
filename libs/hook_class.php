@@ -115,14 +115,18 @@ class Hook {
 	//! Triggers a hook
 	/*!
 		\param $name The hook name.
+		\param $silent Make it silent, no exception thrown. Default value is false.
 		\return The triggerHook() result, usually the first parameter.
 		
 		Triggers the hook named $name.
 		e.g trigger('MyHook', $parameter1, $parameter2)
 	*/
-	public static function trigger($name) {
+	public static function trigger($name, $silent=false) {
 		$name = static::slug($name);
 		if( empty(static::$hooks[$name]) ) {
+			if( $silent ) {
+				return;
+			}
 			throw new Exception('No hook with this name');
 		}
 		$params = null;

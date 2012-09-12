@@ -26,12 +26,12 @@ function exception_error_handler($errno, $errstr, $errfile, $errline ) {
 }
 set_error_handler('exception_error_handler');
 
-//! Include a directory
+//! Includes a directory
 /*!
 	\param $dir The directory to include.
 	\return The number of files included.
 	
-	Include all files with a name beginning by '_' in the directory $dir.
+	Includes all files with a name beginning by '_' in the directory $dir.
 */
 function includeDir($dir) {
 	//Require to be immediatly available.
@@ -55,13 +55,10 @@ function includeDir($dir) {
 //! Class autoload function
 /*!
 	\param $className The classname not loaded yet.
-	\todo Add Array mapping
+	\sa The \ref libraries documentation
 	
-	Include the file according to the classname in lowercase and suffixed by '_class.php'.
-	First, search in the libs directory, then, always in subdirectory, in the eponym directory.
-	And finally, in the parent directory (replace first '_' by '/')
-	e.g For Parent_MyClass, it searches 'libs/parent_myclass_class.php', 'libs/parent_myclass/parent_myclass_class.php', 'libs/parent/myclass_class.php'
-	The script stops if the class file is not found.
+	Includes the file according to the classname in lowercase and suffixed by '_class.php'.\n
+	The script stops if the class file is not found.\n
 */
 function __autoload($className) {
 	try {
@@ -100,7 +97,7 @@ function __autoload($className) {
 		} else if( is_readable(LIBSPATH.$bFile.'/'.$bFile.'_class.php') ) {
 			require_once LIBSPATH.$bFile.'/'.$bFile.'_class.php';
 			
-		// If the class name is like Prefix_ClassName, we search the class file "classname" in the "prefix" directory in libs/.
+		// If the class name is like Package_ClassName, we search the class file "classname" in the "package" directory in libs/.
 		} else {
 			$classExp = explode('_', $bFile, 2);
 			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php') ) {
@@ -172,7 +169,7 @@ Error is \''.$e->getMessage().'\'.
 
 try {
 	$coreAction = 'displaying_'.$Module;
-	Hook::trigger('showRendering');
+	Hook::trigger('showRendering', true);
 	Rendering::doShow();//Generic final display.
 	
 } catch(Exception $e) {

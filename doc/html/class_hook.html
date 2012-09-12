@@ -115,9 +115,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a958a9fe3b5a655d8af47a32dcfc2ca21"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hook.html#a958a9fe3b5a655d8af47a32dcfc2ca21">register</a> ($name, $callback)</td></tr>
 <tr class="memdesc:a958a9fe3b5a655d8af47a32dcfc2ca21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a callback.  <a href="#a958a9fe3b5a655d8af47a32dcfc2ca21"></a><br/></td></tr>
 <tr class="separator:a958a9fe3b5a655d8af47a32dcfc2ca21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6558a6d2000c4a27cbe27bc242001260"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hook.html#a6558a6d2000c4a27cbe27bc242001260">trigger</a> ($name)</td></tr>
-<tr class="memdesc:a6558a6d2000c4a27cbe27bc242001260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers a hook.  <a href="#a6558a6d2000c4a27cbe27bc242001260"></a><br/></td></tr>
-<tr class="separator:a6558a6d2000c4a27cbe27bc242001260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6073bc0393fd047c4c81327abde37f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hook.html#aef6073bc0393fd047c4c81327abde37f">trigger</a> ($name, $silent=false)</td></tr>
+<tr class="memdesc:aef6073bc0393fd047c4c81327abde37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers a hook.  <a href="#aef6073bc0393fd047c4c81327abde37f"></a><br/></td></tr>
+<tr class="separator:aef6073bc0393fd047c4c81327abde37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -309,7 +309,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6558a6d2000c4a27cbe27bc242001260"></a>
+<a class="anchor" id="aef6073bc0393fd047c4c81327abde37f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -320,8 +320,18 @@ Static Protected Attributes</h2></td></tr>
           <td class="memname">static Hook::trigger </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$name</em></td><td>)</td>
+          <td class="paramname"><em>$name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$silent</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -333,6 +343,7 @@ Static Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$name</td><td>The hook name. </td></tr>
+    <tr><td class="paramname">$silent</td><td>Make it silent, no exception thrown. Default value is false. </td></tr>
   </table>
   </dd>
 </dl>
@@ -361,7 +372,7 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The first param as result. </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_hook.html#a6558a6d2000c4a27cbe27bc242001260" title="Triggers a hook.">trigger()</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_hook.html#aef6073bc0393fd047c4c81327abde37f" title="Triggers a hook.">trigger()</a></dd></dl>
 <p>Triggers this hook calling all associated callbacks. $params array is passed to the callback as its arguments. The first parameter, $params[0], is considered as the result of the trigger. If $params is not an array, its value is assigned to the second value of a new $params array. </p>
 
 </div>
@@ -433,7 +444,7 @@ Static Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 12 2012 10:26:17 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Sep 12 2012 14:54:34 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
