@@ -71,7 +71,8 @@ function __autoload($className) {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
 		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
-			$AUTOLOADS = array_merge($AUTOLOADS, Config::build('autoload'));
+			$alConf = Config::build('autoload', true);
+			$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
 			$AUTOLOADSFROMCONF = true;
 		}
 		// PHP's class name are not case sensitive.
