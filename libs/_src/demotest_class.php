@@ -1,7 +1,7 @@
 <?php
 //! A sample demo test class
 /*!
-	Use permanent object.
+	Example of how to use the permanent object.
 */
 class DemoTest extends PermanentObject {
 	
@@ -12,7 +12,7 @@ class DemoTest extends PermanentObject {
 	
 	// *** OVERLOADED METHODS ***
 		
-	//! Update this DemoTest object
+	//! Updates this DemoTest object
 	/*!
 		\sa PermanentObject::update()
 	*/
@@ -32,7 +32,7 @@ class DemoTest extends PermanentObject {
 	
 	// 		** CHECK METHODS **
 	
-	//! Check Field 'name'
+	//! Checks Field 'name'
 	/*!
 		\param $inputData The user input.
 		\return a valid field 'name'.
@@ -44,7 +44,7 @@ class DemoTest extends PermanentObject {
 		return strip_tags($inputData['name']);
 	}
 	
-	//! Check user input
+	//! Checks user input
 	/*!
 		\sa PermanentObject::checkUserInput()
 	*/
@@ -56,7 +56,7 @@ class DemoTest extends PermanentObject {
 		return $data;
 	}
 	
-	//! Check for object
+	//! Checks for object
 	/*!
 		\sa PermanentObject::checkForObject()
 	*/

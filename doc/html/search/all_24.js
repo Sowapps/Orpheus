@@ -1,9 +1,10 @@
 var searchData=
 [
+  ['_24action',['$Action',['../index_8php.html#adeb3cb839534d2fcc4480b9ff288c9a5',1,'index.php']]],
   ['_24autoloads',['$AUTOLOADS',['../index_8php.html#a2acfab2ac24bd8ac6c7d36cfd70f6e69',1,'index.php']]],
   ['_24callbacks',['$callbacks',['../class_hook.html#a7c78fbf678d2ffa17e7f0f35a029b577',1,'Hook']]],
   ['_24config',['$config',['../class_config_core.html#a25913a2b3800e144c11c115159e603f3',1,'ConfigCore']]],
-  ['_24coreaction',['$coreAction',['../index_8php.html#a6f4e7796f7498165710c677c671c16d3',1,'index.php']]],
+  ['_24coreaction',['$coreAction',['../index_8php.html#a2155b806456fcbef8be9a71fbd73548b',1,'index.php']]],
   ['_24csspath',['$cssPath',['../class_h_t_m_l_rendering.html#a9e5f31a5f837bfeb0ca01d6c284291d9',1,'HTMLRendering']]],
   ['_24data',['$data',['../class_permanent_object.html#a609502fd2d70bc4b8cf376a73cbdf031',1,'PermanentObject']]],
   ['_24deletedefaults',['$deleteDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253',1,'SQLMapper_MySQL\$deleteDefaults()'],['../class_s_q_l_mapper___pg_s_q_l.html#abc8de894949856f7c2f078e4064aa957',1,'SQLMapper_PgSQL\$deleteDefaults()'],['../class_s_q_l_mapper.html#abd9a5ea19fdd8ccbab574f8cf4df094e',1,'SQLMapper\$deleteDefaults()']]],
@@ -23,6 +24,7 @@ var searchData=
   ['_24modtitle',['$MODTITLE',['../settings_8php.html#ae0549d3a658774a55784938cb8a2ac9f',1,'settings.php']]],
   ['_24module',['$Module',['../index_8php.html#a643d60fb839b5d58f0725a88d0ecd1a0',1,'index.php']]],
   ['_24name',['$name',['../class_hook.html#ab9a65229758172a559bdb2a91042cdf1',1,'Hook']]],
+  ['_24page',['$Page',['../index_8php.html#aab089c55bd2018e10a58f9c478b9440e',1,'index.php']]],
   ['_24selectdefaults',['$selectDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a8c645a79d0a52df73e482461c04a24b0',1,'SQLMapper_MySQL\$selectDefaults()'],['../class_s_q_l_mapper___pg_s_q_l.html#a5e50ef988c28fa1504392a59ba232202',1,'SQLMapper_PgSQL\$selectDefaults()'],['../class_s_q_l_mapper.html#a123841ad7adddcb80ebfc382e155823a',1,'SQLMapper\$selectDefaults()']]],
   ['_24showmodel',['$SHOWMODEL',['../class_h_t_m_l_rendering.html#a9e0e017435626e7ec1372f265447a920',1,'HTMLRendering\$SHOWMODEL()'],['../class_rendering.html#a92d2f2c2ef7c306a692a0e2306330c3d',1,'Rendering\$SHOWMODEL()']]],
   ['_24status',['$status',['../class_abstract_publication.html#a9da3ed6e0dd2848b6c9263b18c3bdc67',1,'AbstractPublication\$status()'],['../class_abstract_status.html#a87ea9112380ac4c20067418524d98227',1,'AbstractStatus\$status()']]],

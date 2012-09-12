@@ -39,14 +39,8 @@ class SiteUser extends User {
 			}
 		} catch(UserException $e) { reportError($e); }
 		
-//		if( !empty($data['name']) ) {
-//			$name = $data['name'];
-//		}
-		
 		$r = parent::update($uInputData, $data);
-//		if( $r && isset($name) && $name == ) {
-//			
-//		}
+		
 		return $r;
 	}
 	
