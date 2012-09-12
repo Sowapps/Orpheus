@@ -118,10 +118,11 @@ $Module = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 try {
-	Config::build('engine');
-	
 	includeDir(CONFPATH);
 	includeDir(LIBSPATH);
+	using('Config');
+	
+	Config::build('engine');
 	
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
