@@ -124,11 +124,11 @@ $coreAction = 'initializing_core';
 try {
 	echo "Init<br />";
 	
-	includeDir(LIBSPATH);
-	echo "libspath loaded<br />";
-	
-	includeDir(CONFPATH);
+	includeDir(CONFPATH);//Require to be loaded before libraries to get hooks. 
 	echo "CONFPATH loaded<br />";
+	
+	includeDir(LIBSPATH);//Require some hooks.
+	echo "LIBSPATH loaded<br />";
 	
 	Config::build('engine');
 	echo "Enfinge config builded.<br />";
