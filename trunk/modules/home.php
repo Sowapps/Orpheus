@@ -1,5 +1,5 @@
 <?php
-if( !empty($_POST['data']) ) {
+if( isPOST('data') ) {
 	try {
 		
 		$tid = DemoTest::create($_POST['data']);

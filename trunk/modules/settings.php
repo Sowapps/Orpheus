@@ -1,7 +1,7 @@
 <?php
 $MODTITLE = 'Options';
 
-if( !empty($_POST['submitEdituser']) && !empty($_POST['data']) ) {
+if( isPOST('submitEdituser') && isPOST('data') ) {
 	$noReportErrors = array('invalidPassword', 'invalidName', 'invalidEmail', 'invalidAccessLevel');
 	$form = $_POST['data'];
 	$result = $USER->update($_POST['data']);

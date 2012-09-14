@@ -12,7 +12,7 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 	} catch(UserException $e) {
 		reportError('notFound');
 	}
-	if( !empty($_POST['submitEdituser']) ) {
+	if( isPOST('submitEdituser') ) {
 		$formUserData = $_POST['userdata'];
 		$result = $user->update($_POST['userdata']);
 		if( $result ) {

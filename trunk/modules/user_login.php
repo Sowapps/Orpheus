@@ -5,8 +5,7 @@ $formRegData = array();
 if( isPOST('submitLogin') ) {
 	
 	try {
-		SiteUser::userLogin($_POST['data']);
-		$_SESSION['welcome'] = 3;
+		SiteUser::userLogin($_POST['logindata']);
 		reportSuccess('You\'re successfully loggued in.');
 		
 	} catch(UserException $e) {
@@ -31,10 +30,10 @@ if( User::is_login() ) {
 <form method="POST">
 <div class="loginform form">
 	<div class="username">
-		<input class="input" id="name" type="text" name="data[name]" placeholder="User name" required="required" />
+		<input class="input" id="name" type="text" name="logindata[name]" placeholder="User name" required="required" />
 	</div>
 	<div class="password">
-		<input class="input" id="password" type="password" name="data[password]" placeholder="Password" required="required" />
+		<input class="input" id="password" type="password" name="logindata[password]" placeholder="Password" required="required" />
 	</div>
 	<div class="loginSubmit">
 		<input class="submit" type="submit" name="submitLogin" value="Login"/>

@@ -4,7 +4,7 @@ $logs = array(
 	'sys' => array('label' => t('System'), 'file' => LOGSPATH.SYSLOGFILENAME),
 );
 
-if( !empty($_POST['submitEraseLogs']) ) {
+if( isPOST('submitEraseLogs') ) {
 	$logID = key($_POST['submitEraseLogs']);
 	
 	if( file_put_contents($logs[$logID]['file'], '') !== false ) {
