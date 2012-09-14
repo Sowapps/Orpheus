@@ -2,7 +2,7 @@
 <br />
 <?php
 $formRegData = array();
-if( !empty($_POST['submitLogin']) ) {
+if( isPOST('submitLogin') ) {
 	
 	try {
 		SiteUser::userLogin($_POST['data']);
@@ -12,7 +12,7 @@ if( !empty($_POST['submitLogin']) ) {
 	} catch(UserException $e) {
 		reportError($e);
 	}
-} else if( !empty($_POST['submitRegister']) ) {
+} else if( isPOST('submitRegister') ) {
 	try {
 		$formRegData = $_POST['regdata'];
 		$Membre = SiteUser::create($formRegData);
