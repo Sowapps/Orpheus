@@ -442,6 +442,7 @@ function POST($key=null) {
 
 	Check the POST status to retrieve data from a form.
 	You can specify the name of your submit button as first parameter.
+	We advise to use the name of your submit button, but you can also use another important field of your form.
 */
 function isPOST($key=null) {
 	return isset($_POST) && (is_null($key) || isset($_POST[$key]));
