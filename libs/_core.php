@@ -421,3 +421,28 @@ function displayReportsHTML($domain='global', $rejected=array(), $delete=1) {
 	'.getReportsHTML($domain, $rejected, $delete).'
 	</div>';
 }
+
+//! Gets POST data
+/*!
+	\param $key The key to retrieve. The default value is null (retrieves all data).
+	\return Data using the key or all data from POST array.
+	\sa isPOST()
+
+	Gets data from a POST request using the $key.
+	With no parameter or parameter null, all data are returned.
+*/
+function POST($key=null) {
+	return ( isset($key) ) ? ( (isset($_POST[$key])) ? $_POST[$key] : false) : $_POST ;
+}
+
+//! Checks the POST status
+/*!
+	\param $key The name of the button submitting the request.
+	\return True if the request is a POST one. Compares also the $key if not null.
+
+	Check the POST status to retrieve data from a form.
+	You can specify the name of your submit button as first parameter.
+*/
+function isPOST($key=null) {
+	return isset($_POST) && (is_null($key) || isset($_POST[$key]));
+}
