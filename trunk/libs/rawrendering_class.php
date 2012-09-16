@@ -9,7 +9,7 @@ class RawRendering extends Rendering {
 	/*!
 		\copydoc Rendering::render()
 	*/
-	public function render($env, $model=null) {
+	public function render($model=null, $env=array()) {
 		extract($env);
 		return $Page;
 	}

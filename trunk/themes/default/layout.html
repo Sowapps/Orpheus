@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% if MODTITLE %}{{ MODTITLE }} :: {% endif %}{{ constant('SITENAME') }}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="Description" content=""/>
+	<meta name="Author" content="{{ constant('AUTHORNAME') }}"/>
+	<meta name="application-name" content="{{ constant('SITENAME') }}" />
+	<meta name="msapplication-starturl" content="{{ constant('DEFAULTLINK') }}" />
+	<meta name="Keywords" content="projet"/>
+	<meta name="Robots" content="Index, Follow"/>
+	<meta name="revisit-after" content="16 days"/>
+{% if METAPROP %}
+	{% for property,content in METAPROP %}
+	<meta property="{{ property }}" content="{{ content }}"/>
+	{% endfor %}
+{% endif %}
+</head>
+<body class="{{ Module }}">
+
+{{ MENUS.topmenu }}
+
+{% if Page %}
+
+{{ Page }}
+
+{% else %}
+
+{% include Module ~ ".html" %}
+
+{% endif %}
+
+</body>
+</html>
