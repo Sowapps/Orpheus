@@ -162,6 +162,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ab48b4e73ab9f8df812c1ee4db6c3fbce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#ab48b4e73ab9f8df812c1ee4db6c3fbce">displayReportsHTML</a> ($domain='global', $rejected=array(), $delete=1)</td></tr>
 <tr class="memdesc:ab48b4e73ab9f8df812c1ee4db6c3fbce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays reports as HTML.  <a href="#ab48b4e73ab9f8df812c1ee4db6c3fbce"></a><br/></td></tr>
 <tr class="separator:ab48b4e73ab9f8df812c1ee4db6c3fbce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe475d31a7fa5be41269c860787cebf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#aabe475d31a7fa5be41269c860787cebf">POST</a> ($key=null)</td></tr>
+<tr class="memdesc:aabe475d31a7fa5be41269c860787cebf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets POST data.  <a href="#aabe475d31a7fa5be41269c860787cebf"></a><br/></td></tr>
+<tr class="separator:aabe475d31a7fa5be41269c860787cebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81fb154c20bf4d8700c3b846a9afcdd8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a81fb154c20bf4d8700c3b846a9afcdd8">isPOST</a> ($key=null)</td></tr>
+<tr class="memdesc:a81fb154c20bf4d8700c3b846a9afcdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the POST status.  <a href="#a81fb154c20bf4d8700c3b846a9afcdd8"></a><br/></td></tr>
+<tr class="separator:a81fb154c20bf4d8700c3b846a9afcdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="adbe8bb82cc1c861256e95a790034cb3d"></a>
@@ -459,6 +465,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a81fb154c20bf4d8700c3b846a9afcdd8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">isPOST </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$key</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$key</td><td>The name of the button submitting the request. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the request is a POST one. Compares also the $key if not null.</dd></dl>
+<p>Check the POST status to retrieve data from a form. You can specify the name of your submit button as first parameter. We advise to use the name of your submit button, but you can also use another important field of your form. </p>
+
+</div>
+</div>
 <a class="anchor" id="ad6b2a953f3c1c2171fea8b36ae55bc27"></a>
 <div class="memitem">
 <div class="memproto">
@@ -594,6 +624,31 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#aafb49ba0e0b950559c79462b42918b07" title="The core functions.">redirectTo()</a></dd></dl>
 <p>Redirects permanently the client to a $destination using the HTTP headers. The only difference with <a class="el" href="__core_8php.html#aafb49ba0e0b950559c79462b42918b07" title="The core functions.">redirectTo()</a> is the status code sent to the client. </p>
+
+</div>
+</div>
+<a class="anchor" id="aabe475d31a7fa5be41269c860787cebf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">POST </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$key</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$key</td><td>The key to retrieve. The default value is null (retrieves all data). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Data using the key or all data from POST array. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#a81fb154c20bf4d8700c3b846a9afcdd8" title="Checks the POST status.">isPOST()</a></dd></dl>
+<p>Gets data from a POST request using the $key. With no parameter or parameter null, all data are returned. </p>
 
 </div>
 </div>
@@ -949,7 +1004,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 12 2012 14:54:34 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 16 2012 16:33:26 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

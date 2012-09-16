@@ -96,7 +96,7 @@ Variables</h2></td></tr>
 <tr class="memitem:a28db3e6ebc5c9630c22946b6019fb714"><td class="memItemLeft" align="right" valign="top"><a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a>($Action== 'edit'&amp;&amp;<a class="el" href="class_user.html#a3562aba5c2e1164faa75918e8b8301f7">User::canDo</a>('users_edit'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adm__users_8php.html#a28db3e6ebc5c9630c22946b6019fb714">$formRegData</a> = array()</td></tr>
 <tr class="separator:a28db3e6ebc5c9630c22946b6019fb714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c9ca9ca90888f0e229f186e44a1b1e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a>(!empty($_POST['submitRegister'])) <br class="typebreak"/>
-<a class="el" href="settings_8php.html#a25fd151a97db1f0c99d551050c85c85c">else</a> <a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a>(!empty($_POST['submitDeleteUser'])&amp;&amp;<a class="el" href="class_user.html#a3562aba5c2e1164faa75918e8b8301f7">User::canDo</a>('users_delete'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adm__users_8php.html#a1c9ca9ca90888f0e229f186e44a1b1e7">$UsersArr</a> = <a class="el" href="class_permanent_object.html#a4c6aa9d927b84a9e5ad68a81c0205ed9">User::get</a>(array('output'=&gt;<a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">SQLMapper::ARR_OBJECTS</a>))</td></tr>
+<a class="el" href="settings_8php.html#abfb930cd7de6352e6d432d4f5e7bbaab">else</a> <a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a>(!empty($_POST['submitDeleteUser'])&amp;&amp;<a class="el" href="class_user.html#a3562aba5c2e1164faa75918e8b8301f7">User::canDo</a>('users_delete'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adm__users_8php.html#a1c9ca9ca90888f0e229f186e44a1b1e7">$UsersArr</a> = <a class="el" href="class_permanent_object.html#a4c6aa9d927b84a9e5ad68a81c0205ed9">User::get</a>(array('output'=&gt;<a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">SQLMapper::ARR_OBJECTS</a>))</td></tr>
 <tr class="separator:a1c9ca9ca90888f0e229f186e44a1b1e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3716e6ea5022b904223fca49ab688e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="adm__users_8php.html#ac3716e6ea5022b904223fca49ab688e1">foreach</a> ($UsersArr as $user)</td></tr>
 <tr class="separator:ac3716e6ea5022b904223fca49ab688e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,7 +119,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a> (!empty($_POST['submitRegister'])) <a class="el" href="settings_8php.html#a25fd151a97db1f0c99d551050c85c85c">else</a> <a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a> (!empty($_POST['submitDeleteUser'])&amp;&amp;<a class="el" href="class_user.html#a3562aba5c2e1164faa75918e8b8301f7">User::canDo</a>('users_delete')) $UsersArr = <a class="el" href="class_permanent_object.html#a4c6aa9d927b84a9e5ad68a81c0205ed9">User::get</a>(array('output'=&gt;<a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">SQLMapper::ARR_OBJECTS</a>))</td>
+          <td class="memname"><a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a> (!empty($_POST['submitRegister'])) <a class="el" href="settings_8php.html#abfb930cd7de6352e6d432d4f5e7bbaab">else</a> <a class="el" href="index_8php.html#a6b3e3d1137fbf41165ce96c9516b189f">if</a> (!empty($_POST['submitDeleteUser'])&amp;&amp;<a class="el" href="class_user.html#a3562aba5c2e1164faa75918e8b8301f7">User::canDo</a>('users_delete')) $UsersArr = <a class="el" href="class_permanent_object.html#a4c6aa9d927b84a9e5ad68a81c0205ed9">User::get</a>(array('output'=&gt;<a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c">SQLMapper::ARR_OBJECTS</a>))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -141,7 +141,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Sep 12 2012 14:54:34 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 16 2012 16:33:26 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

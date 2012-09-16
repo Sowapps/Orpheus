@@ -5,5 +5,6 @@ var searchData=
   ['pdo_5fquery',['pdo_query',['../__pdo_8php.html#a35c4b204f1ef889f71d48379f60dc464',1,'_pdo.php']]],
   ['pdo_5fquote',['pdo_quote',['../__pdo_8php.html#a60db2f1aaa7d3cc2296d6a8a171cc702',1,'_pdo.php']]],
   ['permanentredirectto',['permanentRedirectTo',['../__core_8php.html#ace68af7b3fcb376fb2fe7effa3cb3c52',1,'_core.php']]],
+  ['post',['POST',['../__core_8php.html#aabe475d31a7fa5be41269c860787cebf',1,'_core.php']]],
   ['prepare',['prepare',['../class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f',1,'SQLMapper']]]
 ];
