@@ -16,7 +16,7 @@ abstract class Rendering {
 		Renders the model using $env.
 		This function does not display the result, see display().
 	*/
-	public abstract function render($env, $model=null);
+	public abstract function render($model=null, $env=array());
 	
 	//! Displays rendering.
 	/*!
@@ -25,8 +25,8 @@ abstract class Rendering {
 		
 		Displays the model rendering using $env.
 	*/
-	public function display($env, $model=null) {
-		echo $this->render($env, $model);
+	public function display($model=null, $env=array()) {
+		echo $this->render($model, $env);
 	}
 	
 	//! Shows the rendering using a child rendering class.
@@ -42,8 +42,42 @@ abstract class Rendering {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
 		}
+		
+		// Menus' things
+		$MENUSCONF = Config::build('menus', true);
+		$MENUS = array();
+		foreach( $MENUSCONF->all as $mName => $mModules ) {
+			$menu = '';
+			foreach( $mModules as $modData ) {
+				$CSSClasses = $Link = $Text = '';
+				if( $modData[0] == '#' ) {
+					list($Link, $Text) = explode('|', substr($modData, 1));
+				} else {
+					$modData = explode('-', $modData);
+					$module = $modData[0];
+					if( !User::canAccess($module) ) {
+						continue;
+					}
+					$action = ( count($modData) > 1 ) ? $modData[1] : '';
+					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
+					$Link = u($module, $action, $queryStr);
+					$CSSClasses = $module.' '.(($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : '');
+					$Text = $module;
+				}
+				$menu .= "
+				<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";
+			}
+			if( !empty($menu) ) {
+				$menu = "
+				<ul class=\"menu {$mName}\">{$menu}
+				</ul>";
+			}
+			$MENUS[$mName] = $menu;
+		}
+		$env['MENUS'] = &$MENUS;
+		
 		$r = new static();
-		$r->display($env, static::$SHOWMODEL);
+		$r->display(static::$SHOWMODEL, $env);
 		exit();
 	}
 	

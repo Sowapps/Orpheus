@@ -5,7 +5,7 @@
 */
 class TwigRendering extends Rendering {
 	
-	protected static $SHOWMODEL = 'page_skeleton';
+	protected static $SHOWMODEL = 'layout';
 	public static $theme = 'default';
 	
 	public static $themesPath = 'themes/';
@@ -18,7 +18,7 @@ class TwigRendering extends Rendering {
 	/*!
 	 * \copydoc Rendering::render()
 	 */
-	public function render($env, $model=null) {
+	public function render($model=null, $env=array()) {
 		if( !isset($model) ) {
 			throw new Exception("Invalid Rendering Model");
 		}
