@@ -11,6 +11,7 @@ abstract class Rendering {
 	/*!
 		\param $env An environment variable, commonly an array but depends on the rendering class used.
 		\param $model The model to use, default use is defined by child.
+		\return The generated rendering.
 		
 		Renders the model using $env.
 		This function does not display the result, see display().

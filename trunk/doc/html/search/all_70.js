@@ -19,5 +19,6 @@ var searchData=
   ['permanentobject_5fclass_2ephp',['permanentobject_class.php',['../permanentobject__class_8php.html',1,'']]],
   ['permanentredirectto',['permanentRedirectTo',['../__core_8php.html#ace68af7b3fcb376fb2fe7effa3cb3c52',1,'_core.php']]],
   ['pgsql_5fclass_2ephp',['pgsql_class.php',['../pgsql__class_8php.html',1,'']]],
+  ['post',['POST',['../__core_8php.html#aabe475d31a7fa5be41269c860787cebf',1,'_core.php']]],
   ['prepare',['prepare',['../class_s_q_l_mapper.html#a8340245eee406507ee9220dffcde350f',1,'SQLMapper']]]
 ];

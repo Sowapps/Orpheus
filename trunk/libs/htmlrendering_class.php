@@ -22,6 +22,8 @@ class HTMLRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env);
+		
+		// Menus' things
 		$MENUSCONF = Config::build('menus', 1);
 		$MENUS = array();
 		foreach( $MENUSCONF->all as $mName => $mModules ) {
@@ -52,6 +54,7 @@ class HTMLRendering extends Rendering {
 			}
 			$MENUS[$mName] = $menu;
 		}
+		
 		include static::getModelsPath().$model.'.php';
 	}
 	

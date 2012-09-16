@@ -1,7 +1,7 @@
 var searchData=
 [
   ['includedir',['includeDir',['../index_8php.html#a467c5fe1a2ebb1b66c55fbd7534aa97a',1,'index.php']]],
-  ['init',['init',['../class_site_user.html#aab677ce8b6af4beb70936a4448a55e18',1,'SiteUser\init()'],['../class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8',1,'AbstractPublication\init()']]],
+  ['init',['init',['../class_site_user.html#aab677ce8b6af4beb70936a4448a55e18',1,'SiteUser\init()'],['../class_twig_rendering.html#a2ea4eb702f94ffea635f11e38ba13a57',1,'TwigRendering\init()'],['../class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8',1,'AbstractPublication\init()']]],
   ['insert',['insert',['../class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee',1,'SQLMapper_MySQL\insert()'],['../class_s_q_l_mapper___pg_s_q_l.html#a6244fbe3fe0f921f0bd15071510403e5',1,'SQLMapper_PgSQL\insert()'],['../class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745',1,'SQLMapper\insert()']]],
   ['is_5fdate',['is_date',['../__validators_8php.html#a0cafad5835e34bb480868dbc924690f0',1,'_validators.php']]],
   ['is_5femail',['is_email',['../class_email.html#a3e06cf42f718c5aadc2f0125423a5950',1,'Email\is_email()'],['../__validators_8php.html#a2a05313511eb5374196804719c7ca884',1,'is_email():&#160;_validators.php']]],
@@ -14,6 +14,7 @@ var searchData=
   ['isalternative',['isAlternative',['../class_email.html#ae2917449f27ce11b9b75f21ec883d568',1,'Email']]],
   ['ishtml',['isHTML',['../class_email.html#a13b3127a4fabd43e9e3721aaa680e61a',1,'Email']]],
   ['ismulticontent',['isMultiContent',['../class_email.html#a7faca5d7ec75cbea331205c26d010547',1,'Email']]],
+  ['ispost',['isPOST',['../__core_8php.html#a81fb154c20bf4d8700c3b846a9afcdd8',1,'_core.php']]],
   ['istext',['isTEXT',['../class_email.html#a7021c69f1b8083654ca3d8efb6c54642',1,'Email']]],
   ['iurldecode',['iURLDecode',['../__core_8php.html#ad6b2a953f3c1c2171fea8b36ae55bc27',1,'_core.php']]],
   ['iurlencode',['iURLEncode',['../__core_8php.html#a610776a2fc33289d10478a034ed60b14',1,'_core.php']]]

@@ -13,6 +13,7 @@ var searchData=
   ['setsubject',['setSubject',['../class_email.html#a6ecd8877938ad840384c69e9e651ff97',1,'Email']]],
   ['settextbody',['setTEXTBody',['../class_email.html#a2b4d36da7cba6986dad33eec31885fac',1,'Email']]],
   ['settings_2ephp',['settings.php',['../settings_8php.html',1,'']]],
+  ['settwigenvironment',['setTwigEnvironment',['../class_twig_rendering.html#aec588563acf1fc0f457d2b4d6f24fd37',1,'TwigRendering']]],
   ['settype',['setType',['../class_email.html#aed46d83df3197fe96ec398ccb86eb32d',1,'Email']]],
   ['setvalue',['setValue',['../class_permanent_object.html#a7ea07b0b92ab5bdb9942a3ffab60934e',1,'PermanentObject']]],
   ['sitename',['SITENAME',['../constants_8php.html#ac91fe4eef242dfc35896ee6b7e378022',1,'constants.php']]],
