@@ -9,8 +9,10 @@
  * Set ERROR_LEVEL to set your website in production (with no error reports to the user).
  */
 
-define('ERROR_LEVEL', E_ALL | E_STRICT);//Development
-//define('ERROR_LEVEL', 0);//Production
+define('DEV_LEVEL', E_ALL | E_STRICT);//Development
+define('PROD_LEVEL', 0);//Production
+
+define('ERROR_LEVEL', DEV_LEVEL);
 
 define('TIME', $_SERVER['REQUEST_TIME']);
 //define('DS', DIRECTORY_SEPARATOR);
