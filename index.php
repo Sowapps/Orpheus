@@ -52,15 +52,15 @@ function includeDir($dir) {
 }
 
 
-//! Class autoload function
-/*!
+// Class autoload function
+/*
 	\param $className The classname not loaded yet.
 	\sa The \ref libraries documentation
 	
 	Includes the file according to the classname in lowercase and suffixed by '_class.php'.\n
 	The script stops if the class file is not found.\n
 */
-function __autoload($className) {
+spl_autoload_register( function($className) {
 	try {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
@@ -114,7 +114,8 @@ function __autoload($className) {
 		@sys_error("$e", 'loading_class_'.$className);
 		die('A fatal error occured loading libraries.');
 	}
-}
+}, true, true );// End of spl_autoload_register()
+
 $AUTOLOADS = array();
 $Module = '';// Useful for initializing errors.
 
