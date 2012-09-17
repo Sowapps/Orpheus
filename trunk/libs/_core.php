@@ -163,11 +163,11 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
+	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
+	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( ERROR_LEVEL == DEV_LEVEL ) {
 		Rendering::doDisplay('report', $Error);
 	}
-	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
-	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 }
 
 //! Logs a system error.
