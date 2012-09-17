@@ -17,13 +17,13 @@
 {% endif %}
 </head>
 <body class="{{ Module }}">
-
-{{ MENUS.topmenu }}
+{{ MENUS.topmenu|raw }}
+Length of page: {{ Page|length }}<br />
 
 {% if Page %}
 
 PAGE:<br />
-{{ Page }}
+{{ Page|raw }}
 
 {% else %}
 
