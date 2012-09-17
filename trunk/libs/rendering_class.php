@@ -42,6 +42,7 @@ abstract class Rendering {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
 		}
+		text("Page is ".((isset($env['Page'])) ? 'defined' : 'not defined')." and its length is ".strlen($env['Page']));
 		
 		// Menus' things
 		$MENUSCONF = Config::build('menus', true);
