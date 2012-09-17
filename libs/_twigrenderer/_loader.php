@@ -16,7 +16,7 @@ if( function_exists('log_debug') ) {
 	log_debug("TwigRendering loader: TwigRendering loaded.");
 }
 
-require_once dirname(__FILE__).'Twig/lib/Twig/Autoloader.php';
+require_once dirname(__FILE__).'/Twig/lib/Twig/Autoloader.php';
 
 Twig_Autoloader::register();
 
