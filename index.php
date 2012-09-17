@@ -72,8 +72,8 @@ spl_autoload_register( function($className) {
 		// PHP's class name are not case sensitive.
 		$bFile = strtolower($className);
 		
-		if( function_exists('text') ) { text(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
-		if( function_exists('log_debug') ) { log_debug(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
+		//if( function_exists('text') ) { text(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
+		//if( function_exists('log_debug') ) { log_debug(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
 		
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
@@ -108,7 +108,9 @@ spl_autoload_register( function($className) {
 				require_once LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php';
 				return;
 			}
-			throw new Exception("Unable to load lib \"{$className}\"");
+			// NOT FOUND
+			//Some libs could add their own autoload function.
+			//throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
 		@sys_error("$e", 'loading_class_'.$className);
