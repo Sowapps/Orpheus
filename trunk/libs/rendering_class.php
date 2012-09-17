@@ -90,4 +90,22 @@ abstract class Rendering {
 		$c = Config::get('default_rendering');
 		$c::show();
 	}
+	
+	//! Calls the render function.
+	/*!
+		Calls the render function using the 'default_rendering' configuration.
+	*/
+	final public static function doRender($model=null, $env=array()) {
+		$c = Config::get('default_rendering');
+		$c::render($model, $env);
+	}
+	
+	//! Calls the display function.
+	/*!
+		Calls the display function using the 'default_rendering' configuration.
+	*/
+	final public static function doDisplay($model=null, $env=array()) {
+		$c = Config::get('default_rendering');
+		$c::display($model, $env);
+	}
 }
