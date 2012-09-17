@@ -154,6 +154,7 @@ function cleanscandir($dir, $sorting_order=0) {
 	\param $report The report to log.
 	\param $file The log file path.
 	\param $action The action associated to the report. Default value is an empty string.
+	\param $silent If True, it won't display the report.
 	\warning This function require a writable log file.
 
 	Logs an error in a file serializing data to JSON.
@@ -161,13 +162,26 @@ function cleanscandir($dir, $sorting_order=0) {
 	The log folder is the constant LOGSPATH or, if undefined, the current one.
 	If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
 */
-function log_error($report, $file, $action='') {
+function log_error($report, $file, $action='', $silent=false) {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( ERROR_LEVEL == DEV_LEVEL ) {
 		Rendering::doDisplay('report', $Error);
 	}
+}
+
+//! Logs a debug.
+/*!
+	\param $report The debug report to log.
+	\param $action The action associated to the report. Default value is an empty string.
+	\sa log_error()
+
+	Logs a system error.
+	The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
+*/
+function log_debug($report, $action='') {
+	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, true);
 }
 
 //! Logs a system error.
