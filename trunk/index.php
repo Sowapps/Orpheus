@@ -117,11 +117,11 @@ $Module = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 try {
 	
-	includeDir(CONFPATH);//Require to be loaded before libraries to get hooks.
+	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
 	
-	includeDir(LIBSPATH);//Require some hooks.
+	Config::build('engine');// Some libs should require to get some configuration.
 	
-	Config::build('engine');
+	includeDir(LIBSPATH);// Require some hooks.
 	
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
