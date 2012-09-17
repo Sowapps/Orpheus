@@ -166,7 +166,7 @@ function log_error($report, $file, $action='', $silent=false) {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	if( ERROR_LEVEL == DEV_LEVEL ) {
+	if( !$silent && ERROR_LEVEL == DEV_LEVEL ) {
 		Rendering::doDisplay('report', $Error);
 	}
 }
