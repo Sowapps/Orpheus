@@ -23,7 +23,7 @@ class TwigRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		text("Page is ".((isset($env['Page'])) ? 'defined' : 'not defined')." and its length is ".strlen($env['Page']));
-		return $twig->render($model.'.twig', $env);
+		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
 	//! Initializes the Twig rendering
@@ -34,7 +34,7 @@ class TwigRendering extends Rendering {
 		if( isset(static::$twigenv) ) {
 			return;// Already done ?
 		}
-		$twigenv = new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
+		static::$twigenv = new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
 			'cache' => static::getCachePath(),
 		));
 		static::setTwigEnvironment($twigenv);
