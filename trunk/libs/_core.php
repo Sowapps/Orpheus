@@ -324,7 +324,7 @@ function addAutoload($className, $classPath) {
 		text("Class file not found");
 		throw new Exception("Class file of \"{$className}\" not found.");
 	}
-	text("Everything ok");
+	text("Everything ok: {$AUTOLOADS[$className]}");
 	return true;
 }
 
