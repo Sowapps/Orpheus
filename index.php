@@ -72,7 +72,7 @@ function __autoload($className) {
 		// PHP's class name are not case sensitive.
 		$bFile = strtolower($className);
 		
-		if( text('log_debug') ) { text(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
+		if( function_exists('text') ) { text(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
 		if( function_exists('log_debug') ) { log_debug(print_r($AUTOLOADS, 1)."\nSearching $bFile"); }
 		
 		// If the class file path is known in the AUTOLOADS array
