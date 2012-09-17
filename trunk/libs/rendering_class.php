@@ -61,7 +61,7 @@ abstract class Rendering {
 					$action = ( count($modData) > 1 ) ? $modData[1] : '';
 					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
 					$Link = u($module, $action, $queryStr);
-					$CSSClasses = $module.' '.(($module == $Module && (!isset($Action) || $Action == $action)) ? 'current' : '');
+					$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current' : '');
 					$Text = $module;
 				}
 				$menu .= "
