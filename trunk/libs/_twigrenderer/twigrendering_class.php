@@ -45,7 +45,7 @@ class TwigRendering extends Rendering {
 	/*!
 	 * \param $twigEnv The new Twig_Environment object.
 	 */
-	public function setTwigEnvironment(Twig_Environment $twigEnv) {
+	public static function setTwigEnvironment(Twig_Environment $twigEnv) {
 		static::$twigenv = $twigEnv;
 	}
 	
@@ -53,7 +53,7 @@ class TwigRendering extends Rendering {
 	/*!
 	 * \return The Twig_Environment object.
 	 */
-	public function getTwigEnvironment() {
+	public static function getTwigEnvironment() {
 		return static::$twigenv;
 	}
 	
