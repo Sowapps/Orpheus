@@ -65,7 +65,7 @@ abstract class Rendering {
 					$Text = $module;
 				}
 				$menu .= "
-	<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";
+		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";
 			}
 			if( !empty($menu) ) {
 				$menu = "

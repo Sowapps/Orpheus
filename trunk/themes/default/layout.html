@@ -18,6 +18,15 @@
 </head>
 <body class="{{ Module }}">
 {{ MENUS.topmenu|raw }}
+
+PAGE THINGS - START
+{% if Page is defined %}
+	Page is defined.<br />
+	
+{% else %}
+	Page is not defined.<br />
+{% endif %}
+
 Length of page: {{ Page|length }}<br />
 
 {% if Page %}
@@ -32,5 +41,6 @@ INCLUDE:<br />
 
 {% endif %}
 
+PAGE THINGS - END
 </body>
 </html>
