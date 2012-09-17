@@ -10,6 +10,7 @@ class TwigRendering extends Rendering {
 	
 	public static $themesPath = 'themes/';
 	public static $cssPath = 'css/';
+	public static $modelsPath = '';
 	public static $cachePath = 'cache/';
 	
 	protected static $twigenv;
