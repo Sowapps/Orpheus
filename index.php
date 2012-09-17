@@ -71,6 +71,7 @@ function __autoload($className) {
 		}
 		// PHP's class name are not case sensitive.
 		$bFile = strtolower($className);
+		log_debug(print_r($AUTOLOADS, 1)."\nSearching $bFile");
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
 			if( is_readable(LIBSPATH.$AUTOLOADS[$bFile]) ) {
