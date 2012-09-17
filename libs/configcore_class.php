@@ -27,6 +27,25 @@ abstract class ConfigCore {
 		return (isset($this->config[$key])) ? $this->config[$key] : NULL;
 	}
 	
+	//! The magic function to set config.
+	/*!
+		\param $key The key to set the value.
+		\param $value The new config value.
+		
+		Sets the configuration item with key $key.
+		Except for:
+		- 'all' : It sets all the array containing all configuration items.
+	*/
+	public function __set($key, $value) {
+		if( $key == 'all' && is_array($value) ) {
+			$this->config = $value;
+			return;
+		}
+		if( isset($this->config[$key]) ) {
+			$this->config[$key] = $value;
+		}
+	}
+	
 	//! Adds configuration to this object.
 	/*!
 		\param $conf The configuration array to add to the current object.
@@ -81,5 +100,19 @@ abstract class ConfigCore {
 			throw new Exception('No Main Config');
 		}
 		return static::$main->$key;
+	}
+	
+	//! Sets configuration to the main configuration object.
+	/*!
+		\param $key The key to set the value.
+		\param $value The new config value.
+		
+		Calls __set() method to main configuration object.
+	*/
+	public static function set($key, $value) {
+		if( !isset(static::$main) ) {
+			throw new Exception('No Main Config');
+		}
+		static::$main->$key = $value;
 	}
 }
