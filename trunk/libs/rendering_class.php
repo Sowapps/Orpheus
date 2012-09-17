@@ -27,8 +27,7 @@ abstract class Rendering {
 	 * Displays the model rendering using $env.
 	 */
 	public function display($model=null, $env=array()) {
-		echo $r = $this->render($model, $env);
-		text("length of the render: ".strlen($r));
+		echo $this->render($model, $env);
 	}
 	
 	//! Shows the rendering using a child rendering class.
