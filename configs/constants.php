@@ -43,3 +43,4 @@ define('SITENAME',		'Orpheus');
 
 define('PDOLOGFILENAME','.pdo_error');
 define('SYSLOGFILENAME','.system');
+define('DEBUGFILENAME',	'.debug');
