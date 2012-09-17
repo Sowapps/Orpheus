@@ -6,25 +6,26 @@
 abstract class Rendering {
 	
 	protected static $SHOWMODEL = 'show';
+	private static $rendering;
 	
 	//! Renders the model.
 	/*!
-		\param $env An environment variable, commonly an array but depends on the rendering class used.
-		\param $model The model to use, default use is defined by child.
-		\return The generated rendering.
-		
-		Renders the model using $env.
-		This function does not display the result, see display().
-	*/
+	 * \param $env An environment variable, commonly an array but depends on the rendering class used.
+	 * \param $model The model to use, default use is defined by child.
+	 * \return The generated rendering.
+	 * 
+	 * Renders the model using $env.
+	 * This function does not display the result, see display().
+	 */
 	public abstract function render($model=null, $env=array());
 	
 	//! Displays rendering.
 	/*!
-		\param $env An environment variable.
-		\param $model The model to use.
-		
-		Displays the model rendering using $env.
-	*/
+	 * \param $env An environment variable.
+	 * \param $model The model to use.
+	 * 
+	 * Displays the model rendering using $env.
+	 */
 	public function display($model=null, $env=array()) {
 		echo $r = $this->render($model, $env);
 		text("length of the render: ".strlen($r));
@@ -32,13 +33,13 @@ abstract class Rendering {
 	
 	//! Shows the rendering using a child rendering class.
 	/*!
-		\param $env An environment variable.
-		\attention Require the use of a child class, you can not instantiate this one.
-		
-		Shows the $SHOWMODEL rendering using the child class.
-		A call to this function terminate the running script.
-		Default is the global environment.
-	*/
+	 * \param $env An environment variable.
+	 * \attention Require the use of a child class, you can not instantiate this one.
+	 * 
+	 * Shows the $SHOWMODEL rendering using the child class.
+	 * A call to this function terminate the running script.
+	 * Default is the global environment.
+	 */
 	private static function show($env=null) {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
@@ -78,15 +79,16 @@ abstract class Rendering {
 		}
 		$env['MENUS'] = &$MENUS;
 		
-		$r = new static();
-		$r->display(static::$SHOWMODEL, $env);
+		self::checkRendering();
+		self::$rendering->display(static::$SHOWMODEL, $env);
 		exit();
 	}
 	
 	//! Calls the show function.
 	/*!
-		Calls the show function using the 'default_rendering' configuration.
-	*/
+	 * \sa show()
+	 * Calls the show function using the 'default_rendering' configuration.
+	 */
 	final public static function doShow() {
 		$c = Config::get('default_rendering');
 		$c::show();
@@ -94,19 +96,39 @@ abstract class Rendering {
 	
 	//! Calls the render function.
 	/*!
-		Calls the render function using the 'default_rendering' configuration.
-	*/
+	 * \param $env An environment variable.
+	 * \param $model The model to use.
+	 * \return The generated rendering.
+	 * \sa render()
+	 * 
+	 * Calls the render function using the 'default_rendering' configuration.
+	 */
 	final public static function doRender($model=null, $env=array()) {
-		$c = Config::get('default_rendering');
-		$c::render($model, $env);
+		self::checkRendering();
+		return self::$rendering->render($model, $env);
 	}
 	
 	//! Calls the display function.
 	/*!
-		Calls the display function using the 'default_rendering' configuration.
-	*/
+	 * \param $env An environment variable.
+	 * \param $model The model to use.
+	 * \sa display()
+	 * 
+	 * Calls the display function using the 'default_rendering' configuration.
+	 */
 	final public static function doDisplay($model=null, $env=array()) {
-		$c = Config::get('default_rendering');
-		$c::display($model, $env);
+		self::checkRendering();
+		self::$rendering->display($model, $env);
+	}
+	
+	//! Checks the rendering
+	/*!
+	 * Checks the rendering and try to create a valid one.
+	 */
+	final private static function checkRendering() {
+		if( is_null(self::$rendering) ) {
+			$c = Config::get('default_rendering');
+			self::$rendering = new $c();
+		}
 	}
 }
