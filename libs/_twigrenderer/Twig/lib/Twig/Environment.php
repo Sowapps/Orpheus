@@ -292,6 +292,7 @@ class Twig_Environment
      */
     public function render($name, array $context = array())
     {
+    	text("Rendering with twig: $name");
         return $this->loadTemplate($name)->render($context);
     }
 
@@ -317,6 +318,7 @@ class Twig_Environment
     public function loadTemplate($name, $index = null)
     {
         $cls = $this->getTemplateClass($name, $index);
+        text("Tempalte class: \"$cls\"");
 
         if (isset($this->loadedTemplates[$cls])) {
             return $this->loadedTemplates[$cls];
