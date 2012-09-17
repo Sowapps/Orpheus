@@ -17,32 +17,18 @@
 {% endif %}
 </head>
 <body class="{{ Module }}">
-Menu
+
 {{ MENUS.topmenu|raw }}
-
-PAGE THINGS - START
-
-{% if Page is defined %}
-	Page is defined.<br />
-	
-{% else %}
-	Page is not defined.<br />
-{% endif %}
-
-Length of page: {{ Page|length }}<br />
 
 {% if Page %}
 
-PAGE:<br />
 {{ Page|raw }}
 
 {% else %}
 
-INCLUDE:<br />
 {% include Module ~ ".twig" %}
 
 {% endif %}
 
-PAGE THINGS - END
 </body>
 </html>
