@@ -22,7 +22,6 @@ class TwigRendering extends Rendering {
 		if( !isset($model) ) {
 			throw new Exception("Invalid Rendering Model");
 		}
-		text("Page is ".((isset($env['Page'])) ? 'defined' : 'not defined')." and its length is ".strlen($env['Page']));
 		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
