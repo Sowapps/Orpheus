@@ -12,6 +12,7 @@ if( strtolower(Config::get('default_rendering')) != 'twigrendering' ) {
 }
 
 addAutoload('TwigRendering', '_twigrenderer/twigrendering_class.php');
+text('TwigRendering loader: TwigRendering loaded.');
 if( function_exists('log_debug') ) {
 	log_debug("TwigRendering loader: TwigRendering loaded.");
 }
