@@ -159,9 +159,20 @@ function cleanscandir($dir, $sorting_order=0) {
 	Logs an error in a file serializing data to JSON.
 	Each line of the file is a JSON string of the reports.
 	The log folder is the constant LOGSPATH or, if undefined, the current one.
+	If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
 */
 function log_error($report, $file, $action='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
+	if( ERROR_LEVEL == DEV_LEVEL ) {
+		text("
+	<div class=\"fatalerror\">
+		Date: {$Error['date']}<br />
+		Report: {$Error['report']}<br />
+		Action: {$Error['action']}<br />
+		Set the ERROR_LEVEL constant value to PROD_LEVEL in your constant file if you don't want to display errors.<br />
+		Error reports are saved in logs in both cases.
+	</div>");
+	}
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 }
