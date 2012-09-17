@@ -22,10 +22,12 @@
 
 {% if Page %}
 
+PAGE:<br />
 {{ Page }}
 
 {% else %}
 
+INCLUDE:<br />
 {% include Module ~ ".html" %}
 
 {% endif %}
