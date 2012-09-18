@@ -20,7 +20,7 @@ var searchData=
   ['_24logs',['$logs',['../adm__logs_8php.html#a1985bbbc5349038a012f02c97f5276e6',1,'adm_logs.php']]],
   ['_24main',['$main',['../class_config_core.html#aa7c65b7d0852adbb68fd652d904722ce',1,'ConfigCore']]],
   ['_24mapper',['$Mapper',['../class_s_q_l_mapper.html#a70d29b1a0c024eb2f11e7e1ec7966430',1,'SQLMapper']]],
-  ['_24modelspath',['$modelsPath',['../class_h_t_m_l_rendering.html#a68e88bd0fb36b18faf700e30a2b86619',1,'HTMLRendering']]],
+  ['_24modelspath',['$modelsPath',['../class_twig_rendering.html#adad0c488504ecfd9b09427706cd0b361',1,'TwigRendering\$modelsPath()'],['../class_h_t_m_l_rendering.html#a68e88bd0fb36b18faf700e30a2b86619',1,'HTMLRendering\$modelsPath()']]],
   ['_24modfields',['$modFields',['../class_permanent_object.html#ac200e4e36ce8ff0321a97fdec95f92ec',1,'PermanentObject']]],
   ['_24modtitle',['$MODTITLE',['../settings_8php.html#ae0549d3a658774a55784938cb8a2ac9f',1,'settings.php']]],
   ['_24module',['$Module',['../index_8php.html#a643d60fb839b5d58f0725a88d0ecd1a0',1,'index.php']]],
