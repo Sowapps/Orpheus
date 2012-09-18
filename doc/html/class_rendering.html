@@ -120,6 +120,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a16a9e7993eeda3a57d8e5ec6e2915eec"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rendering.html#a16a9e7993eeda3a57d8e5ec6e2915eec">doShow</a> ()</td></tr>
 <tr class="memdesc:a16a9e7993eeda3a57d8e5ec6e2915eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the show function.  <a href="#a16a9e7993eeda3a57d8e5ec6e2915eec"></a><br/></td></tr>
 <tr class="separator:a16a9e7993eeda3a57d8e5ec6e2915eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c8971bae0c06ae17f13b6e5b70755d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rendering.html#a55c8971bae0c06ae17f13b6e5b70755d">doRender</a> ($model=null, $env=array())</td></tr>
+<tr class="memdesc:a55c8971bae0c06ae17f13b6e5b70755d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the render function.  <a href="#a55c8971bae0c06ae17f13b6e5b70755d"></a><br/></td></tr>
+<tr class="separator:a55c8971bae0c06ae17f13b6e5b70755d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a423c23e61465884b984474ac44fb0cb2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_rendering.html#a423c23e61465884b984474ac44fb0cb2">doDisplay</a> ($model=null, $env=array())</td></tr>
+<tr class="memdesc:a423c23e61465884b984474ac44fb0cb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the display function.  <a href="#a423c23e61465884b984474ac44fb0cb2"></a><br/></td></tr>
+<tr class="separator:a423c23e61465884b984474ac44fb0cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
@@ -163,6 +169,93 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a423c23e61465884b984474ac44fb0cb2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Rendering::doDisplay </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$env</em> = <code>array()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">final</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$env</td><td>An environment variable. </td></tr>
+    <tr><td class="paramname">$model</td><td>The model to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_rendering.html#a9d076d6787ebe05826bf7158c779acdf" title="Displays rendering.">display()</a></dd></dl>
+<p>Calls the display function using the 'default_rendering' configuration. </p>
+
+</div>
+</div>
+<a class="anchor" id="a55c8971bae0c06ae17f13b6e5b70755d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Rendering::doRender </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$model</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$env</em> = <code>array()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">final</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$env</td><td>An environment variable. </td></tr>
+    <tr><td class="paramname">$model</td><td>The model to use. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The generated rendering. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_rendering.html#a4784300bff972c7aefa6f457b348e3cf" title="Renders the model.">render()</a></dd></dl>
+<p>Calls the render function using the 'default_rendering' configuration. </p>
+
+</div>
+</div>
 <a class="anchor" id="a16a9e7993eeda3a57d8e5ec6e2915eec"></a>
 <div class="memitem">
 <div class="memproto">
@@ -183,7 +276,7 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Calls the show function using the 'default_rendering' configuration. </p>
+<dl class="section see"><dt>See Also</dt><dd>show() Calls the show function <a class="el" href="__core_8php.html#a6c366c5bfd3fdec91cdd334d52f03ce3" title="Imports the required class(es).">using</a> the 'default_rendering' configuration. </dd></dl>
 
 </div>
 </div>
@@ -257,7 +350,7 @@ Static Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 17 2012 14:57:16 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 11:57:53 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

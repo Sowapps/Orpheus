@@ -21,13 +21,15 @@
  * 
  * \subsection autoloads_sub With autoloads
  * 
- * The framework uses PHP __autoload() to load required libraries.\n
+ * The framework uses PHP spl_autoload_register() function to load on request the required libraries.\n
  * It searches the file containing your class from all possibilities, in the priority order:\n
  * \li Paths specified with addAutoload() function.
  * \li Paths loaded from the "autoload" config file (configs/autoload.ini).
  * \li For MyClass, path as libs/myclass_class.php.
  * \li For MyClass, path as libs/myclass/myclass_class.php.
  * \li For Package_MyClass, path as libs/package/myclass_class.php.
+ * 
+ * A library can declare its own autoload function, it can't affect the behavior of this function but the order of the different functions' calls can.
  * 
  * 
  * \subsection using_sub The "using" way

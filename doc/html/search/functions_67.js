@@ -19,6 +19,6 @@ var searchData=
   ['getpermalink',['getPermalink',['../class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689',1,'AbstractPublication']]],
   ['getreportshtml',['getReportsHTML',['../__core_8php.html#a211771742c3a047e2de3d28fd7e39cd9',1,'_core.php']]],
   ['gettable',['getTable',['../class_permanent_object.html#a992bc5c66c015b0a330df437df1a41aa',1,'PermanentObject']]],
-  ['gettwigenvironment',['getTwigEnvironment',['../class_twig_rendering.html#aceea39591cd6a50af3a8d7b6cc6a7aa4',1,'TwigRendering']]],
+  ['gettwigenvironment',['getTwigEnvironment',['../class_twig_rendering.html#ab4c5ea9a0cc4898dbcb6ef3de01e7cc9',1,'TwigRendering']]],
   ['getvalue',['getValue',['../class_permanent_object.html#a2c3772c84dce93dad42456f97ecc2043',1,'PermanentObject']]]
 ];

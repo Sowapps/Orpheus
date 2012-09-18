@@ -117,9 +117,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a01d33e93fcf3ad447c29152d3c713d3f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f">cleanscandir</a> ($dir, $sorting_order=0)</td></tr>
 <tr class="memdesc:a01d33e93fcf3ad447c29152d3c713d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Scans a directory cleanly.  <a href="#a01d33e93fcf3ad447c29152d3c713d3f"></a><br/></td></tr>
 <tr class="separator:a01d33e93fcf3ad447c29152d3c713d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa809b6300e84b21e341c4022987d8b7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#aaa809b6300e84b21e341c4022987d8b7">log_error</a> ($report, $file, $action='')</td></tr>
-<tr class="memdesc:aaa809b6300e84b21e341c4022987d8b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an error in a file.  <a href="#aaa809b6300e84b21e341c4022987d8b7"></a><br/></td></tr>
-<tr class="separator:aaa809b6300e84b21e341c4022987d8b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a310ffc83c86dd9ea6a5be79eea809d52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a310ffc83c86dd9ea6a5be79eea809d52">log_error</a> ($report, $file, $action='', $silent=false)</td></tr>
+<tr class="memdesc:a310ffc83c86dd9ea6a5be79eea809d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an error in a file.  <a href="#a310ffc83c86dd9ea6a5be79eea809d52"></a><br/></td></tr>
+<tr class="separator:a310ffc83c86dd9ea6a5be79eea809d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e0aa98995e9c323a489f354093b8b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a83e0aa98995e9c323a489f354093b8b8">log_debug</a> ($report, $action='')</td></tr>
+<tr class="memdesc:a83e0aa98995e9c323a489f354093b8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a debug.  <a href="#a83e0aa98995e9c323a489f354093b8b8"></a><br/></td></tr>
+<tr class="separator:a83e0aa98995e9c323a489f354093b8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a211c992147daa63b42ade37dc9b72c13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a211c992147daa63b42ade37dc9b72c13">sys_error</a> ($report, $action='')</td></tr>
 <tr class="memdesc:a211c992147daa63b42ade37dc9b72c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a system error.  <a href="#a211c992147daa63b42ade37dc9b72c13"></a><br/></td></tr>
 <tr class="separator:a211c992147daa63b42ade37dc9b72c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -537,7 +540,42 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaa809b6300e84b21e341c4022987d8b7"></a>
+<a class="anchor" id="a83e0aa98995e9c323a489f354093b8b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">log_debug </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$report</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$action</em> = <code>''</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$report</td><td>The debug report to log. </td></tr>
+    <tr><td class="paramname">$action</td><td>The action associated to the report. Default value is an empty string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#a310ffc83c86dd9ea6a5be79eea809d52" title="Logs an error in a file.">log_error()</a></dd></dl>
+<p>Logs a system error. The log file is the constant DEBUGFILENAME or, if undefined, '.debug'. </p>
+
+</div>
+</div>
+<a class="anchor" id="a310ffc83c86dd9ea6a5be79eea809d52"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -557,7 +595,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$action</em> = <code>''</code>&#160;</td>
+          <td class="paramname"><em>$action</em> = <code>''</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$silent</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -571,6 +615,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">$report</td><td>The report to log. </td></tr>
     <tr><td class="paramname">$file</td><td>The log file path. </td></tr>
     <tr><td class="paramname">$action</td><td>The action associated to the report. Default value is an empty string. </td></tr>
+    <tr><td class="paramname">$silent</td><td>If True, it won't display the report. </td></tr>
   </table>
   </dd>
 </dl>
@@ -895,7 +940,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#aaa809b6300e84b21e341c4022987d8b7" title="Logs an error in a file.">log_error()</a></dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#a310ffc83c86dd9ea6a5be79eea809d52" title="Logs an error in a file.">log_error()</a></dd></dl>
 <p>Logs a system error. The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'. </p>
 
 </div>
@@ -1004,7 +1049,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Sep 17 2012 14:57:16 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Sep 18 2012 11:57:52 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
