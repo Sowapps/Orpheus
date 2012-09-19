@@ -8,9 +8,13 @@
  * \section intro_sec Introduction
  *
  * Orpheus is a free, open source, flexible, and smart framework meant to be embedded in web applications.\n
- * The purpose is to provide an easy to use library that is powerful, but that isn't weighed down by a large amount of rarely used features.\n
+ * The purpose is to provide an easy-to-use library that is powerful, but that isn't weighed down by a large amount of rarely-used features.\n
  * Development of Orpheus begun in January, 2012, with the first public release on july 28th, 2012, with only the most basic of functionalities.\n
  * The author is still dedicated to the continued improvement and growth of this framework.\n
+ * \n
+ * The framewok is designed in a way to seperate job and technical instructions, this is the Separation of concerns.\n
+ * Libraries do the technical part, Objects link Model and Controller, Modules are the Main controller (The job) and the template are the view.\n
+ * Only the core package is necessary, you can use the MVC design pattern if you want, all needed tools are provided, but its use is not mandatory.\n
  * \n
  * The official website for the framework is http://orpheus.cartman34.fr/.\n
  *
@@ -35,7 +39,7 @@
  * Configure constants: \ref constants\n
  * Install the libraries you need and configure it.\n
  * Don't forget to configure your database, menus and user rights.\n
- * To develop your own features, puts it in your source folder "libs/_src/".\n
+ * To develop your own features, put it in your root folder "libs/_src/".\n
  *
  * \section basic_lib Basic libraries
  * 
