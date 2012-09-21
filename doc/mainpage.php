@@ -28,7 +28,7 @@
  * 
  * Download The lastest release from our website:\n
  * http://orpheus.cartman34.fr/downloads/latest/\n
- * (Take full package for all files)
+ * (Take basicpack for all basic files)
  * 
  * \subsection embed Step 2: Embed
  * 
