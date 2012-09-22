@@ -150,9 +150,8 @@ try {
 	if( !is_readable(MODPATH.$Module.'.php') ) {
 		throw new Exception('inexistantModule');
 	}
-
 	$coreAction = 'running_'.$Module;
-	$Module = Hook::trigger('runModule', $Module);
+	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
 	require_once MODPATH.$Module.'.php';
