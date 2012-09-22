@@ -410,7 +410,7 @@ function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
 		foreach( $reports as $message) {
 			if( !in_array($message, $rejected) ) {
 				$report .= '
-		<div class="report report_'.$domain.' '.$type.'">'.t($message).'</div>';
+		<div class="report report_'.$domain.' '.$type.'">'.t($message, $domain).'</div>';
 			}
 		}
 		if( $delete ) {
