@@ -400,12 +400,21 @@ function reportError($message, $domain='global') {
 
 	Gets all reports from the list of $domain and generates the HTML source to display.
 */
-function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
+function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 	global $REPORTS;
-	if( empty($REPORTS[$domain]) ) {
+	if( empty($REPORTS) ) {
 		return '';
 	}
 	$report = '';
+	if( $domain == 'all' ) {
+		foreach( array_keys($REPORTS) as $domain ) {
+			$report .= getReportsHTML($domain);
+		}
+		return $report;
+	}
+	if( empty($REPORTS[$domain]) ) {
+		return '';
+	}
 	foreach( $REPORTS[$domain] as $type => &$reports ) {
 		foreach( $reports as $message) {
 			if( !in_array($message, $rejected) ) {
@@ -422,17 +431,17 @@ function getReportsHTML($domain='global', $rejected=array(), $delete=1) {
 
 //! Displays reports as HTML
 /*!
-	\param $domain The translation domain and the domain of the report. Default value is 'global'.
+	\param $domain The translation domain and the domain of the report. Default value is 'all'.
 	\param $rejected An array of rejected messages. Can be the first parameter.
 	\param $delete True to delete entries from the list.
 	\sa getReportsHTML()
 
 	Displays all reports from the list of $domain and displays generated HTML source.
 */
-function displayReportsHTML($domain='global', $rejected=array(), $delete=1) {
+function displayReportsHTML($domain='all', $rejected=array(), $delete=1) {
 	if( is_array($domain) && empty($rejected) ) {
 		$rejected = $domain;
-		$domain = 'global';
+		$domain = 'all';
 	}
 	echo '
 	<div class="reports '.$domain.'">
