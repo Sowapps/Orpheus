@@ -1,4 +1,4 @@
-	<div class="fatalerror">
+	<div class="fatalerror report report_global error">
 		An error has occured, there is so more informations.<br />
 		Date: <?php echo $date; ?><br />
 		Report: <?php echo $report; ?><br />
