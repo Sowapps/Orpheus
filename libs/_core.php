@@ -469,14 +469,15 @@ function isPOST($key=null) {
 //! Gets the HTML value
 /*!
 	\param $name The name of the field.
-	\param $data The array of data where to look for. Default value is $_POST.
+	\param $data The array of data where to look for. Default value is $formData (if exist) or $_POST.
 	\return A HTML source with the "value" attribute.
 
 	Gets the HTML value attribut from an array of data if this $name exists.
 */
 function htmlValue($name, $data=null) {
 	if( is_null($data) ) {
-		$data = POST();
+		global $formData;
+		$data = (isset($formData)) ? $formData : POST();
 	}
 	return (!empty($data[$name])) ? " value=\"{$data[$name]}\"" : '';
 }
