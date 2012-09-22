@@ -163,12 +163,17 @@ try {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
 	}
+	ob_start();
 	sys_error("$e", $coreAction);
+	$Page = ob_get_contents();
+	ob_end_clean();
+	/*
 	$Page = '
-<div class="error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
+<div class="report report_global error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
 <div class="logs" style="display: none;">
 Error is \''.$e->getMessage().'\'.
 </div>';
+*/
 }
 
 try {
