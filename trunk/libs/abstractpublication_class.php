@@ -183,8 +183,11 @@ abstract class AbstractPublication extends AbstractStatus {
 		$publication = SQLMapper::doSelect(array(
 			'table' => static::$table,
 			'what' => 'name',
-			'where' => 'name = '.SQLMapper::quote($data['name']).' OR
-				( '.$ucheck.' AND create_time >= '.(time()-static::$floodDelay).')',
+			'where' => 'name = '.SQLMapper::quote($data['name']).
+				( (static::$floodDelay)
+					? 'OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
+					: ''
+				),
 			'number' => 1
 		));
 		if( empty($publication) ) {

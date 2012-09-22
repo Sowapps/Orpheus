@@ -56,7 +56,7 @@ abstract class Rendering {
 				} else {
 					$modData = explode('-', $modData);
 					$module = $modData[0];
-					if( !User::canAccess($module) ) {
+					if( !User::canAccess($module) || !is_readable(MODPATH.$module.'.php') ) {
 						continue;
 					}
 					$action = ( count($modData) > 1 ) ? $modData[1] : '';
