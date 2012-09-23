@@ -11,6 +11,7 @@ abstract class PermanentObject {
 	protected static $table = null;
 	protected static $fields = array();
 	protected static $userEditableFields = array();
+	protected static $domain = null;
 	
 	protected static $IDFIELD = 'id';
 	protected $modFields = array();
@@ -121,7 +122,7 @@ abstract class PermanentObject {
 				throw new UserException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data));
-		} catch(UserException $e) { reportError($e); return 0; }
+		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
 		foreach($data as $fieldname => $fieldvalue) {
 			if( $fieldname != static::$IDFIELD && in_array($fieldname, static::$userEditableFields) ) {
@@ -402,6 +403,16 @@ abstract class PermanentObject {
 	*/
 	public static function getIDField() {
 		return static::$IDFIELD;
+	}
+	
+	//! Gets the domain of this class
+	/*!
+	 * \return The domain of this class.
+	 * 
+	 * Gets the domain of this class, can be guessed from $table or specified in $domain.
+	*/
+	public static function getDomain() {
+		return ( !is_null(static::$domain) ) ? static::$domain : static::$table;
 	}
 	
 	//! Runs for object

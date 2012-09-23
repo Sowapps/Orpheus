@@ -18,7 +18,7 @@ class User extends AbstractStatus {
 		'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'
 	);
 	protected static $userEditableFields = array(
-		'email_public', 'password'
+		'email_public', 'password', 'accesslevel'
 	);
 	protected $login = 0;
 
@@ -102,21 +102,19 @@ class User extends AbstractStatus {
 	 */
 	public function checkPermissions($inputData ) {
 		global $USER;
-		/* Vérifie:
-		 * - Si l'utilisateur courant a les droits de modifications.
-		 * - Si l'utilisateur courant a strictement plus de permissions que l'utilisateur à éditer.
-		 * - Si l'utilisateur courant ne tente pas de donner plus de droits qu'il n'en possède lui même.
-		 */
 		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 200 ) {
 			throw new UserException('invalidAccessLevel');
 		}
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
 			throw new UserException('sameAccessLevel');
 		}
-		if( User::canDo('users_grants', $this) || $USER->accesslevel <= $this->accesslevel || $USER->accesslevel <= $inputData['accesslevel'] ) {
+		if( !User::canDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
+			|| !$USER->checkPerm($this->accesslevel) // Has the current user less accesslevel that the edited one ?
+			|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
+		) {
 			throw new UserException('forbiddenGrant');
 		}
-		return (int) ( !empty($inputData['accesslevel']) );
+		return (int) $inputData['accesslevel'];
 	}
 	
 	//! Checks if this user can do a restricted action on an user
@@ -148,21 +146,21 @@ class User extends AbstractStatus {
 			if( $inputData['name'] != $this->name ) {
 				$data['name'] = $inputData['name'];
 			}
-		} catch(UserException $e) { reportError($e); }
+		} catch(UserException $e) { reportError($e, static::getDomain()); }
 		
 		try {
 			$inputData['email'] = self::checkEmail($uInputData);
 			if( $inputData['email'] != $this->email ) {
 				$data['email'] = $inputData['email'];
 			}
-		} catch(UserException $e) { reportError($e); }
+		} catch(UserException $e) { reportError($e, static::getDomain()); }
 		
 		try {
 			$inputData['email_public'] = self::checkPublicEmail($uInputData);
 			if( $inputData['email_public'] != $this->email_public ) {
 				$data['email_public'] = $inputData['email_public'];
 			}
-		} catch(UserException $e) { reportError($e); }
+		} catch(UserException $e) { reportError($e, static::getDomain()); }
 		
 		try {
 			//Un modérateur n'est pas obligé de fournir une confirmation.
@@ -170,14 +168,14 @@ class User extends AbstractStatus {
 			if( $inputData['password'] != $this->password ) {
 				$data['password'] = $inputData['password'];
 			}
-		} catch(UserException $e) { reportError($e); }
+		} catch(UserException $e) { reportError($e, static::getDomain()); }
 		
 		try {
 			$inputData['accesslevel'] = $this->checkPermissions($uInputData);
 			if( $inputData['accesslevel'] != $this->accesslevel ) {
 				$data['accesslevel'] = $inputData['accesslevel'];
 			}
-		} catch(UserException $e) { reportError($e); }
+		} catch(UserException $e) { reportError($e, static::getDomain()); }
 		
 		return parent::update($uInputData, $data);
 	}
