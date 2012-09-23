@@ -121,7 +121,7 @@ function ssh2_run($command, $SSH2S=null) {
 	if( $session === false ) {
 		throw new Exception('SSH2_unableToConnect');
 	}
-	if( !ssh2_auth_password( $session , $SSH2S['user'] , $SSH2S['passwd'] ) ) {
+	if( !ssh2_auth_password( $session , $SSH2S['users'] , $SSH2S['passwd'] ) ) {
 		throw new Exception('SSH2_unableToIdentify');
 	}
 	$stream = ssh2_exec( $session, $command);
@@ -517,9 +517,10 @@ function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, 
 	if( is_null($selected) && isset($formData[$name]) ) {
 		$selected = $formData[$name];
 	}
-	foreach( $data as $dataValue ) {
+	foreach( $data as $dataKey => $dataValue ) {
+		$key = (is_int($dataKey)) ? $dataValue : $dataKey;// If this is an associative array, we use the key, else the value.
 		$opts .= '
-	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$dataValue, $domain).'</option>';
+	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return "
 <select {$selectAttr}>{$opts}
