@@ -408,7 +408,7 @@ function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 	$report = '';
 	if( $domain == 'all' ) {
 		foreach( array_keys($REPORTS) as $domain ) {
-			$report .= getReportsHTML($domain);
+			$report .= getReportsHTML($domain, $rejected, $delete);
 		}
 		return $report;
 	}
