@@ -507,7 +507,13 @@ function htmlValue($name, $data=null) {
 function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, $selectAttr='') {
 	global $formData;
 	$opts = '';
-	$selectAttr .= ' name="'.$name.'"';
+	$namePath = explode(':', $name);
+	$name = $namePath[count($namePath)-1];
+	$htmlName = '';
+	foreach( $namePath as $index => $path ) {
+		$htmlName .= ( $index ) ? "[{$path}]" : $path;
+	}
+	$selectAttr .= ' name="'.$htmlName.'"';
 	if( is_null($selected) && isset($formData[$name]) ) {
 		$selected = $formData[$name];
 	}
