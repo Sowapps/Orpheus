@@ -25,7 +25,7 @@ function loadLangFile($domain=null) {
 //! Text function, for translations.
 /*!
  * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * \param $domain The domain to apply the Key. Default value is 'global'
+ * \param $domain The domain to apply the Key. Default value is 'global'.
  * \return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
