@@ -8,7 +8,7 @@ var searchData=
   ['demotest_5fclass_2ephp',['demotest_class.php',['../demotest__class_8php.html',1,'']]],
   ['dev_5flevel',['DEV_LEVEL',['../constants_8php.html#a06aaf508fd58e00deb605585fcdcc30b',1,'constants.php']]],
   ['display',['display',['../class_rendering.html#a9d076d6787ebe05826bf7158c779acdf',1,'Rendering']]],
-  ['displayreportshtml',['displayReportsHTML',['../__core_8php.html#ab48b4e73ab9f8df812c1ee4db6c3fbce',1,'_core.php']]],
+  ['displayreportshtml',['displayReportsHTML',['../__core_8php.html#a11c265514f0fba8c7192ef620e049d5c',1,'_core.php']]],
   ['dodelete',['doDelete',['../class_s_q_l_mapper.html#a5fabfae1b12ed46a60e49e2d64257c87',1,'SQLMapper']]],
   ['dodisplay',['doDisplay',['../class_rendering.html#a423c23e61465884b984474ac44fb0cb2',1,'Rendering']]],
   ['doinsert',['doInsert',['../class_s_q_l_mapper.html#af869e9ca6655fe97fe451ec2fb2312c2',1,'SQLMapper']]],
