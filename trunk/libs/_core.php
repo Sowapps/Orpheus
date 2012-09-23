@@ -493,18 +493,24 @@ function htmlValue($name, $data=null) {
 
 //! Generates the HTML source for a SELECT
 /*!
+ * \param $name The name of the field.
  * \param $data The data to to build the dropdown.
  * \param $prefix The prefix to use for the text name of values. Default value is an empty string.
- * \param $selected The selected value from the data. Default value is null (no selection).
  * \param $domain The domain to apply the Key. Default value is 'global'.
+ * \param $selected The selected value from the data. Default value is null (no selection).
  * \param $selectAttr Additional attributes for the SELECT tag.
  * \return A HTML source for the built SELECT tag.
  * \warning This function is not complete, it requires more functionalities.
  * 
  * Generates the HTML source for a SELECT from the $data.
 */
-function htmlSelect($data, $prefix='', $selected=null, $domain='global', $selectAttr='') {
+function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, $selectAttr='') {
+	global $formData;
 	$opts = '';
+	$selectAttr .= ' name="'.$name.'"';
+	if( is_null($selected) && isset($formData[$name]) ) {
+		$selected = $formData[$name];
+	}
 	foreach( $data as $dataValue ) {
 		$opts .= '
 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$dataValue, $domain).'</option>';

@@ -63,7 +63,7 @@ abstract class Rendering {
 					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
 					$Link = u($module, $action, $queryStr);
 					$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current' : '');
-					$Text = $module;
+					$Text = $module.( (!empty($action)) ? '_'.$action : '');
 				}
 				$menu .= "
 		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";

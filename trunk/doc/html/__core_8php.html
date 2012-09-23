@@ -174,9 +174,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a868d635f811c04d1d71ced4e8d05b65b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a868d635f811c04d1d71ced4e8d05b65b">htmlValue</a> ($name, $data=null)</td></tr>
 <tr class="memdesc:a868d635f811c04d1d71ced4e8d05b65b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the HTML value.  <a href="#a868d635f811c04d1d71ced4e8d05b65b"></a><br/></td></tr>
 <tr class="separator:a868d635f811c04d1d71ced4e8d05b65b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3209cfe7e958186055f3a8d639b65288"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a3209cfe7e958186055f3a8d639b65288">htmlSelect</a> ($data, $prefix='', $selected=null, $domain='global', $selectAttr='')</td></tr>
-<tr class="memdesc:a3209cfe7e958186055f3a8d639b65288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the HTML source for a SELECT.  <a href="#a3209cfe7e958186055f3a8d639b65288"></a><br/></td></tr>
-<tr class="separator:a3209cfe7e958186055f3a8d639b65288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc8ae2541f68ee1529f16a5829f980b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#aafc8ae2541f68ee1529f16a5829f980b">htmlSelect</a> ($name, $data, $prefix='', $domain='global', $selected=null, $selectAttr='')</td></tr>
+<tr class="memdesc:aafc8ae2541f68ee1529f16a5829f980b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the HTML source for a SELECT.  <a href="#aafc8ae2541f68ee1529f16a5829f980b"></a><br/></td></tr>
+<tr class="separator:aafc8ae2541f68ee1529f16a5829f980b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="adbe8bb82cc1c861256e95a790034cb3d"></a>
@@ -474,13 +474,19 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3209cfe7e958186055f3a8d639b65288"></a>
+<a class="anchor" id="aafc8ae2541f68ee1529f16a5829f980b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">htmlSelect </td>
           <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$data</em>, </td>
         </tr>
@@ -494,13 +500,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$selected</em> = <code>null</code>, </td>
+          <td class="paramname"><em>$domain</em> = <code>'global'</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$domain</em> = <code>'global'</code>, </td>
+          <td class="paramname"><em>$selected</em> = <code>null</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -517,10 +523,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">$name</td><td>The name of the field. </td></tr>
     <tr><td class="paramname">$data</td><td>The data to to build the dropdown. </td></tr>
     <tr><td class="paramname">$prefix</td><td>The prefix to use for the text name of values. Default value is an empty string. </td></tr>
-    <tr><td class="paramname">$selected</td><td>The selected value from the data. Default value is null (no selection). </td></tr>
     <tr><td class="paramname">$domain</td><td>The domain to apply the Key. Default value is 'global'. </td></tr>
+    <tr><td class="paramname">$selected</td><td>The selected value from the data. Default value is null (no selection). </td></tr>
     <tr><td class="paramname">$selectAttr</td><td>Additional attributes for the SELECT tag. </td></tr>
   </table>
   </dd>
@@ -1147,7 +1154,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 23 2012 14:47:18 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Sep 23 2012 15:06:12 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>

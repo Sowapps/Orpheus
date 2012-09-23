@@ -52,10 +52,10 @@ class SQLMapper_PgSQL extends SQLMapper {
 	public function select(array $options=array()) {
 		$options += self::$selectDefaults;
 		if( empty($options['table']) ) {
-			throw new Exception("Empty table");
+			throw new Exception('Empty table option');
 		}
 		if( empty($options['what']) ) {
-			throw new Exception("No selection");
+			throw new Exception('No selection');
 		}
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
@@ -87,10 +87,10 @@ class SQLMapper_PgSQL extends SQLMapper {
 	public function update(array $options=array()) {
 		$options += self::$updateDefaults;
 		if( empty($options['table']) ) {
-			throw new Exception("Empty table");
+			throw new Exception('Empty table option');
 		}
 		if( empty($options['what']) ) {
-			throw new Exception("No field");
+			throw new Exception('No field');
 		}
 		$OPTIONS = '';
 		$OPTIONS .= (!empty($options['only'])) ? ' ONLY' : '';
@@ -114,7 +114,7 @@ class SQLMapper_PgSQL extends SQLMapper {
 	public function delete(array $options=array()) {
 		$options += self::$deleteDefaults;
 		if( empty($options['table']) ) {
-			throw new Exception("Empty table");
+			throw new Exception('Empty table option');
 		}
 		$OPTIONS = '';
 		$OPTIONS .= (!empty($options['only'])) ? ' ONLY' : '';
@@ -138,10 +138,10 @@ class SQLMapper_PgSQL extends SQLMapper {
 	public function insert(array $options=array()) {
 		$options += self::$insertDefaults;
 		if( empty($options['table']) ) {
-			throw new Exception("Empty table");
+			throw new Exception('Empty table option');
 		}
 		if( empty($options['what']) ) {
-			throw new Exception("No field");
+			throw new Exception('No field');
 		}
 		$OPTIONS = '';
 		
