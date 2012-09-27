@@ -9,7 +9,7 @@ if( isPOST('submitEraseLogs') ) {
 	$logID = key($_POST['submitEraseLogs']);
 	
 	if( file_put_contents($logs[$logID]['file'], '') !== false ) {
-		reportSuccess('fileErased');
+		reportSuccess('successFileErased');
 
 	} else {
 		reportError('unableToEraseFile');
@@ -18,6 +18,9 @@ if( isPOST('submitEraseLogs') ) {
 
 foreach( $logs as $logID => $logData ) {
 	try {
+		if( !is_readable($logData['file']) ) {
+			?>No entry in this log.<?php
+		}
 		$logLines = file($logData['file'], FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
 		?>
 	<h1><?php echo $logData['label']; ?></h1><?php
