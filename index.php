@@ -134,6 +134,7 @@ try {
 	
 	//Check and Get Action.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
+	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? $_GET['format'] : 'html';
 	
 	$Page = '';
 	
