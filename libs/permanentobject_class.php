@@ -14,8 +14,11 @@ abstract class PermanentObject {
 	protected static $domain = null;
 	
 	protected static $IDFIELD = 'id';
+	protected static $instances = array();
+	
 	protected $modFields = array();
 	protected $data = array();
+	protected $isDeleted = false;
 	
 	// *** OVERLOADED METHODS ***
 	
@@ -141,7 +144,7 @@ abstract class PermanentObject {
 	 * \sa update()
 	 * 
 	 * This function is called by update() before saving new data.
-	 * In this base class, this method does nothing.
+	 * In the base class, this method does nothing.
 	*/
 	public function runForUpdate() { }
 	
@@ -182,6 +185,27 @@ abstract class PermanentObject {
 		if( !in_array($field, $this->modFields) ) {
 			$this->modFields[] = $field;
 		}
+	}
+	
+	//! Checks if this object is deleted
+	/*!
+	 * \return True if this object is deleted.
+	 * 
+	 * Checks if this object is known as deleted.
+	*/
+	public function isDeleted() {
+		return $this->isDeleted;
+	}
+	
+	//! Marks this object as deleted
+	/*!
+	 * \sa isDeleted()
+	 * \warning Be sure what you are doing before calling this function (never out of this class' context).
+	 * 
+	 * Marks this object as deleted
+	 */
+	public function markAsDeleted() {
+		$this->isDeleted = true;
 	}
 	
 	//! Gets one value or all values.
@@ -252,26 +276,40 @@ abstract class PermanentObject {
 	
 	//! Loads a permanent object
 	/*!
-	 * \param $id The object ID to load.
+	 * \param $in The object ID to load or a valid array of the object's data.
 	 * \return The object.
 	 * \sa get()
 	
-	 * Loads the object with the ID $id
+	 * Loads the object with the ID $id or the array data
 	*/
-	public static function load($id) {
-		if( !ctype_digit("$id") ) {
-			throw new UserException('invalidID');
-		}
+	public static function load($in) {
 		$IDFIELD=static::$IDFIELD;
-		$options = array(
-			'number'=> 1,
-			'where'	=> "{$IDFIELD}={$id}",
-		);
-		$data = static::get($options);
-		if( empty($data) ) {
-			throw new UserException('inexistantobject');
+		// If $in is an array, we trust him, as data of the object.
+		if( is_array($in) ) {
+			$id = $in[$IDFIELD];
+			$data = $in;
 		}
-		return new static($data);
+		// Loading cached
+		if( isset(static::$instances[$id]) ) {
+			return static::$instances[$id];
+		}
+		// If we don't get the data, we request them.
+		if( empty($data) ) {
+			if( !ctype_digit("$id") ) {
+				throw new UserException('invalidID');
+			}
+			// Getting data
+			$data = static::get(array(
+				'number'=> 1,
+				'where'	=> "{$IDFIELD}={$id}",
+			));
+			// Ho no, we don't have the data, we can't load the object !
+			if( empty($data) ) {
+				throw new UserException('inexistantobject');
+			}
+		}
+		// Saving cached
+		return static::$instances[$id] = new static($data);
 	}
 	
 	//! Deletes a permanent object
@@ -291,8 +329,25 @@ abstract class PermanentObject {
 			'number'=> 1,
 			'where'	=> "{$IDFIELD}={$id}",
 		);
-		return SQLMapper::doDelete($options);
+		$r = SQLMapper::doDelete($options);
+		if( $r ) {
+			if( isset(static::$instances[$id]) ) {
+				static::$instances[$id]->markAsDeleted();
+			}
+			static::runForDeletion($id);
+		}
+		return $r;
 	}
+	
+	//! Runs for Deletion
+	/*!
+	 * \sa delete()
+	 * 
+	 * This function is called by delete() after deleting the object $id.
+	 * If you need to get the object before, prefer to inherit delete()
+	 * In the base class, this method does nothing.
+	*/
+	public static function runForDeletion() { }
 	
 	//! Gets some permanent objects
 	/*!
@@ -421,7 +476,7 @@ abstract class PermanentObject {
 	 * \sa create()
 	 * 
 	 * This function is called by create() after checking new data and before inserting them.
-	 * In this base class, this method does nothing.
+	 * In the base class, this method does nothing.
 	*/
 	public static function runForObject(&$data) { }
 	
@@ -432,7 +487,7 @@ abstract class PermanentObject {
 	 * \sa create()
 	 * 
 	 * This function is called by create() after inserting new data.
-	 * In this base class, this method does nothing.
+	 * In the base class, this method does nothing.
 	*/
 	public static function applyToObject(&$data, $id) { }
 	
@@ -455,7 +510,7 @@ abstract class PermanentObject {
 	 * \sa create()
 	 * 
 	 * This function is called by create() after checking user input data and before running for them.
-	 * In this base class, this method does nothing.
+	 * In the base class, this method does nothing.
 	*/
 	public static function checkForObject($data) { }
 }
