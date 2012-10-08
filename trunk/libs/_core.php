@@ -140,7 +140,11 @@ function ssh2_run($command, $SSH2S=null) {
  * Scans a directory and returns a clean result.
 */
 function cleanscandir($dir, $sorting_order=0) {
-	$result = scandir($dir);
+	try {
+		$result = scandir($dir);
+	} catch(Exception $e) {
+		return array();
+	}
 	unset($result[0]);
 	unset($result[1]);
 	if( $sorting_order ) {
