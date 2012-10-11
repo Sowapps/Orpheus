@@ -288,6 +288,8 @@ abstract class PermanentObject {
 		if( is_array($in) ) {
 			$id = $in[$IDFIELD];
 			$data = $in;
+		} else {
+			$id = $in;
 		}
 		// Loading cached
 		if( isset(static::$instances[$id]) ) {
