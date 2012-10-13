@@ -52,12 +52,17 @@ class Email {
 	//! Initializes the object
 	private function init() {
 		$this->Headers['Date'] = date('r');
-		if( defined('ADMINEMAIL') ) {
-			if( defined('SITENAME') ) {
-				$this->setSender(SITENAME.' <'.ADMINEMAIL.'>');
-			} else {
-				$this->setSender(ADMINEMAIL);
-			}
+		if( defined('REPLYEMAIL') ) {
+			$sendEmail = REPLYEMAIL;
+		} else if( defined('ADMINEMAIL') ) {
+			$sendEmail = ADMINEMAIL;
+		} else {
+			return;
+		}
+		if( defined('SITENAME') ) {
+			$this->setSender(SITENAME.' <'.$sendEmail.'>');
+		} else {
+			$this->setSender($sendEmail);
 		}
 	}
 	
@@ -101,6 +106,16 @@ class Email {
 	*/
 	public function containsFile($Filename) {
 		return in_array($Filename, $this->AttFiles);
+	}
+	
+	//! Checks if the file list contains any file.
+	/*!
+		\return True if the file list is not empty.
+		
+		Checks if the file list is not empty.
+	*/
+	public function containsFiles() {
+		return !empty($this->AttFiles);
 	}
 	
 	//! Adds a file to the files list

@@ -18,7 +18,7 @@ class User extends AbstractStatus {
 		'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'
 	);
 	protected static $userEditableFields = array(
-		'email_public', 'password', 'accesslevel'
+		'email', 'email_public', 'password', 'accesslevel'
 	);
 	protected $login = 0;
 
