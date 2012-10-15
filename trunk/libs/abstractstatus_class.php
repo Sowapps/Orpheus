@@ -70,7 +70,7 @@ abstract class AbstractStatus extends PermanentObject {
 	public function status($newStatus=null) {
 		if( isset($newStatus) ) {
 			static::checkStatus($newStatus, $this->status);
-			$this->setData('status', $newStatus);
+			$this->setValue('status', $newStatus);
 		}
 		return $this->status;
 	}
