@@ -292,8 +292,8 @@ abstract class PermanentObject {
 			$id = $in;
 		}
 		// Loading cached
-		if( isset(static::$instances[$id]) ) {
-			return static::$instances[$id];
+		if( isset(static::$instances[static::getTable()][$id]) ) {
+			return static::$instances[static::getTable()][$id];
 		}
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
@@ -311,7 +311,7 @@ abstract class PermanentObject {
 			}
 		}
 		// Saving cached
-		return static::$instances[$id] = new static($data);
+		return static::$instances[static::getTable()][$id] = new static($data);
 	}
 	
 	//! Deletes a permanent object
@@ -333,8 +333,8 @@ abstract class PermanentObject {
 		);
 		$r = SQLMapper::doDelete($options);
 		if( $r ) {
-			if( isset(static::$instances[$id]) ) {
-				static::$instances[$id]->markAsDeleted();
+			if( isset(static::$instances[static::getTable()][$id]) ) {
+				static::$instances[static::getTable()][$id]->markAsDeleted();
 			}
 			static::runForDeletion($id);
 		}
@@ -369,10 +369,10 @@ abstract class PermanentObject {
 		$r = SQLMapper::doSelect($options);
 		if( isset($objects) ) {
 			if( !empty($r) && isset($options['number']) && $options['number'] == 1 ) {
-				$r = new static($r);
+				$r = static::load($r);
 			} else {
 				foreach( $r as &$rdata ) {
-					$rdata = new static($rdata);
+					$rdata = static::load($rdata);
 				}
 			}
 		}
