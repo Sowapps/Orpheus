@@ -102,7 +102,7 @@ class User extends AbstractStatus {
 	 */
 	public function checkPermissions($inputData ) {
 		global $USER;
-		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 200 ) {
+		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
 			throw new UserException('invalidAccessLevel');
 		}
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
