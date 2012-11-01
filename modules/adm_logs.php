@@ -18,17 +18,17 @@ if( isPOST('submitEraseLogs') ) {
 
 foreach( $logs as $logID => $logData ) {
 	try {
-		if( !is_readable($logData['file']) ) {
-			?>No entry in this log.<?php
-		}
-		$logLines = file($logData['file'], FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+		$logLines = null;
 		?>
 	<h1><?php echo $logData['label']; ?></h1><?php
+		if( is_readable($logData['file']) ) {
+			$logLines = file($logData['file'], FILE_IGNORE_NEW_LINES|FILE_SKIP_EMPTY_LINES);
+		}
 		
 		if( !empty($logLines) )  {
 			?>
 			<form method="POST">
-			<input type="submit" name="submitEraseLogs[<?php echo $logID; ?>]" value="Erase all" /><br />
+			<input type="submit" name="submitEraseLogs[<?php echo $logID; ?>]" value="Tout effacer" /><br />
 			<ul><?php
 			foreach( $logLines as $Line ) {
 				$entryData = json_decode($Line, 1);
@@ -41,10 +41,10 @@ foreach( $logs as $logID => $logData ) {
 			}
 			?>
 			</ul>
-			<input type="submit" name="submitEraseLogs[<?php echo $logID; ?>]" value="Erase all" /><br />
+			<input type="submit" name="submitEraseLogs[<?php echo $logID; ?>]" value="Tout effacer" /><br />
 			</form><?php
 		} else {
-			?>No entry in this log.<?php
+			?>Aucune entrée connue dans ce journal.<?php
 		}
 	} catch(Exception $e) {
 		echo t($e->__toString());
