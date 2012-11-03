@@ -278,6 +278,27 @@ function parseFields(array $fields) {
 	return $list;
 }
 
+//! Gets value from an Array Path
+/*!
+ * \param $fields The fields array.
+ * \return A string as fields list.
+ *
+ * Gets value from an Array Path using / as separator.
+*/
+function apath_get($array, $apath) {
+	if( empty($array) || !is_array($array) || empty($apath) ) {
+		return null;
+	}
+	$rpaths = explode('/', $apath, 2);
+	if( !isset($array[$rpaths[0]]) ) {
+		return null;
+	}
+	if( !isset($rpaths[1]) ) {
+		return $array[$rpaths[0]];
+	}
+	return apath_get($array[$rpaths[0]], $rpaths[1]);
+}
+
 //! Imports the required class(es).
 /*!
  * \param $pkgPath The package path.

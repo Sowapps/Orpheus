@@ -24,7 +24,7 @@ abstract class ConfigCore {
 		if( $key == 'all' ) {
 			return $this->config;
 		}
-		return (isset($this->config[$key])) ? $this->config[$key] : NULL;
+		return apath_get($this->config, $key);
 	}
 	
 	//! The magic function to set config.

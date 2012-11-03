@@ -63,7 +63,11 @@ if( !empty($_POST['submitRegister']) ) {
 	}
 }
 
-$UsersArr = User::get(array('output'=>SQLMapper::ARR_OBJECTS));
+$UsersArr = SiteUser::get(array(
+		'where'		=> ( User::canDo('users_seedev') ) ? '' : 'accesslevel<='.Config::get('perm_status/administrator'),
+		'orderby'	=> 'fullname ASC',
+		'output'	=> SQLMapper::ARR_OBJECTS
+));
 
 displayReportsHTML();
 ?>
