@@ -257,7 +257,7 @@ class User extends AbstractStatus {
 	 */
 	public static function delete($id) {
 		if( !self::canDo('users_delete') ) {
-			throw new OperationForbiddenException('users_delete');
+			throw new UserException('forbiddenDelete');
 		}
 		return parent::delete($id);
 	}
