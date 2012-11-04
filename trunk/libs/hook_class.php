@@ -130,9 +130,9 @@ class Hook {
 			throw new Exception('No hook with this name');
 		}
 		$params = null;
-		if( func_num_args() > 1 ) {
+		if( func_num_args() > 2 ) {
 			$params = func_get_args();
-			unset($params[0]);
+			unset($params[0], $params[1]);
 			$params = array_values($params);
 		}
 		return static::$hooks[$name]->triggerHook($params);
