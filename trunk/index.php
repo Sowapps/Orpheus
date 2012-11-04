@@ -145,7 +145,7 @@ try {
 	} else {
 		$Module = $_GET['module'];
 	}
-	if( !is_name($Module) ) {
+	if( empty($Module) || !is_name($Module) ) {
 		throw new Exception('invalidModuleName');
 	}
 	if( !is_readable(MODPATH.$Module.'.php') ) {
