@@ -8,6 +8,7 @@ class Email {
 	private $Headers = array(
 		'MIME-Version' => '',
 		'Content-Type' => 'text/plain, charset=UTF-8',
+		//'Content-Transfer-Encoding' => '7bit',
 		'Date' => '',//See init()
 		'From' => 'no-reply@nodomain.com',//Override PHP's default
 		'Sender' => '',
@@ -45,7 +46,7 @@ class Email {
 	*/
 	public function __construct($TEXTBody='', $Subject='') { //Class' Constructor
 		$this->init();
-		$this->Subject = $Subject;
+		$this->setSubject($Subject);
 		$this->setTEXTBody($TEXTBody);
 	}
 	
@@ -152,7 +153,7 @@ class Email {
 		if( !is_string($Subject) ) {
 			throw new Exception('RequireStringParameter');
 		}
-		$this->Subject = $Subject;
+		$this->Subject = '=?UTF-8?Q?'.static::escape($Subject).'?=';// Supports UTF-8 and Quote printable encoding
 	}
 	
 	//! Sets the text body of the mail
@@ -174,7 +175,7 @@ class Email {
 		if( !is_string($Body) ) {
 			throw new Exception('RequireStringParameter');
 		}
-		$this->HTMLBody = $Body;
+		$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
 	}
 	
 	//! Sets the alternative body of the mail
@@ -211,7 +212,7 @@ class Email {
 					'headers' => array(
 						'Content-Type' => 'multipart/alternative',
 					),
-					'body' => ( mb_detect_encoding($str, "UTF-8") == "UTF-8" ) ? utf8_decode($this->AltBody) : $this->AltBody,
+					'body' => ( mb_detect_encoding($this->AltBody, "UTF-8") == "UTF-8" ) ? utf8_decode($this->AltBody) : $this->AltBody,
 				);
 			}
 			
@@ -231,7 +232,16 @@ class Email {
 						'Content-Type' => 'text/html; charset="UTF-8"',
 						'Content-Transfer-Encoding' => 'quoted-printable',
 					),
-					'body' => $this->HTMLBody,
+					'body' => <<<EOF
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+{$this->HTMLBody}
+</body>
+</html>
+EOF
 				);
 			}
 			
@@ -338,6 +348,8 @@ BODY;
 			}
 		}
 		$Headers .= "\r\n";
+		text($Headers);
+		text($Body);
 		if( !is_array($ToAddress) ) {
 			if( !mail($ToAddress, $this->Subject, $Body, $Headers) ) {
 				throw new Exception("ProblemSendingMail");
@@ -442,12 +454,6 @@ BODY;
 	*/
 	public static function is_email($email) {
 		return is_email($email);
-		/*
-		$atom   = '[-a-z0-9!#$%&\'*+\\/=?^_`{|}~]';   // caractères autorisés avant l'arobase
-		$domain = '([a-z0-9]([-a-z0-9]*[a-z0-9]+)?)'; // caractères autorisés après l'arobase (nom de domaine)
-		$regex = '/^' . $atom . '+(\.' . $atom . '+)*@(' . $domain . '{1,63}\.)+' . $domain . '{2,63}$/i';
-		return is_string($email) && preg_match($regex, $email);
-		*/
 	}
 
 	//! Gets the mime type of a file.
@@ -461,6 +467,16 @@ BODY;
 			return finfo_file($finfo, $Filename);
 		}
 		return mime_content_type($Filename);
+	}
+
+	//! Escapes the string for mails.
+	/*!
+		\param $string The string to escape.
+		\return The escaped string for mails.
+	*/
+	public static function escape($string) {
+		//It seems that utf8_encode() is not sufficient, it does not work, but UTF-8 do.
+		return quoted_printable_encode(( mb_detect_encoding($string, "UTF-8") == "UTF-8" ) ? $string : utf8_encode($string));
 	}
 }
 ?>
