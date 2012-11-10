@@ -348,8 +348,6 @@ BODY;
 			}
 		}
 		$Headers .= "\r\n";
-		text($Headers);
-		text($Body);
 		if( !is_array($ToAddress) ) {
 			if( !mail($ToAddress, $this->Subject, $Body, $Headers) ) {
 				throw new Exception("ProblemSendingMail");
