@@ -9,7 +9,7 @@
  */
 
 if( !defined('ORPHEUSPATH') ) {
-	define('ORPHEUSPATH', './');
+	define('ORPHEUSPATH', getcwd().'/');
 }
 
 // Edit the constant file according to the system context (OS, directory tree ...).
@@ -145,7 +145,7 @@ try {
 	} else {
 		$Module = $_GET['module'];
 	}
-	if( empty($Module) || !is_name($Module) ) {
+	if( !is_name($Module) ) {
 		throw new Exception('invalidModuleName');
 	}
 	if( !is_readable(MODPATH.$Module.'.php') ) {
@@ -167,13 +167,6 @@ try {
 	sys_error("$e", $coreAction);
 	$Page = ob_get_contents();
 	ob_end_clean();
-	/*
-	$Page = '
-<div class="report report_global error">A fatal error occured and can not be supported, <a href="'.DEFAULTLINK.'">unable to continue.</a></div>
-<div class="logs" style="display: none;">
-Error is \''.$e->getMessage().'\'.
-</div>';
-*/
 }
 
 try {
