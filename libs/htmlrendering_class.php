@@ -9,7 +9,7 @@ class HTMLRendering extends Rendering {
 	
 	public static $theme = 'default';
 	
-	public static $themesPath = 'themes/';
+	//public static $themesPath = 'themes/';
 	public static $cssPath = 'css/';
 	public static $modelsPath = '';
 	
@@ -33,7 +33,7 @@ class HTMLRendering extends Rendering {
 		Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return static::$themesPath.static::$theme.'/'.static::$modelsPath;
+		return THEMESPATH.static::$theme.'/'.static::$modelsPath;
 	}
 
 	//! Gets the CSS files path.
@@ -43,6 +43,6 @@ class HTMLRendering extends Rendering {
 		Gets the path to the CSS files.
 	*/
 	public static function getCSSPath() {
-		return static::$themesPath.static::$theme.'/'.static::$cssPath;
+		return THEMESPATH.static::$theme.'/'.static::$cssPath;
 	}
 }
