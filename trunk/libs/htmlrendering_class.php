@@ -23,8 +23,6 @@ class HTMLRendering extends Rendering {
 		}
 		extract($env);
 		
-		text("THEMESPATH");
-		text(THEMESPATH);
 		include static::getModelsPath().$model.'.php';
 	}
 	
