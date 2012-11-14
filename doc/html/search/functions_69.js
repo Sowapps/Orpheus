@@ -12,6 +12,7 @@ var searchData=
   ['is_5fphone_5fnumber',['is_phone_number',['../__validators_8php.html#a7562e0774c512c0a5dd2cd8ac0b2cea6',1,'_validators.php']]],
   ['is_5furl',['is_url',['../__validators_8php.html#a0deaaa34dc77288e6d7e054b3a5a4152',1,'_validators.php']]],
   ['isalternative',['isAlternative',['../class_email.html#ae2917449f27ce11b9b75f21ec883d568',1,'Email']]],
+  ['isdeleted',['isDeleted',['../class_permanent_object.html#abc5464b809ee92087918c18911313aad',1,'PermanentObject']]],
   ['ishtml',['isHTML',['../class_email.html#a13b3127a4fabd43e9e3721aaa680e61a',1,'Email']]],
   ['ismulticontent',['isMultiContent',['../class_email.html#a7faca5d7ec75cbea331205c26d010547',1,'Email']]],
   ['ispost',['isPOST',['../__core_8php.html#a81fb154c20bf4d8700c3b846a9afcdd8',1,'_core.php']]],

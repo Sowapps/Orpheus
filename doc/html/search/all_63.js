@@ -22,10 +22,10 @@ var searchData=
   ['config_5fclass_2ephp',['config_class.php',['../config__class_8php.html',1,'']]],
   ['configcore',['ConfigCore',['../class_config_core.html',1,'']]],
   ['configcore_5fclass_2ephp',['configcore_class.php',['../configcore__class_8php.html',1,'']]],
-  ['confpath',['CONFPATH',['../constants_8php.html#af9d274bc324bb83d1811e1297c2e74fd',1,'constants.php']]],
   ['constants',['Constants',['../constants.html',1,'']]],
   ['constants_2ephp',['constants.php',['../constants_8php.html',1,'']]],
   ['containsfile',['containsFile',['../class_email.html#aac98e123dee2736316a334ae2b028808',1,'Email']]],
+  ['containsfiles',['containsFiles',['../class_email.html#abf06726b70313b2445ea2ebfe60f7f21',1,'Email']]],
   ['create',['create',['../class_hook.html#a76362d684f78293ed94c65ae2e1857d0',1,'Hook\create()'],['../class_permanent_object.html#a61d10f679c32ca1e9883eef7db9a6c93',1,'PermanentObject\create()']]],
   ['config_20library',['Config Library',['../lib_config.html',1,'']]],
   ['core_20library',['Core Library',['../lib_core.html',1,'']]]

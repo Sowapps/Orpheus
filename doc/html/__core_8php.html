@@ -141,6 +141,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac5ddd4d37e80713d7bef3cf1728de4ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#ac5ddd4d37e80713d7bef3cf1728de4ac">parseFields</a> (array $fields)</td></tr>
 <tr class="memdesc:ac5ddd4d37e80713d7bef3cf1728de4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse Fields array to string.  <a href="#ac5ddd4d37e80713d7bef3cf1728de4ac"></a><br/></td></tr>
 <tr class="separator:ac5ddd4d37e80713d7bef3cf1728de4ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3e4e77dfcb51a8027fb223dbacc7ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a4f3e4e77dfcb51a8027fb223dbacc7ae">apath_get</a> ($array, $apath)</td></tr>
+<tr class="memdesc:a4f3e4e77dfcb51a8027fb223dbacc7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets value from an Array Path.  <a href="#a4f3e4e77dfcb51a8027fb223dbacc7ae"></a><br/></td></tr>
+<tr class="separator:a4f3e4e77dfcb51a8027fb223dbacc7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c366c5bfd3fdec91cdd334d52f03ce3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__core_8php.html#a6c366c5bfd3fdec91cdd334d52f03ce3">using</a> ($pkgPath)</td></tr>
 <tr class="memdesc:a6c366c5bfd3fdec91cdd334d52f03ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Imports the required class(es).  <a href="#a6c366c5bfd3fdec91cdd334d52f03ce3"></a><br/></td></tr>
 <tr class="separator:a6c366c5bfd3fdec91cdd334d52f03ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -252,6 +255,41 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="__core_8php.html#ade63ab225ff0ae8b6d536063ced98fd7" title="Reports a success.">reportSuccess()</a>, <a class="el" href="__core_8php.html#af2a50843f1c593ae25d799a40c5ee0e9" title="Reports an error.">reportError()</a></dd></dl>
 <p>Adds the report $message to the list of reports for this $type. The type of the message is commonly 'success' or 'error'. </p>
+
+</div>
+</div>
+<a class="anchor" id="a4f3e4e77dfcb51a8027fb223dbacc7ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">apath_get </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$array</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$apath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$array</td><td>The array to look in. </td></tr>
+    <tr><td class="paramname">$apath</td><td>The array path to follow. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The resulting value or null if not found.</dd></dl>
+<p>Gets value from an Array Path using / as separator. </p>
 
 </div>
 </div>
@@ -1154,7 +1192,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Sep 23 2012 15:06:12 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Nov 14 2012 21:54:36 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.2
 </small></address>
