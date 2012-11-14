@@ -8,9 +8,24 @@
 	PHP File for the website core.
  */
 
-if( !defined('ORPHEUSPATH') ) {
-	define('ORPHEUSPATH', getcwd().'/');
+//! Defines an undefined constant.
+/*!
+ * \param $name		The name of the constant.
+* \param $value	The value of the constant.
+* \return True if the constant was defined successfully.
+
+* Defines a constant if this one is not defined yet.
+*/
+function defifn($name, $value) {
+	if( defined($name) ) {
+		return false;
+	}
+	define($name, $value);
+	return true;
 }
+
+defifn('ORPHEUSPATH', getcwd().'/');
+defifn('INSTANCEPATH', ORPHEUSPATH);
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once ORPHEUSPATH.'configs/constants.php';

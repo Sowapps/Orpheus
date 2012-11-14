@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['defifn',['defifn',['../index_8php.html#a7ded22765b79029b0acca26547417fe2',1,'index.php']]],
   ['delete',['delete',['../class_permanent_object.html#ab5c0118d9badf56963ec81cafca8ba7d',1,'PermanentObject\delete()'],['../class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59',1,'SQLMapper_MySQL\delete()'],['../class_s_q_l_mapper___pg_s_q_l.html#a75e6e4d7f4316f1a5bacec285bba92fe',1,'SQLMapper_PgSQL\delete()'],['../class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384',1,'SQLMapper\delete()'],['../class_user.html#ad75a67bb454fe739e55c27dbaed54b75',1,'User\delete()']]],
   ['display',['display',['../class_rendering.html#a9d076d6787ebe05826bf7158c779acdf',1,'Rendering']]],
   ['displayreportshtml',['displayReportsHTML',['../__core_8php.html#a11c265514f0fba8c7192ef620e049d5c',1,'_core.php']]],

@@ -18,7 +18,6 @@ var searchData=
   ['settwigenvironment',['setTwigEnvironment',['../class_twig_rendering.html#a1812b710eaa8bc1881be97fb596b6c0c',1,'TwigRendering']]],
   ['settype',['setType',['../class_email.html#aed46d83df3197fe96ec398ccb86eb32d',1,'Email']]],
   ['setvalue',['setValue',['../class_permanent_object.html#a7ea07b0b92ab5bdb9942a3ffab60934e',1,'PermanentObject']]],
-  ['sitename',['SITENAME',['../constants_8php.html#ac91fe4eef242dfc35896ee6b7e378022',1,'constants.php']]],
   ['siteroot',['SITEROOT',['../constants_8php.html#a64936195162951825cf8b9cf7b43063f',1,'constants.php']]],
   ['siteuser',['SiteUser',['../class_site_user.html',1,'']]],
   ['siteuser_5fclass_2ephp',['siteuser_class.php',['../siteuser__class_8php.html',1,'']]],
@@ -32,6 +31,5 @@ var searchData=
   ['statement',['STATEMENT',['../class_s_q_l_mapper.html#a2c4194565a940222ee86efbc09a9daa5',1,'SQLMapper']]],
   ['status',['status',['../class_abstract_status.html#a13065df944948731acc20a3237f0601a',1,'AbstractStatus']]],
   ['str_5flimit',['str_limit',['../__core_8php.html#a0ff41c78802b3e48935a0c6a212f7454',1,'_core.php']]],
-  ['sys_5ferror',['sys_error',['../__core_8php.html#a211c992147daa63b42ade37dc9b72c13',1,'_core.php']]],
-  ['syslogfilename',['SYSLOGFILENAME',['../constants_8php.html#a715925d9698c0408e6d3e1c7fb56026b',1,'constants.php']]]
+  ['sys_5ferror',['sys_error',['../__core_8php.html#a211c992147daa63b42ade37dc9b72c13',1,'_core.php']]]
 ];

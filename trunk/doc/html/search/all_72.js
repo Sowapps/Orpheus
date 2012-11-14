@@ -14,6 +14,7 @@ var searchData=
   ['report_2ephp',['report.php',['../report_8php.html',1,'']]],
   ['reporterror',['reportError',['../__core_8php.html#af2a50843f1c593ae25d799a40c5ee0e9',1,'_core.php']]],
   ['reportsuccess',['reportSuccess',['../__core_8php.html#ade63ab225ff0ae8b6d536063ced98fd7',1,'_core.php']]],
+  ['runfordeletion',['runForDeletion',['../class_permanent_object.html#aa8ac9ae139a9f94cebc9f5f2eb1fdae5',1,'PermanentObject']]],
   ['runforobject',['runForObject',['../class_permanent_object.html#ac11ba854b181270c9a276d2f98e2b5b5',1,'PermanentObject']]],
   ['runforupdate',['runForUpdate',['../class_site_user.html#a0e785c75c2f1b0f1c2ed890f1411aa19',1,'SiteUser\runForUpdate()'],['../class_permanent_object.html#a410146aae64feae05acfe03943f1ce07',1,'PermanentObject\runForUpdate()']]]
 ];

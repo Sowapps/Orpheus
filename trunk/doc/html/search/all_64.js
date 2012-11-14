@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['debugfilename',['DEBUGFILENAME',['../constants_8php.html#ae1b730544ce3a0fdd4dd70e65f17bec6',1,'constants.php']]],
-  ['defaultlink',['DEFAULTLINK',['../constants_8php.html#a8f3a9ec6760b6dfdb339a1794f596787',1,'constants.php']]],
-  ['defaultmod',['DEFAULTMOD',['../constants_8php.html#a0eee36e85b54f42e4ac1d5a80727dccd',1,'constants.php']]],
+  ['defifn',['defifn',['../index_8php.html#a7ded22765b79029b0acca26547417fe2',1,'index.php']]],
   ['delete',['delete',['../class_permanent_object.html#ab5c0118d9badf56963ec81cafca8ba7d',1,'PermanentObject\delete()'],['../class_s_q_l_mapper___my_s_q_l.html#ae6485f01a1fd88810ca7d334f6611b59',1,'SQLMapper_MySQL\delete()'],['../class_s_q_l_mapper___pg_s_q_l.html#a75e6e4d7f4316f1a5bacec285bba92fe',1,'SQLMapper_PgSQL\delete()'],['../class_s_q_l_mapper.html#a5976d0ffdba9b5e1c2daa988bf8e1384',1,'SQLMapper\delete()'],['../class_user.html#ad75a67bb454fe739e55c27dbaed54b75',1,'User\delete()']]],
   ['demotest',['DemoTest',['../class_demo_test.html',1,'']]],
   ['demotest_5fclass_2ephp',['demotest_class.php',['../demotest__class_8php.html',1,'']]],

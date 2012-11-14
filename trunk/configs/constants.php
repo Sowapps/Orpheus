@@ -12,35 +12,35 @@
 define('DEV_LEVEL', E_ALL | E_STRICT);//Development
 define('PROD_LEVEL', 0);//Production
 
-define('ERROR_LEVEL', DEV_LEVEL);
+defifn('ERROR_LEVEL', DEV_LEVEL);
 
-define('TIME', $_SERVER['REQUEST_TIME']);
+defifn('TIME', $_SERVER['REQUEST_TIME']);
 //define('DS', DIRECTORY_SEPARATOR);
 define('INSIDE', true);
 
 //Useful paths.
-define('CONFPATH',		ORPHEUSPATH.'configs/');
-define('MODPATH',		ORPHEUSPATH.'modules/');
-define('LIBSPATH',		ORPHEUSPATH.'libs/');
-define('LOGSPATH',		ORPHEUSPATH.'logs/');
-define('THEMESPATH',	ORPHEUSPATH.'themes/');
+defifn('CONFPATH',		ORPHEUSPATH.'configs/');
+defifn('MODPATH',		ORPHEUSPATH.'modules/');
+defifn('LIBSPATH',		ORPHEUSPATH.'libs/');
+defifn('THEMESPATH',	ORPHEUSPATH.'themes/');
+defifn('LOGSPATH',		INSTANCEPATH.'logs/');
 
 //Static medias
-define('JSPATH',		'js/');
+defifn('JSPATH',		'js/');
 
 // LIB Initernationalization
-define('LANGPATH',	ORPHEUSPATH.'languages/');
-define('LANG',	'en_US');
+defifn('LANGPATH',		ORPHEUSPATH.'languages/');
+defifn('LANG',			'en_US');
 
 
 //Miscelanous
-define('DEFAULTMOD',	'home');
+defifn('DEFAULTMOD',	'home');
 define('SITEROOT',		'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
-define('DEFAULTLINK',	SITEROOT);
+defifn('DEFAULTLINK',	SITEROOT);
 
-define('AUTHORNAME',	'Florent HAZARD');
-define('SITENAME',		'Orpheus');
+defifn('AUTHORNAME',	'Florent HAZARD');
+defifn('SITENAME',		'Orpheus');
 
-define('PDOLOGFILENAME','.pdo_error');
-define('SYSLOGFILENAME','.system');
-define('DEBUGFILENAME',	'.debug');
+defifn('PDOLOGFILENAME','.pdo_error');
+defifn('SYSLOGFILENAME','.system');
+defifn('DEBUGFILENAME',	'.debug');

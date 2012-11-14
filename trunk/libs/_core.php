@@ -280,8 +280,9 @@ function parseFields(array $fields) {
 
 //! Gets value from an Array Path
 /*!
- * \param $fields The fields array.
- * \return A string as fields list.
+ * \param $array The array to look in.
+ * \param $apath The array path to follow.
+ * \return The resulting value or null if not found.
  *
  * Gets value from an Array Path using / as separator.
 */
