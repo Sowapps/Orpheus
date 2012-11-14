@@ -26,9 +26,10 @@ function defifn($name, $value) {
 
 defifn('ORPHEUSPATH', getcwd().'/');
 defifn('INSTANCEPATH', ORPHEUSPATH);
+defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
 
 // Edit the constant file according to the system context (OS, directory tree ...).
-require_once ORPHEUSPATH.'configs/constants.php';
+require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
