@@ -25,7 +25,7 @@ function defifn($name, $value) {
 }
 
 defifn('ORPHEUSPATH', getcwd().'/');
-defifn('INSTANCEPATH', ORPHEUSPATH);
+defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
 defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
 
 // Edit the constant file according to the system context (OS, directory tree ...).
