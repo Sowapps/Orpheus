@@ -121,7 +121,6 @@ function ensure_pdoinstance($Instance=null) {
 			$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
 			
 			try {
-				text("sqlite:{$InstSettings["path"]}");
 				$pdoInstances[$Instance] = new PDO(
 					"sqlite:{$InstSettings["path"]}"
 				);
