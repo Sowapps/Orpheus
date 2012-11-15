@@ -114,6 +114,21 @@ function ensure_pdoinstance($Instance=null) {
 				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
 			}
 		}
+		
+	} else if( $InstSettings['driver'] == 'sqlite' ) {
+		//If Instance does not exist yet, it is not connected, we create it & link it.
+		if( empty($pdoInstances[$Instance]) ) {
+			$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
+			
+			try {
+				$pdoInstances[$Instance] = new PDO(
+					"sqlite:{$InstSettings["path"]}"
+				);
+				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			} catch (PDOException $e) {
+				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
+			}
+		}
 	}
 	return $Instance;
 }
@@ -136,7 +151,7 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	$pdoInstance = $pdoInstances[$Instance];
 		
 		
-	if( $InstSettings['driver'] == 'mysql' || $InstSettings['driver'] == 'pgsql' ) {
+	if( in_array($InstSettings['driver'], array('mysql', 'pgsql', 'sqlite')) ) {
 	
 		if( bintest($Fetch, PDOEXEC) ) { //Exec
 			try {
@@ -185,6 +200,7 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 			unset($PDOSQuery);
 		}
 		return $returnValue;
+		
 	}
 	
 	//Unknown Driver
