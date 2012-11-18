@@ -23,6 +23,7 @@ defifn('CONFPATH',		ORPHEUSPATH.'configs/');
 defifn('MODPATH',		ORPHEUSPATH.'modules/');
 defifn('LIBSPATH',		ORPHEUSPATH.'libs/');
 defifn('THEMESPATH',	ORPHEUSPATH.'themes/');
+defifn('THEMESURL',		'themes/');
 defifn('LOGSPATH',		INSTANCEPATH.'logs/');
 
 //Static medias
