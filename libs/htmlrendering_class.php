@@ -33,7 +33,7 @@ class HTMLRendering extends Rendering {
 		Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return THEMESPATH.static::$theme.'/'.static::$modelsPath;
+		return THEMESURL.static::$theme.'/'.static::$modelsPath;
 	}
 
 	//! Gets the CSS files path.
@@ -43,6 +43,6 @@ class HTMLRendering extends Rendering {
 		Gets the path to the CSS files.
 	*/
 	public static function getCSSPath() {
-		return THEMESPATH.static::$theme.'/'.static::$cssPath;
+		return THEMESURL.static::$theme.'/'.static::$cssPath;
 	}
 }
