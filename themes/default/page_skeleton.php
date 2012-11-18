@@ -18,6 +18,14 @@ if( !empty($METAPROP) ) {
 	}
 }
 ?>
+
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>style.css" type="text/css" media="screen" />
+	
+	<!-- External JS libraries -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
 </head>
 <body class="<?php echo $Module; ?>">
 
