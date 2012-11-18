@@ -20,6 +20,7 @@ if( !empty($METAPROP) ) {
 ?>
 
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-responsive.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>style.css" type="text/css" media="screen" />
 	
 	<!-- External JS libraries -->
