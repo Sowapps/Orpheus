@@ -280,9 +280,8 @@ function parseFields(array $fields) {
 
 //! Gets value from an Array Path
 /*!
- * \param $array The array to look in.
- * \param $apath The array path to follow.
- * \return The resulting value or null if not found.
+ * \param $fields The fields array.
+ * \return A string as fields list.
  *
  * Gets value from an Array Path using / as separator.
 */
@@ -551,4 +550,60 @@ function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, 
 	return "
 <select {$selectAttr}>{$opts}
 </select>";
+}
+
+//! Converts special characters to non-special ones
+/*!
+ * \param $string The string to convert.
+ * \return The string wih no special characters.
+ *
+ * Replaces all special characters in $string by the non-special version of theses.
+*/
+function convertSpecialChars($string) {
+	return str_replace( array(
+	'À','à','Á','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
+	'C','c','C','c','Ç','ç',
+	'D','d','Ð','d',
+	'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
+	'G','g',
+	'Ì','ì','Í','í','Î','î','Ï','ï',
+	'L','l','L','l','L','l',
+	'Ñ','ñ','N','n','N','n',
+	'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
+	'R','r','R','r',
+	'Š','š','S','s','S','s',
+	'T','t','T','t','T','t',
+	'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
+	'Ÿ','ÿ','ý','Ý',
+	'Ž','ž','Z','z','Z','z',
+	'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ',
+	'”','“','‘','’',"'","\n","\r"), array(
+	'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
+	'C','c','C','c','C','c',
+	'D','d','D','d',
+	'E','e','E','e','E','e','E','e','E','e','E','e',
+	'G','g',
+	'I','i','I','i','I','i','I','i',
+	'L','l','L','l','L','l',
+	'N','n','N','n','N','n',
+	'O','o','O','o','O','o','O','o','Oe','oe','O','o','o',
+	'R','r','R','r',
+	'S','s','S','s','S','s',
+	'T','t','T','t','T','t',
+	'U','u','U','u','U','u','Ue','ue','U','u',
+	'Y','y','Y','y',
+	'Z','z','Z','z','Z','z',
+	'TH','th','DH','dh','ss','OE','oe','AE','ae','u',
+	'','','','','','',''), $string);
+}
+
+//! Converts the string into a slug
+/*!
+ * \param $string The string to convert.
+ * \return The slug version.
+ *
+ * Converts string to lower case and converts all special characters. 
+*/
+function toSlug($string) {
+	return convertSpecialChars(strtolower($string));
 }
