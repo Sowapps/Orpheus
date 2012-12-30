@@ -54,14 +54,15 @@ function includeDir($dir) {
 	$files = scandir($dir);
 	$i=0;
 	foreach($files as $file) {
-		if( $file[0] == '_' ) {
-			//We don't check infinite file system loops.
-			if( !is_dir($dir.$file) ) {
-				require_once $dir.$file;
-				$i++;
-			} else if( is_readable($dir.$file) ) {
-				$i += includeDir($dir.$file.'/');
-			}
+		if( !is_readable($dir.$file) ) {
+			continue;
+		}
+		//We don't check infinite file system loops.
+		if( is_dir($dir.$file) ) {
+			$i += includeDir($dir.$file.'/');
+		} else if( $file[0] == '_' ) {
+			require_once $dir.$file;
+			$i++;
 		}
 	}
 	return $i;
@@ -85,7 +86,7 @@ spl_autoload_register( function($className) {
 			$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
 			$AUTOLOADSFROMCONF = true;
 		}
-		// PHP's class name are not case sensitive.
+		// PHP's class' names are not case sensitive.
 		$bFile = strtolower($className);
 		
 		// If the class file path is known in the AUTOLOADS array
