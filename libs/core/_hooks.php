@@ -5,6 +5,8 @@
  * PHP File containing default registering of hooks' callbacks.
  */
 
+using('hooks.hook');
+
 //! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
 	//If user try to override url rewriting and the requested page is not root.
