@@ -304,8 +304,11 @@ function apath_get($array, $apath) {
  * \param $pkgPath The package path.
  * \warning You should only use lowercase for package names.
  * 
- * Includes the package from the libs directory.
- * e.g: "package.myclass", "package.other.*"
+ * Includes a class from a package in the libs directory, or calls the package loader.
+ * e.g: "package.myclass", "package.other.*", "package"
+ * 
+ * Packages should include a _loader.php or loader.php file (it is detected in that order).
+ * Class files should be named classname_class.php
 */
 function using($pkgPath) {
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
@@ -316,6 +319,13 @@ function using($pkgPath) {
 			if( preg_match("#^[^\.].*_class.php$#", $file) ) {
 				require_once $dir.'/'.$file;
 			}
+		}
+	}
+	if( is_dir($pkgPath) ) {
+		if( file_exists($pkgPath.'/_loader.php') ) {
+			require_once $pkgPath.'/_loader.php';
+		} else {
+			require_once $pkgPath.'/loader.php';
 		}
 	}
 	require_once $pkgPath.'_class.php';
