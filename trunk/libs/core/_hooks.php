@@ -33,12 +33,3 @@ Hook::register('checkModule', function () {
 	$GLOBALS['ACCESS'] = Config::build('access', true);
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 });
-
-// Publisher library
-
-//! Callback for Hook 'runModule'
-Hook::register('runModule', function () {
-	if( !User::canAccess($GLOBALS['Module']) ) {
-		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : DEFAULTLINK);
-	}
-});
