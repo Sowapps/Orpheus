@@ -50,6 +50,7 @@ set_error_handler('exception_error_handler');
 	Includes all files with a name beginning by '_' in the directory $dir.
 */
 function includeDir($dir) {
+	echo "Including $dir<br />\n";
 	//Require to be immediatly available.
 	$files = scandir($dir);
 	$i=0;
@@ -59,6 +60,7 @@ function includeDir($dir) {
 			continue;
 		}
 		//We don't check infinite file system loops.
+		echo "$dir$file<br />\n";
 		if( is_dir($dir.$file) ) {
 			$i += includeDir($dir.$file.'/');
 		} else if( $file[0] == '_' ) {
