@@ -333,8 +333,10 @@ function using($pkgPath) {
 	if( is_dir($pkgPath) ) {
 		text('IS DIR');
 		if( file_exists($pkgPath.'/_loader.php') ) {
+			text("Loader _loader");
 			require_once $pkgPath.'/_loader.php';
 		} else {
+			text("Loader loader");
 			require_once $pkgPath.'/loader.php';
 		}
 		return;
