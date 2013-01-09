@@ -3,7 +3,7 @@
  */
 
 text("Adding autoload Hook");
-addAutoload('Hook',						'hook/hook_class.php');
+addAutoload('Hook',						'hooks/hook');
 
 text("Hook config");
 /*
