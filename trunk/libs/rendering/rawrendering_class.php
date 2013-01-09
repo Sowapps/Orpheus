@@ -11,6 +11,9 @@ class RawRendering extends Rendering {
 	*/
 	public function render($model=null, $env=array()) {
 		extract($env);
+		if( !isset($Page) ) {
+			$Page = '';
+		}
 		return $Page;
 	}
 }
