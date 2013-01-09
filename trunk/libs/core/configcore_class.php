@@ -91,13 +91,15 @@ abstract class ConfigCore {
 	//! Gets configuration from the main configuration object.
 	/*!
 		\param $key The key to get the value.
+		\param $default The default value to use.
 		\return A config value.
 		
 		Calls __get() method from main configuration object.
 	*/
-	public static function get($key) {
+	public static function get($key, $default=null) {
 		if( !isset(static::$main) ) {
-			throw new Exception('No Main Config');
+			return $default;
+			//throw new Exception('No Main Config');
 		}
 		return static::$main->$key;
 	}
