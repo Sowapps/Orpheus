@@ -6,7 +6,7 @@
  */
 
 echo __FILE__.' : '.__LINE__."<br />\n";
-using('hooks.hook');
+using('hooks');
 
 echo __FILE__.' : '.__LINE__."<br />\n";
 
