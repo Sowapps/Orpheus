@@ -24,7 +24,6 @@ function defifn($name, $value) {
 	return true;
 }
 
-text(__FILE__.' : '.__LINE__);
 defifn('ORPHEUSPATH', getcwd().'/');
 defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
 defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
