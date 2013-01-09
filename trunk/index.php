@@ -131,7 +131,7 @@ spl_autoload_register( function($className) {
 		die('A fatal error occured loading libraries.');
 	}
 }, true, true );// End of spl_autoload_register()
-text(__FILE__.' : '.__LINE__);
+echo __FILE__.' : '.__LINE__."<br />\n";
 
 $AUTOLOADS = array();
 $Module = '';// Useful for initializing errors.
@@ -139,15 +139,15 @@ $Module = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 try {
 	
-	text(__FILE__.' : '.__LINE__);
+	echo __FILE__.' : '.__LINE__."<br />\n";
 	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
-	text(__FILE__.' : '.__LINE__);
+	echo __FILE__.' : '.__LINE__."<br />\n";
 	
 	includeDir(LIBSPATH);// Require some hooks.
 	
-	text(__FILE__.' : '.__LINE__);
+	echo __FILE__.' : '.__LINE__."<br />\n";
 	//Here start Hooks and Session too.
 	Hook::trigger('startSession');
 	
