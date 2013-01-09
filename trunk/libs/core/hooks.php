@@ -5,10 +5,8 @@
  * PHP File containing default registering of hooks' callbacks.
  */
 
-echo __FILE__.' : '.__LINE__."<br />\n";
 using('hooks');
 
-echo __FILE__.' : '.__LINE__."<br />\n";
 
 //! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
@@ -26,7 +24,6 @@ Hook::register('runModule', function ($Module) {
 		permanentRedirectTo(DEFAULTLINK);
 	}
 });
-echo __FILE__.' : '.__LINE__."<br />\n";
 
 //! Callback for Hook 'checkModule'
 Hook::register('checkModule', function () {
@@ -37,4 +34,3 @@ Hook::register('checkModule', function () {
 	$GLOBALS['ACCESS'] = Config::build('access', true);
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 });
-echo __FILE__.' : '.__LINE__."<br />\n";
