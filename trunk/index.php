@@ -193,7 +193,7 @@ try {
 		ob_end_clean();
 	}
 	if( !function_exists('sys_error') ) {
-		die("$e");
+		die($e->getMessage()."<br />\n".$e->getTraceAsString());
 	}
 	ob_start();
 	sys_error("$e", $coreAction);
