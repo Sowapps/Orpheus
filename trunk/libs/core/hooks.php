@@ -5,7 +5,10 @@
  * PHP File containing default registering of hooks' callbacks.
  */
 
+echo __FILE__.' : '.__LINE__."<br />\n";
 using('hooks.hook');
+
+echo __FILE__.' : '.__LINE__."<br />\n";
 
 //! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
