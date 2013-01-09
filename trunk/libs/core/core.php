@@ -173,7 +173,7 @@ function log_error($report, $file, $action='', $silent=false) {
 	if( !$silent && ERROR_LEVEL == DEV_LEVEL ) {
 		if( !Rendering::doDisplay('report', $Error) ) {
 			// If we fail in our display of this error, this is fatal.
-			echo print_r($Error, true);
+			echo print_r($Error, 1);
 		}
 	}
 }

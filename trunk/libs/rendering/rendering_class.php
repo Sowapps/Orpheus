@@ -119,9 +119,12 @@ abstract class Rendering {
 	final public static function doDisplay($model=null, $env=array()) {
 		self::checkRendering();
 		if( !isset(self::$rendering) ) {
+			echo "Failed to render";
 			return false;
 		}
+		echo "Succeeded to render";
 		self::$rendering->display($model, $env);
+		return true;
 	}
 	
 	//! Checks the rendering
