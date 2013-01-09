@@ -125,7 +125,7 @@ abstract class Rendering {
 	 */
 	final private static function checkRendering() {
 		if( is_null(self::$rendering) ) {
-			$c = Config::get('default_rendering');
+			$c = Config::get('default_rendering', 'rawrendering');
 			self::$rendering = new $c();
 		}
 	}
