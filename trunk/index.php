@@ -52,7 +52,6 @@ set_error_handler('exception_error_handler');
 	It browses recursively through sub-directories.
 */
 function includeDir($dir, $importants=array()) {
-	echo "Including $dir<br />\n";
 	//Require to be immediatly available.
 	$files = array_unique(array_merge($importants, scandir($dir)));
 	
@@ -63,7 +62,6 @@ function includeDir($dir, $importants=array()) {
 			continue;
 		}
 		//We don't check infinite file system loops.
-		echo "$dir$file<br />\n";
 		if( is_dir($dir.$file) ) {
 			$i += includeDir($dir.$file.'/');
 		} else if( $file[0] == '_' ) {

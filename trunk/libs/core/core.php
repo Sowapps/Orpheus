@@ -359,11 +359,9 @@ function using($pkgPath) {
 function addAutoload($className, $classPath) {
 	global $AUTOLOADS;
 	$className = strtolower($className);
-	echo "addAutoload($className, $classPath)<br />\n";
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
-	echo "Class path: ".LIBSPATH.$classPath."<br />\n";
 	var_dump(is_readable(LIBSPATH.$classPath));
 	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
 		$AUTOLOADS[$className] = $classPath.'_class.php';
@@ -372,7 +370,6 @@ function addAutoload($className, $classPath) {
 		$AUTOLOADS[$className] = $classPath;
 		
 	} else {
-		echo "Class file not found<br />\n";
 		throw new Exception("Class file of \"{$className}\" not found.");
 	}
 	return true;
