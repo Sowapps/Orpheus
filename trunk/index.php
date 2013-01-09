@@ -45,17 +45,19 @@ set_error_handler('exception_error_handler');
 //! Includes a directory
 /*!
 	\param $dir The directory to include.
+	\param $importants The files in that are importants to load first.
 	\return The number of files included.
 	
 	Includes all files with a name beginning by '_' in the directory $dir.
+	It browses recursively through sub-directories.
 */
-function includeDir($dir) {
+function includeDir($dir, $importants=array()) {
 	echo "Including $dir<br />\n";
 	//Require to be immediatly available.
-	$files = scandir($dir);
+	$files = array_unique(array_merge($importants, scandir($dir)));
 	$i=0;
 	foreach($files as $file) {
-		// If file is not readable or hidden.
+		// If file is not readable or hidden, we pass.
 		if( !is_readable($dir.$file) || $file[0] == '.' ) {
 			continue;
 		}
@@ -143,7 +145,7 @@ $coreAction = 'initializing_core';
 try {
 	
 	echo __FILE__.' : '.__LINE__."<br />\n";
-	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
+	includeDir(CONFPATH, array('core/'));// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	echo __FILE__.' : '.__LINE__."<br />\n";
