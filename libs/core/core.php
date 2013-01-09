@@ -314,12 +314,9 @@ function apath_get($array, $apath) {
  * Class files should be named classname_class.php
 */
 function using($pkgPath) {
-	text("Using( $pkgPath )");
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
-	text("=> $pkgPath ");
 	// Including all contents of a package
 	if( substr($pkgPath, -2) == '.*' ) {
-		text('IS .*');
 		$dir = substr($pkgPath, 0, -2);
 		$files = scandir($dir);
 		foreach($files as $file) {
@@ -331,17 +328,13 @@ function using($pkgPath) {
 	}
 	// Including loader of a package
 	if( is_dir($pkgPath) ) {
-		text('IS DIR');
 		if( file_exists($pkgPath.'/_loader.php') ) {
-			text("Loader _loader");
 			require_once $pkgPath.'/_loader.php';
 		} else {
-			text("Loader loader");
 			require_once $pkgPath.'/loader.php';
 		}
 		return;
 	}
-	text('Including file.');
 	// Including a class
 	require_once $pkgPath.'_class.php';
 }
@@ -362,7 +355,6 @@ function addAutoload($className, $classPath) {
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
-	var_dump(is_readable(LIBSPATH.$classPath));
 	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
 		$AUTOLOADS[$className] = $classPath.'_class.php';
 		
