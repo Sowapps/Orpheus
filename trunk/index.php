@@ -184,6 +184,9 @@ try {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
 	}
+	if( !function_exists('sys_error') ) {
+		die("$e");
+	}
 	ob_start();
 	sys_error("$e", $coreAction);
 	$Page = ob_get_contents();
