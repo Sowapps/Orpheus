@@ -118,6 +118,9 @@ abstract class Rendering {
 	 */
 	final public static function doDisplay($model=null, $env=array()) {
 		self::checkRendering();
+		if( !isset(self::$rendering) ) {
+			return false;
+		}
 		self::$rendering->display($model, $env);
 	}
 	
