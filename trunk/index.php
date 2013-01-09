@@ -196,7 +196,7 @@ try {
 		die($e->getMessage()."<br />\n".$e->getTraceAsString());
 	}
 	ob_start();
-	sys_error("$e", $coreAction);
+	sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), $coreAction);
 	$Page = ob_get_contents();
 	ob_end_clean();
 }
