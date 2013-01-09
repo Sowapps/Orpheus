@@ -55,6 +55,7 @@ function includeDir($dir, $importants=array()) {
 	echo "Including $dir<br />\n";
 	//Require to be immediatly available.
 	$files = array_unique(array_merge($importants, scandir($dir)));
+	
 	$i=0;
 	foreach($files as $file) {
 		// If file is not readable or hidden, we pass.
@@ -144,8 +145,10 @@ $Module = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 try {
 	
+	includeDir(LIBSPATH.'core/');// Load engine Core
+	
 	echo __FILE__.' : '.__LINE__."<br />\n";
-	includeDir(CONFPATH, array('core/'));// Require to be loaded before libraries to get hooks.
+	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	echo __FILE__.' : '.__LINE__."<br />\n";
