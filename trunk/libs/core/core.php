@@ -363,6 +363,8 @@ function addAutoload($className, $classPath) {
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
+	echo "Class path: ".LIBSPATH.$classPath."<br />\n";
+	var_dump(is_readable(LIBSPATH.$classPath));
 	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
 		$AUTOLOADS[$className] = $classPath.'_class.php';
 		
