@@ -314,7 +314,9 @@ function apath_get($array, $apath) {
  * Class files should be named classname_class.php
 */
 function using($pkgPath) {
+	text("Using( $pkgPath )");
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	// Including all contents of a package
 	if( substr($pkgPath, -2) == '.*' ) {
 		$dir = substr($pkgPath, 0, -2);
 		$files = scandir($dir);
@@ -323,14 +325,19 @@ function using($pkgPath) {
 				require_once $dir.'/'.$file;
 			}
 		}
+		return;
 	}
+	// Including loader of a package
 	if( is_dir($pkgPath) ) {
+		text('IS DIR');
 		if( file_exists($pkgPath.'/_loader.php') ) {
 			require_once $pkgPath.'/_loader.php';
 		} else {
 			require_once $pkgPath.'/loader.php';
 		}
+		return;
 	}
+	// Including a class
 	require_once $pkgPath.'_class.php';
 }
 
