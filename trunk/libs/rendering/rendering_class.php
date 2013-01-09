@@ -89,7 +89,9 @@ abstract class Rendering {
 	 */
 	final public static function doShow() {
 		$c = Config::get('default_rendering');
-		$c::show();
+		if( !is_null($c) ) {
+			$c::show();
+		}
 	}
 	
 	//! Calls the render function.
@@ -125,8 +127,10 @@ abstract class Rendering {
 	 */
 	final private static function checkRendering() {
 		if( is_null(self::$rendering) ) {
-			$c = Config::get('default_rendering', 'rawrendering');
-			self::$rendering = new $c();
+			$c = Config::get('default_rendering');
+			if( !is_null($c) ) {
+				self::$rendering = new $c();
+			}
 		}
 	}
 }
