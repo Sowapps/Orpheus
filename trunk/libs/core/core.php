@@ -316,8 +316,10 @@ function apath_get($array, $apath) {
 function using($pkgPath) {
 	text("Using( $pkgPath )");
 	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	text("=> $pkgPath ");
 	// Including all contents of a package
 	if( substr($pkgPath, -2) == '.*' ) {
+		text('IS .*');
 		$dir = substr($pkgPath, 0, -2);
 		$files = scandir($dir);
 		foreach($files as $file) {
@@ -337,6 +339,7 @@ function using($pkgPath) {
 		}
 		return;
 	}
+	text('Including file.');
 	// Including a class
 	require_once $pkgPath.'_class.php';
 }
