@@ -5,5 +5,5 @@
  * Author: Your name.
  */
 
-addAutoload('SiteUser', '_src/siteuser_class.php');
-addAutoload('DemoTest', '_src/demotest_class.php');
+addAutoload('SiteUser', 'src/siteuser');
+addAutoload('DemoTest', 'src/demotest');
