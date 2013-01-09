@@ -54,7 +54,8 @@ function includeDir($dir) {
 	$files = scandir($dir);
 	$i=0;
 	foreach($files as $file) {
-		if( !is_readable($dir.$file) ) {
+		// If file is not readable or hidden.
+		if( !is_readable($dir.$file) || $file[0] == '.' ) {
 			continue;
 		}
 		//We don't check infinite file system loops.
