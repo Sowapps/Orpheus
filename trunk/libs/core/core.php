@@ -171,7 +171,10 @@ function log_error($report, $file, $action='', $silent=false) {
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( !$silent && ERROR_LEVEL == DEV_LEVEL ) {
-		Rendering::doDisplay('report', $Error);
+		if( !Rendering::doDisplay('report', $Error) ) {
+			// If we fail in our display of this error, this is fatal.
+			text($Error);
+		}
 	}
 }
 
