@@ -359,6 +359,7 @@ function using($pkgPath) {
 function addAutoload($className, $classPath) {
 	global $AUTOLOADS;
 	$className = strtolower($className);
+	echo "addAutoload($className, $classPath)<br />\n";
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
@@ -369,6 +370,7 @@ function addAutoload($className, $classPath) {
 		$AUTOLOADS[$className] = $classPath;
 		
 	} else {
+		echo "Class file not found<br />\n";
 		throw new Exception("Class file of \"{$className}\" not found.");
 	}
 	return true;

@@ -203,11 +203,13 @@ try {
 
 try {
 	$coreAction = 'displaying_'.$Module;
-	Hook::trigger('showRendering', true);
+	if( class_exists('Hook') ) {
+		Hook::trigger('showRendering', true);
+	}
 	Rendering::doShow();//Generic final display.
 	
 } catch(Exception $e) {
-	@sys_error("$e", $coreAction);
+	@sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), $coreAction);
 	die('A fatal display error occured.');
 }
 ?>
