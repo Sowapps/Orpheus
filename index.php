@@ -12,7 +12,7 @@
 /*!
  * \param $name		The name of the constant.
 * \param $value	The value of the constant.
-* \return True if the constant was defined successfully.
+* \return True if the constant was defined successfully, else False.
 
 * Defines a constant if this one is not defined yet.
 */
@@ -52,6 +52,7 @@ set_error_handler('exception_error_handler');
 	It browses recursively through sub-directories.
 */
 function includeDir($dir, $importants=array()) {
+	//echo "includeDir($dir)<br />\n";
 	//Require to be immediatly available.
 	$files = array_unique(array_merge($importants, scandir($dir)));
 	
@@ -61,6 +62,7 @@ function includeDir($dir, $importants=array()) {
 		if( !is_readable($dir.$file) || $file[0] == '.' ) {
 			continue;
 		}
+		//echo "Including $dir$file ...<br />\n";
 		//We don't check infinite file system loops.
 		if( is_dir($dir.$file) ) {
 			$i += includeDir($dir.$file.'/');
@@ -68,7 +70,9 @@ function includeDir($dir, $importants=array()) {
 			require_once $dir.$file;
 			$i++;
 		}
+		//echo ">>> $dir$file Done.<br />\n";
 	}
+	//echo "> $dir Done.<br />\n";
 	return $i;
 }
 
@@ -169,10 +173,10 @@ try {
 		$Module = $_GET['module'];
 	}
 	if( empty($Module) || !is_name($Module) ) {
-		throw new Exception('invalidModuleName');
+		throw new UserException('invalidModuleName');
 	}
 	if( !is_readable(MODPATH.$Module.'.php') ) {
-		throw new Exception('inexistantModule');
+		throw new UserException('inexistantModule');
 	}
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
@@ -181,6 +185,10 @@ try {
 	require_once MODPATH.$Module.'.php';
 	$Page = ob_get_contents();
 	ob_end_clean();
+	
+} catch(UserException $e) {
+	reportError($e);
+	$Page = getReportsHTML();
 	
 } catch(Exception $e) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
