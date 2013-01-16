@@ -355,21 +355,28 @@ abstract class PermanentObject {
 	/*!
 	 * \param $options The options used to get the permanents object.
 	 * \return An array of array containing object's data.
-	 * \sa SQLMapper::doSelect()
+	 * \sa SQLMapper
 	 * 
 	 * Gets an objects' list using this class' table.
+	 * The following explanations are for the case where output is SQLMapper::ARR_OBJECTS
+	 * If only one object is expected, we try to load and return it, else we return null.
+	 * In other cases, we load them and return a list of all objects, event if there is not result or only one.
 	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
+		// May be incompatible with old revisions (< R398)
+		if( !isset($options['output']) ) {
+			$options['output'] = SQLMapper::ARR_OBJECTS;
+		}
 		//This method intercepts outputs of array of objects.
-		if( isset($options['output']) && $options['output'] == SQLMapper::ARR_OBJECTS ) {
+		if( $options['output'] == SQLMapper::ARR_OBJECTS ) {
 			$options['output'] = SQLMapper::ARR_ASSOC;
 			$objects = 1;
 		}
 		$r = SQLMapper::doSelect($options);
 		if( !empty($r) && isset($objects) ) {
-			if( !empty($r) && isset($options['number']) && $options['number'] == 1 ) {
-				$r = static::load($r);
+			if( isset($options['number']) && $options['number'] == 1 ) {
+				$r = (!empty($r)) ? static::load($r) : null;
 			} else {
 				foreach( $r as &$rdata ) {
 					$rdata = static::load($rdata);
