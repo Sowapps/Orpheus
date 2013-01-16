@@ -167,6 +167,9 @@ function cleanscandir($dir, $sorting_order=0) {
  * If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
 */
 function log_error($report, $file, $action='', $silent=false) {
+	if( !is_scalar($report) ) {
+		$report = print_r($report, 1);
+	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
