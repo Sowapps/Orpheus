@@ -158,7 +158,7 @@ function cleanscandir($dir, $sorting_order=0) {
  * \param $report The report to log.
  * \param $file The log file path.
  * \param $action The action associated to the report. Default value is an empty string.
- * \param $silent If True, it won't display the report.
+ * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
  * \warning This function require a writable log file.
 
  * Logs an error in a file serializing data to JSON.
@@ -166,17 +166,23 @@ function cleanscandir($dir, $sorting_order=0) {
  * The log folder is the constant LOGSPATH or, if undefined, the current one.
  * If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
 */
-function log_error($report, $file, $action='', $silent=false) {
+function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
 		$report = 'NON-SCALAR::'.print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	if( !$silent && ERROR_LEVEL == DEV_LEVEL ) {
-		if( !Rendering::doDisplay('report', $Error) ) {
-			// If we fail in our display of this error, this is fatal.
-			echo print_r($Error, 1);
+	if( !is_null($message) ) {
+		if( ERROR_LEVEL == DEV_LEVEL ) {
+			$Error['message'] = (empty($message)) ? $report : $message;
+			// Display a pretty formatted error report
+			if( !Rendering::doDisplay('report', $Error) ) {
+				// If we fail in our display of this error, this is fatal.
+				echo print_r($Error, 1);
+			}
+		} else {
+			die($message);
 		}
 	}
 }
@@ -191,7 +197,7 @@ function log_error($report, $file, $action='', $silent=false) {
  * The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
 */
 function log_debug($report, $action='') {
-	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, true);
+	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, null);
 }
 
 //! Logs a system error.
@@ -205,6 +211,19 @@ function log_debug($report, $action='') {
 */
 function sys_error($report, $action='') {
 	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $action);
+}
+
+//! Logs a sql error.
+/*!
+ * \param $report The report to log.
+ * \param $action The action associated to the report. Default value is an empty string.
+ * \sa log_error()
+
+ * Logs a sql error.
+ * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
+*/
+function sql_error($report, $action='') {
+	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action, t('errorOccurredWithDB'));
 }
 
 //! Limits the length of a string
