@@ -215,9 +215,12 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 	Saves the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='') {
-	if( function_exists('log_error') ) {
-		log_error($PDOReport, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $Action);
+	// Let's system manage this error (> R400)
+	if( function_exists('sql_error') ) {
+		sql_error($PDOReport, $Action);
+		return;
 	}
+	// Manage error by myself (compatibility with olds version)
 	$Error = array("date" => date('c'), "report" => $PDOReport, "action" => $Action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').( (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error');
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
