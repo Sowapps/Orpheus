@@ -168,7 +168,7 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='', $silent=false) {
 	if( !is_scalar($report) ) {
-		$report = print_r($report, 1);
+		$report = 'NON-SCALAR::'.print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
