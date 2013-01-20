@@ -24,7 +24,9 @@ function defifn($name, $value) {
 	return true;
 }
 
-defifn('ORPHEUSPATH', getcwd().'/');
+// This method take care about paths through symbolic links.
+defifn('ORPHEUSPATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
+
 defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
 defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
 
