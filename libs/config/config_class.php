@@ -7,15 +7,25 @@ class Config extends ConfigCore {
 	
 	//!	Loads new configuration source.
 	/*!
-		\param $source An identifier to get the source.
+		\param $source An identifier or a path to get the source.
 	
-		Loads a configuration from a .ini file in CONFPATH.
+		If an identifier, loads a configuration from a .ini file in CONFPATH.
+		Else $source is a full path to the ini configuration file.
 	*/
-	public function load($source) {
-		if( !is_readable(CONFPATH.$source.'.ini') ) {
+	public function load($source) {		
+		// Full path given
+		if( is_readable($source) ) {
+			$confPath = $source;
+			
+		// File in configs folder
+		} else if( is_readable(CONFPATH.$source.'.ini') ) {
+			$confPath = CONFPATH.$source.'.ini';
+			
+		/// File not found
+		} else {
 			return array();
 		}
-		$parsed = parse_ini_file(CONFPATH.$source.'.ini', true);
+		$parsed = parse_ini_file($confPath, true);
 		$this->add($parsed);
 		return $parsed;
 	}

@@ -19,16 +19,18 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
-//Constantes PDO
-define('PDOQUERY', 0);//Simple Query (SELECT ...). Returns a result set.
-define('PDOEXEC', 1);//Simple Execution (INSERT INTO, UPDATA, DELETE ...). Returns the number of affected lines.
+defifn('DBCONFPATH'			, 'database');
 
-define('PDONOSTMT', PDOQUERY | 0<<1);//Continue, can not be used alone.
-define('PDOSTMT', PDOQUERY | 1<<1);//Returns the PDOStatement without any treatment but does NOT free the connection.
-define('PDOFETCH', PDOQUERY | 0<<2);//Query and simple Fetch (only one result) - Default
-define('PDOFETCHALL', PDOQUERY | 1<<2);//Query and Fetch All (Set of all results)
-define('PDOFETCHALLCOL', PDOQUERY | 0<<3);//All columns
-define('PDOFETCHFIRSTCOL', PDOQUERY | 1<<3);//Only the first column
+//Constantes PDO
+define('PDOQUERY'			, 0);//Simple Query (SELECT ...). Returns a result set.
+define('PDOEXEC'			, 1);//Simple Execution (INSERT INTO, UPDATA, DELETE ...). Returns the number of affected lines.
+
+define('PDONOSTMT'			, PDOQUERY | 0<<1);//Continue, can not be used alone.
+define('PDOSTMT'			, PDOQUERY | 1<<1);//Returns the PDOStatement without any treatment but does NOT free the connection.
+define('PDOFETCH'			, PDOQUERY | 0<<2);//Query and simple Fetch (only one result) - Default
+define('PDOFETCHALL'		, PDOQUERY | 1<<2);//Query and Fetch All (Set of all results)
+define('PDOFETCHALLCOL'		, PDOQUERY | 0<<3);//All columns
+define('PDOFETCHFIRSTCOL'	, PDOQUERY | 1<<3);//Only the first column
 
 //! Ensures to be connected to the database.
 /*
@@ -45,7 +47,7 @@ function ensure_pdoinstance($Instance=null) {
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
-		$config = Config::build('database', true);
+		$config = Config::build(DBCONFPATH, true);
 		$DBS = $config->all;
 	}
 	
