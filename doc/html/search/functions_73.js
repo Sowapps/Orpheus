@@ -3,7 +3,7 @@ var searchData=
   ['save',['save',['../class_permanent_object.html#aa161262d8e6640659f93eb70e00d8d67',1,'PermanentObject']]],
   ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb',1,'SQLMapper_PgSQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
   ['send',['send',['../class_email.html#aeff0b41b4d792c8e52c08f088fdc70a4',1,'Email']]],
-  ['sendresponse',['sendResponse',['../__core_8php.html#a5541f3d746d89fffa14f9a0fa9440e5b',1,'_core.php']]],
+  ['sendresponse',['sendResponse',['../core_8php.html#a5541f3d746d89fffa14f9a0fa9440e5b',1,'core.php']]],
   ['set',['set',['../class_config_core.html#ac71592819491bb200c4e3b9b174c4ba2',1,'ConfigCore']]],
   ['setaltbody',['setAltBody',['../class_email.html#a2a618da95e293da3e5e93662d6eccef8',1,'Email']]],
   ['setheader',['setHeader',['../class_email.html#a6b96d29cb1773a336a6687526234bc94',1,'Email']]],
@@ -16,8 +16,9 @@ var searchData=
   ['settype',['setType',['../class_email.html#aed46d83df3197fe96ec398ccb86eb32d',1,'Email']]],
   ['setvalue',['setValue',['../class_permanent_object.html#a7ea07b0b92ab5bdb9942a3ffab60934e',1,'PermanentObject']]],
   ['slug',['slug',['../class_hook.html#a3bf465684fb291a0da9c6964710a9e5f',1,'Hook']]],
-  ['ssh2_5frun',['ssh2_run',['../__core_8php.html#a23f9517830f7d777d047fd28fd3891dd',1,'_core.php']]],
+  ['sql_5ferror',['sql_error',['../core_8php.html#ac0bce37a6911d24d619d69fed32b405f',1,'core.php']]],
+  ['ssh2_5frun',['ssh2_run',['../core_8php.html#a23f9517830f7d777d047fd28fd3891dd',1,'core.php']]],
   ['status',['status',['../class_abstract_status.html#a13065df944948731acc20a3237f0601a',1,'AbstractStatus']]],
-  ['str_5flimit',['str_limit',['../__core_8php.html#a0ff41c78802b3e48935a0c6a212f7454',1,'_core.php']]],
-  ['sys_5ferror',['sys_error',['../__core_8php.html#a211c992147daa63b42ade37dc9b72c13',1,'_core.php']]]
+  ['str_5flimit',['str_limit',['../core_8php.html#a0ff41c78802b3e48935a0c6a212f7454',1,'core.php']]],
+  ['sys_5ferror',['sys_error',['../core_8php.html#a211c992147daa63b42ade37dc9b72c13',1,'core.php']]]
 ];

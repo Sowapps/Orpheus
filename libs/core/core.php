@@ -305,8 +305,9 @@ function parseFields(array $fields) {
 
 //! Gets value from an Array Path
 /*!
- * \param $fields The fields array.
- * \return A string as fields list.
+ * \param $array The array to get the value from.
+ * \param $apath The path used to browse the array.
+ * \return The value from $apath in $array.
  *
  * Gets value from an Array Path using / as separator.
 */
@@ -389,14 +390,14 @@ function addAutoload($className, $classPath) {
 	return true;
 }
 
-//! Gets the url of a module
+//! Gets the full url of a module
 /*!
  * \param $module The module.
  * \param $action The action to use for this url.
  * \param $queryStr The query string to add to the url, can be an array.
  * \return The url of $module.
 
- * Gets url of a module, using default link for module defaut module.
+ * Gets the full url of a module, using default link for default module.
 */
 function u($module, $action='', $queryStr='') {
 	if( $module == DEFAULTMOD && empty($action) ) {
@@ -410,7 +411,7 @@ function u($module, $action='', $queryStr='') {
 			$queryStr = str_replace('&', '&amp;');
 		}
 	}
-	return $module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
+	return SITEROOT.$module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
 }
 
 //! Adds a report

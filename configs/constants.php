@@ -36,7 +36,7 @@ defifn('LANG',			'en_US');
 
 //Miscelanous
 defifn('DEFAULTMOD',	'home');
-define('SITEROOT',		'http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['SCRIPT_NAME']));
+define('SITEROOT',		'http://'.$_SERVER['HTTP_HOST'].dirpath($_SERVER['SCRIPT_NAME']));
 defifn('DEFAULTLINK',	SITEROOT);
 
 defifn('AUTHORNAME',	'Florent HAZARD');
