@@ -24,8 +24,20 @@ function defifn($name, $value) {
 	return true;
 }
 
+//! Returns the directory path of path
+/*!
+	\param $path The path get parent directory
+	\return The secured path
+	
+	Returns the parent directory path of $path
+*/
+function dirpath($path) {
+	$dirname = dirname($path);
+	return ( $dirname == '/' ) ? '/' : $dirname.'/';
+}
+
 // This method take care about paths through symbolic links.
-defifn('ORPHEUSPATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
+defifn('ORPHEUSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));
 
 defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
 defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
@@ -78,7 +90,7 @@ function includeDir($dir, $importants=array()) {
 	return $i;
 }
 
-
+spl_autoload_register(
 // Class autoload function
 /*
 	\param $className The classname not loaded yet.
@@ -87,7 +99,7 @@ function includeDir($dir, $importants=array()) {
 	Includes the file according to the classname in lowercase and suffixed by '_class.php'.\n
 	The script stops if the class file is not found.\n
 */
-spl_autoload_register( function($className) {
+function($className) {
 	try {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
@@ -156,12 +168,12 @@ try {
 	
 	includeDir(LIBSPATH);// Require some hooks.
 	
-	//Here start Hooks and Session too.
+	// Here starts Hooks and Session too.
 	Hook::trigger('startSession');
 	
 	session_start();
 	
-	//Check and Get Action.
+	// Checks and Gets Action.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
 	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? $_GET['format'] : 'html';
 	
