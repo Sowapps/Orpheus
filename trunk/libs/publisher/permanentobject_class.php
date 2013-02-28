@@ -3,28 +3,34 @@ using('sqlmapper.SQLMapper');
 
 //! The permanent object class
 /*!
-	 * Create permanent object using the SQL Mapper.
-*/
+ * Manage a permanent object using the SQL Mapper.
+ */
 abstract class PermanentObject {
 	
 	//Attributes
-	protected static $table = null;
-	protected static $fields = array();
-	protected static $userEditableFields = array();
-	protected static $domain = null;
-	
 	protected static $IDFIELD = 'id';
 	protected static $instances = array();
+	
+	protected static $table = null;
+	protected static $fields = array();
+	protected static $editableFields = array();
+	protected static $validator = null;//! See checkUserInput()
+	protected static $domain = null;
 	
 	protected $modFields = array();
 	protected $data = array();
 	protected $isDeleted = false;
 	
-	// *** OVERLOADED METHODS ***
+	//! Internal static initialization
+	public static function init() {
+		static::$fields = array(static::$IDFIELD);
+	}
+	
+	// *** OVERRIDDEN METHODS ***
 	
 	//! Constructor
 	/*!
-	 * \param $data An array of the object's data to construct. 
+	 * \param $data An array of the object's data to construct
 	 */
 	public function __construct(array $data) {
 		foreach( static::$fields as $fieldname ) {
@@ -46,47 +52,43 @@ abstract class PermanentObject {
 			try {
 				$this->save();
 			} catch(Exception $e) {
-				text('An error occured while saving (__destruct):');
-				text($e->getMessage());
+				// Can be destructed outside of the matrix
+				sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__destruct(): Saving');
 			}
 		}
 	}
 	
 	//! Magic getter
 	/*!
-	 * \param $name Name of the property to get.
-	 * \return The value of field $name.
+	 * \param $name Name of the property to get
+	 * \return The value of field $name
 	 * 
 	 * Gets the value of field $name.
 	 * 'all' returns all fields.
 	*/
 	public function __get($name) {
-		try {
-			return $this->getValue(($name == 'all') ? null : $name);
-		} catch(FieldNotFoundException $e) {
-			/* Previously, we got the attribute if
-			 * the data does not exist but private is private.
-			 */
-			throw $e;
-		}
+		return $this->getValue(($name == 'all') ? null : $name);
 	}
 	
 	//! Magic setter
 	/*!
-	 * \param $name Name of the property to set.
-	 * \param $value New value of the property.
+	 * \param $name Name of the property to set
+	 * \param $value New value of the property
 	 * 
 	 * Sets the value of field $name.
 	*/
 	public function __set($name, $value) {
-		try {
-			$this->setValue($name, $value);
-		} catch(FieldNotFoundException $e) {
-			/* Previously, we set the attribute if
-			 * the data does not exist but private is private.
-			 */
-			throw $e;
-		}
+		$this->setValue($name, $value);
+	}
+	
+	//! Magic isset
+	/*!
+	 * \param $name Name of the property to check is set
+	 * 
+	 * Checks if the field $name is set.
+	*/
+	public function __isset($name) {
+        return isset($this->data[$name]);
 	}
 	
 	//! Magic toString
@@ -99,11 +101,11 @@ abstract class PermanentObject {
 		try {
 			return '#'.$this->{static::$IDFIELD}.' ('.get_class($this).')';
 		} catch( Exception $e ) {
-			die("FATAL EXCEPTION: <br />{$e}");
+			sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__toString()');
 		}
 	}
 	
-	// *** USER METHODS ***
+	// *** DEV METHODS ***
 	
 	//! Updates this permanent object
 	/*!
@@ -500,18 +502,50 @@ abstract class PermanentObject {
 	*/
 	public static function applyToObject(&$data, $id) { }
 	
-	// 		** CHECK METHODS **
+	// 		** VALIDATION METHODS **
 	
 	//! Checks user input
 	/*!
 	 * \param $uInputData The user input data to check.
+	 * \param $ref The referenced object (update only).
 	 * \return The valid data.
 	 * \overrideit
 	 * 
 	 * Checks if the class could generate a valid object from $uInputData.
 	 * The method could modify the user input to fix them but it must return the data.
 	*/
-	public static function checkUserInput($uInputData) { }
+	public static function checkUserInput($uInputData, $ref=null) {
+		if( empty(static::$validator) ) {
+			return array();
+		}
+		if( is_array(static::$validator) ) {
+			$data = array();
+			foreach( static::$validator as $field => $checkMeth ) {
+				// If editing an uneditable field.
+				if( !is_null($ref) && !in_array($field, static::$editableFields) ) {
+					continue;
+				}
+				try {
+					$value = static::$checkMeth($uInputData);
+					if( is_null($ref) || $value != $ref->$field ) {
+						$data[$field] = $value;
+					}
+				} catch(UserException $e) {
+					// TODO: Exclude empty field from error while updating.
+					reportError($e, static::getDomain());
+				}
+			}
+			return $data;
+		
+		} else if( is_object(static::$validator) ) {
+			if( method_exists(static::$validator, 'validate') ) {
+				return static::$validator->validate($uInputData);
+			}
+		}
+		return array();
+		// TODO: Using config file.
+		// else if( is_string(static::$validator) ) { }
+	}
 	
 	//! Checks for object
 	/*!
@@ -523,4 +557,5 @@ abstract class PermanentObject {
 	*/
 	public static function checkForObject($data) { }
 }
+PermanentObject::init();
 ?>

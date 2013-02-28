@@ -30,7 +30,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	);
 	public static $floodDelay = 300;//in seconds.
 
-	// *** METHODES SURCHARGEES ***
+	// *** OVERRIDDEN METHODS ***
 	
 	//! Magic string conversion
 	/*!
@@ -42,7 +42,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		return $this->getHTML();
 	}
 	
-	// *** USER METHODS ***
+	// *** DEV METHODS ***
 	
 	//! Updates this publication object
 	/*!
@@ -111,7 +111,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		));
 	}
 	
-	// 		** CHECK METHODS **
+	// 		** VALIDATION METHODS **
 	
 	//! Checks a name
 	/*!
