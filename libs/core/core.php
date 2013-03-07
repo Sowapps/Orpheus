@@ -365,7 +365,7 @@ function using($pkgPath) {
 //! Adds a class to the autoload.
 /*!
  * \param $className The class name.
- * \param $classPath The class path. (cf. description)
+ * \param $classPath The class path.
  * 
  * Adds the class to the autoload list, associated with its file.
  * The semi relative path syntax has priority over the full relative path syntax.

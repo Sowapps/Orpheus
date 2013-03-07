@@ -24,23 +24,50 @@ function defifn($name, $value) {
 	return true;
 }
 
-//! Returns the directory path of path
+//! Gets the directory path
 /*!
 	\param $path The path get parent directory
 	\return The secured path
 	
-	Returns the parent directory path of $path
+	Gets the parent directory path of $path
 */
 function dirpath($path) {
 	$dirname = dirname($path);
 	return ( $dirname == '/' ) ? '/' : $dirname.'/';
 }
 
+//! Gets the path of a file/directory using a preferred directory. 
+/*!
+ * \param $prefDir The preferred directory path to use.
+ * \param $altDir The alternative directory path.
+ * \param $commonPath The common path.
+ * 
+ * This function tries to return the path to the file $commonPath searching first
+ * in the preferred directory $prefDir and if not found in this one, it searches
+ * into the alternative directory $altDir.
+ * This function does not check if $commonPath file really exists in $altDir directory.
+*/
+function getPath($prefDir, $altDir, $commonPath) {
+	return ( file_exists($prefDir.$commonPath) ) ? $prefDir.$commonPath : $altDir.$commonPath;
+}
+
+//! Gets the path of a file/directory. 
+/*!
+ * \param $commonPath The common path.
+ * \see getPath()
+ * 
+ * This function uses getPath() with INSTANCEPATH and ORPHEUSPATH as parameters.
+ * It allows developers to get a dynamic path to a file.
+*/
+function pathOf($commonPath) {
+	return getPath(INSTANCEPATH, ORPHEUSPATH, $commonPath);
+}
+
 // This method take care about paths through symbolic links.
 defifn('ORPHEUSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));
 
 defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
-defifn('CONSTANTSPATH', ORPHEUSPATH.'configs/constants.php');
+defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
