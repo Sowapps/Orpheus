@@ -8,15 +8,13 @@
  * Configure others carefully and only if it's really necessary.\n
  * Set ERROR_LEVEL to set your website in production (with no error reports to the user).
  */
+defifn('TIME',			$_SERVER['REQUEST_TIME']);
+define('INSIDE',		true);
 
-define('DEV_LEVEL', E_ALL | E_STRICT);//Development
-define('PROD_LEVEL', 0);//Production
+define('DEV_LEVEL',		E_ALL | E_STRICT);//Development
+define('PROD_LEVEL',	0);//Production
 
-defifn('ERROR_LEVEL', DEV_LEVEL);
-
-defifn('TIME', $_SERVER['REQUEST_TIME']);
-//define('DS', DIRECTORY_SEPARATOR);
-define('INSIDE', true);
+defifn('ERROR_LEVEL',	DEV_LEVEL);
 
 //Useful paths.
 defifn('CONFPATH',		ORPHEUSPATH.'configs/');
@@ -27,7 +25,7 @@ defifn('THEMESURL',		'themes/');
 defifn('LOGSPATH',		INSTANCEPATH.'logs/');
 
 //Static medias
-defifn('JSPATH',		'js/');
+defifn('JSURL',			'js/');
 
 // LIB Initernationalization
 defifn('LANGPATH',		ORPHEUSPATH.'languages/');

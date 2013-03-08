@@ -10,6 +10,7 @@ var searchData=
   ['_24data',['$data',['../class_permanent_object.html#a609502fd2d70bc4b8cf376a73cbdf031',1,'PermanentObject']]],
   ['_24deletedefaults',['$deleteDefaults',['../class_s_q_l_mapper___my_s_q_l.html#a647e577c46145a61e35a0a0b0cb24253',1,'SQLMapper_MySQL\$deleteDefaults()'],['../class_s_q_l_mapper___pg_s_q_l.html#abc8de894949856f7c2f078e4064aa957',1,'SQLMapper_PgSQL\$deleteDefaults()'],['../class_s_q_l_mapper.html#abd9a5ea19fdd8ccbab574f8cf4df094e',1,'SQLMapper\$deleteDefaults()']]],
   ['_24domain',['$domain',['../class_permanent_object.html#a4336ff20f6a55956f288c61debd07fe8',1,'PermanentObject']]],
+  ['_24editablefields',['$editableFields',['../class_permanent_object.html#ac187a1a06fbdeda6257ef17086a88341',1,'PermanentObject']]],
   ['_24fields',['$fields',['../class_abstract_publication.html#adf99bc032e8451eb2cd68234609cc507',1,'AbstractPublication\$fields()'],['../class_abstract_status.html#a0bdfc6eb9fa8cf7301280dae485fd0d6',1,'AbstractStatus\$fields()'],['../class_permanent_object.html#a63c9e24b092b59f9c2668b5f8ecc3d5d',1,'PermanentObject\$fields()'],['../class_user.html#a9c33ff8a77c3aed66f0f2bb60b97e2ab',1,'User\$fields()'],['../class_demo_test.html#af4e2bf5f0fcfb1d8cfe32f53636888c7',1,'DemoTest\$fields()'],['../class_site_user.html#a588b032fee754c066d9946511fe61a85',1,'SiteUser\$fields()']]],
   ['_24flooddelay',['$floodDelay',['../class_abstract_publication.html#af7398beae47c7b35683535a52b614f58',1,'AbstractPublication']]],
   ['_24format',['$Format',['../index_8php.html#a6e94dc26ed654d87da04e0730ffe1794',1,'index.php']]],
@@ -38,6 +39,7 @@ var searchData=
   ['_24theme',['$theme',['../class_h_t_m_l_rendering.html#a4d77c906a100ef0bca1192aca3a6eafe',1,'HTMLRendering\$theme()'],['../class_twig_rendering.html#a9dcb3cb7c9bbc6d85f0463d640392158',1,'TwigRendering\$theme()']]],
   ['_24twigenv',['$twigenv',['../class_twig_rendering.html#af02045432caabbdaea81eaf7daa0650d',1,'TwigRendering']]],
   ['_24updatedefaults',['$updateDefaults',['../class_s_q_l_mapper___my_s_q_l.html#aeba0fa7e8ee9329dbbb719adcbe32a37',1,'SQLMapper_MySQL\$updateDefaults()'],['../class_s_q_l_mapper___pg_s_q_l.html#a90d976b54a3b194f1db56d8c05d82a25',1,'SQLMapper_PgSQL\$updateDefaults()'],['../class_s_q_l_mapper.html#af08c5fdc7d581911eb8538db33a5834e',1,'SQLMapper\$updateDefaults()']]],
-  ['_24usereditablefields',['$userEditableFields',['../class_permanent_object.html#a08aafd00fb3e7627f5f9213b4bb4e5c9',1,'PermanentObject\$userEditableFields()'],['../class_user.html#a9dd570c4dd3103eb4f7c3dd31d6a5091',1,'User\$userEditableFields()'],['../class_demo_test.html#a76ff4a67c42db0f79ffb496ff8b64c18',1,'DemoTest\$userEditableFields()'],['../class_site_user.html#a371d1beb3b03993ce7111c43c7a600c1',1,'SiteUser\$userEditableFields()']]],
-  ['_24usersarr',['$UsersArr',['../adm__users_8php.html#a1c9ca9ca90888f0e229f186e44a1b1e7',1,'adm_users.php']]]
+  ['_24usereditablefields',['$userEditableFields',['../class_user.html#a9dd570c4dd3103eb4f7c3dd31d6a5091',1,'User\$userEditableFields()'],['../class_demo_test.html#a76ff4a67c42db0f79ffb496ff8b64c18',1,'DemoTest\$userEditableFields()'],['../class_site_user.html#a371d1beb3b03993ce7111c43c7a600c1',1,'SiteUser\$userEditableFields()']]],
+  ['_24usersarr',['$UsersArr',['../adm__users_8php.html#a1c9ca9ca90888f0e229f186e44a1b1e7',1,'adm_users.php']]],
+  ['_24validator',['$validator',['../class_permanent_object.html#a22e1d8c47066b8b2b5e6cfc92dc528f1',1,'PermanentObject']]]
 ];

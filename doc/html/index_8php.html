@@ -98,8 +98,14 @@ Functions</h2></td></tr>
 <tr class="memdesc:a7ded22765b79029b0acca26547417fe2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines an undefined constant.  <a href="#a7ded22765b79029b0acca26547417fe2">More...</a><br/></td></tr>
 <tr class="separator:a7ded22765b79029b0acca26547417fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab63512d4bd01c4b44e9bfbbc555cb3d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#ab63512d4bd01c4b44e9bfbbc555cb3d6">dirpath</a> ($path)</td></tr>
-<tr class="memdesc:ab63512d4bd01c4b44e9bfbbc555cb3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the directory path of path.  <a href="#ab63512d4bd01c4b44e9bfbbc555cb3d6">More...</a><br/></td></tr>
+<tr class="memdesc:ab63512d4bd01c4b44e9bfbbc555cb3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the directory path.  <a href="#ab63512d4bd01c4b44e9bfbbc555cb3d6">More...</a><br/></td></tr>
 <tr class="separator:ab63512d4bd01c4b44e9bfbbc555cb3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acee932ccf02e6ab181d7a29d2702be06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#acee932ccf02e6ab181d7a29d2702be06">getPath</a> ($prefDir, $altDir, $commonPath)</td></tr>
+<tr class="memdesc:acee932ccf02e6ab181d7a29d2702be06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the path of a file/directory using a preferred directory.  <a href="#acee932ccf02e6ab181d7a29d2702be06">More...</a><br/></td></tr>
+<tr class="separator:acee932ccf02e6ab181d7a29d2702be06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97f8a32581cffdab3463b758cd3ee092"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a97f8a32581cffdab3463b758cd3ee092">pathOf</a> ($commonPath)</td></tr>
+<tr class="memdesc:a97f8a32581cffdab3463b758cd3ee092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the path of a file/directory.  <a href="#a97f8a32581cffdab3463b758cd3ee092">More...</a><br/></td></tr>
+<tr class="separator:a97f8a32581cffdab3463b758cd3ee092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57d34da3bd80860dfd34620af3c5d246"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="index_8php.html#a57d34da3bd80860dfd34620af3c5d246">exception_error_handler</a> ($errno, $errstr, $errfile, $errline)</td></tr>
 <tr class="memdesc:a57d34da3bd80860dfd34620af3c5d246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error Handler.  <a href="#a57d34da3bd80860dfd34620af3c5d246">More...</a><br/></td></tr>
 <tr class="separator:a57d34da3bd80860dfd34620af3c5d246"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,7 +194,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The secured path</dd></dl>
-<p>Returns the parent directory path of $path </p>
+<p>Gets the parent directory path of $path </p>
 
 </div>
 </div>
@@ -231,6 +237,47 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="acee932ccf02e6ab181d7a29d2702be06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getPath </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$prefDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$altDir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$commonPath</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$prefDir</td><td>The preferred directory path to use. </td></tr>
+    <tr><td class="paramname">$altDir</td><td>The alternative directory path. </td></tr>
+    <tr><td class="paramname">$commonPath</td><td>The common path.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This function tries to return the path to the file $commonPath searching first in the preferred directory $prefDir and if not found in this one, it searches into the alternative directory $altDir. This function does not check if $commonPath file really exists in $altDir directory. </p>
+
+</div>
+</div>
 <a class="anchor" id="ad2ef1ab0552fa919e575f479180626f0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -263,6 +310,30 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The number of files included.</dd></dl>
 <p>Includes all files with a name beginning by '_' in the directory $dir. It browses recursively through sub-directories. </p>
+
+</div>
+</div>
+<a class="anchor" id="a97f8a32581cffdab3463b758cd3ee092"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pathOf </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$commonPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$commonPath</td><td>The common path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="index_8php.html#acee932ccf02e6ab181d7a29d2702be06" title="Gets the path of a file/directory using a preferred directory.">getPath()</a></dd></dl>
+<p>This function uses <a class="el" href="index_8php.html#acee932ccf02e6ab181d7a29d2702be06" title="Gets the path of a file/directory using a preferred directory.">getPath()</a> with INSTANCEPATH and ORPHEUSPATH as parameters. It allows developers to get a dynamic path to a file. </p>
 
 </div>
 </div>
@@ -383,7 +454,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Jan 31 2013 22:54:19 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Mar 8 2013 12:34:18 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>
