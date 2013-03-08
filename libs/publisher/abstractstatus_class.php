@@ -17,12 +17,15 @@
 abstract class AbstractStatus extends PermanentObject {
 	
 	//Attributes
-	protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
 	protected static $fields = array('id', 'status');
-
-	// *** METHODES SURCHARGEES ***
+	protected static $editableFields = array('status');
+	protected static $validator = array('status'=>'checkStatus');
 	
-	// *** METHODES UTILISATEUR ***
+	protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
+	
+	// *** OVERRIDDEN METHODS ***
+	
+	// *** DEV METHODS ***
 	
 	//! Gets available status.
 	/*!
@@ -33,30 +36,6 @@ abstract class AbstractStatus extends PermanentObject {
 	public function getAvailableStatus() {
 		return static::$status[$this->status];
 	}
-	
-	// *** METHODES STATIQUES ***
-	
-	// 		** METHODES DE VERIFICATION **
-	
-	//! Checks user input
-	/*!
-	 * \sa PermanentObject::checkUserInput()
-	 */
-	public static function checkUserInput($uInputData) {
-		$data = array();
-		//only for create.
-		try {
-			if( !isset($uInputData['status']) ) {
-				throw new Exception();//Juste pour le catch.
-			}
-			$data['status'] = self::checkStatus($uInputData['status']);
-		} catch(Exception $e) {
-			$data['status'] = static::getDefaultStatus();
-		}
-		return $data;
-	}
-	
-	// *** STATUS METHODS ***
 	
 	//! Gets and sets the status of this object
 	/*!
@@ -69,31 +48,45 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public function status($newStatus=null) {
 		if( isset($newStatus) ) {
-			static::checkStatus($newStatus, $this->status);
+			static::checkStatus($newStatus, $this->status, false);
 			$this->setValue('status', $newStatus);
 		}
 		return $this->status;
 	}
 	
+	// *** METHODES STATIQUES ***
+	
+	// 		** METHODES DE VERIFICATION **
+	
 	//! Checks a status
 	/*!
-	 * \param $newStatus The new status to set.
-	 * \param $currentStatus The current status. Default value is null.
+	 * \param $newStatus The new status to set
+	 * \param $ref The reference to check the status from
+	 * \param $reportToUser If True, reports errors to user instead of throwing an exception
 	 * \return The $newStatus.
 	 * 
 	 * Checks the $newStatus.
 	 * If $currentStatus is null, its consider that the objet haven't it, like new one.
 	 */
-	public static function checkStatus($newStatus, $currentStatus=null) {
-		if( empty($newStatus) ) {
-			throw new UserException('invalidStatus');
-		}
-		if( !isset(static::$status[$newStatus]) ) {
-			throw new UserException('unknownStatus');
-		}
-		//If not new, we check the current status can set to this one.
-		if( isset($currentStatus) && !in_array($newStatus, static::$status[$currentStatus]) ) {
-			throw new UserException('unavailableStatus');
+	public static function checkStatus($newStatus, $ref=null, $reportToUser=true) {
+		try {
+			if( empty($newStatus) ) {
+				throw new UserException('invalidStatus');
+			}
+			if( !isset(static::$status[$newStatus]) ) {
+				throw new UserException('unknownStatus');
+			}
+			//If not new, we check the current status can set to this one.
+			if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
+				throw new UserException('unavailableStatus');
+			}
+		} catch(UserException $e) {
+			if( $reportToUser ) {
+				reportError($e, static::$domain);
+				return static::getDefaultStatus();
+			} else {
+				throw $e;
+			}
 		}
 		return $newStatus;
 	}

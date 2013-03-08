@@ -28,6 +28,14 @@ abstract class AbstractPublication extends AbstractStatus {
 		'name', 'user_id', 'user_name', 'published', 'cache',
 		'create_time', 'create_ip', 'edit_time', 'edit_ip'
 	);
+	protected static $editableFields = array('name', 'user_id', 'user_name', 'published');
+	protected static $validator = array(
+		'name'			=> 'checkName',
+		'user_id'		=> 'checkUserID',
+		'user_name'		=> 'checkUserName',
+		'published'		=> 'checkPublished'
+	);
+	
 	public static $floodDelay = 300;//in seconds.
 
 	// *** OVERRIDDEN METHODS ***
@@ -118,7 +126,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * \param $inputData The input data from the user.
 	 * \return The stripped name.
 	 * 
-	 * Validates the name in array $inputData.
+	 * Validates the name field in array $inputData.
 	 */
 	public static function checkName($inputData) {
 		if( empty($inputData['name']) ) {
@@ -132,7 +140,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * \param $inputData The input data from the user.
 	 * \return The user id as integer.
 	 * 
-	 * Validates the user_id in array $inputData.
+	 * Validates the user_id field in array $inputData.
 	 */
 	public static function checkUserID($inputData) {
 		if( !isset($inputData['user_id']) || !is_ID($inputData['user_id']) ) {
@@ -146,7 +154,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * \param $inputData The input data from the user.
 	 * \return The stripped user name.
 	 * 
-	 * Validates the user_name in array $inputData.
+	 * Validates the user_name field in array $inputData.
 	 */
 	public static function checkUserName($inputData) {
 		if( empty($inputData['user_name']) ) {
@@ -155,19 +163,15 @@ abstract class AbstractPublication extends AbstractStatus {
 		return strip_tags($inputData['user_name']);
 	}
 	
-	//! Checks user input
+	//! Checks published status
 	/*!
-	 * \sa PermanentObject::checkUserInput()
-	*/
-	public static function checkUserInput($uInputData) {
-		$data = array();
-		$data['name'] = self::checkName($uInputData);
-		$data['user_id'] = self::checkUserID($uInputData);
-		$data['user_name'] = self::checkUserName($uInputData);
-		
-		$data += parent::checkUserInput($uInputData);
-		
-		return $data;
+	 * \param $inputData The input data from the user.
+	 * \return The published status.
+	 * 
+	 * Validates the published field in array $inputData.
+	 */
+	public static function checkPublished($inputData) {
+		return ( !empty($inputData['published']) ) ? 1 : 0;
 	}
 	
 	//! Checks for object
