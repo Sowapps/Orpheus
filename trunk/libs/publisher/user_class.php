@@ -17,9 +17,14 @@ class User extends AbstractStatus {
 		'id', 'name', 'password', 'accesslevel', 'status', 'email', 'email_public',
 		'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'
 	);
-	protected static $userEditableFields = array(
-		'email', 'email_public', 'password', 'accesslevel'
+	protected static $editableFields = array('name', 'password', 'email', 'email_public');
+	protected static $validator = array(
+		'name'			=> 'checkName',
+		'password'		=> 'checkPassword',
+		'email'			=> 'checkEmail',
+		'email_public'	=> 'checkPublicEmail'
 	);
+	
 	protected $login = 0;
 
 	// *** METHODES SURCHARGEES ***
@@ -360,17 +365,14 @@ class User extends AbstractStatus {
 		return $inputData['email_public'];
 	}
 	
-	//! Checks user input
+	//! Checks a access level
 	/*!
-	 * \sa PermanentObject::checkUserInput()
+	 * \param $inputData The input data from the user.
+	 * \return The access level.
+	 * \see checkPermissions()
 	*/
-	public static function checkUserInput($uInputData) {
-		$data = array();
-		$data['name'] = self::checkName($uInputData);
-		$data['password'] = self::checkPassword($uInputData);
-		$data['email'] = self::checkEmail($uInputData);
-		$data['email_public'] = self::checkPublicEmail($uInputData);
-		return $data+parent::checkUserInput($uInputData);
+	public function checkAccessLevel($inputData, $ref) {
+		return $ref->checkPermissions($inputData);
 	}
 	
 	//! Checks for object

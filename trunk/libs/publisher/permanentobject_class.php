@@ -513,6 +513,9 @@ abstract class PermanentObject {
 	 * 
 	 * Checks if the class could generate a valid object from $uInputData.
 	 * The method could modify the user input to fix them but it must return the data.
+	 * The data are passed through the validator, for different cases:
+	 * - If empty, this function return an empty array.
+	 * - If an array, it uses an field => checkMethod association.
 	*/
 	public static function checkUserInput($uInputData, $ref=null) {
 		if( empty(static::$validator) ) {
@@ -520,13 +523,15 @@ abstract class PermanentObject {
 		}
 		if( is_array(static::$validator) ) {
 			$data = array();
-			foreach( static::$validator as $field => $checkMeth ) {
+			foreach( static::$editableFields as $field ) {
+				$checkMeth = ( !empty(static::$validator[$field]) ) ? static::$validator[$field] : null;
 				// If editing an uneditable field.
 				if( !is_null($ref) && !in_array($field, static::$editableFields) ) {
 					continue;
 				}
 				try {
-					$value = static::$checkMeth($uInputData);
+					// If not defined, we just get the value without check
+					$value = ( !is_null($checkMeth) ) ? static::$checkMeth($uInputData, $ref) : $uInputData[$field];
 					if( is_null($ref) || $value != $ref->$field ) {
 						$data[$field] = $value;
 					}
