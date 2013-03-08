@@ -65,8 +65,8 @@ function pathOf($commonPath) {
 
 // This method take care about paths through symbolic links.
 defifn('ORPHEUSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));
+defifn('INSTANCEPATH', ORPHEUSPATH);
 
-defifn('INSTANCEPATH', ORPHEUSPATH);// Used for logs
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 
 // Edit the constant file according to the system context (OS, directory tree ...).

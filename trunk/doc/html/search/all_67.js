@@ -16,6 +16,7 @@ var searchData=
   ['getmimetype',['getMimeType',['../class_email.html#a28ee3cb86b885f7e444cc04cecee0d34',1,'Email']]],
   ['getmodelspath',['getModelsPath',['../class_h_t_m_l_rendering.html#a9297da2127f74dba376661c577f634f9',1,'HTMLRendering\getModelsPath()'],['../class_twig_rendering.html#a2c90f18f1c3e8c143fdb1beb47899bad',1,'TwigRendering\getModelsPath()']]],
   ['getnicename',['getNicename',['../class_site_user.html#ae10728ed36d3780e14e6ec0301a08a2f',1,'SiteUser']]],
+  ['getpath',['getPath',['../index_8php.html#acee932ccf02e6ab181d7a29d2702be06',1,'index.php']]],
   ['getpermalink',['getPermalink',['../class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689',1,'AbstractPublication']]],
   ['getreportshtml',['getReportsHTML',['../core_8php.html#a2ec56ffc5183c68ef4af36a207390cc3',1,'core.php']]],
   ['gettable',['getTable',['../class_permanent_object.html#a992bc5c66c015b0a330df437df1a41aa',1,'PermanentObject']]],
