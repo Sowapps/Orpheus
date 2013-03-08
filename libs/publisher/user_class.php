@@ -405,11 +405,11 @@ class User extends AbstractStatus {
 	/*!
 		\sa AbstractStatus::checkStatus()
 	*/
-	public static function checkStatus($newStatus, $currentStatus=null) {
-		if( !User::canDo('users_status', 1) ) {
+	public static function checkStatus($newStatus, $ref=null, $reportToUser=true) {
+		if( !User::canDo('users_status', $ref) ) {
 			throw new UserException('forbiddenUStatus');
 		}
-		return parent::checkStatus($newStatus, $currentStatus);
+		return parent::checkStatus($newStatus, $ref, $reportToUser=true);
 	}
 	
 	/* Website */
