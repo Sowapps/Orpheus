@@ -401,11 +401,11 @@ class User extends AbstractStatus {
 	
 	// *** STATUS METHODS ***
 	
-	//! Checks a status
+	//! Validates a status
 	/*!
-		\sa AbstractStatus::checkStatus()
+		\sa AbstractStatus::validateStatus()
 	*/
-	public static function checkStatus($newStatus, $ref=null, $reportToUser=true) {
+	public static function validateStatus($newStatus, $ref=null) {
 		if( !User::canDo('users_status', $ref) ) {
 			throw new UserException('forbiddenUStatus');
 		}
