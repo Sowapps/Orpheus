@@ -233,13 +233,14 @@ try {
 	
 } catch(Exception $e) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
+		$Page = ob_get_contents();
 		ob_end_clean();
 	}
 	if( !function_exists('sys_error') ) {
-		die($e->getMessage()."<br />\n".$e->getTraceAsString());
+		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
 	ob_start();
-	sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), $coreAction);
+	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	$Page = ob_get_contents();
 	ob_end_clean();
 }
@@ -252,7 +253,7 @@ try {
 	Rendering::doShow();//Generic final display.
 	
 } catch(Exception $e) {
-	@sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), $coreAction);
+	@sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	die('A fatal display error occured.');
 }
 ?>

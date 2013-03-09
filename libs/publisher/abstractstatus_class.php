@@ -58,7 +58,7 @@ abstract class AbstractStatus extends PermanentObject {
 	
 	// 		** METHODES DE VERIFICATION **
 	
-	//! Checks a status
+	//! Validate a status
 	/*!
 	 * \param $newStatus The new status to set
 	 * \param $ref The reference to check the status from
@@ -66,9 +66,9 @@ abstract class AbstractStatus extends PermanentObject {
 	 * \return The $newStatus.
 	 * 
 	 * Checks the $newStatus.
-	 * If $currentStatus is null, its consider that the objet haven't it, like new one.
+	 * If $currentStatus is null, it considers that the objet haven't it, like new one.
 	 */
-	public static function checkStatus($newStatus, $ref=null, $reportToUser=true) {
+	public static function validateStatus($newStatus, $ref=null, $reportToUser=true) {
 		try {
 			if( empty($newStatus) ) {
 				throw new UserException('invalidStatus');
@@ -89,6 +89,19 @@ abstract class AbstractStatus extends PermanentObject {
 			}
 		}
 		return $newStatus;
+	}
+	
+	//! Checks a status
+	/*!
+	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the status from
+	 * \return The status.
+	 * \see validateStatus()
+	 * 
+	 * Uses validateStatus() to vaidate field 'status'.
+	 */
+	public static function checkStatus($inputData, $ref=null) {
+		return static::validateStatus($inputData['status'], $ref, true);
 	}
 	
 	//! Gets the default status

@@ -63,7 +63,7 @@ function text($message = '', $html = true) {
 	if( defined("TERMINAL") ) {
 		$html = false;
 	}
-	if( is_array($message) ) {
+	if( !is_scalar($message) ) {
 		$message = print_r($message, 1);
 		if( $html ) {
 			$message = '<pre>'.$message.'</pre>';
@@ -176,6 +176,7 @@ function log_error($report, $file, $action='', $message='') {
 	if( !is_null($message) ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
 			$Error['message'] = (empty($message)) ? $report : $message;
+			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
 			if( !Rendering::doDisplay('report', $Error) ) {
 				// If we fail in our display of this error, this is fatal.

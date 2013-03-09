@@ -523,16 +523,20 @@ abstract class PermanentObject {
 		}
 		if( is_array(static::$validator) ) {
 			$data = array();
-			foreach( static::$editableFields as $field ) {
-				$checkMeth = ( !empty(static::$validator[$field]) ) ? static::$validator[$field] : null;
-				// If editing an uneditable field.
-				if( !is_null($ref) && !in_array($field, static::$editableFields) ) {
+			foreach( static::$fields as $field ) {
+				if(
+					// If editing the id field
+					$field == static::$IDFIELD ||
+					// If editing an uneditable field
+					!is_null($ref) && !in_array($field, static::$editableFields)
+				) {
 					continue;
 				}
+				$checkMeth = ( !empty(static::$validator[$field]) ) ? static::$validator[$field] : null;
 				try {
 					// If not defined, we just get the value without check
 					$value = ( !is_null($checkMeth) ) ? static::$checkMeth($uInputData, $ref) : $uInputData[$field];
-					if( is_null($ref) || $value != $ref->$field ) {
+					if( !is_null($value) && ( is_null($ref) || $value != $ref->$field ) ) {
 						$data[$field] = $value;
 					}
 				} catch(UserException $e) {
