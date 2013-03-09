@@ -58,35 +58,25 @@ abstract class AbstractStatus extends PermanentObject {
 	
 	// 		** METHODES DE VERIFICATION **
 	
-	//! Validate a status
+	//! Validates a status
 	/*!
 	 * \param $newStatus The new status to set
 	 * \param $ref The reference to check the status from
-	 * \param $reportToUser If True, reports errors to user instead of throwing an exception
 	 * \return The $newStatus.
 	 * 
 	 * Checks the $newStatus.
 	 * If $currentStatus is null, it considers that the objet haven't it, like new one.
 	 */
-	public static function validateStatus($newStatus, $ref=null, $reportToUser=true) {
-		try {
-			if( empty($newStatus) ) {
-				throw new UserException('invalidStatus');
-			}
-			if( !isset(static::$status[$newStatus]) ) {
-				throw new UserException('unknownStatus');
-			}
-			//If not new, we check the current status can set to this one.
-			if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
-				throw new UserException('unavailableStatus');
-			}
-		} catch(UserException $e) {
-			if( $reportToUser ) {
-				reportError($e, static::$domain);
-				return static::getDefaultStatus();
-			} else {
-				throw $e;
-			}
+	public static function validateStatus($newStatus, $ref=null) {
+		if( empty($newStatus) ) {
+			throw new UserException('invalidStatus');
+		}
+		if( !isset(static::$status[$newStatus]) ) {
+			throw new UserException('unknownStatus');
+		}
+		//If not new, we check the current status can set to this one.
+		if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
+			throw new UserException('unavailableStatus');
 		}
 		return $newStatus;
 	}
@@ -98,10 +88,14 @@ abstract class AbstractStatus extends PermanentObject {
 	 * \return The status.
 	 * \see validateStatus()
 	 * 
-	 * Uses validateStatus() to vaidate field 'status'.
+	 * Uses validateStatus() to validate field 'status'.
 	 */
 	public static function checkStatus($inputData, $ref=null) {
-		return static::validateStatus($inputData['status'], $ref, true);
+		// When creating whe set to the default
+		if( is_null($ref) ) {
+			return static::getDefaultStatus();
+		}
+		return static::validateStatus($inputData['status'], $ref);
 	}
 	
 	//! Gets the default status

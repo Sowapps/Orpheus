@@ -523,7 +523,7 @@ abstract class PermanentObject {
 		}
 		if( is_array(static::$validator) ) {
 			$data = array();
-			foreach( static::$fields as $field ) {
+			foreach( static::$validator as $field => $checkMeth ) {
 				if(
 					// If editing the id field
 					$field == static::$IDFIELD ||
@@ -532,10 +532,9 @@ abstract class PermanentObject {
 				) {
 					continue;
 				}
-				$checkMeth = ( !empty(static::$validator[$field]) ) ? static::$validator[$field] : null;
 				try {
 					// If not defined, we just get the value without check
-					$value = ( !is_null($checkMeth) ) ? static::$checkMeth($uInputData, $ref) : $uInputData[$field];
+					$value = static::$checkMeth($uInputData, $ref);
 					if( !is_null($value) && ( is_null($ref) || $value != $ref->$field ) ) {
 						$data[$field] = $value;
 					}
