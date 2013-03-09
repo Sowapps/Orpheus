@@ -412,6 +412,11 @@ class User extends AbstractStatus {
 		return parent::checkStatus($newStatus, $ref, $reportToUser=true);
 	}
 	
-	/* Website */
+	public static function init() {
+		//self::$fields = array_unique(array_merge(self::$fields, parent::$fields));
+		self::$editableFields = array_unique(array_merge(self::$editableFields, parent::$editableFields));
+		self::$validator = array_unique(array_merge(self::$validator, parent::$validator));
+	}
 }
+User::init();
 ?>

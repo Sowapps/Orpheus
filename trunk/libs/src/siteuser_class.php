@@ -64,8 +64,8 @@ class SiteUser extends User {
 	
 	public static function init() {
 		self::$fields = array_unique(array_merge(self::$fields, parent::$fields));
-		self::$userEditableFields = array_unique(array_merge(self::$userEditableFields, parent::$userEditableFields));
+		self::$editableFields = array_unique(array_merge(self::$editableFields, parent::$editableFields));
+		self::$validator = array_unique(array_merge(self::$validator, parent::$validator));
 	}
 }
 SiteUser::init();
-?>
