@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['lastid',['lastID',['../class_s_q_l_mapper___my_s_q_l.html#a96eebb1ea0fe901ba6dd59fa11322192',1,'SQLMapper_MySQL\lastID()'],['../class_s_q_l_mapper___pg_s_q_l.html#ae50549a7ef045b5f8ed662995ec527bd',1,'SQLMapper_PgSQL\lastID()'],['../class_s_q_l_mapper.html#ae180b8c24fd116b8092b8a4c2797ba8e',1,'SQLMapper\lastID()']]],
+  ['lastid',['lastID',['../class_s_q_l_adapter___m_s_s_q_l.html#aa8f1d9b5cc94fa5e4f177658522fe701',1,'SQLAdapter_MSSQL\lastID()'],['../class_s_q_l_adapter___my_s_q_l.html#a1eab2808d7c8fb53ea4fdeefc14599f9',1,'SQLAdapter_MySQL\lastID()'],['../class_s_q_l_adapter___pg_s_q_l.html#a46cf48b711be76068e770a6e27e0a2cc',1,'SQLAdapter_PgSQL\lastID()'],['../class_s_q_l_adapter.html#ab7ccfac886d291ea0ef30844b0c33757',1,'SQLAdapter\lastID()']]],
   ['lib_5fconfig_2ephp',['lib_config.php',['../lib__config_8php.html',1,'']]],
   ['lib_5fcore_2ephp',['lib_core.php',['../lib__core_8php.html',1,'']]],
   ['lib_5fhooks_2ephp',['lib_hooks.php',['../lib__hooks_8php.html',1,'']]],
@@ -8,7 +8,7 @@ var searchData=
   ['lib_5fpublisher_2ephp',['lib_publisher.php',['../lib__publisher_8php.html',1,'']]],
   ['lib_5frendering_2ephp',['lib_rendering.php',['../lib__rendering_8php.html',1,'']]],
   ['lib_5froute_2ephp',['lib_route.php',['../lib__route_8php.html',1,'']]],
-  ['lib_5fsqlmapper_2ephp',['lib_sqlmapper.php',['../lib__sqlmapper_8php.html',1,'']]],
+  ['lib_5fsqladapter_2ephp',['lib_sqladapter.php',['../lib__sqladapter_8php.html',1,'']]],
   ['libraries',['Libraries',['../libraries.html',1,'']]],
   ['libraries_2ephp',['libraries.php',['../libraries_8php.html',1,'']]],
   ['load',['load',['../class_config.html#a92b7efc06eac2cb6497747de7df654ee',1,'Config\load()'],['../class_config_core.html#af35a1aa3896406323b1a686f10c7110a',1,'ConfigCore\load()'],['../class_permanent_object.html#aea07b102a991bb59a94a55904d96a324',1,'PermanentObject\load()'],['../class_user.html#aa204528dd2205c8d0cf70173fdf31284',1,'User\load()']]],

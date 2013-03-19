@@ -11,7 +11,7 @@
  * This library give you an Email class to easily send emails.\n
  * \n
  * This package is very useful to get an user system and publications objets.\n
- * It requires the SQLMapper Library.\n
+ * It requires the SQLAdapter Library.\n
  * 
  * \section install_sec Installation
  * 

@@ -113,7 +113,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	//! Erase all cache for this publication type
 	public static function eraseAllCache() {
-		return SQLMapper::doUpdate(array(
+		return SQLAdapter::doUpdate(array(
 			'table' => static::$table,
 			'what' => "cache=''",
 		));
@@ -184,10 +184,10 @@ abstract class AbstractPublication extends AbstractStatus {
 		}
 		$ucheck = ($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'";
 		
-		$publication = SQLMapper::doSelect(array(
+		$publication = SQLAdapter::doSelect(array(
 			'table' => static::$table,
 			'what' => 'name',
-			'where' => 'name = '.SQLMapper::quote($data['name']).
+			'where' => 'name = '.SQLAdapter::quote($data['name']).
 				( (static::$floodDelay)
 					? 'OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
 					: ''

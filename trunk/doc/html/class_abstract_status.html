@@ -165,12 +165,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#ab14eef7adf2dee1e17fcf54bbd5b8ac7">checkUserInput</a> ($uInputData)</td></tr>
-<tr class="memdesc:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks user input.  <a href="#ab14eef7adf2dee1e17fcf54bbd5b8ac7">More...</a><br/></td></tr>
-<tr class="separator:ab14eef7adf2dee1e17fcf54bbd5b8ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3c46939a35a6d895e8b9922fb4417a2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#ad3c46939a35a6d895e8b9922fb4417a2">checkStatus</a> ($newStatus, $currentStatus=null)</td></tr>
-<tr class="memdesc:ad3c46939a35a6d895e8b9922fb4417a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks a status.  <a href="#ad3c46939a35a6d895e8b9922fb4417a2">More...</a><br/></td></tr>
-<tr class="separator:ad3c46939a35a6d895e8b9922fb4417a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f76eaf44b7951d77cc4141f02143710"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a8f76eaf44b7951d77cc4141f02143710">validateStatus</a> ($newStatus, $ref=null)</td></tr>
+<tr class="memdesc:a8f76eaf44b7951d77cc4141f02143710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validates a status.  <a href="#a8f76eaf44b7951d77cc4141f02143710">More...</a><br/></td></tr>
+<tr class="separator:a8f76eaf44b7951d77cc4141f02143710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91c4f14ad6f110726085f32ce52ccb0b"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a91c4f14ad6f110726085f32ce52ccb0b">checkStatus</a> ($inputData, $ref=null)</td></tr>
+<tr class="memdesc:a91c4f14ad6f110726085f32ce52ccb0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks a status.  <a href="#a91c4f14ad6f110726085f32ce52ccb0b">More...</a><br/></td></tr>
+<tr class="separator:a91c4f14ad6f110726085f32ce52ccb0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4399273f51a109e292556b4b1c575dc"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#aa4399273f51a109e292556b4b1c575dc">getDefaultStatus</a> ()</td></tr>
 <tr class="memdesc:aa4399273f51a109e292556b4b1c575dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default status.  <a href="#aa4399273f51a109e292556b4b1c575dc">More...</a><br/></td></tr>
 <tr class="separator:aa4399273f51a109e292556b4b1c575dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -223,10 +223,14 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:a87ea9112380ac4c20067418524d98227"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a87ea9112380ac4c20067418524d98227">$status</a> = array('approved'=&gt;array('rejected'), 'rejected'=&gt;array('approved'))</td></tr>
-<tr class="separator:a87ea9112380ac4c20067418524d98227"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bdfc6eb9fa8cf7301280dae485fd0d6"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a0bdfc6eb9fa8cf7301280dae485fd0d6">$fields</a> = array('id', '<a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a>')</td></tr>
 <tr class="separator:a0bdfc6eb9fa8cf7301280dae485fd0d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a587352756c07eb8558a3ab40b0de84f2"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a587352756c07eb8558a3ab40b0de84f2">$editableFields</a> = array('<a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a>')</td></tr>
+<tr class="separator:a587352756c07eb8558a3ab40b0de84f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac42085adc64e9989f11fa61ee41a3ef1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#ac42085adc64e9989f11fa61ee41a3ef1">$validator</a> = array('<a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a>'=&gt;'<a class="el" href="class_abstract_status.html#a91c4f14ad6f110726085f32ce52ccb0b">checkStatus</a>')</td></tr>
+<tr class="separator:ac42085adc64e9989f11fa61ee41a3ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87ea9112380ac4c20067418524d98227"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_abstract_status.html#a87ea9112380ac4c20067418524d98227">$status</a> = array('approved'=&gt;array('rejected'), 'rejected'=&gt;array('approved'))</td></tr>
+<tr class="separator:a87ea9112380ac4c20067418524d98227"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_attribs_class_permanent_object"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_class_permanent_object')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_permanent_object.html">PermanentObject</a></td></tr>
 <tr class="memitem:a47707b9409888e2500aba53deda123b2 inherit pro_static_attribs_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a47707b9409888e2500aba53deda123b2">$IDFIELD</a> = 'id'</td></tr>
 <tr class="separator:a47707b9409888e2500aba53deda123b2 inherit pro_static_attribs_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,7 +268,7 @@ Additional Inherited Members</h2></td></tr>
 </ul>
 <p>Common example for publications: private static $status = array('draft'=&gt;array('waiting'), 'waiting'=&gt;array('approved', 'rejected'), 'approved'=&gt;array('rejected'), 'rejected'=&gt;array('approved')); Here default is 'draft' (the first in the list), 'draft' only unlock 'waiting' status (waiting for moderation). </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="ad3c46939a35a6d895e8b9922fb4417a2"></a>
+<a class="anchor" id="a91c4f14ad6f110726085f32ce52ccb0b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -275,13 +279,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">static AbstractStatus::checkStatus </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$newStatus</em>, </td>
+          <td class="paramname"><em>$inputData</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$currentStatus</em> = <code>null</code>&#160;</td>
+          <td class="paramname"><em>$ref</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -297,38 +301,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">$newStatus</td><td>The new status to set. </td></tr>
-    <tr><td class="paramname">$currentStatus</td><td>The current status. Default value is null. </td></tr>
+    <tr><td class="paramname">$inputData</td><td>The input data from the user. </td></tr>
+    <tr><td class="paramname">$ref</td><td>The reference to check the status from </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The $newStatus.</dd></dl>
-<p>Checks the $newStatus. If $currentStatus is null, its consider that the objet haven't it, like new one. </p>
-
-</div>
-</div>
-<a class="anchor" id="ab14eef7adf2dee1e17fcf54bbd5b8ac7"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static AbstractStatus::checkUserInput </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>$uInputData</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_permanent_object.html#a5ec4571835290e3b0018c5774e495f3d" title="Checks user input.">PermanentObject::checkUserInput()</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The status. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_abstract_status.html#a8f76eaf44b7951d77cc4141f02143710" title="Validates a status.">validateStatus()</a></dd></dl>
+<p>Uses <a class="el" href="class_abstract_status.html#a8f76eaf44b7951d77cc4141f02143710" title="Validates a status.">validateStatus()</a> to validate field 'status'. </p>
 
 </div>
 </div>
@@ -398,7 +378,70 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a8f76eaf44b7951d77cc4141f02143710"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static AbstractStatus::validateStatus </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$newStatus</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$ref</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$newStatus</td><td>The new status to set </td></tr>
+    <tr><td class="paramname">$ref</td><td>The reference to check the status from </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The $newStatus.</dd></dl>
+<p>Checks the $newStatus. If $currentStatus is null, it considers that the objet haven't it, like new one. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a587352756c07eb8558a3ab40b0de84f2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractStatus::$editableFields = array('<a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a>')</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a0bdfc6eb9fa8cf7301280dae485fd0d6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -439,13 +482,33 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ac42085adc64e9989f11fa61ee41a3ef1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">AbstractStatus::$validator = array('<a class="el" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a">status</a>'=&gt;'<a class="el" href="class_abstract_status.html#a91c4f14ad6f110726085f32ce52ccb0b">checkStatus</a>')</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/workspace/Orpheus/libs/publisher/<a class="el" href="abstractstatus__class_8php.html">abstractstatus_class.php</a></li>
+<li>C:/Workspaces/Eclipse/Orpheus/libs/publisher/<a class="el" href="abstractstatus__class_8php.html">abstractstatus_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 8 2013 12:34:18 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 10:15:27 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

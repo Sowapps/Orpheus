@@ -1,13 +1,13 @@
 <?php
 /*!
- * \page lib_sqlmapper SQLMapper Library
+ * \page lib_sqladapter SQLAdapter Library
  * 
  * \section intro_sec Introduction
  *
- * The SQLMapper library is designed to map SQL entities into PHP OBbjects.\n
+ * The SQLAdapter library is designed to map SQL entities into PHP OBbjects.\n
  * It includes a small PDO library to use easily PDO as procedural programming.\n
- * Each driver requires is own Mapper, inherited from the SQlMapper class.\n
- * Only the mappers for MySQL and PostgreSQL DBMS were developed for the moment.\n
+ * Each driver requires is own Adapter, inherited from the SQlAdapter class.\n
+ * Only the adapters for MySQL and PostgreSQL DBMS were developed for the moment.\n
  * \n
  * This package is often use by libraries, we recommend it.\n
  * 

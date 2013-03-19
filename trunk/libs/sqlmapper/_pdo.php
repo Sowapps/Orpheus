@@ -97,6 +97,28 @@ function ensure_pdoinstance($Instance=null) {
 			}
 		}
 		
+	//If driver is mssql
+	} else if( $InstSettings['driver'] == 'mssql' ) {
+		//If Instance does not exist yet, it is not connected, we create it & link it.
+		if( empty($pdoInstances[$Instance]) ) {
+			$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
+			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
+			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
+			if( empty($InstSettings["dbname"]) ) {
+				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+			}
+			
+			try {
+				$pdoInstances[$Instance] = new PDO(
+					"mysql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
+					$InstSettings["user"], $InstSettings["passwd"]
+				);
+				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			} catch (PDOException $e) {
+				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
+			}
+		}
+		
 	} else if( $InstSettings['driver'] == 'pgsql' ) {
 		//If Instance does not exist yet, it is not connected, we create it & link it.
 		if( empty($pdoInstances[$Instance]) ) {

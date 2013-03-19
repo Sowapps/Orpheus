@@ -51,5 +51,5 @@
  * \li \ref lib_publisher
  * \li \ref lib_rendering
  * \li \ref lib_route
- * \li \ref lib_sqlmapper
+ * \li \ref lib_sqladapter
  */

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['validatename',['validateName',['../class_twig___loader___filesystem.html#af531f0a3353ebdaecd352b144edfb79f',1,'Twig_Loader_Filesystem']]]
+  ['validatestatus',['validateStatus',['../class_abstract_status.html#a8f76eaf44b7951d77cc4141f02143710',1,'AbstractStatus\validateStatus()'],['../class_user.html#ab2d9ccd2707d7d3db5c4d58287881e6c',1,'User\validateStatus()']]]
 ];

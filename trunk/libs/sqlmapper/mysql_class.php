@@ -1,9 +1,9 @@
 <?php
-//! The MYSQL Mapper class
+//! The MYSQL Adapter class
 /*!
-	This class is the sql mapper for MySQL.
+	This class is the sql adapter for MySQL.
 */
-class SQLMapper_MySQL extends SQLMapper {
+class SQLAdapter_MySQL extends SQLAdapter {
 	
 	protected static $IDFIELD = 'id';
 	
@@ -14,7 +14,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
-			'output'		=> SQLMapper::ARR_ASSOC,//Associative Array
+			'output'		=> SQLAdapter::ARR_ASSOC,//Associative Array
 	);
 	
 	//! Defaults for updating
@@ -25,7 +25,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
-			'output'		=> SQLMapper::NUMBER,//Number of updated lines
+			'output'		=> SQLAdapter::NUMBER,//Number of updated lines
 	);
 	
 	//! Defaults for deleting
@@ -37,7 +37,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
-			'output'		=> SQLMapper::NUMBER,//Number of deleted lines
+			'output'		=> SQLAdapter::NUMBER,//Number of deleted lines
 	);
 	
 	//! Defaults for inserting
@@ -46,7 +46,7 @@ class SQLMapper_MySQL extends SQLMapper {
 			'delayed'		=> false,//false => Not delayed
 			'ignore'		=> false,//false => Not ignore errors
 			'into'			=> true,//true => INSERT INTO
-			'output'		=> SQLMapper::NUMBER,//Number of inserted lines
+			'output'		=> SQLAdapter::NUMBER,//Number of inserted lines
 	);
 	
 	//! The function to use for SELECT queries
@@ -54,7 +54,7 @@ class SQLMapper_MySQL extends SQLMapper {
 		\param $options The options used to build the query.
 		\return Mixed return, depending on the 'output' option.
 	 	\sa http://dev.mysql.com/doc/refman/5.0/en/select.html
-	 	\sa SQLMapper::select()
+	 	\sa SQLAdapter::select()
 	 	
 		Using pdo_query(), It parses the query from an array to a SELECT query.
     */

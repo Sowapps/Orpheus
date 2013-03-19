@@ -234,7 +234,7 @@ Static Protected Attributes</h2></td></tr>
 <tr class="separator:a4336ff20f6a55956f288c61debd07fe8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Manage a permanent object using the SQL Mapper. </p>
+<div class="textblock"><p>Manage a permanent object using the SQL Adapter. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa4c70b4f04985d9f57dad8ad9a28e66f"></a>
 <div class="memitem">
@@ -488,7 +488,11 @@ Static Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The valid data. </dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd>This method require to be overridden.</dd></dl>
-<p>Checks if the class could generate a valid object from $uInputData. The method could modify the user input to fix them but it must return the data. </p>
+<p>Checks if the class could generate a valid object from $uInputData. The method could modify the user input to fix them but it must return the data. The data are passed through the validator, for different cases:</p>
+<ul>
+<li>If empty, this function return an empty array.</li>
+<li>If an array, it uses an field =&gt; checkMethod association. </li>
+</ul>
 
 </div>
 </div>
@@ -640,8 +644,8 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An array of array containing object's data. </dd></dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_mapper.html" title="The main SQL Mapper class.">SQLMapper</a></dd></dl>
-<p>Gets an objects' list using this class' table. The following explanations are for the case where output is <a class="el" href="class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c" title="Array of objects.">SQLMapper::ARR_OBJECTS</a> If only one object is expected, we try to load and return it, else we return null. In other cases, we load them and return a list of all objects, event if there is not result or only one. </p>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_adapter.html" title="The main SQL Adapter class.">SQLAdapter</a></dd></dl>
+<p>Gets an objects' list using this class' table. The following explanations are for the case where output is <a class="el" href="class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d" title="Array of objects.">SQLAdapter::ARR_OBJECTS</a> If only one object is expected, we try to load and return it, else we return null. In other cases, we load them and return a list of all objects, event if there is not result or only one. </p>
 
 </div>
 </div>
@@ -1011,7 +1015,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>1 in case of success, else 0.</dd></dl>
-<p>If some fields was modified, it saves these fields using the SQL Mapper. </p>
+<p>If some fields was modified, it saves these fields using the SQL Adapter. </p>
 
 </div>
 </div>
@@ -1288,12 +1292,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/workspace/Orpheus/libs/publisher/<a class="el" href="permanentobject__class_8php.html">permanentobject_class.php</a></li>
+<li>C:/Workspaces/Eclipse/Orpheus/libs/publisher/<a class="el" href="permanentobject__class_8php.html">permanentobject_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 8 2013 12:34:19 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 19 2013 10:15:27 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.3.1
 </small></address>

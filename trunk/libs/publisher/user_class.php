@@ -199,10 +199,10 @@ class User extends AbstractStatus {
 		self::checkPassword($data, false);
 		//self::checkForEntry() does not return password and id now.
 		
-		$user = SQLMapper::doSelect(array(
+		$user = SQLAdapter::doSelect(array(
 			'table' => static::$table,
 			'what' => 'id, name, password',
-			'where' => 'name = '.SQLMapper::quote($data['name']),
+			'where' => 'name = '.SQLAdapter::quote($data['name']),
 			'number' => 1
 		));
 		//$table=static::$table;
@@ -371,7 +371,7 @@ class User extends AbstractStatus {
 	 * \return The access level.
 	 * \see checkPermissions()
 	*/
-	public function checkAccessLevel($inputData, $ref) {
+	public function checkAccessLevel($inputData) {
 		return $ref->checkPermissions($inputData);
 	}
 	
@@ -383,10 +383,10 @@ class User extends AbstractStatus {
 		if( empty($data['name']) && empty($data['email']) ) {
 			return;//Nothing to check.
 		}
-		$user = SQLMapper::doSelect(array(
+		$user = SQLAdapter::doSelect(array(
 			'table' => static::$table,
 			'what' => 'name, email',
-			'where' => 'name LIKE '.SQLMapper::quote($data['name']).' OR email LIKE '.SQLMapper::quote($data['email']),
+			'where' => 'name LIKE '.SQLAdapter::quote($data['name']).' OR email LIKE '.SQLAdapter::quote($data['email']),
 			'number' => 1
 		));
 		if( !empty($user) ) {
