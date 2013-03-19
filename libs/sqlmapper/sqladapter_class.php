@@ -1,11 +1,11 @@
 <?php
-//! The main SQL Mapper class
+//! The main SQL Adapter class
 /*!
-	This class is the mother sql mapper inherited for specific DBMS.
+	This class is the mother sql adapter inherited for specific DBMS.
 */
-abstract class SQLMapper {
+abstract class SQLAdapter {
 	
-	protected static $Mapper;
+	protected static $Adapter;
 	
 	protected static $IDFIELD;
 	
@@ -35,7 +35,7 @@ abstract class SQLMapper {
 	*/
 	public static function doSelect(array $options=array()) {
 		self::prepare();
-		return self::$Mapper->select($options);
+		return self::$Adapter->select($options);
 	}
 	
 	//! The static function to use for UPDATE queries in global context.
@@ -44,41 +44,41 @@ abstract class SQLMapper {
 	*/
 	public static function doUpdate(array $options=array()) {
 		self::prepare();
-		return self::$Mapper->update($options);
+		return self::$Adapter->update($options);
 	}
 	
 	//! The static function to use for DELETE queries in global context.
 	/*!
-		\sa SQLMapper::delete()
+		\sa SQLAdapter::delete()
 	*/
 	public static function doDelete(array $options=array()) {
 		self::prepare();
-		return self::$Mapper->delete($options);
+		return self::$Adapter->delete($options);
 	}
 	
 	//! The static function to use for INSERT queries in global context.
 	/*!
-		\sa SQLMapper::insert()
+		\sa SQLAdapter::insert()
 	*/
 	public static function doInsert(array $options=array()) {
 		self::prepare();
-		return self::$Mapper->insert($options);
+		return self::$Adapter->insert($options);
 	}
 	
 	//! The static function to use to get last isnert id in global context.
 	/*!
-		\sa SQLMapper::lastID()
+		\sa SQLAdapter::lastID()
 	*/
 	public static function doLastID($table) {
 		self::prepare();
-		return self::$Mapper->lastID($table);
+		return self::$Adapter->lastID($table);
 	}
 	
 	
 	//! The function to use for SELECT queries
 	/*!
 		\param $options The options used to build the query.
-		\return Mixed return, depending on the mapper.
+		\return Mixed return, depending on the adapter.
 		
 		It parses the query from an array to a SELECT query.
 	*/
@@ -122,16 +122,16 @@ abstract class SQLMapper {
 	public abstract function lastID($table, $idfield);
 	
 	public static function prepare() {
-		if( self::$Mapper != null ) {
+		if( self::$Adapter != null ) {
 			return;
 		}
 		global $DBS;
 		$Instance = ensure_pdoinstance();
 		if( empty($DBS[$Instance]) ) {
-			throw new Exception("Mapper unable to connect to the database.");
+			throw new Exception("Adapter unable to connect to the database.");
 		}
-		$mapperClass = 'SQLMapper_'.$DBS[$Instance]['driver'];
-		self::$Mapper = new $mapperClass();
+		$adapterClass = 'SQLAdapter_'.$DBS[$Instance]['driver'];
+		self::$Adapter = new $adapterClass();
 		//$pdoInstances[$Instance]->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 	
@@ -140,5 +140,5 @@ abstract class SQLMapper {
 	}
 }
 
-includeDir(LIBSPATH.'sqlmapper/');
-SQLMapper::prepare();//Object destruction can not load libs and load DB config.
+includeDir(LIBSPATH.'sqladapter/');
+SQLAdapter::prepare();//Object destruction can not load libs and load DB config.

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sqlmapper_20library',['SQLMapper Library',['../lib_sqlmapper.html',1,'']]]
+  ['sqladapter_20library',['SQLAdapter Library',['../lib_sqladapter.html',1,'']]]
 ];

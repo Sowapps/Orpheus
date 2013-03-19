@@ -1,8 +1,8 @@
 var searchData=
 [
   ['includedir',['includeDir',['../index_8php.html#ad2ef1ab0552fa919e575f479180626f0',1,'index.php']]],
-  ['init',['init',['../class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8',1,'AbstractPublication\init()'],['../class_permanent_object.html#aea1b992defb7081bbf00a73847c0c9e9',1,'PermanentObject\init()'],['../class_site_user.html#aab677ce8b6af4beb70936a4448a55e18',1,'SiteUser\init()'],['../class_twig_rendering.html#a2ea4eb702f94ffea635f11e38ba13a57',1,'TwigRendering\init()']]],
-  ['insert',['insert',['../class_s_q_l_mapper___my_s_q_l.html#a782651f9a6f5f686d07f352ce332d7ee',1,'SQLMapper_MySQL\insert()'],['../class_s_q_l_mapper___pg_s_q_l.html#a6244fbe3fe0f921f0bd15071510403e5',1,'SQLMapper_PgSQL\insert()'],['../class_s_q_l_mapper.html#aa1cdf54e11d69c59795ec82d17a8a745',1,'SQLMapper\insert()']]],
+  ['init',['init',['../class_abstract_publication.html#aefd4ad0b25e8970a0e35032720b4c4e8',1,'AbstractPublication\init()'],['../class_permanent_object.html#aea1b992defb7081bbf00a73847c0c9e9',1,'PermanentObject\init()'],['../class_user.html#a40b9e53286b562409fa827a7d31f8d96',1,'User\init()'],['../class_site_user.html#aab677ce8b6af4beb70936a4448a55e18',1,'SiteUser\init()'],['../class_twig_rendering.html#a2ea4eb702f94ffea635f11e38ba13a57',1,'TwigRendering\init()']]],
+  ['insert',['insert',['../class_s_q_l_adapter___m_s_s_q_l.html#a15eed4a6afa45e66ade7b21723f0b166',1,'SQLAdapter_MSSQL\insert()'],['../class_s_q_l_adapter___my_s_q_l.html#a3d278996658e9423a9a929e987b08abf',1,'SQLAdapter_MySQL\insert()'],['../class_s_q_l_adapter___pg_s_q_l.html#a08853d41891c5edacbaf54c356aacd21',1,'SQLAdapter_PgSQL\insert()'],['../class_s_q_l_adapter.html#afacd246fcce6f618406ce5b09cc97b37',1,'SQLAdapter\insert()']]],
   ['is_5fdate',['is_date',['../validators_8php.html#a0cafad5835e34bb480868dbc924690f0',1,'validators.php']]],
   ['is_5femail',['is_email',['../class_email.html#a3e06cf42f718c5aadc2f0125423a5950',1,'Email\is_email()'],['../validators_8php.html#a2a05313511eb5374196804719c7ca884',1,'is_email():&#160;validators.php']]],
   ['is_5fid',['is_ID',['../validators_8php.html#a5b359c824c0d971054b862123ca7b9b2',1,'validators.php']]],

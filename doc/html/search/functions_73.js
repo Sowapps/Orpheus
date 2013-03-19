@@ -1,7 +1,7 @@
 var searchData=
 [
   ['save',['save',['../class_permanent_object.html#aa161262d8e6640659f93eb70e00d8d67',1,'PermanentObject']]],
-  ['select',['select',['../class_s_q_l_mapper___my_s_q_l.html#af8717ee44de1e36123df86333595ae29',1,'SQLMapper_MySQL\select()'],['../class_s_q_l_mapper___pg_s_q_l.html#a36813a71acc50895cb4ff40537353bbb',1,'SQLMapper_PgSQL\select()'],['../class_s_q_l_mapper.html#a933609594a936784f56e008e241fbeff',1,'SQLMapper\select()']]],
+  ['select',['select',['../class_s_q_l_adapter___m_s_s_q_l.html#a4fd2a096c4f6c1089bcd1a270b027806',1,'SQLAdapter_MSSQL\select()'],['../class_s_q_l_adapter___my_s_q_l.html#a4361980f3f7ae99c0e1ca6e8d3586559',1,'SQLAdapter_MySQL\select()'],['../class_s_q_l_adapter___pg_s_q_l.html#a0be11cf8613cb32c49186c70ab0a75e6',1,'SQLAdapter_PgSQL\select()'],['../class_s_q_l_adapter.html#a6e646ae8ea03c3369c5f992b2574f2a7',1,'SQLAdapter\select()']]],
   ['send',['send',['../class_email.html#aeff0b41b4d792c8e52c08f088fdc70a4',1,'Email']]],
   ['sendresponse',['sendResponse',['../core_8php.html#a5541f3d746d89fffa14f9a0fa9440e5b',1,'core.php']]],
   ['set',['set',['../class_config_core.html#ac71592819491bb200c4e3b9b174c4ba2',1,'ConfigCore']]],

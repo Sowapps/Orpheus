@@ -12,6 +12,6 @@ var searchData=
   ['adm_5fusers_2ephp',['adm_users.php',['../adm__users_8php.html',1,'']]],
   ['apath_5fget',['apath_get',['../core_8php.html#a4f3e4e77dfcb51a8027fb223dbacc7ae',1,'core.php']]],
   ['applytoobject',['applyToObject',['../class_permanent_object.html#a11b43c8f6e4898f04d6f6ace10138d44',1,'PermanentObject']]],
-  ['arr_5fassoc',['ARR_ASSOC',['../class_s_q_l_mapper.html#a75bd4d6dc792ff0ed3ab842db8ba3d28',1,'SQLMapper']]],
-  ['arr_5fobjects',['ARR_OBJECTS',['../class_s_q_l_mapper.html#ae1b3c75c75438ff572d6f8f77abe059c',1,'SQLMapper']]]
+  ['arr_5fassoc',['ARR_ASSOC',['../class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99',1,'SQLAdapter']]],
+  ['arr_5fobjects',['ARR_OBJECTS',['../class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d',1,'SQLAdapter']]]
 ];

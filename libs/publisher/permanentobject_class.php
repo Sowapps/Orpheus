@@ -1,9 +1,9 @@
 <?php
-using('sqlmapper.SQLMapper');
+using('sqladapter.SQLAdapter');
 
 //! The permanent object class
 /*!
- * Manage a permanent object using the SQL Mapper.
+ * Manage a permanent object using the SQL Adapter.
  */
 abstract class PermanentObject {
 	
@@ -154,7 +154,7 @@ abstract class PermanentObject {
 	/*!
 	 * \return 1 in case of success, else 0.
 	 * 
-	 * If some fields was modified, it saves these fields using the SQL Mapper.
+	 * If some fields was modified, it saves these fields using the SQL Adapter.
 	*/
 	public function save() {
 		if( empty($this->modFields) ) {
@@ -163,7 +163,7 @@ abstract class PermanentObject {
 		$updQ = '';
 		foreach($this->modFields as $fieldname) {
 			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.SQLMapper::quote($this->$fieldname);
+				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.SQLAdapter::quote($this->$fieldname);
 			}
 		}
 		$IDFIELD=static::$IDFIELD;
@@ -174,7 +174,7 @@ abstract class PermanentObject {
 			'where'	=> "{$IDFIELD}={$this->{$IDFIELD}}",
 			'number'=> 1,
 		);
-		return SQLMapper::doUpdate($options);
+		return SQLAdapter::doUpdate($options);
 	}
 	
 	//! Marks the field as modified
@@ -333,7 +333,7 @@ abstract class PermanentObject {
 			'number'=> 1,
 			'where'	=> "{$IDFIELD}={$id}",
 		);
-		$r = SQLMapper::doDelete($options);
+		$r = SQLAdapter::doDelete($options);
 		if( $r ) {
 			if( isset(static::$instances[static::getTable()][$id]) ) {
 				static::$instances[static::getTable()][$id]->markAsDeleted();
@@ -357,10 +357,10 @@ abstract class PermanentObject {
 	/*!
 	 * \param $options The options used to get the permanents object.
 	 * \return An array of array containing object's data.
-	 * \sa SQLMapper
+	 * \sa SQLAdapter
 	 * 
 	 * Gets an objects' list using this class' table.
-	 * The following explanations are for the case where output is SQLMapper::ARR_OBJECTS
+	 * The following explanations are for the case where output is SQLAdapter::ARR_OBJECTS
 	 * If only one object is expected, we try to load and return it, else we return null.
 	 * In other cases, we load them and return a list of all objects, event if there is not result or only one.
 	*/
@@ -368,14 +368,14 @@ abstract class PermanentObject {
 		$options['table'] = static::$table;
 		// May be incompatible with old revisions (< R398)
 		if( !isset($options['output']) ) {
-			$options['output'] = SQLMapper::ARR_OBJECTS;
+			$options['output'] = SQLAdapter::ARR_OBJECTS;
 		}
 		//This method intercepts outputs of array of objects.
-		if( $options['output'] == SQLMapper::ARR_OBJECTS ) {
-			$options['output'] = SQLMapper::ARR_ASSOC;
+		if( $options['output'] == SQLAdapter::ARR_OBJECTS ) {
+			$options['output'] = SQLAdapter::ARR_ASSOC;
 			$objects = 1;
 		}
-		$r = SQLMapper::doSelect($options);
+		$r = SQLAdapter::doSelect($options);
 		if( !empty($r) && isset($objects) ) {
 			if( isset($options['number']) && $options['number'] == 1 ) {
 				$r = (!empty($r)) ? static::load($r) : null;
@@ -409,15 +409,15 @@ abstract class PermanentObject {
 		$what = array();
 		foreach($data as $fieldname => $fieldvalue) {
 			if( in_array($fieldname, static::$fields) ) {
-				$what[$fieldname] = SQLMapper::quote($fieldvalue);
+				$what[$fieldname] = SQLAdapter::quote($fieldvalue);
 			}
 		}
 		$options = array(
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
-		SQLMapper::doInsert($options);
-		$LastInsert = SQLMapper::doLastID(static::$table, static::$IDFIELD);
+		SQLAdapter::doInsert($options);
+		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD);
 		//To do after insertion
 		static::applyToObject($data, $LastInsert);//old ['LAST_INSERT_ID()']
 		return $LastInsert;
