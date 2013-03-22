@@ -8,7 +8,7 @@ class DemoTest extends PermanentObject {
 	//Attributes
 	protected static $table = 'test';
 	protected static $fields = array('id', 'name');
-	protected static $userEditableFields = array('name');
+	protected static $editableFields = array('name');
 	
 	// *** OVERLOADED METHODS ***
 		

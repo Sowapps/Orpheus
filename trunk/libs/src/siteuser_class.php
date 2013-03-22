@@ -19,8 +19,8 @@ class SiteUser extends User {
 	protected static $userEditableFields = array(
 		'fullname'
 	);
-
-	// *** METHODES SURCHARGEES ***
+	
+	// *** OVERLOADED METHODS ***
 	
 	public function __toString() {
 		return $this->fullname;
@@ -30,42 +30,16 @@ class SiteUser extends User {
 		return strtolower($this->name);
 	}
 	
-	public function update($uInputData, array $data=array()) {
-		
-		try {
-			$inputData['fullname'] = self::checkFullName($uInputData);
-			if( $inputData['fullname'] != $this->fullname ) {
-				$data['fullname'] = $inputData['fullname'];
-			}
-		} catch(UserException $e) { reportError($e); }
-		
-		$r = parent::update($uInputData, $data);
-		
-		return $r;
-	}
-	
 	public function runForUpdate() {
 	}
-	
-	// 		** METHODES DE VERIFICATION **
+
+	// 		** CHECK METHODS **
 
 	public static function checkFullName($inputData) {
 		if( empty($inputData['fullname']) ) {
 			throw new UserException('invalidFullName');
 		}
 		return strip_tags($inputData['fullname']);
-	}
-	
-	public static function checkUserInput($uInputData) {
-		$data = parent::checkUserInput($uInputData);
-		$data['fullname'] = static::checkFullName($uInputData);
-		return $data;
-	}
-	
-	public static function init() {
-		self::$fields = array_unique(array_merge(self::$fields, parent::$fields));
-		self::$editableFields = array_unique(array_merge(self::$editableFields, parent::$editableFields));
-		self::$validator = array_unique(array_merge(self::$validator, parent::$validator));
 	}
 }
 SiteUser::init();
