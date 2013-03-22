@@ -469,7 +469,7 @@ function reportError($message, $domain='global') {
 */
 function getHTMLReport($message, $type, $domain='global') {
 	return '
-		<div class="report report_'.$domain.' '.$type.'">'.t($message, $domain).'</div>';
+		<div class="report report_'.$domain.' '.$type.'">'.nl2br(t($message, $domain)).'</div>';
 }
 
 //! Gets some/all reports as HTML
