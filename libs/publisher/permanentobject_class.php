@@ -22,7 +22,7 @@ abstract class PermanentObject {
 	protected $isDeleted = false;
 	
 	//! Internal static initialization
-	public static function init() {
+	public static function selfInit() {
 		static::$fields = array(static::$IDFIELD);
 	}
 	
@@ -564,6 +564,17 @@ abstract class PermanentObject {
 	 * In the base class, this method does nothing.
 	*/
 	public static function checkForObject($data) { }
+	
+	//! Initializes class
+	public static function init() {
+		$parent = get_parent_class(get_called_class());
+		if( empty($parent) ) {
+			return;
+		}
+		static::$fields = array_unique(array_merge(static::$fields, $parent::$fields));
+		static::$editableFields = array_unique(array_merge(static::$editableFields, $parent::$editableFields));
+		static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
+	}
 }
-PermanentObject::init();
+PermanentObject::selfInit();
 ?>
