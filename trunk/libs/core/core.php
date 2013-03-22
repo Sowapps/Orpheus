@@ -458,12 +458,27 @@ function reportError($message, $domain='global') {
 	return addReport($message, 'error', $domain);
 }
 
-//! Gets reports as HTML
+//! Gets one report as HTML
+/*!
+ * \param $message The message to report.
+ * \param $type The type of the message.
+ * \param $domain The domain fo the message. Not used for translation. Default value is global.
+
+ * Returns a valid HTML report.
+ * This function is only a HTML generator.
+*/
+function getHTMLReport($message, $type, $domain='global') {
+	return '
+		<div class="report report_'.$domain.' '.$type.'">'.t($message, $domain).'</div>';
+}
+
+//! Gets some/all reports as HTML
 /*!
  * \param $domain The translation domain and the domain of the report. Default value is 'global'.
  * \param $rejected An array of rejected messages.
  * \param $delete True to delete entries from the list.
  * \sa displayReportsHTML()
+ * \sa getHTMLReport()
 
  * Gets all reports from the list of $domain and generates the HTML source to display.
 */
@@ -485,8 +500,7 @@ function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 	foreach( $REPORTS[$domain] as $type => &$reports ) {
 		foreach( $reports as $message) {
 			if( !in_array($message, $rejected) ) {
-				$report .= '
-		<div class="report report_'.$domain.' '.$type.'">'.t($message, $domain).'</div>';
+				$report .= getHTMLReport($message, $type, $domain);
 			}
 		}
 		if( $delete ) {
