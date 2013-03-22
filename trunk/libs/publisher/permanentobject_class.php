@@ -313,7 +313,7 @@ abstract class PermanentObject {
 			}
 		}
 		// Saving cached
-		return static::$instances[static::getTable()][$id] = new static($data);
+		return static::$instances[static::getTable()][$id] = $data;
 	}
 	
 	//! Deletes a permanent object
