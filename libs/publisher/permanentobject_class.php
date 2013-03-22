@@ -130,7 +130,7 @@ abstract class PermanentObject {
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
 		foreach($data as $fieldname => $fieldvalue) {
-			if( $fieldname != static::$IDFIELD && in_array($fieldname, static::$userEditableFields) ) {
+			if( $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
 				$this->$fieldname = $fieldvalue;
 			}
 		}
