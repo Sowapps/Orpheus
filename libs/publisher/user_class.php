@@ -199,20 +199,16 @@ class User extends AbstractStatus {
 		self::checkPassword($data, false);
 		//self::checkForEntry() does not return password and id now.
 		
-		$user = SQLAdapter::doSelect(array(
-			'table' => static::$table,
-			'what' => 'id, name, password',
-			'where' => 'name = '.SQLAdapter::quote($data['name']),
+		$user = static::get(array(
+			'where' => 'name LIKE '.SQLAdapter::quote($data['name']),
 			'number' => 1
 		));
-		//$table=static::$table;
 		if( empty($user) )  {
 			throw new UserException("unknownName");
 		}
-		if( $user['password'] != self::hashPassword($data['password']) )  {
+		if( $user->password != self::hashPassword($data['password']) )  {
 			throw new UserException("wrongPassword");
 		}
-		$user = static::load($user['id']);
 		$user->login();
 	}
 	
@@ -412,11 +408,13 @@ class User extends AbstractStatus {
 		return parent::checkStatus($newStatus, $ref, $reportToUser=true);
 	}
 	
+	/*
 	public static function init() {
 		//self::$fields = array_unique(array_merge(self::$fields, parent::$fields));
 		self::$editableFields = array_unique(array_merge(self::$editableFields, parent::$editableFields));
 		self::$validator = array_unique(array_merge(self::$validator, parent::$validator));
 	}
+	*/
 }
 User::init();
 ?>

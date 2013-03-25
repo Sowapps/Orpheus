@@ -108,4 +108,4 @@ abstract class AbstractStatus extends PermanentObject {
 		return key(static::$status);
 	}
 }
-?>
+AbstractStatus::init();

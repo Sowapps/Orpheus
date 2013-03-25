@@ -74,14 +74,35 @@ require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
+set_error_handler(
 //! Error Handler
 /*!
 	System function to handle PHP errors and convert it into exceptions.
 */
-function exception_error_handler($errno, $errstr, $errfile, $errline ) {
-	throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-}
-set_error_handler('exception_error_handler');
+function($errno, $errstr, $errfile, $errline ) {
+	if( empty($GLOBALS['NO_EXCEPTION']) ) {
+		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+	} else {
+		if( !function_exists('sys_error') ) {
+			die($errstr."<br />\n{$errfile} : {$errline}");
+		}
+		sys_error($errstr."<br />\n{$errfile} : {$errline}");
+		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
+	}
+});
+
+set_exception_handler(
+//! Exception Handler
+/*!
+	System function to handle all exceptions and stop script execution.
+ */
+function($e) {
+	if( !function_exists('sys_error') ) {
+		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
+	}
+	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
+});
 
 //! Includes a directory
 /*!
@@ -185,8 +206,8 @@ $AUTOLOADS = array();
 $Module = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
+
 try {
-	
 	includeDir(LIBSPATH.'core/');// Load engine Core
 	
 	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
@@ -198,7 +219,11 @@ try {
 	// Here starts Hooks and Session too.
 	Hook::trigger('startSession');
 	
+	$NO_EXCEPTION = 1;
+	
 	session_start();
+	
+	$NO_EXCEPTION = 0;
 	
 	// Checks and Gets Action.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
