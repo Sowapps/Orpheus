@@ -373,15 +373,16 @@ abstract class PermanentObject {
 		//This method intercepts outputs of array of objects.
 		if( $options['output'] == SQLAdapter::ARR_OBJECTS ) {
 			$options['output'] = SQLAdapter::ARR_ASSOC;
+			$options['what'] = '*';
 			$objects = 1;
 		}
 		$r = SQLAdapter::doSelect($options);
 		if( !empty($r) && isset($objects) ) {
 			if( isset($options['number']) && $options['number'] == 1 ) {
-				$r = (!empty($r)) ? static::load($r) : null;
+				$r = new static($r);
 			} else {
 				foreach( $r as &$rdata ) {
-					$rdata = static::load($rdata);
+					$rdata = new static($rdata);
 				}
 			}
 		}
@@ -573,7 +574,9 @@ abstract class PermanentObject {
 		}
 		static::$fields = array_unique(array_merge(static::$fields, $parent::$fields));
 		static::$editableFields = array_unique(array_merge(static::$editableFields, $parent::$editableFields));
-		static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
+		if( is_array(static::$validator) && is_array($parent::$validator) ) {
+			static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
+		}
 	}
 }
 PermanentObject::selfInit();

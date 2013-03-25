@@ -203,11 +203,6 @@ abstract class AbstractPublication extends AbstractStatus {
 			throw new UserException("floodDelay");
 		}
 	}
-	
-	//! Internal initialization
-	public static function init() {
-		self::$fields = array_unique(array_merge(self::$fields,parent::$fields));
-	}
 }
 AbstractPublication::init();
 ?>
