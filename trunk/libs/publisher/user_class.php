@@ -417,4 +417,3 @@ class User extends AbstractStatus {
 	*/
 }
 User::init();
-?>

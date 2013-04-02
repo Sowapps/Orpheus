@@ -409,7 +409,7 @@ function u($module, $action='', $queryStr='') {
 			unset($queryStr['module'], $queryStr['action']);
 			$queryStr = http_build_query($queryStr, '', '&amp;');
 		} else {
-			$queryStr = str_replace('&', '&amp;');
+			$queryStr = str_replace('&', '&amp;', $queryStr);
 		}
 	}
 	return SITEROOT.$module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
@@ -618,42 +618,42 @@ function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, 
 function convertSpecialChars($string) {
 	// Replaces all letter special characters.
 	$string = str_replace(
-			array(
-		'À','à','Á','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
-		'C','c','C','c','Ç','ç',
-		'D','d','Ð','d',
-		'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
-		'G','g',
-		'Ì','ì','Í','í','Î','î','Ï','ï',
-		'L','l','L','l','L','l',
-		'Ñ','ñ','N','n','N','n',
-		'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
-		'R','r','R','r',
-		'Š','š','S','s','S','s',
-		'T','t','T','t','T','t',
-		'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
-		'Ÿ','ÿ','ý','Ý',
-		'Ž','ž','Z','z','Z','z',
-		'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ',
+		array(
+			'À','à','Á','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
+			'C','c','C','c','Ç','ç',
+			'D','d','Ð','d',
+			'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
+			'G','g',
+			'Ì','ì','Í','í','Î','î','Ï','ï',
+			'L','l','L','l','L','l',
+			'Ñ','ñ','N','n','N','n',
+			'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
+			'R','r','R','r',
+			'Š','š','S','s','S','s',
+			'T','t','T','t','T','t',
+			'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
+			'Ÿ','ÿ','ý','Ý',
+			'Ž','ž','Z','z','Z','z',
+			'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ',
 		' '),
 		//'”','“','‘','’',"'","\n","\r",'£','$','€','¤'), //Just deleted
-			array(
-		'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
-		'C','c','C','c','C','c',
-		'D','d','D','d',
-		'E','e','E','e','E','e','E','e','E','e','E','e',
-		'G','g',
-		'I','i','I','i','I','i','I','i',
-		'L','l','L','l','L','l',
-		'N','n','N','n','N','n',
-		'O','o','O','o','O','o','O','o','Oe','oe','O','o','o',
-		'R','r','R','r',
-		'S','s','S','s','S','s',
-		'T','t','T','t','T','t',
-		'U','u','U','u','U','u','Ue','ue','U','u',
-		'Y','y','Y','y',
-		'Z','z','Z','z','Z','z',
-		'TH','th','DH','dh','ss','OE','oe','AE','ae','u',
+		array(
+			'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
+			'C','c','C','c','C','c',
+			'D','d','D','d',
+			'E','e','E','e','E','e','E','e','E','e','E','e',
+			'G','g',
+			'I','i','I','i','I','i','I','i',
+			'L','l','L','l','L','l',
+			'N','n','N','n','N','n',
+			'O','o','O','o','O','o','O','o','Oe','oe','O','o','o',
+			'R','r','R','r',
+			'S','s','S','s','S','s',
+			'T','t','T','t','T','t',
+			'U','u','U','u','U','u','Ue','ue','U','u',
+			'Y','y','Y','y',
+			'Z','z','Z','z','Z','z',
+			'TH','th','DH','dh','ss','OE','oe','AE','ae','u',
 		'_'), $string);
 		//'','','','','','',''), $string);
 	// Now replaces all other special character by nothing.
@@ -664,10 +664,23 @@ function convertSpecialChars($string) {
 //! Converts the string into a slug
 /*!
  * \param $string The string to convert.
+ * \param $case The case style to use, values: null (default), LOWERCAMELCASE or UPPERCAMELCASE.
  * \return The slug version.
  *
  * Converts string to lower case and converts all special characters. 
 */
-function toSlug($string) {
-	return convertSpecialChars(strtolower($string));
+function toSlug($string, $case=null) {
+	$string = strtolower($string);
+	if( isset($case) ) {
+		if( bintest($case, CAMELCASE) ) {
+			$string = str_replace(' ', '', ucwords(str_replace('&', 'and', $string)));
+			if( $case == LOWERCAMELCASE ) {
+				$string = lcfirst($string);
+			}
+		}
+	}
+	return convertSpecialChars($string);
 }
+defifn('CAMELCASE',			1<<0);
+defifn('LOWERCAMELCASE',	CAMELCASE);
+defifn('UPPERCAMELCASE',	CAMELCASE | 1<<1);

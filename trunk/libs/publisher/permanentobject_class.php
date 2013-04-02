@@ -12,8 +12,11 @@ abstract class PermanentObject {
 	protected static $instances = array();
 	
 	protected static $table = null;
+	// Contains all fields
 	protected static $fields = array();
+	// Contains fields editables by users
 	protected static $editableFields = array();
+	// Contains the validator. The default one is an array system.
 	protected static $validator = null;//! See checkUserInput()
 	protected static $domain = null;
 	
@@ -580,4 +583,3 @@ abstract class PermanentObject {
 	}
 }
 PermanentObject::selfInit();
-?>
