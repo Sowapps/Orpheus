@@ -477,4 +477,3 @@ BODY;
 		return quoted_printable_encode(( mb_detect_encoding($string, "UTF-8") == "UTF-8" ) ? $string : utf8_encode($string));
 	}
 }
-?>

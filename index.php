@@ -281,4 +281,3 @@ try {
 	@sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	die('A fatal display error occured.');
 }
-?>
