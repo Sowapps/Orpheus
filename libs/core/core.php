@@ -448,14 +448,17 @@ function reportSuccess($message, $domain='global') {
 //! Reports an error
 /*!
  * \param $message The message to report.
- * \param $domain The domain fo the message. Not used for translation. Default value is global.
+ * \param $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
  * \sa addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
 */
-function reportError($message, $domain='global') {
+function reportError($message, $domain=null) {
+	if( $message instanceof UserException && is_null($domain) ) {
+		$domain = $message->getDomain();
+	}
 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport($message, 'error', $domain);
+	return addReport($message, 'error', is_null($domain) ? 'global' : $domain);
 }
 
 //! Gets one report as HTML

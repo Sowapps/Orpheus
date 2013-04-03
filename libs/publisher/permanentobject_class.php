@@ -124,16 +124,17 @@ abstract class PermanentObject {
 	* This method update the EDIT event log.
 	* Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	*/
-	public function update($uInputData, array $data=array()) {
+	public function update($uInputData) {
+		$data = static::checkUserInput($uInputData, $this);
 		try {
 			if( empty($data) ) {
-				throw new UserException('updateEmptyData');
+				throwException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data));
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
 		foreach($data as $fieldname => $fieldvalue) {
-			if( $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
+			if( isset($fieldvalue) && $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
 				$this->$fieldname = $fieldvalue;
 			}
 		}
@@ -178,6 +179,37 @@ abstract class PermanentObject {
 			'number'=> 1,
 		);
 		return SQLAdapter::doUpdate($options);
+	}
+	
+	//! Reloads fields from database
+	/*!
+	 * \param $field The field to reload, default is null (all fields).
+	 * 
+	 * Updates the current object's fields from database.
+	 * If $field is not set, it reloads only one field else all fields.
+	 * Also it removes the reloaded fields from the modified ones list.
+	*/
+	public function reload($field=null) {
+		$IDFIELD = static::$IDFIELD;
+		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD);
+		if( !is_null($field) ) {
+			if( !in_array($field, $fields) ) {
+				throw new FieldNotFoundException($field);
+			}
+			$i = array_search($this->modFields);
+			if( $i !== false ) {
+				unset($this->modFields[$i]);
+			}
+			$options['what'] = $field;
+		} else {
+			$this->modFields = array();
+		}
+		$data = static::get($options);
+		if( !is_null($field) ) {
+			$this->data[$field] = $data[$field];
+		} else {
+			$this->data = $data;
+		}
 	}
 	
 	//! Marks the field as modified
@@ -238,7 +270,7 @@ abstract class PermanentObject {
 	*/
 	public function setValue($key, $value) {
 		if( !isset($key, $value) ) {
-			throw new UserException("nullValue");
+			throwException("nullValue");
 			
 		} else if( !in_array($key, static::$fields) ) {
 			throw new FieldNotFoundException($key);
@@ -303,7 +335,7 @@ abstract class PermanentObject {
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
 			if( !ctype_digit("$id") ) {
-				throw new UserException('invalidID');
+				throwException('invalidID');
 			}
 			// Getting data
 			$data = static::get(array(
@@ -312,7 +344,7 @@ abstract class PermanentObject {
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($data) ) {
-				throw new UserException('inexistantobject');
+				throwException('inexistantObject');
 			}
 		}
 		// Saving cached
@@ -328,7 +360,7 @@ abstract class PermanentObject {
 	*/
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
-			throw new UserException('invalidID');
+			throwException('invalidID');
 		}
 		$IDFIELD=static::$IDFIELD;
 		$options = array(
@@ -581,5 +613,17 @@ abstract class PermanentObject {
 			static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
 		}
 	}
+	
+	//! Throws an UserException
+	/*!
+	 * \param $message the text message, may be a translation string
+	 * \sa UserException
+	 * 
+	 * Throws an UserException with the current domain.
+	*/
+	public static function throwException($message) {
+		throw new UserException($message, static::$domain);
+	}
+	
 }
 PermanentObject::selfInit();
