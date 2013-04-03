@@ -83,11 +83,19 @@ function($errno, $errstr, $errfile, $errline ) {
 	if( empty($GLOBALS['NO_EXCEPTION']) ) {
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else {
-		if( !function_exists('sys_error') ) {
-			die($errstr."<br />\n{$errfile} : {$errline}");
+		$backtrace = '';
+		foreach( debug_backtrace() as $trace ) {
+			if( !isset($trace['file']) ) {
+				$trace['file'] = $trace['line'] = 'N/A';
+			}
+			$backtrace .= '
+'.$trace['file'].' ('.$trace['line'].'): '.$trace['function'].'('.print_r($trace['args'], 1).')<br />';
 		}
-		sys_error($errstr."<br />\n{$errfile} : {$errline}");
-		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
+		if( !function_exists('sys_error') ) {
+			die($errstr."<br />\n{$backtrace}");
+		}
+		sys_error($errstr."<br />\n{$backtrace}");
+		die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 	}
 });
 
@@ -203,7 +211,7 @@ function($className) {
 }, true, true );// End of spl_autoload_register()
 
 $AUTOLOADS = array();
-$Module = '';// Useful for initializing errors.
+$Module = $Page = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 
@@ -220,6 +228,7 @@ try {
 	Hook::trigger('startSession');
 	
 	$NO_EXCEPTION = 1;
+	//PHP is unable to manage exception thrown during session_start()
 	
 	session_start();
 	
@@ -228,8 +237,6 @@ try {
 	// Checks and Gets Action.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
 	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? $_GET['format'] : 'html';
-	
-	$Page = '';
 	
 	Hook::trigger('checkModule');
 	
@@ -261,12 +268,15 @@ try {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
+	log_debug(__FILE__.' : '.__LINE__);
 	if( !function_exists('sys_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
+	log_debug(__FILE__.' : '.__LINE__);
 	ob_start();
 	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	$Page = ob_get_contents();
+	log_debug(__FILE__.' : '.__LINE__);
 	ob_end_clean();
 }
 

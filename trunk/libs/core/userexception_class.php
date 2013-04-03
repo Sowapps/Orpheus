@@ -4,5 +4,15 @@
 	This exception is thrown when an occured caused by the user.
 */
 class UserException extends Exception {
-	//nothing special
+	
+	private $domain;
+	
+	public function __construct($message=null, $domain=null) {
+		parent::__construct($message);
+		$this->domain = $domain;
+	}
+	
+	public function getDomain() {
+		return $this->domain;
+	}
 }
