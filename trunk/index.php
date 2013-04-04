@@ -80,7 +80,9 @@ set_error_handler(
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
+	log_debug("Error: $errstr");
 	if( empty($GLOBALS['NO_EXCEPTION']) ) {
+		log_debug('Throwing exception');
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else {
 		$backtrace = '';
@@ -96,6 +98,31 @@ function($errno, $errstr, $errfile, $errline ) {
 		}
 		sys_error($errstr."<br />\n{$backtrace}");
 		die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+	}
+});
+
+register_shutdown_function(
+//! Shutdown Handler
+/*!
+	System function to handle PHP shutdown and catch uncaught errors.
+*/
+function() {
+	if( $error = error_get_last() ) {
+		switch($error['type']){
+			case E_ERROR:
+			case E_CORE_ERROR:
+			case E_COMPILE_ERROR:
+			case E_USER_ERROR: {
+				ob_end_clean();
+				$message = $error['message'].' in '.$error['file'].' ('.$error['line'].')';
+				if( !function_exists('sys_error') ) {
+					die($message);
+				}
+				sys_error($message);
+				die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+				break;
+			}
+		}
 	}
 });
 
@@ -268,15 +295,15 @@ try {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
-	log_debug(__FILE__.' : '.__LINE__);
+	//log_debug(__FILE__.' : '.__LINE__);
 	if( !function_exists('sys_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	log_debug(__FILE__.' : '.__LINE__);
+	//log_debug(__FILE__.' : '.__LINE__);
 	ob_start();
 	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	$Page = ob_get_contents();
-	log_debug(__FILE__.' : '.__LINE__);
+	//log_debug(__FILE__.' : '.__LINE__);
 	ob_end_clean();
 }
 

@@ -128,7 +128,7 @@ abstract class PermanentObject {
 		$data = static::checkUserInput($uInputData, $this);
 		try {
 			if( empty($data) ) {
-				throwException('updateEmptyData');
+				static::throwException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data));
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
@@ -191,7 +191,7 @@ abstract class PermanentObject {
 	*/
 	public function reload($field=null) {
 		$IDFIELD = static::$IDFIELD;
-		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD);
+		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_ASSOC, 'number' => 1);
 		if( !is_null($field) ) {
 			if( !in_array($field, $fields) ) {
 				throw new FieldNotFoundException($field);
@@ -253,7 +253,7 @@ abstract class PermanentObject {
 	*/
 	public function getValue($key=null) {
 		if( !empty($key) ) {
-			if( !in_array($key, static::$fields) ) {
+			if( !isset($this->data[$key]) ) {
 				throw new FieldNotFoundException($key);
 			}
 			return $this->data[$key];
@@ -270,7 +270,7 @@ abstract class PermanentObject {
 	*/
 	public function setValue($key, $value) {
 		if( !isset($key, $value) ) {
-			throwException("nullValue");
+			static::throwException("nullValue");
 			
 		} else if( !in_array($key, static::$fields) ) {
 			throw new FieldNotFoundException($key);
@@ -335,7 +335,7 @@ abstract class PermanentObject {
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
 			if( !ctype_digit("$id") ) {
-				throwException('invalidID');
+				static::throwException('invalidID');
 			}
 			// Getting data
 			$data = static::get(array(
@@ -344,7 +344,7 @@ abstract class PermanentObject {
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($data) ) {
-				throwException('inexistantObject');
+				static::throwException('inexistantObject');
 			}
 		}
 		// Saving cached
@@ -360,7 +360,7 @@ abstract class PermanentObject {
 	*/
 	public static function delete($id) {
 		if( !ctype_digit("$id") ) {
-			throwException('invalidID');
+			static::throwException('invalidID');
 		}
 		$IDFIELD=static::$IDFIELD;
 		$options = array(
@@ -554,28 +554,28 @@ abstract class PermanentObject {
 	 * - If an array, it uses an field => checkMethod association.
 	*/
 	public static function checkUserInput($uInputData, $ref=null) {
-		if( empty(static::$validator) ) {
+		if( empty(static::$editableFields) ) {
 			return array();
 		}
 		if( is_array(static::$validator) ) {
 			$data = array();
-			foreach( static::$validator as $field => $checkMeth ) {
-				if(
-					// If editing the id field
-					$field == static::$IDFIELD ||
-					// If editing an uneditable field
-					!is_null($ref) && !in_array($field, static::$editableFields)
-				) {
+			foreach( static::$editableFields as $field ) {
+				// If editing the id field
+				if( $field == static::$IDFIELD ) {
 					continue;
 				}
 				try {
-					// If not defined, we just get the value without check
-					$value = static::$checkMeth($uInputData, $ref);
-					if( !is_null($value) && ( is_null($ref) || $value != $ref->$field ) ) {
-						$data[$field] = $value;
+					if( !empty(static::$validator[$field]) ) {
+						$checkMeth = static::$validator[$field];
+						// If not defined, we just get the value without check
+						$value = static::$checkMeth($uInputData, $ref);
+						if( !is_null($value) && ( is_null($ref) || $value != $ref->$field ) ) {
+							$data[$field] = $value;
+						}
+					} else if( isset($uInputData[$field]) ) {
+						$data[$field] = $uInputData[$field];
 					}
 				} catch(UserException $e) {
-					// TODO: Exclude empty field from error while updating.
 					reportError($e, static::getDomain());
 				}
 			}
