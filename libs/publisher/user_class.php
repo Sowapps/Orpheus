@@ -1,4 +1,4 @@
- <?php
+<?php
 //! The user class
 /*!
  * The user class represents an user known by the current website as a permanent object.
@@ -61,10 +61,15 @@ class User extends AbstractStatus {
 	}
 	
 	//! Log out this user from the current session.
-	public function logout() {
+	public function logout($reason=null) {
 		global $USER;
-		$this->login = 0;//Au cas où l'utilisateur est pointé ailleurs.
+		if( !$this->login ) {
+			return false;
+		}
+		$this->login = 0;
 		$_SESSION['USER'] = $USER = null;
+		$_SESSION['LOGOUT_REASON'] = $reason;
+		return true;
 	}
 
 	//! Checks permissions
@@ -105,9 +110,12 @@ class User extends AbstractStatus {
 	/*!
 	 * \param $inputData The input data.
 	 */
-	public function checkPermissions($inputData ) {
+	public function checkPermissions($inputData) {
 		global $USER;
-		if( !isset($inputData['accesslevel']) || !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
+		if( !isset($inputData['accesslevel']) ) {
+			return null;
+		}
+		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
 			throw new UserException('invalidAccessLevel');
 		}
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
@@ -140,49 +148,13 @@ class User extends AbstractStatus {
 	 * 
 	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
 	 */
-	public function update($uInputData, array $data=array()) {
+	public function update($uInputData) {
 		
 		if( !User::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		
-		try {
-			$inputData['name'] = self::checkName($uInputData);
-			if( $inputData['name'] != $this->name ) {
-				$data['name'] = $inputData['name'];
-			}
-		} catch(UserException $e) { reportError($e, static::getDomain()); }
-		
-		try {
-			$inputData['email'] = self::checkEmail($uInputData);
-			if( $inputData['email'] != $this->email ) {
-				$data['email'] = $inputData['email'];
-			}
-		} catch(UserException $e) { reportError($e, static::getDomain()); }
-		
-		try {
-			$inputData['email_public'] = self::checkPublicEmail($uInputData);
-			if( $inputData['email_public'] != $this->email_public ) {
-				$data['email_public'] = $inputData['email_public'];
-			}
-		} catch(UserException $e) { reportError($e, static::getDomain()); }
-		
-		try {
-			//Un modérateur n'est pas obligé de fournir une confirmation.
-			$inputData['password'] = self::checkPassword($uInputData, !User::canDo(static::$table.'_edit') );
-			if( $inputData['password'] != $this->password ) {
-				$data['password'] = $inputData['password'];
-			}
-		} catch(UserException $e) { reportError($e, static::getDomain()); }
-		
-		try {
-			$inputData['accesslevel'] = $this->checkPermissions($uInputData);
-			if( $inputData['accesslevel'] != $this->accesslevel ) {
-				$data['accesslevel'] = $inputData['accesslevel'];
-			}
-		} catch(UserException $e) { reportError($e, static::getDomain()); }
-		
-		return parent::update($uInputData, $data);
+		return parent::update($uInputData);
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -195,20 +167,21 @@ class User extends AbstractStatus {
 	 * It tries to validate given data, in case of errors, UserException are thrown.
 	 */
 	public static function userLogin($data) {
-		self::checkName($data);
-		self::checkPassword($data, false);
+		$name = self::checkName($data);
+		$password = self::checkPassword($data);
 		//self::checkForEntry() does not return password and id now.
 		
 		$user = static::get(array(
-			'where' => 'name LIKE '.SQLAdapter::quote($data['name']),
+			'where' => 'name LIKE '.SQLAdapter::quote($name),
 			'number' => 1
 		));
 		if( empty($user) )  {
 			throw new UserException("unknownName");
 		}
-		if( $user->password != self::hashPassword($data['password']) )  {
+		if( $user->password != $password )  {
 			throw new UserException("wrongPassword");
 		}
+		$user->logout();
 		$user->login();
 	}
 	
@@ -234,7 +207,7 @@ class User extends AbstractStatus {
 	 * It verifies if a valid session exist.
 	 */
 	public static function is_login() {
-		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User );
+		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
 	}
 	
 	//! Loads an user object
@@ -300,7 +273,10 @@ class User extends AbstractStatus {
 	 * 
 	 * Validates the name in array $inputData.
 	 */
-	public static function checkName($inputData) {
+	public static function checkName($inputData, $ref=null) {
+		if( !isset($inputData['name']) && isset($ref) ) {
+			return null;
+		}
 		if( empty($inputData['name']) || !is_name($inputData['name']) ) {
 			throw new UserException('invalidName');
 		}
@@ -315,10 +291,13 @@ class User extends AbstractStatus {
 	 * 
 	 * Validates the password in array $inputData.
 	 */
-	public static function checkPassword($inputData, $withConfirmation=1) {
+	public static function checkPassword($inputData, $ref=null) {
 		if( empty($inputData['password']) ) {
+			if( isset($ref) ) {//UPDATE
+				return null;
+			}
 			throw new UserException('invalidPassword');
-		} else if( $withConfirmation && (empty($inputData['password_conf']) || $inputData['password'] != $inputData['password_conf']) ) {
+		} else if( isset($inputData['password_conf']) && (empty($inputData['password_conf']) || $inputData['password'] != $inputData['password_conf']) ) {
 			throw new UserException('invalidPasswordConf');
 		}
 		return static::hashPassword($inputData['password']);
@@ -331,8 +310,11 @@ class User extends AbstractStatus {
 	 * 
 	 * Validates the email address in array $inputData.
 	 */
-	public static function checkEmail($inputData) {
+	public static function checkEmail($inputData, $ref) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
+			if( empty($inputData['email']) && isset($ref) ) {//UPDATE
+				return null;
+			}
 			throw new UserException('invalidEmail');
 		}
 		return $inputData['email'];
@@ -347,7 +329,10 @@ class User extends AbstractStatus {
 	 * This address is not required, you can use a checkbox to automatically use the real email address.
 	 * e.g The email is foo@bar.com and public_email is 'on', the returned public_email will be foo@bar.com.
 	 */
-	public static function checkPublicEmail($inputData) {
+	public static function checkPublicEmail($inputData, $ref) {
+		if( !isset($inputData['email_public']) && isset($ref) ) {//UPDATING
+			return null;
+		}
 		//Require checkEmail() before.
 		if( !empty($inputData['email_public']) ) {
 			if( strtolower($inputData['email_public']) == 'on' && !empty($inputData['email']) ) {
@@ -367,7 +352,10 @@ class User extends AbstractStatus {
 	 * \return The access level.
 	 * \see checkPermissions()
 	*/
-	public function checkAccessLevel($inputData) {
+	public static function checkAccessLevel($inputData, $ref) {
+		if( !isset($inputData['accesslevel']) && isset($ref) ) {//UPDATING
+			return null;
+		}
 		return $ref->checkPermissions($inputData);
 	}
 	
@@ -379,11 +367,11 @@ class User extends AbstractStatus {
 		if( empty($data['name']) && empty($data['email']) ) {
 			return;//Nothing to check.
 		}
-		$user = SQLAdapter::doSelect(array(
-			'table' => static::$table,
-			'what' => 'name, email',
-			'where' => 'name LIKE '.SQLAdapter::quote($data['name']).' OR email LIKE '.SQLAdapter::quote($data['email']),
-			'number' => 1
+		$user = static::get(array(
+			'what'		=> 'name, email',
+			'where'		=> 'name LIKE '.SQLAdapter::quote($data['name']).' OR email LIKE '.SQLAdapter::quote($data['email']),
+			'output'	=> SQLAdapter::ARR_ASSOC,
+			'number'	=> 1
 		));
 		if( !empty($user) ) {
 			if( $user['email'] == $data['email'] ) {
@@ -417,3 +405,27 @@ class User extends AbstractStatus {
 	*/
 }
 User::init();
+/*
+MYSQL
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `email_public` varchar(100) NOT NULL,
+  `accesslevel` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `create_ip` varchar(40) NOT NULL DEFAULT '',
+  `activation_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `activation_ip` varchar(40) NOT NULL DEFAULT '',
+  `login_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `login_ip` varchar(40) NOT NULL DEFAULT '',
+  `activity_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `activity_ip` varchar(40) NOT NULL DEFAULT '',
+  `status` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+*/
