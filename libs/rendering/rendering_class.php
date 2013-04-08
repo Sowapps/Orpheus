@@ -56,7 +56,11 @@ abstract class Rendering {
 				} else {
 					$modData = explode('-', $modData);
 					$module = $modData[0];
-					if( !User::canAccess($module) || !is_readable(MODPATH.$module.'.php') ) {
+					global $USER_CLASS;
+					if( !is_readable(MODPATH.$module.'.php') || !$USER_CLASS::canAccess($module) ) {
+						continue;
+					}
+					if( !Hook::trigger('menuItemAccess', true, true, $module) ) {
 						continue;
 					}
 					$action = ( count($modData) > 1 ) ? $modData[1] : '';

@@ -687,3 +687,8 @@ function toSlug($string, $case=null) {
 defifn('CAMELCASE',			1<<0);
 defifn('LOWERCAMELCASE',	CAMELCASE);
 defifn('UPPERCAMELCASE',	CAMELCASE | 1<<1);
+
+//! Converts the boolean into a string
+function bool2str($v) {
+	return ($v ? 'True' : 'False');
+}

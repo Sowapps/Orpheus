@@ -80,9 +80,7 @@ set_error_handler(
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
-	log_debug("Error: $errstr");
 	if( empty($GLOBALS['NO_EXCEPTION']) ) {
-		log_debug('Throwing exception');
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else {
 		$backtrace = '';
@@ -295,15 +293,12 @@ try {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
-	//log_debug(__FILE__.' : '.__LINE__);
 	if( !function_exists('sys_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	//log_debug(__FILE__.' : '.__LINE__);
 	ob_start();
 	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 	$Page = ob_get_contents();
-	//log_debug(__FILE__.' : '.__LINE__);
 	ob_end_clean();
 }
 
