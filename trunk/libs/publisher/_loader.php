@@ -10,12 +10,15 @@ addAutoload('PermanentObject',					'publisher/permanentobject_class.php');
 addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
 addAutoload('User',								'publisher/user_class.php');
 
+defifn('USER_CLASS',		'User');
+$USER_CLASS = USER_CLASS;
 
 // Hooks
 
 //! Hook 'runModule'
 Hook::register('runModule', function () {
-	if( !User::canAccess($GLOBALS['Module']) ) {
+	global $USER_CLASS;
+	if( !$USER_CLASS::canAccess($GLOBALS['Module']) ) {
 		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : DEFAULTLINK);
 	}
 });

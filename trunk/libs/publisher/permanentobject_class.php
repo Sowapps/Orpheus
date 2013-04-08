@@ -252,13 +252,15 @@ abstract class PermanentObject {
 	 * Gets the value of field $key or all data values if $key is null.
 	*/
 	public function getValue($key=null) {
-		if( !empty($key) ) {
-			if( !isset($this->data[$key]) ) {
-				throw new FieldNotFoundException($key);
-			}
-			return $this->data[$key];
+		if( empty($key) ) {
+			return $this->data;
 		}
-		return $this->data;
+		if( !isset($this->data[$key]) ) {
+			log_debug('Key "'.$key.'" not found in array :');
+			log_debug($this->data);
+			throw new FieldNotFoundException($key);
+		}
+		return $this->data[$key];
 	}
 	
 	//! Sets the value of a field
@@ -341,6 +343,7 @@ abstract class PermanentObject {
 			$data = static::get(array(
 				'number'=> 1,
 				'where'	=> "{$IDFIELD}={$id}",
+				'output'=> SQLAdapter::ARR_ASSOC,
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($data) ) {
@@ -348,7 +351,7 @@ abstract class PermanentObject {
 			}
 		}
 		// Saving cached
-		return static::$instances[static::getTable()][$id] = $data;
+		return static::$instances[static::getTable()][$id] = new static($data);
 	}
 	
 	//! Deletes a permanent object
@@ -397,7 +400,8 @@ abstract class PermanentObject {
 	 * Gets an objects' list using this class' table.
 	 * The following explanations are for the case where output is SQLAdapter::ARR_OBJECTS
 	 * If only one object is expected, we try to load and return it, else we return null.
-	 * In other cases, we load them and return a list of all objects, event if there is not result or only one.
+	 * In other cases, we load them and return a list of all objects, even if there is no result or only one.
+	 * 
 	*/
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
@@ -414,10 +418,10 @@ abstract class PermanentObject {
 		$r = SQLAdapter::doSelect($options);
 		if( !empty($r) && isset($objects) ) {
 			if( isset($options['number']) && $options['number'] == 1 ) {
-				$r = new static($r);
+				$r = static::load($r);
 			} else {
 				foreach( $r as &$rdata ) {
-					$rdata = new static($rdata);
+					$rdata = static::load($rdata);
 				}
 			}
 		}

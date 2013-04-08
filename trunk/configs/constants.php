@@ -16,6 +16,8 @@ define('PROD_LEVEL',	0);//Production
 
 defifn('ERROR_LEVEL',	DEV_LEVEL);
 
+defifn('USER_CLASS',		'SiteUser');
+
 //Useful paths.
 defifn('CONFPATH',		ORPHEUSPATH.'configs/');
 defifn('MODPATH',		ORPHEUSPATH.'modules/');
