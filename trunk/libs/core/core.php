@@ -536,20 +536,36 @@ function displayReportsHTML($domain='all', $rejected=array(), $delete=1) {
 //! Gets POST data
 /*!
  * \param $key The key to retrieve. The default value is null (retrieves all data).
- * \return Data using the key or all data from POST array.
+ * \return Data using the path or all data from POST array.
  * \sa isPOST()
+ * \sa extractFrom()
 
- * Gets data from a POST request using the $key.
+ * Gets data from a POST request using the $path.
  * With no parameter or parameter null, all data are returned.
 */
-function POST($key=null) {
-	return ( isset($key) ) ? ( (isset($_POST[$key])) ? $_POST[$key] : false) : $_POST ;
+function POST($path=null) {
+	return extractFrom($path, $_POST);
+}
+
+//! Gets GET data
+/*!
+ * \param $key The key to retrieve. The default value is null (retrieves all data).
+ * \return Data using the path or all data from GET array.
+ * \sa isGET()
+ * \sa extractFrom()
+
+ * Gets data from a GET request using the $path.
+ * With no parameter or parameter null, all data are returned.
+*/
+function GET($path=null) {
+	return extractFrom($path, $_GET);
 }
 
 //! Checks the POST status
 /*!
  * \param $key The name of the button submitting the request.
  * \return True if the request is a POST one. Compares also the $key if not null.
+ * \sa POST()
  * 
  * Check the POST status to retrieve data from a form.
  * You can specify the name of your submit button as first parameter.
@@ -557,6 +573,33 @@ function POST($key=null) {
 */
 function isPOST($key=null) {
 	return isset($_POST) && (is_null($key) || isset($_POST[$key]));
+}
+
+//! Checks the GET status
+/*!
+ * \param $key The name of the button submitting the request.
+ * \return True if the request is a GET one. Compares also the $key if not null.
+ * \sa GET()
+ * 
+ * Check the GET status to retrieve data from a form.
+ * You can specify the name of your submit button as first parameter.
+ * We advise to use the name of your submit button, but you can also use another important field of your form.
+*/
+function isGET($key=null) {
+	return isset($_GET) && (is_null($key) || isset($_GET[$key]));
+}
+
+//! Extracts data from array
+/*!
+ * \param $path The path to retrieve. null retrieves all data.
+ * \param $array The array of data to browse.
+ * \return Data using the path or all data from the given array.
+
+ * Gets data from an array using the $path.
+ * $path is null, all data are returned.
+*/
+function extractFrom($path, $array) {
+	return ( isset($path) ) ? ( (!is_null($v = apath_get($array, $key))) ? $path : false) : $array ;
 }
 
 //! Gets the HTML value
@@ -588,7 +631,7 @@ function htmlValue($name, $data=null) {
  * 
  * Generates the HTML source for a SELECT from the $data.
 */
-function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, $selectAttr='') {
+function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, $tagAttr='') {
 	global $formData;
 	$opts = '';
 	$namePath = explode(':', $name);
@@ -597,7 +640,7 @@ function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, 
 	foreach( $namePath as $index => $path ) {
 		$htmlName .= ( $index ) ? "[{$path}]" : $path;
 	}
-	$selectAttr .= ' name="'.$htmlName.'"';
+	$tagAttr .= ' name="'.$htmlName.'"';
 	if( is_null($selected) && isset($formData[$name]) ) {
 		$selected = $formData[$name];
 	}
@@ -607,7 +650,7 @@ function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, 
 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return "
-<select {$selectAttr}>{$opts}
+<select {$tagAttr}>{$opts}
 </select>";
 }
 
