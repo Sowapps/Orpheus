@@ -308,7 +308,9 @@ abstract class PermanentObject {
 	public function logEvent($event, $time=null, $ipAdd=null) {
 		$log = static::getLogEvent($event, $time, $ipAdd);
 		$this->setValue($event.'_time', $log[$event.'_time']);
-		$this->setValue($event.'_ip', $log[$event.'_ip']);
+		try {
+			$this->setValue($event.'_ip', $log[$event.'_ip']);
+		} catch(FieldNotFoundException $e) {}
 	}
 	
 	// *** STATIC METHODS ***
@@ -383,13 +385,14 @@ abstract class PermanentObject {
 	
 	//! Runs for Deletion
 	/*!
+	 * \param $id The deleted object ID.
 	 * \sa delete()
 	 * 
 	 * This function is called by delete() after deleting the object $id.
 	 * If you need to get the object before, prefer to inherit delete()
 	 * In the base class, this method does nothing.
 	*/
-	public static function runForDeletion() { }
+	public static function runForDeletion($id) { }
 	
 	//! Gets some permanent objects
 	/*!
@@ -416,6 +419,9 @@ abstract class PermanentObject {
 			$objects = 1;
 		}
 		$r = SQLAdapter::doSelect($options);
+		if( empty($r) && ($options['output'] == SQLAdapter::ARR_ASSOC || $options['output'] == SQLAdapter::ARR_OBJECTS) ) {
+			return array();
+		}
 		if( !empty($r) && isset($objects) ) {
 			if( isset($options['number']) && $options['number'] == 1 ) {
 				$r = static::load($r);
