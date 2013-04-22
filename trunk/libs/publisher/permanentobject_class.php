@@ -338,7 +338,7 @@ abstract class PermanentObject {
 		}
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
-			if( !ctype_digit("$id") ) {
+			if( !is_ID("$id") ) {
 				static::throwException('invalidID');
 			}
 			// Getting data
