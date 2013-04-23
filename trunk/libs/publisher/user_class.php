@@ -227,7 +227,7 @@ class User extends AbstractStatus {
 	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
 	public static function load($id) {
-		if( !empty($GLOBALS['USER']) && $GLOBALS['USER'] instanceof User && $GLOBALS['USER']->id == $id) {
+		if( static::getLoggedUserID() == $id) {
 			return $GLOBALS['USER'];
 		}
 		return parent::load($id);
