@@ -106,7 +106,7 @@ class User extends AbstractStatus {
 		return $this->checkPerm((int) $GLOBALS['ACCESS']->$module);
 	}
 	
-	//! Checks if current loggued user can edit this one.
+	//! Checks if current logged user can edit this one.
 	/*!
 	 * \param $inputData The input data.
 	 */
@@ -199,22 +199,32 @@ class User extends AbstractStatus {
 		return hash('sha512', $salt.$str.'7');
 	}
 	
-	//! Checks if the client is loggued in
+	//! Checks if the client is logged in
 	/*!
-	 * \return True if the current client is loggued in.
+	 * \return True if the current client is logged in.
 	 * 
-	 * Checks if the client is loggued in.
+	 * Checks if the client is logged in.
 	 * It verifies if a valid session exist.
 	 */
 	public static function is_login() {
 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
 	}
 	
+	//! Gets ID if user is logged
+	/*!
+	 * \return The id of the current client logged in.
+	 * 
+	 * Gets the ID of the current user or 0.
+	 */
+	public static function getLoggedUserID() {
+		return static::is_login() ? $_SESSION['USER']->id : 0;
+	}
+	
 	//! Loads an user object
 	/*!
 	 * \sa PermanentObject::load()
 	 * 
-	 * It tries to optimize by getting directly the loggued user if he has the same ID.
+	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
 	public static function load($id) {
 		if( !empty($GLOBALS['USER']) && $GLOBALS['USER'] instanceof User && $GLOBALS['USER']->id == $id) {
