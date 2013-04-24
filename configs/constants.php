@@ -36,9 +36,11 @@ defifn('LANG',			'en_US');
 
 
 //Miscelanous
-defifn('DEFAULTMOD',	'home');
-define('SITEROOT',		'http://'.$_SERVER['HTTP_HOST'].dirpath($_SERVER['SCRIPT_NAME']));
-defifn('DEFAULTLINK',	SITEROOT);
+defifn('DEFAULTMOD',		'home');
+defifn('HTTPS',				!empty($_SERVER['HTTPS']));
+defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
+defifn('SITEROOT',			SCHEME.'://'.$_SERVER['HTTP_HOST'].dirpath($_SERVER['SCRIPT_NAME']));
+defifn('DEFAULTLINK',		SITEROOT);
 
 defifn('AUTHORNAME',	'Florent HAZARD');
 defifn('SITENAME',		'Orpheus');

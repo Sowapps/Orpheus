@@ -58,11 +58,11 @@ function is_date($Date) {
 //! Checks if the input is an url.
 /*!
  * \param $Url The url to check.
- * \param $protocol Not used yet.
+ * \param $protocol Not used yet. Default to SCHEME constant.
  * \return True if $Url si a valid url.
  */
-function is_url($Url, $protocol='http') {
-	return filter_var($email, FILTER_VALIDATE_URL);
+function is_url($Url, $protocol=null) {
+	return filter_var($Url, FILTER_VALIDATE_URL);
 }
 
 //! Checks if the input is an ip address.
