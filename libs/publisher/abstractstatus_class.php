@@ -48,7 +48,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public function status($newStatus=null) {
 		if( isset($newStatus) ) {
-			static::checkStatus($newStatus, $this->status, false);
+			static::validateStatus($newStatus, $this);
 			$this->setValue('status', $newStatus);
 		}
 		return $this->status;
@@ -90,10 +90,13 @@ abstract class AbstractStatus extends PermanentObject {
 	 * 
 	 * Uses validateStatus() to validate field 'status'.
 	 */
-	public static function checkStatus($inputData, $ref=null) {
+	public static function checkStatus($inputData, $ref) {
 		// When creating whe set to the default
-		if( is_null($ref) ) {
+		if( !isset($ref) ) {
 			return static::getDefaultStatus();
+		}
+		if( !isset($inputData['status']) ) {
+			return null;
 		}
 		return static::validateStatus($inputData['status'], $ref);
 	}

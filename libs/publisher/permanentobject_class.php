@@ -136,13 +136,17 @@ abstract class PermanentObject {
 		foreach($data as $fieldname => $fieldvalue) {
 			if( isset($fieldvalue) && $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
 				$this->$fieldname = $fieldvalue;
+			} else {
+				unset($data[$fieldname]);
 			}
 		}
 		if( in_array('edit_time', static::$fields) ) {
 			static::logEvent('edit');
 		}
-		$this->runForUpdate();
-		return $this->save();
+		if( $r = $this->save() ) {
+			$this->runForUpdate($data);
+		}
+		return $r;
 	}
 	
 	//! Runs for Update
@@ -152,7 +156,7 @@ abstract class PermanentObject {
 	 * This function is called by update() before saving new data.
 	 * In the base class, this method does nothing.
 	*/
-	public function runForUpdate() { }
+	public function runForUpdate($data) { }
 	
 	//! Saves this permanent object
 	/*!

@@ -58,11 +58,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * This update method manages 'name' and 'user_name' fields.
 	 */
-	public function update($uInputData, array $data=array()) {
+	public function update($uInputData) {
 		if( !User::canDo(static::$table.'_edit') ) {
 			throw new UserException('forbiddenUpdate');
 		}
-		return parent::update($uInputData, $data);
+		return parent::update($uInputData);
 	}
 	
 	//! Gets HTML contents
@@ -113,8 +113,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * Validates the name field in array $inputData.
 	 */
-	public static function checkName($inputData) {
+	public static function checkName($inputData, $ref) {
 		if( empty($inputData['name']) ) {
+			if( isset($ref) ) {//UPDATE
+				return null;
+			}
 			throw new UserException('invalidName');
 		}
 		return strip_tags($inputData['name']);
@@ -127,8 +130,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * Validates the user_id field in array $inputData.
 	 */
-	public static function checkUserID($inputData) {
+	public static function checkUserID($inputData, $ref) {
 		if( !isset($inputData['user_id']) || !is_ID($inputData['user_id']) ) {
+			if( !isset($inputData['user_id']) && isset($ref) ) {//UPDATE
+				return null;
+			}
 			throw new UserException('invalidUserID');
 		}
 		return (int) $inputData['user_id'];
@@ -141,8 +147,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * Validates the user_name field in array $inputData.
 	 */
-	public static function checkUserName($inputData) {
+	public static function checkUserName($inputData, $ref) {
 		if( empty($inputData['user_name']) ) {
+			if( isset($ref) ) {//UPDATE
+				return null;
+			}
 			throw new UserException('invalidUserName');
 		}
 		return strip_tags($inputData['user_name']);
@@ -155,7 +164,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * Validates the published field in array $inputData.
 	 */
-	public static function checkPublished($inputData) {
+	public static function checkPublished($inputData, $ref) {
 		return ( !empty($inputData['published']) ) ? 1 : 0;
 	}
 	
