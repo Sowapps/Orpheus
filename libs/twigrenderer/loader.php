@@ -11,3 +11,5 @@ require_once dirname(__FILE__).'/Twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 
 TwigRendering::init();
+
+$GLOBALS['TWIG_CSSFOLDERURL'] = TwigRendering::getCSSPath();
