@@ -73,7 +73,7 @@ class TwigRendering extends Rendering {
 		Gets the path to the CSS files.
 	*/
 	public static function getCSSPath() {
-		return THEMESPATH.static::$theme.'/'.static::$cssPath;
+		return THEMESURL.static::$theme.'/'.static::$cssPath;
 	}
 
 	//! Gets the Cache path.
