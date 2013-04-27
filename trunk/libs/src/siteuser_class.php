@@ -29,9 +29,6 @@ class SiteUser extends User {
 	public function getNicename() {
 		return strtolower($this->name);
 	}
-	
-	public function runForUpdate() {
-	}
 
 	// 		** CHECK METHODS **
 

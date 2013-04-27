@@ -11,21 +11,6 @@ class DemoTest extends PermanentObject {
 	protected static $editableFields = array('name');
 	
 	// *** OVERLOADED METHODS ***
-		
-	//! Updates this DemoTest object
-	/*!
-		\sa PermanentObject::update()
-	*/
-	public function update($uInputData, array $data=array()) {
-		try {
-			$inputData['name'] = self::checkName($uInputData);
-			if( $inputData['name'] != $this->name ) {
-				$data['name'] = $inputData['name'];
-			}
-		} catch(UserException $e) { reportError($e); }
-		
-		return parent::update($uInputData, $data);
-	}
 	
 	// *** STATIC METHODS ***
 	
@@ -37,8 +22,11 @@ class DemoTest extends PermanentObject {
 		\param $inputData The user input.
 		\return a valid field 'name'.
 	*/
-	public static function checkName($inputData) {
+	public static function checkName($inputData, $ref) {
 		if( empty($inputData['name']) ) {
+			if( is_null($ref) ) {// Updating
+				return null;
+			}
 			throw new UserException('emptyName');
 		}
 		return strip_tags($inputData['name']);
