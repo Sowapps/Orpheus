@@ -535,7 +535,7 @@ function displayReportsHTML($domain='all', $rejected=array(), $delete=1) {
 
 //! Gets POST data
 /*!
- * \param $key The key to retrieve. The default value is null (retrieves all data).
+ * \param $path The path to retrieve. The default value is null (retrieves all data).
  * \return Data using the path or all data from POST array.
  * \sa isPOST()
  * \sa extractFrom()
@@ -549,7 +549,7 @@ function POST($path=null) {
 
 //! Gets GET data
 /*!
- * \param $key The key to retrieve. The default value is null (retrieves all data).
+ * \param $path The path to retrieve. The default value is null (retrieves all data).
  * \return Data using the path or all data from GET array.
  * \sa isGET()
  * \sa extractFrom()
@@ -599,7 +599,7 @@ function isGET($key=null) {
  * $path is null, all data are returned.
 */
 function extractFrom($path, $array) {
-	return ( isset($path) ) ? ( (!is_null($v = apath_get($array, $key))) ? $path : false) : $array ;
+	return ( isset($path) ) ? ( (!is_null($v = apath_get($array, $path))) ? $v : false) : $array ;
 }
 
 //! Gets the HTML value
