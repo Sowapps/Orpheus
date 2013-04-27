@@ -30,11 +30,26 @@ if( !empty($METAPROP) ) {
 </head>
 <body class="<?php echo $Module; ?>">
 
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#"><?php echo SITENAME ?></a>
+          <div class="nav-collapse collapse">
 <?php
 echo $MENUS['topmenu'];
+?>
+          </div>
+        </div>
+      </div>
+    </div>
 
+<div class="container">
+
+<?php
 echo $Page;
 ?>
+
+</div>
 
 </body>
 </html>
