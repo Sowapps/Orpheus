@@ -11,6 +11,7 @@ addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php')
 addAutoload('User',								'publisher/user_class.php');
 
 defifn('USER_CLASS',		'User');
+global $USER_CLASS;
 $USER_CLASS = USER_CLASS;
 
 // Hooks
@@ -19,6 +20,7 @@ $USER_CLASS = USER_CLASS;
 Hook::register('runModule', function () {
 	global $USER_CLASS;
 	if( !$USER_CLASS::canAccess($GLOBALS['Module']) ) {
+		log_debug(__FILE__.'('.__LINE__.'): Redirecting to default');
 		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : DEFAULTLINK);
 	}
 });
