@@ -15,6 +15,15 @@
 	<meta property="{{ property }}" content="{{ content }}"/>
 	{% endfor %}
 {% endif %}
+
+	<link rel="stylesheet" href="{{ HTMLRendering::getCSSPath(); }}bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ HTMLRendering::getCSSPath(); }}bootstrap-responsive.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ HTMLRendering::getCSSPath(); }}style.css" type="text/css" media="screen" />
+	
+	<!-- External JS libraries -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
 </head>
 <body class="{{ Module }}">
 
