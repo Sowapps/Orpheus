@@ -18,7 +18,18 @@
 </head>
 <body class="{{ Module }}">
 
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">{{ constant('SITENAME') }}</a>
+          <div class="nav-collapse collapse">
 {{ MENUS.topmenu|raw }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="container">
 
 {% if Page %}
 
@@ -29,6 +40,8 @@
 {% include Module ~ ".twig" %}
 
 {% endif %}
+
+</div>
 
 </body>
 </html>

@@ -17,16 +17,22 @@ if( isPOST('data') ) {
 	
 }
 ?>
-This page is an example of Home using Orpheus.<br />
-<a href="user_login.html">Try user system ! (Publisher Plugin)</a><br />
-<br />
+<div class="hero-unit">
+	<h1>Hello PHP developer !</h1>
+	<p>This is the home page of my new PHP Framework, named Orpheus. This one is made for you because you want to develop your website quickly with something easy-to-use, optimized, secured and standardized with the simplest way to do it and the maximum customizing capabilities.</p>
+	<p><a href="downloads/" class="btn btn-primary btn-large">&darr; Download &darr;</a></p>
+</div>
+
+<section id="demotest">
 <?php
 displayReportsHTML();
 ?>
-Try to create you own DemoTest object:<br />
-<form method="POST">
 
-<label for="name">Name: </label><input type="text" name="data[name]" value="A new value" /><br />
-<input type="submit" value="Insert it !"/>
-
-</form>
+	<fieldset>
+		<legend>Try to create you own DemoTest object</legend>
+		<label>Create it from a new value</label>
+		<input type="text" name="data[name]" placeholder="Type new value...">
+		<span class="help-block">Submit a new value to see this working test in action.</span>
+		<button id="submitDemoTest" type="submit" class="btn">Insert it !</button>
+	</fieldset>
+</section>
