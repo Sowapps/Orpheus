@@ -245,6 +245,19 @@ class User extends AbstractStatus {
 		}
 		return parent::delete($id);
 	}
+
+	//! Checks if this user has admin right
+	/*!
+	 * \param $module The module to look for.
+	 * \return True if this user is logged and is admin.
+	 *
+	 * Checks if this user has admin access level.
+	 * This is often used to determine if the current user can access to the admin panel.
+	 */
+	public static function isAdmin($module) {
+		global $USER;
+		return ( !empty($USER) && $USER->accesslevel > 0 );
+	}
 	
 	//! Checks if this user can access to a module
 	/*!

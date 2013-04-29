@@ -309,6 +309,7 @@ function parseFields(array $fields) {
  * \param $array The array to get the value from.
  * \param $apath The path used to browse the array.
  * \return The value from $apath in $array.
+ * \sa build_apath()
  *
  * Gets value from an Array Path using / as separator.
 */
@@ -324,6 +325,30 @@ function apath_get($array, $apath) {
 		return $array[$rpaths[0]];
 	}
 	return apath_get($array[$rpaths[0]], $rpaths[1]);
+}
+
+//! Build all path to browse array
+/*!
+ * \param $array The array to get the value from.
+ * \return An array of apath to get all values.
+ * \sa apath_get()
+ *
+ * Builds an array associating all values with their apath of the given one using / as separator.
+ * e.g Array('path'=>array('to'=>array('value'=>'value'))) => Array('path/to/value'=>'value')
+*/
+function build_apath($array, $prefix='') {
+	if( empty($array) || !is_array($array) ) {
+		return array();
+	}
+	$r = array();
+	foreach($array as $key => $value) {
+		if( is_array($value) ) {
+			$r += build_apath($value, $prefix.$key.'/');
+		} else {
+			$r[$prefix.$key] = $value; 
+		}
+	}
+	return $r;
 }
 
 //! Imports the required class(es).
