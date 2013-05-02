@@ -43,13 +43,16 @@ abstract class AbstractStatus extends PermanentObject {
 	 * \return The status of this object.
 	 * 
 	 * Gets the status of this object.
-	 * Sets it if $newStatus is null.
+	 * Sets it if $newStatus is not null.
 	 * The return value is the final one.
 	 */
 	public function status($newStatus=null) {
 		if( isset($newStatus) ) {
 			static::validateStatus($newStatus, $this);
 			$this->setValue('status', $newStatus);
+			if( in_array('status_time', static::$fields) ) {
+				static::logEvent('status');
+			}
 		}
 		return $this->status;
 	}
