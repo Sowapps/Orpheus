@@ -10,6 +10,9 @@ using('hooks');
 
 //! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
+	if( defined('TERMINAL') ) {
+		return;
+	}
 	//If user try to override url rewriting and the requested page is not root.
 	if( empty($_SERVER['REDIRECT_rewritten']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' && $Module != 'remote' ) {
 		permanentRedirectTo(u($Module));
