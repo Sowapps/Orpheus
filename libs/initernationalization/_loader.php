@@ -26,14 +26,34 @@ function loadLangFile($domain=null) {
 /*!
  * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
  * \param $domain The domain to apply the Key. Default value is 'global'.
+ * \param $values The values array to replace in text. Could be used as second parameter.
  * \return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
+ * It try to replace $values in text by key using #key# format.
+ * $values accept 2 formats:
+ *  - array('key1'=>'value1', 'key2'=>'value2')
+ *  - array(array('key1', 'key2'), array('value1', 'value2'))
  */
-function t($k, $domain='global') {
+function t($k, $domain='global', $values=array()) {
 	global $LANG;
+	if( is_array($domain) ) {
+		$values = $domain;
+		$domain = 'global';
+	}
 	if( !isset($LANG[$domain]) ) {
 		loadLangFile($domain);
 	}
-	return ( isset($LANG[$domain]) && isset($LANG[$domain][$k]) ) ? $LANG[$domain][$k] : $k;
+	$r = ( isset($LANG[$domain]) && isset($LANG[$domain][$k]) ) ? $LANG[$domain][$k] : $k;
+	if( !empty($values) ) {
+		if( !empty($values[0]) ) {
+			$rkeys = $values[0];
+			$rvalues = !empty($values[1]) ? $values[1] : '';
+		} else {
+			$rkeys = array_map(function ($v) { return "#{$v}#"; }, array_keys($values));
+			$rvalues = array_values($values);
+		}
+		$r = str_replace( $rkeys, $rvalues, $r);
+	}
+	return $r;
 }
