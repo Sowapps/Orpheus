@@ -16,9 +16,16 @@ class Post extends AbstractPublication {
 	protected static $validator = array(
 		'contents'		=> 'checkContents'
 	);
-	
 	protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
+
+
+	// *** OVERRIDDEN METHODS ***
 	
+	// *** DEV METHODS ***
+	
+	// *** STATIC METHODS ***
+	
+	// 		** VALIDATION METHODS **
 	public static function checkContents($inputData, $ref) {
 		return $inputData['contents'];
 	}
