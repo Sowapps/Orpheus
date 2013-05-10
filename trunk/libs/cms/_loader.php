@@ -1,5 +1,5 @@
 <?php
-/* Loader File for the publisher sources
+/* Loader File for the cms sources
  */
 
 addAutoload('Inlay',		'cms/inlay_class.php');

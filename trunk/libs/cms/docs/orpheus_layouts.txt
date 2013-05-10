@@ -1,0 +1,20 @@
+Incrustations/Instance de layout:
+inlay/
+inset/outset
+
+Un layout peut inclure un inlay commun à plusieurs layouts ou unique.
+Un layout peut avoir plusieurs représentations, eux-même des inlays spécifiques.
+Un layout peut inclure d'autres layouts.
+
+Il y a 2 types de inlay
+- celui qui contient communément du HTML mais il peut intégrer dans ce HTML des références à d'autres inlays.
+- le rendu d'un layout en fonction de certaines données.
+
+La différence principale entre les deux est que le premier, la structure HTML est une données en bdd et que pour l'autre, elle est dans un fichier layout. Dans le premier cas, le contenu est ajusté dynamiquement.
+
+Un layout est un modèle de présentation alors qu'un inlay associe la structure et ses données.
+Instance Layout => Fichier modèle(layout) + inlays à insérer.
+Inlay => HTML + inlays à insérer.
+
+TODO:
+Trouver un nom pour les instances de layout (leur représentation unique en fonction des données).
