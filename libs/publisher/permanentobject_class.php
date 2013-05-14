@@ -136,8 +136,9 @@ abstract class PermanentObject {
 		foreach($data as $fieldname => $fieldvalue) {
 			if( isset($fieldvalue) && $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
 				$this->$fieldname = $fieldvalue;
-			} else {
-				unset($data[$fieldname]);
+// 			} else {
+// 				Do not delete real_password
+// 				unset($data[$fieldname]);
 			}
 		}
 		if( in_array('edit_time', static::$fields) ) {
