@@ -8,31 +8,31 @@
  * Configure others carefully and only if it's really necessary.\n
  * Set ERROR_LEVEL to set your website in production (with no error reports to the user).
  */
-defifn('TIME',			$_SERVER['REQUEST_TIME']);
-define('INSIDE',		true);
+defifn('TIME',				$_SERVER['REQUEST_TIME']);
+define('INSIDE',			true);
 
-define('DEV_LEVEL',		E_ALL | E_STRICT);//Development
-define('PROD_LEVEL',	0);//Production
+define('DEV_LEVEL',			E_ALL | E_STRICT);//Development
+define('PROD_LEVEL',		0);//Production
 
-defifn('ERROR_LEVEL',	DEV_LEVEL);
+defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev') ? DEV_LEVEL : PROD_LEVEL);
 
 defifn('USER_CLASS',		'SiteUser');
 
 //Useful paths.
-defifn('CONFPATH',		ORPHEUSPATH.'configs/');
-defifn('MODPATH',		ORPHEUSPATH.'modules/');
-defifn('LIBSPATH',		ORPHEUSPATH.'libs/');
-defifn('THEMESPATH',	ORPHEUSPATH.'themes/');
-defifn('THEMESURL',		'themes/');
-defifn('LOGSPATH',		INSTANCEPATH.'logs/');
-defifn('SRCPATH',		'src/');
+defifn('CONFPATH',			ORPHEUSPATH.'configs/');
+defifn('MODPATH',			ORPHEUSPATH.'modules/');
+defifn('LIBSPATH',			ORPHEUSPATH.'libs/');
+defifn('THEMESPATH',		ORPHEUSPATH.'themes/');
+defifn('THEMESURL',			'themes/');
+defifn('LOGSPATH',			INSTANCEPATH.'logs/');
+defifn('SRCPATH',			'src/');
 
 //Static medias
-defifn('JSURL',			'js/');
+defifn('JSURL',				'js/');
 
 // LIB Initernationalization
-defifn('LANGPATH',		ORPHEUSPATH.'languages/');
-defifn('LANG',			'en_US');
+defifn('LANGPATH',			ORPHEUSPATH.'languages/');
+defifn('LANG',				'en_US');
 
 
 //Miscelanous
@@ -42,9 +42,9 @@ defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
 defifn('SITEROOT',			SCHEME.'://'.$_SERVER['HTTP_HOST'].dirpath($_SERVER['SCRIPT_NAME']));
 defifn('DEFAULTLINK',		SITEROOT);
 
-defifn('AUTHORNAME',	'Florent HAZARD');
-defifn('SITENAME',		'Orpheus');
+defifn('AUTHORNAME',		'Florent HAZARD');
+defifn('SITENAME',			'Orpheus');
 
-defifn('PDOLOGFILENAME','.pdo_error');
-defifn('SYSLOGFILENAME','.system');
-defifn('DEBUGFILENAME',	'.debug');
+defifn('PDOLOGFILENAME',	'.pdo_error');
+defifn('SYSLOGFILENAME',	'.system');
+defifn('DEBUGFILENAME',		'.debug');
