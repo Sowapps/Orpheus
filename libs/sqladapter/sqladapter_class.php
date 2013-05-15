@@ -126,6 +126,10 @@ abstract class SQLAdapter {
 			return;
 		}
 		global $DBS;
+		// No settings or no driver setting disable prepare().
+		if( empty($DBS) || empty($DBS['driver']) ) {
+			return;
+		}
 		$Instance = ensure_pdoinstance();
 		if( empty($DBS[$Instance]) ) {
 			throw new Exception("Adapter unable to connect to the database.");
