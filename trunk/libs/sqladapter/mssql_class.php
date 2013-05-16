@@ -13,6 +13,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
+			'number_percent'=> false,// false => No Percent option
 			'offset'		=> 0,//0 => The start
 			'output'		=> SQLAdapter::ARR_ASSOC,//Associative Array
 	);
@@ -24,6 +25,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
+			'number_percent'=> false,// false => No Percent option
 			'offset'		=> 0,//0 => The start
 			'output'		=> SQLAdapter::NUMBER,//Number of updated lines
 	);
@@ -36,6 +38,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
+			'number_percent'=> false,// false => No Percent option
 			'offset'		=> 0,//0 => The start
 			'output'		=> SQLAdapter::NUMBER,//Number of deleted lines
 	);
