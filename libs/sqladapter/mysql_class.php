@@ -76,7 +76,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
+		$results = $this->query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
 		if( $options['output'] == static::ARR_OBJECTS ) {
 			foreach($results as &$r) {
 				$r = (object)$r;//stdClass
@@ -114,7 +114,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return pdo_query($QUERY, PDOEXEC);
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for DELETE queries
@@ -142,7 +142,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return pdo_query($QUERY, PDOEXEC);
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for INSERT queries
@@ -190,7 +190,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return pdo_query($QUERY, PDOEXEC);
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to get the last inserted ID
@@ -202,6 +202,6 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		It requires a successful call of insert() !
 	*/
 	public function lastID($table, $idfield='id') {
-		return pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
+		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 	}
 }

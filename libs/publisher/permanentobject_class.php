@@ -12,6 +12,7 @@ abstract class PermanentObject {
 	protected static $instances = array();
 	
 	protected static $table = null;
+	protected static $DBInstance = null;
 	// Contains all fields
 	protected static $fields = array();
 	// Contains fields editables by users
@@ -183,7 +184,7 @@ abstract class PermanentObject {
 			'where'	=> "{$IDFIELD}={$this->{$IDFIELD}}",
 			'number'=> 1,
 		);
-		return SQLAdapter::doUpdate($options);
+		return SQLAdapter::doUpdate($options, static::$DBInstance);
 	}
 	
 	//! Reloads fields from database
@@ -378,7 +379,7 @@ abstract class PermanentObject {
 			'number'=> 1,
 			'where'	=> "{$IDFIELD}={$id}",
 		);
-		$r = SQLAdapter::doDelete($options);
+		$r = SQLAdapter::doDelete($options, static::$DBInstance);
 		if( $r ) {
 			if( isset(static::$instances[static::getTable()][$id]) ) {
 				static::$instances[static::getTable()][$id]->markAsDeleted();
@@ -423,7 +424,7 @@ abstract class PermanentObject {
 			$options['what'] = '*';
 			$objects = 1;
 		}
-		$r = SQLAdapter::doSelect($options);
+		$r = SQLAdapter::doSelect($options, static::$DBInstance);
 		if( empty($r) && ($options['output'] == SQLAdapter::ARR_ASSOC || $options['output'] == SQLAdapter::ARR_OBJECTS) ) {
 			return array();
 		}
@@ -452,9 +453,9 @@ abstract class PermanentObject {
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
 		}
-		//Check if entry already exist
+		// Check if entry already exist
 		static::checkForObject($data);
-		//Other Checks and to do before insertion
+		// To do before insertion
 		static::runForObject($data);
 		
 		$what = array();
@@ -467,10 +468,10 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
-		SQLAdapter::doInsert($options);
-		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD);
-		//To do after insertion
-		static::applyToObject($data, $LastInsert);//old ['LAST_INSERT_ID()']
+		SQLAdapter::doInsert($options, static::$DBInstance);
+		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
+		// To do after insertion
+		static::applyToObject($data, $LastInsert);
 		return $LastInsert;
 	}
 	
