@@ -173,19 +173,18 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		$OPTIONS .= (!empty($options['into'])) ? ' INTO' : '';
 		
 		$COLS = $WHAT = '';
-		//Is an array
+		// Is an array
 		if( is_array($options['what']) ) {
-			//Is an indexed array of fields Arrays
-			if( !empty($options['what'][0]) ) {
-				$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
-				foreach($options['what'] as $row) {
-					$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
-				}
-				$WHAT = 'VALUES '.$WHAT;
-			//Is associative fields Arrays
-			} else {
-				$WHAT = 'SET '.parseFields($options['what']);
+			// Is an associative array
+			if( !isset($options['what'][0]) ) {
+				$options['what'] = array(0=>$options['what']);
 			}
+			// Indexed array to values string
+			$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
+			foreach($options['what'] as $row) {
+				$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
+			}
+			$WHAT = 'VALUES '.$WHAT;
 			
 		//Is a string
 		} else {
