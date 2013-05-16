@@ -76,7 +76,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		$results = pdo_query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
+		$results = $this->query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
 		if( $options['output'] == static::ARR_OBJECTS ) {
 			foreach($results as &$r) {
 				$r = (object)$r;//stdClass
@@ -116,7 +116,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return pdo_query($QUERY, PDOEXEC);
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for DELETE queries
@@ -146,18 +146,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		/*
-		DELETE FROM Purchasing.PurchaseOrderDetail
-		WHERE PurchaseOrderDetailID IN
-		(SELECT TOP 10 PurchaseOrderDetailID
-		FROM Purchasing.PurchaseOrderDetail
-		ORDER BY DueDate ASC);
-		return pdo_query($QUERY, PDOEXEC);
-		WITH q AS (
-	SELECT TOP(1) * FROM aTest ORDER BY id DESC
-)
-DELETE FROM q;
-		*/
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to use for INSERT queries
@@ -204,7 +193,7 @@ DELETE FROM q;
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return pdo_query($QUERY, PDOEXEC);
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to get the last inserted ID
@@ -216,6 +205,6 @@ DELETE FROM q;
 		It requires a successful call of insert() !
 	*/
 	public function lastID($table, $idfield='id') {
-		return pdo_query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
+		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 	}
 }

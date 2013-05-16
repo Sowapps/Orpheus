@@ -51,14 +51,17 @@ function ensure_pdoinstance($Instance=null) {
 		$DBS = $config->all;
 	}
 	
-	//Checking instance and getting its settings
+	// Using default instance
 	if( empty($Instance) ) {
+		// Default is constant PDODEFINSTNAME
 		if( defined('PDODEFINSTNAME') ) {
 			$Instance = PDODEFINSTNAME;
 		} else if( !empty($DBS) && is_array($DBS) ) {
+			// Default is the first value of the multidimensional array DB Settings
 			if( is_array(current($DBS)) ) {
 				$Instance = key($DBS);
 			} else {
+				// Default is 'default' and value is all the contents of DB Settings
 				$Instance = 'default';
 				$DBS[$Instance] = $DBS;
 			}
@@ -68,6 +71,8 @@ function ensure_pdoinstance($Instance=null) {
 	} else if( empty($DBS[$Instance]) ) {
 		pdo_error('Parameter Instance is unknown.', 'Instance Setting Definition');
 	}
+	
+	// Loading instance
 	$InstSettings = $DBS[$Instance];
 	
 	//If There is no driver given, it is an error.
@@ -110,7 +115,7 @@ function ensure_pdoinstance($Instance=null) {
 			
 			try {
 				$pdoInstances[$Instance] = new PDO(
-					"mysql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
+					"mssql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -160,24 +165,24 @@ function ensure_pdoinstance($Instance=null) {
 //! Executes $Query
 /*
 	\param $Query The query to execute.
-	\param $Fetch See PDO constants above. Optionnal, default is PDOQUERY.
-	\param $Instance The instance to use to execute the query. Optionnal, default is defined by ensure_pdoinstance().
+	\param $Fetch See PDO constants above. Optional, default is PDOQUERY.
+	\param $Instance The instance to use to execute the query. Optional, default is defined by ensure_pdoinstance().
 	\return The result of the query, of type defined by $Fetch.
 	
 	Executes $Query on the instanciated database.
 */
-function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
+function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
 	
-	//Check connection
-	$Instance = ensure_pdoinstance($Instance);
-	$InstSettings = $DBS[$Instance];
-	$pdoInstance = $pdoInstances[$Instance];
+	// Checks connection
+	$Instance		= ensure_pdoinstance($Instance);
+	$InstSettings	= $DBS[$Instance];
+	$pdoInstance	= $pdoInstances[$Instance];
 		
 		
-	if( in_array($InstSettings['driver'], array('mysql', 'pgsql', 'sqlite')) ) {
+	if( in_array($InstSettings['driver'], array('mysql', 'mssql', 'pgsql', 'sqlite')) ) {
 	
-		if( bintest($Fetch, PDOEXEC) ) { //Exec
+		if( bintest($Fetch, PDOEXEC) ) {// Exec
 			try {
 				$returnValue = $pdoInstance->exec($Query);
 			} catch (PDOException $e) {
@@ -185,7 +190,7 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 				return 0;
 			}
 			return $returnValue;
-		} else { //Query
+		} else {// Query
 			try {
 				$PDOSQuery = $pdoInstance->query($Query);
 			} catch (PDOException $e) {
@@ -234,7 +239,7 @@ function pdo_query($Query, $Fetch = PDOQUERY, $Instance=null) {
 //! Logs a PDO error
 /*
 	\param $PDOReport The PDO report to save.
-	\param $Action Optionnal information about what the script was doing.
+	\param $Action Optional information about what the script was doing.
 
 	Saves the error report $PDOReport in the log file and exit script.
 */
