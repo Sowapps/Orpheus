@@ -155,7 +155,7 @@ abstract class SQLAdapter {
 			return;
 		}
 		global $DBS;
-		$Instance = ensure_pdoinstance($Instance);
+		$Instance = ensure_pdoinstance($instance);
 		if( empty($DBS[$Instance]) ) {
 			throw new Exception("Adapter unable to connect to the database.");
 		}
