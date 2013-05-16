@@ -21,7 +21,7 @@ if( isPOST('data') ) {
 <?php
 displayReportsHTML();
 ?>
-
+	<form action="POST">
 	<fieldset>
 		<legend>Using multiple DB instance feature and MS SQL server, try to create you own DemoTest object</legend>
 		<label>Create it from a new value</label>
@@ -29,4 +29,5 @@ displayReportsHTML();
 		<span class="help-block">Submit a new value to see this working test in action.</span>
 		<button id="submitDemoTest" type="submit" class="btn">Insert it !</button>
 	</fieldset>
+	</form>
 </section>
