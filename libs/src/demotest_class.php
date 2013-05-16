@@ -8,7 +8,10 @@ class DemoTest extends PermanentObject {
 	//Attributes
 	protected static $table = 'test';
 	protected static $fields = array('id', 'name');
+	
 	protected static $editableFields = array('name');
+	
+	protected static $validator = array('name'=>'checkName');
 	
 	// *** OVERLOADED METHODS ***
 	
@@ -30,18 +33,6 @@ class DemoTest extends PermanentObject {
 			throw new UserException('emptyName');
 		}
 		return strip_tags($inputData['name']);
-	}
-	
-	//! Checks user input
-	/*!
-		\sa PermanentObject::checkUserInput()
-	*/
-	public static function checkUserInput($uInputData) {
-		$data = parent::checkUserInput($uInputData);
-	
-		$data['name'] = self::checkName($uInputData);
-	
-		return $data;
 	}
 	
 	//! Checks for object
