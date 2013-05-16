@@ -3,7 +3,7 @@
 /*!
 	Example of how to use the permanent object.
 */
-class DemoTest_MSSQL extends DemoTest_MSSQL {
+class DemoTest_MSSQL extends DemoTest {
 	
 	//Attributes
 	protected static $DBInstance = 'mssql';
