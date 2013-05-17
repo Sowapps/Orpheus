@@ -228,14 +228,18 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		It requires a successful call of insert() !
 	*/
  	public function lastID($table, $idfield='id') {
- 		return $this->lastID;
- 	}
-// 	public function lastID($table, $idfield='id') {
+//  		return $this->lastID;
 // 		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
 // 		return $this->query("SELECT @@IDENTITY;", PDOFETCHFIRSTCOL);
 
 // 		return $this->query("SELECT SCOPE_IDENTITY() AS id", PDOFETCHFIRSTCOL);
 		//return $this->query("SELECT CAST(COALESCE(SCOPE_IDENTITY(), @@IDENTITY) AS int)", PDOFETCHFIRSTCOL);
 // 		return pdo_lastInsertId($this->instance);
-// 	}
+		$Instance		= ensure_pdoinstance($Instance);
+		$pdoInstance	= $pdoInstances[$Instance];
+ 		$sth = $pdoInstance->prepare('SELECT SCOPE_IDENTITY() AS id');
+ 		$sth->execute();
+ 		$result = $sth->fetch();
+ 		return $result['id'];
+	}
 }
