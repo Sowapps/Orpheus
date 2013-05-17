@@ -207,6 +207,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		It requires a successful call of insert() !
 	*/
 	public function lastID($table, $idfield='id') {
-		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
+		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
 	}
 }
