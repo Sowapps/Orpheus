@@ -236,6 +236,19 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or it is not implemented yet.', 'Driver Definition');
 }
 
+//! Gets the last inserted ID
+/*
+ * \param $Instance The instance to use to get the last inserted id. Optional, default is defined by ensure_pdoinstance().
+ * \return The last inserted id.
+ * 
+ * Gets the last inserted ID for this instance
+*/
+function pdo_lastInsertId($Instance=null) {
+	$Instance		= ensure_pdoinstance($Instance);
+	$pdoInstance	= $pdoInstances[$Instance];
+	return $pdoInstance->lastInsertId();
+}
+
 //! Logs a PDO error
 /*
 	\param $PDOReport The PDO report to save.

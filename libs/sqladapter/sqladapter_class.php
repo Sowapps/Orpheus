@@ -85,7 +85,9 @@ abstract class SQLAdapter {
 	 * 
 	 * It requires a successful call of insert() !
 	*/
-	public abstract function lastID($table, $idfield);
+	public function lastID($table, $idfield) {
+		return pdo_lastInsertId($this->instance);
+	}
 	
 	
 	//! The static function to use for SELECT queries in global context
