@@ -73,13 +73,25 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No selection');
 		}
-		$OPTIONS = ( $options['number'] > 0 ) ?
-			' TOP '.$options['number'].( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		if( empty($options['orderby']) ) {
+			$options['orderby'] = static::$IDFIELD; 
+		}
+		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
-		$QUERY = "SELECT {$OPTIONS} {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY};";
+		if( $options['number'] > 0 ) {
+			// ORDER BY is required
+			$LIMIT_WC = ( $options['offset'] > 0 ) ? $options['offset'].' AND '.($options['offset']+$options['number']) : '<= '.$options['number'];
+			$QUERY = "SELECT * FROM ( SELECT {$WHAT}, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} ) AS a WHERE a.rownum {$LIMIT_WC};";
+			
+		} else {
+			$QUERY = "SELECT {$OPTIONS} {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY};";
+		}
+		// Seems to now work with DB LIB
+// 		$OPTIONS = ( $options['number'] > 0 ) ?
+// 			' TOP '.$options['number'].( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
+// 		SELECT * FROM ( SELECT row_number() OVER (ORDER BY ID) as rownum, * ) as A where A.rownum BETWEEN 3 and 5
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
