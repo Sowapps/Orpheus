@@ -2,6 +2,9 @@
 //! The MSSQL Adapter class
 /*!
 	This class is the sql adapter for MSSQL.
+	
+	Install method for debian:
+	http://atutility.com/2007/09/14/install-pdo-pdo_sqlite-pdo_dblib-pdo_mysql
 */
 class SQLAdapter_MSSQL extends SQLAdapter {
 	

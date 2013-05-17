@@ -115,7 +115,7 @@ function ensure_pdoinstance($Instance=null) {
 			
 			try {
 				$pdoInstances[$Instance] = new PDO(
-					"mssql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
+					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
