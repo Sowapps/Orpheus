@@ -9,6 +9,7 @@
 class SQLAdapter_MSSQL extends SQLAdapter {
 	
 	protected static $IDFIELD = 'id';
+	protected $lastID = 0;
 	
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
@@ -210,11 +211,12 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			$WHAT = $options['what'];
 		}
 		
-		$QUERY = "INSERT {$OPTIONS} {$options['table']} {$COLS} {$WHAT};";
+		$QUERY = "INSERT {$OPTIONS} {$options['table']} {$COLS} {$WHAT}; SELECT SCOPE_IDENTITY();";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		return $this->query($QUERY, PDOEXEC);
+		return $this->lastID = $this->query($QUERY, PDOFETCHFIRSTCOL);
+// 		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to get the last inserted ID
@@ -225,6 +227,9 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		
 		It requires a successful call of insert() !
 	*/
+ 	public function lastID($table, $idfield='id') {
+ 		return $this->lastID;
+ 	}
 // 	public function lastID($table, $idfield='id') {
 // 		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
 // 		return $this->query("SELECT @@IDENTITY;", PDOFETCHFIRSTCOL);
