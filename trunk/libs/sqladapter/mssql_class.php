@@ -74,7 +74,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			throw new Exception('No selection');
 		}
 		$OPTIONS = ( $options['number'] > 0 ) ?
-			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
+			' TOP '.$options['number'].( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
@@ -143,7 +143,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		$OPTIONS = '';
 		$SUBOPTIONS = '';
 		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
-			' TOP '.$options['number'].( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
+			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		
