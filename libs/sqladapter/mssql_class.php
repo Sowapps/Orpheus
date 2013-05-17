@@ -97,6 +97,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
+		text($QUERY);
 		$results = $this->query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
 		if( $options['output'] == static::ARR_OBJECTS ) {
 			foreach($results as &$r) {
