@@ -330,6 +330,9 @@ abstract class PermanentObject {
 	 * Loads the object with the ID $id or the array data
 	*/
 	public static function load($in) {
+		if( empty($in) ) {
+			static::throwException('invalidParameter_IN');
+		}
 		$IDFIELD=static::$IDFIELD;
 		// If $in is an array, we trust him, as data of the object.
 		if( is_array($in) ) {
