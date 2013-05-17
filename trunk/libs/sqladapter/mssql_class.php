@@ -221,7 +221,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		global $pdoInstances;
 		$Instance		= ensure_pdoinstance($this->instance);
 		$pdoInstance	= $pdoInstances[$Instance];
-		$sth = $dbh->prepare($QUERY);
+		$sth = $pdoInstance->prepare($QUERY);
 		$sth->execute();
 		var_dump($sth->fetch(PDO::FETCH_ASSOC));
 		return 1;
