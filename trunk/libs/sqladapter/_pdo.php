@@ -244,6 +244,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
  * Gets the last inserted ID for this instance
 */
 function pdo_lastInsertId($Instance=null) {
+	global $pdoInstances;
 	$Instance		= ensure_pdoinstance($Instance);
 	$pdoInstance	= $pdoInstances[$Instance];
 	return $pdoInstance->lastInsertId();
