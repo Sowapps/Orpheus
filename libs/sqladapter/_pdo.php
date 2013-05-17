@@ -247,7 +247,9 @@ function pdo_lastInsertId($Instance=null) {
 	global $pdoInstances;
 	$Instance		= ensure_pdoinstance($Instance);
 	$pdoInstance	= $pdoInstances[$Instance];
-	return $pdoInstance->lastInsertId();
+	$r = $pdoInstance->lastInsertId();
+	text("PDO Instance $Instance return last insert id: {$r}");
+	return $r;
 }
 
 //! Logs a PDO error
