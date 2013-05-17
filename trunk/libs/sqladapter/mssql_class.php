@@ -240,7 +240,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
  	public function lastID($table, $idfield='id') {
 //  		return $this->lastID;
 		$r = $this->query("SELECT SCOPE_IDENTITY() AS LAST_ID;", PDOFETCH);
-		return $r['LAST_ID']
+		return $r['LAST_ID'];
 // 		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
 // 		return $this->query("SELECT @@IDENTITY;", PDOFETCHFIRSTCOL);
 
