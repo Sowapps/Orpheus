@@ -7,6 +7,7 @@ if( isPOST('data') ) {
 		
 		$tid = DemoTest_MSSQL::create($_POST['data']);
 		reportSuccess("Object created.");
+		text("ID: ".$tid);
 		
 		$test = DemoTest_MSSQL::load($tid);
 		reportSuccess("Object \"{$test}\" loaded, it's named \"{$test->name}\".");
