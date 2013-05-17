@@ -65,6 +65,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		Using pdo_query(), It parses the query from an array to a SELECT query.
     */
 	public function select(array $options=array()) {
+		text('MS SQL Adapter SELECT');
 		$options += self::$selectDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
@@ -134,6 +135,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		It parses the query from an array to a DELETE query.
 	*/
 	public function delete(array $options=array()) {
+		text('MS SQL Adapter DELETE');
 		$options += self::$deleteDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
@@ -165,6 +167,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		Accept only the String syntax for what option.
 	*/
 	public function insert(array $options=array()) {
+		text('MS SQL Adapter INSERT');
 		$options += self::$insertDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');

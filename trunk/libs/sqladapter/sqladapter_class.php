@@ -96,6 +96,7 @@ abstract class SQLAdapter {
 	*/
 	public static function doSelect(array $options=array(), $Instance=null) {
 		self::prepare($Instance);
+		text("Doing SELECT with instance $Instance");
 		return self::$Adapters[$Instance]->select($options);
 	}
 	
@@ -129,6 +130,7 @@ abstract class SQLAdapter {
 	*/
 	public static function doInsert(array $options=array(), $Instance=null) {
 		self::prepare($Instance);
+		text("Doing INSERT with instance $Instance");
 		return self::$Adapters[$Instance]->insert($options);
 	}
 	
