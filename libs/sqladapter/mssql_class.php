@@ -216,16 +216,17 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
+		text($QUERY);
 // 		var_dump($this->lastID = $this->query($QUERY, PDOFETCH));
 // 		return $this->lastID;
-		global $pdoInstances;
-		$Instance		= ensure_pdoinstance($this->instance);
-		$pdoInstance	= $pdoInstances[$Instance];
-		$sth = $pdoInstance->prepare($QUERY);
-		$sth->execute();
-		var_dump($sth->fetch(PDO::FETCH_ASSOC));
-		return 1;
-		//return $this->query($QUERY, PDOEXEC);
+// 		global $pdoInstances;
+// 		$Instance		= ensure_pdoinstance($this->instance);
+// 		$pdoInstance	= $pdoInstances[$Instance];
+// 		$sth = $pdoInstance->prepare($QUERY);
+// 		$sth->execute();
+// 		var_dump($sth->fetch(PDO::FETCH_ASSOC));
+// 		return 1;
+		return $this->query($QUERY, PDOEXEC);
 	}
 	
 	//! The function to get the last inserted ID
@@ -237,8 +238,9 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		It requires a successful call of insert() !
 	*/
  	public function lastID($table, $idfield='id') {
- 		return $this->lastID;
-		//return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
+//  		return $this->lastID;
+		$r = $this->query("SELECT SCOPE_IDENTITY() AS LAST_ID;", PDOFETCH);
+		return $r['LAST_ID']
 // 		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
 // 		return $this->query("SELECT @@IDENTITY;", PDOFETCHFIRSTCOL);
 
