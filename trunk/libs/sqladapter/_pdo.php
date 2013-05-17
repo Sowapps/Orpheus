@@ -114,6 +114,7 @@ function ensure_pdoinstance($Instance=null) {
 			}
 			
 			try {
+				text("dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}");
 				$pdoInstances[$Instance] = new PDO(
 					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
@@ -184,6 +185,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	
 		if( bintest($Fetch, PDOEXEC) ) {// Exec
 			try {
+				text('Executing a query');
 				$returnValue = $pdoInstance->exec($Query);
 			} catch (PDOException $e) {
 				pdo_error("EXEC ERROR: ".$e->getMessage(), "Query:".$Query);
@@ -192,6 +194,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 			return $returnValue;
 		} else {// Query
 			try {
+				text('Querying a query');
 				$PDOSQuery = $pdoInstance->query($Query);
 			} catch (PDOException $e) {
 				pdo_error("QUERY ERROR: ".$e->getMessage(), "Query:".$Query);
@@ -233,7 +236,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	}
 	
 	//Unknown Driver
-	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or it is not implemented yet.', 'Driver Definition');
+	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or is not implemented yet.', 'Driver Definition');
 }
 
 //! Gets the last inserted ID

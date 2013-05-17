@@ -211,7 +211,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			$WHAT = $options['what'];
 		}
 		
-		$QUERY = "INSERT {$OPTIONS} {$options['table']} {$COLS} {$WHAT}; SELECT SCOPE_IDENTITY();";
+		$QUERY = "INSERT {$OPTIONS} {$options['table']} {$COLS} {$WHAT}; SELECT SCOPE_IDENTITY() LAST_ID;";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
