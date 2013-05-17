@@ -238,7 +238,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		global $pdoInstances;
 		$Instance		= ensure_pdoinstance($this->instance);
 		$pdoInstance	= $pdoInstances[$Instance];
- 		$sth = $pdoInstance->prepare('SELECT SCOPE_IDENTITY() AS id');
+ 		$sth = $pdoInstance->prepare('SELECT @@IDENTITY AS id');
  		$sth->execute();
  		$result = $sth->fetch();
  		return $result['id'];
