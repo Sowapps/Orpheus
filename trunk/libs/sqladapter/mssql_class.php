@@ -235,7 +235,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 // 		return $this->query("SELECT SCOPE_IDENTITY() AS id", PDOFETCHFIRSTCOL);
 		//return $this->query("SELECT CAST(COALESCE(SCOPE_IDENTITY(), @@IDENTITY) AS int)", PDOFETCHFIRSTCOL);
 // 		return pdo_lastInsertId($this->instance);
-		$Instance		= ensure_pdoinstance($Instance);
+		$Instance		= ensure_pdoinstance($this->instance);
 		$pdoInstance	= $pdoInstances[$Instance];
  		$sth = $pdoInstance->prepare('SELECT SCOPE_IDENTITY() AS id');
  		$sth->execute();
