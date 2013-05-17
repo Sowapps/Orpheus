@@ -73,6 +73,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No selection');
 		}
+		$OPTIONS = '';
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
