@@ -1,4 +1,7 @@
 <?php
+
+var_dump(DemoTest_MSSQL::get());
+
 if( isPOST('data') ) {
 	try {
 		
