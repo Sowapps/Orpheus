@@ -44,7 +44,6 @@ define('PDOFETCHFIRSTCOL'	, PDOQUERY | 1<<3);//Only the first column
 */
 function ensure_pdoinstance($Instance=null) {
 	global $pdoInstances, $DBS;
-	text("ensure_pdoinstance($Instance)");
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
@@ -75,8 +74,6 @@ function ensure_pdoinstance($Instance=null) {
 	
 	// Loading instance
 	$InstSettings = $DBS[$Instance];
-	
-	text("Setting instance with {$InstSettings['driver']}");
 	
 	//If There is no driver given, it is an error.
 	if( empty($InstSettings['driver']) ) {
@@ -115,7 +112,6 @@ function ensure_pdoinstance($Instance=null) {
 				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
 			try {
-				text("dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}");
 				$pdoInstances[$Instance] = new PDO(
 					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
@@ -136,7 +132,6 @@ function ensure_pdoinstance($Instance=null) {
 				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
 			try {
-				text("pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};...");
 				$pdoInstances[$Instance] = new PDO(
 					"pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};password={$InstSettings["passwd"]}"
 				);
@@ -174,7 +169,6 @@ function ensure_pdoinstance($Instance=null) {
 */
 function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
-	text("pdo_query($Instance)");
 	// Checks connection
 	$Instance		= ensure_pdoinstance($Instance);
 	$InstSettings	= $DBS[$Instance];
@@ -185,7 +179,6 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	
 		if( bintest($Fetch, PDOEXEC) ) {// Exec
 			try {
-				text('Executing a query');
 				$returnValue = $pdoInstance->exec($Query);
 			} catch (PDOException $e) {
 				pdo_error("EXEC ERROR: ".$e->getMessage(), "Query:".$Query);
@@ -194,7 +187,6 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 			return $returnValue;
 		} else {// Query
 			try {
-				text('Querying a query');
 				$PDOSQuery = $pdoInstance->query($Query);
 			} catch (PDOException $e) {
 				pdo_error("QUERY ERROR: ".$e->getMessage(), "Query:".$Query);
@@ -251,7 +243,6 @@ function pdo_lastInsertId($Instance=null) {
 	$Instance		= ensure_pdoinstance($Instance);
 	$pdoInstance	= $pdoInstances[$Instance];
 	$r = $pdoInstance->lastInsertId();
-	text("PDO Instance $Instance return last insert id: {$r}");
 	return $r;
 }
 
