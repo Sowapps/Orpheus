@@ -66,7 +66,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		Using pdo_query(), It parses the query from an array to a SELECT query.
     */
 	public function select(array $options=array()) {
-		text('MS SQL Adapter SELECT');
 		$options += self::$selectDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
@@ -97,7 +96,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		text($QUERY);
 		$results = $this->query($QUERY, ($options['output'] == static::STATEMENT) ? PDOSTMT : PDOFETCHALL );
 		if( $options['output'] == static::ARR_OBJECTS ) {
 			foreach($results as &$r) {
@@ -123,17 +121,25 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No field');
 		}
-		$OPTIONS = '';
-		$SUBOPTIONS = '';
-		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
-			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
+// 		$OPTIONS = '';
+// 		$SUBOPTIONS = '';
+// 		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
+// 			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		if( empty($options['orderby']) ) {
+			$options['orderby'] = static::$IDFIELD; 
+		}
+		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
-		$QUERY = "WITH q AS (
-			SELECT {$SUBOPTIONS} * FROM {$options['table']} {$WC} {$ORDERBY}
-		)
-		UPDATE {$OPTIONS} q SET {$WHAT};";
+		if( $options['number'] > 0 ) {
+			// ORDER BY is required
+			$LIMIT_WC = ( $options['offset'] > 0 ) ? $options['offset'].' AND '.($options['offset']+$options['number']) : '<= '.$options['number'];
+			$QUERY = "WITH a AS ( SELECT {$WHAT}, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
+				UPDATE a SET {$WHAT} WHERE a.rownum {$LIMIT_WC};";
+			
+		} else {
+			$QUERY = "UPDATE {$options['table']} SET {$WHAT}  {$WC} {$ORDERBY};";
+		}
 		
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
@@ -150,22 +156,30 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		It parses the query from an array to a DELETE query.
 	*/
 	public function delete(array $options=array()) {
-		text('MS SQL Adapter DELETE');
 		$options += self::$deleteDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
 		}
-		$OPTIONS = '';
-		$SUBOPTIONS = '';
-		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
-			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
+// 		$OPTIONS = '';
+// 		$SUBOPTIONS = '';
+// 		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
+// 			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		if( empty($options['orderby']) ) {
+			$options['orderby'] = static::$IDFIELD; 
+		}
+		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
-		$QUERY = "WITH q AS (
-			SELECT {$SUBOPTIONS} * FROM {$options['table']} {$WC} {$ORDERBY}
-		)
-		DELETE {$OPTIONS} FROM q;";
+		if( $options['number'] > 0 ) {
+			// ORDER BY is required
+			$LIMIT_WC = ( $options['offset'] > 0 ) ? $options['offset'].' AND '.($options['offset']+$options['number']) : '<= '.$options['number'];
+			$QUERY = "WITH a AS ( SELECT {$WHAT}, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
+				DELETE FROM a WHERE a.rownum {$LIMIT_WC};";
+			
+		} else {
+			$QUERY = "DELETE FROM {$options['table']} {$WC} {$ORDERBY};";
+		}
+		
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
@@ -182,7 +196,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		Accept only the String syntax for what option.
 	*/
 	public function insert(array $options=array()) {
-		text('MS SQL Adapter INSERT');
 		$options += self::$insertDefaults;
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
@@ -217,7 +230,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-		text($QUERY);
 // 		var_dump($this->lastID = $this->query($QUERY, PDOFETCH));
 // 		return $this->lastID;
 // 		global $pdoInstances;

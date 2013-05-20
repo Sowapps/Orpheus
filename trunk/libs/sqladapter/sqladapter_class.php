@@ -46,7 +46,6 @@ abstract class SQLAdapter {
 	 * \sa pdo_query()
 	*/
 	public function query($Query, $Fetch=PDOQUERY) {
-		text("SQLAdapter::query() : {$this->instance}");
 		return pdo_query($Query, $Fetch, $this->instance);
 	}
 	
@@ -107,7 +106,6 @@ abstract class SQLAdapter {
 	*/
 	public static function doSelect(array $options=array(), $Instance=null) {
 		self::prepare($Instance);
-		text("Doing SELECT with instance $Instance");
 		return self::$Adapters[$Instance]->select($options);
 	}
 	
@@ -141,7 +139,6 @@ abstract class SQLAdapter {
 	*/
 	public static function doInsert(array $options=array(), $Instance=null) {
 		self::prepare($Instance);
-		text("Doing INSERT with instance $Instance");
 		return self::$Adapters[$Instance]->insert($options);
 	}
 	
@@ -169,16 +166,13 @@ abstract class SQLAdapter {
 		}
 		global $DBS;
 		$Instance = ensure_pdoinstance($instance);
-		text("$Instance = ensure_pdoinstance($instance)");
 		if( empty($DBS[$Instance]) ) {
 			throw new Exception("Adapter unable to connect to the database.");
 		}
 		$adapterClass = 'SQLAdapter_'.$DBS[$Instance]['driver'];
-		text("new $adapterClass($Instance)");
 		// $instance is prepare() name of instance and $Instance is the real one
 		self::$Adapters[$instance] = new $adapterClass($Instance);
 		if( empty(self::$Adapters[$instance]) ) {
-			text("Associating '$instance' with '$Instance'");
 			// null means default but default is not always 'default'
 			self::$Adapters[$Instance] = &self::$Adapters[$instance];
 		}
