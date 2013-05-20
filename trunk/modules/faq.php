@@ -11,7 +11,7 @@ If you're a webdesigner and you would like to propose a theme, please contact me
 <h2>Why this website is (only) in english ?</h2>
 <p>
 Because English is an international language, this is the language used by developers to make it understandable by everyone, as the Orpheus framework.<br />
-Even if the framework has an internationalization, its default language is English as the demo website and documentation website.
+Even if the framework has an internationalization library, its default language is English as the demo website and documentation website.
 </p>
 
 <h2>Is this website based on Orpheus ?</h2>
@@ -29,5 +29,5 @@ Dude, please read <a href="doc/html/">the manual of Orpheus</a>. ;-)
 In fact, this is not really a framework, it's the future base of your website.<br />
 It helps you to complete your work, without coding again the common base of a website.<br />
 The main difference is that Orpheus forces you to follow certain basic rules, allowing you to maintain a secure and optimized application, even if it's designed to be tolerant and extensible.<br />
- With a lot of library, everything is allowed on Orpheus, you can use your own user system, your own config library or import a library from another framework. 
+With a lot of library, everything is allowed on Orpheus, you can use your own user system, your own config library or import a library from another framework. 
 </p>
