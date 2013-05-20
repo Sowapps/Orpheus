@@ -44,6 +44,7 @@ define('PDOFETCHFIRSTCOL'	, PDOQUERY | 1<<3);//Only the first column
 */
 function ensure_pdoinstance($Instance=null) {
 	global $pdoInstances, $DBS;
+	text("ensure_pdoinstance($Instance)");
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
@@ -173,7 +174,7 @@ function ensure_pdoinstance($Instance=null) {
 */
 function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
-	
+	text("pdo_query($Instance)");
 	// Checks connection
 	$Instance		= ensure_pdoinstance($Instance);
 	$InstSettings	= $DBS[$Instance];
