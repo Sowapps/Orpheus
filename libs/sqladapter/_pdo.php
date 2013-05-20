@@ -75,6 +75,8 @@ function ensure_pdoinstance($Instance=null) {
 	// Loading instance
 	$InstSettings = $DBS[$Instance];
 	
+	text("Setting instance with {$InstSettings['driver']}");
+	
 	//If There is no driver given, it is an error.
 	if( empty($InstSettings['driver']) ) {
 		pdo_error('Data Base setting "driver" should have the driver name (not empty)', 'Driver Definition');
@@ -89,7 +91,6 @@ function ensure_pdoinstance($Instance=null) {
 			if( empty($InstSettings["dbname"]) ) {
 				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
-			
 			try {
 				$pdoInstances[$Instance] = new PDO(
 					"mysql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
@@ -112,7 +113,6 @@ function ensure_pdoinstance($Instance=null) {
 			if( empty($InstSettings["dbname"]) ) {
 				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
-			
 			try {
 				text("dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}");
 				$pdoInstances[$Instance] = new PDO(
@@ -134,8 +134,8 @@ function ensure_pdoinstance($Instance=null) {
 			if( empty($InstSettings["dbname"]) ) {
 				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
-			
 			try {
+				text("pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};...");
 				$pdoInstances[$Instance] = new PDO(
 					"pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};password={$InstSettings["passwd"]}"
 				);
@@ -149,7 +149,6 @@ function ensure_pdoinstance($Instance=null) {
 		//If Instance does not exist yet, it is not connected, we create it & link it.
 		if( empty($pdoInstances[$Instance]) ) {
 			$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
-			
 			try {
 				$pdoInstances[$Instance] = new PDO(
 					"sqlite:{$InstSettings["path"]}"
