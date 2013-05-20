@@ -1,13 +1,13 @@
 <?php
 
-var_dump(DemoTest_MSSQL::get());
+// var_dump(DemoTest_MSSQL::get());
 
 if( isPOST('data') ) {
 	try {
 		
 		$tid = DemoTest_MSSQL::create($_POST['data']);
 		reportSuccess("Object created.");
-		text("ID: ".$tid);
+// 		text("ID: ".$tid);
 		
 		$test = DemoTest_MSSQL::load($tid);
 		reportSuccess("Object \"{$test}\" loaded, it's named \"{$test->name}\".");
