@@ -134,7 +134,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required
 			$LIMIT_WC = ( $options['offset'] > 0 ) ? $options['offset'].' AND '.($options['offset']+$options['number']) : '<= '.$options['number'];
-			$QUERY = "WITH a AS ( SELECT {$WHAT}, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
+			$QUERY = "WITH a AS ( SELECT *, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
 				UPDATE a SET {$WHAT} WHERE a.rownum {$LIMIT_WC};";
 			
 		} else {
@@ -173,7 +173,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required
 			$LIMIT_WC = ( $options['offset'] > 0 ) ? $options['offset'].' AND '.($options['offset']+$options['number']) : '<= '.$options['number'];
-			$QUERY = "WITH a AS ( SELECT {$WHAT}, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
+			$QUERY = "WITH a AS ( SELECT *, row_number() OVER ({$ORDERBY}) AS rownum FROM {$options['table']} {$WC} )
 				DELETE FROM a WHERE a.rownum {$LIMIT_WC};";
 			
 		} else {
