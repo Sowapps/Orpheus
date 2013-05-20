@@ -30,7 +30,7 @@
           <div class="nav-collapse collapse">
 
 	<ul class="nav menu topmenu">
-		<li class="item forums current active"><a href="forums.html">Home</a></li>
+		<li class="item forums current active"><a href="forums.html">Forums</a></li>
 		<li class="item members"><a href="members.html">Members</a></li>
 	</ul>
 	<form class="navbar-form pull-right">
@@ -42,32 +42,119 @@
         </div>
       </div>
     </div>
-	
+
+<style>
+.threadWrapper {
+	padding: 9px 15px;
+	border-radius: 4px 4px 4px 4px;
+	border: 1px solid #E5E5E5;
+	background-color: #F5F5F5;
+}
+
+.threadWrapper > ul {
+	margin: 0 0 5px 0;
+	list-style: none;
+}
+.threadWrapper > ul li {
+	margin-bottom: 2px;
+}
+.threadWrapper > ul a {
+	display: block;
+	height: 20px;
+	padding: 5px 10px;
+	line-height: 20px;
+	border-radius: 4px 4px 4px 4px;
+	text-decoration: none;
+	background-color: #FFFFFF;
+}
+.threadWrapper > ul a:hover {
+	background-color: #0088CC;
+	color: #FFFFFF;
+}
+</style>
 	
 <div class="container">
 
-<div class="forumlist" id="forumlist">
+<div class="forumlist" id="forumlist-0">
 	<div class="accordion-group">
 		<div class="accordion-heading">
-			<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-			Collapsible Group Item #1
+			<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-1">
+			Spare-time Forum
 			</a>
 		</div>
-		<div id="collapseOne" class="accordion-body collapse">
+		<div id="collapse-1" class="accordion-body collapse in">
 			<div class="accordion-inner">
-			Anim pariatur cliche...
+			
+				<div class="forumlist" id="forumlist-1">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-3">
+							Literacy Of Idiots Forum
+							</a>
+						</div>
+						<div id="collapse-3" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="threadWrapper">
+									<h4>Threads of Forum #3</h4>
+									<ul>
+										<li><a href="#">Where to go for holidays ?</a></li>
+										<li><a href="#">What is your last favorite films ?</a></li>
+										<li><a href="#">The death of Michael Jackson</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-4">
+							The Timeless Beer Forum
+							</a>
+						</div>
+						<div id="collapse-4" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<div class="threadWrapper">
+									<h4>Threads of Forum #4</h4>
+									<ul>
+										<li><a href="#">Where to go for holidays ?</a></li>
+										<li><a href="#">What is your last favorite films ?</a></li>
+										<li><a href="#">The death of Michael Jackson</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="threadWrapper">
+					<h4>Threads of Forum #1</h4>
+					<ul>
+						<li><a href="#">Where to go for holidays ?</a></li>
+						<li><a href="#">What is your last favorite films ?</a></li>
+						<li><a href="#">The death of Michael Jackson</a></li>
+					</ul>
+				</div>
+				
+				
 			</div>
 		</div>
 	</div>
 	<div class="accordion-group">
 		<div class="accordion-heading">
-		<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-		Collapsible Group Item #2
+		<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-2">
+		Anti-Racist Forum
 		</a>
 		</div>
-		<div id="collapseTwo" class="accordion-body collapse">
+		<div id="collapse-2" class="accordion-body collapse">
 		<div class="accordion-inner">
-		Anim pariatur cliche...
+			<div class="threadWrapper">
+				<h4>Threads of Anti-Racist Forum</h4>
+				<ul>
+					<li><a href="#">Where to go for holidays ?</a></li>
+					<li><a href="#">What is your last favorite films ?</a></li>
+					<li><a href="#">The death of Michael Jackson</a></li>
+				</ul>
+			</div>
 		</div>
 		</div>
 	</div>
