@@ -30,6 +30,14 @@ abstract class SQLAdapter {
 	const SQLQUERY		= 4;//!< Query String
 	const NUMBER		= 5;//!< Number
 
+	//! Constructor
+	/*!
+	 * \param $Instance The instance to use to execute the future queries.
+	*/
+	public function __construct($Instance) {
+		$this->instance = $Instance;
+	}
+
 	//! The function to use to query the DB server using db instance of this object
 	/*!
 	 * \param $Query The query to execute.
@@ -38,6 +46,7 @@ abstract class SQLAdapter {
 	 * \sa pdo_query()
 	*/
 	public function query($Query, $Fetch=PDOQUERY) {
+		text("SQLAdapter::query() : {$this->instance}");
 		return pdo_query($Query, $Fetch, $this->instance);
 	}
 	
@@ -160,13 +169,16 @@ abstract class SQLAdapter {
 		}
 		global $DBS;
 		$Instance = ensure_pdoinstance($instance);
+		text("$Instance = ensure_pdoinstance($instance)");
 		if( empty($DBS[$Instance]) ) {
 			throw new Exception("Adapter unable to connect to the database.");
 		}
 		$adapterClass = 'SQLAdapter_'.$DBS[$Instance]['driver'];
+		text("new $adapterClass($Instance)");
 		// $instance is prepare() name of instance and $Instance is the real one
 		self::$Adapters[$instance] = new $adapterClass($Instance);
 		if( empty(self::$Adapters[$instance]) ) {
+			text("Associating '$instance' with '$Instance'");
 			// null means default but default is not always 'default'
 			self::$Adapters[$Instance] = &self::$Adapters[$instance];
 		}
