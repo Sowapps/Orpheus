@@ -198,13 +198,15 @@ try {
 	
 	// Here starts Hooks and Session too.
 	Hook::trigger('startSession');
+
+	if( !defined('TERMINAL') ) {
+		$NO_EXCEPTION = 1;
 	
-	$NO_EXCEPTION = 1;
-	//PHP is unable to manage exception thrown during session_start()
+		//PHP is unable to manage exception thrown during session_start()
+		session_start();
 	
-	session_start();
-	
-	$NO_EXCEPTION = 0;
+		$NO_EXCEPTION = 0;
+	}
 	
 	// Checks and Gets Action.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
