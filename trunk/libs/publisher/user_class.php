@@ -17,12 +17,13 @@ class User extends AbstractStatus {
 		'id', 'name', 'password', 'accesslevel', 'status', 'email', 'email_public',
 		'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'
 	);
-	protected static $editableFields = array('name', 'password', 'email', 'email_public');
+	protected static $editableFields = array('name', 'password', 'email', 'email_public', 'accesslevel');
 	protected static $validator = array(
 		'name'			=> 'checkName',
 		'password'		=> 'checkPassword',
 		'email'			=> 'checkEmail',
-		'email_public'	=> 'checkPublicEmail'
+		'email_public'	=> 'checkPublicEmail',
+		'accesslevel'	=> 'checkAccessLevel'
 	);
 	
 	protected $login = 0;
@@ -248,13 +249,12 @@ class User extends AbstractStatus {
 
 	//! Checks if this user has admin right
 	/*!
-	 * \param $module The module to look for.
 	 * \return True if this user is logged and is admin.
 	 *
 	 * Checks if this user has admin access level.
 	 * This is often used to determine if the current user can access to the admin panel.
 	 */
-	public static function isAdmin($module) {
+	public static function isAdmin() {
 		global $USER;
 		return ( !empty($USER) && $USER->accesslevel > 0 );
 	}
