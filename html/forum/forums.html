@@ -34,8 +34,9 @@
 		<li class="item members"><a href="members.html">Members</a></li>
 	</ul>
 	<form class="navbar-form pull-right">
+		<button class="login-btn btn"><span class="icon-off"></span>Connexion</button>
 	    <input type="text" class="input-medium search-query" style="width: 166px;" placeholder="What are you lookin' for ?">
-	    <button type="submit" class="btn">Search</button>
+	    <button type="submit" class="btn" name="submitSearch">Search</button>
 	</form>
 	
           </div>
@@ -44,6 +45,15 @@
     </div>
 
 <style>
+/* Global */
+.login-btn {
+	padding: 4px 8px;
+}
+.login-btn span {
+	margin-right: 4px;
+}
+
+/* Forums */
 .threadWrapper {
 	padding: 9px 15px;
 	border-radius: 4px 4px 4px 4px;
@@ -58,18 +68,35 @@
 .threadWrapper > ul li {
 	margin-bottom: 2px;
 }
-.threadWrapper > ul a {
-	display: block;
-	height: 20px;
-	padding: 5px 10px;
+/*
+.threadWrapper > ul a:hover {
 	line-height: 20px;
+	line-height: 24px;
+}
+*/
+.threadWrapper > ul > li {
+	height: 24px;
+	line-height: 24px;
+	padding: 2px 10px;
+	display: block;
 	border-radius: 4px 4px 4px 4px;
 	text-decoration: none;
 	background-color: #FFFFFF;
 }
-.threadWrapper > ul a:hover {
+.threadWrapper > ul > li:hover {
 	background-color: #0088CC;
+}
+.threadWrapper > ul > li a {
+	height: 20px;
+	display: inline-block;
+}
+.threadWrapper > ul > li:hover a {
 	color: #FFFFFF;
+}
+
+.thread_infos {
+	float: right;
+	font-size: 12px;
 }
 </style>
 	
@@ -129,9 +156,14 @@
 				<div class="threadWrapper">
 					<h4>Threads of Forum #1</h4>
 					<ul>
-						<li><a href="#">Where to go for holidays ?</a></li>
-						<li><a href="#">What is your last favorite films ?</a></li>
-						<li><a href="#">The death of Michael Jackson</a></li>
+						<li><a href="#">Where to go for holidays ?</a><span class="thread_infos"><a href="#">Dernier message</a> de <a href="#">T1b0</a>, le 21/05/2013</span></li>
+						<li><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Dernier message</a> de <a href="#">Math1</a>, le 19/05/2013</span></li>
+						<li><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Dernier message</a> de <a href="#">T1b0</a>, le 19/05/2013</span></li>
+						<!--
+						<li><a href="#">Where to go for holidays ?</a><a href="#" class="thread_infos">Dernier message de T1b0, le 21/05/2013</a></li>
+						<li><a href="#">What is your last favorite films ?</a><a href="#" class="thread_infos">Dernier message de Math1, le 19/05/2013</a></li>
+						<li><a href="#">The death of Michael Jackson</a><a href="#" class="thread_infos">Dernier message de T1b0, le 19/05/2013</a></li>
+						-->
 					</ul>
 				</div>
 				
