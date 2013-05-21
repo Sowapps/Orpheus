@@ -37,9 +37,11 @@ defifn('LANG',				'en_US');
 
 //Miscelanous
 defifn('DEFAULTMOD',		'home');
+defifn('DEFAULTHOST',		'imercure.fr');
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
 defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
-defifn('SITEROOT',			SCHEME.'://'.$_SERVER['HTTP_HOST'].dirpath($_SERVER['SCRIPT_NAME']));
+defifn('HOST',				(!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'imercure.fr');
+defifn('SITEROOT',			SCHEME.'://'.HOST.dirpath($_SERVER['SCRIPT_NAME']));
 defifn('DEFAULTLINK',		SITEROOT);
 
 defifn('AUTHORNAME',		'Florent HAZARD');
