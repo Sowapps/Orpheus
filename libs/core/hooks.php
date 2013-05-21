@@ -14,11 +14,11 @@ Hook::register('runModule', function ($Module) {
 		return;
 	}
 	//If user try to override url rewriting and the requested page is not root.
-	if( empty($_SERVER['REDIRECT_rewritten']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' && $Module != 'remote' ) {
+	if( empty($_SERVER['REDIRECT_rewritten']) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' && $Module != 'remote' ) {
 		permanentRedirectTo(u($Module));
 	}
 	// If the module is the default but with wrong link.
-	if( $Module == DEFAULTMOD && empty($Action) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' ) {
+	if( $Module == DEFAULTMOD && empty($Action) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' ) {
 		permanentRedirectTo(DEFAULTLINK);
 	}
 });
