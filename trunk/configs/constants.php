@@ -18,7 +18,7 @@ defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'd
 
 defifn('USER_CLASS',		'SiteUser');
 
-//Useful paths.
+// Useful paths.
 defifn('CONFPATH',			ORPHEUSPATH.'configs/');
 defifn('MODPATH',			ORPHEUSPATH.'modules/');
 defifn('LIBSPATH',			ORPHEUSPATH.'libs/');
@@ -27,7 +27,7 @@ defifn('THEMESURL',			'themes/');
 defifn('LOGSPATH',			INSTANCEPATH.'logs/');
 defifn('SRCPATH',			'src/');
 
-//Static medias
+// Static medias
 defifn('JSURL',				'js/');
 
 // LIB Initernationalization
@@ -35,9 +35,9 @@ defifn('LANGPATH',			ORPHEUSPATH.'languages/');
 defifn('LANG',				'en_US');
 
 
-//Miscelanous
+// Miscelanous
 defifn('DEFAULTMOD',		'home');
-defifn('DEFAULTHOST',		'imercure.fr');
+defifn('DEFAULTHOST',		'domain.com');
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
 defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
 defifn('HOST',				(!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'imercure.fr');
