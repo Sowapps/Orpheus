@@ -77,7 +77,7 @@ function ensure_pdoinstance($Instance=null) {
 	
 	//If There is no driver given, it is an error.
 	if( empty($InstSettings['driver']) ) {
-		pdo_error('Data Base setting "driver" should have the driver name (not empty)', 'Driver Definition');
+		pdo_error('Database setting "driver" should have the driver name (not empty)', 'Driver Definition');
 		
 	//If driver is mysql
 	} else if( $InstSettings['driver'] == 'mysql' ) {
@@ -87,7 +87,7 @@ function ensure_pdoinstance($Instance=null) {
 			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
 			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
 			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
 			try {
 				$pdoInstances[$Instance] = new PDO(
@@ -109,7 +109,7 @@ function ensure_pdoinstance($Instance=null) {
 			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
 			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
 			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
 			try {
 				$pdoInstances[$Instance] = new PDO(
@@ -129,7 +129,7 @@ function ensure_pdoinstance($Instance=null) {
 			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
 			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
 			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Data Base setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
 			try {
 				$pdoInstances[$Instance] = new PDO(
