@@ -450,7 +450,7 @@ abstract class PermanentObject {
 	 * 
 	 * Creates a new permanent object from ths input data.
 	*/
-	public static function create($inputData) {
+	public static function create($inputData=array()) {
 		$data = static::checkUserInput($inputData);
 		
 		if( in_array('create_time', static::$fields) ) {
