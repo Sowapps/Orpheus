@@ -367,27 +367,34 @@ abstract class PermanentObject {
 	
 	//! Deletes a permanent object
 	/*!
-	 * \param $id The object ID to delete.
-	 * \return 1 in case of success, else 0.
+	 * \param $in The object ID to delete or the delete array.
+	 * \return the number of deleted rows.
 	 * 
-	 * Deletes the object with the ID $id
+	 * Deletes the object with the ID $id or according to the input array.
+	 * It calls runForDeletion() only in case of $in is an ID. 
 	*/
-	public static function delete($id) {
-		if( !ctype_digit("$id") ) {
+	public static function delete($in) {
+		
+		if( is_array($in) ) {
+			$in['table'] = static::$table;
+			return SQLAdapter::doDelete($in, static::$DBInstance);
+		}
+		
+		if( !ctype_digit("$in") ) {
 			static::throwException('invalidID');
 		}
 		$IDFIELD=static::$IDFIELD;
 		$options = array(
 			'table'	=> static::$table,
 			'number'=> 1,
-			'where'	=> "{$IDFIELD}={$id}",
+			'where'	=> "{$IDFIELD}={$in}",
 		);
 		$r = SQLAdapter::doDelete($options, static::$DBInstance);
 		if( $r ) {
-			if( isset(static::$instances[static::getTable()][$id]) ) {
-				static::$instances[static::getTable()][$id]->markAsDeleted();
+			if( isset(static::$instances[static::getTable()][$in]) ) {
+				static::$instances[static::getTable()][$in]->markAsDeleted();
 			}
-			static::runForDeletion($id);
+			static::runForDeletion($in);
 		}
 		return $r;
 	}
