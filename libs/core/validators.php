@@ -40,14 +40,15 @@ function is_ID($Number) {
 
 //! Checks if the input is a date.
 /*!
- * \param $Date The date to check.
- * \return True if $Date si a valid date.
+ * \param $date The date to check.
+ * \param $separators The separator to use for date format. Regex special characters should be escaped.  Optional, default value is \-\/:\;,|\#
+ * \return True if $date si a valid date.
  * 
  * The date have to be well formatted and valid.
- * The format is DD/MM/YYYY and separator can be '/', '-', ':', ';', ',', '|' or '#' 
+ * The format is DD/MM/YYYY and default separators can be '/', '-', ':', ';', ',', '|' or '#' 
  */
-function is_date($Date) {
-	$DateFor = preg_replace('#^([0-9]{1,2})[\-\/:\;,|\#]([0-9]{1,2})[\-\/:\;,|\#]([0-9]{4})$#', '$1#$2#$3', $Date, -1, $Count);
+function is_date($date, $separators='\-\/:\;,|\#') {
+	$DateFor = preg_replace('#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})$#', '$1#$2#$3', $date, -1, $Count);
 	if( !$Count ) {
 		return false;
 	}
