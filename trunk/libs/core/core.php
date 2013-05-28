@@ -760,3 +760,20 @@ defifn('UPPERCAMELCASE',	CAMELCASE | 1<<1);
 function bool2str($v) {
 	return ($v ? 'True' : 'False');
 }
+
+//! Splits a string by string in limited values
+/*!
+ * \param $delimiter	The boundary string.
+ * \param $string		The input string.
+ * \param $limit		The limit of values exploded.
+ * \param $default		The default value to use if missing.
+ * \return An array of a defined number of values.
+ * \sa explode()
+ * 
+ * Splits a string by string in a limited number of values.
+ * The main difference with explode() is this function complete missing values with $default.
+ * If you want $limit optional, use explode()
+ */
+function explodeList($delimiter, $string, $limit, $default=null) {
+	return array_pad(explode($delimiter, $string, $limit), abs($limit), $default);
+}
