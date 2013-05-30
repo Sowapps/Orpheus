@@ -57,7 +57,9 @@ class User extends AbstractStatus {
 		global $USER;
 		$_SESSION['USER'] = $USER = $this;
 		$this->login = 1;
-		static::logEvent('login');
+		if( !$force ) {
+			static::logEvent('login');
+		}
 		static::logEvent('activity');
 	}
 	
