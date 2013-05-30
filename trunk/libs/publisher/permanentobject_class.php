@@ -134,6 +134,7 @@ abstract class PermanentObject {
 			static::checkForObject(static::completeFields($data));
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
+		$oldData = $this->all;
 		foreach($data as $fieldname => $fieldvalue) {
 			if( isset($fieldvalue) && $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
 				$this->$fieldname = $fieldvalue;
@@ -146,23 +147,26 @@ abstract class PermanentObject {
 			static::logEvent('edit');
 		}
 		if( $r = $this->save() ) {
-			$this->runForUpdate($data);
+			$this->runForUpdate($data, $oldData);
 		}
 		return $r;
 	}
 	
 	//! Runs for Update
 	/*!
+	 * \param $data the new data
+	 * \param $oldData the old data
 	 * \sa update()
 	 * 
 	 * This function is called by update() before saving new data.
+	 * $data contains only edited data, excluding invalids and not changed ones.
 	 * In the base class, this method does nothing.
 	*/
 	public function runForUpdate($data, $oldData) { }
 	
 	//! Saves this permanent object
 	/*!
-	 * \return 1 in case of success, else 0.
+	 * \return 1 in case of success, else 0
 	 * 
 	 * If some fields was modified, it saves these fields using the SQL Adapter.
 	*/
