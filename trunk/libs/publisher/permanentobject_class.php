@@ -158,7 +158,7 @@ abstract class PermanentObject {
 	 * This function is called by update() before saving new data.
 	 * In the base class, this method does nothing.
 	*/
-	public function runForUpdate($data) { }
+	public function runForUpdate($data, $oldData) { }
 	
 	//! Saves this permanent object
 	/*!
