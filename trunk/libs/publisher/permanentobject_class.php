@@ -167,7 +167,7 @@ abstract class PermanentObject {
 	 * If some fields was modified, it saves these fields using the SQL Adapter.
 	*/
 	public function save() {
-		if( empty($this->modFields) ) {
+		if( empty($this->modFields) || $this->isDeleted() ) {
 			return 0;
 		}
 		$updQ = '';
