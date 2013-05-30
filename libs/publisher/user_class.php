@@ -50,8 +50,8 @@ class User extends AbstractStatus {
 	// *** METHODES UTILISATEUR ***
 	
 	//! Log in this user to the current session.
-	public function login() {
-		if( static::is_login() ) {
+	public function login($force=false) {
+		if( !$force && static::is_login() ) {
 			throw new UserException('alreadyLogguedIn');
 		}
 		global $USER;
@@ -376,7 +376,10 @@ class User extends AbstractStatus {
 	 * \see checkPermissions()
 	*/
 	public static function checkAccessLevel($inputData, $ref) {
-		if( !isset($inputData['accesslevel']) && isset($ref) ) {//UPDATING
+		if( !isset($ref) ) {
+			return 0;
+		}
+		if( !isset($inputData['accesslevel']) ) {//UPDATING
 			return null;
 		}
 		return $ref->checkPermissions($inputData);
