@@ -20,6 +20,9 @@
 	<script type="text/javascript" src="../../js/jquery.js"></script>
 	<script type="text/javascript" src="../../js/jquery-ui.js"></script>
 	<script type="text/javascript" src="../../js/bootstrap.js"></script>
+	
+	<script type="text/javascript" src="../../js/core.js"></script>
+	<script type="text/javascript" src="../../js/debug.js"></script>
 </head>
 <body class="thread">
 
@@ -36,7 +39,7 @@
 	</ul>
 	<form class="navbar-form pull-right">
 		<button class="login-btn btn"><span class="icon-off"></span>Connexion</button>
-	    <input type="text" class="input-medium search-query" style="width: 166px;" placeholder="What are you lookin' for ?">
+	    <input type="text" class="input-medium search-query" style="width: 166px;" placeholder="What are you lookin' for ?" autofocus="autofocus">
 	    <button type="submit" class="btn" name="submitSearch">Search</button>
 	</form>
 	
@@ -67,7 +70,7 @@
 		<div class="post_head">
 			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">
 			<div class="post_infos">
-				<a href="#">T1b0</a>, le 02/06/2013
+				<a href="#">T1b0</a>Le 02/06/2013
 			</div>
 		</div>
 		<div class="post_body">
@@ -82,7 +85,7 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 		<div style="clear: both; height: 10px;"></div>
 	</article>
 	
-	<article>
+	<article class="">
 	<!--
 		<div class="post_head">
 			<h3><a href="#">How to go so far with only a bukket ?</a></h3>
@@ -91,7 +94,7 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 		<div class="post_head">
 			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">
 			<div class="post_infos">
-				<a href="#">T1b0</a>, le 02/06/2013
+				<a href="#">Infernato Del Arte</a>Le 02/06/2013
 			</div>
 		</div>
 		<div class="post_body">
@@ -99,8 +102,27 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 Alii summum decus in carruchis solito altioribus et ambitioso vestium cultu ponentes sudant sub ponderibus lacernarum, quas in collis insertas cingulis ipsis adnectunt nimia subtegminum tenuitate perflabiles, expandentes eas crebris agitationibus maximeque sinistra, ut longiores fimbriae tunicaeque perspicue luceant varietate liciorum effigiatae in species animalium multiformes.<br />
 <br />
 Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latasque leges fundamenta libertatis et retinacula sempiterna velut frugi parens et prudens et dives Caesaribus tamquam liberis suis regenda patrimonii iura permisit.<br />
+		
+		</div>
+		<div style="clear: both; height: 10px;"></div>
+	</article>
+	
+	<article>
+	<!--
+		<div class="post_head">
+			<h3><a href="#">How to go so far with only a bukket ?</a></h3>
+		</div>
+	-->
+		<div class="post_head">
+			<div class="post_infos">
+				<a href="#">Infernato Del Arte</a>Le 02/06/2013
+			</div>
+		</div>
+		<div class="post_body">
+		
+Alii summum decus in carruchis solito altioribus et ambitioso vestium cultu ponentes sudant sub ponderibus lacernarum, quas in collis insertas cingulis ipsis adnectunt nimia subtegminum tenuitate perflabiles, expandentes eas crebris agitationibus maximeque sinistra, ut longiores fimbriae tunicaeque perspicue luceant varietate liciorum effigiatae in species animalium multiformes.<br />
 <br />
-Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante perstrinxi) praesidii adiumentique causa, non benevolentiae neque caritatis, amicitias esse expetendas; itaque, ut quisque minimum firmitatis haberet minimumque virium, ita amicitias appetere maxime; ex eo fieri ut mulierculae magis amicitiarum praesidia quaerant quam viri et inopes quam opulenti et calamitosi quam ii qui putentur beati.<br />
+Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latasque leges fundamenta libertatis et retinacula sempiterna velut frugi parens et prudens et dives Caesaribus tamquam liberis suis regenda patrimonii iura permisit.<br />
 		
 		</div>
 		<div style="clear: both; height: 10px;"></div>
@@ -116,6 +138,43 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 		</p>
 	</div>
 </footer>
+
+<script>
+function setArticleActive(article, force=false) {
+	//debug("Set active article: ");
+	//debug(article);
+	if( !article || !$(article).length || ( !force && $(article).hasClass("active") ) ) {
+		// Already active
+		return;
+	}
+	$("article").removeClass("active");
+	$(article).addClass("active");
+	
+	// Center
+	centerViewportOn(article);
+
+}
+
+$(function() {
+	$("article").hover(function() {
+		//setArticleActive(this);
+	});
+	$("body").on("keydown", function(event) {
+		//debug("keydown");
+		var article;
+		if( event.which == KeyEvent.DOM_VK_DOWN ) {
+			article = ( $("article.active").length ) ? $("article.active").next("article") : $("article:first-child");
+		} else if( event.which == KeyEvent.DOM_VK_UP ) {
+			article = ( $("article.active").length ) ? $("article.active").prev("article") : $("article:last-child");
+		}
+		//debug($(article).length);
+		setArticleActive(article);
+	});
+	//debug($("article:first-child"));
+	//$("article:first-child").focus();
+	setArticleActive($("article.active"), true);
+});
+</script>
 
 </body>
 </html>
