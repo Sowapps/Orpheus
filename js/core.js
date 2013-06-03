@@ -12,17 +12,29 @@ function centerInViewport(el) {
 	.scrollLeft(elOffset.left + (elWidth/2) - (viewportWidth/2));
 }
 
-function moveOnMouse(el) {
+var TEST = 0;
+function moveOnMouse(el, e) {
+//	if( TEST ) {
+//		return;
+//	}
 	el = $(el);
-	debug(el);
-	var viewportWidth = jQuery(window).width(),
-	viewportHeight = jQuery(window).height(),
-	elWidth = el.width(),
-	elHeight = el.height(),
+//	debug(el);
+//	var viewportWidth = jQuery(window).width(),
+//	viewportHeight = jQuery(window).height(),
+//	elWidth = el.width(),
+	var elHeight = el.height(),
 	elOffset = el.offset();
+//	debug("Element height: 		"+elHeight);
+//	debug("Mouse Y: 			"+e.pageY);
+//	debug("Element offset top:		"+elOffset.top);
+//	var scrollTop = elOffset.top + (elHeight/2) - (e.pageY/2);
+//	var scrollTop = -((e.pageY - (elHeight/2)) - elOffset.top);
+	var scrollTop = jQuery(window).scrollTop()-((e.pageY - (elHeight/2)) - elOffset.top);
+//	debug("scrollTop: 			"+scrollTop);
+//	TEST++;
 	jQuery(window)
-	.scrollTop(elOffset.top + (elHeight/2) - (viewportHeight/2))
-	.scrollLeft(elOffset.left + (elWidth/2) - (viewportWidth/2));
+	.scrollTop(scrollTop);
+//	.scrollLeft(elOffset.left +e.pageX-elWidth/2);
 }
 
 if( typeof KeyEvent == "undefined" ) {

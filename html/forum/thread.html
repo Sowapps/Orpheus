@@ -140,7 +140,7 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 </footer>
 
 <script>
-function setArticleActive(article, force=false) {
+function setArticleActive(article, e=null, force=false) {
 	//debug("Set active article: ");
 	//debug(article);
 	if( !article || !$(article).length || ( !force && $(article).hasClass("active") ) ) {
@@ -151,13 +151,17 @@ function setArticleActive(article, force=false) {
 	$(article).addClass("active");
 	
 	// Center
-	centerViewportOn(article);
-
+	if( e ) {
+		moveOnMouse(article, e);
+	} else {
+		centerInViewport(article);
+	}
 }
 
 $(function() {
-	$("article").hover(function() {
-		//setArticleActive(this);
+	$("article").mouseenter(function(e) {
+		//debug(e);
+		setArticleActive(this, e);
 	});
 	$("body").on("keydown", function(event) {
 		//debug("keydown");
@@ -172,7 +176,7 @@ $(function() {
 	});
 	//debug($("article:first-child"));
 	//$("article:first-child").focus();
-	setArticleActive($("article.active"), true);
+	setArticleActive($("article.active"), null, true);
 });
 </script>
 
