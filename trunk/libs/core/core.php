@@ -629,54 +629,60 @@ function extractFrom($path, $array) {
 
 //! Gets the HTML value
 /*!
- * \param $name The name of the field
- * \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
- * \return A HTML source with the "value" attribute.
- * 
- * Gets the HTML value attribut from an array of data if this $name exists.
+* \param $name The name of the field
+* \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
+* \return A HTML source with the "value" attribute.
+*
+* Gets the HTML value attribut from an array of data if this $name exists.
 */
 function htmlValue($name, $data=null) {
 	if( is_null($data) ) {
 		global $formData;
 		$data = (isset($formData)) ? $formData : POST();
 	}
-	return (!empty($data[$name])) ? " value=\"{$data[$name]}\"" : '';
+	$v = apath_get($data, $name);
+	return !empty($v) ? " value=\"{$v}\"" : '';
 }
 
 //! Generates the HTML source for a SELECT
 /*!
- * \param $name The name of the field.
- * \param $data The data to to build the dropdown.
- * \param $prefix The prefix to use for the text name of values. Default value is an empty string.
- * \param $domain The domain to apply the Key. Default value is 'global'.
- * \param $selected The selected value from the data. Default value is null (no selection).
- * \param $selectAttr Additional attributes for the SELECT tag.
- * \return A HTML source for the built SELECT tag.
- * \warning This function is not complete, it requires more functionalities.
- * 
- * Generates the HTML source for a SELECT from the $data.
+* \param $name The name of the field.
+* \param $values The values to to build the dropdown.
+* \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
+* \param $selected The selected value from the data. Default value is null (no selection).
+* \param $prefix The prefix to use for the text name of values. Default value is an empty string.
+* \param $domain The domain to apply the Key. Default value is 'global'.
+* \param $tagAttr Additional attributes for the SELECT tag.
+* \return A HTML source for the built SELECT tag.
+* \warning This function is not complete, it requires more functionalities.
+*
+* Generates the HTML source for a SELECT from the $data.
 */
-function htmlSelect($name, $data, $prefix='', $domain='global', $selected=null, $tagAttr='') {
-	global $formData;
-	$opts = '';
-	$namePath = explode(':', $name);
+function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $domain='global', $tagAttr='') {
+	if( is_null($data) ) {
+		global $formData;
+		$data = isset($formData) ? $formData : POST();
+	}
+	$namePath = explode('/', $name);
 	$name = $namePath[count($namePath)-1];
 	$htmlName = '';
 	foreach( $namePath as $index => $path ) {
 		$htmlName .= ( $index ) ? "[{$path}]" : $path;
 	}
 	$tagAttr .= ' name="'.$htmlName.'"';
-	if( is_null($selected) && isset($formData[$name]) ) {
-		$selected = $formData[$name];
+	$v = apath_get($data, $name);
+	if( !empty($v) ) {//is_null($selected) && 
+		$selected = $v;
 	}
-	foreach( $data as $dataKey => $dataValue ) {
-		$key = (is_int($dataKey)) ? $dataValue : $dataKey;// If this is an associative array, we use the key, else the value.
+	$opts = '';
+	foreach( $values as $dataKey => $dataValue ) {
+		$key = is_int($dataKey) ? $dataValue : $dataKey;// If this is an associative array, we use the key, else the value.
 		$opts .= '
 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return "
-<select {$tagAttr}>{$opts}
-</select>";
+	<select {$tagAttr}>{$opts}
+	</select>";
 }
 
 //! Converts special characters to non-special ones
