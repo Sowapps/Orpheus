@@ -16,7 +16,7 @@ class SiteUser extends User {
 	protected static $fields = array(
 		'fullname'
 	);
-	protected static $userEditableFields = array(
+	protected static $editableFields = array(
 		'fullname'
 	);
 	
