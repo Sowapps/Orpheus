@@ -153,7 +153,7 @@ class User extends AbstractStatus {
 	 */
 	public function update($uInputData) {
 		
-		if( !User::canDo(static::$table.'_edit', $this) ) {
+		if( !static::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		
