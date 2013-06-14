@@ -191,9 +191,10 @@ abstract class AbstractPublication extends AbstractStatus {
 		if( empty($publication) ) {
 			return;
 		}
+		global $USER_CLASS;
 		if( $publication['name'] == $data['name'] ) {
 			throw new UserException("entryExisting");
-		} else if( !user_can('anecdotes_safeUse') ) {
+		} else if( static::$floodDelay && !$USER_CLASS::canDo(static::$table.'_safeUse') ) {
 			throw new UserException("floodDelay");
 		}
 	}
