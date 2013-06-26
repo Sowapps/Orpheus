@@ -57,6 +57,17 @@ abstract class AbstractStatus extends PermanentObject {
 		return $this->status;
 	}
 	
+	//! Checks if this object has the given status
+	/*!
+	 * \param $status The status to compare
+	 * \return True if the status is $status
+	 * 
+	 * Compares the given status to the current one.
+	 */
+	public function hasStatus($status) {
+		return $this->status = $status;
+	}
+	
 	// *** METHODES STATIQUES ***
 	
 	// 		** METHODES DE VERIFICATION **
@@ -112,6 +123,15 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public static function getDefaultStatus() {
 		return key(static::$status);
+	}
+	//! Gets available statuses from the given one.
+	/*!
+	 * \return An array of the available statuses.
+	 * 
+	 * Gets all available statuses for the given one.
+	 */
+	public static function availableStatusesFrom($status) {
+		return static::$status[$status];
 	}
 }
 AbstractStatus::init();
