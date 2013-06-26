@@ -34,7 +34,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * Gets all available status for the current one.
 	 */
 	public function getAvailableStatus() {
-		return static::$status[$this->status];
+		return static::availableStatusesFrom($this->status);
 	}
 	
 	//! Gets and sets the status of this object
