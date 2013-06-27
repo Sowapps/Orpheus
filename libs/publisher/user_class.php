@@ -124,7 +124,7 @@ class User extends AbstractStatus {
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
 			throw new UserException('sameAccessLevel');
 		}
-		if( !User::canDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
+		if( !User::loggedCanDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
 			|| !$USER->checkPerm($this->accesslevel) // Has the current user less accesslevel that the edited one ?
 			|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
 		) {
@@ -135,15 +135,28 @@ class User extends AbstractStatus {
 	
 	//! Checks if this user can alter data on the given user
 	/*!
-	 * \param $action The action to look for.
 	 * \param $user The user we want to edit.
 	 * \return True if this user has enough acess level to edit $user or he is altering himself.
-	 * \sa canDo()
+	 * \sa loggedCanDo()
 	 * 
 	 * Checks if this user can alter on $user.
 	 */
-	public function canAlter($action, User $user) {
-		return $user->equals($USER) || $user->accesslevel < $this->accesslevel;
+	public function canAlter(User $user) {
+		return $this->equals($user) || !$user->accesslevel || $this->accesslevel > $user->accesslevel;
+	}
+	
+	//! Checks if this user can affect data on the given user
+	/*!
+	 * \param $action The action to look for.
+	 * \param $user The user we want to edit.
+	 * \return True if this user has enough acess level to edit $user or he is altering himself.
+	 * \sa loggedCanDo()
+	 * \sa canAlter()
+	 * 
+	 * Checks if this user can affect $object.
+	 */
+	public function canDo($action, $object=null) {
+		return ( $this->checkPerm($action) && ( is_null($object) || ($object instanceof User && $this->canAlter($object)) ) );
 	}
 	
 	//! Updates this publication object
@@ -153,7 +166,7 @@ class User extends AbstractStatus {
 	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
 	 */
 	public function update($uInputData) {
-		if( !static::canDo(static::$table.'_edit', $this) ) {
+		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		return parent::update($uInputData);
@@ -242,7 +255,7 @@ class User extends AbstractStatus {
 	 * It tries to check current user rights.
 	 */
 	public static function delete($id) {
-		if( !self::canDo('users_delete') ) {
+		if( !self::loggedCanDo('users_delete') ) {
 			throw new UserException('forbiddenDelete');
 		}
 		return parent::delete($id);
@@ -283,9 +296,9 @@ class User extends AbstractStatus {
 	 * 
 	 * Checks if this user can do $action.
 	 */
-	public static function canDo($action, $object=null) {
+	public static function loggedCanDo($action, $object=null) {
 		global $USER;
-		return !empty($USER) && $USER instanceof User && ( $USER->checkPerm($action) && ( is_null($object) || ($object instanceof User && $USER->canAlter($object)) ) );
+		return !empty($USER) && $USER instanceof User && $USER->canDo($action, $object);
 	}
 	
 	// 		** Verification methods **
@@ -417,7 +430,7 @@ class User extends AbstractStatus {
 		\sa AbstractStatus::validateStatus()
 	*/
 	public static function validateStatus($newStatus, $ref=null) {
-		if( !User::canDo('users_status', $ref) ) {
+		if( !User::loggedCanDo('users_status', $ref) ) {
 			throw new UserException('forbiddenUStatus');
 		}
 		return parent::checkStatus($newStatus, $ref, $reportToUser=true);

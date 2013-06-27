@@ -59,7 +59,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * This update method manages 'name' and 'user_name' fields.
 	 */
 	public function update($uInputData) {
-		if( !User::canDo(static::$table.'_edit') ) {
+		if( !User::loggedCanDo(static::$table.'_edit') ) {
 			throw new UserException('forbiddenUpdate');
 		}
 		return parent::update($uInputData);
@@ -194,7 +194,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		global $USER_CLASS;
 		if( $publication['name'] == $data['name'] ) {
 			throw new UserException("entryExisting");
-		} else if( static::$floodDelay && !$USER_CLASS::canDo(static::$table.'_safeUse') ) {
+		} else if( static::$floodDelay && !$USER_CLASS::loggedCanDo(static::$table.'_safeUse') ) {
 			throw new UserException("floodDelay");
 		}
 	}
