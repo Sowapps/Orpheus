@@ -133,16 +133,17 @@ class User extends AbstractStatus {
 		return (int) $inputData['accesslevel'];
 	}
 	
-	//! Checks if this user can do a restricted action on an user
+	//! Checks if this user can alter data on the given user
 	/*!
 	 * \param $action The action to look for.
 	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user.
+	 * \return True if this user has enough acess level to edit $user or he is altering himself.
+	 * \sa canDo()
 	 * 
-	 * Checks if this user can do $action on $user.
+	 * Checks if this user can alter on $user.
 	 */
-	public function canOn($action, $user) {
-		return $this->checkPerm($action) && $user->accesslevel < $this->accesslevel;
+	public function canAlter($action, User $user) {
+		return $user->equals($USER) || $user->accesslevel < $this->accesslevel;
 	}
 	
 	//! Updates this publication object
@@ -152,11 +153,9 @@ class User extends AbstractStatus {
 	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
 	 */
 	public function update($uInputData) {
-		
 		if( !static::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
-		
 		return parent::update($uInputData);
 	}
 	
@@ -279,14 +278,14 @@ class User extends AbstractStatus {
 	//! Checks if this user can do a restricted action
 	/*!
 	 * \param $action The action to look for.
-	 * \param $selfEditUser The user if editing one or null. Default value is null.
+	 * \param $object The object to edit if editing one or null. Default value is null.
 	 * \return True if this user can do this $action.
 	 * 
 	 * Checks if this user can do $action.
 	 */
-	public static function canDo($action, $selfEditUser=null) {
+	public static function canDo($action, $object=null) {
 		global $USER;
-		return !empty($USER) && $USER instanceof SiteUser && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && $selfEditUser instanceof SiteUser && $selfEditUser->equals($USER) ) );
+		return !empty($USER) && $USER instanceof User && ( $USER->checkPerm($action) && ( is_null($object) || ($object instanceof User && $USER->canAlter($object)) ) );
 	}
 	
 	// 		** Verification methods **
@@ -335,7 +334,7 @@ class User extends AbstractStatus {
 	 * 
 	 * Validates the email address in array $inputData.
 	 */
-	public static function checkEmail($inputData, $ref) {
+	public static function checkEmail($inputData, $ref=null) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
 			if( empty($inputData['email']) && isset($ref) ) {//UPDATE
 				return null;
