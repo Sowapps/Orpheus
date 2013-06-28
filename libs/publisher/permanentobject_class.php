@@ -584,10 +584,10 @@ abstract class PermanentObject {
 	 * - If an array, it uses an field => checkMethod association.
 	*/
 	public static function checkUserInput($uInputData, $ref=null) {
-		if( empty(static::$editableFields) ) {
-			return array();
-		}
 		if( is_array(static::$validator) ) {
+			if( empty(static::$editableFields) ) {
+				return array();
+			}
 			$data = array();
 			foreach( static::$editableFields as $field ) {
 				// If editing the id field
