@@ -783,3 +783,30 @@ function bool2str($v) {
 function explodeList($delimiter, $string, $limit, $default=null) {
 	return array_pad(explode($delimiter, $string, $limit), abs($limit), $default);
 }
+
+//! Gets the string of a boolean
+/*!
+ * \param $b The boolean.
+* \return The boolean's string.
+*/
+function b($b) {
+	return $b ? 'TRUE' : 'FALSE';
+}
+
+//! Gets the date as string
+/*!
+ * \param $time The UNIX timestamp.
+* \return The date using 'dateFormat' translation key
+*/
+function d($time) {
+	return strftime(t('dateFormat'), $time);
+}
+
+//! Gets the date time as string
+/*!
+ * \param $time The UNIX timestamp.
+ * \return The date using 'timeFormat' translation key
+*/
+function dt($time) {
+	return strftime(t('timeFormat'), $time);
+}
