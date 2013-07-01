@@ -19,6 +19,7 @@ abstract class PermanentObject {
 	protected static $editableFields = array();
 	// Contains the validator. The default one is an array system.
 	protected static $validator = null;//! See checkUserInput()
+	// Contains the domain. Used as default UserException domain.
 	protected static $domain = null;
 	
 	protected $modFields = array();
@@ -462,7 +463,11 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData=array()) {
-		$data = static::checkUserInput($inputData);
+		$data = static::checkUserInput($inputData, null, $errCount);
+		
+		if( $errCount ) {
+			static::throwException('errorCreateChecking');
+		}
 		
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
@@ -583,11 +588,14 @@ abstract class PermanentObject {
 	 * - If empty, this function return an empty array.
 	 * - If an array, it uses an field => checkMethod association.
 	*/
-	public static function checkUserInput($uInputData, $ref=null) {
+	public static function checkUserInput($uInputData, $ref=null, &$errCount=0) {
 		if( is_array(static::$validator) ) {
 			if( empty(static::$editableFields) ) {
 				return array();
 			}
+// 			text('checkUserInput() :: Default validator');
+// 			text('$editableFields: '.htmlSecret(static::$editableFields));
+// 			text('get_called_class: '.get_called_class());
 			$data = array();
 			foreach( static::$editableFields as $field ) {
 				// If editing the id field
@@ -606,6 +614,7 @@ abstract class PermanentObject {
 						$data[$field] = $uInputData[$field];
 					}
 				} catch(UserException $e) {
+					$errCount++;
 					reportError($e, static::getDomain());
 				}
 			}
@@ -613,7 +622,7 @@ abstract class PermanentObject {
 		
 		} else if( is_object(static::$validator) ) {
 			if( method_exists(static::$validator, 'validate') ) {
-				return static::$validator->validate($uInputData);
+				return static::$validator->validate($uInputData, $ref, $errCount);
 			}
 		}
 		return array();
@@ -642,6 +651,9 @@ abstract class PermanentObject {
 		if( is_array(static::$validator) && is_array($parent::$validator) ) {
 			static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
 		}
+		if( is_null(static::$domain) ) {
+			static::$domain = static::$table;
+		}
 	}
 	
 	//! Throws an UserException
@@ -652,6 +664,7 @@ abstract class PermanentObject {
 	 * Throws an UserException with the current domain.
 	*/
 	public static function throwException($message) {
+		text(get_called_class().' throwing exception with domain '.static::$domain);
 		throw new UserException($message, static::$domain);
 	}
 	

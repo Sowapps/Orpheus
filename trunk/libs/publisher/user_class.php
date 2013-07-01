@@ -124,7 +124,7 @@ class User extends AbstractStatus {
 		if( $inputData['accesslevel'] == $this->accesslevel ) {
 			throw new UserException('sameAccessLevel');
 		}
-		if( !User::loggedCanDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
+		if( !User::canDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
 			|| !$USER->checkPerm($this->accesslevel) // Has the current user less accesslevel that the edited one ?
 			|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
 		) {
@@ -133,30 +133,16 @@ class User extends AbstractStatus {
 		return (int) $inputData['accesslevel'];
 	}
 	
-	//! Checks if this user can alter data on the given user
-	/*!
-	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user or he is altering himself.
-	 * \sa loggedCanDo()
-	 * 
-	 * Checks if this user can alter on $user.
-	 */
-	public function canAlter(User $user) {
-		return $this->equals($user) || !$user->accesslevel || $this->accesslevel > $user->accesslevel;
-	}
-	
-	//! Checks if this user can affect data on the given user
+	//! Checks if this user can do a restricted action on an user
 	/*!
 	 * \param $action The action to look for.
 	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user or he is altering himself.
-	 * \sa loggedCanDo()
-	 * \sa canAlter()
+	 * \return True if this user has enough acess level to edit $user.
 	 * 
-	 * Checks if this user can affect $object.
+	 * Checks if this user can do $action on $user.
 	 */
-	public function canDo($action, $object=null) {
-		return ( $this->checkPerm($action) && ( is_null($object) || ($object instanceof User && $this->canAlter($object)) ) );
+	public function canOn($action, $user) {
+		return $this->checkPerm($action) && $user->accesslevel < $this->accesslevel;
 	}
 	
 	//! Updates this publication object
@@ -166,9 +152,11 @@ class User extends AbstractStatus {
 	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
 	 */
 	public function update($uInputData) {
-		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
+		
+		if( !User::canDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
+		
 		return parent::update($uInputData);
 	}
 	
@@ -255,7 +243,7 @@ class User extends AbstractStatus {
 	 * It tries to check current user rights.
 	 */
 	public static function delete($id) {
-		if( !self::loggedCanDo('users_delete') ) {
+		if( !self::canDo('users_delete') ) {
 			throw new UserException('forbiddenDelete');
 		}
 		return parent::delete($id);
@@ -291,14 +279,14 @@ class User extends AbstractStatus {
 	//! Checks if this user can do a restricted action
 	/*!
 	 * \param $action The action to look for.
-	 * \param $object The object to edit if editing one or null. Default value is null.
+	 * \param $selfEditUser The user if editing one or null. Default value is null.
 	 * \return True if this user can do this $action.
 	 * 
 	 * Checks if this user can do $action.
 	 */
-	public static function loggedCanDo($action, $object=null) {
+	public static function canDo($action, $selfEditUser=null) {
 		global $USER;
-		return !empty($USER) && $USER instanceof User && $USER->canDo($action, $object);
+		return !empty($USER) && $USER instanceof SiteUser && ( $USER->checkPerm($action) || ( !empty($selfEditUser) && $selfEditUser instanceof SiteUser && $selfEditUser->equals($USER) ) );
 	}
 	
 	// 		** Verification methods **
@@ -347,7 +335,7 @@ class User extends AbstractStatus {
 	 * 
 	 * Validates the email address in array $inputData.
 	 */
-	public static function checkEmail($inputData, $ref=null) {
+	public static function checkEmail($inputData, $ref) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
 			if( empty($inputData['email']) && isset($ref) ) {//UPDATE
 				return null;
@@ -404,12 +392,18 @@ class User extends AbstractStatus {
 		\sa PermanentObject::checkForObject()
 	*/
 	public static function checkForObject($data) {
-		if( empty($data['name']) && empty($data['email']) ) {
-			return;//Nothing to check.
+		$where = 'email LIKE '.SQLAdapter::quote($data['email']);
+		$what = 'email';
+		if( empty($data['email']) ) {
+			return;//Nothing to check. Email is mandatory.
+		}
+		if( !empty($data['name']) ) {
+			$what .= ', name';
+			$where .= ' OR name LIKE '.SQLAdapter::quote($data['name']);
 		}
 		$user = static::get(array(
-			'what'		=> 'name, email',
-			'where'		=> 'name LIKE '.SQLAdapter::quote($data['name']).' OR email LIKE '.SQLAdapter::quote($data['email']),
+			'what'		=> $what,
+			'where'		=> $where,
 			'output'	=> SQLAdapter::ARR_ASSOC,
 			'number'	=> 1
 		));
@@ -430,7 +424,7 @@ class User extends AbstractStatus {
 		\sa AbstractStatus::validateStatus()
 	*/
 	public static function validateStatus($newStatus, $ref=null) {
-		if( !User::loggedCanDo('users_status', $ref) ) {
+		if( !User::canDo('users_status', $ref) ) {
 			throw new UserException('forbiddenUStatus');
 		}
 		return parent::checkStatus($newStatus, $ref, $reportToUser=true);

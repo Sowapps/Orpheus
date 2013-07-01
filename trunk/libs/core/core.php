@@ -175,7 +175,8 @@ function log_error($report, $file, $action='', $message='') {
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( !is_null($message) ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
-			$Error['message'] = (empty($message)) ? $report : $message;
+// 			$Error['message'] = (empty($message)) ? $report : $message;
+			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
 			if( !Rendering::doDisplay('report', $Error) ) {
@@ -308,18 +309,19 @@ function parseFields(array $fields) {
 /*!
  * \param $array The array to get the value from.
  * \param $apath The path used to browse the array.
+ * \param $default The default value returned if array is valid but key is not found.
  * \return The value from $apath in $array.
  * \sa build_apath()
  *
  * Gets value from an Array Path using / as separator.
 */
-function apath_get($array, $apath) {
-	if( empty($array) || !is_array($array) || empty($apath) ) {
+function apath_get($array, $apath, $default=null) {
+	if( empty($array) || !is_array($array) || is_null($apath) ) {
 		return null;
 	}
 	$rpaths = explode('/', $apath, 2);
 	if( !isset($array[$rpaths[0]]) ) {
-		return null;
+		return $default;
 	}
 	if( !isset($rpaths[1]) ) {
 		return $array[$rpaths[0]];
@@ -631,38 +633,34 @@ function extractFrom($path, $array) {
 /*!
 * \param $name The name of the field
 * \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
+* \param $default The default value if $name is not defined in $data
 * \return A HTML source with the "value" attribute.
 *
 * Gets the HTML value attribut from an array of data if this $name exists.
 */
-function htmlValue($name, $data=null) {
-	if( is_null($data) ) {
-		global $formData;
-		$data = (isset($formData)) ? $formData : POST();
-	}
+function htmlValue($name, $data=null, $default='') {
+	fillFormData($data);
 	$v = apath_get($data, $name);
-	return !empty($v) ? " value=\"{$v}\"" : '';
+	return !empty($v) ? " value=\"{$v}\"" : $default;
 }
 
 //! Generates the HTML source for a SELECT
 /*!
 * \param $name The name of the field.
-* \param $values The values to to build the dropdown.
+* \param $values The values to build the dropdown menu.
 * \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
 * \param $selected The selected value from the data. Default value is null (no selection).
 * \param $prefix The prefix to use for the text name of values. Default value is an empty string.
 * \param $domain The domain to apply the Key. Default value is 'global'.
 * \param $tagAttr Additional attributes for the SELECT tag.
 * \return A HTML source for the built SELECT tag.
-* \warning This function is not complete, it requires more functionalities.
+* \sa htmlOptions
+* \warning This function is under conflict with name attribute and last form data values, prefer htmlOptions()
 *
 * Generates the HTML source for a SELECT from the $data.
 */
 function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $domain='global', $tagAttr='') {
-	if( is_null($data) ) {
-		global $formData;
-		$data = isset($formData) ? $formData : POST();
-	}
+	fillFormData($data);
 	$namePath = explode('/', $name);
 	$name = $namePath[count($namePath)-1];
 	$htmlName = '';
@@ -676,13 +674,133 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 	}
 	$opts = '';
 	foreach( $values as $dataKey => $dataValue ) {
+		$addAttr = '';
+		if( is_array($dataValue) ) {
+			list($dataValue, $addAttr) = array_pad($dataValue, 2, null);
+		}
 		$key = is_int($dataKey) ? $dataValue : $dataKey;// If this is an associative array, we use the key, else the value.
 		$opts .= '
-	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').'>'.t($prefix.$key, $domain).'</option>';
+	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').' '.$addAttr.'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return "
 	<select {$tagAttr}>{$opts}
 	</select>";
+}
+
+//! Generates the HTML source for options of a SELECT
+/*!
+* \param $fieldPath The name path to the field.
+* \param $values The values to build the dropdown menu.
+* \param $selected The selected value from the data. Default value is null (no selection).
+* \param $prefix The prefix to use for the text name of values. Default value is an empty string.
+* \param $domain The domain to apply the Key. Default value is 'global'.
+* \param $tagAttr Additional attributes for the SELECT tag.
+* \return A HTML source for the built SELECT tag.
+* \sa htmlOptions
+* \warning This function is under conflict with name attribute and last form data values, prefer htmlOptions()
+*
+* Generates the HTML source for a SELECT from the $data.
+*/
+function htmlOptions($fieldPath, $values, $default=null, $prefix='', $domain='global') {
+	fillFormData($data);
+// 	$namePath = explode('/', $name);
+// 	$name = $namePath[count($namePath)-1];
+// 	$htmlName = '';
+// 	foreach( $namePath as $index => $path ) {
+// 		$htmlName .= ( $index ) ? "[{$path}]" : $path;
+// 	}
+// 	$tagAttr .= ' name="'.$htmlName.'"';
+	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+// 	$v = apath_get($data, $fieldPath);
+// 	if( !empty($v) ) {
+// 		$selected = $v;
+// 	}
+	$opts = '';
+	foreach( $values as $dataKey => $elValue ) {
+		$addAttr = '';
+		if( is_array($elValue) ) {
+			list($elValue, $addAttr) = array_pad($elValue, 2, null);
+		}
+		$key = is_int($dataKey) ? $elValue : $dataKey;// If this is an associative array, we use the key, else the value.
+		$opts .= htmlOption($elValue, t($prefix.$key, $domain), $value==$elValue);
+// 		$opts .= '
+// 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').' '.$addAttr.'>'.t($prefix.$key, $domain).'</option>';
+	}
+	return $opts;
+}
+
+//! Generates a selected attribute
+/*!
+* \param $field The name of the field.
+* \param $value The value.
+* \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
+* \param $attr Attribute name if selected. Default value is 'selected'.
+* \return A HTML source for the built selected attribute.
+* \sa htmlSelect()
+* \sa htmlOptions()
+*
+* Generates a HTML source as selected attribute for a SELECT.
+* This function is useful for very customized select which could not use htmlSelect().
+*/
+// function htmlOptionValue($field, $value, $data=null, $attr='selected') {
+// 	if( is_null($data) ) {
+// 		$data = isset($GLOBALS['formData']) ? $GLOBALS['formData'] : POST();
+// 	}
+// 	return (isset($data[$field]) && $value == $data[$field]) ? 'selected="selected"' : '';
+// }
+
+function htmlText($fieldPath, $default='', $addAttr='') {
+	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
+}
+
+function htmlTextArea($fieldPath, $default='', $addAttr='') {
+	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
+}
+
+function htmlHidden($fieldPath, $default='', $addAttr='') {
+	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
+}
+
+function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
+	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
+	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
+}
+
+function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
+	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
+	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
+	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
+}
+
+function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
+	if( is_null($label) ) { $label = $elValue; }
+// 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
+	return '<option value="'.$elValue.'"'.($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
+}
+
+function apath_html($apath) {
+	$apath = explode('/', $apath);
+	$htmlName = '';
+	foreach( $apath as $index => $path ) {
+		$htmlName .= ( $index ) ? '['.$path.']' : $path;
+	}
+	return $htmlName;
+}
+
+function getFormData() {
+	return isset($GLOBALS['formData']) ? $GLOBALS['formData'] : POST();
+}
+
+function fillFormData(&$data) {
+	return $data = is_null($data) ? getFormData() : $data;
+}
+
+function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null) {
+	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault);
+	return !is_null($value);
 }
 
 //! Converts special characters to non-special ones
@@ -782,31 +900,4 @@ function bool2str($v) {
  */
 function explodeList($delimiter, $string, $limit, $default=null) {
 	return array_pad(explode($delimiter, $string, $limit), abs($limit), $default);
-}
-
-//! Gets the string of a boolean
-/*!
- * \param $b The boolean.
-* \return The boolean's string.
-*/
-function b($b) {
-	return $b ? 'TRUE' : 'FALSE';
-}
-
-//! Gets the date as string
-/*!
- * \param $time The UNIX timestamp.
-* \return The date using 'dateFormat' translation key
-*/
-function d($time) {
-	return strftime(t('dateFormat'), $time);
-}
-
-//! Gets the date time as string
-/*!
- * \param $time The UNIX timestamp.
- * \return The date using 'timeFormat' translation key
-*/
-function dt($time) {
-	return strftime(t('timeFormat'), $time);
 }
