@@ -21,6 +21,15 @@ class UserException extends Exception {
 	}
 	
 	public function __toString() {
-		return $this->getText();
+		try {
+			return $this->getText();
+		} catch(Exception $e) {
+			if( ERROR_LEVEL == DEV_LEVEL ) {
+				die('A fatal error occurred in UserException::__toString() :<br />'.$e->getMessage());
+			}
+			die('A fatal error occurred, please report it to an admin.<br />Une erreur fatale est survenue, veuillez contacter un administrateur.<br />');
+// 			reportError($e);
+		}
+		return '';
 	}
 }
