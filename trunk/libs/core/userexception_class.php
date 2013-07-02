@@ -15,4 +15,12 @@ class UserException extends Exception {
 	public function getDomain() {
 		return $this->domain;
 	}
+	
+	public function getText() {
+		return $this->getMessage();
+	}
+	
+	public function __toString() {
+		return $this->getText();
+	}
 }
