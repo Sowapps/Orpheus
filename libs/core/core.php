@@ -226,6 +226,7 @@ function sys_error($report, $action='') {
 */
 function sql_error($report, $action='') {
 	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action, t('errorOccurredWithDB'));
+	throw new UserException('errorOccurredWithDB');
 }
 
 //! Limits the length of a string
@@ -314,6 +315,8 @@ function parseFields(array $fields) {
  * \sa build_apath()
  *
  * Gets value from an Array Path using / as separator.
+ * Returns null if parameters are invalids, $default if the path is not found else the value.
+ * If $default is not null and returned value is null, you can infer your parameters are invalids.
 */
 function apath_get($array, $apath, $default=null) {
 	if( empty($array) || !is_array($array) || is_null($apath) ) {
@@ -323,10 +326,7 @@ function apath_get($array, $apath, $default=null) {
 	if( !isset($array[$rpaths[0]]) ) {
 		return $default;
 	}
-	if( !isset($rpaths[1]) ) {
-		return $array[$rpaths[0]];
-	}
-	return apath_get($array[$rpaths[0]], $rpaths[1]);
+	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
 }
 
 //! Build all path to browse array
@@ -616,17 +616,18 @@ function isGET($key=null) {
 	return isset($_GET) && (is_null($key) || isset($_GET[$key]));
 }
 
-//! Extracts data from array
+//! Extracts data from array using apath
 /*!
- * \param $path The path to retrieve. null retrieves all data.
+ * \param $apath The apath to retrieve. null retrieves all data.
  * \param $array The array of data to browse.
- * \return Data using the path or all data from the given array.
+ * \return Data using the apath or all data from the given array.
 
- * Gets data from an array using the $path.
- * $path is null, all data are returned.
+ * Gets data from an array using the $apath.
+ * If $apath is null, all data are returned.
 */
-function extractFrom($path, $array) {
-	return ( isset($path) ) ? ( (!is_null($v = apath_get($array, $path))) ? $v : false) : $array ;
+function extractFrom($apath, $array) {
+	return is_null($apath) ? $array : apath_get($array, $apath);
+// 	return is_null($path) ? $array : ( (!is_null($v = apath_get($array, $path))) ? $v : false) ;
 }
 
 //! Gets the HTML value
@@ -692,42 +693,46 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 * \param $fieldPath The name path to the field.
 * \param $values The values to build the dropdown menu.
 * \param $selected The selected value from the data. Default value is null (no selection).
+* \param $matches Define the associativity between array and option values. Default value is OPT_VALUE2LABEL (as null).
 * \param $prefix The prefix to use for the text name of values. Default value is an empty string.
 * \param $domain The domain to apply the Key. Default value is 'global'.
 * \param $tagAttr Additional attributes for the SELECT tag.
 * \return A HTML source for the built SELECT tag.
-* \sa htmlOptions
-* \warning This function is under conflict with name attribute and last form data values, prefer htmlOptions()
+* \sa htmlOption()
 *
 * Generates the HTML source for a SELECT from the $data.
+* For associative arrays, we commonly use the value=>label model (OPT_VALUE2LABEL) but sometimes for associative arrays we could prefer the label=>value model (OPT_LABEL2VALUE).
+* You can use your own combination with defined constants OPT_VALUE_IS_VALUE, OPT_VALUE_IS_KEY, OPT_LABEL_IS_VALUE and OPT_LABEL_IS_KEY.
+* Common combinations are OPT_LABEL2VALUE, OPT_VALUE2LABEL and OPT_VALUE.
+* The label is prefixed with $prefix and translated using t().
 */
-function htmlOptions($fieldPath, $values, $default=null, $prefix='', $domain='global') {
+function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
 	fillFormData($data);
-// 	$namePath = explode('/', $name);
-// 	$name = $namePath[count($namePath)-1];
-// 	$htmlName = '';
-// 	foreach( $namePath as $index => $path ) {
-// 		$htmlName .= ( $index ) ? "[{$path}]" : $path;
-// 	}
-// 	$tagAttr .= ' name="'.$htmlName.'"';
-	$value = fillInputValue($value, $fieldPath) ? $value : $default;
-// 	$v = apath_get($data, $fieldPath);
-// 	if( !empty($v) ) {
-// 		$selected = $v;
-// 	}
+	if( is_null($matches) ) { $matches = OPT_VALUE2LABEL; }
+	// Value of selected/default option
+	fillInputValue($selValue, $fieldPath, $default);
 	$opts = '';
 	foreach( $values as $dataKey => $elValue ) {
 		$addAttr = '';
 		if( is_array($elValue) ) {
 			list($elValue, $addAttr) = array_pad($elValue, 2, null);
 		}
-		$key = is_int($dataKey) ? $elValue : $dataKey;// If this is an associative array, we use the key, else the value.
-		$opts .= htmlOption($elValue, t($prefix.$key, $domain), $value==$elValue);
+		$optLabel = bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
+		$optValue = bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
+// 		$label = is_int($dataKey) ? $elValue : $dataKey;// If this is an associative array, we use the key, else the value.
+		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), $selValue==$optValue, $addAttr);
 // 		$opts .= '
 // 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').' '.$addAttr.'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return $opts;
 }
+define('OPT_VALUE_IS_VALUE'	 , 0);
+define('OPT_VALUE_IS_KEY'	 , 1);
+define('OPT_LABEL_IS_VALUE'	 , 0);
+define('OPT_LABEL_IS_KEY'	 , 2);
+define('OPT_LABEL2VALUE'	 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_KEY);
+define('OPT_VALUE2LABEL'	 , OPT_VALUE_IS_KEY | OPT_LABEL_IS_VALUE);
+define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 
 //! Generates a selected attribute
 /*!
@@ -790,14 +795,41 @@ function apath_html($apath) {
 	return $htmlName;
 }
 
+//! Gets input form data
+/*!
+ * \return POST() or global $formData if set.
+ *
+ * Gets input form data from POST.
+ * Developers can specify an array of data to use by filling global $formData.
+ * This function is designed to be used internally to have compliant way to get input form data.
+ */
 function getFormData() {
 	return isset($GLOBALS['formData']) ? $GLOBALS['formData'] : POST();
 }
 
+//! Fills the given data from input form
+/*!
+ * \param $data The data to fill, as pointer.
+ * \return The resulting $data.
+ * \sa getFormData()
+ *
+ * Fills the given pointer data array with input form data if null.
+ * This function is designed to only offset the case where $data is null.
+ */
 function fillFormData(&$data) {
 	return $data = is_null($data) ? getFormData() : $data;
 }
 
+//! Fills the given value from input form
+/*!
+ * \param $value The value to fill, as pointer.
+ * \param $fieldPath The apath to the input form value.
+ * \param $aPathGetDefault The default value if not found.
+ * \return True if got value is not null (found).
+ * \sa getFormData()
+ *
+ * Fills the given pointer value with input form data or uses default.
+ */
 function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null) {
 	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault);
 	return !is_null($value);
@@ -809,7 +841,7 @@ function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null) {
  * \return The string wih no special characters.
  *
  * Replaces all special characters in $string by the non-special version of theses.
-*/
+ */
 function convertSpecialChars($string) {
 	// Replaces all letter special characters.
 	$string = str_replace(
