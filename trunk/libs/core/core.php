@@ -484,8 +484,8 @@ function reportError($message, $domain=null) {
 	if( $message instanceof UserException && is_null($domain) ) {
 		$domain = $message->getDomain();
 	}
-	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport($message, 'error', is_null($domain) ? 'global' : $domain);
+// 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
+	return addReport("$message", 'error', is_null($domain) ? 'global' : $domain);
 }
 
 //! Gets one report as HTML
