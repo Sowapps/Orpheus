@@ -463,6 +463,7 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData=array()) {
+		text("Create for ".get_called_class()." from ".htmlSecret($inputData));
 		$data = static::checkUserInput($inputData, null, $errCount);
 		
 		if( $errCount ) {
@@ -578,7 +579,7 @@ abstract class PermanentObject {
 	//! Checks user input
 	/*!
 	 * \param $uInputData The user input data to check.
-	 * \param $ref The referenced object (update only).
+	 * \param $ref The referenced object (update only) or and array of fields to check.
 	 * \return The valid data.
 	 * \overrideit
 	 * 
@@ -603,15 +604,23 @@ abstract class PermanentObject {
 					continue;
 				}
 				try {
+					$value = null;
+					// Field to validate
 					if( !empty(static::$validator[$field]) ) {
 						$checkMeth = static::$validator[$field];
 						// If not defined, we just get the value without check
 						$value = static::$checkMeth($uInputData, $ref);
-						if( !is_null($value) && ( is_null($ref) || $value != $ref->$field ) ) {
-							$data[$field] = $value;
-						}
-					} else if( isset($uInputData[$field]) ) {
-						$data[$field] = $uInputData[$field];
+
+					// Field to NOT validate
+					} if( isset($uInputData[$field]) ) {
+						$value = $uInputData[$field];
+					}
+					if( !is_null($value) && (
+							is_null($ref) ||
+							is_object($value) && $value != $ref->$field ||
+							is_array($value) && in_array($field, $ref)
+						) ) {
+						$data[$field] = $value;
 					}
 				} catch(UserException $e) {
 					$errCount++;
