@@ -33,7 +33,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * 
 	 * Gets all available status for the current one.
 	 */
-	public function getAvailableStatus() {
+	public function getAvailableStatuses() {
 		return static::availableStatusesFrom($this->status);
 	}
 	
@@ -47,7 +47,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * The return value is the final one.
 	 */
 	public function status($newStatus=null) {
-		if( isset($newStatus) ) {
+		if( isset($newStatus) && $newStatus != $this->status ) {
 			static::validateStatus($newStatus, $this);
 			$this->setValue('status', $newStatus);
 			if( in_array('status_time', static::$fields) ) {
@@ -65,7 +65,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * Compares the given status to the current one.
 	 */
 	public function hasStatus($status) {
-		return $this->status = $status;
+		return ($this->status == $status);
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -90,6 +90,8 @@ abstract class AbstractStatus extends PermanentObject {
 		}
 		//If not new, we check the current status can set to this one.
 		if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
+			text('unavailable Status: '.$newStatus.' from '.$ref->status);
+			text(static::$status[$ref->status]);
 			throw new UserException('unavailableStatus');
 		}
 		return $newStatus;
