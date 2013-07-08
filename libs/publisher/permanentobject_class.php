@@ -579,7 +579,8 @@ abstract class PermanentObject {
 	//! Checks user input
 	/*!
 	 * \param $uInputData The user input data to check.
-	 * \param $ref The referenced object (update only) or and array of fields to check.
+	 * \param $ref The referenced object (update only) or an array of fields to check. Default value is null.
+	 * \param $errCount The resulting error count, as pointer. Output parameter.
 	 * \return The valid data.
 	 * \overrideit
 	 * 
@@ -594,9 +595,6 @@ abstract class PermanentObject {
 			if( empty(static::$editableFields) ) {
 				return array();
 			}
-// 			text('checkUserInput() :: Default validator');
-// 			text('$editableFields: '.htmlSecret(static::$editableFields));
-// 			text('get_called_class: '.get_called_class());
 			$data = array();
 			foreach( static::$editableFields as $field ) {
 				// If editing the id field
@@ -635,8 +633,6 @@ abstract class PermanentObject {
 			}
 		}
 		return array();
-		// TODO: Using config file.
-		// else if( is_string(static::$validator) ) { }
 	}
 	
 	//! Checks for object
@@ -648,6 +644,24 @@ abstract class PermanentObject {
 	 * In the base class, this method does nothing.
 	*/
 	public static function checkForObject($data) { }
+	
+	//! Tests user input
+	/*!
+	 * \param $data The new data to process.
+	 * \param $ref The referenced object (update only) or an array of fields to check. Default value is null.
+	 * \sa create()
+	 * \sa checkUserInput()
+	 * 
+	 * Does a checkUserInput() and a checkForObject()
+	*/
+	public static function testUserInput($uInputData, $ref=null) {
+		$data = static::checkUserInput($uInputData, $ref);
+		try {
+			static::checkForObject($data);
+		} catch(UserException $e) {
+			reportError($e, static::getDomain());
+		}
+	}
 	
 	//! Initializes class
 	public static function init() {
