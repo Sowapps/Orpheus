@@ -463,7 +463,6 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData=array()) {
-		text("Create for ".get_called_class()." from ".htmlSecret($inputData));
 		$data = static::checkUserInput($inputData, null, $errCount);
 		
 		if( $errCount ) {
@@ -523,7 +522,7 @@ abstract class PermanentObject {
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(
 			$event.'_time' => (isset($time)) ? $time : time(),
-			$event.'_ip' => (isset($ipAdd)) ? $ipAdd : $_SERVER['REMOTE_ADDR'],
+			$event.'_ip' => (isset($ipAdd)) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
 		);
 	}
 	
@@ -687,7 +686,6 @@ abstract class PermanentObject {
 	 * Throws an UserException with the current domain.
 	*/
 	public static function throwException($message) {
-		text(get_called_class().' throwing exception with domain '.static::$domain);
 		throw new UserException($message, static::$domain);
 	}
 	
