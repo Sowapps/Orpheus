@@ -323,8 +323,11 @@ function apath_get($array, $apath, $default=null) {
 		return null;
 	}
 	$rpaths = explode('/', $apath, 2);
+	// If element does not exist in array
 	if( !isset($array[$rpaths[0]]) ) {
-		return $default;
+		// If has a child, the child could not be found
+		// Else container exists, but element not found.
+		return isset($rpaths[1]) ? null : $default;
 	}
 	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
 }
@@ -776,7 +779,10 @@ function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
-	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
+// 	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
+	$selected = ($r = fillInputValue($value, $fieldPath, false)) ? !empty($value) : $default;
+	text("fillInputValue: ".b($r));
+	text("Selected: ".b($selected));
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
@@ -832,6 +838,7 @@ function fillFormData(&$data) {
  */
 function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null) {
 	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault);
+	text("apath_get => ".htmlSecret($value));
 	return !is_null($value);
 }
 
