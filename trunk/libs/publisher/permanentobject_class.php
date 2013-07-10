@@ -128,6 +128,7 @@ abstract class PermanentObject {
 	*/
 	public function update($uInputData) {
 		$data = static::checkUserInput($uInputData, $this);
+		
 		try {
 			if( empty($data) ) {
 				static::throwException('updateEmptyData');
@@ -609,13 +610,13 @@ abstract class PermanentObject {
 						$value = static::$checkMeth($uInputData, $ref);
 
 					// Field to NOT validate
-					} if( isset($uInputData[$field]) ) {
+					} else if( isset($uInputData[$field]) ) {
 						$value = $uInputData[$field];
 					}
 					if( !is_null($value) && (
 							is_null($ref) ||
-							is_object($value) && $value != $ref->$field ||
-							is_array($value) && in_array($field, $ref)
+							is_object($ref) && $value != $ref->$field ||
+							is_array($ref) && in_array($field, $ref)
 						) ) {
 						$data[$field] = $value;
 					}
