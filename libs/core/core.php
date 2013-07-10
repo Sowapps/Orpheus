@@ -311,6 +311,7 @@ function parseFields(array $fields) {
  * \param $array The array to get the value from.
  * \param $apath The path used to browse the array.
  * \param $default The default value returned if array is valid but key is not found.
+ * \param $pathRequired True if the path is required. Default value is False.
  * \return The value from $apath in $array.
  * \sa build_apath()
  *
@@ -318,7 +319,7 @@ function parseFields(array $fields) {
  * Returns null if parameters are invalids, $default if the path is not found else the value.
  * If $default is not null and returned value is null, you can infer your parameters are invalids.
 */
-function apath_get($array, $apath, $default=null) {
+function apath_get($array, $apath, $default=null, $pathRequired=false) {
 	if( empty($array) || !is_array($array) || is_null($apath) ) {
 		return null;
 	}
@@ -327,7 +328,7 @@ function apath_get($array, $apath, $default=null) {
 	if( !isset($array[$rpaths[0]]) ) {
 		// If has a child, the child could not be found
 		// Else container exists, but element not found.
-		return isset($rpaths[1]) ? null : $default;
+		return ($pathRequired && isset($rpaths[1])) ? null : $default;
 	}
 	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
 }
@@ -780,7 +781,7 @@ function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 // 	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
-	$selected = ($r = fillInputValue($value, $fieldPath, false)) ? !empty($value) : $default;
+	$selected = ($r = fillInputValue($value, $fieldPath, false, true)) ? !empty($value) : $default;
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
@@ -828,14 +829,16 @@ function fillFormData(&$data) {
 /*!
  * \param $value The value to fill, as pointer.
  * \param $fieldPath The apath to the input form value.
- * \param $aPathGetDefault The default value if not found.
+ * \param $aPathGetDefault The default value if not found. Default value is null (apath_get()'s default).
+ * \param $pathRequired True if the path is required. Default value is False (apath_get()'s default).
  * \return True if got value is not null (found).
  * \sa getFormData()
+ * \sa apath_get()
  *
  * Fills the given pointer value with input form data or uses default.
  */
-function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null) {
-	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault);
+function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null, $pathRequired=false) {
+	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault, $pathRequired);
 	return !is_null($value);
 }
 
