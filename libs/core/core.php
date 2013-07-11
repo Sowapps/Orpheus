@@ -955,7 +955,7 @@ function b($b) {
  * \param $time The UNIX timestamp.
 * \return The date using 'dateFormat' translation key
 */
-function d($time) {
+function d($time=TIME) {
 	return strftime(t('dateFormat'), $time);
 }
 
@@ -964,6 +964,6 @@ function d($time) {
  * \param $time The UNIX timestamp.
  * \return The date using 'timeFormat' translation key
 */
-function dt($time) {
+function dt($time=TIME) {
 	return strftime(t('timeFormat'), $time);
 }
