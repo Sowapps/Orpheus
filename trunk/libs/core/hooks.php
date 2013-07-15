@@ -18,7 +18,7 @@ Hook::register('runModule', function ($Module) {
 		permanentRedirectTo(u($Module));
 	}
 	// If the module is the default but with wrong link.
-	if( $Module == DEFAULTMOD && empty($Action) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' ) {
+	if( $Module == DEFAULTMOD && empty($GLOBALS['Action']) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' ) {
 		permanentRedirectTo(DEFAULTLINK);
 	}
 });
