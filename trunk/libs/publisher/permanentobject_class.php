@@ -591,6 +591,9 @@ abstract class PermanentObject {
 	 * - If an array, it uses an field => checkMethod association.
 	*/
 	public static function checkUserInput($uInputData, $ref=null, &$errCount=0) {
+		if( !isset($errCount) ) {
+			$errCount = 0;
+		}
 		if( is_array(static::$validator) ) {
 			if( empty(static::$editableFields) ) {
 				return array();
@@ -649,13 +652,17 @@ abstract class PermanentObject {
 	/*!
 	 * \param $data The new data to process.
 	 * \param $ref The referenced object (update only) or an array of fields to check. Default value is null.
+	 * \param $errCount The resulting error count, as pointer. Output parameter.
 	 * \sa create()
 	 * \sa checkUserInput()
 	 * 
 	 * Does a checkUserInput() and a checkForObject()
 	*/
-	public static function testUserInput($uInputData, $ref=null) {
-		$data = static::checkUserInput($uInputData, $ref);
+	public static function testUserInput($uInputData, $ref=null, &$errCount=0) {
+		$data = static::checkUserInput($uInputData, $ref, $errCount);
+		if( $errCount ) {
+			return;
+		}
 		try {
 			static::checkForObject($data);
 		} catch(UserException $e) {
