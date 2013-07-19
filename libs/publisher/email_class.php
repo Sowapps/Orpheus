@@ -150,10 +150,13 @@ class Email {
 		\param $Subject The new subject.
 	*/
 	public function setSubject($Subject) {
-		if( !is_string($Subject) ) {
-			throw new Exception('RequireStringParameter');
-		}
-		$this->Subject = '=?UTF-8?Q?'.static::escape($Subject).'?=';// Supports UTF-8 and Quote printable encoding
+// 		if( !is_string($Subject) ) {
+// 			throw new Exception('RequireStringParameter');
+// 		}
+// 		$this->Subject = '=?UTF-8?Q?'.static::escape($Subject).'?=';// Supports UTF-8 and Quote printable encoding
+		// If subject is too long, QP returns a bad string, it's working with b64.
+		$this->Subject = '=?utf-8?b?'.base64_encode("$Subject").'?=';// Supports UTF-8
+// 		log_debug("Convert utf8 subject from {$Subject} to {$this->Subject}");
 	}
 	
 	//! Sets the text body of the mail
