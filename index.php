@@ -94,7 +94,6 @@ function($e) {
 	It browses recursively through sub-directories.
 */
 function includeDir($dir, $importants=array()) {
-	//echo "includeDir($dir)<br />\n";
 	//Require to be immediatly available.
 	$files = array_unique(array_merge($importants, scandir($dir)));
 	
@@ -104,7 +103,6 @@ function includeDir($dir, $importants=array()) {
 		if( !is_readable($dir.$file) || $file[0] == '.' ) {
 			continue;
 		}
-		//echo "Including $dir$file ...<br />\n";
 		//We don't check infinite file system loops.
 		if( is_dir($dir.$file) ) {
 			$i += includeDir($dir.$file.'/');
@@ -112,9 +110,7 @@ function includeDir($dir, $importants=array()) {
 			require_once $dir.$file;
 			$i++;
 		}
-		//echo ">>> $dir$file Done.<br />\n";
 	}
-	//echo "> $dir Done.<br />\n";
 	return $i;
 }
 
