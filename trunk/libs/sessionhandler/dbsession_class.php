@@ -39,7 +39,8 @@ class DBSession extends PermanentObject implements SessionInterface {
 // 	public function save();
 	
 	public static function build($session_id) {
-		return Session::load(Session::create(array('sessid'=>$session_id, 'edit_time'=>time())));
+		log_debug($id = Session::create(array('sessid'=>$session_id, 'edit_time'=>time())));
+		return Session::load($id);
 	}
 	
 	public static function getBySessID($session_id) {
