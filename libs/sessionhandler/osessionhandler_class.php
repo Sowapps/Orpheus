@@ -90,36 +90,3 @@ class OSessionHandler implements SessionHandlerInterface {
 // 	abstract public string read ( string $session_id )
 // 	abstract public bool write ( string $session_id , string $session_data )
 }
-
-if( !class_exists(Session) ) {
-// Fake nested class
-class Session extends PermanentObject {
-	//Attributes
-	protected static $table = 'sessions';
-	protected static $domain = 'sessions';
-	//protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
-	protected static $fields = array(
-			'id', 'sessid', 'data', 'create_time', 'create_ip', 'edit_time'
-	);
-	protected static $editableFields = array('sessid', 'data', 'edit_time');
-	protected static $validator = array();
-	
-	public static function getBySessID($session_id) {
-		return static::get(array(
-				'where' => 'sessid='.SQLAdapter::quote($session_id),
-				'number' => 1,
-		));
-	}
-	public static function deleteBySessID($session_id) {
-		return static::delete(array(
-			'where' => 'sessid='.SQLAdapter::quote($session_id),
-			'number' => 1,
-		));
-	}
-	public static function deleteFrom($delay) {
-		return static::delete(array(
-			'where' => 'edit_time < '.(time()-intval($delay))
-		));
-	}
-}
-}
