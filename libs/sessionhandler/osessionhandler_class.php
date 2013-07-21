@@ -78,8 +78,11 @@ class OSessionHandler implements SessionHandlerInterface {
 		}
 	}
 	
-	public function register() {
-		session_set_save_handler($this->session, true);
+	public static function register(OSessionHandler $sessionHandler=null) {
+		if( is_null($sessionHandler) ) {
+			$sessionHandler = new static();
+		}
+		session_set_save_handler($sessionHandler, true);
 	}
 	
 	
