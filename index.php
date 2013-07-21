@@ -201,12 +201,14 @@ try {
 		//PHP is unable to manage exception thrown during session_start()
 		session_start();
 		if( !isset($_SESSION['ORPHEUS']) ) {
+			log_debug('New session, $_SESSION[ORPHEUS] unset');
 			$_SESSION['ORPHEUS'] = array('LAST_REGENERATEID' => 0);
 		}
 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
 			// Only version >= 4.3.3 can regenerate session id without losing data
 			//http://php.net/manual/fr/function.session-regenerate-id.php
 			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
+				log_debug('Regenerating Session ID');
 				$_SESSION['ORPHEUS']['LAST_REGENERATEID'] = TIME;
 				session_regenerate_id();
 			}
