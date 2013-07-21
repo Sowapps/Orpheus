@@ -1,6 +1,6 @@
 <?php
 
-class DBSessionHandler implements SessionHandlerInterface {
+class OSessionHandler implements SessionHandlerInterface {
 	
 	private $session;
 	private $gc_enabled;
@@ -33,10 +33,10 @@ class DBSessionHandler implements SessionHandlerInterface {
 			if( !isset($this->session) ) {
 				$this->session = Session::getBySessID($session_id);
 				if( is_null($this->session) ) {
-					$this->session = Session::load(Session::create(array('sessid'=>$session_id, 'edit_time'=>time())));
+					$this->session = Session::build($session_id);
 				}
 			}
-			return $this->session->data;
+			return $this->session->readData();
 		} catch(Exception $e) {
 			sys_error($e);
 			return '';
@@ -45,8 +45,10 @@ class DBSessionHandler implements SessionHandlerInterface {
 	
 	public function write($session_id, $session_data) {
 		try {
-			$this->session->data = $session_data;
-			$this->session->edit_time = time();
+			if( !isset($this->session) || $this->session->sessID() != $session_id ) {
+				throw new Exception('notSetOrDifferentSession');
+			}
+			$this->session->writeData($session_data);
 			return true;
 		} catch(Exception $e) {
 			sys_error($e);
@@ -77,7 +79,7 @@ class DBSessionHandler implements SessionHandlerInterface {
 	}
 	
 	public function register() {
-		session_set_save_handler($this, true);
+		session_set_save_handler($this->session, true);
 	}
 	
 	
