@@ -18,9 +18,9 @@ class DBSession extends PermanentObject implements SessionInterface {
 	protected static $domain = 'sessions';
 	//protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
 	protected static $fields = array(
-			'id', 'sessid', 'data', 'create_time', 'create_ip', 'edit_time'
+			'id', 'sessid', 'sessdata', 'create_time', 'create_ip', 'edit_time'
 	);
-	protected static $editableFields = array('sessid', 'data', 'edit_time');
+	protected static $editableFields = array('sessid', 'sessdata', 'edit_time');
 	protected static $validator = array();
 	
 	public function writeData($session_id, $session_data) {
