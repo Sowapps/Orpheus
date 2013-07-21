@@ -11,7 +11,7 @@ class FSSession implements SessionInterface {
 	protected static $editableFields = array('sessid', 'data', 'edit_time');
 	protected static $validator = array();
 	
-	public function writeData($data) {
+	public function writeData($session_id, $data) {
 		$this->data = $session_data;
 		$this->edit_time = time();
 	}
@@ -27,14 +27,9 @@ class FSSession implements SessionInterface {
 // 	public function save();
 	
 	public static function build($session_id) {
-		return Session::load(Session::create(array('sessid'=>$session_id, 'edit_time'=>time())));
 	}
 	
 	public static function getBySessID($session_id) {
-		return static::get(array(
-				'where' => 'sessid='.SQLAdapter::quote($session_id),
-				'number' => 1,
-		));
 	}
 	public static function deleteBySessID($session_id) {
 		return static::delete(array(
@@ -43,9 +38,6 @@ class FSSession implements SessionInterface {
 		));
 	}
 	public static function deleteFrom($delay) {
-		return static::delete(array(
-			'where' => 'edit_time < '.(time()-intval($delay))
-		));
 	}
 }
 

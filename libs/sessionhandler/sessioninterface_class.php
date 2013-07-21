@@ -4,7 +4,7 @@ interface SessionInterface {
 	
 	public function sessID();
 	
-	public function writeData($data);
+	public function writeData($session_id, $data);
 	
 	public function readData();
 	
