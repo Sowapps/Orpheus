@@ -290,6 +290,7 @@ abstract class PermanentObject {
 			throw new FieldNotFoundException($key);
 			
 		} else {
+			text($this->data);
 			if( empty($this->data[$key]) || $value !== $this->data[$key] ) {
 				$this->addModFields($key);
 				$this->data[$key] = $value;
