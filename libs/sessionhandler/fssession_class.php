@@ -1,18 +1,6 @@
 <?php
 
-/*
-CREATE TABLE `orpheus_demo`.`sessions` (
-	`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`sessid` VARCHAR( 128 ) NOT NULL COMMENT 'The max length of hash algorithms. You can set it according to your php configuration.',
-	`data` LONGTEXT NOT NULL ,
-	`create_time` INT( 10 ) UNSIGNED NOT NULL ,
-	`create_ip` VARCHAR( 40 ) NOT NULL ,
-	`edit_time` INT( 10 ) UNSIGNED NOT NULL ,
-	INDEX ( `sessid` )
-) ENGINE =  MYISAM;
-*/
-
-class DBSession extends PermanentObject implements SessionInterface {
+class FSSession implements SessionInterface {
 	//Attributes
 	protected static $table = 'sessions';
 	protected static $domain = 'sessions';
