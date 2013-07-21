@@ -29,6 +29,7 @@ class OSessionHandler implements SessionHandlerInterface {
 	}
 	
 	public function read($session_id) {
+		text("Reading Session $session_id");
 		try {
 			if( !isset($this->session) ) {
 				$this->session = Session::getBySessID($session_id);
@@ -36,7 +37,8 @@ class OSessionHandler implements SessionHandlerInterface {
 					$this->session = Session::build($session_id);
 				}
 			}
-			log_debug($this->session);
+// 			log_debug($this->session);
+			text($this->session);
 			return $this->session->readData();
 		} catch(Exception $e) {
 			sys_error($e);
@@ -45,9 +47,13 @@ class OSessionHandler implements SessionHandlerInterface {
 	}
 	
 	public function write($session_id, $session_data) {
+		text("Writing Session $session_id");
 		try {
-			if( !isset($this->session) || $this->session->sessID() != $session_id ) {
-				throw new Exception('notSetOrDifferentSession');
+			if( !isset($this->session) ) {
+				throw new Exception('notSetSession');
+			}
+			if( $this->session->sessID() != $session_id ) {
+				throw new Exception('differentSession_'.$session_id);
 			}
 			$this->session->writeData($session_data);
 			return true;
