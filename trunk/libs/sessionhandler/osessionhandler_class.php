@@ -32,7 +32,7 @@ class OSessionHandler implements SessionHandlerInterface {
 		try {
 			if( !isset($this->session) ) {
 				$this->session = Session::getBySessID($session_id);
-				if( is_null($this->session) ) {
+				if( empty($this->session) ) {
 					$this->session = Session::build($session_id);
 				}
 			}
