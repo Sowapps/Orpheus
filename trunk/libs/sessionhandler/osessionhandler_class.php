@@ -37,7 +37,8 @@ class OSessionHandler implements SessionHandlerInterface {
 					$this->session = Session::build($session_id);
 				}
 			}
-// 			log_debug($this->session);
+			log_debug('Loaded session, reading data...');
+			log_debug($this->session->sessID());
 // 			text($this->session);
 			return $this->session->readData();
 		} catch(Exception $e) {
