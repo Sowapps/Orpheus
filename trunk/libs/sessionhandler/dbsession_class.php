@@ -23,7 +23,9 @@ class DBSession extends PermanentObject implements SessionInterface {
 	protected static $editableFields = array('sessid', 'data', 'edit_time');
 	protected static $validator = array();
 	
-	public function writeData($data) {
+	public function writeData($session_id, $data) {
+		// PHP could change current Session ID
+		$this->sessid = $session_id;
 		$this->data = $session_data;
 		$this->edit_time = time();
 	}
