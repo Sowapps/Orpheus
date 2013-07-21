@@ -15,6 +15,9 @@ addAutoload('Session',							'sessionhandler/dbsession');
 // Hooks
 
 //! Hook 'startSession'
+
 Hook::register('startSession', function () {
-	OSessionHandler::register();
+	if( version_compare(PHP_VERSION, '5.4', '>=') ) {
+		OSessionHandler::register();
+	}
 });
