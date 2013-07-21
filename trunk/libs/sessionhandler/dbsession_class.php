@@ -26,12 +26,12 @@ class DBSession extends PermanentObject implements SessionInterface {
 	public function writeData($session_id, $session_data) {
 		// PHP could change current Session ID
 		$this->sessid = $session_id;
-		$this->data = $session_data;
+		$this->sessdata = $session_data;
 		$this->edit_time = time();
 	}
 	
 	public function readData() {
-		return $this->data;
+		return $this->sessdata;
 	}
 	
 	public function sessID() {
