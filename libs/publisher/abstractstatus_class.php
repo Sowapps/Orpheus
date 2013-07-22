@@ -33,8 +33,8 @@ abstract class AbstractStatus extends PermanentObject {
 	 * 
 	 * Gets all available status for the current one.
 	 */
-	public function getAvailableStatuses() {
-		return static::availableStatusesFrom($this->status);
+	public function getAvailableStatus() {
+		return static::$status[$this->status];
 	}
 	
 	//! Gets and sets the status of this object
@@ -47,7 +47,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * The return value is the final one.
 	 */
 	public function status($newStatus=null) {
-		if( isset($newStatus) && $newStatus != $this->status ) {
+		if( isset($newStatus) ) {
 			static::validateStatus($newStatus, $this);
 			$this->setValue('status', $newStatus);
 			if( in_array('status_time', static::$fields) ) {
@@ -57,15 +57,23 @@ abstract class AbstractStatus extends PermanentObject {
 		return $this->status;
 	}
 	
-	//! Checks if this object has the given status
+	//! Checks if current object has this status
 	/*!
-	 * \param $status The status to compare
-	 * \return True if the status is $status
+	 * \param $status The status to check. Could be an array of status to check.
+	 * \return True if $status is equals to the current one.
 	 * 
-	 * Compares the given status to the current one.
+	 * Checks if current object has this status.
 	 */
 	public function hasStatus($status) {
-		return ($this->status == $status);
+		if( is_array($status) ) {
+			foreach( $status as $s ) {
+				if( $this->hasStatus($s) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return $this->status == $status;
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -90,8 +98,6 @@ abstract class AbstractStatus extends PermanentObject {
 		}
 		//If not new, we check the current status can set to this one.
 		if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
-			text('unavailable Status: '.$newStatus.' from '.$ref->status);
-			text(static::$status[$ref->status]);
 			throw new UserException('unavailableStatus');
 		}
 		return $newStatus;
@@ -125,15 +131,6 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public static function getDefaultStatus() {
 		return key(static::$status);
-	}
-	//! Gets available statuses from the given one.
-	/*!
-	 * \return An array of the available statuses.
-	 * 
-	 * Gets all available statuses for the given one.
-	 */
-	public static function availableStatusesFrom($status) {
-		return static::$status[$status];
 	}
 }
 AbstractStatus::init();
