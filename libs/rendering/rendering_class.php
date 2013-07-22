@@ -69,8 +69,10 @@ abstract class Rendering {
 					$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current active' : '');
 					$Text = $module.( (!empty($action)) ? '_'.$action : '');
 				}
+				//A tag fills the li space
+				//span allows to fill A width with a reduced height
 				$menu .= "
-		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\">".t($Text)."</a></li>";
+		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\"><span>".t($Text)."</span></a></li>";
 			}
 			if( !empty($menu) ) {
 				$menu = "
