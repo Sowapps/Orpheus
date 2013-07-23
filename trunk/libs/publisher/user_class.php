@@ -381,7 +381,7 @@ class User extends AbstractStatus {
 		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
 			throw new UserException('invalidAccessLevel');
 		}
-		if( !defined(ALLOW_USER_GRANTING) ) { // Special case for developers
+		if( !defined('ALLOW_USER_GRANTING') ) { // Special case for developers
 			global $USER;
 			if( !User::loggedCanDo('users_grants', $ref) // Can the current user do this action ? This user try to edit himself ?
 // 				|| (isset($ref) && !$USER->checkPerm($ref->accesslevel)) // Has the current user less accesslevel that the edited one ? - Already check in canDo()
