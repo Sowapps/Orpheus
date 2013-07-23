@@ -38,5 +38,13 @@ class SiteUser extends User {
 		}
 		return strip_tags($inputData['fullname']);
 	}
+	
+	public static function checkUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
+		$data = parent::checkUserInput($uInputData, $fields, $ref, $errCount);
+		if( !empty($uInputData['password']) ) {
+			$data['real_password'] = $uInputData['password'];
+		}
+		return $data;
+	}
 }
 SiteUser::init();

@@ -114,21 +114,22 @@ abstract class PermanentObject {
 	
 	//! Updates this permanent object
 	/*!
-	* \param $uInputData The input data we will check and extract, used by children.
-	* \param $data The data from wich it will update this object, used by parents, including this one.
-	* \return 1 in case of success, else 0.
-	* \overrideit
-	* \sa runForUpdate()
-	* 
-	* This method require to be overridden but it still be called too by the child classes.
-	* Here $uInputData is not used, it is reserved for child classes.
-	* $data must contain a filled array of new data.
-	* This method update the EDIT event log.
-	* Before saving, runForUpdate() is called to let child classes to run custom instructions.
-	*/
-	public function update($uInputData) {
-		$data = static::checkUserInput($uInputData, $this);
-		
+	 * \param $uInputData The input data we will check and extract, used by children.
+	 * \param $fields The array of fields to check. Default value is null.
+	 * \return 1 in case of success, else 0.
+	 * \overrideit
+	 * \sa runForUpdate()
+	 * 
+	 * This method require to be overridden but it still be called too by the child classes.
+	 * Here $uInputData is not used, it is reserved for child classes.
+	 * $data must contain a filled array of new data.
+	 * This method update the EDIT event log.
+	 * Before saving, runForUpdate() is called to let child classes to run custom instructions.
+	 * Parameter $fields is really useful to allow partial modification only (against form hack).
+	 */
+	public function update($uInputData, $fields=null) {
+		$data = static::checkUserInput($uInputData, $fields, $this);
+		// Don't care about some errors, other fields should be updated.
 		try {
 			if( empty($data) ) {
 				static::throwException('updateEmptyData');
@@ -460,13 +461,15 @@ abstract class PermanentObject {
 	/*!
 	 * \param $inputData The input data we will check, extract and create the new object.
 	 * \return The ID of the new permanent object.
+	 * \sa testUserInput()
 	 * 
 	 * Creates a new permanent object from ths input data.
+	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array()) {
-		text("Create: ".htmlSecret($inputData));
-		$data = static::checkUserInput($inputData, null, $errCount);
-		text("checkUserInput: ".htmlSecret($data));
+// 		text("Create: ".htmlSecret($inputData));
+		$data = static::checkUserInput($inputData, null, null, $errCount);
+// 		text("checkUserInput: ".htmlSecret($data));
 		
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
@@ -581,7 +584,8 @@ abstract class PermanentObject {
 	//! Checks user input
 	/*!
 	 * \param $uInputData The user input data to check.
-	 * \param $ref The referenced object (update only) or an array of fields to check. Default value is null.
+	 * \param $fields The array of fields to check. Default value is null.
+	 * \param $ref The referenced object (update only). Default value is null.
 	 * \param $errCount The resulting error count, as pointer. Output parameter.
 	 * \return The valid data.
 	 * \overrideit
@@ -592,10 +596,18 @@ abstract class PermanentObject {
 	 * - If empty, this function return an empty array.
 	 * - If an array, it uses an field => checkMethod association.
 	*/
-	public static function checkUserInput($uInputData, $ref=null, &$errCount=0) {
+	public static function checkUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
 		if( !isset($errCount) ) {
 			$errCount = 0;
 		}
+		// Allow reversed parameters 2 & 3 - Declared as useless
+// 		if( !is_array($fields) && !is_object($ref) ) {
+// 			$tmp = $fields; $fields = $ref; $ref = $tmp; unset($tmp);
+// 		}
+// 		if( is_null($ref) && is_object($ref) ) {
+// 			$ref = $fields;
+// 			$fields = null;
+// 		}
 		if( is_array(static::$validator) ) {
 			if( empty(static::$editableFields) ) {
 				return array();
@@ -618,11 +630,10 @@ abstract class PermanentObject {
 					} else if( isset($uInputData[$field]) ) {
 						$value = $uInputData[$field];
 					}
-					if( !is_null($value) && (
-							is_null($ref) ||
-							is_object($ref) && $value != $ref->$field ||
-							is_array($ref) && in_array($field, $ref)
-						) ) {
+					if( !is_null($value) &&
+						(is_null($ref) || $value != $ref->$field) &&
+						(is_null($fields) || in_array($field, $fields))
+					) {
 						$data[$field] = $value;
 					}
 				} catch(UserException $e) {
@@ -653,15 +664,16 @@ abstract class PermanentObject {
 	//! Tests user input
 	/*!
 	 * \param $data The new data to process.
-	 * \param $ref The referenced object (update only) or an array of fields to check. Default value is null.
+	 * \param $fields The array of fields to check. Default value is null.
+	 * \param $ref The referenced object (update only). Default value is null.
 	 * \param $errCount The resulting error count, as pointer. Output parameter.
 	 * \sa create()
 	 * \sa checkUserInput()
 	 * 
 	 * Does a checkUserInput() and a checkForObject()
 	*/
-	public static function testUserInput($uInputData, $ref=null, &$errCount=0) {
-		$data = static::checkUserInput($uInputData, $ref, $errCount);
+	public static function testUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
+		$data = static::checkUserInput($uInputData, $fields, $ref, $errCount);
 		if( $errCount ) {
 			return;
 		}
