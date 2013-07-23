@@ -18,7 +18,7 @@ abstract class PermanentObject {
 	// Contains fields editables by users
 	protected static $editableFields = array();
 	// Contains the validator. The default one is an array system.
-	protected static $validator = null;//! See checkUserInput()
+	protected static $validator = array();//! See checkUserInput()
 	// Contains the domain. Used as default UserException domain.
 	protected static $domain = null;
 	
@@ -464,7 +464,9 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	*/
 	public static function create($inputData=array()) {
+		text("Create: ".htmlSecret($inputData));
 		$data = static::checkUserInput($inputData, null, $errCount);
+		text("checkUserInput: ".htmlSecret($data));
 		
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');

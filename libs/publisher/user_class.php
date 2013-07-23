@@ -115,23 +115,7 @@ class User extends AbstractStatus {
 	 * \param $inputData The input data.
 	 */
 	public function checkPermissions($inputData) {
-		global $USER;
-		if( !isset($inputData['accesslevel']) ) {
-			return null;
-		}
-		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
-			throw new UserException('invalidAccessLevel');
-		}
-		if( $inputData['accesslevel'] == $this->accesslevel ) {
-			throw new UserException('sameAccessLevel');
-		}
-		if( !User::loggedCanDo('users_grants', $this) // Can the current user do this action ? This user try to edit himself ?
-			|| !$USER->checkPerm($this->accesslevel) // Has the current user less accesslevel that the edited one ?
-			|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
-		) {
-			throw new UserException('forbiddenGrant');
-		}
-		return (int) $inputData['accesslevel'];
+		return static::checkAccessLevel($inputData, $this);
 	}
 	
 	//! Checks if this user can alter data on the given user
@@ -390,14 +374,26 @@ class User extends AbstractStatus {
 	 * \return The access level.
 	 * \see checkPermissions()
 	*/
-	public static function checkAccessLevel($inputData, $ref) {
-		if( !isset($ref) ) {
-			return 0;
+	public static function checkAccessLevel($inputData, $ref=null) {
+		if( !isset($inputData['accesslevel']) ) {
+			return isset($ref) ? null : 0;
 		}
-		if( !isset($inputData['accesslevel']) ) {//UPDATING
-			return null;
+		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
+			throw new UserException('invalidAccessLevel');
 		}
-		return $ref->checkPermissions($inputData);
+		if( !defined(ALLOW_USER_GRANTING) ) { // Special case for developers
+			global $USER;
+			if( !User::loggedCanDo('users_grants', $ref) // Can the current user do this action ? This user try to edit himself ?
+// 				|| (isset($ref) && !$USER->checkPerm($ref->accesslevel)) // Has the current user less accesslevel that the edited one ? - Already check in canDo()
+				|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
+			) {
+				throw new UserException('forbiddenGrant');
+			}
+			if( isset($ref) && $inputData['accesslevel'] == $ref->accesslevel ) {
+				throw new UserException('sameAccessLevel');
+			}
+		}
+		return (int) $inputData['accesslevel'];
 	}
 	
 	//! Checks for object
@@ -452,3 +448,27 @@ class User extends AbstractStatus {
 	*/
 }
 User::init();
+/*
+MYSQL
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `fullname` varchar(100) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `email_public` varchar(100) NOT NULL,
+  `accesslevel` smallint(6) unsigned NOT NULL DEFAULT '0',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `create_ip` varchar(40) NOT NULL DEFAULT '',
+  `activation_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `activation_ip` varchar(40) NOT NULL DEFAULT '',
+  `login_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `login_ip` varchar(40) NOT NULL DEFAULT '',
+  `activity_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `activity_ip` varchar(40) NOT NULL DEFAULT '',
+  `status` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+*/
