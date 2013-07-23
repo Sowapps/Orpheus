@@ -711,7 +711,6 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 * The label is prefixed with $prefix and translated using t().
 */
 function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
-	fillFormData($data);
 	if( is_null($matches) ) { $matches = OPT_VALUE2LABEL; }
 	// Value of selected/default option
 	fillInputValue($selValue, $fieldPath, $default);
@@ -723,10 +722,7 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 		}
 		$optLabel = bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
 		$optValue = bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
-// 		$label = is_int($dataKey) ? $elValue : $dataKey;// If this is an associative array, we use the key, else the value.
 		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), $selValue==$optValue, $addAttr);
-// 		$opts .= '
-// 	<option value="'.$dataValue.'" '.( ($dataValue == $selected) ? 'selected="selected"' : '').' '.$addAttr.'>'.t($prefix.$key, $domain).'</option>';
 	}
 	return $opts;
 }
@@ -759,26 +755,31 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 // }
 
 function htmlText($fieldPath, $default='', $addAttr='') {
+// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
+// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
 }
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
+// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
 }
 
 function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
+// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
 	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
+// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 // 	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
 	$selected = ($r = fillInputValue($value, $fieldPath, false, true)) ? !empty($value) : $default;
@@ -829,7 +830,7 @@ function fillFormData(&$data) {
 /*!
  * \param $value The value to fill, as pointer.
  * \param $fieldPath The apath to the input form value.
- * \param $aPathGetDefault The default value if not found. Default value is null (apath_get()'s default).
+ * \param $default The default value if not found. Default value is null (apath_get()'s default).
  * \param $pathRequired True if the path is required. Default value is False (apath_get()'s default).
  * \return True if got value is not null (found).
  * \sa getFormData()
@@ -837,8 +838,11 @@ function fillFormData(&$data) {
  *
  * Fills the given pointer value with input form data or uses default.
  */
-function fillInputValue(&$value, $fieldPath, $aPathGetDefault=null, $pathRequired=false) {
-	$value = apath_get(getFormData(), $fieldPath, $aPathGetDefault, $pathRequired);
+function fillInputValue(&$value, $fieldPath, $default=null, $pathRequired=false) {
+	$value = apath_get(getFormData(), $fieldPath, $default, $pathRequired);
+	if( is_null($value) ) {
+		$value = $default;
+	}
 	return !is_null($value);
 }
 
@@ -966,4 +970,24 @@ function d($time=TIME) {
 */
 function dt($time=TIME) {
 	return strftime(t('timeFormat'), $time);
+}
+
+//! Generates a new password
+/*!
+ * \param $length Thelength of the generated password.
+ * \param $chars The characters to use to generate password.
+ * \param $notlast Avoid $notlast characters at end of $chars.
+ * \return The generated password.
+ * 
+ * This generator is made for humans, it avoids some special letters as first/last one.
+ * So, place these characters at the end of $chars.
+*/
+function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz0123456789?!$@+-', $notlast=2) {
+	$max = strlen($chars)-1;
+	$r = '';
+	for( $i=0; $i<$length; $i++ ) {
+		$c = $chars[mt_rand(0, (!$i || $i>=($length-1)) ? $max-$notlast : $max)];
+		$r .= mt_rand(0, 1) ? strtoupper($c) : $c;
+	}
+	return $r;
 }
