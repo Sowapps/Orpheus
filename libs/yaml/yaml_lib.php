@@ -3,17 +3,17 @@
 /*!
 	This class is the main way to get configuration.
 */
-class Config extends ConfigCore {
+class YAML extends ConfigCore {
 	
 	const EXT = 'yaml';
-
+	
 	//!	Loads configuration from new source.
 	/*!
 		\param $source An identifier or a path to get the source.
 		\return The loaded configuration array.
 	
-		If an identifier, loads a configuration from a .ini file in CONFPATH.
-		Else $source is a full path to the ini configuration file.
+		If an identifier, loads a configuration from a .yaml file in CONFPATH.
+		Else $source is a full path to the YAML configuration file.
 	*/
 	public function load($source) {		
 		// Full path given
@@ -28,9 +28,13 @@ class Config extends ConfigCore {
 		} else {
 			return array();
 		}
-		$parsed = parse_ini_file($confPath, true);
+		$parsed = yaml_parse_file($confPath);
 		$this->add($parsed);
 		return $parsed;
 	}
 	
+}
+
+if( !class_exists('Config', false) ) {
+	class Config extends YAML {}
 }
