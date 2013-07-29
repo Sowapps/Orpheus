@@ -1,7 +1,7 @@
 <?php
-//! The config class
+//! The YAML class
 /*!
-	This class is the main way to get configuration.
+	This class is made to get YAML configuration.
 */
 class YAML extends ConfigCore {
 	
