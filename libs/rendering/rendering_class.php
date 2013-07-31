@@ -82,7 +82,7 @@ abstract class Rendering {
 			$MENUS[$mName] = $menu;
 		}
 		$env['MENUS'] = &$MENUS;
-		
+
 		self::checkRendering();
 		self::$rendering->display(static::$SHOWMODEL, $env);
 		exit();
@@ -94,10 +94,8 @@ abstract class Rendering {
 	 * Calls the show function using the 'default_rendering' configuration.
 	 */
 	final public static function doShow() {
-		$c = Config::get('default_rendering');
-		if( !is_null($c) ) {
-			$c::show();
-		}
+		$c = self::checkRendering();
+		$c::show();
 	}
 	
 	//! Calls the render function.
@@ -137,10 +135,14 @@ abstract class Rendering {
 	 */
 	final private static function checkRendering() {
 		if( is_null(self::$rendering) ) {
-			$c = Config::get('default_rendering');
-			if( !is_null($c) ) {
-				self::$rendering = new $c();
+			if( class_exists('Config') ) {
+				$c = Config::get('default_rendering');
 			}
+			if( !isset($c) ) {
+				$c = defined("TERMINAL") ? 'RawRendering' : 'HTMLRendering';
+			}
+			self::$rendering = new $c();
 		}
+		return get_class(self::$rendering);
 	}
 }

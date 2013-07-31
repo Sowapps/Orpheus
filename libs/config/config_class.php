@@ -5,7 +5,7 @@
 */
 class Config extends ConfigCore {
 	
-	const EXT = 'yaml';
+	const EXT = 'ini';
 
 	//!	Loads configuration from new source.
 	/*!
