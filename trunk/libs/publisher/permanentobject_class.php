@@ -467,9 +467,7 @@ abstract class PermanentObject {
 	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array()) {
-// 		text("Create: ".htmlSecret($inputData));
 		$data = static::checkUserInput($inputData, null, null, $errCount);
-// 		text("checkUserInput: ".htmlSecret($data));
 		
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
