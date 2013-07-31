@@ -23,7 +23,7 @@ class SiteUser extends User {
 	// *** OVERLOADED METHODS ***
 	
 	public function __toString() {
-		return $this->fullname;
+		return escapeText($this->fullname);
 	}
 	
 	public function getNicename() {
