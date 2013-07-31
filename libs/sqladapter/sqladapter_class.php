@@ -104,7 +104,6 @@ abstract class SQLAdapter {
 	*/
 	public function setIDField($field) {
 		if( !is_null($field) ) {
-			text('Setting ID field to '.$field);
 			$this->IDFIELD = $field;
 		}
 	}

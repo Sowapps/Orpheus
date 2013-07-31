@@ -76,7 +76,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
-			text('Selecting for ID field: '.$this->IDFIELD);
 			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
