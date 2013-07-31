@@ -7,7 +7,7 @@ abstract class SQLAdapter {
 	
 	protected static $Adapters = array();
 	
-	protected static $IDFIELD;
+	protected $IDFIELD = 'id';
 	
 	protected $instance;
 	
@@ -88,13 +88,25 @@ abstract class SQLAdapter {
 	//! The function to get the last inserted ID
 	/*!
 	 * \param $table The table to get the last inserted id.
-	 * \param $idfield The field id name.
 	 * \return The last inserted id value.
 	 * 
 	 * It requires a successful call of insert() !
 	*/
-	public function lastID($table, $idfield) {
+	public function lastID($table) {
 		return pdo_lastInsertId($this->instance);
+	}
+
+	//! Changes the IDFIELD
+	/*!
+	 * \param $field The new ID field.
+	 * 
+	 * Sets the IDFIELD value to $field
+	*/
+	public function setIDField($field) {
+		if( !is_null($field) ) {
+			text('Setting ID field to '.$field);
+			$this->IDFIELD = $field;
+		}
 	}
 	
 	
@@ -104,8 +116,9 @@ abstract class SQLAdapter {
 	 * \param $Instance The db instance used to send the query.
 	 * \sa select()
 	*/
-	public static function doSelect(array $options=array(), $Instance=null) {
+	public static function doSelect(array $options=array(), $Instance=null, $IDField=null) {
 		self::prepare($Instance);
+		self::$Adapters[$Instance]->setIDField($IDField);
 		return self::$Adapters[$Instance]->select($options);
 	}
 	
@@ -115,8 +128,9 @@ abstract class SQLAdapter {
 	 * \param $Instance The db instance used to send the query.
 	 * \sa update()
 	*/
-	public static function doUpdate(array $options=array(), $Instance=null) {
+	public static function doUpdate(array $options=array(), $Instance=null, $IDField=null) {
 		self::prepare($Instance);
+		self::$Adapters[$Instance]->setIDField($IDField);
 		return self::$Adapters[$Instance]->update($options);
 	}
 	
@@ -126,8 +140,9 @@ abstract class SQLAdapter {
 	 * \param $Instance The db instance used to send the query.
 	 * \sa SQLAdapter::delete()
 	*/
-	public static function doDelete(array $options=array(), $Instance=null) {
+	public static function doDelete(array $options=array(), $Instance=null, $IDField=null) {
 		self::prepare($Instance);
+		self::$Adapters[$Instance]->setIDField($IDField);
 		return self::$Adapters[$Instance]->delete($options);
 	}
 	
@@ -137,21 +152,23 @@ abstract class SQLAdapter {
 	 * \param $Instance The db instance used to send the query.
 	 * \sa SQLAdapter::insert()
 	*/
-	public static function doInsert(array $options=array(), $Instance=null) {
+	public static function doInsert(array $options=array(), $Instance=null, $IDField=null) {
 		self::prepare($Instance);
+		self::$Adapters[$Instance]->setIDField($IDField);
 		return self::$Adapters[$Instance]->insert($options);
 	}
 	
 	//! The static function to use to get last isnert id in global context
 	/*!
 	 * \param $options The options used to build the query.
-	 * \param $idfield The field id name.
+	 * \param $IDField The field id name.
 	 * \param $Instance The db instance used to send the query.
 	 * \sa SQLAdapter::lastID()
 	*/
-	public static function doLastID($table, $idfield='id', $Instance=null) {
+	public static function doLastID($table, $IDField='id', $Instance=null) {
 		self::prepare($Instance);
-		return self::$Adapters[$Instance]->lastID($table, $idfield);
+		self::$Adapters[$Instance]->setIDField($IDField);
+		return self::$Adapters[$Instance]->lastID($table);
 	}
 
 	//! The static function to prepare an adapter for the given instance

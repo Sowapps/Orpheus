@@ -5,8 +5,6 @@
 */
 class SQLAdapter_PgSQL extends SQLAdapter {
 	
-	protected static $IDFIELD = 'id';
-	
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '*',//* => All fields
@@ -173,12 +171,11 @@ class SQLAdapter_PgSQL extends SQLAdapter {
 	//! The function to get the last inserted ID
 	/*!
 		\param $table The table to get the last inserted id.
-		\param $idfield The field id name.
 		\return The last inserted id value.
 		
 		It requires a successful call of insert() !
 	*/
-	public function lastID($table, $idfield='id') {
-		return $this->query("SELECT currval('{$table}_{$idfield}_seq'::regclass)", PDOFETCHFIRSTCOL);
+	public function lastID($table) {
+		return $this->query("SELECT currval('{$table}_{$this->IDFIELD}_seq'::regclass)", PDOFETCHFIRSTCOL);
 	}
 }

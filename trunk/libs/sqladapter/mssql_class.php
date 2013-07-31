@@ -8,7 +8,6 @@
 */
 class SQLAdapter_MSSQL extends SQLAdapter {
 	
-	protected static $IDFIELD = 'id';
 	protected $lastID = 0;
 	
 	//! Defaults for selecting
@@ -77,7 +76,8 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
-			$options['orderby'] = static::$IDFIELD; 
+			text('Selecting for ID field: '.$this->IDFIELD);
+			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
@@ -121,13 +121,9 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No field');
 		}
-// 		$OPTIONS = '';
-// 		$SUBOPTIONS = '';
-// 		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
-// 			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
-			$options['orderby'] = static::$IDFIELD; 
+			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
@@ -160,13 +156,9 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
 		}
-// 		$OPTIONS = '';
-// 		$SUBOPTIONS = '';
-// 		$SUBOPTIONS .= ( $options['number'] > 0 ) ?
-// 			' TOP ('.$options['number'].')'.( ($options['number_percent']) ? ' PERCENT' : '' ) : '';
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
-			$options['orderby'] = static::$IDFIELD; 
+			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
 		
@@ -230,15 +222,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
-// 		var_dump($this->lastID = $this->query($QUERY, PDOFETCH));
-// 		return $this->lastID;
-// 		global $pdoInstances;
-// 		$Instance		= ensure_pdoinstance($this->instance);
-// 		$pdoInstance	= $pdoInstances[$Instance];
-// 		$sth = $pdoInstance->prepare($QUERY);
-// 		$sth->execute();
-// 		var_dump($sth->fetch(PDO::FETCH_ASSOC));
-// 		return 1;
 		return $this->query($QUERY, PDOEXEC);
 	}
 	
@@ -250,22 +233,9 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		
 		It requires a successful call of insert() !
 	*/
- 	public function lastID($table, $idfield='id') {
+ 	public function lastID($table) {
 //  		return $this->lastID;
 		$r = $this->query("SELECT SCOPE_IDENTITY() AS LAST_ID;", PDOFETCH);
 		return $r['LAST_ID'];
-// 		return $this->query("SELECT SCOPE_IDENTITY();", PDOFETCHFIRSTCOL);
-// 		return $this->query("SELECT @@IDENTITY;", PDOFETCHFIRSTCOL);
-
-// 		return $this->query("SELECT SCOPE_IDENTITY() AS id", PDOFETCHFIRSTCOL);
-		//return $this->query("SELECT CAST(COALESCE(SCOPE_IDENTITY(), @@IDENTITY) AS int)", PDOFETCHFIRSTCOL);
-// 		return pdo_lastInsertId($this->instance);
-// 		global $pdoInstances;
-// 		$Instance		= ensure_pdoinstance($this->instance);
-// 		$pdoInstance	= $pdoInstances[$Instance];
-//  		$sth = $pdoInstance->prepare('SELECT @@IDENTITY AS id');
-//  		$sth->execute();
-//  		$result = $sth->fetch();
-//  		return $result['id'];
 	}
 }

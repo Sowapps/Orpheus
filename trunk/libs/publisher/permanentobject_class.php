@@ -191,7 +191,7 @@ abstract class PermanentObject {
 			'where'	=> "{$IDFIELD}={$this->{$IDFIELD}}",
 			'number'=> 1,
 		);
-		return SQLAdapter::doUpdate($options, static::$DBInstance);
+		return SQLAdapter::doUpdate($options, static::$DBInstance, static::$IDFIELD);
 	}
 	
 	//! Reloads fields from database
@@ -384,7 +384,7 @@ abstract class PermanentObject {
 		
 		if( is_array($in) ) {
 			$in['table'] = static::$table;
-			return SQLAdapter::doDelete($in, static::$DBInstance);
+			return SQLAdapter::doDelete($in, static::$DBInstance, static::$IDFIELD);
 		}
 		
 		if( !ctype_digit("$in") ) {
@@ -396,7 +396,7 @@ abstract class PermanentObject {
 			'number'=> 1,
 			'where'	=> "{$IDFIELD}={$in}",
 		);
-		$r = SQLAdapter::doDelete($options, static::$DBInstance);
+		$r = SQLAdapter::doDelete($options, static::$DBInstance, static::$IDFIELD);
 		if( $r ) {
 			if( isset(static::$instances[static::getTable()][$in]) ) {
 				static::$instances[static::getTable()][$in]->markAsDeleted();
@@ -441,7 +441,7 @@ abstract class PermanentObject {
 			$options['what'] = '*';
 			$objects = 1;
 		}
-		$r = SQLAdapter::doSelect($options, static::$DBInstance);
+		$r = SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
 		if( empty($r) && ($options['output'] == SQLAdapter::ARR_ASSOC || $options['output'] == SQLAdapter::ARR_OBJECTS) ) {
 			return array();
 		}
@@ -493,7 +493,7 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
-		SQLAdapter::doInsert($options, static::$DBInstance);
+		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
 		static::applyToObject($data, $LastInsert);
