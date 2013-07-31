@@ -5,8 +5,6 @@
 */
 class SQLAdapter_MySQL extends SQLAdapter {
 	
-	protected static $IDFIELD = 'id';
-	
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '*',//* => All fields
