@@ -369,7 +369,6 @@ abstract class PermanentObject {
 			}
 			// Getting data
 			$obj = static::get(array(
-// 				'number'=> 1,
 				'where'	=> "{$IDFIELD}={$id}",
 				'output'=> SQLAdapter::OBJECT,
 			));
