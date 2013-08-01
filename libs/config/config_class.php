@@ -21,8 +21,8 @@ class Config extends ConfigCore {
 			$confPath = $source;
 			
 		// File in configs folder
-		} else if( is_readable(CONFPATH.$source.'.'.self::EXT) ) {
-			$confPath = CONFPATH.$source.'.'.self::EXT;
+		} else if( is_readable(static::getFilePath($source)) ) {
+			$confPath = static::getFilePath($source);
 			
 		/// File not found
 		} else {
@@ -32,5 +32,15 @@ class Config extends ConfigCore {
 		$this->add($parsed);
 		return $parsed;
 	}
+
+	//!	Gets the file path
+	/*!
+		\param $source An identifier to get the source.
+		\return The configuration file path according to Orpheus file are organized.
 	
+		Gets the configuration file path in CONFPATH.
+	*/
+	public static function getFilePath($source) {
+		return CONFPATH.$source.'.'.self::EXT;
+	}
 }

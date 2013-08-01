@@ -11,7 +11,7 @@ abstract class ConfigCore {
 	//! Contains the configuration for this Config Object. Must be inherited from ConfigCore.
 	protected $config = array();
 	
-	//! The magic function to get config.
+	//! The magic function to get config
 	/*!
 		\param $key The key to get the value.
 		\return A config value.
@@ -27,7 +27,7 @@ abstract class ConfigCore {
 		return apath_get($this->config, $key);
 	}
 	
-	//! The magic function to set config.
+	//! The magic function to set config
 	/*!
 		\param $key The key to set the value.
 		\param $value The new config value.
@@ -46,7 +46,7 @@ abstract class ConfigCore {
 		}
 	}
 	
-	//! Adds configuration to this object.
+	//! Adds configuration to this object
 	/*!
 		\param $conf The configuration array to add to the current object.
 		
@@ -56,7 +56,7 @@ abstract class ConfigCore {
 		$this->config += $conf;
 	}
 	
-	//!	Loads new configuration source.
+	//!	Loads new configuration source
 	/*!
 		\param $source An identifier to get the source.
 		
@@ -64,7 +64,7 @@ abstract class ConfigCore {
 	*/
 	public abstract function load($source);
 	
-	//!	Builds new configuration source.
+	//!	Builds new configuration source
 	/*!
 		\param $source An identifier to build the source.
 		\param $minor Specify if this is a minor configuration.
@@ -88,7 +88,7 @@ abstract class ConfigCore {
 		}
 	}
 	
-	//! Gets configuration from the main configuration object.
+	//! Gets configuration from the main configuration object
 	/*!
 		\param $key The key to get the value.
 		\param $default The default value to use.
@@ -104,7 +104,7 @@ abstract class ConfigCore {
 		return static::$main->$key;
 	}
 	
-	//! Sets configuration to the main configuration object.
+	//! Sets configuration to the main configuration object
 	/*!
 		\param $key The key to set the value.
 		\param $value The new config value.
