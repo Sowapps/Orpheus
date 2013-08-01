@@ -112,6 +112,16 @@ abstract class PermanentObject {
 	
 	// *** DEV METHODS ***
 	
+	//! Gets this permanent object's ID
+	/*!
+	 * \return The id of this object.
+	 * 
+	 * Gets this object ID according to the IDFIELD attribute.
+	 */
+	public function id() {
+		return $this->{static::$IDFIELD};
+	}
+	
 	//! Updates this permanent object
 	/*!
 	 * \param $uInputData The input data we will check and extract, used by children.
@@ -354,22 +364,24 @@ abstract class PermanentObject {
 		}
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
-			if( !is_ID("$id") ) {
+			if( !is_ID($id) ) {
 				static::throwException('invalidID');
 			}
 			// Getting data
-			$data = static::get(array(
-				'number'=> 1,
+			$obj = static::get(array(
+// 				'number'=> 1,
 				'where'	=> "{$IDFIELD}={$id}",
-				'output'=> SQLAdapter::ARR_ASSOC,
+				'output'=> SQLAdapter::OBJECT,
 			));
 			// Ho no, we don't have the data, we can't load the object !
-			if( empty($data) ) {
+			if( empty($obj) ) {
 				static::throwException('inexistantObject');
 			}
+		} else {
+			$obj = new static($data);
 		}
 		// Saving cached
-		return static::$instances[static::getTable()][$id] = new static($data);
+		return static::$instances[static::getTable()][$id] = $obj;
 	}
 	
 	//! Deletes a permanent object
@@ -424,19 +436,24 @@ abstract class PermanentObject {
 	 * \sa SQLAdapter
 	 * 
 	 * Gets an objects' list using this class' table.
-	 * The following explanations are for the case where output is SQLAdapter::ARR_OBJECTS
-	 * If only one object is expected, we try to load and return it, else we return null.
-	 * In other cases, we load them and return a list of all objects, even if there is no result or only one.
 	 * 
 	*/
 	public static function get(array $options=array()) {
+		// Going out of documentation (obsolete)
+// 	 * The following explanations are for the case where output is SQLAdapter::ARR_OBJECTS
+// 	 * If only one object is expected, we try to load and return it, else we return null.
+// 	 * In other cases, we load them and return a list of all objects, even if there is no result or only one.
 		$options['table'] = static::$table;
 		// May be incompatible with old revisions (< R398)
 		if( !isset($options['output']) ) {
 			$options['output'] = SQLAdapter::ARR_OBJECTS;
 		}
 		//This method intercepts outputs of array of objects.
-		if( $options['output'] == SQLAdapter::ARR_OBJECTS ) {
+		if( $options['output'] == SQLAdapter::ARR_OBJECTS || $options['output'] == SQLAdapter::OBJECT ) {
+			if( $options['output'] == SQLAdapter::OBJECT ) {
+				$options['number'] = 1;
+				$onlyOne = 1;
+			}
 			$options['output'] = SQLAdapter::ARR_ASSOC;
 			$options['what'] = '*';
 			$objects = 1;
@@ -446,8 +463,9 @@ abstract class PermanentObject {
 			return array();
 		}
 		if( !empty($r) && isset($objects) ) {
-			if( isset($options['number']) && $options['number'] == 1 ) {
-				$r = static::load($r);
+// 			if( isset($options['number']) && $options['number'] == 1 ) {
+			if( isset($onlyOne) ) {
+				$r = static::load($r[0]);
 			} else {
 				foreach( $r as &$rdata ) {
 					$rdata = static::load($rdata);
