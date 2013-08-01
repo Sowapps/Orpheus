@@ -141,6 +141,11 @@ abstract class Rendering {
 			if( !isset($c) ) {
 				$c = defined("TERMINAL") ? 'RawRendering' : 'HTMLRendering';
 			}
+			if( !class_exists($c) ) {
+				text('Rendering class should be loaded');
+				debug_print_backtrace();
+				die();
+			}
 			self::$rendering = new $c();
 		}
 		return get_class(self::$rendering);
