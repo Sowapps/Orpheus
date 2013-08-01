@@ -24,11 +24,12 @@ abstract class SQLAdapter {
 	protected static $insertDefaults = array();
 	
 	//List of outputs for getting list
-	const ARR_OBJECTS	= 1;//!< Array of objects
+	const OBJECT		= 1;//!< Object
 	const ARR_ASSOC		= 2;//!< Associative array
-	const STATEMENT		= 3;//!< SQL Statement
-	const SQLQUERY		= 4;//!< Query String
-	const NUMBER		= 5;//!< Number
+	const ARR_OBJECTS	= 3;//!< Array of objects
+	const STATEMENT		= 4;//!< SQL Statement
+	const SQLQUERY		= 5;//!< Query String
+	const NUMBER		= 6;//!< Number
 
 	//! Constructor
 	/*!

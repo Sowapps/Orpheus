@@ -23,7 +23,7 @@ defifn('DBCONFPATH'			, 'database');
 
 //Constantes PDO
 define('PDOQUERY'			, 0);//Simple Query (SELECT ...). Returns a result set.
-define('PDOEXEC'			, 1);//Simple Execution (INSERT INTO, UPDATA, DELETE ...). Returns the number of affected lines.
+define('PDOEXEC'			, 1);//Simple Execution (INSERT INTO, UPDATE, DELETE ...). Returns the number of affected lines.
 
 define('PDONOSTMT'			, PDOQUERY | 0<<1);//Continue, can not be used alone.
 define('PDOSTMT'			, PDOQUERY | 1<<1);//Returns the PDOStatement without any treatment but does NOT free the connection.
