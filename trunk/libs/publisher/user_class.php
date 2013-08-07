@@ -173,7 +173,8 @@ class User extends AbstractStatus {
 		
 		$user = static::get(array(
 			'where' => 'name LIKE '.SQLAdapter::quote($name),
-			'number' => 1
+			'number' => 1,
+			'output' => SQLAdapter::OBJECT
 		));
 		if( empty($user) )  {
 			throw new UserException("unknownName");
