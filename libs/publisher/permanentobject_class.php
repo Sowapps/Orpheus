@@ -315,8 +315,8 @@ abstract class PermanentObject {
 	 * 
 	 * Compares the class and the ID field value of the 2 objects.
 	*/
-	public function equals(PermanentObject $o) {
-		return (get_class($this)==get_class($o) && $this->{static::$IDFIELD}==$o->{static::$IDFIELD});
+	public function equals($o) {
+		return (get_class($this)==get_class($o) && $this->id()==$o->id());
 	}
 	
 	//! Logs an event
@@ -343,6 +343,7 @@ abstract class PermanentObject {
 	 * \param $in The object ID to load or a valid array of the object's data.
 	 * \return The object.
 	 * \sa get()
+	 * Exceptions invalidParameter_IN
 	
 	 * Loads the object with the ID $id or the array data
 	*/
