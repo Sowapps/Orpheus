@@ -127,21 +127,22 @@ class User extends AbstractStatus {
 	 * Checks if this user can alter on $user.
 	 */
 	public function canAlter(User $user) {
-		return $this->equals($user) || !$user->accesslevel || $this->accesslevel > $user->accesslevel;
+// 		return $this->equals($user) || !$user->accesslevel || $this->accesslevel > $user->accesslevel;
+		return !$user->accesslevel || $this->accesslevel > $user->accesslevel;
 	}
 	
 	//! Checks if this user can affect data on the given user
 	/*!
 	 * \param $action The action to look for.
 	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user or he is altering himself.
+	 * \return True if this user has enough access level to edit $user or he is altering himself.
 	 * \sa loggedCanDo()
 	 * \sa canAlter()
 	 * 
 	 * Checks if this user can affect $object.
 	 */
 	public function canDo($action, $object=null) {
-		return ( $this->checkPerm($action) && ( is_null($object) || ($object instanceof User && $this->canAlter($object)) ) );
+		return $this->equals($object) || ( $this->checkPerm($action) && ( !($object instanceof User) || $this->canAlter($object) ) );
 	}
 	
 	//! Updates this publication object
