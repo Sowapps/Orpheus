@@ -47,13 +47,17 @@ function is_ID($Number) {
  * The date have to be well formatted and valid.
  * The format is DD/MM/YYYY and default separators can be '/', '-', ':', ';', ',', '|' or '#' 
  */
-function is_date($date, $separators='\-\/:\;,|\#') {
+function is_date($date, $separators='\-\/:\;,|\#', &$time=false) {
 	$DateFor = preg_replace("#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})$#", '$1#$2#$3', $date, -1, $Count);
 	if( !$Count ) {
 		return false;
 	}
 	list($Day, $Month, $Year) = explode("#", $DateFor);
-	return checkdate($Month, $Day, $Year);
+	$r = checkdate($Month, $Day, $Year);
+	if( $r && is_null($time) ) {
+		$time = mktime(0, 0, $Month, $Day, $Year);
+	} 
+	return $r;
 }
 
 //! Checks if the input is an url.

@@ -661,7 +661,7 @@ abstract class PermanentObject {
 		
 		} else if( is_object(static::$validator) ) {
 			if( method_exists(static::$validator, 'validate') ) {
-				return static::$validator->validate($uInputData, $ref, $errCount);
+				return static::$validator->validate($uInputData, $fields, $ref, $errCount);
 			}
 		}
 		return array();
