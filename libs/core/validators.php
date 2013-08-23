@@ -55,7 +55,7 @@ function is_date($date, $separators='\-\/:\;,|\#', &$time=false) {
 	list($Day, $Month, $Year) = explode("#", $DateFor);
 	$r = checkdate($Month, $Day, $Year);
 	if( $r && is_null($time) ) {
-		$time = mktime(0, 0, $Month, $Day, $Year);
+		$time = mktime(0, 0, 0, $Month, $Day, $Year);
 	} 
 	return $r;
 }

@@ -594,7 +594,7 @@ function GET($path=null) {
 
 //! Checks the POST status
 /*!
- * \param $key The name of the button submitting the request.
+ * \param $apath The apath to test.
  * \return True if the request is a POST one. Compares also the $key if not null.
  * \sa POST()
  * 
@@ -602,13 +602,13 @@ function GET($path=null) {
  * You can specify the name of your submit button as first parameter.
  * We advise to use the name of your submit button, but you can also use another important field of your form.
 */
-function isPOST($key=null) {
-	return isset($_POST) && (is_null($key) || isset($_POST[$key]));
+function isPOST($apath=null) {
+	return isset($_POST) && (is_null($apath) || !is_null(POST($apath)));
 }
 
 //! Checks the GET status
 /*!
- * \param $key The name of the button submitting the request.
+ * \param $apath The apath to test.
  * \return True if the request is a GET one. Compares also the $key if not null.
  * \sa GET()
  * 
@@ -616,8 +616,8 @@ function isPOST($key=null) {
  * You can specify the name of your submit button as first parameter.
  * We advise to use the name of your submit button, but you can also use another important field of your form.
 */
-function isGET($key=null) {
-	return isset($_GET) && (is_null($key) || isset($_GET[$key]));
+function isGET($apath=null) {
+	return isset($_GET) && (is_null($apath) || !is_null(GET($apath)));
 }
 
 //! Extracts data from array using apath
@@ -645,8 +645,8 @@ function extractFrom($apath, $array) {
 */
 function htmlValue($name, $data=null, $default='') {
 	fillFormData($data);
-	$v = apath_get($data, $name);
-	return !empty($v) ? " value=\"{$v}\"" : $default;
+	$v = apath_get($data, $name, $default);
+	return !empty($v) ? " value=\"{$v}\"" : '';
 }
 
 //! Generates the HTML source for a SELECT
@@ -779,10 +779,14 @@ function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 }
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
-// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 // 	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
-	$selected = ($r = fillInputValue($value, $fieldPath, false, true)) ? !empty($value) : $default;
+// 	text("htmlCheckbox($fieldPath): default: $default");
+	// 			If Value found,	we consider this one, else we use default
+	$selected = ($r = fillInputValue($value, $fieldPath, $default, true)) ? !empty($value) : $default;
+// 	text($selected ? 'SELECTED' : 'NOT SELECTED');
+// 	text($r ? 'VALUE NOT NULL' : 'NULL VALUE');
+// 	text('VALUE: '.$value);
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
