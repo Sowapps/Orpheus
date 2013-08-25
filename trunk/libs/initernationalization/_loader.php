@@ -30,7 +30,7 @@ function loadLangFile($domain=null) {
  * \return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
- * It try to replace $values in text by key using #key# format.
+ * It try to replace $values in text by key using \#key\# format.
  * $values accept 2 formats:
  *  - array('key1'=>'value1', 'key2'=>'value2')
  *  - array(array('key1', 'key2'), array('value1', 'value2'))

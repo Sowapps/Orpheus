@@ -1,6 +1,6 @@
 <?php
 /*!
- * \file loader.php
+ * \file Orpheus/loader.php
  * \brief The Orpheus Loader
  * \author Florent Hazard
  * \copyright The MIT License, see LICENSE.txt

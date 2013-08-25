@@ -336,6 +336,7 @@ function apath_get($array, $apath, $default=null, $pathRequired=false) {
 //! Build all path to browse array
 /*!
  * \param $array The array to get the value from.
+ * \param $prefix The prefix to get the value, this is for an internal use only.
  * \return An array of apath to get all values.
  * \sa apath_get()
  *
@@ -696,11 +697,10 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 /*!
 * \param $fieldPath The name path to the field.
 * \param $values The values to build the dropdown menu.
-* \param $selected The selected value from the data. Default value is null (no selection).
+* \param $default The default selected value. Default value is null (no selection).
 * \param $matches Define the associativity between array and option values. Default value is OPT_VALUE2LABEL (as null).
 * \param $prefix The prefix to use for the text name of values. Default value is an empty string.
 * \param $domain The domain to apply the Key. Default value is 'global'.
-* \param $tagAttr Additional attributes for the SELECT tag.
 * \return A HTML source for the built SELECT tag.
 * \sa htmlOption()
 *
@@ -736,10 +736,9 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 
 //! Generates a selected attribute
 /*!
-* \param $field The name of the field.
-* \param $value The value.
-* \param $data The array of data where to look for. Default value is $formData (if exist) or $_POST
-* \param $attr Attribute name if selected. Default value is 'selected'.
+* \param $fieldPath The field path to use to define name.
+* \param $default The default value.
+* \param $addAttr additional attributes.
 * \return A HTML source for the built selected attribute.
 * \sa htmlSelect()
 * \sa htmlOptions()
