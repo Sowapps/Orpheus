@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operationforbiddenexception_5fclass_2ephp',['operationforbiddenexception_class.php',['../operationforbiddenexception__class_8php.html',1,'']]]
+  ['osessionhandler_5fclass_2ephp',['osessionhandler_class.php',['../osessionhandler__class_8php.html',1,'']]]
 ];

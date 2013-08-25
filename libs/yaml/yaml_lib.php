@@ -1,5 +1,5 @@
 <?php
-//! The YAML class
+//! The yaml class
 /*!
 	This class is made to get YAML configuration.
 */

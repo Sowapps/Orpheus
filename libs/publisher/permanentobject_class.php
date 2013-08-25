@@ -679,7 +679,7 @@ abstract class PermanentObject {
 	
 	//! Tests user input
 	/*!
-	 * \param $data The new data to process.
+	 * \param $uInputData The user input data to test.
 	 * \param $fields The array of fields to check. Default value is null.
 	 * \param $ref The referenced object (update only). Default value is null.
 	 * \param $errCount The resulting error count, as pointer. Output parameter.

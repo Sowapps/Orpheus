@@ -134,8 +134,8 @@ class User extends AbstractStatus {
 	//! Checks if this user can affect data on the given user
 	/*!
 	 * \param $action The action to look for.
-	 * \param $user The user we want to edit.
-	 * \return True if this user has enough access level to edit $user or he is altering himself.
+	 * \param $object The object we want to edit.
+	 * \return True if this user has enough access level to alter $object (or he is altering himself).
 	 * \sa loggedCanDo()
 	 * \sa canAlter()
 	 * 
@@ -293,6 +293,7 @@ class User extends AbstractStatus {
 	//! Checks a name
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The stripped name.
 	 * 
 	 * Validates the name in array $inputData.
@@ -310,7 +311,7 @@ class User extends AbstractStatus {
 	//! Checks a Password
 	/*!
 	 * \param $inputData The input data from the user.
-	 * \param $withConfirmation True if the confirmation is required. Default value is true.
+	 * \param $ref The reference to check the field from.
 	 * \return The hashed password string.
 	 * 
 	 * Validates the password in array $inputData.
@@ -330,6 +331,7 @@ class User extends AbstractStatus {
 	//! Checks an Email address
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The email address.
 	 * 
 	 * Validates the email address in array $inputData.
@@ -347,13 +349,14 @@ class User extends AbstractStatus {
 	//! Checks a public Email address
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The public email address.
 	 * 
 	 * Validates the public email address in array $inputData.
 	 * This address is not required, you can use a checkbox to automatically use the real email address.
 	 * e.g The email is foo@bar.com and public_email is 'on', the returned public_email will be foo@bar.com.
 	 */
-	public static function checkPublicEmail($inputData, $ref) {
+	public static function checkPublicEmail($inputData, $ref=null) {
 		if( !isset($inputData['email_public']) && isset($ref) ) {//UPDATING
 			return null;
 		}
@@ -373,6 +376,7 @@ class User extends AbstractStatus {
 	//! Checks a access level
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The access level.
 	 * \see checkPermissions()
 	*/

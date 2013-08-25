@@ -9,6 +9,7 @@ var searchData=
   ['lib_5froute_2ephp',['lib_route.php',['../lib__route_8php.html',1,'']]],
   ['lib_5fsqladapter_2ephp',['lib_sqladapter.php',['../lib__sqladapter_8php.html',1,'']]],
   ['libraries_2ephp',['libraries.php',['../libraries_8php.html',1,'']]],
+  ['loader_2ephp',['loader.php',['../libs_2twigrenderer_2loader_8php.html',1,'']]],
   ['loader_2ephp',['loader.php',['../loader_8php.html',1,'']]],
   ['logout_2ephp',['logout.php',['../logout_8php.html',1,'']]]
 ];

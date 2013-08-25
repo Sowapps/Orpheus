@@ -3,8 +3,9 @@ var searchData=
   ['publisher_20library',['Publisher Library',['../lib_publisher.html',1,'']]],
   ['page_5fskeleton_2ephp',['page_skeleton.php',['../page__skeleton_8php.html',1,'']]],
   ['parsefields',['parseFields',['../core_8php.html#ac5ddd4d37e80713d7bef3cf1728de4ac',1,'core.php']]],
-  ['pathof',['pathOf',['../index_8php.html#a97f8a32581cffdab3463b758cd3ee092',1,'index.php']]],
+  ['pathof',['pathOf',['../loader_8php.html#a97f8a32581cffdab3463b758cd3ee092',1,'loader.php']]],
   ['pdo_5ferror',['pdo_error',['../__pdo_8php.html#a06d9b49e7574996a1aac7ea51422393f',1,'_pdo.php']]],
+  ['pdo_5flastinsertid',['pdo_lastInsertId',['../__pdo_8php.html#ab2f74a3c2e28460a2140c81f71d9ebea',1,'_pdo.php']]],
   ['pdo_5fquery',['pdo_query',['../__pdo_8php.html#a35c4b204f1ef889f71d48379f60dc464',1,'_pdo.php']]],
   ['pdo_5fquote',['pdo_quote',['../__pdo_8php.html#a60db2f1aaa7d3cc2296d6a8a171cc702',1,'_pdo.php']]],
   ['pdoexec',['PDOEXEC',['../__pdo_8php.html#abdd0a8a2c32517cc9c4ee58a71713dd9',1,'_pdo.php']]],
@@ -19,7 +20,8 @@ var searchData=
   ['permanentobject_5fclass_2ephp',['permanentobject_class.php',['../permanentobject__class_8php.html',1,'']]],
   ['permanentredirectto',['permanentRedirectTo',['../core_8php.html#ace68af7b3fcb376fb2fe7effa3cb3c52',1,'core.php']]],
   ['pgsql_5fclass_2ephp',['pgsql_class.php',['../pgsql__class_8php.html',1,'']]],
-  ['post',['POST',['../core_8php.html#aabe475d31a7fa5be41269c860787cebf',1,'core.php']]],
-  ['prepare',['prepare',['../class_s_q_l_adapter.html#a94d4ff4cd95b731576773961ba1ae7bf',1,'SQLAdapter']]],
+  ['post',['Post',['../class_post.html',1,'Post'],['../core_8php.html#a5255c6d32ecc62a0c22631d5ab4cabb0',1,'POST($path=null):&#160;core.php']]],
+  ['post_5fclass_2ephp',['post_class.php',['../post__class_8php.html',1,'']]],
+  ['prepare',['prepare',['../class_s_q_l_adapter.html#a4a76273ec7d2fe4e207633ba29685244',1,'SQLAdapter']]],
   ['prod_5flevel',['PROD_LEVEL',['../constants_8php.html#a43979363d85c9f0ba4f7d2d56e097df1',1,'constants.php']]]
 ];

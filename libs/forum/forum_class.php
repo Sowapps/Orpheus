@@ -32,11 +32,12 @@ class Forum extends AbstractStatus {
 	//! Checks a name
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The stripped name.
 	 * 
 	 * Validates the name field in array $inputData.
 	 */
-	public static function checkName($inputData, $ref) {
+	public static function checkName($inputData, $ref=null) {
 		if( empty($inputData['name']) ) {
 			if( isset($ref) ) {//UPDATE
 				return null;
@@ -49,11 +50,12 @@ class Forum extends AbstractStatus {
 	//! Checks a user id
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The user id as integer.
 	 * 
 	 * Validates the user_id field in array $inputData.
 	 */
-	public static function checkUserID($inputData, $ref) {
+	public static function checkUserID($inputData, $ref=null) {
 		if( !isset($inputData['user_id']) || !is_ID($inputData['user_id']) ) {
 			if( !isset($inputData['user_id']) && isset($ref) ) {//UPDATE
 				return null;
@@ -66,11 +68,12 @@ class Forum extends AbstractStatus {
 	//! Checks a user name
 	/*!
 	 * \param $inputData The input data from the user.
+	 * \param $ref The reference to check the field from.
 	 * \return The stripped user name.
 	 * 
 	 * Validates the user_name field in array $inputData.
 	 */
-	public static function checkUserName($inputData, $ref) {
+	public static function checkUserName($inputData, $ref=null) {
 		if( empty($inputData['user_name']) ) {
 			if( isset($ref) ) {//UPDATE
 				return null;

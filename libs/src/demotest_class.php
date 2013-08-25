@@ -22,10 +22,11 @@ class DemoTest extends PermanentObject {
 	
 	//! Checks Field 'name'
 	/*!
-		\param $inputData The user input.
-		\return a valid field 'name'.
-	*/
-	public static function checkName($inputData, $ref) {
+	 * \param $inputData The user input.
+	 * \param $ref The reference to check the field from.
+	 * \return a valid field 'name'.
+	 */
+	public static function checkName($inputData, $ref=null) {
 		if( empty($inputData['name']) ) {
 			if( is_null($ref) ) {// Updating
 				return null;

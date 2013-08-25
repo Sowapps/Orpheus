@@ -91,14 +91,14 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public static function validateStatus($newStatus, $ref=null) {
 		if( empty($newStatus) ) {
-			throw new UserException('invalidStatus');
+			static::throwException('invalidStatus');
 		}
 		if( !isset(static::$status[$newStatus]) ) {
-			throw new UserException('unknownStatus');
+			static::throwException('unknownStatus');
 		}
 		//If not new, we check the current status can set to this one.
 		if( isset($ref) && !in_array($newStatus, static::$status[$ref->status]) ) {
-			throw new UserException('unavailableStatus');
+			static::throwException('unavailableStatus');
 		}
 		return $newStatus;
 	}

@@ -10,7 +10,10 @@ var searchData=
   ['addreport',['addReport',['../core_8php.html#a7b55a45c5c3eb90cc0016f8f91fbf069',1,'core.php']]],
   ['adm_5flogs_2ephp',['adm_logs.php',['../adm__logs_8php.html',1,'']]],
   ['adm_5fusers_2ephp',['adm_users.php',['../adm__users_8php.html',1,'']]],
-  ['apath_5fget',['apath_get',['../core_8php.html#a4f3e4e77dfcb51a8027fb223dbacc7ae',1,'core.php']]],
+  ['apath_5fget',['apath_get',['../core_8php.html#a22ab6df3cf25021ee89ce9376e36f975',1,'core.php']]],
+  ['apath_5fhtml',['apath_html',['../core_8php.html#a4f75964f80aa94979106dbf84ad4c05d',1,'core.php']]],
+  ['apcache',['APCache',['../class_a_p_cache.html',1,'']]],
+  ['apcache_5fclass_2ephp',['apcache_class.php',['../apcache__class_8php.html',1,'']]],
   ['applytoobject',['applyToObject',['../class_permanent_object.html#a11b43c8f6e4898f04d6f6ace10138d44',1,'PermanentObject']]],
   ['arr_5fassoc',['ARR_ASSOC',['../class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99',1,'SQLAdapter']]],
   ['arr_5fobjects',['ARR_OBJECTS',['../class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d',1,'SQLAdapter']]]

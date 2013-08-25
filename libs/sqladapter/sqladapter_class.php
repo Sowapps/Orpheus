@@ -114,6 +114,7 @@ abstract class SQLAdapter {
 	/*!
 	 * \param $options The options used to build the query.
 	 * \param $Instance The db instance used to send the query.
+	 * \param $IDField The ID field of the table.
 	 * \sa select()
 	*/
 	public static function doSelect(array $options=array(), $Instance=null, $IDField=null) {
@@ -126,6 +127,7 @@ abstract class SQLAdapter {
 	/*!
 	 * \param $options The options used to build the query.
 	 * \param $Instance The db instance used to send the query.
+	 * \param $IDField The ID field of the table.
 	 * \sa update()
 	*/
 	public static function doUpdate(array $options=array(), $Instance=null, $IDField=null) {
@@ -138,6 +140,7 @@ abstract class SQLAdapter {
 	/*!
 	 * \param $options The options used to build the query.
 	 * \param $Instance The db instance used to send the query.
+	 * \param $IDField The ID field of the table.
 	 * \sa SQLAdapter::delete()
 	*/
 	public static function doDelete(array $options=array(), $Instance=null, $IDField=null) {
@@ -150,6 +153,7 @@ abstract class SQLAdapter {
 	/*!
 	 * \param $options The options used to build the query.
 	 * \param $Instance The db instance used to send the query.
+	 * \param $IDField The ID field of the table.
 	 * \sa SQLAdapter::insert()
 	*/
 	public static function doInsert(array $options=array(), $Instance=null, $IDField=null) {
@@ -160,7 +164,7 @@ abstract class SQLAdapter {
 	
 	//! The static function to use to get last isnert id in global context
 	/*!
-	 * \param $options The options used to build the query.
+	 * \param $table The table to get the last ID. Some DBMS ignore it.
 	 * \param $IDField The field id name.
 	 * \param $Instance The db instance used to send the query.
 	 * \sa SQLAdapter::lastID()
@@ -173,8 +177,7 @@ abstract class SQLAdapter {
 
 	//! The static function to prepare an adapter for the given instance
 	/*!
-	 * \param $options The options used to build the query.
-	 * \param $Instance The db instance used to send the query.
+	 * \param $instance The db instance name to prepare.
 	 * \sa SQLAdapter::lastID()
 	*/
 	public static function prepare($instance=null) {
