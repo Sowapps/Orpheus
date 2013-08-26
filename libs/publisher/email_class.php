@@ -2,6 +2,8 @@
 //! The email class
 /*!
 	This class is a tool to send mails.
+		
+	Incompatible with Rev < 552
 */
 class Email {
 	//Attributes
@@ -44,10 +46,10 @@ class Email {
 		\param $TEXTBody The body of the text message. Default value is an empty string.
 		\param $Subject The subject of the mail. Default value is an empty string.
 	*/
-	public function __construct($TEXTBody='', $Subject='') { //Class' Constructor
+	public function __construct($Subject='', $Text='') { //Class' Constructor
 		$this->init();
 		$this->setSubject($Subject);
-		$this->setTEXTBody($TEXTBody);
+		$this->setText($Text);
 	}
 	
 	//! Initializes the object
@@ -169,16 +171,30 @@ class Email {
 		}
 		$this->TEXTBody = $Body;
 	}
-	
+
 	//! Sets the html body of the mail
 	/*!
-		\param $Body The new body.
+	 \param $Body The new body.
 	*/
 	public function setHTMLBody($Body) {
-		if( !is_string($Body) ) {
+	if( !is_string($Body) ) {
+	throw new Exception('RequireStringParameter');
+	}
+	$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
+	}
+	
+	//! Sets the mail content
+	/*!
+		\param $Text The new text for the mail contents.
+		
+		Fills Text and HTML bodies from the given text
+	*/
+	public function setText($Text) {
+		if( !is_string($Text) ) {
 			throw new Exception('RequireStringParameter');
 		}
-		$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
+		$this->setTEXTBody(strip_tags($Text));
+		$this->setHTMLBody(nl2br($Text));
 	}
 	
 	//! Sets the alternative body of the mail
