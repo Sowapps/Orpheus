@@ -103,7 +103,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		$OPTIONS = '';
 		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
 		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
-		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
+		$WHAT = is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.

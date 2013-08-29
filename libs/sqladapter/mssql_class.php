@@ -126,6 +126,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
+		$WHAT = is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required
