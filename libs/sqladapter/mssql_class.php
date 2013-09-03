@@ -126,7 +126,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
-		$WHAT = is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required
@@ -228,10 +227,11 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 	
 	//! The function to get the last inserted ID
 	/*!
-	 * \param $table The table to get the last inserted id.
-	 * \return The last inserted id value.
+		\param $table The table to get the last inserted id.
+		\param $idfield The field id name.
+		\return The last inserted id value.
 		
-	 * It requires a successful call of insert() !
+		It requires a successful call of insert() !
 	*/
  	public function lastID($table) {
 //  		return $this->lastID;

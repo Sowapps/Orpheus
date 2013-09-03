@@ -103,7 +103,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		$OPTIONS = '';
 		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
 		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
-		$WHAT = is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
+		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
@@ -195,11 +195,12 @@ class SQLAdapter_MySQL extends SQLAdapter {
 	//! The function to get the last inserted ID
 	/*!
 		\param $table The table to get the last inserted id.
+		\param $idfield The field id name.
 		\return The last inserted id value.
 		
 		It requires a successful call of insert() !
 	*/
-	public function lastID($table) {
+	public function lastID($table, $idfield='id') {
 		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 	}
 }
