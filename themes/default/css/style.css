@@ -22,12 +22,25 @@ body {
 	float: right;
 }
 
+form {
+	margin: 0;
+}
+
 /*
 section {
 	margin-top: 30px;
 	padding-top: 30px;
 }
 */
+
+/** Global **/
+
+.left {
+	float: left;
+}
+.right {
+	float: right;
+}
 
 /** Report Messages **/
 
