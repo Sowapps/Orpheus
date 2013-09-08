@@ -71,6 +71,7 @@
 				</ul>
 				<form class="navbar-form navbar-right">
 <!-- 				glyphicon glyphicon-off -->
+<!-- 					<a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Launch demo modal</a> -->
 					<button class="login-btn btn" data-toggle="modal" data-target="#connectForm">Log in<span class="icon-off"></span></button>
 <!-- 					<div class="form-group" style="width: 166px;"> -->
 					<input type="text" placeholder="What are you lookin' for ?" autofocus="autofocus" class="form-control search-query">
@@ -213,7 +214,7 @@
 </div><!-- /.modal -->
 
 
-<div id="connectForm" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="connectForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
 <div class="modal-dialog">
 <div class="modal-content">
 <form method="POST" class="form-horizontal">
@@ -224,22 +225,21 @@
 	<div class="modal-body" style="text-align: center;">
 		<div class="control-group">
 			<label class="control-label" for="inputLogin">Username / Email</label>
-			<div class="controls">
-				<input type="text" name="data[login]" id="inputLogin" placeholder="Enter your ID">
-			</div>
+<!-- 			<div class="controls"> -->
+<!-- 				<input type="text" name="data[login]" id="inputLogin" placeholder="Enter your ID"> -->
+<!-- 			</div> -->
+			<input class="form-control" type="text" name="data[login]" id="inputLogin" placeholder="Enter your ID">
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="inputPassword">Password</label>
-			<div class="controls">
-				<input type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
-			</div>
+			<input class="form-control" type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
 		</div>
 		<div class="control-group">
 			<button id="registerBtn" class="btn btn-link" style="margin: 0 0 0 350px;" data-toggle="modal" data-target="#registerForm">Register</button>
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button type="submit" name="submitLogin" class="btn btn-primary">Connect</button>
 	</div>
 </form>
@@ -247,7 +247,7 @@
 </div>
 </div>
 
-<div id="registerForm" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="registerForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
 <form method="POST" class="form-horizontal">
@@ -258,31 +258,23 @@
 	<div class="modal-body" style="text-align: center;">
 		<div class="control-group">
 			<label class="control-label" for="inputName">Your Username</label>
-			<div class="controls">
-				<input type="text" name="data[name]" id="inputName" placeholder="Enter your name">
-			</div>
+			<input class="form-control" type="text" name="data[name]" id="inputName" placeholder="Enter your name">
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="inputEmail">Your Email</label>
-			<div class="controls">
-				<input type="text" name="data[email]" id="inputEmail" placeholder="Enter your email">
-			</div>
+			<input class="form-control" type="text" name="data[email]" id="inputEmail" placeholder="Enter your email">
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="inputPassword">Your Password</label>
-			<div class="controls">
-				<input type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
-			</div>
+			<input class="form-control" type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="inputConfPassword">Confirm password</label>
-			<div class="controls">
-				<input type="password" name="data[password_conf]" id="inputConfPassword" placeholder="Enter your password">
-			</div>
+			<input class="form-control" type="password" name="data[password_conf]" id="inputConfPassword" placeholder="Enter your password">
 		</div>
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button type="submit" name="submitRegister" class="btn btn-primary">Register</button>
 	</div>
 </form>
@@ -290,7 +282,7 @@
 </div>
 </div>
 
-<div id="newThreadForm" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+<div id="newThreadForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
 <!-- <form method="POST" class=""> -->
@@ -304,9 +296,7 @@
 		<h3 id="ntf_title"></h3>
 		<div class="control-group">
 			<label class="control-label" for="inputName">Title</label>
-			<div class="controls">
-				<input type="text" name="data[name]" id="inputName" placeholder="Enter the title of your new thread">
-			</div>
+			<input class="form-control" type="text" name="data[name]" id="inputName" placeholder="Enter the title of your new thread">
 		</div>
 		
 <!-- 	#editor	#newThreadForm textarea -->
@@ -369,7 +359,7 @@
 <!-- 		</div> -->
 	</div>
 	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button type="submit" name="submitRegister" class="btn btn-primary">Save</button>
 	</div>
 <!-- </form> -->
