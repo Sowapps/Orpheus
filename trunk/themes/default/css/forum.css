@@ -122,6 +122,11 @@ footer.fixed .credits {
 	font-size: 12px;
 }
 
+.form-horizontal input.form-control {
+	width: 240px;
+	margin: auto;
+}
+
 .panel-title > a {
 	display: inline-block;
 	width: 100%;
