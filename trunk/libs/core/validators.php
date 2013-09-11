@@ -27,6 +27,19 @@ function is_name($name, $charnb_max=50, $charnb_min=3) {
 	return preg_match('#^[a-z0-9\-\_]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
 }
 
+//! Checks if the input is a personal name.
+/*!
+ * \param $name The name to check.
+ * \param $charnb_max The maximum length of the given name. Default value is 50.
+ * \param $charnb_min The minimum length of the given name. Default value is 3.
+ * \return True if $name si a name.
+ * 
+ * The name can not contain programming characters like control characters, '<', '>' or '='...
+ */
+function is_personalname($name, $charnb_max=50, $charnb_min=3) {
+	return preg_match('#^[^\^\<\>\*\+\(\)\[\]\{\}\'\"\~\&\=\:\;\`\|\#\@\%\/\\\\\[:cntrl:]]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
+}
+
 //! Checks if the input is an ID Number.
 /*!
  * \param $Number The number to check.
@@ -42,7 +55,6 @@ function is_ID($Number) {
 /*!
  * \param $date The date to check.
  * \param $separators The separator to use for date format. Regex special characters should be escaped.  Optional, default value is \-\/:\;,|\#
- * \param $time The output to get timestamp from this valid date.
  * \return True if $date si a valid date.
  * 
  * The date have to be well formatted and valid.
