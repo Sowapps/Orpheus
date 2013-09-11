@@ -5,7 +5,7 @@
 */
 class UserException extends Exception {
 	
-	private $domain;
+	protected $domain;
 	
 	public function __construct($message=null, $domain=null) {
 		parent::__construct($message);
@@ -14,6 +14,10 @@ class UserException extends Exception {
 	
 	public function getDomain() {
 		return $this->domain;
+	}
+	
+	public function setDomain($domain) {
+		$this->domain = $domain;
 	}
 	
 	public function getText() {

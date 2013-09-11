@@ -278,7 +278,8 @@ abstract class PermanentObject {
 		if( empty($key) ) {
 			return $this->data;
 		}
-		if( !isset($this->data[$key]) ) {
+// 		if( !isset($this->data[$key]) ) {
+		if( !array_key_exists($key, $this->data) ) {
 			log_debug('Key "'.$key.'" not found in array :');
 			log_debug($this->data);
 			throw new FieldNotFoundException($key);
@@ -486,7 +487,6 @@ abstract class PermanentObject {
 	*/
 	public static function create($inputData=array()) {
 		$data = static::checkUserInput($inputData, null, null, $errCount);
-		
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
@@ -494,10 +494,13 @@ abstract class PermanentObject {
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
 		}
+		text("Creating from ".htmlSecret($data));
 		// Check if entry already exist
 		static::checkForObject($data);
+		text("checkForObject ".htmlSecret($data));
 		// To do before insertion
 		static::runForObject($data);
+		text("runForObject from ".htmlSecret($data));
 		
 		$what = array();
 		foreach($data as $fieldname => $fieldvalue) {
@@ -509,6 +512,8 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
+		text("Class fields ".htmlSecret(static::$fields));
+		text("Creating query options ".htmlSecret($options));
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
@@ -679,7 +684,7 @@ abstract class PermanentObject {
 	
 	//! Tests user input
 	/*!
-	 * \param $uInputData The user input data to test.
+	 * \param $data The new data to process.
 	 * \param $fields The array of fields to check. Default value is null.
 	 * \param $ref The referenced object (update only). Default value is null.
 	 * \param $errCount The resulting error count, as pointer. Output parameter.
@@ -725,6 +730,17 @@ abstract class PermanentObject {
 	*/
 	public static function throwException($message) {
 		throw new UserException($message, static::$domain);
+	}
+	
+	//! Reports an UserException
+	/*!
+	 * \param $e the UserException
+	 * \sa UserException
+	 * 
+	 * Throws an UserException with the current domain.
+	*/
+	public static function reportException(UserException $e) {
+		reportError($e);
 	}
 	
 }
