@@ -360,15 +360,15 @@ abstract class PermanentObject {
 		} else {
 			$id = $in;
 		}
+		if( !is_ID($id) ) {
+			static::throwException('invalidID');
+		}
 		// Loading cached
-		if( isset(static::$instances[static::getTable()][$id]) ) {
-			return static::$instances[static::getTable()][$id];
+		if( isset(static::$instances[static::getClass()][$id]) ) {
+			return static::$instances[static::getClass()][$id];
 		}
 		// If we don't get the data, we request them.
 		if( empty($data) ) {
-			if( !is_ID($id) ) {
-				static::throwException('invalidID');
-			}
 			// Getting data
 			$obj = static::get(array(
 				'where'	=> "{$IDFIELD}={$id}",
@@ -382,7 +382,7 @@ abstract class PermanentObject {
 			$obj = new static($data);
 		}
 		// Saving cached
-		return static::$instances[static::getTable()][$id] = $obj;
+		return static::$instances[static::getClass()][$id] = $obj;
 	}
 	
 	//! Deletes a permanent object
@@ -391,7 +391,11 @@ abstract class PermanentObject {
 	 * \return the number of deleted rows.
 	 * 
 	 * Deletes the object with the ID $id or according to the input array.
-	 * It calls runForDeletion() only in case of $in is an ID. 
+	 * It calls runForDeletion() only in case of $in is an ID.
+	 * 
+	 * The cached object is mark as deleted.
+	 * Warning ! If several class instantiate the same db row, it only marks the one of the current class, others won't be marked as deleted, this can cause issues !
+	 * We advise you to use only one class of one item row or to use it read-only.
 	*/
 	public static function delete($in) {
 		
@@ -411,8 +415,8 @@ abstract class PermanentObject {
 		);
 		$r = SQLAdapter::doDelete($options, static::$DBInstance, static::$IDFIELD);
 		if( $r ) {
-			if( isset(static::$instances[static::getTable()][$in]) ) {
-				static::$instances[static::getTable()][$in]->markAsDeleted();
+			if( isset(static::$instances[static::getClass()][$in]) ) {
+				static::$instances[static::getClass()][$in]->markAsDeleted();
 			}
 			static::runForDeletion($in);
 		}
@@ -494,13 +498,13 @@ abstract class PermanentObject {
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
 		}
-		text("Creating from ".htmlSecret($data));
+// 		text("Creating from ".htmlSecret($data));
 		// Check if entry already exist
 		static::checkForObject($data);
-		text("checkForObject ".htmlSecret($data));
+// 		text("checkForObject ".htmlSecret($data));
 		// To do before insertion
 		static::runForObject($data);
-		text("runForObject from ".htmlSecret($data));
+// 		text("runForObject from ".htmlSecret($data));
 		
 		$what = array();
 		foreach($data as $fieldname => $fieldvalue) {
@@ -512,8 +516,8 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
-		text("Class fields ".htmlSecret(static::$fields));
-		text("Creating query options ".htmlSecret($options));
+// 		text("Class fields ".htmlSecret(static::$fields));
+// 		text("Creating query options ".htmlSecret($options));
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
@@ -551,6 +555,14 @@ abstract class PermanentObject {
 			$event.'_time' => (isset($time)) ? $time : time(),
 			$event.'_ip' => (isset($ipAdd)) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
 		);
+	}
+	
+	//! Gets the name of this class
+	/*!
+	 * \return The name of this class.
+	*/
+	public static function getClass() {
+		return get_called_class();
 	}
 	
 	//! Gets the table of this class
