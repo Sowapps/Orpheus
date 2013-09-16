@@ -257,6 +257,17 @@ abstract class PermanentObject {
 		return $this->isDeleted;
 	}
 	
+	//! Checks if this object is valid
+	/*!
+	 * \return True if this object is valid.
+	 * 
+	 * Checks if this object is not deleted.
+	 * May be used for others cases.
+	*/
+	public function isValid() {
+		return !$this->isDeleted();
+	}
+	
 	//! Marks this object as deleted
 	/*!
 	 * \sa isDeleted()
