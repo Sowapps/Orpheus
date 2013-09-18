@@ -101,7 +101,8 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 				$r = (object)$r;//stdClass
 			}
 		}
-		return $results;
+		return $options['output'] == static::ARR_FIRST ? $results[0] : $results;
+// 		return $results;
 // 		return (!empty($results) && $options['output'] == static::ARR_ASSOC && $options['number'] == 1) ? $results[0] : $results;
 	}
 	

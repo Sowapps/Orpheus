@@ -214,7 +214,7 @@ abstract class PermanentObject {
 	*/
 	public function reload($field=null) {
 		$IDFIELD = static::$IDFIELD;
-		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_ASSOC, 'number' => 1);
+		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_FIRST, 'number' => 1);
 		if( !is_null($field) ) {
 			if( !in_array($field, $fields) ) {
 				throw new FieldNotFoundException($field);
@@ -452,13 +452,10 @@ abstract class PermanentObject {
 	 * \sa SQLAdapter
 	 * 
 	 * Gets an objects' list using this class' table.
+	 * Take care that output=SQLAdapter::ARR_OBJECTS and number=1 is different from output=SQLAdapter::OBJECT
 	 * 
 	*/
 	public static function get(array $options=array()) {
-		// Going out of documentation (obsolete)
-// 	 * The following explanations are for the case where output is SQLAdapter::ARR_OBJECTS
-// 	 * If only one object is expected, we try to load and return it, else we return null.
-// 	 * In other cases, we load them and return a list of all objects, even if there is no result or only one.
 		$options['table'] = static::$table;
 		// May be incompatible with old revisions (< R398)
 		if( !isset($options['output']) ) {
@@ -475,7 +472,7 @@ abstract class PermanentObject {
 			$objects = 1;
 		}
 		$r = SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
-		if( empty($r) && ($options['output'] == SQLAdapter::ARR_ASSOC || $options['output'] == SQLAdapter::ARR_OBJECTS) ) {
+		if( empty($r) && in_array($options['output'], array(SQLAdapter::ARR_ASSOC, SQLAdapter::ARR_OBJECTS, SQLAdapter::ARR_FIRST)) ) {
 			return array();
 		}
 		if( !empty($r) && isset($objects) ) {
@@ -509,13 +506,10 @@ abstract class PermanentObject {
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
 		}
-// 		text("Creating from ".htmlSecret($data));
 		// Check if entry already exist
 		static::checkForObject($data);
-// 		text("checkForObject ".htmlSecret($data));
 		// To do before insertion
 		static::runForObject($data);
-// 		text("runForObject from ".htmlSecret($data));
 		
 		$what = array();
 		foreach($data as $fieldname => $fieldvalue) {
@@ -527,8 +521,6 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
-// 		text("Class fields ".htmlSecret(static::$fields));
-// 		text("Creating query options ".htmlSecret($options));
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
