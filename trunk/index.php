@@ -21,15 +21,21 @@ require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
+// Errors Actions
+define("ERROR_THROW_EXCEPTION", 0);
+define("ERROR_DISPLAY_RAW", 1);
+define("ERROR_IGNORE", 2);
 set_error_handler(
 //! Error Handler
 /*!
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
-	if( empty($GLOBALS['NO_EXCEPTION']) ) {
+	if( empty($GLOBALS['ERROR_ACTION']) ) {//ERROR_THROW_EXCEPTION
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-	} else {
+	} else if( $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
+		return;
+	} else {//ERROR_DISPLAY_RAW
 		$backtrace = '';
 		foreach( debug_backtrace() as $trace ) {
 			if( !isset($trace['file']) ) {
@@ -196,8 +202,8 @@ try {
 	Hook::trigger('startSession');
 
 	if( !defined('TERMINAL') ) {
-		$NO_EXCEPTION = 1;
-	
+		$ERROR_ACTION = ERROR_DISPLAY_RAW;
+		
 		//PHP is unable to manage exception thrown during session_start()
 		session_start();
 		if( !isset($_SESSION['ORPHEUS']) ) {
@@ -212,7 +218,7 @@ try {
 			}
 		}
 	
-		$NO_EXCEPTION = 0;
+		$ERROR_ACTION = ERROR_THROW_EXCEPTION;
 	}
 	
 	// Checks and Gets Action.

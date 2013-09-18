@@ -22,7 +22,7 @@ Hook::register('runModule', function () {
 	// If user can not access to this module, we redirect him to default but if default is forbidden, we can not redirect indefinitely.
 	// User should always access to default, even if it redirects him to another module.
 	if( !$USER_CLASS::canAccess($GLOBALS['Module']) && DEFAULTMOD != $GLOBALS['Module'] ) {
-		log_debug(__FILE__.'('.__LINE__.'): Redirecting to default');
+		//log_debug(__FILE__.'('.__LINE__.'): Redirecting to default');
 		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : u(DEFAULTMOD));
 	}
 });
