@@ -214,7 +214,7 @@ abstract class PermanentObject {
 	*/
 	public function reload($field=null) {
 		$IDFIELD = static::$IDFIELD;
-		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_FIRST, 'number' => 1);
+		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_FIRST);
 		if( !is_null($field) ) {
 			if( !in_array($field, $fields) ) {
 				throw new FieldNotFoundException($field);
