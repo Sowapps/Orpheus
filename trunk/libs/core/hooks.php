@@ -24,11 +24,12 @@ Hook::register('runModule', function ($Module) {
 });
 
 //! Callback for Hook 'checkModule'
-Hook::register('checkModule', function () {
-	if( User::is_login() ) {
-		//global $USER;// Do not work in this context.
-		$GLOBALS['USER'] = &$_SESSION['USER'];
-	}
-	$GLOBALS['ACCESS'] = Config::build('access', true);
-	$GLOBALS['RIGHTS'] = Config::build('rights', true);
-});
+// Move to Publisher lib
+// Hook::register('checkModule', function () {
+// 	if( User::is_login() ) {
+// 		//global $USER;// Do not work in this context.
+// 		$GLOBALS['USER'] = &$_SESSION['USER'];
+// 	}
+// 	$GLOBALS['ACCESS'] = Config::build('access', true);
+// 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
+// });
