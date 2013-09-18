@@ -58,11 +58,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * This update method manages 'name' and 'user_name' fields.
 	 */
-	public function update($uInputData) {
+	public function update($uInputData, $fields=null) {
 		if( !User::loggedCanDo(static::$table.'_edit') ) {
 			throw new UserException('forbiddenUpdate');
 		}
-		return parent::update($uInputData);
+		return parent::update($uInputData, $fields);
 	}
 	
 	//! Gets HTML contents
@@ -190,6 +190,7 @@ abstract class AbstractPublication extends AbstractStatus {
 					? 'OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
 					: ''
 				),
+			'output' => SQLAdapter::ARR_FIRST,
 			'number' => 1
 		));
 		if( empty($publication) ) {

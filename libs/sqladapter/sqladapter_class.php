@@ -25,11 +25,12 @@ abstract class SQLAdapter {
 	
 	//List of outputs for getting list
 	const OBJECT		= 1;//!< Object
-	const ARR_ASSOC		= 2;//!< Associative array
-	const ARR_OBJECTS	= 3;//!< Array of objects
-	const STATEMENT		= 4;//!< SQL Statement
-	const SQLQUERY		= 5;//!< Query String
-	const NUMBER		= 6;//!< Number
+	const ARR_FIRST		= 2;//!< First element only (from ARR_ASSOC)
+	const ARR_ASSOC		= 3;//!< Array of associative arrays
+	const ARR_OBJECTS	= 4;//!< Array of objects
+	const STATEMENT		= 5;//!< SQL Statement
+	const SQLQUERY		= 6;//!< Query String
+	const NUMBER		= 7;//!< Number
 
 	//! Constructor
 	/*!
@@ -118,8 +119,7 @@ abstract class SQLAdapter {
 	 * \sa select()
 	*/
 	public static function doSelect(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepare($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->select($options);
 	}
 	
@@ -131,8 +131,7 @@ abstract class SQLAdapter {
 	 * \sa update()
 	*/
 	public static function doUpdate(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepare($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->update($options);
 	}
 	
@@ -144,8 +143,7 @@ abstract class SQLAdapter {
 	 * \sa SQLAdapter::delete()
 	*/
 	public static function doDelete(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepare($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->delete($options);
 	}
 	
@@ -157,8 +155,7 @@ abstract class SQLAdapter {
 	 * \sa SQLAdapter::insert()
 	*/
 	public static function doInsert(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepare($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->insert($options);
 	}
 	
@@ -170,17 +167,30 @@ abstract class SQLAdapter {
 	 * \sa SQLAdapter::lastID()
 	*/
 	public static function doLastID($table, $IDField='id', $Instance=null) {
-		self::prepare($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+		$options=array();
+		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->lastID($table);
 	}
 
-	//! The static function to prepare an adapter for the given instance
+	//! The static function to prepare the query for the given instance
 	/*!
-	 * \param $instance The db instance name to prepare.
-	 * \sa SQLAdapter::lastID()
+	 * \param $options The options used to build the query.
+	 * \param $Instance The db instance used to send the query.
+	 * \param $IDField The ID field of the table.
 	*/
-	public static function prepare($instance=null) {
+	public static function prepareQuery(array &$options=array(), &$Instance=null, $IDField=null) {
+		self::prepareInstance($Instance);
+		self::$Adapters[$Instance]->setIDField($IDField);
+		if( !empty($options) && !empty($options['output']) && $options['output'] == SQLAdapter::ARR_FIRST ) {
+			$options['number'] = 1;
+		}
+	}
+
+	//! The static function to prepareInstance an adapter for the given instance
+	/*!
+	 * \param $instance The db instance name to prepareInstance.
+	*/
+	public static function prepareInstance(&$instance=null) {
 		if( isset(self::$Adapters[$instance]) ) {
 			return;
 		}
@@ -190,7 +200,7 @@ abstract class SQLAdapter {
 			throw new Exception("Adapter unable to connect to the database.");
 		}
 		$adapterClass = 'SQLAdapter_'.$DBS[$Instance]['driver'];
-		// $instance is prepare() name of instance and $Instance is the real one
+		// $instance is prepareInstance() name of instance and $Instance is the real one
 		self::$Adapters[$instance] = new $adapterClass($Instance);
 		if( empty(self::$Adapters[$instance]) ) {
 			// null means default but default is not always 'default'
@@ -212,4 +222,4 @@ abstract class SQLAdapter {
 }
 
 includeDir(LIBSPATH.'sqladapter/');
-SQLAdapter::prepare();//Object destruction can not load libs and load DB config.
+SQLAdapter::prepareInstance();//Object destruction can not load libs and load DB config.
