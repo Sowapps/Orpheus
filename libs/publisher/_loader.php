@@ -16,6 +16,23 @@ $USER_CLASS = USER_CLASS;
 
 // Hooks
 
+//! Hook 'checkModule'
+Hook::register('checkModule', function () {
+	$GLOBALS['ACCESS'] = Config::build('access', true);
+	$GLOBALS['RIGHTS'] = Config::build('rights', true);
+	
+	if( User::is_login() ) {
+		//global $USER;// Do not work in this context.
+		$GLOBALS['USER'] = &$_SESSION['USER'];
+		
+		// If login ip is different from current one, protect against cookie stealing
+		if( $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
+			$USER->logout('loggedFromAnotherComputer');
+			return;
+		}
+	}
+});
+
 //! Hook 'runModule'
 Hook::register('runModule', function () {
 	global $USER_CLASS;
