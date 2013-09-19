@@ -215,7 +215,7 @@ function log_debug($report, $action='') {
  * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
 */
 function log_hack($report, $message='') {
-	log_error($report, (defined("HACKFILENAME")) ? HACKFILENAME : '.hack', '', $message);
+	log_error($report, (defined("HACKLOGFILENAME")) ? HACKLOGFILENAME : '.hack', '', $message);
 }
 
 //! Logs a system error.
