@@ -158,13 +158,13 @@ function cleanscandir($dir, $sorting_order=0) {
  * \param $report The report to log.
  * \param $file The log file path.
  * \param $action The action associated to the report. Default value is an empty string.
- * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
+ * \param $message The message to display. Default is an empty string. See description for details.
  * \warning This function require a writable log file.
 
  * Logs an error in a file serializing data to JSON.
  * Each line of the file is a JSON string of the reports.
  * The log folder is the constant LOGSPATH or, if undefined, the current one.
- * If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
+ * If message is NULL, it won't display any report; if ERROR_LEVEL is DEV_LEVEL, displays report; if empty, throw exception else it displays the message.
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
@@ -175,7 +175,7 @@ function log_error($report, $file, $action='', $message='') {
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( !is_null($message) ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
-// 			$Error['message'] = (empty($message)) ? $report : $message;
+			//$Error['message'] = (empty($message)) ? $report : $message;
 			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
@@ -183,6 +183,9 @@ function log_error($report, $file, $action='', $message='') {
 				// If we fail in our display of this error, this is fatal.
 				echo print_r($Error, 1);
 			}
+		} else if( empty($message) ) {
+			throw new Exception('errorOccurred');
+			
 		} else {
 			die($message);
 		}
@@ -195,11 +198,24 @@ function log_error($report, $file, $action='', $message='') {
  * \param $action The action associated to the report. Default value is an empty string.
  * \sa log_error()
 
- * Logs a system error.
+ * Logs a debug.
  * The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
 */
 function log_debug($report, $action='') {
 	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, null);
+}
+
+//! Logs a hack attemp.
+/*!
+ * \param $report The report to log.
+ * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
+ * \sa log_error()
+
+ * Logs a hack attemp.
+ * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
+*/
+function log_hack($report, $message='') {
+	log_error($report, (defined("HACKFILENAME")) ? HACKFILENAME : '.hack', '', $message);
 }
 
 //! Logs a system error.
@@ -225,8 +241,8 @@ function sys_error($report, $action='') {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action, t('errorOccurredWithDB'));
-	throw new UserException('errorOccurredWithDB');
+	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action);//, t('errorOccurredWithDB'));
+	throw new Exception('errorOccurredWithDB');
 }
 
 //! Limits the length of a string
