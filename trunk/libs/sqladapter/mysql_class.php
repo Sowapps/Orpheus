@@ -80,7 +80,8 @@ class SQLAdapter_MySQL extends SQLAdapter {
 				$r = (object)$r;//stdClass
 			}
 		}
-		return $options['output'] == static::ARR_FIRST ? $results[0] : $results;
+		return (!empty($results) && $options['output'] == static::ARR_FIRST) ?  $results[0] : $results;
+		
 // 		return (!empty($results) && $options['output'] == static::ARR_ASSOC && $options['number'] == 1) ? $results[0] : $results;
 	}
 	
