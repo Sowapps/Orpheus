@@ -23,7 +23,7 @@ Hook::register('checkModule', function () {
 	
 	if( User::is_login() ) {
 		//global $USER;// Do not work in this context.
-		$GLOBALS['USER'] = &$_SESSION['USER'];
+		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
 		
 		// If login ip is different from current one, protect against cookie stealing
 		if( $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
