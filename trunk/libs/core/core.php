@@ -184,7 +184,7 @@ function log_error($report, $file, $action='', $message='') {
 				echo print_r($Error, 1);
 			}
 		} else if( empty($message) ) {
-			throw new Exception('errorOccurred');
+			throw new Exception('fatalErrorOccurred');
 			
 		} else {
 			die($message);
