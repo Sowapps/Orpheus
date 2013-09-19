@@ -1,5 +1,44 @@
 RewriteEngine On
 
+ErrorDocument 400 /http_error-400.html
+ErrorDocument 401 /http_error-401.html
+ErrorDocument 402 /http_error-402.html
+ErrorDocument 403 /http_error-403.html
+ErrorDocument 404 /http_error-404.html
+ErrorDocument 405 /http_error-405.html
+ErrorDocument 406 /http_error-406.html
+ErrorDocument 407 /http_error-407.html
+ErrorDocument 408 /http_error-408.html
+ErrorDocument 409 /http_error-409.html
+ErrorDocument 410 /http_error-410.html
+ErrorDocument 411 /http_error-411.html
+ErrorDocument 412 /http_error-412.html
+ErrorDocument 413 /http_error-413.html
+ErrorDocument 414 /http_error-414.html
+ErrorDocument 415 /http_error-415.html
+ErrorDocument 416 /http_error-416.html
+ErrorDocument 417 /http_error-417.html
+ErrorDocument 418 /http_error-418.html
+ErrorDocument 419 /http_error-419.html
+ErrorDocument 420 /http_error-420.html
+ErrorDocument 421 /http_error-421.html
+ErrorDocument 422 /http_error-422.html
+ErrorDocument 423 /http_error-423.html
+ErrorDocument 424 /http_error-424.html
+ErrorDocument 425 /http_error-425.html
+ErrorDocument 426 /http_error-426.html
+ErrorDocument 500 /http_error-500.html
+ErrorDocument 501 /http_error-501.html
+ErrorDocument 502 /http_error-502.html
+ErrorDocument 503 /http_error-503.html
+ErrorDocument 504 /http_error-504.html
+ErrorDocument 505 /http_error-505.html
+ErrorDocument 506 /http_error-506.html
+ErrorDocument 507 /http_error-507.html
+ErrorDocument 508 /http_error-508.html
+ErrorDocument 509 /http_error-509.html
+ErrorDocument 510 /http_error-510.html
+
 # With JSON the module is constant, this is remote, allow get.json, get-what=user&term=Mi.json
 RewriteRule ^([^\=\&\-]+)(?:\-([^=\-]+=.+))?\.json$ index.php?module=remote&action=$1&format=json&$2 [L,E=json:1,QSA]
 
