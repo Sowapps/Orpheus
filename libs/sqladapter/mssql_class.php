@@ -125,6 +125,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 			$options['orderby'] = $this->IDFIELD; 
 		}
 		$ORDERBY = 'ORDER BY '.$options['orderby'];
+		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
 		
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required
@@ -133,7 +134,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 				UPDATE a SET {$WHAT} WHERE a.rownum {$LIMIT_WC};";
 			
 		} else {
-			$QUERY = "UPDATE {$options['table']} SET {$WHAT}  {$WC} {$ORDERBY};";
+			$QUERY = "UPDATE {$options['table']} SET {$WHAT} {$WC} {$ORDERBY};";
 		}
 		
 		if( $options['output'] == static::SQLQUERY ) {
