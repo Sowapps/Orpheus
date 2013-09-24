@@ -1011,13 +1011,26 @@ function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz01234567
 	return $r;
 }
 
-//! Returns the day time using the given integer
+//! Returns the day timestamp using the given integer
 /*!
  * \param $time The time to get the day time. Default value is current timestamp.
  * 
- * Returns the timestamp of the current day accodring to the midnight hour.
+ * Returns the timestamp of the current day of $time according to the midnight hour.
 */
 function dayTime($time=null) {
 	if( is_null($time) ) { $time = time(); }
 	return $time - $time%86400 - date('Z');
+}
+
+//! Returns the timestamp of the $day of the month using the given integer
+/*!
+ * \param $day The day of the month to get the timestamp. Default value is 1, the first day of the month.
+ * \param $time The time to get the month timestamp. Default value is current timestamp.
+ * \sa dayTime()
+ *
+ * Returns the timestamp of the $day of current month of $time according to the midnight hour.
+*/
+function monthTime($day=1, $time=null) {
+	if( is_null($time) ) { $time = time(); }
+	return dayTime($time - (date('j', $time)-$day)*86400);
 }
