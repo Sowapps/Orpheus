@@ -177,10 +177,10 @@ class Email {
 	 * \param $Body The new body.
 	 */
 	public function setHTMLBody($Body) {
-	if( !is_string($Body) ) {
-	throw new Exception('RequireStringParameter');
-	}
-	$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
+		if( !is_string($Body) ) {
+			throw new Exception('RequireStringParameter');
+		}
+		$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
 	}
 	
 	//! Sets the mail content
