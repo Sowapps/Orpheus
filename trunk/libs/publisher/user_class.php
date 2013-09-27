@@ -26,8 +26,11 @@ class User extends AbstractStatus {
 		'email_public'	=> 'checkPublicEmail',
 		'accesslevel'	=> 'checkAccessLevel'
 	);
-	
-	protected $login = 0;
+
+	const NOT_LOGGED = 0;
+	const IS_LOGGED = 1;
+	const LOGGED_FORCED = 3;
+	protected $login = self::NOT_LOGGED;
 
 	// *** METHODES SURCHARGEES ***
 	
@@ -50,6 +53,11 @@ class User extends AbstractStatus {
 	
 	// *** METHODES UTILISATEUR ***
 	
+	//! Gets the Log in status of this user in the current session.
+	public function isLogin($f=IS_LOGGED) {
+		return bintest($this->login, $f);
+	}
+	
 	//! Log in this user to the current session.
 	public function login($force=false) {
 		if( !$force && static::is_login() ) {
@@ -57,7 +65,7 @@ class User extends AbstractStatus {
 		}
 		global $USER;
 		$_SESSION['USER'] = $USER = $this;
-		$this->login = 1;
+		$this->login = $force ? LOGGED_FORCED : IS_LOGGED;
 		if( !$force ) {
 			static::logEvent('login');
 		}
@@ -70,7 +78,7 @@ class User extends AbstractStatus {
 		if( !$this->login ) {
 			return false;
 		}
-		$this->login = 0;
+		$this->login = self::NOT_LOGGED;
 		$_SESSION['USER'] = $USER = null;
 		$_SESSION['LOGOUT_REASON'] = $reason;
 		return true;
