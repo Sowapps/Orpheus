@@ -90,7 +90,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * If $currentStatus is null, it considers that the objet haven't it, like new one.
 	 */
 	public static function validateStatus($newStatus, $ref=null) {
-		if( empty($newStatus) ) {
+		if( empty($newStatus) || !is_scalar($newStatus) ) {
 			static::throwException('invalidStatus');
 		}
 		if( !isset(static::$status[$newStatus]) ) {
