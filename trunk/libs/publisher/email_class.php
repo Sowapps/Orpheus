@@ -412,11 +412,12 @@ BODY;
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.
 	 */
-	public function setSender($Email) {
-		$this->setHeader('From', $Email);
-		$this->setHeader('Sender', $Email);
+	public function setSender($SenderEmail, $SenderName=null) {
+		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
+		$this->setHeader('From', is_null($SenderName) ? $SenderEmail : '=?utf-8?b?'.base64_encode($SenderName).'?= <'.$SenderEmail.'>');
+		$this->setHeader('Sender', $SenderEmail);
 		if( empty($Headers['Return-Path']) ) {
-			$this->setReplyTo($Email);
+			$this->setReplyTo($SenderEmail);
 		}
 	}
 	
