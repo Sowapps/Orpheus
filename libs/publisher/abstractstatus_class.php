@@ -97,7 +97,7 @@ abstract class AbstractStatus extends PermanentObject {
 			static::throwException('unknownStatus');
 		}
 		//If not new, we check the current status can set to this one.
-		if( isset($ref) && !in_array($newStatus, $ref->getAvailableStatutes()) ) {
+		if( isset($ref) && !$ref->hasStatus($newStatus) && !in_array($newStatus, $ref->getAvailableStatutes()) ) {
 			static::throwException('unavailableStatus');
 		}
 		return $newStatus;
