@@ -63,7 +63,7 @@ class Email {
 			return;
 		}
 		if( defined('SITENAME') ) {
-			$this->setSender(SITENAME.' <'.$sendEmail.'>');
+			$this->setSender($sendEmail, SITENAME);
 		} else {
 			$this->setSender($sendEmail);
 		}
