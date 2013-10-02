@@ -407,10 +407,12 @@ BODY;
 	
 	//! Sets the Sender value of the mail
 	/*!
-	 * \param $Email The email adress to send this mail
+	 * \param $SenderEmail The email adress to send this mail
+	 * \param $SenderName The email adress to send this mail. Default value is null.
 	 * 
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.
+	 * If a sender name is provided, it sets the "From" header to NOM <EMAIL>
 	 */
 	public function setSender($SenderEmail, $SenderName=null) {
 		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
