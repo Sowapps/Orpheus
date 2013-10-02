@@ -20,6 +20,7 @@ function is_email($email) {
  * \param $charnb_max The maximum length of the given name. Default value is 50.
  * \param $charnb_min The minimum length of the given name. Default value is 3.
  * \return True if $name si a name.
+ * \sa is_personalname()
  * 
  * The name is a slug with no special characters.
  */
@@ -33,11 +34,13 @@ function is_name($name, $charnb_max=50, $charnb_min=3) {
  * \param $charnb_max The maximum length of the given name. Default value is 50.
  * \param $charnb_min The minimum length of the given name. Default value is 3.
  * \return True if $name si a name.
+ * \sa is_name()
  * 
  * The name can not contain programming characters like control characters, '<', '>' or '='...
  */
 function is_personalname($name, $charnb_max=50, $charnb_min=3) {
-	return preg_match('#^[^\^\<\>\*\+\(\)\[\]\{\}\'\"\~\&\=\:\;\`\|\#\@\%\/\\\\\[:cntrl:]]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
+	// \'
+	return preg_match('#^[^\^\<\>\*\+\(\)\[\]\{\}\"\~\&\=\:\;\`\|\#\@\%\/\\\\\[:cntrl:]]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
 }
 
 //! Checks if the input is an ID Number.
