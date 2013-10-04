@@ -119,10 +119,15 @@ class Hook {
 		\return The triggerHook() result, usually the first parameter.
 		
 		Triggers the hook named $name.
-		e.g trigger('MyHook', $parameter1, $parameter2)
+		e.g trigger('MyHook', true, $parameter1); trigger('MyHook', $parameter1, $parameter2);
 	*/
 	public static function trigger($name, $silent=false) {
 		$name = static::slug($name);
+		$firstParam = null;
+		if( !is_bool($silent) ) {
+			$firstParam = $silent;
+			$silent = false;// Default
+		}
 		if( empty(static::$hooks[$name]) ) {
 			if( $silent ) {
 				return;
@@ -133,6 +138,9 @@ class Hook {
 		if( func_num_args() > 2 ) {
 			$params = func_get_args();
 			unset($params[0], $params[1]);
+			if( isset($firstParam) ) {
+				$params[0] = $firstParam;
+			}
 			$params = array_values($params);
 		}
 		return static::$hooks[$name]->triggerHook($params);
