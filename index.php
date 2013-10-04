@@ -21,21 +21,15 @@ require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
-// Errors Actions
-define("ERROR_THROW_EXCEPTION", 0);
-define("ERROR_DISPLAY_RAW", 1);
-define("ERROR_IGNORE", 2);
 set_error_handler(
 //! Error Handler
 /*!
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
-	if( empty($GLOBALS['ERROR_ACTION']) ) {//ERROR_THROW_EXCEPTION
+	if( empty($GLOBALS['NO_EXCEPTION']) ) {
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-	} else if( $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
-		return;
-	} else {//ERROR_DISPLAY_RAW
+	} else {
 		$backtrace = '';
 		foreach( debug_backtrace() as $trace ) {
 			if( !isset($trace['file']) ) {
@@ -202,8 +196,8 @@ try {
 	Hook::trigger('startSession');
 
 	if( !defined('TERMINAL') ) {
-		$ERROR_ACTION = ERROR_DISPLAY_RAW;
-		
+		$NO_EXCEPTION = 1;
+	
 		//PHP is unable to manage exception thrown during session_start()
 		session_start();
 		if( !isset($_SESSION['ORPHEUS']) ) {
@@ -218,26 +212,38 @@ try {
 			}
 		}
 	
-		$ERROR_ACTION = ERROR_THROW_EXCEPTION;
+		$NO_EXCEPTION = 0;
 	}
 	
-	// Checks and Gets Action.
+	// Checks and Gets global inputs.
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
-	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? $_GET['format'] : 'html';
+	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
 	
 	Hook::trigger('checkModule');
 	
-	if( empty($_GET['module']) ) {
-		$Module = DEFAULTMOD;
-	} else {
-		$Module = $_GET['module'];
+	$Module = GET('module');
+	
+	if( empty($Module) ) {
+		$Module = ($format == 'json') ? 'remote' : DEFAULTMOD;
 	}
+	
 	if( empty($Module) || !is_name($Module) ) {
 		throw new UserException('invalidModuleName');
 	}
 	if( !is_readable(MODPATH.$Module.'.php') ) {
 		throw new UserException('inexistantModule');
 	}
+	
+	$allowedFormats = Config::get('module_formats');
+	$allowedFormats = isset($allowedFormats[$Module]) ? $allowedFormats[$Module] : 'html';
+	if( $allowedFormats != '*' && $allowedFormats != $Format && (!is_array($allowedFormats) || !in_array($Format, $allowedFormats)) ) {
+		throw new UserException('unavailableFormat');
+	}
+	unset($allowedFormats);
+	
+	// Future feature ?
+	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
+	
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
