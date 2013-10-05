@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="../../js/bootstrap-wysiwyg.js"></script>
 	
 	<script type="text/javascript" src="../../js/debug.js"></script>
+	<script type="text/javascript" src="../../js/forum-forums.js"></script>
 	<script type="text/javascript" src="../../js/forum-editor.js"></script>
 </head>
 <body class="home">
@@ -105,7 +106,7 @@ body.editor {
 
 <div class="forumlist" id="forumlist-0">
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading" data-id="1">
 			<div class="panel-title">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-1">
 				Spare-time Forum (3/9)
@@ -117,7 +118,7 @@ body.editor {
 			
 				<div class="forumlist" id="forumlist-1">
 					<div class="panel panel-default">
-						<div class="panel-heading">
+						<div class="panel-heading"  data-id="3" data-label="Literacy Of Idiots Forum">
 							<div class="panel-title">
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-3">
 								Literacy Of Idiots Forum (2/3)
@@ -127,7 +128,8 @@ body.editor {
 						<div id="collapse-3" class="panel-collapse collapse in">
 							<div class="panel-body">
 								<div class="threadWrapper">
-									<a class="btn btn-default btn-sm right newthreadbtn" data-tid="3" data-label="Literacy Of Idiots Forum">New thread</a>
+									<a class="btn btn-default btn-sm right newthreadbtn"><i class="icon-plus"></i> New thread</a>
+									
 									<h4>Threads of Literacy Of Idiots Forum</h4>
 									<ul>
 										<li class="unread"><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">How to go so far with only a bukket ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 02/06/2013</span></li>
@@ -139,7 +141,7 @@ body.editor {
 						</div>
 					</div>
 					<div class="panel panel-default">
-						<div class="panel-heading">
+						<div class="panel-heading forum-entry">
 							<div class="panel-title">
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-4">
 								The Timeless Beer Forum (0/3)
@@ -180,7 +182,7 @@ body.editor {
 		</div>
 	</div>
 	<div class="panel panel-default">
-		<div class="panel-heading">
+		<div class="panel-heading forum-entry">
 			<div class="panel-title">
 				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-2">
 				Anti-Racist Forum (0/3)
@@ -295,7 +297,7 @@ body.editor {
 <div class="modal-content">
 <!-- <form method="POST" class=""> -->
 <!-- form-horizontal -->
-	<input type="hidden" name="data[tid]" id="ntf_tid" />
+	<input type="hidden" name="data[tid]" id="ntf_fid" />
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 id="myModalLabel">Create new Thread</h3>
@@ -400,27 +402,6 @@ body.editor {
 </div>
 </div>
 </div>
-
-<script type="text/javascript">
-$(function() {
-	
-	// New thread modal
-	var newThreadForm = $("#newThreadForm").modal({show:false});
-// 	var newThreadForm = $("#newThreadForm").modal();// Tests only
-	$(".newthreadbtn").click(function() {
-		debug("Click");
-		debug(newThreadForm);
-		$(newThreadForm).find("#ntf_tid").val($(this).data("tid"));
-		$(newThreadForm).find("#ntf_title").text($(this).data("label"));
-		$(newThreadForm).modal("show");
-	});
-	
-	// Wysiwyg
-// 	$("#newThreadForm textarea").wysiwyg();
-	$("#editor").wysiwyg();
-	
-});
-</script>
 
 <style>
 
