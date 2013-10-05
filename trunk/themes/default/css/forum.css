@@ -63,6 +63,9 @@ footer.fixed .credits {
 	border: 1px solid #E5E5E5;
 	background-color: #F5F5F5;
 }
+.threadWrapper > .btn {
+	margin-left: 5px;
+}
 
 .threadWrapper > ul {
 	margin: 0 0 5px 0;
@@ -132,6 +135,7 @@ footer.fixed .credits {
 	width: 100%;
 }
 
+/* Forum Editor */
 
 /* Thread Module */
 
