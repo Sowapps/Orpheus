@@ -230,7 +230,7 @@ try {
 	if( empty($Module) || !is_name($Module) ) {
 		throw new UserException('invalidModuleName');
 	}
-	if( !existsPathOf($Module.'.php') ) {
+	if( !existsPathOf(MODDIR.$Module.'.php') ) {
 		die('inexistantModule : '.$Module);
 // 		throw new UserException('inexistantModule');
 	}
