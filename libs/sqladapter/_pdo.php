@@ -19,7 +19,7 @@ if( !defined("INSIDE") ) {
 	return;
 }
 
-defifn('DBCONFPATH'			, 'database');
+defifn('DBCONF'				, 'database');
 
 //Constantes PDO
 define('PDOQUERY'			, 0);//Simple Query (SELECT ...). Returns a result set.
@@ -47,7 +47,7 @@ function ensure_pdoinstance($Instance=null) {
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
-		$config = Config::build(DBCONFPATH, true);
+		$config = Config::build(DBCONF, true);
 		$DBS = $config->all;
 	}
 	
