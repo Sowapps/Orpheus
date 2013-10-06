@@ -222,6 +222,8 @@ try {
 	Hook::trigger('checkModule');
 	
 	$Module = GET('module');
+	text($_GET);
+	text('$Module: '.$Module);
 	
 	if( empty($Module) ) {
 		$Module = ($format == 'json') ? 'remote' : DEFAULTMOD;
