@@ -222,8 +222,6 @@ try {
 	Hook::trigger('checkModule');
 	
 	$Module = GET('module');
-	text($_GET);
-	text('$Module: '.$Module);
 	
 	if( empty($Module) ) {
 		$Module = ($format == 'json') ? 'remote' : DEFAULTMOD;
@@ -233,8 +231,8 @@ try {
 		throw new UserException('invalidModuleName');
 	}
 	if( !existsPathOf(MODDIR.$Module.'.php') ) {
-		die('inexistantModule : '.$Module);
-// 		throw new UserException('inexistantModule');
+// 		die('inexistantModule : '.$Module);
+		throw new UserException('inexistantModule');
 	}
 	
 	$allowedFormats = Config::get('module_formats');
