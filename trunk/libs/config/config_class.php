@@ -12,7 +12,7 @@ class Config extends ConfigCore {
 		\param $source An identifier or a path to get the source.
 		\return The loaded configuration array.
 	
-		If an identifier, loads a configuration from a .ini file in CONFPATH.
+		If an identifier, loads a configuration from a .ini file in CONFDIR.
 		Else $source is a full path to the ini configuration file.
 	*/
 	public function load($source) {		
@@ -38,9 +38,9 @@ class Config extends ConfigCore {
 		\param $source An identifier to get the source.
 		\return The configuration file path according to Orpheus file are organized.
 	
-		Gets the configuration file path in CONFPATH.
+		Gets the configuration file path in CONFDIR.
 	*/
 	public static function getFilePath($source) {
-		return CONFPATH.$source.'.'.self::EXT;
+		return pathOf(CONFDIR.$source.'.'.self::EXT);
 	}
 }

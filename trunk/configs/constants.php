@@ -19,7 +19,7 @@ defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'd
 defifn('USER_CLASS',		'SiteUser');
 
 // Useful paths.
-defifn('CONFPATH',			ORPHEUSPATH.'configs/');
+defifn('CONFDIR',			'configs/');
 defifn('MODPATH',			ORPHEUSPATH.'modules/');
 defifn('LIBSPATH',			ORPHEUSPATH.'libs/');
 defifn('THEMESPATH',		ORPHEUSPATH.'themes/');

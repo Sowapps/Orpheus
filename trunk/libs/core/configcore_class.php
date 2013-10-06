@@ -67,7 +67,7 @@ abstract class ConfigCore {
 	//!	Builds new configuration source
 	/*!
 		\param $source An identifier to build the source.
-		\param $minor Specify if this is a minor configuration.
+		\param $minor True if this is a minor configuration.
 		
 		Builds a configuration from $source using load() method.
 		If it is not a minor configuration, that new configuration is added to the main configuration.
@@ -75,17 +75,15 @@ abstract class ConfigCore {
 	public static function build($source, $minor=false) {
 		if( !$minor ) {
 			if( !isset(static::$main) ) {
-				$newConf = new static();
-				static::$main = $newConf;
-				$GLOBALS['CONFIG'] = &$main;
+				static::$main = new static();
+				$GLOBALS['CONFIG'] = &static::$main;
 			}
 			static::$main->load($source);
 			return static::$main;
-		} else {
-			$newConf = new static();
-			$newConf->load($source);
-			return $newConf;
 		}
+		$newConf = new static();
+		$newConf->load($source);
+		return $newConf;
 	}
 	
 	//! Gets configuration from the main configuration object

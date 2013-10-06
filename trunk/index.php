@@ -186,7 +186,7 @@ $coreAction = 'initializing_core';
 try {
 	includeDir(LIBSPATH.'core/');// Load engine Core
 	
-	includeDir(CONFPATH);// Require to be loaded before libraries to get hooks.
+// 	includeDir(ORPHEUSPATH.CONFDIR);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	
