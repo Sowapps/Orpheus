@@ -230,8 +230,9 @@ try {
 	if( empty($Module) || !is_name($Module) ) {
 		throw new UserException('invalidModuleName');
 	}
-	if( !is_readable(MODPATH.$Module.'.php') ) {
-		throw new UserException('inexistantModule');
+	if( !existsPathOf($Module.'.php') ) {
+		die('inexistantModule : '.$Module);
+// 		throw new UserException('inexistantModule');
 	}
 	
 	$allowedFormats = Config::get('module_formats');

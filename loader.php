@@ -54,11 +54,22 @@ function getPath($prefDir, $altDir, $commonPath) {
 //! Gets the path of a file/directory.
 /*!
  * \param $commonPath The common path.
- *  \see getPath()
+ * \see getPath()
  * 
- *  This function uses getPath() with INSTANCEPATH and ORPHEUSPATH as parameters.
- *  It allows developers to get a dynamic path to a file.
+ * This function uses getPath() with INSTANCEPATH and ORPHEUSPATH as parameters.
+ * It allows developers to get a dynamic path to a file.
  */
 function pathOf($commonPath) {
 	return getPath(INSTANCEPATH, ORPHEUSPATH, $commonPath);
+}
+
+//! Checks if the path exists.
+/*!
+ * \param $commonPath The common path.
+ * \sa pathOf()
+ * 
+ * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
+ */
+function existsPathOf($commonPath) {
+	return file_exists(pathOf($commonPath));
 }
