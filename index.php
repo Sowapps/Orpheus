@@ -249,7 +249,7 @@ try {
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
-	require_once MODPATH.$Module.'.php';
+	require_once pathOf(MODDIR.$Module.'.php');
 	$Page = ob_get_contents();
 	ob_end_clean();
 	
