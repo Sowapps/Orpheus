@@ -20,7 +20,7 @@ defifn('USER_CLASS',		'SiteUser');
 
 // Useful paths.
 defifn('CONFDIR',			'configs/');
-defifn('MODPATH',			ORPHEUSPATH.'modules/');
+defifn('MODPATH',			'modules/');
 defifn('LIBSPATH',			ORPHEUSPATH.'libs/');
 defifn('THEMESPATH',		ORPHEUSPATH.'themes/');
 defifn('THEMESURL',			'themes/');
