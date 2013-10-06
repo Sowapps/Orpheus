@@ -1,5 +1,14 @@
 RewriteEngine On
 
+# With JSON, the module is constant, this is remote, allow get.json, get-what=user&term=Mi.json
+#RewriteRule ^([^\=\&\-]+)(?:\-([^=\-]+=.+))?\.json$ index.php?module=remote&action=$1&format=json&$2 [L,E=json:1,QSA]
+
+# , the module is variable, allow home.html, users-create.html, users-edit-u=5.html
+#RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.html$ index.php?module=$1&format=html&action=$2&$3 [L,E=rewritten:1,QSA]
+
+# For other requests, the module is variable, allow home.html, users-create.html, users-edit-u=5.html, api-listUsers.json
+RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.(.+)$ index.php?module=$1&format=$4&action=$2&$3 [L,E=rewritten:1,QSA]
+
 ErrorDocument 400 /http_error-400.html
 ErrorDocument 401 /http_error-401.html
 ErrorDocument 402 /http_error-402.html
@@ -38,13 +47,3 @@ ErrorDocument 507 /http_error-507.html
 ErrorDocument 508 /http_error-508.html
 ErrorDocument 509 /http_error-509.html
 ErrorDocument 510 /http_error-510.html
-
-# With JSON, the module is constant, this is remote, allow get.json, get-what=user&term=Mi.json
-#RewriteRule ^([^\=\&\-]+)(?:\-([^=\-]+=.+))?\.json$ index.php?module=remote&action=$1&format=json&$2 [L,E=json:1,QSA]
-
-# , the module is variable, allow home.html, users-create.html, users-edit-u=5.html
-#RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.html$ index.php?module=$1&format=html&action=$2&$3 [L,E=rewritten:1,QSA]
-
-# For other requests, the module is variable, allow home.html, users-create.html, users-edit-u=5.html, api-listUsers.json
-RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.(.+)$ index.php?module=$1&format=$4&action=$2&$3 [L,E=rewritten:1,QSA]
-
