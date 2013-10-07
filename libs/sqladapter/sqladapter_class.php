@@ -217,6 +217,9 @@ abstract class SQLAdapter {
 	 * Keep in mind this function does not really protect your DB server, especially against SQL injections.
 	*/
 	public static function quote($String) {
+		if( is_float($String) ) {
+			return strtr($String, ',', '.');
+		}
 		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
 	}
 }
