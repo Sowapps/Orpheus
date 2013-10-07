@@ -30,10 +30,11 @@ function loadLangFile($domain=null) {
  * \return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
- * It try to replace $values in text by key using \#key\# format.
- * $values accept 2 formats:
- *  - array('key1'=>'value1', 'key2'=>'value2')
- *  - array(array('key1', 'key2'), array('value1', 'value2'))
+ * It tries to replace $values in text by key using #key# format using str_replace() but if $values is a list of values, it uses sprintf().
+ * $values allows 3 formats:
+ *  - array('key1'=>'value1', 'key2'=>'value2'...)
+ *  - array(array('key1', 'key2'...), array('value1', 'value2'...))
+ *  - array('value1', 'value2'...)
  */
 function t($k, $domain='global', $values=array()) {
 	global $LANG;
@@ -47,6 +48,9 @@ function t($k, $domain='global', $values=array()) {
 	$r = ( isset($LANG[$domain]) && isset($LANG[$domain][$k]) ) ? $LANG[$domain][$k] : $k;
 	if( !empty($values) ) {
 		if( !empty($values[0]) ) {
+			if( !is_array($values[0]) ) {
+				return vsprintf($r, $values);
+			}
 			$rkeys = $values[0];
 			$rvalues = !empty($values[1]) ? $values[1] : '';
 		} else {
