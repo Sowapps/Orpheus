@@ -1,6 +1,7 @@
 RewriteEngine On
 
 RewriteLog "/var/log/apache2/rewrite.log"
+RewriteLogLevel 9
 
 # Server engine rewriting
 #RewriteRule ^index.php$ index.php?module=0&format=html [L,E=rewritten:1,QSA]
