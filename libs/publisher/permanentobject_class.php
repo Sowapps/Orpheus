@@ -663,10 +663,13 @@ abstract class PermanentObject {
 						$value = static::$checkMeth($uInputData, $ref);
 
 					// Field to NOT validate
-					} else if( isset($uInputData[$field]) ) {
+					} else if( array_key_exists($field, $uInputData) ) {
 						$value = $uInputData[$field];
+					} else {
+						$notset = 1;
 					}
-					if( !is_null($value) &&
+// 					if( !is_null($value) &&
+					if( !isset($notset) &&
 						(is_null($ref) || $value != $ref->$field) &&
 						(is_null($fields) || in_array($field, $fields))
 					) {
