@@ -13,12 +13,12 @@ interface Cache {
 	 * 
 	 * The type should preserved, even for objects.
 	 */
-	public abstract function get(&$cached);
+	public function get(&$cached);
 	
 	//! Sets the cache for the given parameters
 	/*!
 	 * \param $data The data to put in the cache
 	 * \return True if cache has been saved
 	 */
-	public abstract function set($data);
+	public function set($data);
 }
