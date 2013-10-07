@@ -84,36 +84,6 @@ function($e) {
 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
 
-//! Includes a directory
-/*!
-	\param $dir The directory to include.
-	\param $importants The files in that are importants to load first.
-	\return The number of files included.
-	
-	Includes all files with a name beginning by '_' in the directory $dir.
-	It browses recursively through sub-directories.
-*/
-function includeDir($dir, $importants=array()) {
-	//Require to be immediatly available.
-	$files = array_unique(array_merge($importants, scandir($dir)));
-	
-	$i=0;
-	foreach($files as $file) {
-		// If file is not readable or hidden, we pass.
-		if( !is_readable($dir.$file) || $file[0] == '.' ) {
-			continue;
-		}
-		//We don't check infinite file system loops.
-		if( is_dir($dir.$file) ) {
-			$i += includeDir($dir.$file.'/');
-		} else if( $file[0] == '_' ) {
-			require_once $dir.$file;
-			$i++;
-		}
-	}
-	return $i;
-}
-
 spl_autoload_register(
 // Class autoload function
 /*
@@ -137,35 +107,36 @@ function($className) {
 		
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
-			if( is_readable(LIBSPATH.$AUTOLOADS[$bFile]) ) {
+			if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile]) ) {
 				// if the path is a directory, we search the class file into this directory.
-				if( is_dir(LIBSPATH.$AUTOLOADS[$bFile]) ) {
-					if( is_readable(LIBSPATH.$AUTOLOADS[$bFile].$bFile.'_class.php') ) {
-						require_once LIBSPATH.$AUTOLOADS[$bFile].$bFile.'_class.php';
+				if( is_dir(pathOf(LIBSDIR.$AUTOLOADS[$bFile])) ) {
+					if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile].$bFile.'_class.php') ) {
+						require_once pathOf(LIBSDIR.$AUTOLOADS[$bFile].$bFile.'_class.php');
 						return;
 					}
 				// if the path is a file, we include the class file.
 				} else {
-					require_once LIBSPATH.$AUTOLOADS[$bFile];
+					require_once pathOf(LIBSDIR.$AUTOLOADS[$bFile]);
 					return;
 				}
 			}
 			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
 			
-		// If the class file is directly in the libs directory
-		} else if( is_readable(LIBSPATH.$bFile.'_class.php') ) {
-			require_once LIBSPATH.$bFile.'_class.php';
+		// NOT USED, PREFER ADDAUTOLOAD()
+// 		// If the class file is directly in the libs directory
+// 		} else if( is_readable(pathOf(LIBSDIR.$bFile.'_class.php') ) {
+// 			require_once pathOf(LIBSDIR.$bFile.'_class.php';
 			
 			
-		// If the class file is in a eponymous sub directory in the libs directory
-		} else if( is_readable(LIBSPATH.$bFile.'/'.$bFile.'_class.php') ) {
-			require_once LIBSPATH.$bFile.'/'.$bFile.'_class.php';
+// 		// If the class file is in a eponymous sub directory in the libs directory
+// 		} else if( is_readable(pathOf(LIBSDIR.$bFile.'/'.$bFile.'_class.php') ) {
+// 			require_once pathOf(LIBSDIR.$bFile.'/'.$bFile.'_class.php';
 			
 		// If the class name is like Package_ClassName, we search the class file "classname" in the "package" directory in libs/.
 		} else {
 			$classExp = explode('_', $bFile, 2);
-			if( count($classExp) > 1 && is_readable(LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php') ) {
-				require_once LIBSPATH.$classExp[0].'/'.$classExp[1].'_class.php';
+			if( count($classExp) > 1 && existsPathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php') ) {
+				require_once pathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php');
 				return;
 			}
 			// NOT FOUND
@@ -184,13 +155,13 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
-	includeDir(LIBSPATH.'core/');// Load engine Core
+	includePath(LIBSDIR.'core/');// Load engine Core
 	
 // 	includeDir(ORPHEUSPATH.CONFDIR);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	
-	includeDir(LIBSPATH);// Require some hooks.
+	includePath(LIBSDIR);// Require some hooks.
 	
 	// Here starts Hooks and Session too.
 	Hook::trigger('startSession');

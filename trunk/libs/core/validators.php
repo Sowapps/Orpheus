@@ -58,6 +58,7 @@ function is_ID($Number) {
 /*!
  * \param $date The date to check.
  * \param $separators The separator to use for date format. Regex special characters should be escaped.  Optional, default value is \-\/:\;,|\#
+ * \param $time The output timestamp of the data, optional.
  * \return True if $date si a valid date.
  * 
  * The date have to be well formatted and valid.

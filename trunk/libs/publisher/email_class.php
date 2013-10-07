@@ -43,8 +43,8 @@ class Email {
 	
 	//! Constructor
 	/*!
-	 * \param $TEXTBody The body of the text message. Default value is an empty string.
 	 * \param $Subject The subject of the mail. Default value is an empty string.
+	 * \param $Text The body of the message, used as text and html. Default value is an empty string.
 	 */
 	public function __construct($Subject='', $Text='') { //Class' Constructor
 		$this->init();
@@ -412,7 +412,7 @@ BODY;
 	 * 
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.
-	 * If a sender name is provided, it sets the "From" header to NOM <EMAIL>
+	 * If a sender name is provided, it sets the "From" header to NOM \<EMAIL\>
 	 */
 	public function setSender($SenderEmail, $SenderName=null) {
 		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n

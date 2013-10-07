@@ -125,6 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a83e0aa98995e9c323a489f354093b8b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a83e0aa98995e9c323a489f354093b8b8">log_debug</a> ($report, $action='')</td></tr>
 <tr class="memdesc:a83e0aa98995e9c323a489f354093b8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a debug.  <a href="#a83e0aa98995e9c323a489f354093b8b8">More...</a><br/></td></tr>
 <tr class="separator:a83e0aa98995e9c323a489f354093b8b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96a76ae1c814140653dcec9ff4c772cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a96a76ae1c814140653dcec9ff4c772cd">log_hack</a> ($report, $message='')</td></tr>
+<tr class="memdesc:a96a76ae1c814140653dcec9ff4c772cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a hack attemp.  <a href="#a96a76ae1c814140653dcec9ff4c772cd">More...</a><br/></td></tr>
+<tr class="separator:a96a76ae1c814140653dcec9ff4c772cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a211c992147daa63b42ade37dc9b72c13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a211c992147daa63b42ade37dc9b72c13">sys_error</a> ($report, $action='')</td></tr>
 <tr class="memdesc:a211c992147daa63b42ade37dc9b72c13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a system error.  <a href="#a211c992147daa63b42ade37dc9b72c13">More...</a><br/></td></tr>
 <tr class="separator:a211c992147daa63b42ade37dc9b72c13"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -251,6 +254,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a8cef7fcbd53bce6d1713714959bb14f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a8cef7fcbd53bce6d1713714959bb14f6">generatePassword</a> ($length=10, $chars='abcdefghijklmnopqrstuvwxyz0123456789?!$@+-', $notlast=2)</td></tr>
 <tr class="memdesc:a8cef7fcbd53bce6d1713714959bb14f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a new password.  <a href="#a8cef7fcbd53bce6d1713714959bb14f6">More...</a><br/></td></tr>
 <tr class="separator:a8cef7fcbd53bce6d1713714959bb14f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1ecb31c4d1da393285cc8915ceb90d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#ac1ecb31c4d1da393285cc8915ceb90d1">dayTime</a> ($time=null)</td></tr>
+<tr class="memdesc:ac1ecb31c4d1da393285cc8915ceb90d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the day timestamp using the given integer.  <a href="#ac1ecb31c4d1da393285cc8915ceb90d1">More...</a><br/></td></tr>
+<tr class="separator:ac1ecb31c4d1da393285cc8915ceb90d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a214870843cda0915d4184141b144703a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a214870843cda0915d4184141b144703a">monthTime</a> ($day=1, $time=null)</td></tr>
+<tr class="memdesc:a214870843cda0915d4184141b144703a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the timestamp of the $day of the month using the given integer.  <a href="#a214870843cda0915d4184141b144703a">More...</a><br/></td></tr>
+<tr class="separator:a214870843cda0915d4184141b144703a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -601,6 +610,29 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The date using 'dateFormat' translation key </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac1ecb31c4d1da393285cc8915ceb90d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dayTime </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$time</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$time</td><td>The time to get the day time. Default value is current timestamp.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Returns the timestamp of the current day of $time according to the midnight hour. </p>
 
 </div>
 </div>
@@ -1591,7 +1623,7 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 <dl class="section see"><dt>See Also</dt><dd><a class="el" href="core_8php.html#aa2116e73f12b6eb77a664a1dc48013e9" title="Logs an error in a file. ">log_error()</a></dd></dl>
-<p>Logs a system error. The log file is the constant DEBUGFILENAME or, if undefined, '.debug'. </p>
+<p>Logs a debug. The log file is the constant DEBUGFILENAME or, if undefined, '.debug'. </p>
 
 </div>
 </div>
@@ -1635,12 +1667,82 @@ Variables</h2></td></tr>
     <tr><td class="paramname">$report</td><td>The report to log. </td></tr>
     <tr><td class="paramname">$file</td><td>The log file path. </td></tr>
     <tr><td class="paramname">$action</td><td>The action associated to the report. Default value is an empty string. </td></tr>
-    <tr><td class="paramname">$message</td><td>If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value. </td></tr>
+    <tr><td class="paramname">$message</td><td>The message to display. Default is an empty string. See description for details. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section warning"><dt>Warning</dt><dd>This function require a writable log file.</dd></dl>
-<p>Logs an error in a file serializing data to JSON. Each line of the file is a JSON string of the reports. The log folder is the constant LOGSPATH or, if undefined, the current one. If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. </p>
+<p>Logs an error in a file serializing data to JSON. Each line of the file is a JSON string of the reports. The log folder is the constant LOGSPATH or, if undefined, the current one. If message is NULL, it won't display any report; if ERROR_LEVEL is DEV_LEVEL, displays report; if empty, throw exception else it displays the message. </p>
+
+</div>
+</div>
+<a class="anchor" id="a96a76ae1c814140653dcec9ff4c772cd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">log_hack </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$report</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$message</em> = <code>''</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$report</td><td>The report to log. </td></tr>
+    <tr><td class="paramname">$message</td><td>If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="core_8php.html#aa2116e73f12b6eb77a664a1dc48013e9" title="Logs an error in a file. ">log_error()</a></dd></dl>
+<p>Logs a hack attemp. The log file is the constant HACKFILENAME or, if undefined, '.hack'. </p>
+
+</div>
+</div>
+<a class="anchor" id="a214870843cda0915d4184141b144703a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">monthTime </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$day</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$time</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$day</td><td>The day of the month to get the timestamp. Default value is 1, the first day of the month. </td></tr>
+    <tr><td class="paramname">$time</td><td>The time to get the month timestamp. Default value is current timestamp. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="core_8php.html#ac1ecb31c4d1da393285cc8915ceb90d1" title="Returns the day timestamp using the given integer. ">dayTime()</a></dd></dl>
+<p>Returns the timestamp of the $day of current month of $time according to the midnight hour. </p>
 
 </div>
 </div>
@@ -2227,7 +2329,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 25 2013 12:34:54 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 7 2013 21:39:22 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

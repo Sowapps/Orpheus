@@ -42,5 +42,5 @@
  * 
  * All libraries are located in the "libs" folder.\n
  * You can change the name and the locaiton of this folder at your own risk.\n
- * To do it, you only should to edit the LIBSPATH constant in the constant file (default location "configs/constants.php").\n
+ * To do it, you only should to edit the pathOf(LIBSDIR constant in the constant file (default location "configs/constants.php").\n
  */

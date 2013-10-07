@@ -4,7 +4,7 @@
 
 addAutoload('Inlay',		'cms/inlay_class.php');
 
-defifn('LAYOUTSPATH',		THEMESPATH.'layouts/');
+//defifn('LAYOUTSPATH',		THEMESDIR.'default/layouts/');
 
 // Hooks
 

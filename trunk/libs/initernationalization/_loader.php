@@ -3,7 +3,7 @@
 /*!
  * Translation plugin using ini files
  * 
- * Require declaration of constants: LANGPATH, LANG.
+ * Require declaration of constants: LANGDIR, LANG.
  */
 
 //! Loads a language ini file
@@ -14,11 +14,11 @@
  * You don't have to use this function explicitly.
  */
 function loadLangFile($domain=null) {
-	if( !empty($domain) && is_readable(LANGPATH.'/'.LANG.'/'.$domain.'.ini') ) {
-		$GLOBALS['LANG'][$domain] = parse_ini_file(LANGPATH.'/'.LANG.'/'.$domain.'.ini');
+	if( !empty($domain) && existsPathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini') ) {
+		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini'));
 		
-	} else if( is_readable(LANGPATH.'/'.LANG.'.ini') ) {
-		$GLOBALS['LANG'] = parse_ini_file(LANGPATH.'/'.LANG.'.ini');
+	} else if( existsPathOf(LANGDIR.'/'.LANG.'.ini') ) {
+		$GLOBALS['LANG'] = parse_ini_file(pathOf(LANGDIR.'/'.LANG.'.ini'));
 	}
 }
 
@@ -30,7 +30,7 @@ function loadLangFile($domain=null) {
  * \return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
- * It tries to replace $values in text by key using #key# format using str_replace() but if $values is a list of values, it uses sprintf().
+ * It tries to replace $values in text by key using \#key\# format using str_replace() but if $values is a list of values, it uses sprintf().
  * $values allows 3 formats:
  *  - array('key1'=>'value1', 'key2'=>'value2'...)
  *  - array(array('key1', 'key2'...), array('value1', 'value2'...))

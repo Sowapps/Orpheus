@@ -100,6 +100,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ab0a029b7ee813042403c6d3486f072b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="validators_8php.html#ab0a029b7ee813042403c6d3486f072b3">is_name</a> ($name, $charnb_max=50, $charnb_min=3)</td></tr>
 <tr class="memdesc:ab0a029b7ee813042403c6d3486f072b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the input is a name.  <a href="#ab0a029b7ee813042403c6d3486f072b3">More...</a><br/></td></tr>
 <tr class="separator:ab0a029b7ee813042403c6d3486f072b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5c0d5bacb060996b024ed66441482bb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="validators_8php.html#ae5c0d5bacb060996b024ed66441482bb">is_personalname</a> ($name, $charnb_max=50, $charnb_min=3)</td></tr>
+<tr class="memdesc:ae5c0d5bacb060996b024ed66441482bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the input is a personal name.  <a href="#ae5c0d5bacb060996b024ed66441482bb">More...</a><br/></td></tr>
+<tr class="separator:ae5c0d5bacb060996b024ed66441482bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b359c824c0d971054b862123ca7b9b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="validators_8php.html#a5b359c824c0d971054b862123ca7b9b2">is_ID</a> ($Number)</td></tr>
 <tr class="memdesc:a5b359c824c0d971054b862123ca7b9b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the input is an ID Number.  <a href="#a5b359c824c0d971054b862123ca7b9b2">More...</a><br/></td></tr>
 <tr class="separator:a5b359c824c0d971054b862123ca7b9b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,7 +159,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">$date</td><td>The date to check. </td></tr>
     <tr><td class="paramname">$separators</td><td>The separator to use for date format. Regex special characters should be escaped. Optional, default value is -\/:\;,|# </td></tr>
-    <tr><td class="paramname">$time</td><td>The output to get timestamp from this valid date. </td></tr>
+    <tr><td class="paramname">$time</td><td>The output timestamp of the data, optional. </td></tr>
   </table>
   </dd>
 </dl>
@@ -273,8 +276,52 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if $name si a name.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if $name si a name. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="validators_8php.html#ae5c0d5bacb060996b024ed66441482bb" title="Checks if the input is a personal name. ">is_personalname()</a></dd></dl>
 <p>The name is a slug with no special characters. </p>
+
+</div>
+</div>
+<a class="anchor" id="ae5c0d5bacb060996b024ed66441482bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">is_personalname </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$charnb_max</em> = <code>50</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$charnb_min</em> = <code>3</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$name</td><td>The name to check. </td></tr>
+    <tr><td class="paramname">$charnb_max</td><td>The maximum length of the given name. Default value is 50. </td></tr>
+    <tr><td class="paramname">$charnb_min</td><td>The minimum length of the given name. Default value is 3. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if $name si a name. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="validators_8php.html#ab0a029b7ee813042403c6d3486f072b3" title="Checks if the input is a name. ">is_name()</a></dd></dl>
+<p>The name can not contain programming characters like control characters, '&lt;', '&gt;' or '='... </p>
 
 </div>
 </div>
@@ -350,7 +397,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 25 2013 12:34:54 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 7 2013 21:39:22 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
