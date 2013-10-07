@@ -224,7 +224,7 @@ try {
 	$Module = GET('module');
 	
 	if( empty($Module) ) {
-		$Module = ($format == 'json') ? 'remote' : DEFAULTMOD;
+		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;
 	}
 	
 	if( empty($Module) || !is_name($Module) ) {
