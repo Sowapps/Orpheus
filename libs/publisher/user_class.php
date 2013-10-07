@@ -65,7 +65,7 @@ class User extends AbstractStatus {
 		}
 		global $USER;
 		$_SESSION['USER'] = $USER = $this;
-		$this->login = $force ? LOGGED_FORCED : IS_LOGGED;
+		$this->login = $force ? self::LOGGED_FORCED : self::IS_LOGGED;
 		if( !$force ) {
 			static::logEvent('login');
 		}
