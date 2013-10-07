@@ -116,7 +116,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Translation plugin using ini files</p>
-<p>Require declaration of constants: LANGPATH, LANG.Loads a language ini file</p>
+<p>Require declaration of constants: LANGDIR, LANG.Loads a language ini file</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">$domain</td><td>The domain of the file to load.</td></tr>
@@ -165,10 +165,11 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The translated human text.</dd></dl>
-<p>This function try to translate the given key, in case of failure, it just returns the Key. It try to replace $values in text by key using #key# format. $values accept 2 formats:</p>
+<p>This function try to translate the given key, in case of failure, it just returns the Key. It tries to replace $values in text by key using #key# format using str_replace() but if $values is a list of values, it uses sprintf(). $values allows 3 formats:</p>
 <ul>
-<li>array('key1'=&gt;'value1', 'key2'=&gt;'value2')</li>
-<li>array(array('key1', 'key2'), array('value1', 'value2')) </li>
+<li>array('key1'=&gt;'value1', 'key2'=&gt;'value2'...)</li>
+<li>array(array('key1', 'key2'...), array('value1', 'value2'...))</li>
+<li>array('value1', 'value2'...) </li>
 </ul>
 
 </div>
@@ -176,7 +177,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 25 2013 12:34:54 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 7 2013 21:39:21 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

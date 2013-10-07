@@ -8,7 +8,6 @@ class TwigRendering extends Rendering {
 	protected static $SHOWMODEL = 'layout';
 	public static $theme = 'default';
 	
-	//public static $themesPath = 'themes/';
 	public static $cssPath = 'css/';
 	public static $modelsPath = '';
 	public static $cachePath = 'cache/';
@@ -63,7 +62,7 @@ class TwigRendering extends Rendering {
 	 * Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return THEMESPATH.static::$theme.'/'.static::$modelsPath;
+		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
 	}
 
 	//! Gets the CSS files path.

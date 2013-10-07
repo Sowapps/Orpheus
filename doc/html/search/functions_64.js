@@ -1,6 +1,7 @@
 var searchData=
 [
   ['d',['d',['../core_8php.html#adbac3297710fcd852ea552eb9cae2ffe',1,'core.php']]],
+  ['daytime',['dayTime',['../core_8php.html#ac1ecb31c4d1da393285cc8915ceb90d1',1,'core.php']]],
   ['defifn',['defifn',['../loader_8php.html#a7ded22765b79029b0acca26547417fe2',1,'loader.php']]],
   ['delete',['delete',['../class_permanent_object.html#a68199e6e3c01a448a040a7a41ed87bf5',1,'PermanentObject\delete()'],['../class_user.html#ad75a67bb454fe739e55c27dbaed54b75',1,'User\delete()'],['../class_s_q_l_adapter___m_s_s_q_l.html#a3ab44bfcee3831d7f5a75983ea02ac4c',1,'SQLAdapter_MSSQL\delete()'],['../class_s_q_l_adapter___my_s_q_l.html#a5d8e78e232a93514735300ae88ce2646',1,'SQLAdapter_MySQL\delete()'],['../class_s_q_l_adapter___pg_s_q_l.html#a0f7e85f39980188e47ea1dafcffa48c1',1,'SQLAdapter_PgSQL\delete()'],['../class_s_q_l_adapter.html#a4d4339f00671a94845321ced1f1c018d',1,'SQLAdapter\delete()']]],
   ['deletebysessid',['deleteBySessID',['../class_d_b_session.html#ae467d67018d4acb5cd935ec12f8ea419',1,'DBSession\deleteBySessID()'],['../class_f_s_session.html#ab20d6f13177e2d2794e884cfc67e9877',1,'FSSession\deleteBySessID()'],['../interface_session_interface.html#a0b4eb2c725cb5f1dd4218ffb6acb1e2b',1,'SessionInterface\deleteBySessID()']]],

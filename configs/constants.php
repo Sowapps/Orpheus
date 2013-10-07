@@ -21,17 +21,16 @@ defifn('USER_CLASS',		'SiteUser');
 // Useful paths.
 defifn('CONFDIR',			'configs/');
 defifn('MODDIR',			'modules/');
-defifn('LIBSPATH',			ORPHEUSPATH.'libs/');
-defifn('THEMESPATH',		ORPHEUSPATH.'themes/');
-defifn('THEMESURL',			'themes/');
-defifn('LOGSPATH',			INSTANCEPATH.'logs/');
+defifn('LIBSPATH',			'libs/');
+defifn('THEMESDIR',			'themes/');
 defifn('SRCPATH',			'src/');
+defifn('LOGSPATH',			pathOf('logs/'));
 
 // Static medias
 defifn('JSURL',				'js/');
 
 // LIB Initernationalization
-defifn('LANGPATH',			ORPHEUSPATH.'languages/');
+defifn('LANGDIR',			'languages/');
 defifn('LANG',				'en_US');
 
 
@@ -39,12 +38,15 @@ defifn('LANG',				'en_US');
 defifn('DEFAULTMOD',		'home');
 defifn('DEFAULTHOST',		'domain.com');
 defifn('DEFAULTPATH',		'');
+
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
 defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
 defifn('HOST',				(!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
 defifn('PATH',				(!defined("TERMINAL")) ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
 defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
+
+defifn('THEMESURL',			SITEROOT.THEMESDIR);
 
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');

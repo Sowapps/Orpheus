@@ -224,5 +224,5 @@ abstract class SQLAdapter {
 	}
 }
 
-includeDir(LIBSPATH.'sqladapter/');
+includePath(LIBSDIR.'sqladapter/');
 SQLAdapter::prepareInstance();//Object destruction can not load libs and load DB config.

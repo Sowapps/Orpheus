@@ -1,5 +1,5 @@
 <?php
 Config::set('default_rendering', 'TwigRendering');
 
-//require LIBSPATH.'/twigrenderer/loader.php';
+//require pathOf(LIBSDIR.'/twigrenderer/loader.php';
 using('twigrenderer');

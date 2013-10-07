@@ -9,6 +9,7 @@ var searchData=
   ['removefile',['removeFile',['../class_email.html#a46a15322af0364f1e5436a105157541b',1,'Email']]],
   ['render',['render',['../class_h_t_m_l_rendering.html#a70649f84bc09bea3305aad3e48581319',1,'HTMLRendering\render()'],['../class_raw_rendering.html#a4b87eb09b23769d96f423552cedb71e0',1,'RawRendering\render()'],['../class_rendering.html#a4784300bff972c7aefa6f457b348e3cf',1,'Rendering\render()'],['../class_twig_rendering.html#affaf912670f9129130050a8c1559fa7f',1,'TwigRendering\render()']]],
   ['reporterror',['reportError',['../core_8php.html#a6d6ef354094dac611b9b5317ee892432',1,'core.php']]],
+  ['reportexception',['reportException',['../class_permanent_object.html#ad85212350ccbd65dcaf4028df5fd3ba6',1,'PermanentObject']]],
   ['reportsuccess',['reportSuccess',['../core_8php.html#ade63ab225ff0ae8b6d536063ced98fd7',1,'core.php']]],
   ['runfordeletion',['runForDeletion',['../class_permanent_object.html#a1f57d01565f42b7ceeec106c623ed33c',1,'PermanentObject']]],
   ['runforobject',['runForObject',['../class_permanent_object.html#ac11ba854b181270c9a276d2f98e2b5b5',1,'PermanentObject']]],

@@ -58,10 +58,10 @@
         <topic label="generateHTML" href="class_abstract_publication.html#a8c9c398f8b2a1f013b7d6aa421875091"/>
         <topic label="getHTML" href="class_abstract_publication.html#a55253f2feec765b230c520678650608e"/>
         <topic label="getPermalink" href="class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689"/>
-        <topic label="update" href="class_abstract_publication.html#a59993d3b6c4061914a2bec1af513f807"/>
+        <topic label="update" href="class_abstract_publication.html#a1a77266e0ece905d3f0784b021099faf"/>
       </topic>
       <topic label="AbstractStatus" href="class_abstract_status.html">
-        <topic label="getAvailableStatus" href="class_abstract_status.html#a512a92ba0dd08cb963d9c1dcb7866fea"/>
+        <topic label="getAvailableStatutes" href="class_abstract_status.html#a267bb2922648eebedf5e387097bfc925"/>
         <topic label="hasStatus" href="class_abstract_status.html#ac54dcd7d7cb2959c7eab521fa55c213e"/>
         <topic label="status" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a"/>
       </topic>
@@ -97,7 +97,7 @@
       <topic label="DemoTest_MSSQL" href="class_demo_test___m_s_s_q_l.html">
       </topic>
       <topic label="Email" href="class_email.html">
-        <topic label="__construct" href="class_email.html#a33eb5e6ebeb36002b04c3889c8d1964f"/>
+        <topic label="__construct" href="class_email.html#a58ba755e5c52414ab8aa372e8f6bce2c"/>
         <topic label="addFile" href="class_email.html#ad84119c306ad05ad193ecf268c27ce5e"/>
         <topic label="containsFile" href="class_email.html#aac98e123dee2736316a334ae2b028808"/>
         <topic label="containsFiles" href="class_email.html#abf06726b70313b2445ea2ebfe60f7f21"/>
@@ -112,8 +112,9 @@
         <topic label="setHeader" href="class_email.html#a6b96d29cb1773a336a6687526234bc94"/>
         <topic label="setHTMLBody" href="class_email.html#a02b93c9ff2e15025ccb4239fb6f2fdb7"/>
         <topic label="setReplyTo" href="class_email.html#a7d2cd08f3a1a3e554870775a9fa88f7f"/>
-        <topic label="setSender" href="class_email.html#aaf2cf8f2eafe22cf70f9c59bebce581b"/>
+        <topic label="setSender" href="class_email.html#ae5c6b9f7b1dad5260e65a4991d8e5ace"/>
         <topic label="setSubject" href="class_email.html#a6ecd8877938ad840384c69e9e651ff97"/>
+        <topic label="setText" href="class_email.html#a8bfd38ae202ca627f668af6ad3f932b6"/>
         <topic label="setTEXTBody" href="class_email.html#a2b4d36da7cba6986dad33eec31885fac"/>
         <topic label="setType" href="class_email.html#aed46d83df3197fe96ec398ccb86eb32d"/>
       </topic>
@@ -167,6 +168,7 @@
         <topic label="getValue" href="class_permanent_object.html#a2c3772c84dce93dad42456f97ecc2043"/>
         <topic label="id" href="class_permanent_object.html#abc9ca1144a41a15612b0ae5911476bf7"/>
         <topic label="isDeleted" href="class_permanent_object.html#abc5464b809ee92087918c18911313aad"/>
+        <topic label="isValid" href="class_permanent_object.html#a6b4fe15af6c9dd44913f1369a346a4c8"/>
         <topic label="logEvent" href="class_permanent_object.html#ad8409d733ea083781ab49f708cfdf611"/>
         <topic label="markAsDeleted" href="class_permanent_object.html#a109fef49e4c13ba1153cb336cfae15cb"/>
         <topic label="reload" href="class_permanent_object.html#a27a97f82ce80e2facd7d45c6a6fde1df"/>
@@ -210,6 +212,7 @@
         <topic label="$IDFIELD" href="class_s_q_l_adapter.html#a77c7584bfacda9ac2784d276e0e8297a"/>
         <topic label="$instance" href="class_s_q_l_adapter.html#ad992ff908d42b598638aedf866f2466b"/>
         <topic label="ARR_ASSOC" href="class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99"/>
+        <topic label="ARR_FIRST" href="class_s_q_l_adapter.html#a9a43a68faa464d33d6761d99cc09a3da"/>
         <topic label="ARR_OBJECTS" href="class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d"/>
         <topic label="NUMBER" href="class_s_q_l_adapter.html#a9f7af1df9bd218bc0eb238a1917dba44"/>
         <topic label="OBJECT" href="class_s_q_l_adapter.html#a0a309acd0683fe5fbfe9f85795205bd4"/>
@@ -227,7 +230,7 @@
       <topic label="SQLAdapter_MySQL" href="class_s_q_l_adapter___my_s_q_l.html">
         <topic label="delete" href="class_s_q_l_adapter___my_s_q_l.html#a5d8e78e232a93514735300ae88ce2646"/>
         <topic label="insert" href="class_s_q_l_adapter___my_s_q_l.html#a3d278996658e9423a9a929e987b08abf"/>
-        <topic label="lastID" href="class_s_q_l_adapter___my_s_q_l.html#a67b58ae22e39b13ca141785e3392688d"/>
+        <topic label="lastID" href="class_s_q_l_adapter___my_s_q_l.html#a1eab2808d7c8fb53ea4fdeefc14599f9"/>
         <topic label="select" href="class_s_q_l_adapter___my_s_q_l.html#a4361980f3f7ae99c0e1ca6e8d3586559"/>
         <topic label="update" href="class_s_q_l_adapter___my_s_q_l.html#aa04e05aad5c5d7c94e644b2f2f253c67"/>
       </topic>
@@ -253,16 +256,22 @@
         <topic label="checkAccess" href="class_user.html#a5ac267096a7c19f89ca55c7d1da68102"/>
         <topic label="checkPerm" href="class_user.html#a7cee8b78b21d4feb83b81d3b6dcf98fd"/>
         <topic label="checkPermissions" href="class_user.html#af22671725e0fbe9f308532ce48f51cfc"/>
+        <topic label="isLogin" href="class_user.html#ad603c262d93586f3742264a396aed9d4"/>
         <topic label="login" href="class_user.html#acf6ad93e82d8619be3d8cdf21cff3973"/>
         <topic label="logout" href="class_user.html#ac683e117c9a9dbf46162264f2934bc42"/>
         <topic label="update" href="class_user.html#a8e20ac963c2ff927b990ef270323e4ee"/>
         <topic label="$login" href="class_user.html#a7b0214e86b488d62c5d84f9e25636993"/>
+        <topic label="IS_LOGGED" href="class_user.html#a05e6ed3b3fc830b30d22215fb9ca9f19"/>
+        <topic label="LOGGED_FORCED" href="class_user.html#aef9e502143ad8dbb222505b2bfeb33b8"/>
+        <topic label="NOT_LOGGED" href="class_user.html#ad610e7bf5d57e1245831d8cdc7f3ee09"/>
       </topic>
       <topic label="UserException" href="class_user_exception.html">
         <topic label="__construct" href="class_user_exception.html#a8e850d6a879be5c88241fa792400aee0"/>
         <topic label="__toString" href="class_user_exception.html#a22f2bdc405126d755375bb1dd7aac8a2"/>
         <topic label="getDomain" href="class_user_exception.html#a886d24a7dd9764bf075be7cfc3c6a54f"/>
         <topic label="getText" href="class_user_exception.html#a3f2c8005ea1c1a86495e2e89bf003175"/>
+        <topic label="setDomain" href="class_user_exception.html#ab8a4e6d3dce314554b84b117ffbeb45f"/>
+        <topic label="$domain" href="class_user_exception.html#af7bc41ecf53a7b76480ef512becba233"/>
       </topic>
       <topic label="YAML" href="class_y_a_m_l.html">
         <topic label="load" href="class_y_a_m_l.html#a2ce76a6aeda680434c9d074218e9ea89"/>
@@ -449,6 +458,7 @@
             <topic label="cleanscandir" href="core_8php.html#a01d33e93fcf3ad447c29152d3c713d3f"/>
             <topic label="convertSpecialChars" href="core_8php.html#abad254d750f2204201c9e4b8c2ca5ae6"/>
             <topic label="d" href="core_8php.html#adbac3297710fcd852ea552eb9cae2ffe"/>
+            <topic label="dayTime" href="core_8php.html#ac1ecb31c4d1da393285cc8915ceb90d1"/>
             <topic label="displayReportsHTML" href="core_8php.html#a11c265514f0fba8c7192ef620e049d5c"/>
             <topic label="dt" href="core_8php.html#a21d43156a56fa99efa60c8e667b3c1d6"/>
             <topic label="escapeText" href="core_8php.html#acb95ce6c030db33abec0b3ba8612f97a"/>
@@ -477,6 +487,8 @@
             <topic label="iURLEncode" href="core_8php.html#a610776a2fc33289d10478a034ed60b14"/>
             <topic label="log_debug" href="core_8php.html#a83e0aa98995e9c323a489f354093b8b8"/>
             <topic label="log_error" href="core_8php.html#aa2116e73f12b6eb77a664a1dc48013e9"/>
+            <topic label="log_hack" href="core_8php.html#a96a76ae1c814140653dcec9ff4c772cd"/>
+            <topic label="monthTime" href="core_8php.html#a214870843cda0915d4184141b144703a"/>
             <topic label="parseFields" href="core_8php.html#ac5ddd4d37e80713d7bef3cf1728de4ac"/>
             <topic label="permanentRedirectTo" href="core_8php.html#ace68af7b3fcb376fb2fe7effa3cb3c52"/>
             <topic label="POST" href="core_8php.html#a5255c6d32ecc62a0c22631d5ab4cabb0"/>
@@ -507,6 +519,8 @@
               <topic label="__toString" href="class_user_exception.html#a22f2bdc405126d755375bb1dd7aac8a2"/>
               <topic label="getDomain" href="class_user_exception.html#a886d24a7dd9764bf075be7cfc3c6a54f"/>
               <topic label="getText" href="class_user_exception.html#a3f2c8005ea1c1a86495e2e89bf003175"/>
+              <topic label="setDomain" href="class_user_exception.html#ab8a4e6d3dce314554b84b117ffbeb45f"/>
+              <topic label="$domain" href="class_user_exception.html#af7bc41ecf53a7b76480ef512becba233"/>
             </topic>
           </topic>
           <topic label="validators.php" href="validators_8php.html">
@@ -515,6 +529,7 @@
             <topic label="is_ID" href="validators_8php.html#a5b359c824c0d971054b862123ca7b9b2"/>
             <topic label="is_ip" href="validators_8php.html#a88794014f637bbec53b09a1dc484f323"/>
             <topic label="is_name" href="validators_8php.html#ab0a029b7ee813042403c6d3486f072b3"/>
+            <topic label="is_personalname" href="validators_8php.html#ae5c0d5bacb060996b024ed66441482bb"/>
             <topic label="is_phone_number" href="validators_8php.html#a7562e0774c512c0a5dd2cd8ac0b2cea6"/>
             <topic label="is_url" href="validators_8php.html#abc84d22b81771baa628fe64ffb380561"/>
           </topic>
@@ -561,19 +576,19 @@
               <topic label="generateHTML" href="class_abstract_publication.html#a8c9c398f8b2a1f013b7d6aa421875091"/>
               <topic label="getHTML" href="class_abstract_publication.html#a55253f2feec765b230c520678650608e"/>
               <topic label="getPermalink" href="class_abstract_publication.html#ac3d8552ba971cd6ec3e857860baa3689"/>
-              <topic label="update" href="class_abstract_publication.html#a59993d3b6c4061914a2bec1af513f807"/>
+              <topic label="update" href="class_abstract_publication.html#a1a77266e0ece905d3f0784b021099faf"/>
             </topic>
           </topic>
           <topic label="abstractstatus_class.php" href="abstractstatus__class_8php.html">
             <topic label="AbstractStatus" href="class_abstract_status.html">
-              <topic label="getAvailableStatus" href="class_abstract_status.html#a512a92ba0dd08cb963d9c1dcb7866fea"/>
+              <topic label="getAvailableStatutes" href="class_abstract_status.html#a267bb2922648eebedf5e387097bfc925"/>
               <topic label="hasStatus" href="class_abstract_status.html#ac54dcd7d7cb2959c7eab521fa55c213e"/>
               <topic label="status" href="class_abstract_status.html#a13065df944948731acc20a3237f0601a"/>
             </topic>
           </topic>
           <topic label="email_class.php" href="email__class_8php.html">
             <topic label="Email" href="class_email.html">
-              <topic label="__construct" href="class_email.html#a33eb5e6ebeb36002b04c3889c8d1964f"/>
+              <topic label="__construct" href="class_email.html#a58ba755e5c52414ab8aa372e8f6bce2c"/>
               <topic label="addFile" href="class_email.html#ad84119c306ad05ad193ecf268c27ce5e"/>
               <topic label="containsFile" href="class_email.html#aac98e123dee2736316a334ae2b028808"/>
               <topic label="containsFiles" href="class_email.html#abf06726b70313b2445ea2ebfe60f7f21"/>
@@ -588,8 +603,9 @@
               <topic label="setHeader" href="class_email.html#a6b96d29cb1773a336a6687526234bc94"/>
               <topic label="setHTMLBody" href="class_email.html#a02b93c9ff2e15025ccb4239fb6f2fdb7"/>
               <topic label="setReplyTo" href="class_email.html#a7d2cd08f3a1a3e554870775a9fa88f7f"/>
-              <topic label="setSender" href="class_email.html#aaf2cf8f2eafe22cf70f9c59bebce581b"/>
+              <topic label="setSender" href="class_email.html#ae5c6b9f7b1dad5260e65a4991d8e5ace"/>
               <topic label="setSubject" href="class_email.html#a6ecd8877938ad840384c69e9e651ff97"/>
+              <topic label="setText" href="class_email.html#a8bfd38ae202ca627f668af6ad3f932b6"/>
               <topic label="setTEXTBody" href="class_email.html#a2b4d36da7cba6986dad33eec31885fac"/>
               <topic label="setType" href="class_email.html#aed46d83df3197fe96ec398ccb86eb32d"/>
             </topic>
@@ -612,6 +628,7 @@
               <topic label="getValue" href="class_permanent_object.html#a2c3772c84dce93dad42456f97ecc2043"/>
               <topic label="id" href="class_permanent_object.html#abc9ca1144a41a15612b0ae5911476bf7"/>
               <topic label="isDeleted" href="class_permanent_object.html#abc5464b809ee92087918c18911313aad"/>
+              <topic label="isValid" href="class_permanent_object.html#a6b4fe15af6c9dd44913f1369a346a4c8"/>
               <topic label="logEvent" href="class_permanent_object.html#ad8409d733ea083781ab49f708cfdf611"/>
               <topic label="markAsDeleted" href="class_permanent_object.html#a109fef49e4c13ba1153cb336cfae15cb"/>
               <topic label="reload" href="class_permanent_object.html#a27a97f82ce80e2facd7d45c6a6fde1df"/>
@@ -639,10 +656,14 @@
               <topic label="checkAccess" href="class_user.html#a5ac267096a7c19f89ca55c7d1da68102"/>
               <topic label="checkPerm" href="class_user.html#a7cee8b78b21d4feb83b81d3b6dcf98fd"/>
               <topic label="checkPermissions" href="class_user.html#af22671725e0fbe9f308532ce48f51cfc"/>
+              <topic label="isLogin" href="class_user.html#ad603c262d93586f3742264a396aed9d4"/>
               <topic label="login" href="class_user.html#acf6ad93e82d8619be3d8cdf21cff3973"/>
               <topic label="logout" href="class_user.html#ac683e117c9a9dbf46162264f2934bc42"/>
               <topic label="update" href="class_user.html#a8e20ac963c2ff927b990ef270323e4ee"/>
               <topic label="$login" href="class_user.html#a7b0214e86b488d62c5d84f9e25636993"/>
+              <topic label="IS_LOGGED" href="class_user.html#a05e6ed3b3fc830b30d22215fb9ca9f19"/>
+              <topic label="LOGGED_FORCED" href="class_user.html#aef9e502143ad8dbb222505b2bfeb33b8"/>
+              <topic label="NOT_LOGGED" href="class_user.html#ad610e7bf5d57e1245831d8cdc7f3ee09"/>
             </topic>
           </topic>
         </topic>
@@ -733,7 +754,7 @@
             <topic label="SQLAdapter_MySQL" href="class_s_q_l_adapter___my_s_q_l.html">
               <topic label="delete" href="class_s_q_l_adapter___my_s_q_l.html#a5d8e78e232a93514735300ae88ce2646"/>
               <topic label="insert" href="class_s_q_l_adapter___my_s_q_l.html#a3d278996658e9423a9a929e987b08abf"/>
-              <topic label="lastID" href="class_s_q_l_adapter___my_s_q_l.html#a67b58ae22e39b13ca141785e3392688d"/>
+              <topic label="lastID" href="class_s_q_l_adapter___my_s_q_l.html#a1eab2808d7c8fb53ea4fdeefc14599f9"/>
               <topic label="select" href="class_s_q_l_adapter___my_s_q_l.html#a4361980f3f7ae99c0e1ca6e8d3586559"/>
               <topic label="update" href="class_s_q_l_adapter___my_s_q_l.html#aa04e05aad5c5d7c94e644b2f2f253c67"/>
             </topic>
@@ -760,6 +781,7 @@
               <topic label="$IDFIELD" href="class_s_q_l_adapter.html#a77c7584bfacda9ac2784d276e0e8297a"/>
               <topic label="$instance" href="class_s_q_l_adapter.html#ad992ff908d42b598638aedf866f2466b"/>
               <topic label="ARR_ASSOC" href="class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99"/>
+              <topic label="ARR_FIRST" href="class_s_q_l_adapter.html#a9a43a68faa464d33d6761d99cc09a3da"/>
               <topic label="ARR_OBJECTS" href="class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d"/>
               <topic label="NUMBER" href="class_s_q_l_adapter.html#a9f7af1df9bd218bc0eb238a1917dba44"/>
               <topic label="OBJECT" href="class_s_q_l_adapter.html#a0a309acd0683fe5fbfe9f85795205bd4"/>
@@ -816,6 +838,10 @@
         </topic>
         <topic label="faq.php" href="faq_8php.html"/>
         <topic label="home.php" href="home_8php.html"/>
+        <topic label="http_error.php" href="http__error_8php.html">
+          <topic label="$CODE" href="http__error_8php.html#a4086870af864681c36f42e7ed7d6c559"/>
+          <topic label="$TCODE" href="http__error_8php.html#a6a314691ee990441e4762701d25aeaec"/>
+        </topic>
         <topic label="logout.php" href="logout_8php.html"/>
         <topic label="mssql.php" href="mssql_8php.html"/>
         <topic label="sample_twig.php" href="sample__twig_8php.html"/>
@@ -831,7 +857,7 @@
         <topic label="default" href="dir_6fa16a25e17f3e4fbf08770da8ebb922.html">
           <topic label="page_skeleton.php" href="page__skeleton_8php.html"/>
           <topic label="report.php" href="report_8php.html">
-            <topic label="if" href="report_8php.html#a0eeaafd811fcbfeef3b70b6805482e11"/>
+            <topic label="if" href="report_8php.html#a97548b8481dee08bf1bc8014f8107687"/>
           </topic>
         </topic>
       </topic>
@@ -846,10 +872,10 @@
       <topic label="libraries.php" href="libraries_8php.html"/>
       <topic label="mainpage.php" href="mainpage_8php.html"/>
       <topic label="index.php" href="index_8php.html">
-        <topic label="includeDir" href="index_8php.html#ad2ef1ab0552fa919e575f479180626f0"/>
         <topic label="$Action" href="index_8php.html#a326aabb2f11d58d64b9fefa1b8abfadc"/>
+        <topic label="$allowedFormats" href="index_8php.html#ad8b7c9e9e8f146ff1c2d4d9822583b03"/>
         <topic label="$AUTOLOADS" href="index_8php.html#a2acfab2ac24bd8ac6c7d36cfd70f6e69"/>
-        <topic label="$coreAction" href="index_8php.html#af8d1975398cd1311d97162373f2f0da5"/>
+        <topic label="$coreAction" href="index_8php.html#a6f4e7796f7498165710c677c671c16d3"/>
         <topic label="$Format" href="index_8php.html#a6e94dc26ed654d87da04e0730ffe1794"/>
         <topic label="$Module" href="index_8php.html#a643d60fb839b5d58f0725a88d0ecd1a0"/>
         <topic label="$Page" href="index_8php.html#aab089c55bd2018e10a58f9c478b9440e"/>
@@ -860,7 +886,10 @@
       <topic label="loader.php" href="loader_8php.html">
         <topic label="defifn" href="loader_8php.html#a7ded22765b79029b0acca26547417fe2"/>
         <topic label="dirpath" href="loader_8php.html#ab63512d4bd01c4b44e9bfbbc555cb3d6"/>
+        <topic label="existsPathOf" href="loader_8php.html#a3a2a5e008a9abc73c4ea2fa818ba3ad5"/>
         <topic label="getPath" href="loader_8php.html#acee932ccf02e6ab181d7a29d2702be06"/>
+        <topic label="includeDir" href="loader_8php.html#ad2ef1ab0552fa919e575f479180626f0"/>
+        <topic label="includePath" href="loader_8php.html#a85af0b5ea9d187d63df0ec1dce58d727"/>
         <topic label="pathOf" href="loader_8php.html#a97f8a32581cffdab3463b758cd3ee092"/>
       </topic>
     </topic>

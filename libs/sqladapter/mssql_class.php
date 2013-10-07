@@ -228,7 +228,6 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 	//! The function to get the last inserted ID
 	/*!
 		\param $table The table to get the last inserted id.
-		\param $idfield The field id name.
 		\return The last inserted id value.
 		
 		It requires a successful call of insert() !

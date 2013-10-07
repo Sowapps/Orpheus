@@ -22,6 +22,7 @@ var searchData=
   ['pgsql_5fclass_2ephp',['pgsql_class.php',['../pgsql__class_8php.html',1,'']]],
   ['post',['Post',['../class_post.html',1,'Post'],['../core_8php.html#a5255c6d32ecc62a0c22631d5ab4cabb0',1,'POST($path=null):&#160;core.php']]],
   ['post_5fclass_2ephp',['post_class.php',['../post__class_8php.html',1,'']]],
-  ['prepare',['prepare',['../class_s_q_l_adapter.html#a4a76273ec7d2fe4e207633ba29685244',1,'SQLAdapter']]],
+  ['prepareinstance',['prepareInstance',['../class_s_q_l_adapter.html#ae738de92caf7fd1ff6522ba97ebe282d',1,'SQLAdapter']]],
+  ['preparequery',['prepareQuery',['../class_s_q_l_adapter.html#ac9ceef66f90b2613d695748d6f1d0ef1',1,'SQLAdapter']]],
   ['prod_5flevel',['PROD_LEVEL',['../constants_8php.html#a43979363d85c9f0ba4f7d2d56e097df1',1,'constants.php']]]
 ];

@@ -73,3 +73,47 @@ function pathOf($commonPath) {
 function existsPathOf($commonPath) {
 	return file_exists(pathOf($commonPath));
 }
+
+//! Includes a directory
+/*!
+	\param $dir The directory to include.
+	\param $importants The files in that are importants to load first.
+	\return The number of files included.
+	
+	Includes all files with a name beginning by '_' in the directory $dir.
+	It browses recursively through sub-directories.
+*/
+function includeDir($dir, $importants=array()) {
+	//Require to be immediatly available.
+	$files = array_unique(array_merge($importants, scandir($dir)));
+	
+	$i=0;
+	foreach($files as $file) {
+		// If file is not readable or hidden, we pass.
+		if( !is_readable($dir.$file) || $file[0] == '.' ) {
+			continue;
+		}
+		//We don't check infinite file system loops.
+		if( is_dir($dir.$file) ) {
+			$i += includeDir($dir.$file.'/');
+		} else if( $file[0] == '_' ) {
+			require_once $dir.$file;
+			$i++;
+		}
+	}
+	return $i;
+}
+
+//! Includes a directory
+/*!
+	\param $path The relative directory path to include.
+	\param $importants The files in that are importants to load first.
+	\return The number of files included.
+	\sa includeDir()
+	
+	Includes all files with a name beginning by '_' in the directory $dir.
+	It browses recursively through sub-directories.
+*/
+function includePath($path, $importants=array()) {
+	return includeDir(pathOf($path), $importants);
+}

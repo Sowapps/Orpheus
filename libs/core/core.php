@@ -386,7 +386,7 @@ function build_apath($array, $prefix='') {
  * Class files should be named classname_class.php
 */
 function using($pkgPath) {
-	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	$pkgPath = pathOf(LIBSDIR.str_replace('.', '/',strtolower($pkgPath)));
 	// Including all contents of a package
 	if( substr($pkgPath, -2) == '.*' ) {
 		$dir = substr($pkgPath, 0, -2);
@@ -427,10 +427,10 @@ function addAutoload($className, $classPath) {
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
-	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
+	if( existsPathOf(LIBSDIR.$classPath.'_class.php') ) {
 		$AUTOLOADS[$className] = $classPath.'_class.php';
 		
-	} else if( is_readable(LIBSPATH.$classPath) ) {
+	} else if( existsPathOf(LIBSDIR.$classPath) ) {
 		$AUTOLOADS[$className] = $classPath;
 		
 	} else {

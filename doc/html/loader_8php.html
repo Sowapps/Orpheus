@@ -105,6 +105,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a97f8a32581cffdab3463b758cd3ee092"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loader_8php.html#a97f8a32581cffdab3463b758cd3ee092">pathOf</a> ($commonPath)</td></tr>
 <tr class="memdesc:a97f8a32581cffdab3463b758cd3ee092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the path of a file/directory.  <a href="#a97f8a32581cffdab3463b758cd3ee092">More...</a><br/></td></tr>
 <tr class="separator:a97f8a32581cffdab3463b758cd3ee092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a2a5e008a9abc73c4ea2fa818ba3ad5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loader_8php.html#a3a2a5e008a9abc73c4ea2fa818ba3ad5">existsPathOf</a> ($commonPath)</td></tr>
+<tr class="memdesc:a3a2a5e008a9abc73c4ea2fa818ba3ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the path exists.  <a href="#a3a2a5e008a9abc73c4ea2fa818ba3ad5">More...</a><br/></td></tr>
+<tr class="separator:a3a2a5e008a9abc73c4ea2fa818ba3ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2ef1ab0552fa919e575f479180626f0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loader_8php.html#ad2ef1ab0552fa919e575f479180626f0">includeDir</a> ($dir, $importants=array())</td></tr>
+<tr class="memdesc:ad2ef1ab0552fa919e575f479180626f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Includes a directory.  <a href="#ad2ef1ab0552fa919e575f479180626f0">More...</a><br/></td></tr>
+<tr class="separator:ad2ef1ab0552fa919e575f479180626f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85af0b5ea9d187d63df0ec1dce58d727"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="loader_8php.html#a85af0b5ea9d187d63df0ec1dce58d727">includePath</a> ($path, $importants=array())</td></tr>
+<tr class="memdesc:a85af0b5ea9d187d63df0ec1dce58d727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Includes a directory.  <a href="#a85af0b5ea9d187d63df0ec1dce58d727">More...</a><br/></td></tr>
+<tr class="separator:a85af0b5ea9d187d63df0ec1dce58d727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Florent Hazard </dd></dl>
@@ -170,6 +179,30 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a3a2a5e008a9abc73c4ea2fa818ba3ad5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">existsPathOf </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$commonPath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$commonPath</td><td>The common path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="loader_8php.html#a97f8a32581cffdab3463b758cd3ee092" title="Gets the path of a file/directory. ">pathOf()</a></dd></dl>
+<p>This function uses <a class="el" href="loader_8php.html#a97f8a32581cffdab3463b758cd3ee092" title="Gets the path of a file/directory. ">pathOf()</a> to determine possible path of $commonPath and checks if there is any file with this path in file system. </p>
+
+</div>
+</div>
 <a class="anchor" id="acee932ccf02e6ab181d7a29d2702be06"></a>
 <div class="memitem">
 <div class="memproto">
@@ -211,6 +244,77 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ad2ef1ab0552fa919e575f479180626f0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">includeDir </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$importants</em> = <code>array()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$dir</td><td>The directory to include. </td></tr>
+    <tr><td class="paramname">$importants</td><td>The files in that are importants to load first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of files included.</dd></dl>
+<p>Includes all files with a name beginning by '_' in the directory $dir. It browses recursively through sub-directories. </p>
+
+</div>
+</div>
+<a class="anchor" id="a85af0b5ea9d187d63df0ec1dce58d727"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">includePath </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$importants</em> = <code>array()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$path</td><td>The relative directory path to include. </td></tr>
+    <tr><td class="paramname">$importants</td><td>The files in that are importants to load first. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of files included. </dd></dl>
+<dl class="section see"><dt>See Also</dt><dd><a class="el" href="loader_8php.html#ad2ef1ab0552fa919e575f479180626f0" title="Includes a directory. ">includeDir()</a></dd></dl>
+<p>Includes all files with a name beginning by '_' in the directory $dir. It browses recursively through sub-directories. </p>
+
+</div>
+</div>
 <a class="anchor" id="a97f8a32581cffdab3463b758cd3ee092"></a>
 <div class="memitem">
 <div class="memproto">
@@ -238,7 +342,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 25 2013 12:34:54 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 7 2013 21:39:22 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

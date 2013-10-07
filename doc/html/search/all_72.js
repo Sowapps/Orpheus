@@ -16,6 +16,7 @@ var searchData=
   ['rendering_5fclass_2ephp',['rendering_class.php',['../rendering__class_8php.html',1,'']]],
   ['report_2ephp',['report.php',['../report_8php.html',1,'']]],
   ['reporterror',['reportError',['../core_8php.html#a6d6ef354094dac611b9b5317ee892432',1,'core.php']]],
+  ['reportexception',['reportException',['../class_permanent_object.html#ad85212350ccbd65dcaf4028df5fd3ba6',1,'PermanentObject']]],
   ['reportsuccess',['reportSuccess',['../core_8php.html#ade63ab225ff0ae8b6d536063ced98fd7',1,'core.php']]],
   ['runfordeletion',['runForDeletion',['../class_permanent_object.html#a1f57d01565f42b7ceeec106c623ed33c',1,'PermanentObject']]],
   ['runforobject',['runForObject',['../class_permanent_object.html#ac11ba854b181270c9a276d2f98e2b5b5',1,'PermanentObject']]],

@@ -153,9 +153,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a629d86c63b946db2ab516a51831257fb"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a629d86c63b946db2ab516a51831257fb">doLastID</a> ($table, $IDField='id', $Instance=null)</td></tr>
 <tr class="memdesc:a629d86c63b946db2ab516a51831257fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to use to get last isnert id in global context.  <a href="#a629d86c63b946db2ab516a51831257fb">More...</a><br/></td></tr>
 <tr class="separator:a629d86c63b946db2ab516a51831257fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a76273ec7d2fe4e207633ba29685244"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a4a76273ec7d2fe4e207633ba29685244">prepare</a> ($instance=null)</td></tr>
-<tr class="memdesc:a4a76273ec7d2fe4e207633ba29685244"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to prepare an adapter for the given instance.  <a href="#a4a76273ec7d2fe4e207633ba29685244">More...</a><br/></td></tr>
-<tr class="separator:a4a76273ec7d2fe4e207633ba29685244"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9ceef66f90b2613d695748d6f1d0ef1"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#ac9ceef66f90b2613d695748d6f1d0ef1">prepareQuery</a> (array &amp;$options=array(), &amp;$Instance=null, $IDField=null)</td></tr>
+<tr class="memdesc:ac9ceef66f90b2613d695748d6f1d0ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to prepare the query for the given instance.  <a href="#ac9ceef66f90b2613d695748d6f1d0ef1">More...</a><br/></td></tr>
+<tr class="separator:ac9ceef66f90b2613d695748d6f1d0ef1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae738de92caf7fd1ff6522ba97ebe282d"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#ae738de92caf7fd1ff6522ba97ebe282d">prepareInstance</a> (&amp;$instance=null)</td></tr>
+<tr class="memdesc:ae738de92caf7fd1ff6522ba97ebe282d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to prepareInstance an adapter for the given instance.  <a href="#ae738de92caf7fd1ff6522ba97ebe282d">More...</a><br/></td></tr>
+<tr class="separator:ae738de92caf7fd1ff6522ba97ebe282d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a577d0fd77dc00f3dbff1eac820937eff"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a577d0fd77dc00f3dbff1eac820937eff">quote</a> ($String)</td></tr>
 <tr class="memdesc:a577d0fd77dc00f3dbff1eac820937eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The static function to quote.  <a href="#a577d0fd77dc00f3dbff1eac820937eff">More...</a><br/></td></tr>
 <tr class="separator:a577d0fd77dc00f3dbff1eac820937eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,19 +168,22 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a0a309acd0683fe5fbfe9f85795205bd4"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a0a309acd0683fe5fbfe9f85795205bd4">OBJECT</a> = 1</td></tr>
 <tr class="memdesc:a0a309acd0683fe5fbfe9f85795205bd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object.  <a href="#a0a309acd0683fe5fbfe9f85795205bd4">More...</a><br/></td></tr>
 <tr class="separator:a0a309acd0683fe5fbfe9f85795205bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a786c9837cc82b3feded76e486cd8eb99"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99">ARR_ASSOC</a> = 2</td></tr>
-<tr class="memdesc:a786c9837cc82b3feded76e486cd8eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Associative array.  <a href="#a786c9837cc82b3feded76e486cd8eb99">More...</a><br/></td></tr>
+<tr class="memitem:a9a43a68faa464d33d6761d99cc09a3da"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a9a43a68faa464d33d6761d99cc09a3da">ARR_FIRST</a> = 2</td></tr>
+<tr class="memdesc:a9a43a68faa464d33d6761d99cc09a3da"><td class="mdescLeft">&#160;</td><td class="mdescRight">First element only (from ARR_ASSOC)  <a href="#a9a43a68faa464d33d6761d99cc09a3da">More...</a><br/></td></tr>
+<tr class="separator:a9a43a68faa464d33d6761d99cc09a3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a786c9837cc82b3feded76e486cd8eb99"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a786c9837cc82b3feded76e486cd8eb99">ARR_ASSOC</a> = 3</td></tr>
+<tr class="memdesc:a786c9837cc82b3feded76e486cd8eb99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of associative arrays.  <a href="#a786c9837cc82b3feded76e486cd8eb99">More...</a><br/></td></tr>
 <tr class="separator:a786c9837cc82b3feded76e486cd8eb99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab10d92683a8cd085914b562237a0cd0d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d">ARR_OBJECTS</a> = 3</td></tr>
+<tr class="memitem:ab10d92683a8cd085914b562237a0cd0d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#ab10d92683a8cd085914b562237a0cd0d">ARR_OBJECTS</a> = 4</td></tr>
 <tr class="memdesc:ab10d92683a8cd085914b562237a0cd0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of objects.  <a href="#ab10d92683a8cd085914b562237a0cd0d">More...</a><br/></td></tr>
 <tr class="separator:ab10d92683a8cd085914b562237a0cd0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a347794cd7831ca59a542503e21d3f9"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a5a347794cd7831ca59a542503e21d3f9">STATEMENT</a> = 4</td></tr>
+<tr class="memitem:a5a347794cd7831ca59a542503e21d3f9"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a5a347794cd7831ca59a542503e21d3f9">STATEMENT</a> = 5</td></tr>
 <tr class="memdesc:a5a347794cd7831ca59a542503e21d3f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">SQL Statement.  <a href="#a5a347794cd7831ca59a542503e21d3f9">More...</a><br/></td></tr>
 <tr class="separator:a5a347794cd7831ca59a542503e21d3f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee5252f595ca1ccc9346f7c9ead4dca3"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#aee5252f595ca1ccc9346f7c9ead4dca3">SQLQUERY</a> = 5</td></tr>
+<tr class="memitem:aee5252f595ca1ccc9346f7c9ead4dca3"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#aee5252f595ca1ccc9346f7c9ead4dca3">SQLQUERY</a> = 6</td></tr>
 <tr class="memdesc:aee5252f595ca1ccc9346f7c9ead4dca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query String.  <a href="#aee5252f595ca1ccc9346f7c9ead4dca3">More...</a><br/></td></tr>
 <tr class="separator:aee5252f595ca1ccc9346f7c9ead4dca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f7af1df9bd218bc0eb238a1917dba44"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a9f7af1df9bd218bc0eb238a1917dba44">NUMBER</a> = 6</td></tr>
+<tr class="memitem:a9f7af1df9bd218bc0eb238a1917dba44"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_q_l_adapter.html#a9f7af1df9bd218bc0eb238a1917dba44">NUMBER</a> = 7</td></tr>
 <tr class="memdesc:a9f7af1df9bd218bc0eb238a1917dba44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number.  <a href="#a9f7af1df9bd218bc0eb238a1917dba44">More...</a><br/></td></tr>
 <tr class="separator:a9f7af1df9bd218bc0eb238a1917dba44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -564,7 +570,7 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4a76273ec7d2fe4e207633ba29685244"></a>
+<a class="anchor" id="ae738de92caf7fd1ff6522ba97ebe282d"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -572,9 +578,9 @@ Static Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static SQLAdapter::prepare </td>
+          <td class="memname">static SQLAdapter::prepareInstance </td>
           <td>(</td>
-          <td class="paramtype">&#160;</td>
+          <td class="paramtype">&amp;&#160;</td>
           <td class="paramname"><em>$instance</em> = <code>null</code></td><td>)</td>
           <td></td>
         </tr>
@@ -587,11 +593,58 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">$instance</td><td>The db instance name to prepare. </td></tr>
+    <tr><td class="paramname">$instance</td><td>The db instance name to prepareInstance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See Also</dt><dd><a class="el" href="class_s_q_l_adapter.html#adc3ef16bedd88d1e336a2a3b9d19cc3c" title="The function to get the last inserted ID. ">SQLAdapter::lastID()</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac9ceef66f90b2613d695748d6f1d0ef1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static SQLAdapter::prepareQuery </td>
+          <td>(</td>
+          <td class="paramtype">array &amp;&#160;</td>
+          <td class="paramname"><em>$options</em> = <code>array()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$Instance</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$IDField</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$options</td><td>The options used to build the query. </td></tr>
+    <tr><td class="paramname">$Instance</td><td>The db instance used to send the query. </td></tr>
+    <tr><td class="paramname">$IDField</td><td>The ID field of the table. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -895,7 +948,19 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLAdapter::ARR_ASSOC = 2</td>
+          <td class="memname">const SQLAdapter::ARR_ASSOC = 3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9a43a68faa464d33d6761d99cc09a3da"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const SQLAdapter::ARR_FIRST = 2</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -907,7 +972,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLAdapter::ARR_OBJECTS = 3</td>
+          <td class="memname">const SQLAdapter::ARR_OBJECTS = 4</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -919,7 +984,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLAdapter::NUMBER = 6</td>
+          <td class="memname">const SQLAdapter::NUMBER = 7</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -943,7 +1008,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLAdapter::SQLQUERY = 5</td>
+          <td class="memname">const SQLAdapter::SQLQUERY = 6</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -955,7 +1020,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const SQLAdapter::STATEMENT = 4</td>
+          <td class="memname">const SQLAdapter::STATEMENT = 5</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -968,7 +1033,7 @@ Static Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 25 2013 12:34:54 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 7 2013 21:39:22 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
