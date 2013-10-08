@@ -98,7 +98,7 @@ function($className) {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
 		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
-			$alConf = Config::build('autoload', true);
+			$alConf = Config::build('autoloads', true);
 			$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
 			$AUTOLOADSFROMCONF = true;
 		}
@@ -155,9 +155,14 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
-	includePath(LIBSDIR.'core/');// Load engine Core
+	defifn('CORELIB',		'core');
+	defifn('CONFIGLIB',		'config');
 	
-// 	includeDir(ORPHEUSPATH.CONFDIR);// Require to be loaded before libraries to get hooks.
+	includePath(LIBSDIR.CORELIB.'/');// Load engine Core
+	
+	includePath(LIBSDIR.CONFIGLIB.'/');// Load configuration library (Must provide Config class).
+	
+	includePath(CONFDIR);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	

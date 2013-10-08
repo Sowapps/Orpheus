@@ -179,7 +179,7 @@ function log_error($report, $file, $action='', $message='') {
 			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
-			if( !Rendering::doDisplay('report', $Error) ) {
+			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
 				// If we fail in our display of this error, this is fatal.
 				echo print_r($Error, 1);
 			}
