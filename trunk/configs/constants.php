@@ -14,24 +14,28 @@ define('INSIDE',			true);
 define('DEV_LEVEL',			E_ALL | E_STRICT);//Development
 define('PROD_LEVEL',		0);//Production
 
-defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev') ? DEV_LEVEL : PROD_LEVEL);
+defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev' || strpos($_SERVER['SCRIPT_FILENAME'], 'debug') !== false) ? DEV_LEVEL : PROD_LEVEL);
 
 defifn('USER_CLASS',		'SiteUser');
 
 // Useful paths.
 defifn('CONFDIR',			'configs/');
 defifn('MODDIR',			'modules/');
-defifn('LIBSPATH',			'libs/');
+defifn('LIBSDIR',			'libs/');
 defifn('THEMESDIR',			'themes/');
-defifn('SRCPATH',			'src/');
-defifn('LOGSPATH',			pathOf('logs/'));
 
-// Static medias
-defifn('JSURL',				'js/');
+defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
+defifn('LOGSPATH',			pathOf('logs/'));
+defifn('STOREPATH',			INSTANCEPATH.'store/');
+defifn('CACHEPATH',			STOREPATH.'cache/');
+
+// defifn('CONFIGLIB',			'config');
+// defifn('CORELIB',			'core');
 
 // LIB Initernationalization
 defifn('LANGDIR',			'languages/');
 defifn('LANG',				'en_US');
+defifn('LOCALE',			LANG.'.utf8');
 
 
 // Miscelanous
@@ -46,7 +50,9 @@ defifn('PATH',				(!defined("TERMINAL")) ? dirpath($_SERVER['SCRIPT_NAME']) : DE
 defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
 
-defifn('THEMESURL',			SITEROOT.THEMESDIR);
+// Static medias
+defifn('JSURL',				SITEROOT.'/js/');
+defifn('THEMESURL',			SITEROOT.'/'.THEMESDIR);
 
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');
