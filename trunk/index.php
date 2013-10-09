@@ -8,11 +8,21 @@
  * PHP File for the website core.
  */
 
+$t = $SRCPATHS; unset($SRCPATHS);
 require_once 'loader.php';
 
-// This method take care about paths through symbolic links.
-defifn('ORPHEUSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));
-defifn('INSTANCEPATH', ORPHEUSPATH);
+// These constants take care about paths through symbolic links.
+defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
+defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
+defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
+
+addSrcPath(ORPHEUSPATH);
+addSrcPath(APPLICATIONPATH);
+addSrcPath(INSTANCEPATH);
+foreach($t as $path) {
+	addSrcPath($path);
+}
+unset($t);
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 

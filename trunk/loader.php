@@ -8,6 +8,10 @@
  * PHP File for the website core.
  */
 
+if( !isset($SRCPATHS) ) {
+	$SRCPATHS = array();
+}
+
 //! Defines an undefined constant.
 /*!
  * \param $name		The name of the constant.
@@ -28,6 +32,7 @@ function defifn($name, $value) {
 /*!
  * \param $path The path get parent directory
  * \return The secured path
+ * \sa dirname()
  * 
  * Gets the parent directory path of $path
  */
@@ -36,42 +41,51 @@ function dirpath($path) {
 	return ( $dirname == '/' ) ? '/' : $dirname.'/';
 }
 
-//! Gets the path of a file/directory using a preferred directory.
-/*!
- * \param $prefDir The preferred directory path to use.
- * \param $altDir The alternative directory path.
- * \param $commonPath The common path.
- * 
- *  This function tries to return the path to the file $commonPath searching first
- *  in the preferred directory $prefDir and if not found in this one, it searches
- *  into the alternative directory $altDir.
- *  This function does not check if $commonPath file really exists in $altDir directory.
- */
-function getPath($prefDir, $altDir, $commonPath) {
-	return ( file_exists($prefDir.$commonPath) ) ? $prefDir.$commonPath : $altDir.$commonPath;
-}
-
 //! Gets the path of a file/directory.
 /*!
  * \param $commonPath The common path.
- * \see getPath()
+ * \return The first valid path or null if there is no valid one.
+ * \sa addSrcPath()
  * 
- * This function uses getPath() with INSTANCEPATH and ORPHEUSPATH as parameters.
+ * This function uses global variable $SRCPATHS to get the known paths.
  * It allows developers to get a dynamic path to a file.
  */
 function pathOf($commonPath) {
-	return getPath(INSTANCEPATH, ORPHEUSPATH, $commonPath);
+	global $SRCPATHS;
+	for( $i=count($SRCPATHS)-1; $i>=0; $i-- ) {
+		if( file_exists($SRCPATHS[$i].$commonPath) ) {
+			return $SRCPATHS[$i];
+		}
+	}
+	return null;
+// 	return getPath(INSTANCEPATH, ORPHEUSPATH, $commonPath);
+}
+
+//! Adds the path to the known paths.
+/*!
+ * \param $path The source path to add.
+ * \return True if the path was added.
+ * \see pathOf()
+ */
+function addSrcPath($path) {
+	global $SRCPATHS;
+	if( in_array($path, $SRCPATHS) ) {
+		return false;
+	}
+	$SRCPATHS[] = $path;
+	return true;
 }
 
 //! Checks if the path exists.
 /*!
  * \param $commonPath The common path.
+ * \param $path The output parameter to get the first valid path.
  * \sa pathOf()
  * 
  * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
  */
-function existsPathOf($commonPath) {
-	return file_exists(pathOf($commonPath));
+function existsPathOf($commonPath, &$path=null) {
+	return is_null($path=pathOf($commonPath));
 }
 
 //! Includes a directory
