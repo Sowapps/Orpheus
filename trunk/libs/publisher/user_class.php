@@ -427,8 +427,7 @@ class User extends AbstractStatus {
 		$user = static::get(array(
 			'what'		=> $what,
 			'where'		=> $where,
-			'output'	=> SQLAdapter::ARR_ASSOC,
-			'number'	=> 1
+			'output'	=> SQLAdapter::ARR_FIRST
 		));
 		if( !empty($user) ) {
 			if( $user['email'] == $data['email'] ) {
