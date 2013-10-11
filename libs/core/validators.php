@@ -40,7 +40,7 @@ function is_name($name, $charnb_max=50, $charnb_min=3) {
  */
 function is_personalname($name, $charnb_max=50, $charnb_min=3) {
 	// \'
-	return preg_match('#^[^\^\<\>\*\+\(\)\[\]\{\}\"\~\&\=\:\;\`\|\#\@\%\/\\\\\[:cntrl:]]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
+	return preg_match('#^[^\^\<\>\*\+\(\)\[\]\{\}\"\~\&\=\:\;\`\|\#\@\%\/\\\\[:cntrl:]]{'.$charnb_min.','.$charnb_max.'}$#i', $name);
 }
 
 //! Checks if the input is an ID Number.
