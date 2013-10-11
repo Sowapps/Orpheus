@@ -506,6 +506,7 @@ abstract class PermanentObject {
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
 		}
+		
 		// Check if entry already exist
 		static::checkForObject($data);
 		// To do before insertion
@@ -655,7 +656,7 @@ abstract class PermanentObject {
 					continue;
 				}
 				try {
-					$value = null;
+					$value = $notset = null;
 					// Field to validate
 					if( !empty(static::$validator[$field]) ) {
 						$checkMeth = static::$validator[$field];
