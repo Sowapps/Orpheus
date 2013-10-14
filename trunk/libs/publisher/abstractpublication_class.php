@@ -182,16 +182,14 @@ abstract class AbstractPublication extends AbstractStatus {
 		}
 		$ucheck = ($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'";
 		
-		$publication = SQLAdapter::doSelect(array(
-			'table' => static::$table,
+		$publication = static::get(array(
 			'what' => 'name',
 			'where' => 'name = '.SQLAdapter::quote($data['name']).
 				( (static::$floodDelay)
-					? 'OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
+					? ' OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
 					: ''
 				),
-			'output' => SQLAdapter::ARR_FIRST,
-			'number' => 1
+			'output' => SQLAdapter::ARR_FIRST
 		));
 		if( empty($publication) ) {
 			return;

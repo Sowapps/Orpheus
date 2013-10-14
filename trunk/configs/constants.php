@@ -60,3 +60,5 @@ defifn('SITENAME',			'Orpheus');
 defifn('PDOLOGFILENAME',	'.pdo_error');
 defifn('SYSLOGFILENAME',	'.system');
 defifn('DEBUGFILENAME',		'.debug');
+defifn('HACKLOGFILENAME',	'.hack');
+defifn('SERVLOGFILENAME',	'.server');

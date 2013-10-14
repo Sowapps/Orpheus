@@ -158,13 +158,13 @@ function cleanscandir($dir, $sorting_order=0) {
  * \param $report The report to log.
  * \param $file The log file path.
  * \param $action The action associated to the report. Default value is an empty string.
- * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
+ * \param $message The message to display. Default is an empty string. See description for details.
  * \warning This function require a writable log file.
 
  * Logs an error in a file serializing data to JSON.
  * Each line of the file is a JSON string of the reports.
  * The log folder is the constant LOGSPATH or, if undefined, the current one.
- * If the ERROR_LEVEL is setted to DEV_LEVEL, the error will be displayed. 
+ * If message is NULL, it won't display any report; if ERROR_LEVEL is DEV_LEVEL, displays report; if empty, throw exception else it displays the message.
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
@@ -175,14 +175,17 @@ function log_error($report, $file, $action='', $message='') {
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( !is_null($message) ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
-// 			$Error['message'] = (empty($message)) ? $report : $message;
+			//$Error['message'] = (empty($message)) ? $report : $message;
 			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
-			if( !Rendering::doDisplay('report', $Error) ) {
+			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
 				// If we fail in our display of this error, this is fatal.
 				echo print_r($Error, 1);
 			}
+		} else if( empty($message) ) {
+			throw new Exception('fatalErrorOccurred');
+			
 		} else {
 			die($message);
 		}
@@ -195,18 +198,31 @@ function log_error($report, $file, $action='', $message='') {
  * \param $action The action associated to the report. Default value is an empty string.
  * \sa log_error()
 
- * Logs a system error.
+ * Logs a debug.
  * The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
 */
 function log_debug($report, $action='') {
 	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, null);
 }
 
+//! Logs a hack attemp.
+/*!
+ * \param $report The report to log.
+ * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
+ * \sa log_error()
+
+ * Logs a hack attemp.
+ * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
+*/
+function log_hack($report, $message='') {
+	log_error($report, (defined("HACKLOGFILENAME")) ? HACKLOGFILENAME : '.hack', '', $message);
+}
+
 //! Logs a system error.
 /*!
  * \param $report The report to log.
  * \param $action The action associated to the report. Default value is an empty string.
- * \param $silent True to do not display any report.
+ * \param $silent True to not display any report. Default value is false.
  * \sa log_error()
 
  * Logs a system error.
@@ -226,8 +242,8 @@ function sys_error($report, $action='', $silent=false) {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action, t('errorOccurredWithDB'));
-	throw new UserException('errorOccurredWithDB');
+	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action);//, t('errorOccurredWithDB'));
+	throw new Exception('errorOccurredWithDB');
 }
 
 //! Limits the length of a string
@@ -371,10 +387,10 @@ function build_apath($array, $prefix='') {
  * Class files should be named classname_class.php
 */
 function using($pkgPath) {
-	$pkgPath = LIBSPATH.str_replace('.', '/',strtolower($pkgPath));
+	$pkgPath = LIBSDIR.str_replace('.', '/',strtolower($pkgPath));
 	// Including all contents of a package
 	if( substr($pkgPath, -2) == '.*' ) {
-		$dir = substr($pkgPath, 0, -2);
+		$dir = pathOf(substr($pkgPath, 0, -2));
 		$files = scandir($dir);
 		foreach($files as $file) {
 			if( preg_match("#^[^\.].*_class.php$#", $file) ) {
@@ -384,16 +400,16 @@ function using($pkgPath) {
 		return;
 	}
 	// Including loader of a package
-	if( is_dir($pkgPath) ) {
-		if( file_exists($pkgPath.'/_loader.php') ) {
-			require_once $pkgPath.'/_loader.php';
+	if( existsPathOf($pkgPath, $path) && is_dir($path) ) {
+		if( file_exists($path.'/_loader.php') ) {
+			require_once $path.'/_loader.php';
 		} else {
-			require_once $pkgPath.'/loader.php';
+			require_once $path.'/loader.php';
 		}
 		return;
 	}
 	// Including a class
-	require_once $pkgPath.'_class.php';
+	require_once pathOf($pkgPath.'_class.php');
 }
 
 //! Adds a class to the autoload.
@@ -412,10 +428,10 @@ function addAutoload($className, $classPath) {
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
-	if( is_readable(LIBSPATH.$classPath.'_class.php') ) {
+	if( existsPathOf(LIBSDIR.$classPath.'_class.php') ) {
 		$AUTOLOADS[$className] = $classPath.'_class.php';
 		
-	} else if( is_readable(LIBSPATH.$classPath) ) {
+	} else if( existsPathOf(LIBSDIR.$classPath) ) {
 		$AUTOLOADS[$className] = $classPath;
 		
 	} else {
@@ -994,4 +1010,28 @@ function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz01234567
 		$r .= mt_rand(0, 1) ? strtoupper($c) : $c;
 	}
 	return $r;
+}
+
+//! Returns the day timestamp using the given integer
+/*!
+ * \param $time The time to get the day time. Default value is current timestamp.
+ * 
+ * Returns the timestamp of the current day of $time according to the midnight hour.
+*/
+function dayTime($time=null) {
+	if( is_null($time) ) { $time = time(); }
+	return $time - $time%86400 - date('Z');
+}
+
+//! Returns the timestamp of the $day of the month using the given integer
+/*!
+ * \param $day The day of the month to get the timestamp. Default value is 1, the first day of the month.
+ * \param $time The time to get the month timestamp. Default value is current timestamp.
+ * \sa dayTime()
+ *
+ * Returns the timestamp of the $day of current month of $time according to the midnight hour.
+*/
+function monthTime($day=1, $time=null) {
+	if( is_null($time) ) { $time = time(); }
+	return dayTime($time - (date('j', $time)-$day)*86400);
 }
