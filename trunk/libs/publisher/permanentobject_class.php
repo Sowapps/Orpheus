@@ -508,7 +508,7 @@ abstract class PermanentObject {
 		}
 		
 		// Check if entry already exist
-		static::checkForObject($data, $ref=null);
+		static::checkForObject($data);
 		// To do before insertion
 		static::runForObject($data);
 		
@@ -723,7 +723,7 @@ abstract class PermanentObject {
 			return;
 		}
 		try {
-			static::checkForObject($data, $ref=null);
+			static::checkForObject($data, $ref);
 		} catch(UserException $e) {
 			reportError($e, static::getDomain());
 		}
