@@ -646,11 +646,14 @@ abstract class PermanentObject {
 // 			$fields = null;
 // 		}
 		if( is_array(static::$validator) ) {
-			if( empty(static::$editableFields) ) {
+			if( is_null($fields) ) {
+				$fields = static::$editableFields;
+			}
+			if( empty($fields) ) {
 				return array();
 			}
 			$data = array();
-			foreach( static::$editableFields as $field ) {
+			foreach( $fields as $field ) {
 				// If editing the id field
 				if( $field == static::$IDFIELD ) {
 					continue;

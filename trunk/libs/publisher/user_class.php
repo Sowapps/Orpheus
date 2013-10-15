@@ -163,7 +163,7 @@ class User extends AbstractStatus {
 		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
 			throw new UserException('forbiddenUpdate');
 		}
-		return parent::update($uInputData);
+		return parent::update($uInputData, $fields);
 	}
 	
 	// *** METHODES STATIQUES ***
