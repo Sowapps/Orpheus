@@ -13,7 +13,11 @@
  * Loads a language ini file from the file system.
  * You don't have to use this function explicitly.
  */
-function loadLangFile($domain=null) {
+function loadLangFile($domain='global') {
+	global $LANG;
+	if( isset($LANG[$domain]) ) {
+		return;
+	}
 	if( !empty($domain) && existsPathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini') ) {
 		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini'));
 		
@@ -22,7 +26,7 @@ function loadLangFile($domain=null) {
 	}
 }
 
-//! Text function, for translations.
+//! Text function for translations.
 /*!
  * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
  * \param $domain The domain to apply the Key. Default value is 'global'.
@@ -42,10 +46,8 @@ function t($k, $domain='global', $values=array()) {
 		$values = $domain;
 		$domain = 'global';
 	}
-	if( !isset($LANG[$domain]) ) {
-		loadLangFile($domain);
-	}
-	$r = ( isset($LANG[$domain]) && isset($LANG[$domain][$k]) ) ? $LANG[$domain][$k] : $k;
+// 	loadLangFile($domain);
+	$r = hasTranslation($k, $domain) ? $LANG[$domain][$k] : $k;
 	if( !empty($values) ) {
 		if( !empty($values[0]) ) {
 			if( !is_array($values[0]) ) {
@@ -60,4 +62,18 @@ function t($k, $domain='global', $values=array()) {
 		$r = str_replace( $rkeys, $rvalues, $r);
 	}
 	return $r;
+}
+
+//! Checks if this key exists.
+/*!
+ * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * \param $domain The domain to apply the Key. Default value is 'global'.
+ * \return True if the translation exists in this domain.
+ * 
+ * This function checks if the key is known in the translation list.
+ */
+function hasTranslation($k, $domain='global') {
+	global $LANG;
+	loadLangFile($domain);
+	return isset($LANG[$domain]) && isset($LANG[$domain][$k]);
 }
