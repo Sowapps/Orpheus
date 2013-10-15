@@ -176,7 +176,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	/*!
 		\sa PermanentObject::checkForObject()
 	*/
-	public static function checkForObject($data) {
+	public static function checkForObject($data, $ref=null) {
 		if( empty($data['name']) && empty($data['user_id']) && empty($data['create_ip']) ) {
 			return;//Nothing to check.
 		}

@@ -40,7 +40,7 @@ class DemoTest extends PermanentObject {
 	/*!
 		\sa PermanentObject::checkForObject()
 	*/
-	public static function checkForObject($data) {
+	public static function checkForObject($data, $ref=null) {
 		if( empty($data['name']) ) {
 			return;//Nothing to check.
 		}

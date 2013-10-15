@@ -414,7 +414,7 @@ class User extends AbstractStatus {
 	/*!
 		\sa PermanentObject::checkForObject()
 	*/
-	public static function checkForObject($data) {
+	public static function checkForObject($data, $ref=null) {
 		$where = 'email LIKE '.SQLAdapter::quote($data['email']);
 		$what = 'email';
 		if( empty($data['email']) ) {
