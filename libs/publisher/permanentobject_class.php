@@ -144,7 +144,7 @@ abstract class PermanentObject {
 			if( empty($data) ) {
 				static::throwException('updateEmptyData');
 			}
-			static::checkForObject(static::completeFields($data));
+			static::checkForObject(static::completeFields($data), $this);
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
 		$oldData = $this->all;
@@ -508,7 +508,7 @@ abstract class PermanentObject {
 		}
 		
 		// Check if entry already exist
-		static::checkForObject($data);
+		static::checkForObject($data, $ref=null);
 		// To do before insertion
 		static::runForObject($data);
 		
@@ -697,12 +697,14 @@ abstract class PermanentObject {
 	//! Checks for object
 	/*!
 	 * \param $data The new data to process.
+	 * \param $ref The referenced object (update only). Default value is null.
 	 * \sa create()
+	 * \sa update()
 	 * 
 	 * This function is called by create() after checking user input data and before running for them.
 	 * In the base class, this method does nothing.
 	*/
-	public static function checkForObject($data) { }
+	public static function checkForObject($data, $ref=null) { }
 	
 	//! Tests user input
 	/*!
@@ -721,7 +723,7 @@ abstract class PermanentObject {
 			return;
 		}
 		try {
-			static::checkForObject($data);
+			static::checkForObject($data, $ref=null);
 		} catch(UserException $e) {
 			reportError($e, static::getDomain());
 		}
