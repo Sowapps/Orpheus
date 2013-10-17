@@ -1,7 +1,9 @@
 RewriteEngine On
 
 # For other requests, the module is variable, allow home.html, users-create.html, users-edit-u=5.html, api-listUsers.json
-RewriteCond %{REQUEST_FILENAME} !^.*index.(php|html)$
+RewriteCond %{REQUEST_FILENAME} !^.*index.(php|html)$	# Not an index file
+RewriteCond %{REQUEST_FILENAME} !-f						# Not an existing file
+RewriteCond %{REQUEST_FILENAME} !-d						# Not an existing directory
 RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.(.+)$ index.php?module=$1&format=$4&action=$2&$3 [L,E=rewritten:1,QSA]
 
 ErrorDocument 400 /http_error-400.html
