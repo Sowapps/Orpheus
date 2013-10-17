@@ -8,7 +8,9 @@
  * PHP File for the website core.
  */
 
-$t = $SRCPATHS; unset($SRCPATHS);
+if( isset($SRCPATHS) ) {
+	$t = $SRCPATHS; unset($SRCPATHS);
+}
 require_once 'loader.php';
 
 // These constants take care about paths through symbolic links.
@@ -19,10 +21,12 @@ defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);
 addSrcPath(INSTANCEPATH);
-foreach($t as $path) {
-	addSrcPath($path);
+if( isset($t) ) {
+	foreach($t as $path) {
+		addSrcPath($path);
+	}
+	unset($t);
 }
-unset($t);
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 
@@ -108,25 +112,29 @@ function($className) {
 		global $AUTOLOADS, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
 		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
-			$alConf = Config::build('autoloads', true);
-			$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
-			$AUTOLOADSFROMCONF = true;
+			try {
+				$alConf = Config::build('autoloads', true);
+				$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
+				$AUTOLOADSFROMCONF = true;
+			} catch( Exception $e ) {
+				// Might be not found (default)
+			}
 		}
 		// PHP's class' names are not case sensitive.
 		$bFile = strtolower($className);
 		
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
-			if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile]) ) {
+			if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile], $path) ) {
 				// if the path is a directory, we search the class file into this directory.
-				if( is_dir(pathOf(LIBSDIR.$AUTOLOADS[$bFile])) ) {
-					if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile].$bFile.'_class.php') ) {
-						require_once pathOf(LIBSDIR.$AUTOLOADS[$bFile].$bFile.'_class.php');
+				if( is_dir($path) ) {
+					if( existsPathOf($path.$bFile.'_class.php') ) {
+						require_once pathOf($path.$bFile.'_class.php');
 						return;
 					}
 				// if the path is a file, we include the class file.
 				} else {
-					require_once pathOf(LIBSDIR.$AUTOLOADS[$bFile]);
+					require_once $path;
 					return;
 				}
 			}
@@ -210,7 +218,8 @@ try {
 	$Module = GET('module');
 	
 	if( empty($Module) ) {
-		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;
+// 		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;
+		$Module = DEFAULTMOD;
 	}
 	
 	if( empty($Module) || !is_name($Module) ) {
