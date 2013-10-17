@@ -114,17 +114,16 @@ abstract class Rendering {
 	
 	//! Calls the display function.
 	/*!
-	 * \param $env An environment variable.
-	 * \param $model The model to use.
+	 * \param $model The model to use. Default value is null (behavior depending on renderer).
+	 * \param $env An array containing environment variables. Default value is null ($GLOBALS).
 	 * \sa display()
 	 * 
 	 * Calls the display function using the 'default_rendering' configuration.
 	 */
-	final public static function doDisplay($model=null, $env=array()) {
+	final public static function doDisplay($model=null, $env=null) {
 		self::checkRendering();
-		if( !isset(self::$rendering) ) {
-			return false;
-		}
+		if( !isset(self::$rendering) ) { return false; }
+		if( is_null($env) ) { $env = $GLOBALS; }
 		self::$rendering->display($model, $env);
 		return true;
 	}
