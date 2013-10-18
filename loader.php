@@ -43,22 +43,35 @@ function dirpath($path) {
 
 //! Gets the path of a file/directory.
 /*!
- * \param $commonPath The common path.
+ * \param $commonPath The common path
+ * \param $silent Do not throw exception if path does not exist
  * \return The first valid path or null if there is no valid one.
  * \sa addSrcPath()
  * 
  * This function uses global variable $SRCPATHS to get the known paths.
  * It allows developers to get a dynamic path to a file.
  */
-function pathOf($commonPath) {
+function pathOf($commonPath, $silent=false) {
 	global $SRCPATHS;
 	for( $i=count($SRCPATHS)-1; $i>=0; $i-- ) {
 		if( file_exists($SRCPATHS[$i].$commonPath) ) {
-			return $SRCPATHS[$i];
+			return $SRCPATHS[$i].$commonPath;
 		}
 	}
-	return null;
-// 	return getPath(INSTANCEPATH, ORPHEUSPATH, $commonPath);
+	if( $silent ) { return null; }
+	throw new Exception('Path not found: '.$commonPath);
+}
+
+//! Checks if the path exists.
+/*!
+ * \param $commonPath The common path.
+ * \param $path The output parameter to get the first valid path.
+ * \sa pathOf()
+ * 
+ * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
+ */
+function existsPathOf($commonPath, &$path=null) {
+	return !is_null($path=pathOf($commonPath, true));
 }
 
 //! Adds the path to the known paths.
@@ -74,18 +87,6 @@ function addSrcPath($path) {
 	}
 	$SRCPATHS[] = $path;
 	return true;
-}
-
-//! Checks if the path exists.
-/*!
- * \param $commonPath The common path.
- * \param $path The output parameter to get the first valid path.
- * \sa pathOf()
- * 
- * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
- */
-function existsPathOf($commonPath, &$path=null) {
-	return is_null($path=pathOf($commonPath));
 }
 
 //! Includes a directory
