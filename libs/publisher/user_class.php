@@ -280,7 +280,7 @@ class User extends AbstractStatus {
 		return !empty($ACCESS) && (is_null($ACCESS->$module) || 
 			( empty($USER) && $ACCESS->$module < 0 ) ||
 			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser
-				&& $USER->checkPerm((int) $GLOBALS['ACCESS']->$module)));
+				&& $USER->checkPerm((int) $ACCESS->$module)));
 	}
 	
 	//! Checks if this user can do a restricted action
