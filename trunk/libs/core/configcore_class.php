@@ -46,6 +46,16 @@ abstract class ConfigCore {
 		}
 	}
 	
+	//! Magic isset
+	/*!
+		\param $key Key of the config to check is set
+		
+	 	Checks if the config $key is set.
+	*/
+	public function __isset($key) {
+        return isset($this->config[$key]);
+	}
+	
 	//! Adds configuration to this object
 	/*!
 		\param $conf The configuration array to add to the current object.
