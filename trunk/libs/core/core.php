@@ -168,7 +168,7 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		$report = 'NON-SCALAR::'.print_r($report, 1);
+		$report = 'NON-SCALAR::'.$report."\n".print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
@@ -409,7 +409,7 @@ function using($pkgPath) {
 		return;
 	}
 	// Including a class
-	require_once pathOf($pkgPath.'_class.php');
+	require_once existsPathOf($pkgPath.'_class.php', $path) ? $path : pathOf($pkgPath.'.php');
 }
 
 //! Adds a class to the autoload.
