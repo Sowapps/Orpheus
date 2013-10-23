@@ -8,6 +8,7 @@ addAutoload('Email',							'publisher/email_class.php');
 addAutoload('FieldNotFoundException',			'publisher/fieldnotfoundexception_class.php');
 addAutoload('PermanentObject',					'publisher/permanentobject_class.php');
 addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
+addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');
 addAutoload('User',								'publisher/user_class.php');
 
 defifn('USER_CLASS',		'User');

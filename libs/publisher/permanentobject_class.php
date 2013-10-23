@@ -658,28 +658,36 @@ abstract class PermanentObject {
 				if( $field == static::$IDFIELD ) {
 					continue;
 				}
+				$value = $notset = null;
 				try {
-					$value = $notset = null;
-					// Field to validate
-					if( !empty(static::$validator[$field]) ) {
-						$checkMeth = static::$validator[$field];
-						// If not defined, we just get the value without check
-						$value = static::$checkMeth($uInputData, $ref);
+					try {
+						// Field to validate
+						if( !empty(static::$validator[$field]) ) {
+							$checkMeth = static::$validator[$field];
+							// If not defined, we just get the value without check
+							$value = static::$checkMeth($uInputData, $ref);
+	
+						// Field to NOT validate
+						} else if( array_key_exists($field, $uInputData) ) {
+							$value = $uInputData[$field];
+						} else {
+							$notset = 1;
+						}
+						if( !isset($notset) &&
+							(is_null($ref) || $value != $ref->$field) &&
+							(is_null($fields) || in_array($field, $fields))
+						) {
+							$data[$field] = $value;
+						}
 
-					// Field to NOT validate
-					} else if( array_key_exists($field, $uInputData) ) {
-						$value = $uInputData[$field];
-					} else {
-						$notset = 1;
+					} catch(UserException $e) {
+						if( is_null($value) && isset($uInputData[$field]) ) {
+							$value = $uInputData[$field];
+						}
+						throw InvalidFieldException::from($e, $field, $value);
 					}
-// 					if( !is_null($value) &&
-					if( !isset($notset) &&
-						(is_null($ref) || $value != $ref->$field) &&
-						(is_null($fields) || in_array($field, $fields))
-					) {
-						$data[$field] = $value;
-					}
-				} catch(UserException $e) {
+					
+				} catch(InvalidFieldException $e) {
 					$errCount++;
 					reportError($e, static::getDomain());
 				}

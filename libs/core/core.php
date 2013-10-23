@@ -477,9 +477,22 @@ function u($module, $action='', $queryStr='') {
 function addReport($message, $type, $domain='global') {
 	global $REPORTS;
 	if( !isset($REPORTS[$domain]) ) {
-		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
+// 		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
+		$REPORTS[$domain] = array();
+	}
+	if( !isset($REPORTS[$domain][$type]) ) {
+		$REPORTS[$domain][$type] = array();
 	}
 	$REPORTS[$domain][$type][] = $message;
+}
+
+//! Checks if there is error reports
+/*!
+ * \return True if there is any error report.
+*/
+function hasErrorReports() {
+	global $REPORTS;
+	return !empty($REPORTS) && !empty($REPORTS['error']);
 }
 
 //! Reports a success
@@ -510,6 +523,66 @@ function reportError($message, $domain=null) {
 	return addReport("$message", 'error', is_null($domain) ? 'global' : $domain);
 }
 
+//! Gets some/all reports as HTML
+/*!
+ * \param $domain The translation domain and the domain of the report. Default value is 'all' (All domains).
+ * \param $type Filter results by report type.
+ * \param $delete True to delete entries from the list.
+ * \sa getReportsHTML()
+
+ * Gets all reports from the list of $domain optionnally filtered by type.
+*/
+function getReports($domain='all', $type=null, $delete=1) {
+	global $REPORTS;
+	if( empty($REPORTS) ) { return array(); }
+	$reports = $domain=='all' ? $REPORTS : array_intersect_key($REPORTS, array($domain=>''));
+	if( !empty($type) ) {
+		foreach( $reports as $d => &$tl ) {
+			$tl = array_intersect_key($tl, array($type=>''));
+			if( empty($tl) ) {
+				unset($reports[$d]);
+			}
+			if( $delete ) {
+				unset($REPORTS[$d][$type]);
+			}
+		}
+	} else if( $delete ) {
+		if( $domain=='all' ) {
+			$REPORTS = null;
+			//unset($REPORTS);// Global variable is not unset by this way
+		} else {
+			unset($REPORTS[$domain]);
+		}
+	}
+	return $reports;
+}
+
+//! Gets some/all reports as HTML
+/*!
+ * \param $domain The translation domain and the domain of the report. Default value is 'all' (All domains).
+ * \param $rejected An array of rejected messages.
+ * \param $delete True to delete entries from the list.
+ * \sa displayReportsHTML()
+ * \sa getHTMLReport()
+
+ * Gets all reports from the list of $domain and generates the HTML source to display.
+*/
+function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
+	$reports = getReports($domain, null, $delete);
+	if( empty($reports) ) { return ''; }
+	$report = '';
+	foreach( $reports as $d => &$tl ) {
+		foreach( $tl as $t => &$rl ) {
+			foreach( $rl as $message) {
+				if( !in_array($message, $rejected) ) {
+					$report .= getHTMLReport($message, $type, $domain);
+				}
+			}
+		}
+	}
+	return $report;
+}
+
 //! Gets one report as HTML
 /*!
  * \param $message The message to report.
@@ -522,44 +595,6 @@ function reportError($message, $domain=null) {
 function getHTMLReport($message, $type, $domain='global') {
 	return '
 		<div class="report report_'.$domain.' '.$type.'">'.nl2br(t($message, $domain)).'</div>';
-}
-
-//! Gets some/all reports as HTML
-/*!
- * \param $domain The translation domain and the domain of the report. Default value is 'global'.
- * \param $rejected An array of rejected messages.
- * \param $delete True to delete entries from the list.
- * \sa displayReportsHTML()
- * \sa getHTMLReport()
-
- * Gets all reports from the list of $domain and generates the HTML source to display.
-*/
-function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
-	global $REPORTS;
-	if( empty($REPORTS) ) {
-		return '';
-	}
-	$report = '';
-	if( $domain == 'all' ) {
-		foreach( array_keys($REPORTS) as $domain ) {
-			$report .= getReportsHTML($domain, $rejected, $delete);
-		}
-		return $report;
-	}
-	if( empty($REPORTS[$domain]) ) {
-		return '';
-	}
-	foreach( $REPORTS[$domain] as $type => &$reports ) {
-		foreach( $reports as $message) {
-			if( !in_array($message, $rejected) ) {
-				$report .= getHTMLReport($message, $type, $domain);
-			}
-		}
-		if( $delete ) {
-			$reports = array();
-		}
-	}
-	return $report;
 }
 
 //! Displays reports as HTML
