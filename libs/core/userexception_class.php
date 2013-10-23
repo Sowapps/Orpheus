@@ -20,6 +20,10 @@ class UserException extends Exception {
 		$this->domain = $domain;
 	}
 	
+	public function getReport() {
+		return $this->getText();
+	}
+	
 	public function getText() {
 		return $this->getMessage();
 	}

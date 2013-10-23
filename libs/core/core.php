@@ -466,7 +466,7 @@ function u($module, $action='', $queryStr='') {
 
 //! Adds a report
 /*!
- * \param $message The message to report.
+ * \param $report The report (Commonly a string or an UserException=.
  * \param $type The type of the message.
  * \param $domain The domain fo the message. Not used for translation. Default value is global.
  * \sa reportSuccess(), reportError()
@@ -486,15 +486,6 @@ function addReport($message, $type, $domain='global') {
 	$REPORTS[$domain][$type][] = $message;
 }
 
-//! Checks if there is error reports
-/*!
- * \return True if there is any error report.
-*/
-function hasErrorReports() {
-	global $REPORTS;
-	return !empty($REPORTS) && !empty($REPORTS['error']);
-}
-
 //! Reports a success
 /*!
  * \param $message The message to report.
@@ -509,18 +500,35 @@ function reportSuccess($message, $domain='global') {
 
 //! Reports an error
 /*!
- * \param $message The message to report.
+ * \param $report The report.
  * \param $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
  * \sa addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
 */
-function reportError($message, $domain=null) {
-	if( $message instanceof UserException && is_null($domain) ) {
-		$domain = $message->getDomain();
+function reportError($report, $domain=null) {
+	if( $report instanceof UserException ) {
+		if( is_null($domain) ) {
+			$domain = $report->getDomain();
+		}
 	}
 // 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport("$message", 'error', is_null($domain) ? 'global' : $domain);
+	return addReport($report, 'error', is_null($domain) ? 'global' : $domain);
+}
+
+//! Checks if there is error reports
+/*!
+ * \return True if there is any error report.
+*/
+function hasErrorReports() {
+	global $REPORTS;
+	if( empty($REPORTS) ) { return false; }
+	foreach($REPORTS as $d => $tl) {
+		if( !empty($tl['error']) ) {
+			return true;
+		}
+	}
+	return false;
 }
 
 //! Gets some/all reports as HTML
@@ -570,17 +578,18 @@ function getReports($domain='all', $type=null, $delete=1) {
 function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 	$reports = getReports($domain, null, $delete);
 	if( empty($reports) ) { return ''; }
-	$report = '';
+	$reportHTML = '';
 	foreach( $reports as $d => &$tl ) {
 		foreach( $tl as $t => &$rl ) {
-			foreach( $rl as $message) {
+			foreach( $rl as $r) {
+				$message = "$r";
 				if( !in_array($message, $rejected) ) {
-					$report .= getHTMLReport($message, $type, $domain);
+					$reportHTML .= getHTMLReport($message, $type, $domain);
 				}
 			}
 		}
 	}
-	return $report;
+	return $reportHTML;
 }
 
 //! Gets one report as HTML

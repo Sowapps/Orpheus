@@ -673,10 +673,12 @@ abstract class PermanentObject {
 						} else {
 							$notset = 1;
 						}
+						text("$field Value: $value");
 						if( !isset($notset) &&
 							(is_null($ref) || $value != $ref->$field) &&
 							(is_null($fields) || in_array($field, $fields))
 						) {
+							text('Setting value');
 							$data[$field] = $value;
 						}
 
