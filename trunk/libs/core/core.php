@@ -168,14 +168,16 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		$report = 'NON-SCALAR::'.$report."\n".print_r($report, 1);
+		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
+		if( !($report instanceof Exception) ) {
+			$report .= "\n".print_r($report, 1);
+		}
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( !is_null($message) ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
-			//$Error['message'] = (empty($message)) ? $report : $message;
 			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
@@ -469,33 +471,46 @@ function u($module, $action='', $queryStr='') {
  * \param $report The report (Commonly a string or an UserException=.
  * \param $type The type of the message.
  * \param $domain The domain fo the message. Not used for translation. Default value is global.
+ * \return False if rejected.
  * \sa reportSuccess(), reportError()
 
  * Adds the report $message to the list of reports for this $type.
  * The type of the message is commonly 'success' or 'error'.
 */
-function addReport($message, $type, $domain='global') {
-	global $REPORTS;
+function addReport($report, $type, $domain='global') {
+	global $REPORTS, $REJREPORTS;
+	if( isset($REJREPORTS[$k="$report"]) ) {
+		$rej = 1;
+		if( !empty($REJREPORTS[$k]['t']) && !in_array($type, $REJREPORTS[$k]['t']) ) {
+			$rej = 0;
+			
+		} else if( !empty($REJREPORTS[$k]['d']) && !in_array($domain, $REJREPORTS[$k]['d']) ) {
+			$rej = 0;
+		}
+		if( $rej ) {
+			return false;
+		}
+	}
 	if( !isset($REPORTS[$domain]) ) {
-// 		$REPORTS[$domain] = array('error'=>array(), 'success'=>array());
 		$REPORTS[$domain] = array();
 	}
 	if( !isset($REPORTS[$domain][$type]) ) {
 		$REPORTS[$domain][$type] = array();
 	}
-	$REPORTS[$domain][$type][] = $message;
+	$REPORTS[$domain][$type][] = $report;
+	return true;
 }
 
 //! Reports a success
 /*!
- * \param $message The message to report.
+ * \param $report The message to report.
  * \param $domain The domain fo the message. Not used for translation. Default value is global.
  * \sa addReport()
 
  * Adds the report $message to the list of reports for this type 'success'.
 */
-function reportSuccess($message, $domain='global') {
-	return addReport($message, 'success', $domain);
+function reportSuccess($report, $domain='global') {
+	return addReport($report, 'success', $domain);
 }
 
 //! Reports an error
@@ -520,7 +535,7 @@ function reportError($report, $domain=null) {
 /*!
  * \return True if there is any error report.
 */
-function hasErrorReports() {
+function hasErrorReports($except=array()) {
 	global $REPORTS;
 	if( empty($REPORTS) ) { return false; }
 	foreach($REPORTS as $d => $tl) {
@@ -529,6 +544,35 @@ function hasErrorReports() {
 		}
 	}
 	return false;
+}
+
+//! Rejects reports
+/*!
+ * \param $report The report message to reject, could be an array.
+ * \param $type Filter reject by type, could be an array. Default value is null, not filtering.
+ * \param $domain Filter reject by domain, could be an array. Default value is "all", not filtering.
+ * \sa addReport()
+ * 
+ * Register this report to be rejected in the future, addReport() will check it.
+ * All previous values for this report will be replaced.
+*/
+function rejectReport($report, $type=null, $domain='all') {
+	global $REJREPORTS;
+	if( !isset($REJREPORTS) ) { $REJREPORTS = array(); }
+	if( !is_array($report) ) {
+		$report = array($report);
+	}
+	$d = array();
+	if( isset($type) ) {
+		$d['t'] = is_array($type) ? $type : array($type);
+	}
+	if( $domain != 'all' ) {
+		$d['d'] = is_array($domain) ? $domain : array($domain);
+	}
+	foreach( $report as $r ) {
+		$d['r'] = $r;
+		$REJREPORTS["$r"] = $d;
+	}
 }
 
 //! Gets some/all reports as HTML
@@ -584,7 +628,7 @@ function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 			foreach( $rl as $r) {
 				$message = "$r";
 				if( !in_array($message, $rejected) ) {
-					$reportHTML .= getHTMLReport($message, $type, $domain);
+					$reportHTML .= getHTMLReport($message, $t, $d);
 				}
 			}
 		}
