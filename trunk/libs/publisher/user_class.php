@@ -61,7 +61,7 @@ class User extends AbstractStatus {
 	//! Log in this user to the current session.
 	public function login($force=false) {
 		if( !$force && static::is_login() ) {
-			throw new UserException('alreadyLogguedIn');
+			static::throwException('alreadyLogguedIn');
 		}
 		global $USER;
 		$_SESSION['USER'] = $USER = $this;
@@ -161,7 +161,7 @@ class User extends AbstractStatus {
 	 */
 	public function update($uInputData, $fields=null) {
 		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
-			throw new UserException('forbiddenUpdate');
+			static::throwException('forbiddenUpdate');
 		}
 		return parent::update($uInputData, $fields);
 	}
@@ -186,10 +186,10 @@ class User extends AbstractStatus {
 			'output' => SQLAdapter::OBJECT
 		));
 		if( empty($user) )  {
-			throw new UserException("unknownName");
+			static::throwException("unknownName");
 		}
 		if( $user->password != $password )  {
-			throw new UserException("wrongPassword");
+			static::throwException("wrongPassword");
 		}
 		$user->logout();
 		$user->login();
@@ -251,7 +251,7 @@ class User extends AbstractStatus {
 	 */
 	public static function delete($id) {
 		if( !self::loggedCanDo('users_delete') ) {
-			throw new UserException('forbiddenDelete');
+			static::throwException('forbiddenDelete');
 		}
 		return parent::delete($id);
 	}
@@ -311,7 +311,7 @@ class User extends AbstractStatus {
 			return null;
 		}
 		if( empty($inputData['name']) || !is_name($inputData['name']) ) {
-			throw new UserException('invalidName');
+			static::throwException('invalidName');
 		}
 		return $inputData['name'];
 	}
@@ -329,9 +329,9 @@ class User extends AbstractStatus {
 			if( isset($ref) ) {//UPDATE
 				return null;
 			}
-			throw new UserException('invalidPassword');
+			static::throwException('invalidPassword');
 		} else if( isset($inputData['password_conf']) && (empty($inputData['password_conf']) || $inputData['password'] != $inputData['password_conf']) ) {
-			throw new UserException('invalidPasswordConf');
+			static::throwException('invalidPasswordConf');
 		}
 		return static::hashPassword($inputData['password']);
 	}
@@ -349,7 +349,7 @@ class User extends AbstractStatus {
 			if( empty($inputData['email']) && isset($ref) ) {//UPDATE
 				return null;
 			}
-			throw new UserException('invalidEmail');
+			static::throwException('invalidEmail');
 		}
 		return $inputData['email'];
 	}
@@ -373,7 +373,7 @@ class User extends AbstractStatus {
 			if( strtolower($inputData['email_public']) == 'on' && !empty($inputData['email']) ) {
 				$inputData['email_public'] = $inputData['email'];
 			} else if( !is_email($inputData['email_public']) ) {
-				throw new UserException('invalidPublicEmail');
+				static::throwException('invalidPublicEmail');
 			}
 		} else {
 			$inputData['email_public'] = '';
@@ -393,7 +393,7 @@ class User extends AbstractStatus {
 			return isset($ref) ? null : 0;
 		}
 		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
-			throw new UserException('invalidAccessLevel');
+			static::throwException('invalidAccessLevel');
 		}
 		if( !defined('ALLOW_USER_GRANTING') ) { // Special case for developers
 			global $USER;
@@ -401,10 +401,10 @@ class User extends AbstractStatus {
 // 				|| (isset($ref) && !$USER->checkPerm($ref->accesslevel)) // Has the current user less accesslevel that the edited one ? - Already check in canDo()
 				|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
 			) {
-				throw new UserException('forbiddenGrant');
+				static::throwException('forbiddenGrant');
 			}
 			if( isset($ref) && $inputData['accesslevel'] == $ref->accesslevel ) {
-				throw new UserException('sameAccessLevel');
+				static::throwException('sameAccessLevel');
 			}
 		}
 		return (int) $inputData['accesslevel'];
@@ -431,10 +431,10 @@ class User extends AbstractStatus {
 		));
 		if( !empty($user) ) {
 			if( $user['email'] == $data['email'] ) {
-				throw new UserException("emailAlreadyUsed");
+				static::throwException("emailAlreadyUsed");
 				
 			} else {
-				throw new UserException("entryExisting");
+				static::throwException("entryExisting");
 			}
 		}
 	}
@@ -447,7 +447,7 @@ class User extends AbstractStatus {
 	*/
 	public static function validateStatus($newStatus, $ref=null) {
 		if( !User::loggedCanDo('users_status', $ref) ) {
-			throw new UserException('forbiddenUStatus');
+			static::throwException('forbiddenUStatus');
 		}
 		return parent::checkStatus($newStatus, $ref, $reportToUser=true);
 	}
