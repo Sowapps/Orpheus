@@ -449,7 +449,7 @@ class User extends AbstractStatus {
 		if( !User::loggedCanDo('users_status', $ref) ) {
 			static::throwException('forbiddenUStatus');
 		}
-		return parent::checkStatus($newStatus, $ref, $reportToUser=true);
+		return parent::validateStatus($newStatus, $ref);//, $reportToUser=true
 	}
 	
 	/*
