@@ -34,7 +34,7 @@ class SiteUser extends User {
 
 	public static function checkFullName($inputData) {
 		if( empty($inputData['fullname']) ) {
-			throw new UserException('invalidFullName');
+			static::throwException('invalidFullName');
 		}
 		return strip_tags($inputData['fullname']);
 	}
