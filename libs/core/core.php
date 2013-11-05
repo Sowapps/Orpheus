@@ -168,10 +168,10 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
 		if( !($report instanceof Exception) ) {
 			$report .= "\n".print_r($report, 1);
 		}
+		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
