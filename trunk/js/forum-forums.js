@@ -1,4 +1,8 @@
 
+function updateContainerHeight() {
+	$("body > .container").height($(window).height()-110);
+}
+
 $(function() {
 	
 	// New thread modal
@@ -16,6 +20,16 @@ $(function() {
 	// Wysiwyg
 // 	$("#newThreadForm textarea").wysiwyg();
 	$("#editor").wysiwyg();
+	
+	debug($(document).height());
+	debug($("body > .container"));
+	
+	updateContainerHeight();
+	$(window).resize(updateContainerHeight);
+//			function() {
+//		debug("resized document, updating container height");
+//		$("body > .container").height($(window).height()-110);
+//	});
 	
 });
 

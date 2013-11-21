@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="../../themes/default/css/bootstrap.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../../themes/default/css/bootstrap-responsive.css" type="text/css" media="screen" />
+<!-- 	<link rel="stylesheet" href="../../themes/default/css/bootstrap-responsive.css" type="text/css" media="screen" /> -->
 <!-- 	<link rel="stylesheet" href="../../themes/default/css/bootstrap-glyphicons.css" type="text/css" media="screen" /> -->
 	<link rel="stylesheet" href="../../themes/default/css/style.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../../themes/default/css/forum.css" type="text/css" media="screen" />
@@ -99,6 +99,15 @@
 body.editor {
 	background-color: #D9D9D9;
 /* 	background-color: #F0F0F0; */
+}
+
+body {
+    overflow: hidden;
+}
+body > .container {
+    height: 500px;
+    min-height: 400px;
+    overflow-y: scroll;
 }
 </style>
 	
