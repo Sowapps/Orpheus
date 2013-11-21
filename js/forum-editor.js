@@ -27,7 +27,7 @@ function editorMode_render() {
 	});
 	
 	// Edit Forum
-	$(".forumlist").prepend('<button class="btn btn-default btn-sm right editForum-btn"><i class="icon-edit"></i> Edit Forum</button>');
+	$(".forumlist").prepend('<button class="editor-element btn btn-default btn-sm right editForum-btn"><i class="icon-edit"></i> Edit Forum</button>');
 	
 }
 
@@ -43,7 +43,8 @@ function editorMode_enter() {
 	// Showing editor mode
 	$("body").addClass("editor");
 	$(".editmode-btn").removeClass("btn-default").addClass("btn-primary");
-	$(".addForum-btn").show();
+	$(".editor-element").show();
+//	$(".addForum-btn").show();
 }
 
 function editorMode_leave() {
