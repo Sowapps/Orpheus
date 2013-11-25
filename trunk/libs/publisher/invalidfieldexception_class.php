@@ -29,11 +29,18 @@ class InvalidFieldException extends UserException {
 	}
 	
 	public function getText() {
-		return t($this->getMessage(), $this->getDomain(), $this->args);
+		$m = $this->getMessage();
+		$args = $this->args;
+		if( hasTranslation($this->getMessage().'_field') ) {
+			$m = $this->getMessage().'_field';
+			$args = array_merge(array('FIELD'=>t($this->getField(), $this->getDomain())), $args);
+		}
+		return t($m, $this->getDomain(), $args);
 	}
 	
 	public function getReport() {
-		return array(t($this->getMessage(), $this->getDomain(), $this->args), $this->field);
+		return array(static::getText(), $this->field);
+// 		return array(t($this->getMessage(), $this->getDomain(), $this->args), $this->field);
 	}
 	
 	public static function from(UserException $e, $field, $value, $type=null, $args=array()) {
