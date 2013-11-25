@@ -445,11 +445,11 @@ class User extends AbstractStatus {
 	/*!
 		\sa AbstractStatus::validateStatus()
 	*/
-	public static function validateStatus($newStatus, $ref=null) {
+	public static function validateStatus($newStatus, $ref=null, $field='status') {
 		if( !User::loggedCanDo('users_status', $ref) ) {
 			static::throwException('forbiddenUStatus');
 		}
-		return parent::validateStatus($newStatus, $ref);//, $reportToUser=true
+		return parent::validateStatus($newStatus, $ref, $field);//, $reportToUser=true
 	}
 	
 	/*
