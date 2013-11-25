@@ -91,6 +91,7 @@ set_exception_handler(
 	System function to handle all exceptions and stop script execution.
  */
 function($e) {
+	global $coreAction;
 	if( !function_exists('sys_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}

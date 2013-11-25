@@ -17,6 +17,7 @@ function redirectTo($destination=null) {
 	if( !isset($destination) ) {
 		$destination = $_SERVER['SCRIPT_NAME'];
 	}
+	log_debug(debug_backtrace(), 'redirectTo()');
 	header('Location: '.$destination);
 	die();
 }
@@ -168,8 +169,8 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_error($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		if( !($report instanceof Exception) ) {
-			$report .= "\n".print_r($report, 1);
+		if( !is_object($report) || !($report instanceof Exception) ) {
+			$report = "\n".print_r($report, 1);
 		}
 		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
 	}
