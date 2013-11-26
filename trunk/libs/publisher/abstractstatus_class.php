@@ -38,7 +38,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * Checks if current object can reach the given status.
 	 */
 	public function canReachStatus($status, $field='status') {
-		return in_array($status, getAvailableStatutes($field));
+		return in_array($status, $this->getAvailableStatutes($field));
 	}
 	
 	//! Gets available status.
@@ -115,7 +115,7 @@ abstract class AbstractStatus extends PermanentObject {
 			static::throwException('unknownStatus'.($field=='status' ? '' : '_'.$field));
 		}
 		//If not new, we check the current status can set to this one.
-		if( isset($ref) && !$ref->hasStatus($newStatus, $field) && $ref->canReachStatus($newStatus, $field) ) {
+		if( isset($ref) && !$ref->hasStatus($newStatus, $field) && !$ref->canReachStatus($newStatus, $field) ) {
 			static::throwException('unavailableStatus'.($field=='status' ? '' : '_'.$field));
 		}
 		return $newStatus;
