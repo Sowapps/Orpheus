@@ -29,6 +29,18 @@ abstract class AbstractStatus extends PermanentObject {
 	
 	// *** DEV METHODS ***
 	
+	//! Checks if current object can reach the given status.
+	/*!
+	 * \param $status The status the current object should reach.
+	 * \param $field The field to check the status. Default value is 'status'.
+	 * \return True if the object can currently validate this status.
+	 * 
+	 * Checks if current object can reach the given status.
+	 */
+	public function canReachStatus($status, $field='status') {
+		return in_array($status, getAvailableStatutes($field));
+	}
+	
 	//! Gets available status.
 	/*!
 	 * \param $field The field to check the status. Default value is 'status'.
@@ -103,7 +115,7 @@ abstract class AbstractStatus extends PermanentObject {
 			static::throwException('unknownStatus'.($field=='status' ? '' : '_'.$field));
 		}
 		//If not new, we check the current status can set to this one.
-		if( isset($ref) && !$ref->hasStatus($newStatus, $field) && !in_array($newStatus, $ref->getAvailableStatutes($field)) ) {
+		if( isset($ref) && !$ref->hasStatus($newStatus, $field) && $ref->canReachStatus($newStatus, $field) ) {
 			static::throwException('unavailableStatus'.($field=='status' ? '' : '_'.$field));
 		}
 		return $newStatus;
