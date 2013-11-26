@@ -52,7 +52,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 */
 	public function status($newStatus=null, $field='status') {
 		if( isset($newStatus) ) {
-			static::validateStatus($newStatus, $this);
+			static::validateStatus($newStatus, $this, $field);
 			$this->setValue($field, $newStatus);
 			if( in_array($field.'_time', static::$fields) ) {
 				static::logEvent($field);
