@@ -39,6 +39,9 @@ function loadLangFile($domain='global') {
  *  - array('key1'=>'value1', 'key2'=>'value2'...)
  *  - array(array('key1', 'key2'...), array('value1', 'value2'...))
  *  - array('value1', 'value2'...)
+ *  This function is variadic, you can specify values with more scalar arguments.
+ *  
+ *  Examples: t('untranslatedString', 'aDomain'), t('My already translated string'), t('untranslatedString', 'global', array('key1'=>'val1')), t('untranslatedString', 'global', 'val1', 60)
  */
 function t($k, $domain='global', $values=array()) {
 	global $LANG;
@@ -49,6 +52,9 @@ function t($k, $domain='global', $values=array()) {
 // 	loadLangFile($domain);
 	$r = hasTranslation($k, $domain) ? $LANG[$domain][$k] : $k;
 	if( !empty($values) ) {
+		if( !is_array($values) ) {
+			$values = array_slice(func_get_args(), 2);
+		}
 		if( !empty($values[0]) ) {
 			if( !is_array($values[0]) ) {
 				return vsprintf($r, $values);
