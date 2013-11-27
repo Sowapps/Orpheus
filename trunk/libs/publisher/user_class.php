@@ -159,12 +159,13 @@ class User extends AbstractStatus {
 	 * 
 	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
 	 */
-	public function update($uInputData, $fields=null) {
-		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
-			static::throwException('forbiddenUpdate');
-		}
-		return parent::update($uInputData, $fields);
-	}
+	// Prevents password recovery and other user edits...
+// 	public function update($uInputData, $fields=null) {
+// 		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
+// 			static::throwException('forbiddenUpdate');
+// 		}
+// 		return parent::update($uInputData, $fields);
+// 	}
 	
 	// *** METHODES STATIQUES ***
 	
