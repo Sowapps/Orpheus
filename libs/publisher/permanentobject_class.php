@@ -306,7 +306,7 @@ abstract class PermanentObject {
 	 * Sets the field $key with the new $value.
 	*/
 	public function setValue($key, $value) {
-		if( !isset($key, $value) ) {
+		if( !isset($key) ) {//$value
 			static::throwException("nullValue");
 			
 		} else if( !in_array($key, static::$fields) ) {
