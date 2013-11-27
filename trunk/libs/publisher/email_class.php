@@ -10,6 +10,7 @@ class Email {
 	private $Headers = array(
 		'MIME-Version' => '',
 		'Content-Type' => 'text/plain, charset=UTF-8',
+		'Content-Transfer-Encoding' => '',
 		//'Content-Transfer-Encoding' => '7bit',
 		'Date' => '',//See init()
 		'From' => 'no-reply@nodomain.com',//Override PHP's default
@@ -346,11 +347,13 @@ BODY;
 			if( $this->isHTML() ) {
 				$this->setHeader('MIME-Version', '1.0');
 				$this->setHeader('Content-Type', 'text/html; charset="UTF-8"');
+				$this->setHeader('Content-Transfer-Encoding', 'quoted-printable');
 				$Body = $this->HTMLBody;
 			
 			} else if( $this->isTEXT() ) {
 				$this->setHeader('MIME-Version', '');
 				$this->setHeader('Content-Type', 'text/plain; charset="UTF-8"');
+				$this->setHeader('Content-Transfer-Encoding', 'quoted-printable');
 				$Body = $this->TEXTBody;
 			
 			}
@@ -367,6 +370,11 @@ BODY;
 			}
 		}
 		$Headers .= "\r\n";
+// 		text();
+// 		debug('$Headers', $Headers);
+// 		text();
+// 		debug('$Body', $Body);
+// 		text();
 		if( !is_array($ToAddress) ) {
 			if( !mail($ToAddress, $this->Subject, $Body, $Headers) ) {
 				throw new Exception("ProblemSendingMail");
