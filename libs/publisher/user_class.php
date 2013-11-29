@@ -250,12 +250,12 @@ class User extends AbstractStatus {
 	 * 
 	 * It tries to check current user rights.
 	 */
-	public static function delete($id) {
-		if( !self::loggedCanDo('users_delete') ) {
-			static::throwException('forbiddenDelete');
-		}
-		return parent::delete($id);
-	}
+// 	public static function delete($id) {
+// 		if( !self::loggedCanDo('users_delete') ) {
+// 			static::throwException('forbiddenDelete');
+// 		}
+// 		return parent::delete($id);
+// 	}
 
 	//! Checks if this user has admin right
 	/*!

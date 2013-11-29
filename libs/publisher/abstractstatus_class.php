@@ -132,7 +132,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * Uses validateStatus() to validate field 'status'.
 	 */
 	public static function checkStatus($inputData, $ref=null, $field='status') {
-		// When creating whe set to the default
+		// When creating we set to the default
 		if( !isset($inputData[$field]) || !isset($inputData['admin-control']) ) { 
 			if( !isset($ref) ) {
 				return static::getDefaultStatus($field);
