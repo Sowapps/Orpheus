@@ -31,7 +31,7 @@ class InvalidFieldException extends UserException {
 	public function getText() {
 		$m = $this->getMessage();
 		$args = $this->args;
-		if( hasTranslation($this->getMessage().'_field') ) {
+		if( hasTranslation($this->getMessage().'_field', $this->getDomain()) ) {
 			$m = $this->getMessage().'_field';
 			$args = array_merge(array('FIELD'=>t($this->getField(), $this->getDomain())), $args);
 		}
