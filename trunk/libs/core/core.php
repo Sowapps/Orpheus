@@ -17,7 +17,6 @@ function redirectTo($destination=null) {
 	if( !isset($destination) ) {
 		$destination = $_SERVER['SCRIPT_NAME'];
 	}
-	log_debug(debug_backtrace(), 'redirectTo()');
 	header('Location: '.$destination);
 	die();
 }
@@ -458,8 +457,9 @@ function u($module, $action='', $queryStr='') {
 	}
 	if( !empty($queryStr) ) {
 		if( is_array($queryStr) ) {
-			unset($queryStr['module'], $queryStr['action']);
-			$queryStr = http_build_query($queryStr, '', '&amp;');
+			unset($queryStr['module'], $queryStr['action'], $queryStr['format']);
+			// array_filter() Only affect first depth
+			$queryStr = http_build_query(array_filter($queryStr, function($val) { return !empty($val); }), '', '&amp;');
 		} else {
 			$queryStr = str_replace('&', '&amp;', $queryStr);
 		}
