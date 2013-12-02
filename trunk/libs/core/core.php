@@ -459,7 +459,7 @@ function u($module, $action='', $queryStr='') {
 		if( is_array($queryStr) ) {
 			unset($queryStr['module'], $queryStr['action'], $queryStr['format']);
 			// array_filter() Only affect first depth
-			$queryStr = http_build_query(array_filter($queryStr, function($val) { return !empty($val); }), '', '&amp;');
+			$queryStr = http_build_query(array_filter($queryStr), '', '&amp;');//, function($val) { return !empty($val); }
 		} else {
 			$queryStr = str_replace('&', '&amp;', $queryStr);
 		}
