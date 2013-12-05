@@ -320,7 +320,7 @@ function iURLDecode($u) {
 function parseFields(array $fields) {
 	$list = '';
 	foreach($fields as $key => $value) {
-		$list .= (!empty($list) ? ', ' : '').$key.'='.$value;
+		$list .= (!empty($list) ? ', ' : '').'`'.$key.'`='.$value;
 	}
 	return $list;
 }
@@ -440,31 +440,6 @@ function addAutoload($className, $classPath) {
 		throw new Exception("Class file of \"{$className}\" not found.");
 	}
 	return true;
-}
-
-//! Gets the full url of a module
-/*!
- * \param $module The module.
- * \param $action The action to use for this url.
- * \param $queryStr The query string to add to the url, can be an array.
- * \return The url of $module.
-
- * Gets the full url of a module, using default link for default module.
-*/
-function u($module, $action='', $queryStr='') {
-	if( $module == DEFAULTMOD && empty($action) ) {
-		return DEFAULTLINK;
-	}
-	if( !empty($queryStr) ) {
-		if( is_array($queryStr) ) {
-			unset($queryStr['module'], $queryStr['action'], $queryStr['format']);
-			// array_filter() Only affect first depth
-			$queryStr = http_build_query(array_filter($queryStr), '', '&amp;');//, function($val) { return !empty($val); }
-		} else {
-			$queryStr = str_replace('&', '&amp;', $queryStr);
-		}
-	}
-	return SITEROOT.$module.((!empty($action)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
 }
 
 //! Adds a report
