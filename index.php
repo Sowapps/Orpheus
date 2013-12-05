@@ -78,8 +78,11 @@ function() {
 			case E_CORE_ERROR:
 			case E_COMPILE_ERROR:
 			case E_USER_ERROR: {
+				$Page = ob_get_contents();
 				ob_end_clean();
-				$message = $error['message'].' in '.$error['file'].' ('.$error['line'].')';
+				$message = $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
+PAGE:<br /><div style="clear: both;">'.$Page.'</div>';
+				
 				if( !function_exists('sys_error') ) {
 					die($message);
 				}
