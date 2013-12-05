@@ -206,7 +206,7 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 				$options['what'] = array(0=>$options['what']);
 			}
 			// Indexed array to values string
-			$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
+			$COLS = '(`'.implode('`, `', array_keys($options['what'][0])).'`)';
 			foreach($options['what'] as $row) {
 				$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
 			}
