@@ -171,7 +171,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( is_array($options['what']) ) {
 			//Is an indexed array of fields Arrays
 			if( !empty($options['what'][0]) ) {
-				$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
+				$COLS = '(`'.implode('`, `', array_keys($options['what'][0])).'`)';
 				foreach($options['what'] as $row) {
 					$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
 				}

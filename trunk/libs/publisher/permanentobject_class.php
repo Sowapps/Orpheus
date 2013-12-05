@@ -190,7 +190,7 @@ abstract class PermanentObject {
 		$updQ = '';
 		foreach($this->modFields as $fieldname) {
 			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').$fieldname.'='.SQLAdapter::quote($this->$fieldname);
+				$updQ .= ( (!empty($updQ)) ? ', ' : '').'`'.$fieldname.'`='.SQLAdapter::quote($this->$fieldname);
 			}
 		}
 		$IDFIELD=static::$IDFIELD;

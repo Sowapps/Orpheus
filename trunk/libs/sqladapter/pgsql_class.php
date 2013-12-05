@@ -150,7 +150,7 @@ class SQLAdapter_PgSQL extends SQLAdapter {
 			if( empty($options['what'][0]) ) {
 				$options['what'] = array($options['what']);
 			}// Else it's an indexed array of fields Arrays
-			$COLS = '('.implode(', ', array_keys($options['what'][0])).')';
+			$COLS = '(`'.implode('`, `', array_keys($options['what'][0])).'`)';
 			foreach($options['what'] as $row) {
 				$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
 			}
