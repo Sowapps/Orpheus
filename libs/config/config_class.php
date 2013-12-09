@@ -21,12 +21,13 @@ class Config extends ConfigCore {
 			$confPath = $source;
 			
 		// File in configs folder
-		} else if( is_readable(static::getFilePath($source)) ) {
-			$confPath = static::getFilePath($source);
-			
-		/// File not found
 		} else {
-			return array();
+			try {
+				$confPath = static::getFilePath($source);
+			} catch( Exception $e ) {
+				// File not found
+				return array();
+			}
 		}
 		$parsed = parse_ini_file($confPath, true);
 		$this->add($parsed);

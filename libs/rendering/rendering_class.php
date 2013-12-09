@@ -45,39 +45,41 @@ abstract class Rendering {
 		}
 		
 		// Menus' things
+		global $USER_CLASS;
 		$MENUSCONF = Config::build('menus', true);
 		$MENUS = array();
 		foreach( $MENUSCONF->all as $mName => $mModules ) {
 			$menu = '';
-			foreach( $mModules as $modData ) {
-				$CSSClasses = $Link = $Text = '';
-				if( $modData[0] == '#' ) {
-					list($Link, $Text) = explode('|', substr($modData, 1));
-				} else {
-					$modData = explode('-', $modData);
-					$module = $modData[0];
-					global $USER_CLASS;
-					if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module) ) {
-						continue;
+			if( class_exists($USER_CLASS) ) {
+				foreach( $mModules as $modData ) {
+					$CSSClasses = $Link = $Text = '';
+					if( $modData[0] == '#' ) {
+						list($Link, $Text) = explode('|', substr($modData, 1));
+					} else {
+						$modData = explode('-', $modData);
+						$module = $modData[0];
+						if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module) ) {
+							continue;
+						}
+						if( !Hook::trigger('menuItemAccess', true, true, $module) ) {
+							continue;
+						}
+						$action = ( count($modData) > 1 ) ? $modData[1] : '';
+						$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
+						$Link = u($module, $action, $queryStr);
+						$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current active' : '');
+						$Text = $module.( (!empty($action)) ? '_'.$action : '');
 					}
-					if( !Hook::trigger('menuItemAccess', true, true, $module) ) {
-						continue;
-					}
-					$action = ( count($modData) > 1 ) ? $modData[1] : '';
-					$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
-					$Link = u($module, $action, $queryStr);
-					$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current active' : '');
-					$Text = $module.( (!empty($action)) ? '_'.$action : '');
-				}
-				//A tag fills the li space
-				//span allows to fill A width with a reduced height
-				$menu .= "
+					//A tag fills the li space
+					//span allows to fill A width with a reduced height
+					$menu .= "
 		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\"><span>".t($Text)."</span></a></li>";
-			}
-			if( !empty($menu) ) {
-				$menu = "
+				}
+				if( !empty($menu) ) {
+					$menu = "
 	<ul class=\"nav menu {$mName}\">{$menu}
 	</ul>";
+				}
 			}
 			$MENUS[$mName] = $menu;
 		}
@@ -141,8 +143,7 @@ abstract class Rendering {
 				$c = defined("TERMINAL") ? 'RawRendering' : 'HTMLRendering';
 			}
 			if( !class_exists($c) ) {
-				text('Rendering class "'.$c.'" should be loaded');
-				debug_print_backtrace();
+				sys_error('Rendering class "'.$c.'" should be loaded : '.print_r(debug_backtrace(), 1));
 				die();
 			}
 			self::$rendering = new $c();
