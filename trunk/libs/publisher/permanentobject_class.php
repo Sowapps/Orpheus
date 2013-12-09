@@ -156,9 +156,8 @@ abstract class PermanentObject {
 // 				unset($data[$fieldname]);
 			}
 		}
-		if( in_array('edit_time', static::$fields) ) {
-			static::logEvent('edit');
-		}
+		static::logEvent('edit');
+		static::logEvent('update');
 		if( $r = $this->save() ) {
 			$this->runForUpdate($data, $oldData);
 		}
@@ -341,6 +340,7 @@ abstract class PermanentObject {
 	 * Logs an event to this object's data.
 	*/
 	public function logEvent($event, $time=null, $ipAdd=null) {
+		if( !in_array($event.'_time', static::$fields) ) { return; }
 		$log = static::getLogEvent($event, $time, $ipAdd);
 		$this->setValue($event.'_time', $log[$event.'_time']);
 		try {
@@ -505,6 +505,9 @@ abstract class PermanentObject {
 		
 		if( in_array('create_time', static::$fields) ) {
 			$data += static::getLogEvent('create');
+		}
+		if( in_array('edit_time', static::$fields) ) {
+			$data += static::getLogEvent('edit');
 		}
 		
 		// Check if entry already exist
