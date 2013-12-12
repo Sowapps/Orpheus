@@ -171,6 +171,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( is_array($options['what']) ) {
 			//Is an indexed array of fields Arrays
 			if( !empty($options['what'][0]) ) {
+				// Quoted as escapeIdentifier()
 				$COLS = '(`'.implode('`, `', array_keys($options['what'][0])).'`)';
 				foreach($options['what'] as $row) {
 					$WHAT .= (!empty($WHAT) ? ', ' : '').'('.implode(', ', $row).')';
@@ -178,7 +179,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 				$WHAT = 'VALUES '.$WHAT;
 			//Is associative fields Arrays
 			} else {
-				$WHAT = 'SET '.parseFields($options['what']);
+				$WHAT = 'SET '.parseFields($options['what'], '`');
 			}
 			
 		//Is a string
@@ -203,5 +204,16 @@ class SQLAdapter_MySQL extends SQLAdapter {
 	*/
 	public function lastID($table, $idfield='id') {
 		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
+	}
+
+	//! Escapes SQL identifiers
+	/*!
+	 * \param $Identifier The identifier to escape.
+	 * \return The escaped identifier.
+	 * 
+	 * Escapes the given string as an SQL identifier.
+	*/
+	public function escapeIdentifier($Identifier) {
+		return '`'.$Identifier.'`';
 	}
 }

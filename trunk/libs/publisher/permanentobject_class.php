@@ -189,7 +189,7 @@ abstract class PermanentObject {
 		$updQ = '';
 		foreach($this->modFields as $fieldname) {
 			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').'`'.$fieldname.'`='.SQLAdapter::quote($this->$fieldname);
+				$updQ .= ( (!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.SQLAdapter::quote($this->$fieldname);
 			}
 		}
 		$IDFIELD=static::$IDFIELD;
@@ -432,6 +432,16 @@ abstract class PermanentObject {
 			static::runForDeletion($in);
 		}
 		return $r;
+	}
+	
+	//! Escape identifier through instance
+	/*!
+	 * \param $Identifier The identifier to escape
+	 * \return The escaped identifier
+	 * \sa SQLAdapter::escapeIdentifier()
+	*/
+	public static function escapeIdentifier($Identifier) {
+		return SQLAdapter::doEscapeIdentifier($Identifier, static::$DBInstance, static::$IDFIELD);
 	}
 	
 	//! Runs for Deletion

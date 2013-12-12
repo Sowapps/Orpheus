@@ -86,6 +86,17 @@ abstract class SQLAdapter {
 	 * It parses the query from an array to a INSERT query.
 	*/
 	public abstract function insert(array $options=array());
+
+	//! Escapes SQL identifiers
+	/*!
+	 * \param $Identifier The identifier to escape.
+	 * \return The escaped identifier.
+	 * 
+	 * Escapes the given string as an SQL identifier.
+	*/
+	public function escapeIdentifier($Identifier) {
+		return '"'.$Identifier.'"';
+	}
 	
 	//! The function to get the last inserted ID
 	/*!
@@ -170,6 +181,19 @@ abstract class SQLAdapter {
 		$options=array();
 		self::prepareQuery($options, $Instance, $IDField);
 		return self::$Adapters[$Instance]->lastID($table);
+	}
+
+	//! Escapes SQL identifiers
+	/*!
+	 * \param $Identifier The identifier to escape.
+	 * \return The escaped identifier.
+	 * \sa SQLAdapter::escapeIdentifier()
+	 * 
+	 * Escapes the given string as an SQL identifier.
+	*/
+	public static function doEscapeIdentifier($Identifier, $Instance=null) {
+		self::prepareQuery($options, $Instance, $IDField);
+		return self::$Adapters[$Instance]->escapeIdentifier($options);
 	}
 
 	//! The static function to prepare the query for the given instance

@@ -17,6 +17,7 @@ function redirectTo($destination=null) {
 	if( !isset($destination) ) {
 		$destination = $_SERVER['SCRIPT_NAME'];
 	}
+// 	log_debug(debug_backtrace(), 'redirectTo()');
 	header('Location: '.$destination);
 	die();
 }
@@ -313,14 +314,15 @@ function iURLDecode($u) {
 //! Parse Fields array to string
 /*!
  * \param $fields The fields array.
+ * \param $quote The quote to escape key.
  * \return A string as fields list.
  * 
  * It parses a field array to a fields list for queries.
 */
-function parseFields(array $fields) {
+function parseFields(array $fields, $quote='"') {
 	$list = '';
 	foreach($fields as $key => $value) {
-		$list .= (!empty($list) ? ', ' : '').'`'.$key.'`='.$value;
+		$list .= (!empty($list) ? ', ' : '').$quote.$key.$quote.'='.$value;
 	}
 	return $list;
 }
