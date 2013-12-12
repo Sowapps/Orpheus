@@ -41,15 +41,21 @@ require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
+// Errors Actions
+define("ERROR_THROW_EXCEPTION", 0);
+define("ERROR_DISPLAY_RAW", 1);
+define("ERROR_IGNORE", 2);
 set_error_handler(
 //! Error Handler
 /*!
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
-	if( empty($GLOBALS['NO_EXCEPTION']) ) {
+	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-	} else {
+	} else if( $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
+		return;
+	} else {//ERROR_DISPLAY_RAW
 		$backtrace = '';
 		foreach( debug_backtrace() as $trace ) {
 			if( !isset($trace['file']) ) {
