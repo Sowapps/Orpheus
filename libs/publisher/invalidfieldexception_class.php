@@ -28,6 +28,10 @@ class InvalidFieldException extends UserException {
 		return $this->value;
 	}
 	
+	public function getArgs() {
+		return $this->args;
+	}
+	
 	public function getText() {
 		$m = $this->getMessage();
 		$args = $this->args;
