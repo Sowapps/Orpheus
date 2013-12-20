@@ -608,6 +608,16 @@ abstract class PermanentObject {
 		return ( !is_null(static::$domain) ) ? static::$domain : static::$table;
 	}
 	
+	//! Gets the validator of this class
+	/*!
+	 * \return The validator of this class.
+	 * 
+	 * Gets the validator of this class.
+	*/
+	public static function getValidator() {
+		return static::$validator;
+	}
+	
 	//! Runs for object
 	/*!
 	 * \param $data The new data to process.
