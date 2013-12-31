@@ -42,6 +42,16 @@ class HTMLRendering extends Rendering {
 		Gets the path to the CSS files.
 	*/
 	public static function getCSSPath() {
-		return THEMESURL.static::$theme.'/'.static::$cssPath;
+		return static::getThemeURL().static::$cssPath;
+	}
+
+	//! Gets the theme path.
+	/*!
+		\return The theme path.
+		
+		Gets the path to the theme files.
+	*/
+	public static function getThemeURL() {
+		return THEMESURL.static::$theme.'/';
 	}
 }
