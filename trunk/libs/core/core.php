@@ -456,7 +456,8 @@ function addAutoload($className, $classPath) {
  * The type of the message is commonly 'success' or 'error'.
 */
 function addReport($report, $type, $domain='global') {
-	global $REPORTS, $REJREPORTS;
+	global $REPORTS, $REJREPORTS, $DISABLE_REPORT;
+	if( !empty($DISABLE_REPORT) ) { return false; }
 	if( isset($REJREPORTS[$k="$report"]) ) {
 		$rej = 1;
 		if( !empty($REJREPORTS[$k]['t']) && !in_array($type, $REJREPORTS[$k]['t']) ) {
@@ -1089,7 +1090,7 @@ function dayTime($time=null) {
 	return $time - $time%86400 - date('Z');
 }
 
-//! Returns the timestamp of the $day of the month using the given integer
+//! Returns the timestamp of the start of the $day of the month using the given integer
 /*!
  * \param $day The day of the month to get the timestamp. Default value is 1, the first day of the month.
  * \param $time The time to get the month timestamp. Default value is current timestamp.

@@ -97,6 +97,34 @@ abstract class SQLAdapter {
 	public function escapeIdentifier($Identifier) {
 		return '"'.$Identifier.'"';
 	}
+
+	//! Formats SQL string
+	/*!
+	 * \param $String The string to format.
+	 * \return The formatted string.
+	 * 
+	 * Formats the given string as an SQL string.
+	*/
+	public function formatString($String) {
+		return "'".str_replace("'", "''", "$String")."'";
+// 		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
+	}
+
+	//! Formats SQL value
+	/*!
+	 * \param $String The value to format.
+	 * \return The formatted value.
+	 * 
+	 * Formats the given value to the matching SQL type.
+	 * If the value is a float, we make french decimal compatible with SQL.
+	 * If null, we use the NULL value, else we consider it as a string value.
+	*/
+	public function formatValue($value) {
+		if( is_float($value) ) {
+			return strtr($value, ',', '.');
+		}
+		return is_null($String) ? 'NULL' : $this->formatString($value);
+	}
 	
 	//! The function to get the last inserted ID
 	/*!
@@ -120,7 +148,6 @@ abstract class SQLAdapter {
 			$this->IDFIELD = $field;
 		}
 	}
-	
 	
 	//! The static function to use for SELECT queries in global context
 	/*!
@@ -186,14 +213,50 @@ abstract class SQLAdapter {
 	//! Escapes SQL identifiers
 	/*!
 	 * \param $Identifier The identifier to escape.
+	 * \param $Instance The db instance used to send the query.
 	 * \return The escaped identifier.
 	 * \sa SQLAdapter::escapeIdentifier()
 	 * 
 	 * Escapes the given string as an SQL identifier.
 	*/
 	public static function doEscapeIdentifier($Identifier, $Instance=null) {
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->escapeIdentifier($options);
+		self::prepareInstance($Instance);
+		return self::$Adapters[$Instance]->escapeIdentifier($Identifier);
+	}
+
+	//! Escapes SQL identifiers
+	/*!
+	 * \param $String The value to format.
+	 * \param $Instance The db instance used to send the query.
+	 * \return The formatted value.
+	 * \sa SQLAdapter::formatString()
+	 * 
+	 * Formats the given value to the matching SQL type.
+	 * If the value is a float, we make french decimal compatible with SQL.
+	 * If null, we use the NULL value, else we consider it as a string value.
+	*/
+	public static function doFormatString($String, $Instance=null) {
+		self::prepareInstance($Instance);
+		return self::$Adapters[$Instance]->formatString($String);
+	}
+
+	//! The static function to quote
+	/*!
+	 * \param $String The string to quote.
+	 * \param $Instance The db instance used to send the query.
+	 * \return The quoted string.
+	 * \sa SQLAdapter::formatValue()
+	 * 
+	 * Add slashes before simple quotes in $String and surrounds it with simple quotes and .
+	 * Keep in mind this function does not really protect your DB server, especially against SQL injections.
+	*/
+	public static function doFormatValue($value, $Instance=null) {
+		self::prepareInstance($Instance);
+		return self::$Adapters[$Instance]->formatValue($value);
+// 		if( is_float($value) ) {
+// 			return strtr($value, ',', '.');
+// 		}
+// 		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
 	}
 
 	//! The static function to prepare the query for the given instance
@@ -230,21 +293,6 @@ abstract class SQLAdapter {
 			// null means default but default is not always 'default'
 			self::$Adapters[$Instance] = &self::$Adapters[$instance];
 		}
-	}
-
-	//! The static function to quote
-	/*!
-	 * \param $String The string to quote.
-	 * \return The quoted string.
-	 * 
-	 * Add slashes before simple quotes in $String and surrounds it with simple quotes and .
-	 * Keep in mind this function does not really protect your DB server, especially against SQL injections.
-	*/
-	public static function quote($String) {
-		if( is_float($String) ) {
-			return strtr($String, ',', '.');
-		}
-		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
 	}
 }
 

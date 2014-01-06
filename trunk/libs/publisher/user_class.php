@@ -182,7 +182,7 @@ class User extends AbstractStatus {
 		//self::checkForEntry() does not return password and id now.
 		
 		$user = static::get(array(
-			'where' => 'name LIKE '.SQLAdapter::quote($name),
+			'where' => 'name LIKE '.static::formatValue($name),
 			'number' => 1,
 			'output' => SQLAdapter::OBJECT
 		));
@@ -416,14 +416,14 @@ class User extends AbstractStatus {
 		\sa PermanentObject::checkForObject()
 	*/
 	public static function checkForObject($data, $ref=null) {
-		$where = 'email LIKE '.SQLAdapter::quote($data['email']);
+		$where = 'email LIKE '.static::formatValue($data['email']);
 		$what = 'email';
 		if( empty($data['email']) ) {
 			return;//Nothing to check. Email is mandatory.
 		}
 		if( !empty($data['name']) ) {
 			$what .= ', name';
-			$where .= ' OR name LIKE '.SQLAdapter::quote($data['name']);
+			$where .= ' OR name LIKE '.static::formatValue($data['name']);
 		}
 		$user = static::get(array(
 			'what'		=> $what,
