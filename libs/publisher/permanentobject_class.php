@@ -189,7 +189,7 @@ abstract class PermanentObject {
 		$updQ = '';
 		foreach($this->modFields as $fieldname) {
 			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.SQLAdapter::quote($this->$fieldname);
+				$updQ .= ( (!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.static::formatValue($this->$fieldname);
 			}
 		}
 		$IDFIELD=static::$IDFIELD;
@@ -441,7 +441,17 @@ abstract class PermanentObject {
 	 * \sa SQLAdapter::escapeIdentifier()
 	*/
 	public static function escapeIdentifier($Identifier) {
-		return SQLAdapter::doEscapeIdentifier($Identifier, static::$DBInstance, static::$IDFIELD);
+		return SQLAdapter::doEscapeIdentifier($Identifier, static::$DBInstance);
+	}
+	
+	//! Escape value through instance
+	/*!
+	 * \param $Value The value to format
+	 * \return The formatted $Value
+	 * \sa SQLAdapter::formatValue()
+	*/
+	public static function formatValue($Value) {
+		return SQLAdapter::doFormatValue($Value, static::$DBInstance);
 	}
 	
 	//! Runs for Deletion
@@ -528,7 +538,7 @@ abstract class PermanentObject {
 		$what = array();
 		foreach($data as $fieldname => $fieldvalue) {
 			if( in_array($fieldname, static::$fields) ) {
-				$what[$fieldname] = SQLAdapter::quote($fieldvalue);
+				$what[$fieldname] = static::formatValue($fieldvalue);
 			}
 		}
 		$options = array(

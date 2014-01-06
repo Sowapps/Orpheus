@@ -184,7 +184,7 @@ abstract class AbstractPublication extends AbstractStatus {
 		
 		$publication = static::get(array(
 			'what' => 'name',
-			'where' => 'name = '.SQLAdapter::quote($data['name']).
+			'where' => 'name = '.static::formatValue($data['name']).
 				( (static::$floodDelay)
 					? ' OR ( '.(($data['user_id']) ? "user_id={$data['user_id']}" : "create_ip LIKE '{$data['create_ip']}'").' AND create_time >= '.(time()-static::$floodDelay).')'
 					: ''
