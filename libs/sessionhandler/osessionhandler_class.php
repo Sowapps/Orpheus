@@ -23,7 +23,7 @@ class OSessionHandler implements SessionHandlerInterface {
 			}
 			return true;
 		} catch(Exception $e) {
-			sys_error($e);
+			log_error($e);
 			return false;
 		}
 	}
@@ -37,12 +37,12 @@ class OSessionHandler implements SessionHandlerInterface {
 					$this->session = Session::build($session_id);
 				}
 			}
-			log_debug('Loaded session, reading data...');
-			log_debug($this->session->sessID());
+// 			log_debug('Loaded session, reading data...');
+// 			log_debug($this->session->sessID());
 // 			text($this->session);
 			return $this->session->readData();
 		} catch(Exception $e) {
-			sys_error($e);
+			log_error($e);
 			return '';
 		}
 	}
@@ -59,7 +59,7 @@ class OSessionHandler implements SessionHandlerInterface {
 			$this->session->writeData($session_id, $session_data);
 			return true;
 		} catch(Exception $e) {
-			sys_error($e);
+			log_error($e);
 			return false;
 		}
 	}
@@ -71,7 +71,7 @@ class OSessionHandler implements SessionHandlerInterface {
 			}
 			return true;
 		} catch(Exception $e) {
-			sys_error($e);
+			log_error($e);
 			return false;
 		}
 	}
@@ -81,7 +81,7 @@ class OSessionHandler implements SessionHandlerInterface {
 			Session::deleteBySessID($session_id);
 			return true;
 		} catch(Exception $e) {
-			sys_error($e);
+			log_error($e);
 			return false;
 		}
 	}

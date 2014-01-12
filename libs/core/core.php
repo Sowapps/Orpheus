@@ -221,6 +221,7 @@ function log_reporterror($report, $file, $action='', $message='') {
 				// If we fail in our display of this error, this is fatal.
 				echo print_r($Error, 1);
 			}
+			die('Ending script');
 		} else if( empty($message) ) {
 			log_debug(__FILE__.' : '.__LINE__);
 			throw new Exception('fatalErrorOccurred');
@@ -268,11 +269,11 @@ function log_hack($report, $message='') {
  * \obsolete
 
  * Logs a system error.
- * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
+ * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
-function sys_error($report, $action='', $silent=false) {
+function log_error($report, $action='', $silent=false) {
 	log_debug(__FILE__.' : '.__LINE__);
-	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
+	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, $silent ? null : '');
 }
 
 //! Logs a system error.
@@ -283,10 +284,10 @@ function sys_error($report, $action='', $silent=false) {
  * \sa log_report()
 
  * Logs a system error.
- * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
+ * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
 function log_error($report, $action='', $fatal=true) {
-	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, !$fatal && ERROR_LEVEL == PROD_LEVEL ? null : '');
+	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'));
 }
 
 //! Logs a sql error.

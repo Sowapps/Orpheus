@@ -65,10 +65,10 @@ function($errno, $errstr, $errfile, $errline ) {
 			$backtrace .= '
 '.$trace['file'].' ('.$trace['line'].'): '.$trace['function'].'('.print_r($trace['args'], 1).')<br />';
 		}
-		if( !function_exists('sys_error') ) {
+		if( !function_exists('log_error') ) {
 			die($errstr."<br />\n{$backtrace}");
 		}
-		sys_error($errstr."<br />\n{$backtrace}");
+		log_error($errstr."<br />\n{$backtrace}");
 		die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 	}
 });
@@ -90,11 +90,11 @@ function() {
 				$message = $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
 PAGE:<br /><div style="clear: both;">'.$Page.'</div>';
 				
-				if( !function_exists('sys_error') ) {
+				if( !function_exists('log_error') ) {
 					die($message);
 				}
-				sys_error($message);
-				die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+				log_error($message, 'Shutdown script');
+// 				die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 				break;
 			}
 		}
@@ -108,11 +108,11 @@ set_exception_handler(
  */
 function($e) {
 	global $coreAction;
-	if( !function_exists('sys_error') ) {
+	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
-	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
+	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+// 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
 
 spl_autoload_register(
@@ -179,8 +179,8 @@ function($className) {
 			//throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
-		@sys_error("$e", 'loading_class_'.$className);
-		die('A fatal error occured loading libraries.');
+		@log_error("$e", 'loading_class_'.$className);
+// 		die('A fatal error occured loading libraries.');
 	}
 }, true, true );// End of spl_autoload_register()
 
@@ -263,11 +263,9 @@ echo __FILE__.' : '.__LINE__;
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
-echo __FILE__.' : '.__LINE__;
 	require_once pathOf(MODDIR.$Module.'.php');
 	$Page = ob_get_contents();
 	ob_end_clean();
-echo __FILE__.' : '.__LINE__;
 	
 } catch(UserException $e) {
 	reportError($e);
@@ -278,15 +276,14 @@ echo __FILE__.' : '.__LINE__;
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
-	if( !function_exists('sys_error') ) {
+	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	ob_start();
-	sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
-	$Page = ob_get_contents();
-	ob_end_clean();
+// 	ob_start();
+	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+// 	$Page = ob_get_contents();
+// 	ob_end_clean();
 }
-echo __FILE__.' : '.__LINE__;
 
 try {
 	$coreAction = 'displaying_'.$Module;
@@ -304,6 +301,6 @@ echo __FILE__.' : '.__LINE__;
 	}
 	
 } catch(Exception $e) {
-	@sys_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
-	die('A fatal display error occured.');
+	@log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+// 	die('A fatal display error occured.');
 }
