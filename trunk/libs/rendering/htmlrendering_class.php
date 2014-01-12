@@ -1,16 +1,16 @@
 <?php
 //! The HTML rendering class
 /*!
-	A class to render HTML using PHP scripts.
+	A basic class to render HTML using PHP scripts.
 */
 class HTMLRendering extends Rendering {
 	
 	protected static $SHOWMODEL = 'page_skeleton';
 	
-	public static $theme = 'default';
+	public static $theme			= 'default';
 	
-	public static $cssPath = 'css/';
-	public static $modelsPath = '';
+	public static $cssPath			= 'css/';
+	public static $modelsPath		= 'layouts/';
 	
 	//! Renders the model.
 	/*!
@@ -24,6 +24,15 @@ class HTMLRendering extends Rendering {
 		
 		include static::getModelsPath().$model.'.php';
 	}
+	
+// 	public function renderMenu($menu, $items, $layout) {
+// 		global $USER_CLASS;
+// 		if( !isset(static::$menusConf) ) {
+// 			static::$menusConf = Config::build('menus', true);
+// 		}
+// 		if( empty(static::$menusConf) || empty(static::$menusConf[$menu]) ) { return false; }
+		
+// 	}
 	
 	//! Gets the models path.
 	/*!

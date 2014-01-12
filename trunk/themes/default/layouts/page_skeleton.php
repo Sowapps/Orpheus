@@ -20,13 +20,23 @@ if( !empty($METAPROP) ) {
 ?>
 
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-responsive.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-theme.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>font-awesome.css" type="text/css" media="screen" />
+<!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>style.css" type="text/css" media="screen" />
+<?php
+if( !empty($CSS_FILES) ) {
+	foreach($CSS_FILES as $file) {
+		?>
+		
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath().$file; ?>" type="text/css" media="screen" />
+	<?php
+	}
+}
+?>
 	
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
 </head>
 <body class="<?php echo $Module; ?>">
 
@@ -34,7 +44,8 @@ if( !empty($METAPROP) ) {
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="#"><?php echo SITENAME ?></a>
-          <div class="nav-collapse collapse">
+<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
 <?php
 echo $MENUS['topmenu'];
 ?>
@@ -50,6 +61,20 @@ echo $Page;
 ?>
 
 </div>
+	<!-- JS libraries -->
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	
+	<!-- Our JS scripts -->
+	<script type="text/javascript" src="js/script.js"></script>
+<?php
+if( !empty($JS_FILES) ) {
+	foreach($JS_FILES as $file) {
+		echo "
+	<script type=\"text/javascript\" src=\"{$file}\"></script>";
+	}
+}
+?>
 
 </body>
 </html>

@@ -7,6 +7,7 @@ abstract class Rendering {
 	
 	protected static $SHOWMODEL = 'show';
 	private static $rendering;
+	private static $menusConf;
 	
 	//! Renders the model.
 	/*!
@@ -30,6 +31,72 @@ abstract class Rendering {
 		echo $this->render($model, $env);
 	}
 	
+	//! Displays rendering.
+	/*!
+	 * \param $env An environment variable.
+	 * \param $model The model to use.
+	 * 
+	 * Displays the model rendering using $env.
+	 */
+// 	public function renderMenu($menu, $items, $layout) {
+// 		return '';
+// 	}
+// 		global $USER_CLASS;
+// 		if( !isset(static::$menusConf) ) {
+// 			static::$menusConf = Config::build('menus', true);
+// 		}
+// 		if( empty(static::$menusConf) || empty(static::$menusConf[$menu]) ) { return false; }
+		
+// 	}
+	
+	//! Displays rendering.
+	/*!
+	 * \param $env An environment variable.
+	 * \param $model The model to use.
+	 * 
+	 * Displays the model rendering using $env.
+	 */
+	public static function showMenu($menu, $layout=null) {
+		global $USER_CLASS;
+		if( !isset(static::$menusConf) ) {
+			static::$menusConf = Config::build('menus', true);
+		}
+		if( empty(static::$menusConf) || empty(static::$menusConf[$menu])
+			|| !class_exists($USER_CLASS) ) {
+			return false;
+		}
+
+		self::checkRendering();
+		
+		if( is_null($layout) ) {
+			$layout = defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
+		}
+		
+		$env = array('menu'=>$menu, 'items'=>array());
+		foreach( static::$menusConf[$menu] as $modData ) {
+			$item = new stdClass;
+			if( $modData[0] == '#' ) {
+				list($item->link, $item->label) = explode('|', substr($modData, 1));
+			} else {
+				$modData = explode('-', $modData);
+				$module = $modData[0];
+				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
+					|| !Hook::trigger('menuItemAccess', true, true, $module) ) { continue; }
+				$action = ( count($modData) > 1 ) ? $modData[1] : '';
+				$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
+				$item->link = u($module, $action, $queryStr);
+				$item->label = t($module.( (!empty($action)) ? '_'.$action : ''));
+				$item->module = $module;
+				if( $module==$GLOBALS['Module'] && (!isset($Action) || $Action==$action) ) {
+					$item->current = 1;
+				}
+			}
+			$env['items'][] = $item;
+		}
+		
+		self::$rendering->display($layout, $env);
+	}
+	
 	//! Shows the rendering using a child rendering class.
 	/*!
 	 * \param $env An environment variable.
@@ -43,50 +110,10 @@ abstract class Rendering {
 		if( !isset($env) ) {
 			$env = $GLOBALS;
 		}
-		
-		// Menus' things
-		global $USER_CLASS;
-		$MENUSCONF = Config::build('menus', true);
-		$MENUS = array();
-		foreach( $MENUSCONF->all as $mName => $mModules ) {
-			$menu = '';
-			if( class_exists($USER_CLASS) ) {
-				foreach( $mModules as $modData ) {
-					$CSSClasses = $Link = $Text = '';
-					if( $modData[0] == '#' ) {
-						list($Link, $Text) = explode('|', substr($modData, 1));
-					} else {
-						$modData = explode('-', $modData);
-						$module = $modData[0];
-						if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module) ) {
-							continue;
-						}
-						if( !Hook::trigger('menuItemAccess', true, true, $module) ) {
-							continue;
-						}
-						$action = ( count($modData) > 1 ) ? $modData[1] : '';
-						$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
-						$Link = u($module, $action, $queryStr);
-						$CSSClasses = $module.' '.(($module == $GLOBALS['Module'] && (!isset($Action) || $Action == $action)) ? 'current active' : '');
-						$Text = $module.( (!empty($action)) ? '_'.$action : '');
-					}
-					//A tag fills the li space
-					//span allows to fill A width with a reduced height
-					$menu .= "
-		<li class=\"item {$CSSClasses}\"><a href=\"{$Link}\"><span>".t($Text)."</span></a></li>";
-				}
-				if( !empty($menu) ) {
-					$menu = "
-	<ul class=\"nav menu {$mName}\">{$menu}
-	</ul>";
-				}
-			}
-			$MENUS[$mName] = $menu;
-		}
-		$env['MENUS'] = &$MENUS;
 
 		self::checkRendering();
 		self::$rendering->display(static::$SHOWMODEL, $env);
+		
 		exit();
 	}
 	
@@ -95,10 +122,10 @@ abstract class Rendering {
 	 * \sa show()
 	 * Calls the show function using the 'default_rendering' configuration.
 	 */
-	final public static function doShow() {
-		$c = self::checkRendering();
-		$c::show();
-	}
+// 	final public static function doShow() {
+// 		$c = self::checkRendering();
+// 		$c::show();
+// 	}
 	
 	//! Calls the render function.
 	/*!
