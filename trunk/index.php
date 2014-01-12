@@ -281,16 +281,20 @@ try {
 	$Page = ob_get_contents();
 	ob_end_clean();
 }
+echo __FILE__.' : '.__LINE__;
 
 try {
 	$coreAction = 'displaying_'.$Module;
 	if( class_exists('Hook') ) {
 		Hook::trigger('showRendering', true);
 	}
+echo __FILE__.' : '.__LINE__;
 	if( class_exists('Rendering') ) {
 		Rendering::show();//Generic final display.
+echo __FILE__.' : '.__LINE__;
 	} else {
 		echo $Page;
+echo __FILE__.' : '.__LINE__;
 	}
 	
 } catch(Exception $e) {
