@@ -154,7 +154,7 @@ function cleanscandir($dir, $sorting_order=0) {
 	return $result;
 }
 
-//! Logs an error in a file.
+//! Logs a report in a file.
 /*!
  * \param $report The report to log.
  * \param $file The log file path.
@@ -197,41 +197,6 @@ function log_report($report, $file, $action='', $message='') {
 			die($message);
 		}
 	}
-// 	die('Error');
-}
-function log_reporterror($report, $file, $action='', $message='') {
-	if( !is_scalar($report) ) {
-		if( !is_object($report) || !($report instanceof Exception) ) {
-			$report = "\n".print_r($report, 1);
-		}
-		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
-	}
-	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
-	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
-	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	log_debug(__FILE__.' : '.__LINE__);
-	if( !is_null($message) ) {
-		log_debug(__FILE__.' : '.__LINE__);
-		if( ERROR_LEVEL == DEV_LEVEL ) {
-			log_debug(__FILE__.' : '.__LINE__);
-			$Error['message'] = $message;
-			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
-			// Display a pretty formatted error report
-			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
-				// If we fail in our display of this error, this is fatal.
-				echo print_r($Error, 1);
-			}
-			die('Ending script');
-		} else if( empty($message) ) {
-			log_debug(__FILE__.' : '.__LINE__);
-			throw new Exception('fatalErrorOccurred');
-			
-		} else {
-			log_debug(__FILE__.' : '.__LINE__);
-			die($message);
-		}
-	}
-// 	die('Error');
 }
 
 //! Logs a debug.
@@ -272,8 +237,7 @@ function log_hack($report, $message='') {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
 function sys_error($report, $action='', $silent=false) {
-	log_debug(__FILE__.' : '.__LINE__);
-	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, $silent ? null : '');
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, $silent ? null : '');
 }
 
 //! Logs a system error.
@@ -287,8 +251,7 @@ function sys_error($report, $action='', $silent=false) {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
 function log_error($report, $action='', $fatal=true) {
-	log_debug(ERROR_LEVEL == DEV_LEVEL ? 'DEV VERSION' : 'PROD VERSION');
-	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard."));
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard."));
 }
 
 //! Logs a sql error.
@@ -301,7 +264,7 @@ function log_error($report, $action='', $fatal=true) {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action);//, t('errorOccurredWithDB'));
+	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);//, t('errorOccurredWithDB'));
 	throw new Exception('errorOccurredWithDB');
 }
 

@@ -7,19 +7,15 @@
  * 
  * PHP File for the website core.
  */
-echo __FILE__.' : '.__LINE__;
 
 if( isset($SRCPATHS) ) {
 	$t = $SRCPATHS; unset($SRCPATHS);
 }
 require_once 'loader.php';
 
-echo 'Instance file: '.dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php <br />\n';
 $f = dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 if( file_exists($f) ) {
-	echo 'Instance file exists <br />\n';
 	require_once $f;
-	var_dump(DEV_VERSION);
 }
 unset($f);
 
@@ -193,7 +189,6 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
-echo __FILE__.' : '.__LINE__;
 	defifn('CORELIB',		'core');
 	defifn('CONFIGLIB',		'config');
 	
@@ -261,7 +256,6 @@ echo __FILE__.' : '.__LINE__;
 	// Future feature ?
 	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
 
-	echo __FILE__.' : '.__LINE__;
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
@@ -293,14 +287,10 @@ try {
 	if( class_exists('Hook') ) {
 		Hook::trigger('showRendering', true);
 	}
-echo __FILE__.' : '.__LINE__;
-//log_debug(__FILE__.' : '.__LINE__);
 	if( class_exists('Rendering') ) {
 		Rendering::doShow();//Generic final display.
-echo __FILE__.' : '.__LINE__;
 	} else {
 		echo $Page;
-echo __FILE__.' : '.__LINE__;
 	}
 	
 } catch(Exception $e) {
