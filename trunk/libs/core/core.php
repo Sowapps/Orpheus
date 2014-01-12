@@ -271,7 +271,7 @@ function log_hack($report, $message='') {
  * Logs a system error.
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
-function log_error($report, $action='', $silent=false) {
+function sys_error($report, $action='', $silent=false) {
 	log_debug(__FILE__.' : '.__LINE__);
 	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, $silent ? null : '');
 }
