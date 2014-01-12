@@ -288,7 +288,7 @@ try {
 		Hook::trigger('showRendering', true);
 	}
 	if( class_exists('Rendering') ) {
-		Rendering::doShow();//Generic final display.
+		Rendering::show();//Generic final display.
 	} else {
 		echo $Page;
 	}
