@@ -5,7 +5,7 @@ if( !isset($_SERVER['REDIRECT_STATUS']) ) {
 $CODE = $_SERVER['REDIRECT_STATUS'];
 $TCODE = $CODE==404 ? $CODE : 'other';
 
-log_error('HTTP Error : '.$CODE, SERVLOGFILENAME, 'accessing page', null);
+log_report('HTTP Error : '.$CODE, SERVLOGFILENAME, 'accessing page', null);
 
 ?>
 

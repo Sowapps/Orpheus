@@ -123,10 +123,10 @@ abstract class Rendering {
 	 * \sa show()
 	 * Calls the show function using the 'default_rendering' configuration.
 	 */
-// 	final public static function doShow() {
-// 		$c = self::checkRendering();
-// 		$c::show();
-// 	}
+	final public static function doShow() {
+		$c = self::checkRendering();
+		$c::show();
+	}
 	
 	//! Calls the render function.
 	/*!
