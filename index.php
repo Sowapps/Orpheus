@@ -7,8 +7,7 @@
  * 
  * PHP File for the website core.
  */
-
-die('I\'m dieing');
+echo __FILE__.' : '.__LINE__;
 
 if( isset($SRCPATHS) ) {
 	$t = $SRCPATHS; unset($SRCPATHS);
@@ -191,6 +190,7 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
+echo __FILE__.' : '.__LINE__;
 	defifn('CORELIB',		'core');
 	defifn('CONFIGLIB',		'config');
 	
@@ -257,14 +257,17 @@ try {
 	
 	// Future feature ?
 	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
-	
+
+	echo __FILE__.' : '.__LINE__;
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
+echo __FILE__.' : '.__LINE__;
 	require_once pathOf(MODDIR.$Module.'.php');
 	$Page = ob_get_contents();
 	ob_end_clean();
+echo __FILE__.' : '.__LINE__;
 	
 } catch(UserException $e) {
 	reportError($e);
