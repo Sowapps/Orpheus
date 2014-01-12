@@ -8,6 +8,8 @@
  * PHP File for the website core.
  */
 
+die('I\'m dieing');
+
 if( isset($SRCPATHS) ) {
 	$t = $SRCPATHS; unset($SRCPATHS);
 }
