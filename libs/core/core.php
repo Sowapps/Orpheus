@@ -181,6 +181,34 @@ function log_report($report, $file, $action='', $message='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
+	if( !is_null($message) ) {
+		if( ERROR_LEVEL == DEV_LEVEL ) {
+			$Error['message'] = $message;
+			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
+			// Display a pretty formatted error report
+			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
+				// If we fail in our display of this error, this is fatal.
+				echo print_r($Error, 1);
+			}
+		} else if( empty($message) ) {
+			throw new Exception('fatalErrorOccurred');
+			
+		} else {
+			die($message);
+		}
+	}
+// 	die('Error');
+}
+function log_reporterror($report, $file, $action='', $message='') {
+	if( !is_scalar($report) ) {
+		if( !is_object($report) || !($report instanceof Exception) ) {
+			$report = "\n".print_r($report, 1);
+		}
+		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
+	}
+	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
+	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
+	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	log_debug(__FILE__.' : '.__LINE__);
 	if( !is_null($message) ) {
 		log_debug(__FILE__.' : '.__LINE__);
@@ -258,7 +286,7 @@ function sys_error($report, $action='', $silent=false) {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
 */
 function log_error($report, $action='', $fatal=true) {
-	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, !$fatal && ERROR_LEVEL == PROD_LEVEL ? null : '');
+	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, !$fatal && ERROR_LEVEL == PROD_LEVEL ? null : '');
 }
 
 //! Logs a sql error.
