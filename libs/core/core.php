@@ -181,8 +181,11 @@ function log_report($report, $file, $action='', $message='') {
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
+	log_debug(__FILE__.' : '.__LINE__);
 	if( !is_null($message) ) {
+		log_debug(__FILE__.' : '.__LINE__);
 		if( ERROR_LEVEL == DEV_LEVEL ) {
+			log_debug(__FILE__.' : '.__LINE__);
 			$Error['message'] = $message;
 			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
@@ -191,13 +194,15 @@ function log_report($report, $file, $action='', $message='') {
 				echo print_r($Error, 1);
 			}
 		} else if( empty($message) ) {
+			log_debug(__FILE__.' : '.__LINE__);
 			throw new Exception('fatalErrorOccurred');
 			
 		} else {
+			log_debug(__FILE__.' : '.__LINE__);
 			die($message);
 		}
 	}
-	die('Error');
+// 	die('Error');
 }
 
 //! Logs a debug.
@@ -238,6 +243,7 @@ function log_hack($report, $message='') {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
 */
 function sys_error($report, $action='', $silent=false) {
+	log_debug(__FILE__.' : '.__LINE__);
 	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
 }
 
