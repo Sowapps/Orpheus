@@ -31,6 +31,8 @@ defifn('CACHEPATH',			STOREPATH.'cache/');
 
 // defifn('CONFIGLIB',			'config');
 // defifn('CORELIB',			'core');
+// Theme
+defifn('LAYOUT_MENU',		'menu-bootstrap3');
 
 // LIB Initernationalization
 defifn('LANGDIR',			'languages/');
