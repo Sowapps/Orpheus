@@ -165,9 +165,13 @@ function cleanscandir($dir, $sorting_order=0) {
  * Logs an error in a file serializing data to JSON.
  * Each line of the file is a JSON string of the reports.
  * The log folder is the constant LOGSPATH or, if undefined, the current one.
- * If message is NULL, it won't display any report; if ERROR_LEVEL is DEV_LEVEL, displays report; if empty, throw exception else it displays the message.
+ * Take care of this behavior:
+ *	If message is NULL, it won't display any report
+ *	Else if ERROR_LEVEL is DEV_LEVEL, displays report
+ *	Else if message is empty, throw exception
+ *	Else it displays the message.
 */
-function log_error($report, $file, $action='', $message='') {
+function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
 		if( !is_object($report) || !($report instanceof Exception) ) {
 			$report = "\n".print_r($report, 1);
@@ -199,26 +203,26 @@ function log_error($report, $file, $action='', $message='') {
 /*!
  * \param $report The debug report to log.
  * \param $action The action associated to the report. Default value is an empty string.
- * \sa log_error()
+ * \sa log_report()
 
  * Logs a debug.
  * The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
 */
 function log_debug($report, $action='') {
-	log_error($report, (defined("DEBUGFILENAME")) ? DEBUGFILENAME : '.debug', $action, null);
+	log_report($report, defined("DEBUGFILENAME") ? DEBUGFILENAME : '.debug', $action, null);
 }
 
 //! Logs a hack attemp.
 /*!
  * \param $report The report to log.
  * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
- * \sa log_error()
+ * \sa log_report()
 
  * Logs a hack attemp.
  * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
 */
 function log_hack($report, $message='') {
-	log_error($report, (defined("HACKLOGFILENAME")) ? HACKLOGFILENAME : '.hack', '', $message);
+	log_report($report, defined("HACKLOGFILENAME") ? HACKLOGFILENAME : '.hack', '', $message);
 }
 
 //! Logs a system error.
@@ -226,26 +230,41 @@ function log_hack($report, $message='') {
  * \param $report The report to log.
  * \param $action The action associated to the report. Default value is an empty string.
  * \param $silent True to not display any report. Default value is false.
- * \sa log_error()
+ * \sa log_report()
+ * \obsolete
 
  * Logs a system error.
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
 */
 function sys_error($report, $action='', $silent=false) {
-	log_error($report, (defined("SYSLOGFILENAME")) ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
+}
+
+//! Logs a system error.
+/*!
+ * \param $report The report to log.
+ * \param $action The action associated to the report. Default value is an empty string.
+ * \param $fatal True if the error is fatal, it stops script. Default value is true.
+ * \sa log_report()
+
+ * Logs a system error.
+ * The log file is the constant SYSLOGFILENAME or, if undefined, '.sys_error'.
+*/
+function log_error($report, $action='', $fatal=true) {
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, !$fatal && ERROR_LEVEL == PROD_LEVEL ? null : '');
 }
 
 //! Logs a sql error.
 /*!
  * \param $report The report to log.
  * \param $action The action associated to the report. Default value is an empty string.
- * \sa log_error()
+ * \sa log_report()
 
  * Logs a sql error.
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_error($report, (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error', $action);//, t('errorOccurredWithDB'));
+	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action);//, t('errorOccurredWithDB'));
 	throw new Exception('errorOccurredWithDB');
 }
 

@@ -295,7 +295,7 @@ try {
 	}
 echo __FILE__.' : '.__LINE__;
 	if( class_exists('Rendering') ) {
-		Rendering::show();//Generic final display.
+		Rendering::doShow();//Generic final display.
 echo __FILE__.' : '.__LINE__;
 	} else {
 		echo $Page;
