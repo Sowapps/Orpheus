@@ -14,8 +14,10 @@ if( isset($SRCPATHS) ) {
 }
 require_once 'loader.php';
 
+echo 'Instance file: '.dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php <br />\n';
 $f = dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 if( file_exists($f) ) {
+	echo 'Instance file exists <br />\n';
 	require_once $f;
 }
 unset($f);
