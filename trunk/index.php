@@ -294,7 +294,7 @@ try {
 		Hook::trigger('showRendering', true);
 	}
 echo __FILE__.' : '.__LINE__;
-log_debug(__FILE__.' : '.__LINE__);
+//log_debug(__FILE__.' : '.__LINE__);
 	if( class_exists('Rendering') ) {
 		Rendering::doShow();//Generic final display.
 echo __FILE__.' : '.__LINE__;

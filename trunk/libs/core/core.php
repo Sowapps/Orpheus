@@ -197,6 +197,7 @@ function log_report($report, $file, $action='', $message='') {
 			die($message);
 		}
 	}
+	die('Error');
 }
 
 //! Logs a debug.
