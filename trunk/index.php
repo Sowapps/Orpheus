@@ -19,6 +19,7 @@ $f = dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 if( file_exists($f) ) {
 	echo 'Instance file exists <br />\n';
 	require_once $f;
+	var_dump(DEV_VERSION);
 }
 unset($f);
 
