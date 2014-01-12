@@ -58,7 +58,7 @@ abstract class PermanentObject {
 				$this->save();
 			} catch(Exception $e) {
 				// Can be destructed outside of the matrix
-				sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__destruct(): Saving');
+				log_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__destruct(): Saving');
 			}
 		}
 	}
@@ -106,7 +106,7 @@ abstract class PermanentObject {
 		try {
 			return '#'.$this->{static::$IDFIELD}.' ('.get_class($this).')';
 		} catch( Exception $e ) {
-			sys_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__toString()');
+			log_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__toString()');
 		}
 	}
 	
