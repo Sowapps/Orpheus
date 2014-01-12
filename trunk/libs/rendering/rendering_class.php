@@ -62,8 +62,9 @@ abstract class Rendering {
 		global $USER_CLASS;
 		if( !isset(self::$menusConf) ) {
 			self::$menusConf = Config::build('menus', true);
+// 			self::$menusConf = self::$menusConf->all;
 		}
-		if( empty(self::$menusConf) || empty(self::$menusConf[$menu])
+		if( empty(self::$menusConf) || empty(self::$menusConf->$menu)
 			|| !class_exists($USER_CLASS) ) {
 			return false;
 		}
@@ -74,7 +75,7 @@ abstract class Rendering {
 		}
 		
 		$env = array('menu'=>$menu, 'items'=>array());
-		foreach( self::$menusConf[$menu] as $modData ) {
+		foreach( self::$menusConf->$menu as $modData ) {
 			$item = new stdClass;
 			if( $modData[0] == '#' ) {
 				list($item->link, $item->label) = explode('|', substr($modData, 1));
