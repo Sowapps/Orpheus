@@ -56,7 +56,9 @@ abstract class Rendering {
 	 * 
 	 * Displays the model rendering using $env.
 	 */
-	public static function showMenu($menu, $layout=null) {
+	public function showMenu($menu, $layout=null) {
+// 		self::checkRendering();
+		
 		global $USER_CLASS;
 		if( !isset(static::$menusConf) ) {
 			static::$menusConf = Config::build('menus', true);
@@ -66,7 +68,6 @@ abstract class Rendering {
 			return false;
 		}
 
-		self::checkRendering();
 		
 		if( is_null($layout) ) {
 			$layout = defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
@@ -94,7 +95,7 @@ abstract class Rendering {
 			$env['items'][] = $item;
 		}
 		
-		self::$rendering->display($layout, $env);
+		$this->display($layout, $env);
 	}
 	
 	//! Shows the rendering using a child rendering class.

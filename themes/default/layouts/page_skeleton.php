@@ -41,16 +41,9 @@ if( !empty($CSS_FILES) ) {
 <body class="<?php echo $Module; ?>">
 
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="#"><?php echo SITENAME ?></a>
-<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-      <ul class="nav navbar-nav">
-<?php
-echo $MENUS['topmenu'];
-?>
-          </div>
-        </div>
+<?php $this->showMenu('topmenu'); ?>
       </div>
     </div>
 
