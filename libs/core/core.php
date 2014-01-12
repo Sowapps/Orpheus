@@ -272,7 +272,7 @@ function log_hack($report, $message='') {
 */
 function sys_error($report, $action='', $silent=false) {
 	log_debug(__FILE__.' : '.__LINE__);
-	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
+	log_reporterror($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.sys_error', $action, $silent ? null : '');
 }
 
 //! Logs a system error.
