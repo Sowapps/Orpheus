@@ -40,12 +40,14 @@ if( !empty($CSS_FILES) ) {
 </head>
 <body class="<?php echo $Module; ?>">
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-          <a class="brand" href="#"><?php echo SITENAME ?></a>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
+			<div class="collapse navbar-collapse">
 <?php $this->showMenu('topmenu'); ?>
-      </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 <div class="container">
 
