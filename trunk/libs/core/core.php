@@ -475,7 +475,8 @@ function addAutoload($className, $classPath) {
  * The type of the message is commonly 'success' or 'error'.
 */
 function addReport($report, $type, $domain='global') {
-	global $REPORTS, $REJREPORTS;
+	global $REPORTS, $REJREPORTS, $DISABLE_REPORT;
+	if( !empty($DISABLE_REPORT) ) { return false; }
 	if( isset($REJREPORTS[$k="$report"]) ) {
 		$rej = 1;
 		if( !empty($REJREPORTS[$k]['t']) && !in_array($type, $REJREPORTS[$k]['t']) ) {

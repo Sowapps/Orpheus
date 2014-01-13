@@ -1,5 +1,2 @@
-
-<Files ~ "Doxyfile">
-	Order allow,deny
-	Deny from all
-</Files>
+order deny,allow
+deny from all
