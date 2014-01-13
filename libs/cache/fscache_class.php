@@ -74,7 +74,6 @@ class FSCache implements Cache {
 			if( is_object($data) ) {
 				// If castable, we will recreate object when getting it
 				// Else we will return a stdClass Object.
-				text(class_uses($data));
 				$type = array_key_exists('cast', class_uses($data)) ? get_class($data) : 'object';
 			} else if( is_array($data) ) {
 				$type = 'array';

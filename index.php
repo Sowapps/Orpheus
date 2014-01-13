@@ -255,7 +255,7 @@ try {
 	
 	// Future feature ?
 	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
-
+	
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
 	define('OBLEVEL_INIT', ob_get_level());

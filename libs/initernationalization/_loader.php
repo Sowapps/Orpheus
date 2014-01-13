@@ -65,7 +65,7 @@ function t($k, $domain='global', $values=array()) {
 			$rkeys = array_map(function ($v) { return "#{$v}#"; }, array_keys($values));
 			$rvalues = array_values($values);
 		}
-		$r = str_replace( $rkeys, $rvalues, $r);
+		$r = str_replace($rkeys, $rvalues, $r);
 	}
 	return $r;
 }
