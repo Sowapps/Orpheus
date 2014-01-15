@@ -123,7 +123,7 @@ abstract class SQLAdapter {
 		if( is_float($value) ) {
 			return strtr($value, ',', '.');
 		}
-		return is_null($String) ? 'NULL' : $this->formatString($value);
+		return is_null($value) ? 'NULL' : $this->formatString($value);
 	}
 	
 	//! The function to get the last inserted ID

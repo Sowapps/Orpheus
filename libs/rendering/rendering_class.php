@@ -38,24 +38,6 @@ abstract class Rendering {
 	 * 
 	 * Displays the model rendering using $env.
 	 */
-// 	public function renderMenu($menu, $items, $layout) {
-// 		return '';
-// 	}
-// 		global $USER_CLASS;
-// 		if( !isset(static::$menusConf) ) {
-// 			static::$menusConf = Config::build('menus', true);
-// 		}
-// 		if( empty(static::$menusConf) || empty(static::$menusConf[$menu]) ) { return false; }
-		
-// 	}
-	
-	//! Displays rendering.
-	/*!
-	 * \param $env An environment variable.
-	 * \param $model The model to use.
-	 * 
-	 * Displays the model rendering using $env.
-	 */
 	public function showMenu($menu, $layout=null) {
 // 		self::checkRendering();
 		
