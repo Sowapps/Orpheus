@@ -30,8 +30,10 @@ displayReportsHTML();
 	<form method="POST">
 	<fieldset>
 		<legend>Try to create you own DemoTest object</legend>
-		<label>Create it from a new value</label>
-		<input type="text" name="data[name]" placeholder="Type new value...">
+		<div class="form-group">
+			<label>Create it from a new value</label>
+			<input type="text" name="data[name]" placeholder="Type new value...">
+		</div>
 		<span class="help-block">Submit a new value to see this working test in action.</span>
 		<button id="submitDemoTest" type="submit" class="btn">Insert it !</button>
 	</fieldset>
