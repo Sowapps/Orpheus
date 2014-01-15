@@ -51,9 +51,7 @@ if( !empty($CSS_FILES) ) {
 
 <div class="container">
 
-<?php
-echo $Page;
-?>
+<?php echo $Page; ?>
 
 </div>
 	<!-- JS libraries -->
