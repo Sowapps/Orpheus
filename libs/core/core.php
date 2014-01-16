@@ -173,7 +173,9 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		if( !is_object($report) || !($report instanceof Exception) ) {
+		if( is_object($report) && $report instanceof Exception ) {
+			$report = 'Exception \''.get_class($report).'\' with '.( $report->getMessage() ? " message '{$report->getMessage()}'" : 'no message').' in '.$report->getFile().':'.$report->getLine()."\n".$report->getTraceAsString();
+		} else {
 			$report = "\n".print_r($report, 1);
 		}
 		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
