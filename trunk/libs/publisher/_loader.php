@@ -27,7 +27,7 @@ Hook::register('checkModule', function () {
 		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
 		
 		// If login ip is different from current one, protect against cookie stealing
-		if( !$USER->isLogin(User::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
+		if( Config::get('deny_multiple_connections', false) && !$USER->isLogin(User::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
 			$USER->logout('loggedFromAnotherComputer');
 			return;
 		}
