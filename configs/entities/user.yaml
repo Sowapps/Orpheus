@@ -1,0 +1,223 @@
+
+# User descriptor
+
+fields:
+    name:
+        type: string
+        min: 6
+        max: 50
+        validator: is_name
+    password:
+        type: password
+        formater: User::hashPassword
+    accesslevel:
+        type: integer
+        max: 999
+    status:
+        type: code
+        source: User::checkStatus
+    email:
+        type: email
+        max: 999
+    email_public:
+        type: email
+        max: 999
+    
+    
+#        'id', 'name', 'password', 'accesslevel', 'status', 'email', 'email_public',
+#        'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'    
+    
+    saleAgreement:
+        token: 'propertyAncient'
+    # Diagnostic de performance énergétique
+    statementDPE:
+        token: 'propertyAncient'
+        
+    # État liquidatif
+    liquidationStatement:
+        token: 'propertySoulte'
+    
+    # Contrat de réservation
+    reservationContractVEFA:
+        token: 'propertyVEFA'
+    
+    # Compromis de vente du terrain
+    landSaleAgreement:
+        token: 'propertyBuild'
+    # Contrat de réservation ou contrat constructeur
+    buildContract:
+        token: 'propertyBuild'
+    # Plan coté et masse
+    groundPlane:
+        token: 'propertyBuild'
+    # Récépissé du dépôt de la demande de permis
+    permitFilingReceipt:
+        token: 'propertyBuild'
+    # Devis
+    buildingQuote:
+        token: 'buildingQuote'
+    # Livret de famille du client
+    familyRecordBook:
+        token: 'familyRecordBook'
+          
+    # Document personnalisé
+    customDocument:
+        no-auto: true
+        max: 0
+    
+    ### Project Admin attachments
+    # This document are provided by agents
+    
+    # Lettre de mission signée
+    engagementLetter:
+        no-auto: true
+    
+    # Mandat de confirmation signée
+    confirmationMandate:
+        no-auto: true
+    
+    # Demande de financement
+    fundingRequest:
+        no-auto: true
+    
+    # Fiche de solvabilité
+    solvencySheet:
+        no-auto: true
+    
+    # Présentation graphique (du plan de financement)
+    fundingPlanChart:
+        no-auto: true
+
+otherdata:
+    # Relevés bancaires Additionnels
+    otherBankStatementN0:
+        no-auto: true
+    otherBankStatementN1: []
+    otherBankStatementN2: []
+    otherBankStatementN3: []
+
+loanrequest:
+    bankFundingRequest:
+        no-auto: true
+        max: 0
+
+client:
+    # CNI
+    identityDocument: []
+    # CNI
+    residencePermit:
+        token: notFrench
+    # Justificatif de domicile
+    proofOfAddress:
+        token: 'perhousehold'
+    # Livret de famille du client
+    #familyRecordBook:
+    #    token: 'maried'
+    #    group: 'civilStatus'
+    # Contrat de mariage
+    marriageContract:
+        token: 'marriageContract'
+    pacsCertificate:
+        token: 'pacsed'
+    # Certificat de divorce
+    divorceCertificate:
+        token: 'divorced'
+    # Quittances de loyer
+    rentReceiptN0:
+        no-auto: true
+    rentReceiptN1:
+        token: 'tenant'
+    rentReceiptN2:
+        token: 'tenant'
+    rentReceiptN3:
+        token: 'tenant'
+        
+    # Bulletins de salaire
+    payslipN0:
+#        token: 'salaried'
+        no-auto: true
+    payslipN1:
+        token: 'salaried'
+    payslipN2:
+        token: 'salaried'
+    payslipN3:
+        token: 'salaried'
+    # Contrat de travail
+    employmentContract :
+        token: 'recentSalaried'
+    # Déclaration 2035 (Travailleurs non salariés)
+    declaration2035:
+        token: 'selfEmployed'
+    # Relevé de pensions
+    pensionStatement:
+        token: 'retired'
+    # Déclaration 2044 (Revenus locatifs)
+    declaration2044:
+        token: 'rentalIncome'
+    # Allocations familiales
+    statementCAF:
+        token: 'familyAllowances'
+    
+    # Avis d'imposition
+    taxNoticeN0:
+        no-auto: true
+    taxNoticeN1:
+        token: 'taxNoticeN1'
+    taxNoticeN2:
+        token: 'taxNoticeN2'
+    # Taxe d'habitation
+    councilTax:
+        token: 'contributeHousing'
+
+    # Relevés bancaires
+    bankStatementN0:
+        no-auto: true
+    bankStatementN1: []
+    bankStatementN2: []
+    bankStatementN3: []
+    # Justificatif d'épargne
+    proofOfSaving:
+        token: 'contribution'
+
+company:
+    # Projet de statut
+    draftStatutes:
+        token: 'company_new'
+    
+    # Statut de société
+    companyStatutes:
+        token: 'company_existing'
+    # KBIS
+    extractKBIS:
+        token: 'company_existing'
+    # Relevés bancaires
+    companyBankStatementN0:
+        no-auto: true
+    companyBankStatementN1:
+        token: 'company_existing'
+    companyBankStatementN2:
+        token: 'company_existing'
+    companyBankStatementN3:
+        token: 'company_existing'
+
+loan:
+    # Offre de prêt
+    loanOffer: []
+    # Tableau d'amortissement
+    amortizationSchedule: []
+    # Tableau d'amortissement
+    earlyRepaymentCount:
+        token: 'loan_repurchase'
+
+persocontrib:
+    # Offre de prêt
+    loanOffer: []
+    # Tableau d'amortissement
+    amortizationSchedule: []
+
+patrim:
+    # Titre de propriété
+    titleDeed: []
+    # Taxe foncière
+    propertyTax: []
+#        token: 'propertyTax'
