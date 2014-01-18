@@ -3,13 +3,10 @@
 
 fields:
     name:
-        type: string
-        min: 6
-        max: 50
+        type: string(6,50)
         validator: is_name
     password:
         type: password
-        formater: User::hashPassword
     accesslevel:
         type: integer
         max: 999
@@ -24,8 +21,9 @@ fields:
         max: 999
     
     
-#        'id', 'name', 'password', 'accesslevel', 'status', 'email', 'email_public',
-#        'create_time', 'create_ip', 'activation_time', 'activation_ip', 'login_time', 'login_ip', 'activity_time', 'activity_ip'    
+# 'id' 'name' 'password' 'accesslevel', 'status', 'email', 'email_public'
+# 'create_time', 'create_ip', 'activation_time', 'activation_ip',
+#'login_time', 'login_ip', 'activity_time', 'activity_ip'    
     
     saleAgreement:
         token: 'propertyAncient'
