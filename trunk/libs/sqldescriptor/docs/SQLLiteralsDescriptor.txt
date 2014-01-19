@@ -57,8 +57,13 @@ integer([[min=-2147483648,] max=2147483647])
 ref()
 	inherit = integer(0, 4294967295)
 		
-ref()
+enum(source)
+	# source could be
+	# - a String => Look in a config file for this name, to find an array
+	# - an array (JSON) => Search in this array
+	# - a callback => Expect the callback return an array
 	inherit = integer(0, 4294967295)
+	validator = isValueOfEnum
 
 
 # Indexes
