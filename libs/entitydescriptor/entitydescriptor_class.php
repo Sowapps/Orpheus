@@ -170,7 +170,7 @@ EntityDescriptor::registerType('number', null, function($fArgs) {
 EntityDescriptor::registerType('string', null, function($fArgs) {
 	text('Parse Args');
 	text($fArgs);
-	$args = array('min'=>0, 'max'=>65535);
+	$args = (object) array('min'=>0, 'max'=>65535);
 	if( isset($fArgs[1]) ) {
 		$args->min			= $fArgs[0];
 		$args->max			= $fArgs[1];
