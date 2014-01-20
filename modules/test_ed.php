@@ -2,5 +2,7 @@
 
 $ed = new EntityDescriptor('users');
 
-$ed->validateFieldValue('a_number', '125');
-$ed->validateFieldValue('a_number', '-125');
+$values = array('125', '-125');
+foreach( $values as $value ) {
+	$ed->validateFieldValue('a_number', $value);
+}
