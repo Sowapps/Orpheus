@@ -5,6 +5,9 @@
 
 fields:
     a_number: number(0, 0, 255)
+    a_string: string()
+    a_string2: string(20)
+    an_integer: integer(0, 255)
 #    name:
 #        type: string(6,50)
 #        validator: is_name
