@@ -113,7 +113,7 @@ class EntityDescriptor {
 	
 	public static function registerType($name, $parent, $argsParser, $validator, $formatter=null) {
 		// If previously registered, we just replace it
-		static::$types[$name] = new TypeDescriptor($name, static::getType($parent), $argsParser, $validator, $formatter);
+		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter);
 // 		static::$types[$name] = (object) array(
 // 			'argsParser'	=> $argsParser,
 // 			'validator'		=> $validator,
