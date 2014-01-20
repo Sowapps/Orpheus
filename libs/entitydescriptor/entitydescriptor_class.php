@@ -16,7 +16,7 @@ class EntityDescriptor {
 			// Build descriptor
 			$fields = array();
 			//    Parse Config file
-			foreach( $conf['fields'] as $field => $fieldInfos ) {
+			foreach( $conf->fields as $field => $fieldInfos ) {
 				$type	= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$fData	= static::parseType($type);
 				$TYPE	= static::getType($fData['type']);
@@ -30,7 +30,7 @@ class EntityDescriptor {
 			// Save descriptor
 			debug('Descriptor', array(
 				'fields' => $fields,
-				'indexes' => $conf['indexes'],
+				'indexes' => $conf->indexes,
 			));
 // 			$cache->set(array(
 // 				'fields' => $fields,
