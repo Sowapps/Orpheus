@@ -17,7 +17,7 @@ class TypeDescriptor {
 	}
 	
 	public function parseArgs($args) {
-		call_user_func($this->argsParser, $args);
+		return call_user_func($this->argsParser, $args);
 	}
 	
 	public function validate($args, &$value) {
