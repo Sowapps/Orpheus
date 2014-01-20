@@ -186,6 +186,29 @@ EntityDescriptor::registerType('string', null, function($fArgs) {
 	}
 });
 
+EntityDescriptor::registerType('date', null, function($fArgs) {
+	$args = (object) array('country'=>'FR');
+	if( isset($fArgs[0]) ) {
+		$args->country		= strtoupper($fArgs[0]);
+	}
+	if( $args->country != 'FR' ) {
+		throw new Exception('invalidCountry_'.$args->country);
+	}
+	return $args;
+}, function($args, &$value) {
+	// FR Only for now
+	if( !is_date($value, '/', $time) ) {
+		throw new FE('notDate');
+	}
+	$value = d($time);
+}, function($args, &$value) {
+	// FR Only for now
+	if( !is_date($value, '/', $time) ) {
+		throw new FE('notDate');
+	}
+	$value = dt($time);
+});
+
 
 // Derived types
 EntityDescriptor::registerType('integer', 'number', function($fArgs) {

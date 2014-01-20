@@ -65,13 +65,13 @@ function is_ID($Number) {
  * The format is DD/MM/YYYY and default separators can be '/', '-', ':', ';', ',', '|' or '#' 
  */
 function is_date($date, $separators='\-\/:\;,|\#', &$time=false) {
-	$DateFor = preg_replace("#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})$#", '$1#$2#$3', $date, -1, $Count);
-	if( !$Count ) {
+	$DateFor = preg_replace("#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})$#", '$1#$2#$3', $date, -1, $count);
+	if( !$count ) {
 		return false;
 	}
 	list($Day, $Month, $Year) = explode("#", $DateFor);
 	$r = checkdate($Month, $Day, $Year);
-	if( $r && is_null($time) ) {
+	if( $r && $time!==false ) {
 		$time = mktime(0, 0, 0, $Month, $Day, $Year);
 	} 
 	return $r;
