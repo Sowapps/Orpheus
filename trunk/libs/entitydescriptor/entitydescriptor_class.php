@@ -130,9 +130,8 @@ class EntityDescriptor {
 	}
 }
 
-class FE extends Exception {
-	
-}
+// Short Field Exception
+class FE extends Exception { }
 
 defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 

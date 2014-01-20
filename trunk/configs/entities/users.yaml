@@ -4,8 +4,7 @@
 # Maybe it could define if validation is strict
 
 fields:
-    a_number:
-        type: number(0, 0, 255)
+    a_number: number(0, 0, 255)
 #    name:
 #        type: string(6,50)
 #        validator: is_name
