@@ -1,8 +1,10 @@
 
 # User descriptor
 
+# Maybe it could define if validation is strict
+
 fields:
-    number:
+    a_number:
         type: number(0, 0, 255)
 #    name:
 #        type: string(6,50)

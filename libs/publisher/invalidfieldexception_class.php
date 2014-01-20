@@ -8,12 +8,12 @@ class InvalidFieldException extends UserException {
 	private $args;
 	
 	// $field is INPUT field (not always the same as db field)
-	public function __construct($message, $field, $value, $type=null, $domain=null, $args=array()) {
+	public function __construct($message, $field, $value, $type=null, $domain=null, $typeArgs=array()) {
 		parent::__construct($message, $domain);
 		$this->field = $field;
 		$this->type = $type;
 		$this->value = $value;
-		$this->args = is_array($args) ? $args : array($args);
+		$this->args = is_array($typeArgs) ? $typeArgs : array($typeArgs);
 	}
 	
 	public function getField() {
