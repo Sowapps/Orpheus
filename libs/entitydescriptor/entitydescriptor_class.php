@@ -139,6 +139,8 @@ defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 
 // Primary Types
 EntityDescriptor::registerType('number', null, function($fArgs) {
+	text('Parse Args');
+	text($fArgs);
 	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 	if( isset($fArgs[2]) ) {
 		$args->precision	= $fArgs[0];
@@ -166,6 +168,8 @@ EntityDescriptor::registerType('number', null, function($fArgs) {
 });
 
 EntityDescriptor::registerType('string', null, function($fArgs) {
+	text('Parse Args');
+	text($fArgs);
 	$args = array('min'=>0, 'max'=>65535);
 	if( isset($fArgs[1]) ) {
 		$args->min			= $fArgs[0];
