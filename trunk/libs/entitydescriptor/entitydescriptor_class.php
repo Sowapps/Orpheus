@@ -46,7 +46,7 @@ class EntityDescriptor {
 	public function getFieldsName() {
 		return array_keys($this->fields);
 	}
-	
+	/*
 	protected function callValidator($type, $args, &$value) {
 		if( isset($type->parent) ) {
 			$parent = static::getType($type->parent);
@@ -64,6 +64,7 @@ class EntityDescriptor {
 			call_user_func($type->formatter, $args, $value);
 		}
 	}
+	*/
 	
 	public function validateFieldValue($field, &$value, $required=true, $ref=null) {
 		if( !isset($this->fields[$field]) ) {
@@ -81,7 +82,7 @@ class EntityDescriptor {
 		$TYPE	= static::getType($FIELD->type);
 		// TYPE Validator - Use inheritance, mandatory in super class
 		try {
-			$this->callValidator($TYPE, $FIELD->args, $value);
+			$TYPE->validate($FIELD->args, $value);
 			// Field Validator - Could be undefined
 			if( !empty($FIELD->validator) ) {
 				call_user_func($FIELD->validator, $FIELD->args, $value);
@@ -92,7 +93,7 @@ class EntityDescriptor {
 		}
 
 		// TYPE Formatter - Use inheritance, mandatory in super class
-		$this->callFormatter($TYPE, $FIELD->args, $value);
+		$TYPE->format($FIELD->args, $value);
 		// Field Formatter - Could be undefined
 	}
 	
@@ -110,13 +111,14 @@ class EntityDescriptor {
 		return $type;
 	}
 	
-	public static function registerType($name, $argsParser, $validator, $formatter=null) {
+	public static function registerType($name, $parent, $argsParser, $validator, $formatter=null) {
 		// If previously registered, we just replace it
-		static::$types[$name] = (object) array(
-			'argsParser'	=> $argsParser,
-			'validator'		=> $validator,
-			'formatter'		=> $formatter,
-		);
+		static::$types[$name] = new TypeDescriptor($name, static::getType($parent), $argsParser, $validator, $formatter);
+// 		static::$types[$name] = (object) array(
+// 			'argsParser'	=> $argsParser,
+// 			'validator'		=> $validator,
+// 			'formatter'		=> $formatter,
+// 		);
 	}
 
 	public static function parseType($string) {
@@ -135,7 +137,8 @@ class FE extends Exception { }
 
 defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 
-EntityDescriptor::registerType('number', function($a1=null, $a2=null, $a3=null) {
+// Primary Types
+EntityDescriptor::registerType('number', null, function($a1=null, $a2=null, $a3=null) {
 	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 	if( !is_null($a3) ) {
 		$args->precision	= $a1;
@@ -149,6 +152,9 @@ EntityDescriptor::registerType('number', function($a1=null, $a2=null, $a3=null) 
 	}
 	return $args;
 }, function($args, &$value) {
+	if( !is_numeric($value) ) {
+		throw new FE('notNumeric');
+	}
 	if( $value < $args->min ) {
 		throw new FE('belowMinValue');
 	}
@@ -157,7 +163,7 @@ EntityDescriptor::registerType('number', function($a1=null, $a2=null, $a3=null) 
 	}
 });
 
-EntityDescriptor::registerType('string', function($a1=null, $a2=null, $a3=null) {
+EntityDescriptor::registerType('string', null, function($a1=null, $a2=null, $a3=null) {
 	$args = array('min'=>0, 'max'=>65535);
 	if( !is_null($a2) ) {
 		$args['min']		= $a1;
@@ -173,6 +179,26 @@ EntityDescriptor::registerType('string', function($a1=null, $a2=null, $a3=null) 
 	}
 	if( $len > $args->max ) {
 		throw new FE('aboveMaxLength');
+	}
+});
+
+
+// Derived types
+EntityDescriptor::registerType('integer', 'number', function($a1=null, $a2=null) {
+	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
+	if( !is_null($a2) ) {
+		$args->min			= $a1;
+		$args->max			= $a2;
+	} else if( !is_null($a1) ) {
+		$args->max			= $a1;
+	}
+	return $args;
+}, function($args, &$value) {
+	if( $value < $args->min ) {
+		throw new FE('belowMinValue');
+	}
+	if( $value > $args->max ) {
+		throw new FE('aboveMaxValue');
 	}
 });
 
