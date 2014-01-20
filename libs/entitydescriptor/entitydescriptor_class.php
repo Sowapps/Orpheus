@@ -151,10 +151,10 @@ EntityDescriptor::registerType('number', function($a1=null, $a2=null, $a3=null) 
 	return $args;
 }, function(&$args, $value) {
 	if( $value < $args->min ) {
-		throw new FE('belowMin');
+		throw new FE('belowMinValue');
 	}
 	if( $value > $args->max ) {
-		throw new FE('aboveMax');
+		throw new FE('aboveMaxValue');
 	}
 });
 
@@ -167,5 +167,13 @@ EntityDescriptor::registerType('string', function($a1=null, $a2=null, $a3=null) 
 		$args['max']		= $a1;
 	}
 	return $args;
+}, function(&$args, $value) {
+	$len = strlen($value);
+	if( $len < $args->min ) {
+		throw new FE('belowMinLength');
+	}
+	if( $len > $args->max ) {
+		throw new FE('aboveMaxLength');
+	}
 });
 
