@@ -86,7 +86,7 @@ class EntityDescriptor {
 			if( !empty($FIELD->validator) ) {
 				call_user_func($FIELD->validator, $FIELD->args, $value);
 			}
-		} catch( Exception $e ) {
+		} catch( EF $e ) {
 			throw new InvalidFieldException($e->getMessage(), $field, $value, $FIELD->type, null, $FIELD->args);
 			//($message, $field, $value, $type=null, $domain=null, $typeArgs=array())
 		}
