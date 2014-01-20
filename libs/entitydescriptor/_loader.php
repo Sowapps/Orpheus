@@ -3,6 +3,8 @@
  */
 
 addAutoload('EntityDescriptor',					'entitydescriptor/entitydescriptor');
+addAutoload('TypeDescriptor',					'entitydescriptor/typedescriptor');
+
 addAutoload('SQLEntityAdapter',					'entitydescriptor/sqlentityadapter');
 addAutoload('MySQLEntityAdapter',				'entitydescriptor/mysqlentityadapter');
 
