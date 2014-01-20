@@ -28,7 +28,8 @@ class EntityDescriptor {
 			//    Generate cache output
 			
 			// Save descriptor
-			debug('Descriptor', array(
+			text('Descriptor');
+			text(array(
 				'fields' => $fields,
 				'indexes' => $conf->indexes,
 			));
