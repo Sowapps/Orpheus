@@ -150,6 +150,8 @@ EntityDescriptor::registerType('number', null, function($a1=null, $a2=null, $a3=
 	} else if( !is_null($a1) ) {
 		$args->max			= $a1;
 	}
+	text('Args');
+	text($args);
 	return $args;
 }, function($args, &$value) {
 	if( !is_numeric($value) ) {
@@ -163,7 +165,7 @@ EntityDescriptor::registerType('number', null, function($a1=null, $a2=null, $a3=
 	}
 });
 
-EntityDescriptor::registerType('string', null, function($a1=null, $a2=null, $a3=null) {
+EntityDescriptor::registerType('string', null, function($a1=null, $a2=null) {
 	$args = array('min'=>0, 'max'=>65535);
 	if( !is_null($a2) ) {
 		$args['min']		= $a1;
