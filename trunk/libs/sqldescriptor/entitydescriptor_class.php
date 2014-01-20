@@ -28,11 +28,15 @@ class EntityDescriptor {
 	
 	protected static $types = array();
 	public static function registerType($name, $argsParser) {
-
-
+		
+		
 		static::$types[$name] = array(
 			'argsParser'	=> $argsParser
 		);
+	}
+	
+	public static function parseType($string) {
+		
 	}
 }
 
