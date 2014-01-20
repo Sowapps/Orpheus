@@ -8,7 +8,7 @@ class TypeDescriptor {
 	protected $validator;
 	protected $formatter;
 	
-	public function __construct($name, $parent, $argsParser, $validator, $formatter=null) {
+	public function __construct($name, $parent, $argsParser, $validator=null, $formatter=null) {
 		$this->name			= $name;
 		$this->parent		= $parent;
 		$this->argsParser	= $argsParser;
@@ -23,15 +23,20 @@ class TypeDescriptor {
 	public function validate($args, &$value) {
 		if( isset($this->parent) ) {
 			$this->parent->validate($args, $value);
+		} else
+		if( !isset($this->validator) ) {
+			throw new Exception('noValidator');
 		}
-		call_user_func($this->validator, $args, $value);
+		if( isset($this->validator) ) {
+			call_user_func($this->validator, $args, $value);
+		}
 	}
 	
 	public function format($args, &$value) {
 		if( isset($this->parent) ) {
 			$this->parent->format($args, $value);
 		}
-		if( $this->formatter ) {
+		if( isset($this->formatter) ) {
 			call_user_func($this->formatter, $args, $value);
 		}
 	}

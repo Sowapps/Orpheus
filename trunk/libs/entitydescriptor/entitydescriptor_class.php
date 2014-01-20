@@ -111,7 +111,7 @@ class EntityDescriptor {
 		return $type;
 	}
 	
-	public static function registerType($name, $parent, $argsParser, $validator, $formatter=null) {
+	public static function registerType($name, $parent, $argsParser, $validator=null, $formatter=null) {
 		// If previously registered, we just replace it
 		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter);
 // 		static::$types[$name] = (object) array(
@@ -138,17 +138,17 @@ class FE extends Exception { }
 defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 
 // Primary Types
-EntityDescriptor::registerType('number', null, function($a1=null, $a2=null, $a3=null) {
+EntityDescriptor::registerType('number', null, function($fArgs) {
 	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
-	if( !is_null($a3) ) {
-		$args->precision	= $a1;
-		$args->min			= $a2;
-		$args->max			= $a3;
-	} else if( !is_null($a2) ) {
-		$args->min			= $a1;
-		$args->max			= $a2;
-	} else if( !is_null($a1) ) {
-		$args->max			= $a1;
+	if( isset($fArgs[2]) ) {
+		$args->precision	= $fArgs[0];
+		$args->min			= $fArgs[1];
+		$args->max			= $fArgs[2];
+	} else if( isset($fArgs[1]) ) {
+		$args->min			= $fArgs[0];
+		$args->max			= $fArgs[1];
+	} else if( isset($fArgs[0]) ) {
+		$args->max			= $fArgs[0];
 	}
 	text('Args');
 	text($args);
@@ -165,13 +165,13 @@ EntityDescriptor::registerType('number', null, function($a1=null, $a2=null, $a3=
 	}
 });
 
-EntityDescriptor::registerType('string', null, function($a1=null, $a2=null) {
+EntityDescriptor::registerType('string', null, function($fArgs) {
 	$args = array('min'=>0, 'max'=>65535);
-	if( !is_null($a2) ) {
-		$args['min']		= $a1;
-		$args['max']		= $a2;
-	} else if( !is_null($a1) ) {
-		$args['max']		= $a1;
+	if( isset($fArgs[1]) ) {
+		$args->min			= $fArgs[0];
+		$args->max			= $fArgs[1];
+	} else if( isset($fArgs[0]) ) {
+		$args->max			= $fArgs[0];
 	}
 	return $args;
 }, function($args, &$value) {
@@ -186,21 +186,16 @@ EntityDescriptor::registerType('string', null, function($a1=null, $a2=null) {
 
 
 // Derived types
-EntityDescriptor::registerType('integer', 'number', function($a1=null, $a2=null) {
+EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
-	if( !is_null($a2) ) {
-		$args->min			= $a1;
-		$args->max			= $a2;
-	} else if( !is_null($a1) ) {
-		$args->max			= $a1;
+	if( isset($fArgs[1]) ) {
+		$args->min			= $fArgs[0];
+		$args->max			= $fArgs[1];
+	} else if( isset($fArgs[0]) ) {
+		$args->max			= $fArgs[0];
 	}
 	return $args;
-}, function($args, &$value) {
-	if( $value < $args->min ) {
-		throw new FE('belowMinValue');
-	}
-	if( $value > $args->max ) {
-		throw new FE('aboveMaxValue');
-	}
+}, null, function($args, &$value) {
+	return (int) $value;
 });
 
