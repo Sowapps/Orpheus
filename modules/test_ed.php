@@ -10,7 +10,7 @@ $values = array(
 );
 foreach( $values as $a ) {
 	try {
-		text('Value: '.$a[1]);
+		text($a[0].' => '.$a[1]);
 		$ed->validateFieldValue($a[0], $a[1]);
 		text('OK.');
 	} catch( InvalidFieldException $e ) {
