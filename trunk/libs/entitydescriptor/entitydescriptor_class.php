@@ -20,7 +20,7 @@ class EntityDescriptor {
 				$type	= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$fData	= (object) static::parseType($type);
 				$TYPE	= static::getType($fData->type);
-				$fData->args	= call_user_func_array($TYPE->argsParser, $fData->args);
+				$fData->args	= $TYPE->parseArgs($fData->args);
 				
 				$this->fields[$field] = $fData;
 			}

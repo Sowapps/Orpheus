@@ -16,6 +16,10 @@ class TypeDescriptor {
 		$this->formatter	= $formatter;
 	}
 	
+	public function parseArgs($args) {
+		call_user_func($this->argsParser, $args);
+	}
+	
 	public function validate($args, &$value) {
 		if( isset($this->parent) ) {
 			$this->parent->validate($args, $value);
