@@ -27,7 +27,7 @@ defifn('THEMESDIR',			'themes/');
 
 defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
 defifn('LOGSPATH',			pathOf('logs/'));
-defifn('STOREPATH',			INSTANCEPATH.'store/');
+defifn('STOREPATH',			pathOf('store/'));
 defifn('CACHEPATH',			STOREPATH.'cache/');
 
 // defifn('CONFIGLIB',			'config');

@@ -9,6 +9,7 @@ class EntityDescriptor {
 	
 	public function __construct($name) {
 		$descriptorPath = ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
+		text('$descriptorPath: '.$descriptorPath);
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 // 		if( !$cache->get($conf) ) {
 			$conf = YAML::build($descriptorPath, true);
