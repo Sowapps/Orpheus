@@ -196,7 +196,7 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	}
 	return $args;
 	
-}, function($args, &$value) {
+}, function($args, $value) {
 	// FR Only for now
 	$time = null;
 	text("is_date($value, false, $time, {$args->country})");
