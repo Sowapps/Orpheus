@@ -62,6 +62,23 @@ foreach( $ed->getFields() as $fName => $field ) {
 		} else {
 			$cType = "LONGTEXT";
 		}
+	} else
+	if( $TYPE->knowType('integer') ) {
+		$dc = strlen((int) $field->args->max);
+		if( !$field->args->decimals ) {
+			$unsigned	= $field->args->min >= 0 ? 1 : 0;
+			$f			= $unsigned;
+			// TODO
+			
+		} else {
+			$dc += $field->args->decimals;
+			if( $dc+$field->args->decimals < 7 ) {// Approx accurate to 7 decimals
+				$cType = "FLOAT({$dc}, {$field->args->decimals})";
+			} else {// Approx accurate to 15 decimals
+				$cType = "DOUBLE";
+			}
+			$cType .= $cType."({$dc}, {$field->args->decimals})";
+		}
 	}
 	
 	$columns .= ($i ? ", \n" : '')."\t".$fName.' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
