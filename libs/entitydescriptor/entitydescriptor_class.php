@@ -2,13 +2,15 @@
 
 class EntityDescriptor {
 
+	protected $name;
 	protected $fields = array();
 	protected $indexes = array();
 	
 	const DESCRIPTORCLASS='EntityDescriptor';
 	
 	public function __construct($name) {
-		$descriptorPath = ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
+		$this->name		= $name;
+		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		text('$descriptorPath: '.$descriptorPath);
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 // 		if( !$cache->get($conf) ) {
@@ -16,14 +18,15 @@ class EntityDescriptor {
 			// Build descriptor
 			//    Parse Config file
 			//      Fields
-			$this->fields = array();
+			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>array(), 'writable'=>false, 'nullable'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
-				$type	= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
-				$fData	= (object) static::parseType($type);
-				$TYPE	= static::getType($fData->type);
-				$fData->args	= $TYPE->parseArgs($fData->args);
-				
-				$this->fields[$field] = $fData;
+				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
+				$fData					= (object) static::parseType($type);
+				$TYPE					= static::getType($fData->type);
+				$fData->args			= $TYPE->parseArgs($fData->args);
+				$fData->writable		= isset($fieldInfos['writable']) ? !empty($fieldInfos['writable']) : true;
+				$fData->nullable		= isset($fieldInfos['nullable']) ? !empty($fieldInfos['nullable']) : true;
+				$this->fields[$field]	= $fData;
 			}
 
 			//      Indexes
@@ -51,8 +54,8 @@ class EntityDescriptor {
 // 		return $conf;
 	}
 	
-	public function getFieldsName() {
-		return array_keys($this->fields);
+	public function getName() {
+		return $this->name;
 	}
 	
 	public function getFields() {
@@ -61,6 +64,10 @@ class EntityDescriptor {
 	
 	public function getIndexes() {
 		return $this->indexes;
+	}
+	
+	public function getFieldsName() {
+		return array_keys($this->fields);
 	}
 	/*
 	protected function callValidator($type, $args, &$value) {
@@ -85,6 +92,9 @@ class EntityDescriptor {
 	public function validateFieldValue($field, &$value, $required=true, $ref=null) {
 		if( !isset($this->fields[$field]) ) {
 			throw new InvalidFieldException('unknownField', $field, $value);
+		}
+		if( $field=='id' ) {
+			throw new InvalidFieldException('readOnlyField', $field, $value);
 		}
 		
 		if( is_null($value) ) {
