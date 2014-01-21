@@ -57,6 +57,7 @@ function is_ID($Number) {
 //! Checks if the input is a date.
 /*!
  * \param $date The date to check.
+ * \param $withTime True to use datetime format.
  * \param $separators The separator to use for date format. Regex special characters should be escaped.  Optional, default value is \-\/:\;,|\#
  * \param $time The output timestamp of the data, optional.
  * \return True if $date si a valid date.
@@ -64,15 +65,13 @@ function is_ID($Number) {
  * The date have to be well formatted and valid.
  * The format is DD/MM/YYYY and default separators can be '/', '-', ':', ';', ',', '|' or '#' 
  */
-function is_date($date, $separators='\-\/:\;,|\#', &$time=false) {
-	$DateFor = preg_replace("#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})$#", '$1#$2#$3', $date, -1, $count);
-	if( !$count ) {
-		return false;
-	}
-	list($Day, $Month, $Year) = explode("#", $DateFor);
-	$r = checkdate($Month, $Day, $Year);
+function is_date($date, $withTime=false, $separators='\-\/:\;,|\#', &$time=false) {
+	$DateFor = preg_replace("#^([0-9]{1,2})[{$separators}]([0-9]{1,2})[{$separators}]([0-9]{4})".($withTime ? "(?: ([0-2][0-9])[{$separators}]([0-5][0-9])[{$separators}]([0-5][0-9]))?" : '')."$#", '$1#$2#$3#$4#$5#$6', $date, -1, $count);
+	if( !$count ) { return false; }
+	list($day, $month, $year, $hour, $min, $sec) = explodeList("#", $DateFor, 6, 0);
+	$r = checkdate($month, $day, $year);
 	if( $r && $time!==false ) {
-		$time = mktime(0, 0, 0, $Month, $Day, $Year);
+		$time = mktime(0, 0, 0, $month, $day, $year);
 	} 
 	return $r;
 }

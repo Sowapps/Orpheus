@@ -195,15 +195,40 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 		throw new Exception('invalidCountry_'.$args->country);
 	}
 	return $args;
+	
 }, function($args, &$value) {
 	// FR Only for now
-	if( !is_date($value, '/', $time) ) {
+	if( !is_date($value, false, $time, $args->country) ) {
 		throw new FE('notDate');
 	}
-	$value = d($time);
+	// Format to timestamp
+	$value = $time;
+	
+}, function($args, &$value) {
+// 	$value = strtr($value, '/', '-');
+	$value = strftime('%Y-%m-%d', $value);
+});
+
+EntityDescriptor::registerType('datetime', null, function($fArgs) {
+	$args = (object) array('country'=>'FR');
+	if( isset($fArgs[0]) ) {
+		$args->country		= strtoupper($fArgs[0]);
+	}
+	if( $args->country != 'FR' ) {
+		throw new Exception('invalidCountry_'.$args->country);
+	}
+	return $args;
+	
 }, function($args, &$value) {
 	// FR Only for now
-	$value = strtr($value, '/', '-');
+	if( !is_date($value, true, $time, $args->country) ) {
+		throw new FE('notDatetime');
+	}
+	// Format to timestamp
+	$value = $time;
+	
+}, function($args, &$value) {
+	$value = strftime('%Y-%m-%d %H:%M:%S', $value);
 });
 
 
