@@ -198,6 +198,8 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	
 }, function($args, &$value) {
 	// FR Only for now
+	$time = null;
+	text("is_date($value, false, $time, {$args->country})");
 	if( !is_date($value, false, $time, $args->country) ) {
 		throw new FE('notDate');
 	}
