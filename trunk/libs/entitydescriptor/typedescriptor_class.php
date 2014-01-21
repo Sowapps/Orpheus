@@ -16,6 +16,14 @@ class TypeDescriptor {
 		$this->formatter	= $formatter;
 	}
 	
+	public function isType($type) {
+		return $this->type==$type;
+	}
+	
+	public function knowType($type) {
+		return $this->isType($type) || (isset($this->parent) && $this->parent->knowType($type));
+	}
+	
 	public function parseArgs($args) {
 // 		text('Parse Args');
 // 		text($fArgs);
