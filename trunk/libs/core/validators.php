@@ -59,11 +59,11 @@ function is_ID($Number) {
  * \param $date The date to check.
  * \param $withTime True to use datetime format, optional. Default value is false.
  * \param $time The output timestamp of the data, optional.
- * \param $country The country to use the date format, optional. Default and unique value is FR.
+ * \param $country The country to use the date format, optional. Default and unique value is FR, not used.
  * \return True if $date si a valid date.
  * 
  * The date have to be well formatted and valid.
- * The format is DD/MM/YYYY and default separators can be '/', '-', ':', ';', ',', '|' or '#' 
+ * The FR date format is DD/MM/YYYY and time format is HH:MM:SS  
  */
 function is_date($date, $withTime=false, &$time=false, $country='FR') {
 	$DateFor = preg_replace("#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})".($withTime ? "(?: ([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?" : '')."$#", '$1#$2#$3#$4#$5#$6', $date, -1, $count);
@@ -71,7 +71,7 @@ function is_date($date, $withTime=false, &$time=false, $country='FR') {
 	list($day, $month, $year, $hour, $min, $sec) = explodeList("#", $DateFor, 6, 0);
 	$r = checkdate($month, $day, $year);
 	if( $r && $time!==false ) {
-		$time = mktime($hour, $min, $sec, $month, $day, $year);
+		$time = mktime((int) $hour, (int) $min, (int) $sec, $month, $day, $year);
 	} 
 	return $r;
 }
@@ -79,7 +79,7 @@ function is_date($date, $withTime=false, &$time=false, $country='FR') {
 //! Checks if the input is an url.
 /*!
  * \param $Url The url to check.
- * \param $protocol Not used yet. Default to SCHEME constant.
+ * \param $protocol Not used yet. Default to SCHEME constant, not used.
  * \return True if $Url si a valid url.
  */
 function is_url($Url, $protocol=null) {
