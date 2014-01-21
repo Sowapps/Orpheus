@@ -9,6 +9,8 @@ $values = array(
 	array('a_string2',	'This is a test for a very long string'),
 	array('a_date',		'25/12/1987'),
 	array('a_date',		'25/12/1987 12:50:12'),
+	array('a_datetime',	'25/12/1987'),
+	array('a_datetime',	'25/12/1987 12:50:12'),
 );
 foreach( $values as $a ) {
 	try {

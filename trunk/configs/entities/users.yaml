@@ -9,6 +9,7 @@ fields:
     a_string2: string(20)
     an_integer: integer(0, 255)
     a_date: date(FR)
+    a_datetime: datetime(FR)
 #    name:
 #        type: string(6,50)
 #        validator: is_name

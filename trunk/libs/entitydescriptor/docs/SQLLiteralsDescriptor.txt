@@ -34,7 +34,7 @@ date(country)
 
 datetime(country)
 	MySQL Type = DATETIME
-	validator = is_datetime
+	validator = is_date
 
 # Derived Types
 
