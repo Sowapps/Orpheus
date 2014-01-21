@@ -64,7 +64,7 @@ foreach( $ed->getFields() as $fName => $field ) {
 		}
 	}
 	
-	$columns .= ($i ? ", \n" : '').$fName.' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
+	$columns .= ($i ? ", \n" : '')."\t".$fName.' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
 	$i++;
 }
 if( !empty($columns) ) {
