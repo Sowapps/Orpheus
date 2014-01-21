@@ -205,8 +205,7 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	}
 	text(var_dump($time));
 	// Format to timestamp
-	$value = '4978000';
-// 	$value = $time;
+	$value = $time;
 	
 }, function($args, &$value) {
 	text("Formatter");
