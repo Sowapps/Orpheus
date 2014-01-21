@@ -30,7 +30,7 @@ class TypeDescriptor {
 			throw new Exception('noValidator');
 		}
 		if( isset($this->validator) ) {
-			call_user_func($this->validator, $args, &$value);
+			call_user_func_array($this->validator, array($args, &$value));
 // 			text("Called validator, got value: $value");
 		}
 	}
@@ -41,7 +41,7 @@ class TypeDescriptor {
 		}
 		if( isset($this->formatter) ) {
 // 			text("Call formatter with value: $value");
-			call_user_func($this->formatter, $args, &$value);
+			call_user_func_array($this->formatter, array($args, &$value));
 		}
 	}
 }
