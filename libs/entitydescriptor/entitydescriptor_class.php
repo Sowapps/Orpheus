@@ -294,7 +294,7 @@ EntityDescriptor::registerType('password', 'string', function($fArgs) {
 	return (object) array('min'=>5, 'max'=>128);
 
 }, null, function($args, $value) {
-	$value = hashString($str);
+	$value = hashString($value);
 });
 
 EntityDescriptor::registerType('phone', 'string', function($fArgs) {
