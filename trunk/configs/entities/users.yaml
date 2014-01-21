@@ -15,7 +15,6 @@ fields:
     a_phone: phone(FR)
     an_url: url()
     an_ip: ip()
-    an_url: url()
     a_ref: ref()
     an_enum: enum(getEnumValues)
 #    name:
