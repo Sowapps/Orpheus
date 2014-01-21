@@ -208,6 +208,8 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	$value = $time;
 	
 }, function($args, &$value) {
+	text("Formatter");
+	text(var_dump($value));
 // 	$value = strtr($value, '/', '-');
 	$value = strftime('%Y-%m-%d', $value);
 });
