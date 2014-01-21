@@ -176,7 +176,7 @@ EntityDescriptor::registerType('string', null, function($fArgs) {
 		$args->max			= $fArgs[0];
 	}
 	return $args;
-}, function($args, &$value) {
+}, function($args, $value) {
 	$len = strlen($value);
 	if( $len < $args->min ) {
 		throw new FE('belowMinLength');
@@ -198,16 +198,16 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	
 }, function($args, $value) {
 	// FR Only for now
-	$time = null;
-	text("is_date($value, false, $time, {$args->country})");
+// 	$time = null;
+// 	text("is_date($value, false, $time, {$args->country})");
 	if( !is_date($value, false, $time, $args->country) ) {
 		throw new FE('notDate');
 	}
-	text(var_dump($time));
+// 	text(var_dump($time));
 	// Format to timestamp
 	$value = $time;
 	
-}, function($args, &$value) {
+}, function($args, $value) {
 	text("Formatter");
 	text(var_dump($value));
 // 	$value = strtr($value, '/', '-');
@@ -224,7 +224,7 @@ EntityDescriptor::registerType('datetime', null, function($fArgs) {
 	}
 	return $args;
 	
-}, function($args, &$value) {
+}, function($args, $value) {
 	// FR Only for now
 	if( !is_date($value, true, $time, $args->country) ) {
 		throw new FE('notDatetime');
@@ -232,7 +232,7 @@ EntityDescriptor::registerType('datetime', null, function($fArgs) {
 	// Format to timestamp
 	$value = $time;
 	
-}, function($args, &$value) {
+}, function($args, $value) {
 	$value = strftime('%Y-%m-%d %H:%M:%S', $value);
 });
 
@@ -247,7 +247,7 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 		$args->max			= $fArgs[0];
 	}
 	return $args;
-}, null, function($args, &$value) {
+}, null, function($args, $value) {
 	return (int) $value;
 });
 
