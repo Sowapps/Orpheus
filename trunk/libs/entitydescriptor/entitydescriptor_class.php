@@ -203,10 +203,7 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	$value = d($time);
 }, function($args, &$value) {
 	// FR Only for now
-	if( !is_date($value, '/', $time) ) {
-		throw new FE('notDate');
-	}
-	$value = dt($time);
+	$value = strtr($value, '/', '-');
 });
 
 
