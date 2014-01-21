@@ -205,9 +205,7 @@ class User extends AbstractStatus {
 	 * Define constant USER_SALT to use your own salt.
 	 */
 	public static function hashPassword($str) {
-		//http://www.php.net/manual/en/faq.passwords.php
-		$salt = (defined('USER_SALT')) ? USER_SALT : '1$@g&';
-		return hash('sha512', $salt.$str.'7');
+		return hashString($str);
 	}
 	
 	//! Checks if the client is logged in

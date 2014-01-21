@@ -10,6 +10,14 @@ fields:
     an_integer: integer(0, 255)
     a_date: date(FR)
     a_datetime: datetime(FR)
+    an_email: email()
+    a_password: password()
+    a_phone: phone(FR)
+    an_url: url()
+    an_ip: ip()
+    an_url: url()
+    a_ref: ref()
+    an_enum: enum(getEnumValues)
 #    name:
 #        type: string(6,50)
 #        validator: is_name

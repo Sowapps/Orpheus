@@ -40,13 +40,22 @@ datetime(country)
 
 email()
 	inherit = string(0, 100)
-	formatter = is_email
+	validator = is_email
 	
-password()
+password([min=6, [max=30]])
 	inherit = string(0, 128)
-	formatter = User::hashPassword
+	formatter = hashString
+	MySQL Type = VARCHAR(128)
 
 phone(country)
+	inherit = string(0, 15)
+	validator = is_phone
+	
+url()
+	inherit = string(0, 15)
+	validator = is_phone
+	
+ip([version])
 	inherit = string(0, 15)
 	validator = is_phone
 		
@@ -58,11 +67,11 @@ ref()
 	inherit = integer(0, 4294967295)
 		
 enum(source)
-	# source could be
-	# - a String => Look in a config file for this name, to find an array
-	# - an array (JSON) => Search in this array
+	# source could be (in this order)
+	# - an array (JSON) => Search in this array								[NOT USED]
+	# - a String => Look in a config file for this name, to find an array	[NOT USED]
 	# - a callback => Expect the callback return an array
-	inherit = integer(0, 4294967295)
+	inherit = string
 	validator = isValueOfEnum
 
 

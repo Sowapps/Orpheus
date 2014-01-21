@@ -89,10 +89,12 @@ function is_url($Url, $protocol=null) {
 //! Checks if the input is an ip address.
 /*!
  * \param $ip The url to check.
+ * \param $flags The flags for the check.
  * \return True if $ip si a valid ip address.
+ * \sa filter_var()
  */
-function is_ip($ip) {
-	return filter_var($ip, FILTER_VALIDATE_IP);
+function is_ip($ip, $flags=null) {
+	return filter_var($ip, FILTER_VALIDATE_IP, $flags);
 }
 
 //! Checks if the input is a phone number.
@@ -105,8 +107,8 @@ function is_ip($ip) {
  * The separator can be '.', ' ' or '-', it can be ommitted.
  * e.g: +336.12.34.56.78, 01-12-34-56-78
  */
-function is_phone_number($number, $length=null) {
+function is_phone_number($number, $country='FR') {
 	$number = str_replace(array('.', ' ', '-'), '', $number);
-	$length = ( isset($length) && $length > 1 ) ? '{'.($length-1).'}' : '+';
-	return preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{$length}$#", $number);
+// 	$length = ( isset($length) && $length > 1 ) ? '{'.($length-1).'}' : '+';
+	return preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{9}$#", $number);
 }

@@ -14,8 +14,9 @@ class EntityDescriptor {
 // 		if( !$cache->get($conf) ) {
 			$conf = YAML::build($descriptorPath, true);
 			// Build descriptor
-			$this->fields = array();
 			//    Parse Config file
+			//      Fields
+			$this->fields = array();
 			foreach( $conf->fields as $field => $fieldInfos ) {
 				$type	= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$fData	= (object) static::parseType($type);
@@ -24,16 +25,23 @@ class EntityDescriptor {
 				
 				$this->fields[$field] = $fData;
 			}
-			$this->indexes = !empty($conf->indexes) ? $conf->indexes : array();
+
+			//      Indexes
+			$this->indexes = array();
+			if( !empty($conf->indexes) ) {
+				foreach( $conf->indexes as $index ) {
+					$this->indexes[] = (object) static::parseType($type);
+				}
+			}
 			
 			//    Generate cache output
 			
 			// Save descriptor
-			text('Descriptor');
-			text(array(
-				'fields'	=> $this->fields,
-				'indexes'	=> $this->indexes,
-			));
+// 			text('Descriptor');
+// 			text(array(
+// 				'fields'	=> $this->fields,
+// 				'indexes'	=> $this->indexes,
+// 			));
 // 			$cache->set(array(
 // 				'fields' => $fields,
 // 				'indexes' => $conf['indexes'],
@@ -45,6 +53,14 @@ class EntityDescriptor {
 	
 	public function getFieldsName() {
 		return array_keys($this->fields);
+	}
+	
+	public function getFields() {
+		return $this->fields;
+	}
+	
+	public function getIndexes() {
+		return $this->indexes;
 	}
 	/*
 	protected function callValidator($type, $args, &$value) {
@@ -248,6 +264,83 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 	}
 	return $args;
 }, null, function($args, $value) {
-	return (int) $value;
+	$value = (int) $value;
+});
+
+EntityDescriptor::registerType('ref', 'integer', function($fArgs) {
+	return (object) array('precision'=>0, 'min'=>0, 'max'=>4294967295);	
+});
+
+EntityDescriptor::registerType('email', 'string', function($fArgs) {
+	return (object) array('min'=>5, 'max'=>100);
+	
+}, function($args, $value) {
+	if( !is_email($value) ) {
+		throw new FE('notEmail');
+	}
+});
+
+EntityDescriptor::registerType('password', 'string', function($fArgs) {
+	return (object) array('min'=>5, 'max'=>128);
+
+}, null, function($args, $value) {
+	$value = hashString($str);
+});
+
+EntityDescriptor::registerType('phone', 'string', function($fArgs) {
+	$args = (object) array('min'=>10, 'max'=>20, 'country'=>'FR');
+	if( isset($fArgs[0]) ) {
+		$args->country		= strtoupper($fArgs[0]);
+	}
+	if( $args->country != 'FR' ) {
+		throw new Exception('invalidCountry_'.$args->country);
+	}
+	return $args;
+	
+}, function($args, $value) {
+	// FR Only for now
+	if( !is_phone_number($value, $args->country) ) {
+		throw new FE('notPhoneNumber');
+	}
+	
+}, function($args, $value) {
+	// FR Only for now
+	$value = standardizePhoneNumber_FR($value, '.', 2);
+	
+});
+
+EntityDescriptor::registerType('url', 'string', function($fArgs) {
+	return (object) array('min'=>10, 'max'=>200);
+	
+}, function($args, $value) {
+	if( !is_url($value) ) {
+		throw new FE('notURL');
+	}	
+});
+
+EntityDescriptor::registerType('ip', 'string', function($fArgs) {
+	$args = (object) array('min'=>7, 'max'=>40, 'version'=>null);
+	if( isset($fArgs[0]) ) {
+		$args->version		= $fArgs[0];
+	}
+	return $args;
+	
+}, function($args, $value) {
+	if( !is_ip($value) ) {
+		throw new FE('notIPAddress');
+	}	
+});
+
+EntityDescriptor::registerType('enum', 'string', function($fArgs) {
+	$args = (object) array('min'=>1, 'max'=>20, 'source'=>null);
+	if( isset($fArgs[0]) ) {
+		$args->source		= $fArgs[0];
+	}
+	return $args;
+	
+}, function($args, $value) {
+	if( !in_array($value, call_user_func($args->source)) ) {
+		throw new FE('notEnumValue');
+	}	
 });
 
