@@ -1053,6 +1053,12 @@ function explodeList($delimiter, $string, $limit, $default=null) {
 	return array_pad(explode($delimiter, $string, $limit), abs($limit), $default);
 }
 
+function hashString($str) {
+	//http://www.php.net/manual/en/faq.passwords.php
+	$salt = defined('USER_SALT') ? USER_SALT : '1$@g&';
+	return hash('sha512', $salt.$str.'7');
+}
+
 //! Gets the string of a boolean
 /*!
  * \param $b The boolean.
@@ -1122,4 +1128,26 @@ function dayTime($time=null) {
 function monthTime($day=1, $time=null) {
 	if( is_null($time) ) { $time = time(); }
 	return dayTime($time - (date('j', $time)-$day)*86400);
+}
+
+//! Standardizes the phone number to FR country format
+/*!
+ * \param $number The input phone number.
+ * \param $delimiter The delimiter for series of digits. Default value is current timestamp. Default value is '.'.
+ * \param $limit The number of digit in a serie separated by delimiter. Optional, the default value is 2.
+ * \sa dayTime()
+ *
+ * Returns a standard phone number for FR country format.
+ */
+function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
+	// If there is not delimiter we try to put one
+	if( is_id($number[strlen($number)-$limit-1]) ) {
+		$number = str_replace(array('.', ' ', '-'), '', $number);
+		$n = '';
+		for( $i=strlen($number)-$limit; $i>3 || ($number[0]!='+' && $i>($limit-1)); $i-=$limit ) {
+			$n = $delimiter.substr($number, $i, $limit).$n;
+		}
+		return substr($number, 0, $i+2).$n;
+	}
+	return str_replace(array('.', ' ', '-'), $delimiter, $number);
 }

@@ -33,6 +33,20 @@ class YAML extends ConfigCore {
 		return $parsed;
 	}
 
+	//!	Checks if configuration source exists
+	/*!
+		\param $source An identifier to check the source.
+	
+	Checks the configuration from the source is available.
+	*/
+	public function checkSource($source) {
+		try {
+			return is_readable($source) || is_readable(static::getFilePath($source));
+		} catch( Exception $e ) {
+			return false;
+		}
+	}
+
 	//!	Gets the file path
 	/*!
 		\param $source An identifier to get the source.
@@ -41,7 +55,7 @@ class YAML extends ConfigCore {
 		Gets the configuration file path in CONFDIR.
 	*/
 	public static function getFilePath($source) {
-		return pathOf(CONFDIR.$source.'.'.self::EXT);
+		return pathOf(CONFDIR.$source.'.'.self::EXT, true);
 	}
 	
 }

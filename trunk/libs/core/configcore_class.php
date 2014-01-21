@@ -74,6 +74,14 @@ abstract class ConfigCore {
 	*/
 	public abstract function load($source);
 	
+	//!	Checks if configuration source exists
+	/*!
+		\param $source An identifier to check the source.
+		
+		Checks the configuration from the source is available.
+	*/
+	public abstract function checkSource($source);
+	
 	//!	Builds new configuration source
 	/*!
 		\param $source An identifier to build the source.
