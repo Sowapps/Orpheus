@@ -73,5 +73,5 @@ CREATE TABLE {$ed->getName()} (
 {$columns}
 ) ENGINE=MYISAM CHARACTER SET utf8;
 EOF;
-	echo nl2br($query);
+	echo '<pre>'.$query.'</pre>';
 }
