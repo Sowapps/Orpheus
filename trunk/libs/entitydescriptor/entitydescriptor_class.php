@@ -203,6 +203,7 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	if( !is_date($value, false, $time, $args->country) ) {
 		throw new FE('notDate');
 	}
+	text(var_dump($time));
 	// Format to timestamp
 	$value = $time;
 	
