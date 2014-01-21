@@ -17,7 +17,7 @@ class TypeDescriptor {
 	}
 	
 	public function isType($type) {
-		return $this->type==$type;
+		return $this->name==$type;
 	}
 	
 	public function knowType($type) {
