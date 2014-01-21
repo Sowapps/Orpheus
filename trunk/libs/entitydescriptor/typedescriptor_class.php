@@ -31,6 +31,7 @@ class TypeDescriptor {
 		}
 		if( isset($this->validator) ) {
 			call_user_func($this->validator, $args, $value);
+			text("Called validator, got value: $value");
 		}
 	}
 	
@@ -39,6 +40,7 @@ class TypeDescriptor {
 			$this->parent->format($args, $value);
 		}
 		if( isset($this->formatter) ) {
+			text("Call formatter with value: $value");
 			call_user_func($this->formatter, $args, $value);
 		}
 	}
