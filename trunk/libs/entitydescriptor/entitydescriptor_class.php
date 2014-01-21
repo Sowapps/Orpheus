@@ -167,9 +167,9 @@ defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 EntityDescriptor::registerType('number', null, function($fArgs) {
 // 	text('Parse Args');
 // 	text($fArgs);
-	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
+	$args = (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 	if( isset($fArgs[2]) ) {
-		$args->precision	= $fArgs[0];
+		$args->decimals	= $fArgs[0];
 		$args->min			= $fArgs[1];
 		$args->max			= $fArgs[2];
 	} else if( isset($fArgs[1]) ) {
@@ -265,7 +265,7 @@ EntityDescriptor::registerType('datetime', null, function($fArgs) {
 
 // Derived types
 EntityDescriptor::registerType('integer', 'number', function($fArgs) {
-	$args = (object) array('precision'=>0, 'min'=>-2147483648, 'max'=>2147483647);
+	$args = (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 	if( isset($fArgs[1]) ) {
 		$args->min			= $fArgs[0];
 		$args->max			= $fArgs[1];
@@ -278,7 +278,7 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 });
 
 EntityDescriptor::registerType('ref', 'integer', function($fArgs) {
-	return (object) array('precision'=>0, 'min'=>0, 'max'=>4294967295);	
+	return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
 });
 
 EntityDescriptor::registerType('email', 'string', function($fArgs) {
