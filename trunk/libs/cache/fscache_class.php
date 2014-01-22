@@ -38,22 +38,19 @@ class FSCache implements Cache {
 	 * The type is preserved, even for objects.
 	 */
 	public function get(&$cached) {
-		if( !is_readable($this->path) ) {
-			return false;
-		}
-		list($editTime, $type, $data) = explodeList(static::$delim, file_get_contents($this->path), 3);
-		if( isset($this->editTime) && $editTime != $this->editTime ) {
-			return false;
-		}
-		if( $type != 'scalar' ) {
-			$data =  json_decode($data, true);
-			if( $type == 'object' ) {
-				$data =  (object) $data;
-			} else if( $type != 'array' ) {
-				$data = $type::cast($data);
+		try {
+			if( !is_readable($this->path) ) {
+				return false;
 			}
+			list($editTime, $data) = explodeList(static::$delim, file_get_contents($this->path), 2);
+			if( isset($this->editTime) && $editTime != $this->editTime ) {
+				return false;
+			}
+			$cached = unserialize($data);
+		} catch( Exception $e ) {
+			// If error opening file or unserializing occurred, it's a fail
+			return false;
 		}
-		$cached = $data;
 		return true;
 	}
 	
@@ -61,29 +58,13 @@ class FSCache implements Cache {
 	/*!
 	 * \param $data The data to put in the cache
 	 * \return True if cache has been saved
+	 * \sa serialize()
 	 *
 	 * This method unserializes the data in the file using json_decode().
 	 * The type is saved too.
 	 */
 	public function set($data) {
-		$type = 'scalar';
-		if( !is_scalar($data) ) {
-			if( empty($data) ) {
-				$data = array();
-			}
-			if( is_object($data) ) {
-				// If castable, we will recreate object when getting it
-				// Else we will return a stdClass Object.
-				$type = function_exists('class_uses') && array_key_exists('cast', class_uses($data)) ? get_class($data) : 'object';
-			} else if( is_array($data) ) {
-				$type = 'array';
-			} else {
-				// Not compatible type
-				return false;
-			}
-			$data = json_encode((array) $data);
-		}
-		return file_put_contents($this->path, $this->editTime.static::$delim.$type.static::$delim.$data);
+		return file_put_contents($this->path, $this->editTime.static::$delim.serialize($data));
 	}
 	
 	//! Gets the folder path for the cache
