@@ -65,7 +65,7 @@ abstract class ConfigCore {
 	public function add($conf) {
 		text($this->config);
 		text($conf);
-		$this->config = $this->config+$conf;
+		$this->config = array_merge($this->config, $conf);
 	}
 	
 	//!	Loads new configuration source
