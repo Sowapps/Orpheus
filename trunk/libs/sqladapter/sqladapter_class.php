@@ -278,9 +278,7 @@ abstract class SQLAdapter {
 	 * \param $instance The db instance name to prepareInstance.
 	*/
 	public static function prepareInstance(&$instance=null) {
-		if( isset(self::$Adapters[$instance]) ) {
-			return;
-		}
+		if( isset(self::$Adapters[$instance]) ) { return; }
 		global $DBS;
 		$Instance = ensure_pdoinstance($instance);
 		if( empty($DBS[$Instance]) ) {
