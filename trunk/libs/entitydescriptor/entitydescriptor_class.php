@@ -156,8 +156,8 @@ class EntityDescriptor {
 					$uInputData[$field] = null;
 					if( is_null($ref) ) {
 						$uInputData[$field] = $this->fields[$field]->default;
-						if( $uInputData[$field][strlen($uInputData[$field])-1]==')' ) {
-							$uInputData[$field] = call_user_func($uInputData[$field]);
+						if( is_object($uInputData[$field]) ) {
+							$uInputData[$field] = call_user_func_array($uInputData[$field]->type, (array) $uInputData[$field]->args);
 						}
 					}
 				}
@@ -211,6 +211,9 @@ class EntityDescriptor {
 			} else
 			if( $result['default']==='false' ) {
 				$result['default'] = false;
+			} else
+			if( $result['default'][strlen($result['default'])-1]==')' ) {
+				$result['default'] = static::parseType($result['default']);
 			}
 		}
 		return $result;
