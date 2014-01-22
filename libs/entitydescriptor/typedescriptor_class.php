@@ -7,17 +7,40 @@ class TypeDescriptor {
 	protected $argsParser;
 	protected $validator;
 	protected $formatter;
+	protected $writable;
+	protected $nullable;
 	
-	public function __construct($name, $parent, $argsParser, $validator=null, $formatter=null) {
+	public function __construct($name, $parent, $argsParser, $validator=null, $formatter=null, $writable=null, $nullable=null) {
 		$this->name			= $name;
 		$this->parent		= $parent;
 		$this->argsParser	= $argsParser;
 		$this->validator	= $validator;
-		$this->formatter	= $formatter;
+		$this->writable		= $writable;
+		$this->nullable		= $nullable;
 	}
 	
 	public function getName() {
 		return $this->name;
+	}
+	
+	public function isWritable() {
+		if( isset($this->writable) ) {
+			return $this->writable;
+		}
+		if( isset($this->parent) ) {
+			return $this->writable = $this->parent->isWritable();
+		}
+		return null;
+	}
+	
+	public function isNullable() {
+		if( isset($this->nullable) ) {
+			return $this->nullable;
+		}
+		if( isset($this->parent) ) {
+			return $this->nullable = $this->parent->isNullable();
+		}
+		return null;
 	}
 	
 	public function isType($type) {
