@@ -23,6 +23,9 @@ class YAML extends ConfigCore {
 		// File in configs folder
 		} else if( is_readable(static::getFilePath($source)) ) {
 			$confPath = static::getFilePath($source);
+			if( empty($confPath) ) {
+				return false;
+			}
 			
 		/// File not found
 		} else {
@@ -30,7 +33,7 @@ class YAML extends ConfigCore {
 		}
 		$parsed = yaml_parse_file($confPath);
 		$this->add($parsed);
-		return $parsed;
+		return true;
 	}
 
 	//!	Checks if configuration source exists
