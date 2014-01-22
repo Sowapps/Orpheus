@@ -110,7 +110,7 @@ if( isPOST('submitGenerateSQL') ) {
 	<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display<option>
 	<option value="<?php echo OUTPUT_APPLY; ?>">Apply<option>
 </select><br />
-<button submit="submitGenerateSQL">Generate</button>
+<button type="submit" name="submitGenerateSQL">Generate</button>
 </form>
 <style>
 <!--
