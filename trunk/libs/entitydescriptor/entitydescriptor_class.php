@@ -270,7 +270,7 @@ EntityDescriptor::registerType('date', null, null, function($args, $value) {
 	
 }, function($FIELD, $value) {
 	// SQL Format
-	$value = strftime('%Y-%m-%d', $value);
+	$value = sqlDate($value);
 });
 
 EntityDescriptor::registerType('datetime', null, null, function($args, $value) {
@@ -283,7 +283,7 @@ EntityDescriptor::registerType('datetime', null, null, function($args, $value) {
 	
 }, function($FIELD, $value) {
 	// SQL Format
-	$value = strftime('%Y-%m-%d %H:%M:%S', $value);
+	$value = sqlDatetime($value);
 });
 
 
