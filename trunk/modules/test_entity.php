@@ -2,6 +2,7 @@
 
 try {
 	if( isPOST('submitSave') ) {
+		text(DemoEntity::getValidator());
 		$de = DemoEntity::load(DemoEntity::create(POST('data')));
 		text($de);
 		reportSuccess('successSave', DemoEntity::getDomain());

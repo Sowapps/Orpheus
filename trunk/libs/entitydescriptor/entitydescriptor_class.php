@@ -153,7 +153,7 @@ class EntityDescriptor {
 				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
 
-			} catch(UserException $e) {
+			} catch( UserException $e ) {
 				$errCount++;
 				if( isset($this->class) ) {
 					$c = $this->class;
