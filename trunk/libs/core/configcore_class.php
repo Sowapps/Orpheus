@@ -65,6 +65,7 @@ abstract class ConfigCore {
 	public function add($conf) {
 		text($this->config);
 		text($conf);
+		var_dump($conf);
 		$this->config = array_merge($this->config, $conf);
 	}
 	
