@@ -42,6 +42,10 @@ class InvalidFieldException extends UserException {
 		return t($m, $this->getDomain(), $args);
 	}
 	
+	public function __toString() {
+		return $this->field.'_'.$this->getMessage();
+	}
+	
 	public function getReport() {
 		return array(static::getText(), $this->field);
 // 		return array(t($this->getMessage(), $this->getDomain(), $this->args), $this->field);
