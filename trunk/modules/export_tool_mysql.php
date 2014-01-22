@@ -88,9 +88,9 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 }
 
 text(isPOST('submitGenerateSQL'));
-text(isPOST('entity'));
-text(isPOST('entity') && is_array(POST('entities')));
-if( isPOST('submitGenerateSQL') && isPOST('entity') && is_array(POST('entities')) ) {
+text(isPOST('entities'));
+text(isPOST('entities') && is_array(POST('entities')));
+if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities')) ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 	text($output);
 	foreach( POST('entities') as $entityName => $on ) {
