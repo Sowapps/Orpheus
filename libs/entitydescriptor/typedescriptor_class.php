@@ -16,6 +16,10 @@ class TypeDescriptor {
 		$this->formatter	= $formatter;
 	}
 	
+	public function getName() {
+		return $this->name;
+	}
+	
 	public function isType($type) {
 		return $this->name==$type;
 	}
