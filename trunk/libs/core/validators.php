@@ -66,7 +66,7 @@ function is_ID($Number) {
  * The FR date format is DD/MM/YYYY and time format is HH:MM:SS  
  */
 function is_date($date, $withTime=false, &$time=false, $country='FR') {
-	$DateFor = preg_replace("#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})".($withTime ? "(?: ([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?" : '')."$#", '$1#$2#$3#$4#$5#$6', $date, -1, $count);
+	$DateFor = preg_replace("#^([0-9]{1,2})[\-]/([0-9]{1,2})[\-]([0-9]{4})".($withTime ? "(?: ([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?" : '')."$#", '$1#$2#$3#$4#$5#$6', $date, -1, $count);
 	if( !$count ) { return false; }
 	list($day, $month, $year, $hour, $min, $sec) = explodeList("#", $DateFor, 6, 0);
 	$r = checkdate($month, $day, $year);
