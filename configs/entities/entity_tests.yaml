@@ -5,10 +5,10 @@
 
 fields:
     a_number: number(0, 0, 255)
-    a_float: number(4)[writable]
+    a_float: number(4)[readonly]
     a_double: number(0, 255)
-    a_text: string()[nullable]
-    a_string: string(20)[writable nullable]
+    a_text: string()[notnull]
+    a_string: string(20)[readonly notnull]
     an_integer: integer(0, 255)
     a_date: date()
     a_datetime: datetime()
