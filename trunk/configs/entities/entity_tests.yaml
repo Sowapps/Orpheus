@@ -10,7 +10,7 @@ fields:
     a_text: string()[notnull]
     a_string: string(20)[readonly notnull]
     an_integer: integer(0, 255)
-    a_date: date()
+    a_date: date()[readonly
     a_datetime: datetime()
     an_email: email()
     a_password: password()
