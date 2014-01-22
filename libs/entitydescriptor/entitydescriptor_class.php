@@ -50,7 +50,7 @@ class EntityDescriptor {
 				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				if( !isset($fieldInfos['nullable']) ) {
 					$FIELD->nullable = !empty($fieldInfos['nullable']);
-				} else if( $FIELD->writable ) {
+				} else if( $FIELD->nullable ) {
 					$FIELD->nullable = !in_array('notnull', $parse->flags); 
 				} else {
 					$FIELD->nullable = in_array('nullable', $parse->flags); 
