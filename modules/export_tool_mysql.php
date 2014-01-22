@@ -73,7 +73,7 @@ function generateSQLCreate($ed) {
 			return null;
 		}
 		
-		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter_MySQL::escapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
+		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter::doEscapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
 		$i++;
 	}
 	if( empty($columns) ) {
@@ -81,7 +81,7 @@ function generateSQLCreate($ed) {
 		return null;
 	}
 	return '
-CREATE TABLE '.SQLAdapter_MySQL::escapeIdentifier($ed->getName()).' IF NOT EXISTS (
+CREATE TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName()).' IF NOT EXISTS (
 '.$columns.'
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
