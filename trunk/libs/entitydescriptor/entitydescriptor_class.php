@@ -313,7 +313,7 @@ EntityDescriptor::registerType('password', 'string', function($fArgs) {
 	return (object) array('min'=>5, 'max'=>128);
 
 }, function($FIELD, $value, $inputData) {
-	if( empty($inputData[$FIELD.'_conf']) || $value!=$inputData[$FIELD.'_conf'] ) {
+	if( empty($inputData[$FIELD->name.'_conf']) || $value!=$inputData[$FIELD->name.'_conf'] ) {
 		throw new FE('invalidConfirmation');
 	}
 	
