@@ -11,9 +11,9 @@ class EntityDescriptor {
 	public function __construct($name) {
 		$this->name		= $name;
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
-		text('$descriptorPath: '.$descriptorPath);
+// 		text('$descriptorPath: '.$descriptorPath);
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
-// 		if( !$cache->get($conf) ) {
+		if( !$cache->get($descriptor) ) {
 			$conf = YAML::build($descriptorPath, true);
 			// Build descriptor
 			//    Parse Config file
@@ -21,12 +21,16 @@ class EntityDescriptor {
 			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
-				$fData					= (object) static::parseType($type);
-				$TYPE					= static::getType($fData->type);
-				$fData->args			= $TYPE->parseArgs($fData->args);
-				$fData->writable		= isset($fieldInfos['writable']) ? !empty($fieldInfos['writable']) : true;
-				$fData->nullable		= isset($fieldInfos['nullable']) ? !empty($fieldInfos['nullable']) : true;
-				$this->fields[$field]	= $fData;
+				$parse					= (object) static::parseType($type);
+				$FIELD					= (object) array(
+					'name'=>$field,
+					'type'=>$parse->type,
+				);
+				$TYPE					= static::getType($FIELD->type);
+				$FIELD->args			= $TYPE->parseArgs($parse->args);
+				$FIELD->writable		= (!isset($fieldInfos['writable']) || !empty($fieldInfos['writable']) || in_array('writable', $parse->flags));
+				$FIELD->nullable		= (!isset($fieldInfos['nullable']) || !empty($fieldInfos['nullable']) || in_array('nullable', $parse->flags));
+				$this->fields[$field]	= $FIELD;
 			}
 
 			//      Indexes
@@ -36,22 +40,14 @@ class EntityDescriptor {
 					$this->indexes[] = (object) static::parseType($type);
 				}
 			}
-			
-			//    Generate cache output
-			
-			// Save descriptor
-// 			text('Descriptor');
-// 			text(array(
-// 				'fields'	=> $this->fields,
-// 				'indexes'	=> $this->indexes,
-// 			));
-// 			$cache->set(array(
-// 				'fields' => $fields,
-// 				'indexes' => $conf['indexes'],
-// 			));
-// 		}
-		
-// 		return $conf;
+			text("\$name : $name");
+			text($this);
+			//    Save cache output
+			$cache->set($this);
+			return;
+		}
+		$this->fields	= $descriptor->getFields();
+		$this->indexes	= $descriptor->getIndexes();
 	}
 	
 	public function getName() {
@@ -89,42 +85,52 @@ class EntityDescriptor {
 	}
 	*/
 	
-	public function validateFieldValue($field, &$value, $required=true, $ref=null) {
+	public function validateFieldValue($field, &$value, $inputData=array(), $ref=null) {
 		if( !isset($this->fields[$field]) ) {
 			throw new InvalidFieldException('unknownField', $field, $value);
 		}
-		if( $field=='id' ) {
+		$FIELD	= $this->fields[$field];
+		if( !$FIELD->writable ) {
 			throw new InvalidFieldException('readOnlyField', $field, $value);
 		}
 		
 		if( is_null($value) ) {
-			if( $required ) {
+			if( !$FIELD->nullable ) {
 				throw new InvalidFieldException('requiredField', $field, $value);
 			}
 			// We will format valid null value later (in formatter)
 			return;
 		}
-		$FIELD	= $this->fields[$field];
 		$TYPE	= static::getType($FIELD->type);
 		// TYPE Validator - Use inheritance, mandatory in super class
 		try {
-			$TYPE->validate($FIELD->args, $value);
+			$TYPE->validate($FIELD, $value, $inputData);
 			// Field Validator - Could be undefined
 			if( !empty($FIELD->validator) ) {
-				call_user_func($FIELD->validator, $FIELD->args, $value);
+				call_user_func_array($FIELD->validator, array($FIELD, &$value, $inputData));
 			}
 		} catch( FE $e ) {
 			throw new InvalidFieldException($e->getMessage(), $field, $value, $FIELD->type, null, $FIELD->args);
-			//($message, $field, $value, $type=null, $domain=null, $typeArgs=array())
 		}
 
 		// TYPE Formatter - Use inheritance, mandatory in super class
-		$TYPE->format($FIELD->args, $value);
+		$TYPE->format($FIELD, $value);
 		// Field Formatter - Could be undefined
 	}
 	
 	public function validate(&$uInputData, $fields=null, $ref=null, &$errCount=0) {
-		
+// 		$class = $this->class;
+		foreach( $this->fields as $field => $fData ) {
+			try {
+				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
+				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
+
+			} catch(UserException $e) {
+				$errCount++;
+				$this->reportException($e);
+			}
+		}
+		return $uInputData;
 	}
 	
 	protected static $types = array();
@@ -149,11 +155,12 @@ class EntityDescriptor {
 
 	public static function parseType($string) {
 		$result = array('type'=>null, 'args'=>array());
-		if( !preg_match('#([^\(]+)(?:\(([^\)]+)\))?#', $string, $matches) ) {
+		if( !preg_match('#([^\(]+)(?:\(([^\)]+)\))?(?:\[([^\]]+)\])?#', $string, $matches) ) {
 			throw new Exception('failToParseType');
 		}
-		$result['type'] = trim($matches[1]);
-		$result['args'] = !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
+		$result['type']		= trim($matches[1]);
+		$result['args']		= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
+		$result['flags']	= !empty($matches[3]) ? preg_split('#\s*,\s*#', $matches[3]) : array();
 		return $result;
 	}
 }
@@ -165,8 +172,6 @@ defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 
 // Primary Types
 EntityDescriptor::registerType('number', null, function($fArgs) {
-// 	text('Parse Args');
-// 	text($fArgs);
 	$args = (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 	if( isset($fArgs[2]) ) {
 		$args->decimals	= $fArgs[0];
@@ -178,17 +183,16 @@ EntityDescriptor::registerType('number', null, function($fArgs) {
 	} else if( isset($fArgs[0]) ) {
 		$args->max			= $fArgs[0];
 	}
-// 	text('Args');
-// 	text($args);
 	return $args;
-}, function($args, &$value) {
+	
+}, function($FIELD, &$value) {
 	if( !is_numeric($value) ) {
 		throw new FE('notNumeric');
 	}
-	if( $value < $args->min ) {
+	if( $value < $FIELD->args->min ) {
 		throw new FE('belowMinValue');
 	}
-	if( $value > $args->max ) {
+	if( $value > $FIELD->args->max ) {
 		throw new FE('aboveMaxValue');
 	}
 });
@@ -202,61 +206,31 @@ EntityDescriptor::registerType('string', null, function($fArgs) {
 		$args->max			= $fArgs[0];
 	}
 	return $args;
-}, function($args, $value) {
+	
+}, function($FIELD, $value) {
 	$len = strlen($value);
-	if( $len < $args->min ) {
+	if( $len < $FIELD->args->min ) {
 		throw new FE('belowMinLength');
 	}
-	if( $len > $args->max ) {
+	if( $len > $FIELD->args->max ) {
 		throw new FE('aboveMaxLength');
 	}
 });
 
-EntityDescriptor::registerType('date', null, null
-/*function($fArgs) {
-	$args = (object) array('country'=>'FR');
-	if( isset($fArgs[0]) ) {
-		$args->country		= strtoupper($fArgs[0]);
-	}
-	if( $args->country != 'FR' ) {
-		throw new Exception('invalidCountry_'.$args->country);
-	}
-	return $args;
-	
-}*/
-, function($args, $value) {
+EntityDescriptor::registerType('date', null, null, function($args, $value) {
 	// FR Only for now
-// 	$time = null;
-// 	text("is_date($value, false, $time, {$args->country})");
-//, $args->country
 	if( !is_date($value, false, $time) ) {
 		throw new FE('notDate');
 	}
 	// Format to timestamp
 	$value = $time;
 	
-}, function($args, $value) {
-// 	text("Formatter");
-// 	text(var_dump($value));
-// 	$value = strtr($value, '/', '-');
+}, function($FIELD, $value) {
+	// SQL Format
 	$value = strftime('%Y-%m-%d', $value);
 });
 
-EntityDescriptor::registerType('datetime', null, null
-/*function($fArgs) {
-	return (object) array();
-// 	$args = (object) array('country'=>'FR');
-// 	if( isset($fArgs[0]) ) {
-// 		$args->country		= strtoupper($fArgs[0]);
-// 	}
-// 	if( $args->country != 'FR' ) {
-// 		throw new Exception('invalidCountry_'.$args->country);
-// 	}
-// 	return $args;
-	
-}*/
-, function($args, $value) {
-	//, $args->country
+EntityDescriptor::registerType('datetime', null, null, function($args, $value) {
 	// FR Only for now
 	if( !is_date($value, true, $time) ) {
 		throw new FE('notDatetime');
@@ -264,7 +238,8 @@ EntityDescriptor::registerType('datetime', null, null
 	// Format to timestamp
 	$value = $time;
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
+	// SQL Format
 	$value = strftime('%Y-%m-%d %H:%M:%S', $value);
 });
 
@@ -279,7 +254,8 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 		$args->max			= $fArgs[0];
 	}
 	return $args;
-}, null, function($args, $value) {
+	
+}, null, function($FIELD, $value) {
 	$value = (int) $value;
 });
 
@@ -320,7 +296,7 @@ EntityDescriptor::registerType('ref', 'integer', function($fArgs) {
 EntityDescriptor::registerType('email', 'string', function($fArgs) {
 	return (object) array('min'=>5, 'max'=>100);
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
 	if( !is_email($value) ) {
 		throw new FE('notEmail');
 	}
@@ -329,30 +305,25 @@ EntityDescriptor::registerType('email', 'string', function($fArgs) {
 EntityDescriptor::registerType('password', 'string', function($fArgs) {
 	return (object) array('min'=>5, 'max'=>128);
 
-}, null, function($args, $value) {
+}, function($FIELD, $value, $inputData) {
+	if( empty($inputData[$FIELD.'_conf']) || $value!=$inputData[$FIELD.'_conf'] ) {
+		throw new FE('invalidConfirmation');
+	}
+	
+}, function($FIELD, $value) {
 	$value = hashString($value);
 });
 
 EntityDescriptor::registerType('phone', 'string', function($fArgs) {
 	return (object) array('min'=>10, 'max'=>20);
-// 	$args = (object) array('min'=>10, 'max'=>20, 'country'=>'FR');
-	//, 'country'=>'FR'
-// 	if( isset($fArgs[0]) ) {
-// 		$args->country		= strtoupper($fArgs[0]);
-// 	}
-// 	if( $args->country != 'FR' ) {
-// 		throw new Exception('invalidCountry_'.$args->country);
-// 	}
-// 	return $args;
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
 	// FR Only for now
-// 	if( !is_phone_number($value, $args->country) ) {
 	if( !is_phone_number($value) ) {
 		throw new FE('notPhoneNumber');
 	}
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
 	// FR Only for now
 	$value = standardizePhoneNumber_FR($value, '.', 2);
 	
@@ -361,7 +332,7 @@ EntityDescriptor::registerType('phone', 'string', function($fArgs) {
 EntityDescriptor::registerType('url', 'string', function($fArgs) {
 	return (object) array('min'=>10, 'max'=>200);
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
 	if( !is_url($value) ) {
 		throw new FE('notURL');
 	}	
@@ -374,7 +345,7 @@ EntityDescriptor::registerType('ip', 'string', function($fArgs) {
 	}
 	return $args;
 	
-}, function($args, $value) {
+}, function($FIELD, $value) {
 	if( !is_ip($value) ) {
 		throw new FE('notIPAddress');
 	}	
@@ -387,8 +358,8 @@ EntityDescriptor::registerType('enum', 'string', function($fArgs) {
 	}
 	return $args;
 	
-}, function($args, $value) {
-	if( !in_array($value, call_user_func($args->source)) ) {
+}, function($FIELD, $value) {
+	if( !in_array($value, call_user_func($FIELD->args->source)) ) {
 		throw new FE('notEnumValue');
 	}	
 });
