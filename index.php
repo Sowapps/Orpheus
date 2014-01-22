@@ -45,6 +45,7 @@ error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 define("ERROR_THROW_EXCEPTION", 0);
 define("ERROR_DISPLAY_RAW", 1);
 define("ERROR_IGNORE", 2);
+$ERROR_ACTION = ERROR_THROW_EXCEPTION;
 set_error_handler(
 //! Error Handler
 /*!
@@ -53,7 +54,7 @@ set_error_handler(
 function($errno, $errstr, $errfile, $errline ) {
 	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-	} else if( $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
+	} else if( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
 		return;
 	} else {//ERROR_DISPLAY_RAW
 		$backtrace = '';
