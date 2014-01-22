@@ -26,7 +26,7 @@ class Config extends ConfigCore {
 // 			try {
 			$confPath = static::getFilePath($source);
 			if( empty($confPath) ) {
-				return array();
+				return false;
 			}
 // 			} catch( Exception $e ) {
 // 				// File not found
@@ -36,7 +36,7 @@ class Config extends ConfigCore {
 // 		text('$confPath: '.$confPath);
 		$parsed = parse_ini_file($confPath, true);
 		$this->add($parsed);
-		return $parsed;
+		return true;
 	}
 
 	//!	Checks if configuration source exists
