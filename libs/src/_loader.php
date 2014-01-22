@@ -8,6 +8,7 @@
 addAutoload('SiteUser',							'src/siteuser');
 addAutoload('DemoTest',							'src/demotest');
 addAutoload('DemoTest_MSSQL',					'src/demotest_mssql');
+addAutoload('DemoEntity',						'src/demoentity');
 
 addAutoload('Session',							'sessionhandler/dbsession');
 

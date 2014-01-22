@@ -1,0 +1,14 @@
+
+# Entity Test Entities descriptor (FAKE)
+
+fields:
+    create_date: datetime
+    create_ip: ip
+    edit_date: datetime 
+    edit_ip: ip
+    name: string(6, 50)
+    user_id: ref
+    user_name: string(6, 50)
+    published: bool
+
+indexes: []
