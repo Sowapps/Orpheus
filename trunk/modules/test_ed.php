@@ -51,13 +51,13 @@ foreach( $ed->getFields() as $fName => $field ) {
 	$cType = '';
 	if( $TYPE->knowType('string') ) {
 		$max = $TYPE->knowType('password') ? 128 : $field->args->max;
-		if( $field->args->max < 256 ) {
+		if( $max < 256 ) {
 			$cType = "VARCHAR({$field->args->max})";
 		} else
-		if( $field->args->max < 65536 ) {
+		if( $max < 65536 ) {
 			$cType = "TEXT";
 		} else
-		if( $field->args->max < 16777216 ) {
+		if( $max < 16777216 ) {
 			$cType = "MEDIUMTEXT";
 		} else {
 			$cType = "LONGTEXT";
@@ -66,9 +66,24 @@ foreach( $ed->getFields() as $fName => $field ) {
 	if( $TYPE->knowType('integer') ) {
 		$dc = strlen((int) $field->args->max);
 		if( !$field->args->decimals ) {
+			$max		= (int) $field->args->max;
 			$unsigned	= $field->args->min >= 0 ? 1 : 0;
-			$f			= $unsigned;
-			// TODO
+			$f			= 1+1*$unsigned;
+			if( $max < 128*$f ) {
+				$cType	= "TINYINT";
+			} else
+			if( $max < 32768*$f ) {
+				$cType	= "SMALLINT";
+			} else
+			if( $max < 8388608*$f ) {
+				$cType	= "MEDIUMINT";
+			} else
+			if( $max < 2147483648*$f ) {
+				$cType	= "INT";
+			} else {
+				$cType	= "BIGINT";
+			}
+			$cType .= '('.strlen($max).')';
 			
 		} else {
 			$dc += $field->args->decimals;
@@ -77,7 +92,7 @@ foreach( $ed->getFields() as $fName => $field ) {
 			} else {// Approx accurate to 15 decimals
 				$cType = "DOUBLE";
 			}
-			$cType .= $cType."({$dc}, {$field->args->decimals})";
+			$cType .= "({$dc}, {$field->args->decimals})";
 		}
 	}
 	

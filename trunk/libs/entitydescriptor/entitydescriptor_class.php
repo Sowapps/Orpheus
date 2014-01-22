@@ -137,7 +137,7 @@ class EntityDescriptor {
 		return $type;
 	}
 	
-	public static function registerType($name, $parent, $argsParser, $validator=null, $formatter=null) {
+	public static function registerType($name, $parent, $argsParser=null, $validator=null, $formatter=null) {
 		// If previously registered, we just replace it
 		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter);
 // 		static::$types[$name] = (object) array(
@@ -212,7 +212,8 @@ EntityDescriptor::registerType('string', null, function($fArgs) {
 	}
 });
 
-EntityDescriptor::registerType('date', null, function($fArgs) {
+EntityDescriptor::registerType('date', null, null
+/*function($fArgs) {
 	$args = (object) array('country'=>'FR');
 	if( isset($fArgs[0]) ) {
 		$args->country		= strtoupper($fArgs[0]);
@@ -222,14 +223,15 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	}
 	return $args;
 	
-}, function($args, $value) {
+}*/
+, function($args, $value) {
 	// FR Only for now
 // 	$time = null;
 // 	text("is_date($value, false, $time, {$args->country})");
-	if( !is_date($value, false, $time, $args->country) ) {
+//, $args->country
+	if( !is_date($value, false, $time) ) {
 		throw new FE('notDate');
 	}
-// 	text(var_dump($time));
 	// Format to timestamp
 	$value = $time;
 	
@@ -240,19 +242,23 @@ EntityDescriptor::registerType('date', null, function($fArgs) {
 	$value = strftime('%Y-%m-%d', $value);
 });
 
-EntityDescriptor::registerType('datetime', null, function($fArgs) {
-	$args = (object) array('country'=>'FR');
-	if( isset($fArgs[0]) ) {
-		$args->country		= strtoupper($fArgs[0]);
-	}
-	if( $args->country != 'FR' ) {
-		throw new Exception('invalidCountry_'.$args->country);
-	}
-	return $args;
+EntityDescriptor::registerType('datetime', null, null
+/*function($fArgs) {
+	return (object) array();
+// 	$args = (object) array('country'=>'FR');
+// 	if( isset($fArgs[0]) ) {
+// 		$args->country		= strtoupper($fArgs[0]);
+// 	}
+// 	if( $args->country != 'FR' ) {
+// 		throw new Exception('invalidCountry_'.$args->country);
+// 	}
+// 	return $args;
 	
-}, function($args, $value) {
+}*/
+, function($args, $value) {
+	//, $args->country
 	// FR Only for now
-	if( !is_date($value, true, $time, $args->country) ) {
+	if( !is_date($value, true, $time) ) {
 		throw new FE('notDatetime');
 	}
 	// Format to timestamp
@@ -277,6 +283,36 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 	$value = (int) $value;
 });
 
+EntityDescriptor::registerType('float', 'integer', function($fArgs) {
+	$args = (object) array('decimals'=>2, 'min'=>-2147483648, 'max'=>2147483647);
+	if( isset($fArgs[2]) ) {
+		$args->decimals		= $fArgs[0];
+		$args->min			= $fArgs[1];
+		$args->max			= $fArgs[2];
+	} else if( isset($fArgs[1]) ) {
+		$args->min			= $fArgs[0];
+		$args->max			= $fArgs[1];
+	} else if( isset($fArgs[0]) ) {
+		$args->decimals		= $fArgs[0];
+	}
+	return $args;
+});
+
+EntityDescriptor::registerType('double', 'integer', function($fArgs) {
+	$args = (object) array('decimals'=>8, 'min'=>-2147483648, 'max'=>2147483647);	
+	if( isset($fArgs[2]) ) {
+		$args->decimals		= $fArgs[0];
+		$args->min			= $fArgs[1];
+		$args->max			= $fArgs[2];
+	} else if( isset($fArgs[1]) ) {
+		$args->min			= $fArgs[0];
+		$args->max			= $fArgs[1];
+	} else if( isset($fArgs[0]) ) {
+		$args->decimals		= $fArgs[0];
+	}
+	return $args;
+});
+
 EntityDescriptor::registerType('ref', 'integer', function($fArgs) {
 	return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
 });
@@ -298,18 +334,21 @@ EntityDescriptor::registerType('password', 'string', function($fArgs) {
 });
 
 EntityDescriptor::registerType('phone', 'string', function($fArgs) {
-	$args = (object) array('min'=>10, 'max'=>20, 'country'=>'FR');
-	if( isset($fArgs[0]) ) {
-		$args->country		= strtoupper($fArgs[0]);
-	}
-	if( $args->country != 'FR' ) {
-		throw new Exception('invalidCountry_'.$args->country);
-	}
-	return $args;
+	return (object) array('min'=>10, 'max'=>20);
+// 	$args = (object) array('min'=>10, 'max'=>20, 'country'=>'FR');
+	//, 'country'=>'FR'
+// 	if( isset($fArgs[0]) ) {
+// 		$args->country		= strtoupper($fArgs[0]);
+// 	}
+// 	if( $args->country != 'FR' ) {
+// 		throw new Exception('invalidCountry_'.$args->country);
+// 	}
+// 	return $args;
 	
 }, function($args, $value) {
 	// FR Only for now
-	if( !is_phone_number($value, $args->country) ) {
+// 	if( !is_phone_number($value, $args->country) ) {
+	if( !is_phone_number($value) ) {
 		throw new FE('notPhoneNumber');
 	}
 	
