@@ -87,25 +87,28 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
 
-if( isPOST('submitGenerateSQL') ) {
+text(isPOST('submitGenerateSQL'));
+text(isPOST('entity'));
+text(isPOST('entity') && is_array(POST('entities')));
+if( isPOST('submitGenerateSQL') && isPOST('entity') && is_array(POST('entities')) ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
-	if( isPOST('entity') && is_array(POST('entities')) ) {
-		foreach( POST('entities') as $entityName => $on ) {
-			try {
-				$query = generateSQLCreate(new EntityDescriptor($entityName));
-				if( empty($query) ) {
-					throw new UserException('Empty query');
-				}
-				if( $output==OUTPUT_APPLY ) {
-					pdo_query($query, PDOEXEC);
-					reportSuccess('Database contents applied successfully !');
-					
-				} else {
-					echo '<pre>'.$query.'</pre>';
-				}
-			} catch( UserException $e ) {
-				reportError($e);
+	text($output);
+	foreach( POST('entities') as $entityName => $on ) {
+		text("- $entityName");
+		try {
+			$query = generateSQLCreate(new EntityDescriptor($entityName));
+			if( empty($query) ) {
+				throw new UserException('Empty query');
 			}
+			if( $output==OUTPUT_APPLY ) {
+				pdo_query($query, PDOEXEC);
+				reportSuccess('Database contents applied successfully !');
+				
+			} else {
+				echo '<pre>'.$query.'</pre>';
+			}
+		} catch( UserException $e ) {
+			reportError($e);
 		}
 	}
 }
