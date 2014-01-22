@@ -341,10 +341,10 @@ abstract class PermanentObject {
 	*/
 	public function logEvent($event, $time=null, $ipAdd=null) {
 		$log = static::getLogEvent($event, $time, $ipAdd);
-		if( !in_array($event.'_time', static::$fields) ) {
+		if( in_array($event.'_time', static::$fields) ) {
 			$this->setValue($event.'_time', $log[$event.'_time']);
 		} else
-		if( !in_array($event.'_date', static::$fields) ) {
+		if( in_array($event.'_date', static::$fields) ) {
 			$this->setValue($event.'_date', $log[$event.'_time']);
 		} else {
 			return;
