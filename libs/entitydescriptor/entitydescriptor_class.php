@@ -45,7 +45,7 @@ class EntityDescriptor {
 				} else if( $FIELD->writable ) {
 					$FIELD->writable = !in_array('readonly', $parse->flags); 
 				} else {
-					$FIELD->writable = !in_array('writable', $parse->flags); 
+					$FIELD->writable = in_array('writable', $parse->flags); 
 				}
 				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				if( !isset($fieldInfos['nullable']) ) {
@@ -53,7 +53,7 @@ class EntityDescriptor {
 				} else if( $FIELD->writable ) {
 					$FIELD->nullable = !in_array('notnull', $parse->flags); 
 				} else {
-					$FIELD->nullable = !in_array('nullable', $parse->flags); 
+					$FIELD->nullable = in_array('nullable', $parse->flags); 
 				}
 				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				$this->fields[$field]	= $FIELD;
