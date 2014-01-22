@@ -25,6 +25,7 @@ class EntityDescriptor {
 			//      Fields
 			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
+				text('$field : '.$field);
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$parse					= (object) static::parseType($type);
 				$FIELD					= (object) array(
@@ -33,6 +34,7 @@ class EntityDescriptor {
 				);
 				$TYPE					= static::getType($FIELD->type);
 				$FIELD->args			= $TYPE->parseArgs($parse->args);
+				text($parse->flags);
 				$FIELD->writable		= ((!isset($fieldInfos['writable']) || !empty($fieldInfos['writable'])) && !in_array('readonly', $parse->flags));
 				$FIELD->nullable		= ((!isset($fieldInfos['nullable']) || !empty($fieldInfos['nullable'])) && !in_array('notnull', $parse->flags));
 				$this->fields[$field]	= $FIELD;
