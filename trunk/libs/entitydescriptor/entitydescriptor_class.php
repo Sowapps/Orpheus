@@ -281,7 +281,7 @@ EntityDescriptor::registerType('string', null, function($fArgs) {
 
 EntityDescriptor::registerType('date', null, null, function($args, $value) {
 	// FR Only for now
-	if( !is_date($value, false, $time) ) {
+	if( !is_date($value, false, $time) && !is_date($value, false, $time, 'SQL') ) {
 		throw new FE('notDate');
 	}
 	// Format to timestamp
@@ -294,7 +294,7 @@ EntityDescriptor::registerType('date', null, null, function($args, $value) {
 
 EntityDescriptor::registerType('datetime', null, null, function($args, $value) {
 	// FR Only for now
-	if( !is_date($value, true, $time) ) {
+	if( !is_date($value, true, $time) && !is_date($value, true, $time, 'SQL') ) {
 		throw new FE('notDatetime');
 	}
 	// Format to timestamp
