@@ -165,7 +165,7 @@ class EntityDescriptor {
 		}
 		$result['type']		= trim($matches[1]);
 		$result['args']		= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
-		$result['flags']	= !empty($matches[3]) ? preg_split('#\s*,\s*#', $matches[3]) : array();
+		$result['flags']	= !empty($matches[3]) ? preg_split('#\s#', $matches[3], -1, PREG_SPLIT_NO_EMPTY) : array();
 		return $result;
 	}
 }
