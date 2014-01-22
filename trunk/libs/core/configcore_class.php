@@ -102,8 +102,8 @@ abstract class ConfigCore {
 			return static::$main;
 		}
 		$newConf = new static();
-		$r = $newConf->load($source);
-		return $r ? $newConf : null;
+		$newConf->load($source);
+		return $newConf;
 	}
 	
 	//! Gets configuration from the main configuration object

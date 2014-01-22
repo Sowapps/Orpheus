@@ -15,8 +15,8 @@ class EntityDescriptor {
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( !$cache->get($descriptor) ) {
 			$conf = YAML::build($descriptorPath, true);
-			if( empty($conf->all) ) {
-				throw new Exception('Descriptor file for '.$name.' is empty or not found');
+			if( empty($conf->fields) ) {
+				throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
 			}
 			text("\$name : $name ($descriptorPath)");
 			text($conf->fields);
