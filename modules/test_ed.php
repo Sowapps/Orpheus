@@ -47,6 +47,8 @@ foreach( $values as $a ) {
 $columns = '';
 $i = 0;
 foreach( $ed->getFields() as $fName => $field ) {
+	text('$fName : '.$fName);
+	text($field);
 	$TYPE = EntityDescriptor::getType($field->type);
 	$cType = '';
 	if( $TYPE->knowType('string') ) {
