@@ -73,18 +73,17 @@ function generateSQLCreate($ed) {
 			return null;
 		}
 		
-		$columns .= ($i ? ", \n" : '')."\t".$fName.' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
+		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter_MySQL::escapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
 		$i++;
 	}
 	if( empty($columns) ) {
 		throw new UserException('No columns');
 		return null;
 	}
-	return <<<EOF
-CREATE TABLE {$ed->getName()} IF NOT EXISTS (
-{$columns}
-) ENGINE=MYISAM CHARACTER SET utf8;
-EOF;
+	return '
+CREATE TABLE '.SQLAdapter_MySQL::escapeIdentifier($ed->getName()).' IF NOT EXISTS (
+'.$columns.'
+) ENGINE=MYISAM CHARACTER SET utf8;';
 }
 if( isPOST('submitGenerateSQL') ) {
 	try {
