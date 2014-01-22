@@ -26,7 +26,7 @@ class EntityDescriptor {
 			foreach( $conf->fields as $field => $fieldInfos ) {
 // 				text('$field : '.$field);
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
-				$parse					= (object) static::parseType($type);
+				$parse					= static::parseType($type);
 				$FIELD					= (object) array(
 					'name' => $field,
 					'type' => $parse->type,
@@ -66,7 +66,7 @@ class EntityDescriptor {
 			$this->indexes = array();
 			if( !empty($conf->indexes) ) {
 				foreach( $conf->indexes as $index ) {
-					$this->indexes[] = (object) static::parseType($type);
+					$this->indexes[] = static::parseType($type);
 				}
 			}
 			//    Save cache output
@@ -157,7 +157,7 @@ class EntityDescriptor {
 					$uInputData[$field] = null;
 					if( is_null($ref) ) {
 						$uInputData[$field] = $this->fields[$field]->default;
-						if( is_array($uInputData[$field]) ) {
+						if( is_object($uInputData[$field]) ) {
 // 							text('default value callback');
 // 							text($uInputData[$field]->type);
 // 							text((array) $uInputData[$field]->args);
@@ -223,7 +223,7 @@ class EntityDescriptor {
 				text($result['default']);
 			}
 		}
-		return $result;
+		return (object) $result;
 	}
 }
 
