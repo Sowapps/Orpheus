@@ -5,11 +5,13 @@
 
 fields:
     a_number: number(0, 0, 255)
+    a_float: number(4)
+    a_double: number(0, 255)
     a_string: string()
     a_string2: string(20)
     an_integer: integer(0, 255)
-    a_date: date(FR)
-    a_datetime: datetime(FR)
+    a_date: date()
+    a_datetime: datetime()
     an_email: email()
     a_password: password()
     a_phone: phone(FR)
