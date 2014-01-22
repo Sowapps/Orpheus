@@ -98,6 +98,14 @@ foreach( $ed->getFields() as $fName => $field ) {
 			}
 			$cType .= "({$dc}, {$field->args->decimals})";
 		}
+	} else
+	if( $TYPE->knowType('date') ) {
+		$cType = 'DATE';
+	} else
+	if( $TYPE->knowType('datetime') ) {
+		$cType = 'DATETIME';
+	} else {
+		text('Type of '.$fName.' ('.$TYPE->getName().') not found.');
 	}
 	
 	$columns .= ($i ? ", \n" : '')."\t".$fName.' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
