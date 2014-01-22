@@ -64,6 +64,10 @@ foreach( $ed->getFields() as $fName => $field ) {
 		}
 	} else
 	if( $TYPE->knowType('integer') ) {
+		if( !isset($field->args->max) ) {
+			text('Issue with '.$fName);
+			text($field->args);
+		}
 		$dc = strlen((int) $field->args->max);
 		if( !$field->args->decimals ) {
 			$max		= (int) $field->args->max;
