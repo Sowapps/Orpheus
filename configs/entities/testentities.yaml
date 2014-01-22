@@ -10,6 +10,7 @@ fields:
     user_id: ref
     user_name: string(6, 50)
     published: bool=false
-
+    
+    
 
 indexes: []
