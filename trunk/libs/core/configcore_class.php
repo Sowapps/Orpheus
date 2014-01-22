@@ -63,7 +63,7 @@ abstract class ConfigCore {
 		Adds the configuration array $conf to this configuration.
 	*/
 	public function add($conf) {
-		$this->config += $conf;
+		$this->config = $this->config+$conf;
 	}
 	
 	//!	Loads new configuration source
