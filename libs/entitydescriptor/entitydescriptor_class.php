@@ -18,19 +18,19 @@ class EntityDescriptor {
 			if( empty($conf->fields) ) {
 				throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
 			}
-			text("\$name : $name ($descriptorPath)");
-			text($conf->fields);
+// 			text("\$name : $name ($descriptorPath)");
+// 			text($conf->fields);
 			// Build descriptor
 			//    Parse Config file
 			//      Fields
-			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
+			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'readonly'=>false, 'notnull'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
 				text('$field : '.$field);
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$parse					= (object) static::parseType($type);
 				$FIELD					= (object) array(
-					'name'=>$field,
-					'type'=>$parse->type,
+					'name' => $field,
+					'type' => $parse->type,
 				);
 				$TYPE					= static::getType($FIELD->type);
 				$FIELD->args			= $TYPE->parseArgs($parse->args);

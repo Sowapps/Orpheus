@@ -49,6 +49,9 @@ $i = 0;
 foreach( $ed->getFields() as $fName => $field ) {
 	text('$fName : '.$fName);
 	text($field);
+	if( !is_object($field) ) {
+		continue;
+	}
 	$TYPE = EntityDescriptor::getType($field->type);
 	$cType = '';
 	if( $TYPE->knowType('string') ) {
