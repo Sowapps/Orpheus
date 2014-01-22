@@ -15,6 +15,8 @@ class EntityDescriptor {
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( !$cache->get($descriptor) ) {
 			$conf = YAML::build($descriptorPath, true);
+			text("\$name : $name ($descriptorPath)");
+			text($conf->fields);
 			// Build descriptor
 			//    Parse Config file
 			//      Fields
@@ -40,7 +42,6 @@ class EntityDescriptor {
 					$this->indexes[] = (object) static::parseType($type);
 				}
 			}
-			text("\$name : $name");
 			text($this);
 			//    Save cache output
 			$cache->set($this);
