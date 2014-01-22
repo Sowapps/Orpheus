@@ -44,7 +44,7 @@ if( !empty($CSS_FILES) ) {
 		<div class="container">
 			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
 			<div class="collapse navbar-collapse">
-<?php $this->showMenu('topmenu'); ?>
+<?php SiteUser::is_login() ? $this->showMenu('topmenu') :  $this->showMenu('topmenu_member') ; ?>
 			</div>
 		</div>
 	</div>
