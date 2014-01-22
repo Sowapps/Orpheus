@@ -73,7 +73,7 @@ function generateSQLCreate($ed) {
 			throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
 			return null;
 		}
-		text($fName.' => '.($field->nullable ? ' NULLABLE' : ' NOTNULL'));
+// 		text($fName.' => '.($field->nullable ? ' NULLABLE' : ' NOTNULL'));
 		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter::doEscapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
 		$i++;
 	}
@@ -94,7 +94,7 @@ if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 // 	text($output);
 	foreach( POST('entities') as $entityName => $on ) {
-		text("- $entityName");
+// 		text("- $entityName");
 		try {
 			$query = generateSQLCreate(new EntityDescriptor($entityName));
 			if( empty($query) ) {
