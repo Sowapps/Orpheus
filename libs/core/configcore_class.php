@@ -63,9 +63,6 @@ abstract class ConfigCore {
 		Adds the configuration array $conf to this configuration.
 	*/
 	public function add($conf) {
-// 		text($this->config);
-// 		text($conf);
-// 		var_dump($conf);
 		if( empty($conf) ) { return ; }
 		$this->config = array_merge($this->config, $conf);
 	}
