@@ -29,6 +29,7 @@ class Config extends ConfigCore {
 				return array();
 			}
 		}
+		text('$confPath: '.$confPath);
 		$parsed = parse_ini_file($confPath, true);
 		$this->add($parsed);
 		return $parsed;
