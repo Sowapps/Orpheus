@@ -22,7 +22,7 @@ class EntityDescriptor {
 			//      Fields
 			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
-// 				text('$field : '.$field);
+				text('$field : '.$field);
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$parse					= (object) static::parseType($type);
 				$FIELD					= (object) array(
@@ -38,7 +38,7 @@ class EntityDescriptor {
 				// Default if no type's default
 				if( !isset($FIELD->writable) ) { $FIELD->writable = true; }
 				if( !isset($FIELD->nullable) ) { $FIELD->nullable = false; }
-				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : '').' '.($FIELD->nullable ? 'NULLABLE' : ''));
+				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				// Field flags
 				if( !isset($fieldInfos['writable']) ) {
 					$FIELD->writable = !empty($fieldInfos['writable']);
@@ -47,7 +47,7 @@ class EntityDescriptor {
 				} else {
 					$FIELD->writable = !in_array('writable', $parse->flags); 
 				}
-				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : '').' '.($FIELD->nullable ? 'NULLABLE' : ''));
+				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				if( !isset($fieldInfos['nullable']) ) {
 					$FIELD->nullable = !empty($fieldInfos['nullable']);
 				} else if( $FIELD->writable ) {
@@ -55,7 +55,7 @@ class EntityDescriptor {
 				} else {
 					$FIELD->nullable = !in_array('nullable', $parse->flags); 
 				}
-				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : '').' '.($FIELD->nullable ? 'NULLABLE' : ''));
+				text(__LINE__.' => '.($FIELD->writable ? 'WRITABLE' : 'READONLY').' '.($FIELD->nullable ? 'NULLABLE' : 'NOTNULL'));
 				$this->fields[$field]	= $FIELD;
 			}
 

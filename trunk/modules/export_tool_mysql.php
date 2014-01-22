@@ -73,7 +73,7 @@ function generateSQLCreate($ed) {
 			throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
 			return null;
 		}
-		
+		text($fName.' => '.($field->nullable ? ' NULLABLE' : ' NOTNULL'));
 		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter::doEscapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
 		$i++;
 	}
