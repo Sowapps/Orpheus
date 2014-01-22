@@ -1086,6 +1086,24 @@ function dt($time=TIME) {
 	return strftime(t('timeFormat'), $time);
 }
 
+//! Gets the date as string in SQL format
+/*!
+ * \param $time The UNIX timestamp.
+* \return The date using sql format
+*/
+function sqlDate($time=TIME) {
+	return strftime('%Y-%m-%d', $time);
+}
+
+//! Gets the date time as string in SQL format
+/*!
+ * \param $time The UNIX timestamp.
+ * \return The date using sql format
+*/
+function sqlDatetime($time=TIME) {
+	return strftime('%Y-%m-%d %H:%M:%S', $time);
+}
+
 //! Generates a new password
 /*!
  * \param $length Thelength of the generated password.

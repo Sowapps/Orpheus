@@ -340,9 +340,15 @@ abstract class PermanentObject {
 	 * Logs an event to this object's data.
 	*/
 	public function logEvent($event, $time=null, $ipAdd=null) {
-		if( !in_array($event.'_time', static::$fields) ) { return; }
 		$log = static::getLogEvent($event, $time, $ipAdd);
-		$this->setValue($event.'_time', $log[$event.'_time']);
+		if( !in_array($event.'_time', static::$fields) ) {
+			$this->setValue($event.'_time', $log[$event.'_time']);
+		} else
+		if( !in_array($event.'_date', static::$fields) ) {
+			$this->setValue($event.'_date', $log[$event.'_time']);
+		} else {
+			return;
+		}
 		try {
 			$this->setValue($event.'_ip', $log[$event.'_ip']);
 		} catch(FieldNotFoundException $e) {}
@@ -579,8 +585,9 @@ abstract class PermanentObject {
 	*/
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(
-			$event.'_time' => (isset($time)) ? $time : time(),
-			$event.'_ip' => (isset($ipAdd)) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
+			$event.'_time'	=> isset($time) ? $time : time(),
+			$event.'_date'	=> isset($time) ? sqlDatetime : sqlDatetime(),
+			$event.'_ip'	=> isset($ipAdd) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
 		);
 	}
 	
