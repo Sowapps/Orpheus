@@ -37,7 +37,7 @@ if( User::is_login() ) {
 				<label for="login_username">Log in with your registered account</label>
 				<input class="input" id="login_username" type="text" name="logindata[name]" placeholder="User name" required="required" /><br />
 				<input class="input" id="login_password" type="password" name="logindata[password]" placeholder="Password" required="required" /><br />
-				<button id="submitLogin" type="submit" class="btn">Login</button>
+				<button name="submitLogin" type="submit" class="btn">Login</button>
 			</fieldset>
 			</form>
 		</div>
@@ -71,7 +71,7 @@ if( User::is_login() ) {
 						<label class="control-label" for="register_confpassword">Confirm password</label>
 						<input class="input" id="register_confpassword" type="password" name="regdata[password_conf]" placeholder="Confirm your password" required="required" /><br />
 						
-						<button id="submitRegister" type="submit" class="btn">Register</button>
+						<button name="submitRegister" type="submit" class="btn">Register</button>
 					</div>
 				</div>
 			</fieldset>
