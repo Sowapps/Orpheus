@@ -52,10 +52,11 @@ class EntityDescriptor {
 			$cache->set(get_object_vars($this));
 			return;
 		}
-		text($descriptor);
+// 		text($descriptor);
 		$descriptor		= (object) $descriptor;
 		$this->fields	= $descriptor->fields;
 		$this->indexes	= $descriptor->indexes;
+		text($this);
 	}
 	
 	public function getName() {
