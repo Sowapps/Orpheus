@@ -12,8 +12,10 @@ if( isPOST('submitLogin') ) {
 		reportError($e);
 	}
 } else if( isPOST('submitRegister') ) {
+	text('Register');
 	try {
-		$formRegData = $_POST['regdata'];
+		$formRegData = POST('regdata');
+		text(submitRegister);
 		$Membre = SiteUser::create($formRegData);
 		reportSuccess('You\'re successfully registered.');
 	} catch(UserException $e) {
