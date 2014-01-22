@@ -2,7 +2,7 @@
 # Entity Test Entities descriptor (FAKE)
 
 fields:
-    create_date: datetime
+    create_date: datetime=sqlTime()
     create_ip: ip
     edit_date: datetime 
     edit_ip: ip
