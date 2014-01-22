@@ -32,8 +32,27 @@ class EntityDescriptor {
 				$TYPE					= static::getType($FIELD->type);
 				$FIELD->args			= $TYPE->parseArgs($parse->args);
 // 				text($parse->flags);
-				$FIELD->writable		= ((!isset($fieldInfos['writable']) || !empty($fieldInfos['writable'])) && !in_array('readonly', $parse->flags));
-				$FIELD->nullable		= ((!isset($fieldInfos['nullable']) || !empty($fieldInfos['nullable'])) && !in_array('notnull', $parse->flags));
+				// Type's default
+				$FIELD->writable		= $TYPE->isWritable();
+				$FIELD->nullable		= $TYPE->isNullable();
+				// Default if no type's default
+				if( !isset($FIELD->writable) ) { $FIELD->writable = true; }
+				if( !isset($FIELD->nullable) ) { $FIELD->nullable = false; }
+				// Field flags
+				if( !isset($fieldInfos['writable']) ) {
+					$FIELD->writable = !empty($fieldInfos['writable']);
+				} else if( $FIELD->writable ) {
+					$FIELD->writable = !in_array('readonly', $parse->flags); 
+				} else {
+					$FIELD->writable = !in_array('writable', $parse->flags); 
+				}
+				if( !isset($fieldInfos['nullable']) ) {
+					$FIELD->nullable = !empty($fieldInfos['nullable']);
+				} else if( $FIELD->writable ) {
+					$FIELD->nullable = !in_array('notnull', $parse->flags); 
+				} else {
+					$FIELD->nullable = !in_array('nullable', $parse->flags); 
+				}
 				$this->fields[$field]	= $FIELD;
 			}
 
@@ -146,9 +165,9 @@ class EntityDescriptor {
 		return $type;
 	}
 	
-	public static function registerType($name, $parent, $argsParser=null, $validator=null, $formatter=null) {
+	public static function registerType($name, $parent, $argsParser=null, $validator=null, $formatter=null, $writable=null, $nullable=null) {
 		// If previously registered, we just replace it
-		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter);
+		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter, $writable, $nullable);
 // 		static::$types[$name] = (object) array(
 // 			'argsParser'	=> $argsParser,
 // 			'validator'		=> $validator,
@@ -262,6 +281,13 @@ EntityDescriptor::registerType('integer', 'number', function($fArgs) {
 	$value = (int) $value;
 });
 
+EntityDescriptor::registerType('bool', 'integer', function($fArgs) {
+	return (object) array('decimals'=>0, 'min'=>0, 'max'=>1);
+	
+}, null, function($FIELD, $value) {
+	$value = (int) $value;
+});
+
 EntityDescriptor::registerType('float', 'integer', function($fArgs) {
 	$args = (object) array('decimals'=>2, 'min'=>-2147483648, 'max'=>2147483647);
 	if( isset($fArgs[2]) ) {
@@ -294,7 +320,7 @@ EntityDescriptor::registerType('double', 'integer', function($fArgs) {
 
 EntityDescriptor::registerType('ref', 'integer', function($fArgs) {
 	return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
-});
+}, null, null, false);
 
 EntityDescriptor::registerType('email', 'string', function($fArgs) {
 	return (object) array('min'=>5, 'max'=>100);
