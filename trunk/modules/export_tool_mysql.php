@@ -93,6 +93,7 @@ if( isPOST('submitGenerateSQL') ) {
 		}
 		if( isPOST('output') && POST('output')==OUTPUT_APPLY ) {
 			pdo_query($query, PDOEXEC);
+			reportSuccess('Database contents applied successfully !');
 			
 		} else {
 			echo '<pre>'.$query.'</pre>';
