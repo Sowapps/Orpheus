@@ -47,11 +47,12 @@ class EntityDescriptor {
 			}
 			text($this);
 			//    Save cache output
-			$cache->set($this);
+			$cache->set(get_object_vars($this));
 			return;
 		}
-		$this->fields	= $descriptor->getFields();
-		$this->indexes	= $descriptor->getIndexes();
+		$descriptor		= (object) $descriptor;
+		$this->fields	= $descriptor->fields;
+		$this->indexes	= $descriptor->indexes;
 	}
 	
 	public function getName() {
