@@ -107,8 +107,8 @@ if( isPOST('submitGenerateSQL') ) {
 <?php displayReportsHTML(); ?>
 <p>This tool allows you to generate SQL source for MySQL.</p>
 <label>Output</label><select name="output">
-	<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display<option>
-	<option value="<?php echo OUTPUT_APPLY; ?>">Apply<option>
+	<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
+	<option value="<?php echo OUTPUT_APPLY; ?>">Apply</option>
 </select><br />
 <button type="submit" name="submitGenerateSQL">Generate</button>
 </form>
