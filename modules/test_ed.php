@@ -10,8 +10,8 @@ $ed = new EntityDescriptor('users');
 $values = array(
 	array('a_number',	'125'),
 	array('a_number',	'-125'),
-	array('a_string2',	'short string'),
-	array('a_string2',	'This is a test for a very long string'),
+	array('a_string',	'short string'),
+	array('a_string',	'This is a test for a very long string'),
 	array('a_date',		'25/12/1987'),
 	array('a_date',		'25/12/1987 12:50:12'),
 	array('a_datetime',	'25/12/1987'),
@@ -63,7 +63,7 @@ foreach( $ed->getFields() as $fName => $field ) {
 			$cType = "LONGTEXT";
 		}
 	} else
-	if( $TYPE->knowType('integer') ) {
+	if( $TYPE->knowType('number') ) {
 		if( !isset($field->args->max) ) {
 			text('Issue with '.$fName);
 			text($field->args);
