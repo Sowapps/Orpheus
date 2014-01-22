@@ -773,9 +773,8 @@ abstract class PermanentObject {
 	//! Initializes class
 	public static function init() {
 		$parent = get_parent_class(get_called_class());
-		if( empty($parent) ) {
-			return;
-		}
+		if( empty($parent) ) { return; }
+		
 		static::$fields = array_unique(array_merge(static::$fields, $parent::$fields));
 		static::$editableFields = array_unique(array_merge(static::$editableFields, $parent::$editableFields));
 		if( is_array(static::$validator) && is_array($parent::$validator) ) {

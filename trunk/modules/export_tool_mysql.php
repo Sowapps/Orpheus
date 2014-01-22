@@ -1,10 +1,11 @@
 <?php
+using('entitydescriptor.entitydescriptor');
 
 define('OUTPUT_APPLY', 1);
 define('OUTPUT_DISPLAY', 2);
 //define('OUTPUT_SQLDOWNLOAD');
 
-$ed = new EntityDescriptor('entity_tests');
+// $ed = new EntityDescriptor('entity_tests');
 
 // MySQL Generator
 function generateSQLCreate($ed) {
@@ -86,26 +87,41 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
 if( isPOST('submitGenerateSQL') ) {
-	try {
-		$query = generateSQLCreate($ed);
-		if( empty($query) ) {
-			throw new UserException('Empty query');
+	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+	if( isPOST('entity') && is_array(POST('entities')) ) {
+		foreach( POST('entities') as $entityName ) {
+			try {
+				$query = generateSQLCreate(new EntityDescriptor($entityName));
+				if( empty($query) ) {
+					throw new UserException('Empty query');
+				}
+				if( $output==OUTPUT_APPLY ) {
+					pdo_query($query, PDOEXEC);
+					reportSuccess('Database contents applied successfully !');
+					
+				} else {
+					echo '<pre>'.$query.'</pre>';
+				}
+			} catch( UserException $e ) {
+				reportError($e);
+			}
 		}
-		if( isPOST('output') && POST('output')==OUTPUT_APPLY ) {
-			pdo_query($query, PDOEXEC);
-			reportSuccess('Database contents applied successfully !');
-			
-		} else {
-			echo '<pre>'.$query.'</pre>';
-		}
-	} catch( UserException $e ) {
-		reportError($e);
 	}
 }
 ?>
 <form method="POST">
 <?php displayReportsHTML(); ?>
 <p>This tool allows you to generate SQL source for MySQL.</p>
+<h6>Entities found</h6>
+<?php 
+$entities = cleanscandir(ENTITY_DESCRIPTOR_CONFIG_PATH);
+foreach( $entities as $entity ) {
+	$pi = pathinfo($filename);
+	if( $pi['extension'] != 'yaml' ) { continue; }
+	echo '
+<label>'.$pi['filename'].'</label><input type="checkbox" name="entities['.$pi['filename'].']"/><br />';
+}
+?>
 <label>Output</label><select name="output">
 	<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
 	<option value="<?php echo OUTPUT_APPLY; ?>">Apply</option>
