@@ -151,6 +151,7 @@ class EntityDescriptor {
 		foreach( $this->fields as $field => $fData ) {
 			try {
 				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
+				if( !isset($this->fields[$field]) || !$this->fields[$field]->writable ) { continue; }
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
 
 			} catch( UserException $e ) {
