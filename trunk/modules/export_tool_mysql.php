@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 if( isPOST('submitGenerateSQL') ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 	if( isPOST('entity') && is_array(POST('entities')) ) {
-		foreach( POST('entities') as $entityName ) {
+		foreach( POST('entities') as $entityName => $on ) {
 			try {
 				$query = generateSQLCreate(new EntityDescriptor($entityName));
 				if( empty($query) ) {
@@ -113,7 +113,7 @@ if( isPOST('submitGenerateSQL') ) {
 <form method="POST">
 <?php displayReportsHTML(); ?>
 <p>This tool allows you to generate SQL source for MySQL.</p>
-<h6>Entities found</h6>
+<h4>Entities found</h4>
 <?php 
 $entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
 foreach( $entities as $filename ) {
