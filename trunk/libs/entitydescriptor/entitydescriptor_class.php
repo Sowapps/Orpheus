@@ -11,15 +11,12 @@ class EntityDescriptor {
 	public function __construct($name) {
 		$this->name		= $name;
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
-// 		text('$descriptorPath: '.$descriptorPath);
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( !$cache->get($descriptor) ) {
 			$conf = YAML::build($descriptorPath, true);
 			if( empty($conf->fields) ) {
 				throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
 			}
-// 			text("\$name : $name ($descriptorPath)");
-// 			text($conf->fields);
 			// Build descriptor
 			//    Parse Config file
 			//      Fields
@@ -47,16 +44,13 @@ class EntityDescriptor {
 					$this->indexes[] = (object) static::parseType($type);
 				}
 			}
-// 			text($this);
 			//    Save cache output
 			$cache->set(get_object_vars($this));
 			return;
 		}
-// 		text($descriptor);
 		$descriptor		= (object) $descriptor;
 		$this->fields	= $descriptor->fields;
 		$this->indexes	= $descriptor->indexes;
-// 		text($this);
 	}
 	
 	public function getName() {

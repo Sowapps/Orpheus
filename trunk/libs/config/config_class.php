@@ -15,25 +15,16 @@ class Config extends ConfigCore {
 		If an identifier, loads a configuration from a .ini file in CONFDIR.
 		Else $source is a full path to the ini configuration file.
 	*/
-	public function load($source) {	
-// 		text("Load source $source");	
+	public function load($source) {
 		// Full path given
 		if( is_readable($source) ) {
 			$confPath = $source;
 			
 		// File in configs folder
 		} else {
-// 			try {
 			$confPath = static::getFilePath($source);
-			if( empty($confPath) ) {
-				return false;
-			}
-// 			} catch( Exception $e ) {
-// 				// File not found
-// 				return array();
-// 			}
+			if( empty($confPath) ) { return false; }
 		}
-// 		text('$confPath: '.$confPath);
 		$parsed = parse_ini_file($confPath, true);
 		$this->add($parsed);
 		return true;
