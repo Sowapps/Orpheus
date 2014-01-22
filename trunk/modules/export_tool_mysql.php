@@ -115,7 +115,7 @@ if( isPOST('submitGenerateSQL') ) {
 <p>This tool allows you to generate SQL source for MySQL.</p>
 <h6>Entities found</h6>
 <?php 
-$entities = cleanscandir(ENTITY_DESCRIPTOR_CONFIG_PATH);
+$entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
 foreach( $entities as $filename ) {
 	$pi = pathinfo($filename);
 	if( $pi['extension'] != 'yaml' ) { continue; }
