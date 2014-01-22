@@ -92,6 +92,7 @@ abstract class ConfigCore {
 		If it is not a minor configuration, that new configuration is added to the main configuration.
 	*/
 	public static function build($source, $minor=false) {
+// 		text("Build source $source");
 		if( !$minor ) {
 			if( !isset(static::$main) ) {
 				static::$main = new static();
