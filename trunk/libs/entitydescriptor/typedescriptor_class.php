@@ -29,21 +29,18 @@ class TypeDescriptor {
 	}
 	
 	public function parseArgs($args) {
-// 		text('Parse Args');
-// 		text($fArgs);
 		return isset($this->argsParser) ? call_user_func($this->argsParser, $args) : new stdClass();
 	}
 	
-	public function validate($args, &$value) {
+	public function validate($args, &$value, $inputData) {
 		if( isset($this->parent) ) {
-			$this->parent->validate($args, $value);
+			$this->parent->validate($args, $value, $inputData);
 		} else
 		if( !isset($this->validator) ) {
 			throw new Exception('noValidator');
 		}
 		if( isset($this->validator) ) {
-			call_user_func_array($this->validator, array($args, &$value));
-// 			text("Called validator, got value: $value");
+			call_user_func_array($this->validator, array($args, &$value, $inputData));
 		}
 	}
 	
@@ -52,7 +49,6 @@ class TypeDescriptor {
 			$this->parent->format($args, $value);
 		}
 		if( isset($this->formatter) ) {
-// 			text("Call formatter with value: $value");
 			call_user_func_array($this->formatter, array($args, &$value));
 		}
 	}
