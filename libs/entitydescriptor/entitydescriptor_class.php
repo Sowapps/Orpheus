@@ -152,6 +152,7 @@ class EntityDescriptor {
 			try {
 				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
 				if( !isset($this->fields[$field]) || !$this->fields[$field]->writable ) { continue; }
+				text('$field : '.$field);
 				if( !isset($uInputData[$field]) ) {
 					$uInputData[$field] = null;
 					if( is_null($ref) ) {
@@ -164,6 +165,7 @@ class EntityDescriptor {
 						}
 					}
 				}
+				text($uInputData[$field]);
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
 
 			} catch( UserException $e ) {
