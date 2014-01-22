@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 '.$columns.'
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
+
 if( isPOST('submitGenerateSQL') ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 	if( isPOST('entity') && is_array(POST('entities')) ) {
@@ -115,7 +116,7 @@ if( isPOST('submitGenerateSQL') ) {
 <h6>Entities found</h6>
 <?php 
 $entities = cleanscandir(ENTITY_DESCRIPTOR_CONFIG_PATH);
-foreach( $entities as $entity ) {
+foreach( $entities as $filename ) {
 	$pi = pathinfo($filename);
 	if( $pi['extension'] != 'yaml' ) { continue; }
 	echo '

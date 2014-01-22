@@ -39,9 +39,7 @@ class FSCache implements Cache {
 	 */
 	public function get(&$cached) {
 		try {
-			if( !is_readable($this->path) ) {
-				return false;
-			}
+			if( !is_readable($this->path) ) { return false; }
 			list($editTime, $data) = explodeList(static::$delim, file_get_contents($this->path), 2);
 			if( isset($this->editTime) && $editTime != $this->editTime ) {
 				return false;
