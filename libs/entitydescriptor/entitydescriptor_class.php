@@ -2,14 +2,16 @@
 
 class EntityDescriptor {
 
+	protected $class;
 	protected $name;
 	protected $fields = array();
 	protected $indexes = array();
 	
 	const DESCRIPTORCLASS='EntityDescriptor';
 	
-	public function __construct($name) {
+	public function __construct($name, $class=null) {
 		$this->name		= $name;
+		$this->class	= $class;
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( !$cache->get($descriptor) ) {
@@ -153,7 +155,12 @@ class EntityDescriptor {
 
 			} catch(UserException $e) {
 				$errCount++;
-				$this->reportException($e);
+				if( isset($this->class) ) {
+					$c = $this->class;
+					$c::reportException($e);
+					return;
+				}
+				throw $e;
 			}
 		}
 		return $uInputData;
