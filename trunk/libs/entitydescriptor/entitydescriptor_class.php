@@ -33,8 +33,8 @@ class EntityDescriptor {
 				);
 				$TYPE					= static::getType($FIELD->type);
 				$FIELD->args			= $TYPE->parseArgs($parse->args);
-				$FIELD->writable		= (!isset($fieldInfos['writable']) || !empty($fieldInfos['writable']) || in_array('readonly', $parse->flags));
-				$FIELD->nullable		= (!isset($fieldInfos['nullable']) || !empty($fieldInfos['nullable']) || in_array('notnull', $parse->flags));
+				$FIELD->writable		= ((!isset($fieldInfos['writable']) || !empty($fieldInfos['writable'])) && !in_array('readonly', $parse->flags));
+				$FIELD->nullable		= ((!isset($fieldInfos['nullable']) || !empty($fieldInfos['nullable'])) && !in_array('notnull', $parse->flags));
 				$this->fields[$field]	= $FIELD;
 			}
 
