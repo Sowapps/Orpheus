@@ -81,7 +81,7 @@ function generateSQLCreate($ed) {
 		return null;
 	}
 	return '
-CREATE TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName()).' IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 '.$columns.'
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
