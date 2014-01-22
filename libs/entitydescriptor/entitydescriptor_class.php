@@ -187,13 +187,22 @@ class EntityDescriptor {
 	}
 
 	public static function parseType($string) {
-		$result = array('type'=>null, 'args'=>array());
-		if( !preg_match('#([^\(]+)(?:\(([^\)]+)\))?(?:\[([^\]]+)\])?#', $string, $matches) ) {
+		$result = array('type'=>null, 'args'=>array(), 'default'=>null, 'flags'=>array());
+		if( !preg_match('#([^\(\[=]+)(?:\(([^\)]*)\))?(?:\[([^\]]*)\])?(?:=([^\[]*))?#', $string, $matches) ) {
 			throw new Exception('failToParseType');
 		}
-		$result['type']		= trim($matches[1]);
-		$result['args']		= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
-		$result['flags']	= !empty($matches[3]) ? preg_split('#\s#', $matches[3], -1, PREG_SPLIT_NO_EMPTY) : array();
+		$result['type']			= trim($matches[1]);
+		$result['args']			= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
+		$result['flags']		= !empty($matches[3]) ? preg_split('#\s#', $matches[3], -1, PREG_SPLIT_NO_EMPTY) : array();
+		if( !empty($matches[4]) ) {
+			$result['default']	= $matches[4];
+			if( $result['default']==='true' ) {
+				$result['default'] = true;
+			} else
+			if( $result['default']==='false' ) {
+				$result['default'] = false;
+			}
+		}
 		return $result;
 	}
 }
