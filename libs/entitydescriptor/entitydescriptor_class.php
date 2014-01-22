@@ -18,7 +18,7 @@ class EntityDescriptor {
 			// Build descriptor
 			//    Parse Config file
 			//      Fields
-			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>array(), 'writable'=>false, 'nullable'=>false));
+			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
 			foreach( $conf->fields as $field => $fieldInfos ) {
 				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 				$fData					= (object) static::parseType($type);
