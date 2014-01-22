@@ -157,6 +157,9 @@ class EntityDescriptor {
 					if( is_null($ref) ) {
 						$uInputData[$field] = $this->fields[$field]->default;
 						if( is_object($uInputData[$field]) ) {
+							text('default value callback');
+							text($uInputData[$field]->type);
+							text((array) $uInputData[$field]->args);
 							$uInputData[$field] = call_user_func_array($uInputData[$field]->type, (array) $uInputData[$field]->args);
 						}
 					}
@@ -214,6 +217,8 @@ class EntityDescriptor {
 			} else
 			if( $result['default'][strlen($result['default'])-1]==')' ) {
 				$result['default'] = static::parseType($result['default']);
+				text('DEFAULT');
+				text($result['default']);
 			}
 		}
 		return $result;
