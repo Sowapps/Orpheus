@@ -66,11 +66,11 @@ function is_ID($Number) {
  * The FR date format is DD/MM/YYYY and time format is HH:MM:SS  
  */
 function is_date($date, $withTime=false, &$time=false, $country='FR') {
-	text('is_date('.$date.', '.b($withTime).', '.$time.', '.$country.')');
+// 	text('is_date('.$date.', '.b($withTime).', '.$time.', '.$country.')');
 	if( $country=='SQL' ) {
-		text('SQL');
+// 		text('SQL');
 		$DateFor = preg_replace("#^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})".($withTime ? "(?: ([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?" : '')."$#", '$3#$2#$1#$4#$5#$6', $date, -1, $count);
-		text($DateFor);
+// 		text($DateFor);
 	} else {
 		$DateFor = preg_replace("#^([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})".($withTime ? "(?: ([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?" : '')."$#", '$1#$2#$3#$4#$5#$6', $date, -1, $count);
 	}

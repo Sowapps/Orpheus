@@ -2,12 +2,12 @@
 
 try {
 	if( isPOST('submitSave') ) {
-		text(DemoEntity::getValidator());
+// 		text(DemoEntity::getValidator());
 		$formData = POST('data');
 		$formData['user_id'] = 5;
 		$formData['user_name'] = 'The avenger';
 		$de = DemoEntity::load(DemoEntity::create($formData));
-		text($de);
+// 		text($de);
 		reportSuccess('successSave', DemoEntity::getDomain());
 	}
 } catch( UserException $e ) {
