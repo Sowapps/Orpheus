@@ -5,8 +5,6 @@ define('OUTPUT_APPLY', 1);
 define('OUTPUT_DISPLAY', 2);
 //define('OUTPUT_SQLDOWNLOAD');
 
-// $ed = new EntityDescriptor('entity_tests');
-
 // MySQL Generator
 function generateSQLCreate($ed) {
 	$columns = '';
@@ -96,7 +94,7 @@ if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities
 	foreach( POST('entities') as $entityName => $on ) {
 // 		text("- $entityName");
 		try {
-			$query = generateSQLCreate(new EntityDescriptor($entityName));
+			$query = generateSQLCreate(EntityDescriptor::load($entityName));
 			if( empty($query) ) {
 				throw new UserException('Empty query');
 			}
