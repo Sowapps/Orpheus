@@ -370,8 +370,8 @@ class TypeBool extends TypeInteger {
 	public function parseArgs($fArgs) {
 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>1);
 	}
-	
-	public function validate($Field, &$value) {
+
+	public function validate($Field, &$value, $inputData) {
 		$value = (int) !empty($value);
 		parent::validate($Field, $value);
 	}
