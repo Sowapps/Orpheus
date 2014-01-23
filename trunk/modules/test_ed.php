@@ -4,7 +4,7 @@ function getEnumValues() {
 	return array('first', 'second', 'third');
 }
 
-$ed = new EntityDescriptor('entity_tests');
+$ed = EntityDescriptor::load('entity_tests');
 
 // Validator
 $values = array(

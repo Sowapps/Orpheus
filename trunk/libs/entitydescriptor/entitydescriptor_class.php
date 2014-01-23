@@ -71,7 +71,8 @@ class EntityDescriptor {
 		$cache->set($descriptor);
 		return $descriptor;
 	}
-	public function __construct($name, $fields, $indexes, $class=null) {
+	
+	protected function __construct($name, $fields, $indexes, $class=null) {
 		$this->name		= $name;
 		$this->class	= $class;
 		$this->fields	= $fields;

@@ -18,7 +18,7 @@ abstract class PermanentEntity extends PermanentObject {
 
 	//! Initializes class - REQUIRED
 	public static function init() {
-		$ed					= new EntityDescriptor(static::$table);
+		$ed					= EntityDescriptor::load(static::$table);
 		static::$fields		= $ed->getFieldsName();
 		static::$validator	= $ed;
 		if( is_null(static::$domain) ) {
