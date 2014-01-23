@@ -1,15 +1,10 @@
 
 # Entity Test Entities descriptor (FAKE)
 
+parent: publications
+
 fields:
-    create_date: datetime=sqlDatetime()
-    create_ip: ip=clientIP()
-    edit_date: datetime[nullable]
-    edit_ip: ip[nullable]
-    name: string(6, 50)
-    user_id: ref
-    user_name: string(6, 50)
-    published: bool=false
-    
+    slug: string(20, 20)
+
 
 indexes: []

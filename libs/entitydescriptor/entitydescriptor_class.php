@@ -8,74 +8,74 @@ class EntityDescriptor {
 	protected $indexes = array();
 	
 	const DESCRIPTORCLASS='EntityDescriptor';
-	
-	public function __construct($name, $class=null) {
-		$this->name		= $name;
-		$this->class	= $class;
+
+	public function load($name, $class=null) {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
-		if( !$cache->get($descriptor) ) {
-			$conf = YAML::build($descriptorPath, true);
-			if( empty($conf->fields) ) {
-				throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
-			}
-			// Build descriptor
-			//    Parse Config file
-			//      Fields
-			$this->fields = array('id'=>(object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false));
-			foreach( $conf->fields as $field => $fieldInfos ) {
-// 				text('$field : '.$field);
-				$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
-				$parse					= static::parseType($type);
-				$Field					= (object) array(
-					'name' => $field,
-					'type' => $parse->type,
-				);
-				$TYPE					= static::getType($Field->type);
-				$Field->args			= $TYPE->parseArgs($parse->args);
-				$Field->default			= $parse->default;
-// 				text($parse->flags);
-				// Type's default
-				$Field->writable		= $TYPE->isWritable();
-				$Field->nullable		= $TYPE->isNullable();
-				// Default if no type's default
-				if( !isset($Field->writable) ) { $Field->writable = true; }
-				if( !isset($Field->nullable) ) { $Field->nullable = false; }
-// 				text(__LINE__.' => '.($Field->writable ? 'WRITABLE' : 'READONLY').' '.($Field->nullable ? 'NULLABLE' : 'NOTNULL'));
-				// Field flags
-				if( !isset($fieldInfos['writable']) ) {
-					$Field->writable = !empty($fieldInfos['writable']);
-				} else if( $Field->writable ) {
-					$Field->writable = !in_array('readonly', $parse->flags); 
-				} else {
-					$Field->writable = in_array('writable', $parse->flags); 
-				}
-// 				text(__LINE__.' => '.($Field->writable ? 'WRITABLE' : 'READONLY').' '.($Field->nullable ? 'NULLABLE' : 'NOTNULL'));
-				if( !isset($fieldInfos['nullable']) ) {
-					$Field->nullable = !empty($fieldInfos['nullable']);
-				} else if( $Field->nullable ) {
-					$Field->nullable = !in_array('notnull', $parse->flags); 
-				} else {
-					$Field->nullable = in_array('nullable', $parse->flags); 
-				}
-// 				text(__LINE__.' => '.($Field->writable ? 'WRITABLE' : 'READONLY').' '.($Field->nullable ? 'NULLABLE' : 'NOTNULL'));
-				$this->fields[$field]	= $Field;
-			}
-
-			//      Indexes
-			$this->indexes = array();
-			if( !empty($conf->indexes) ) {
-				foreach( $conf->indexes as $index ) {
-					$this->indexes[] = static::parseType($type);
-				}
-			}
-			//    Save cache output
-			$cache->set(get_object_vars($this));
-			return;
+		if( $cache->get($descriptor) ) {
+			return $descriptor;
 		}
-		$descriptor		= (object) $descriptor;
-		$this->fields	= $descriptor->fields;
-		$this->indexes	= $descriptor->indexes;
+		$conf = YAML::build($descriptorPath, true);
+		if( empty($conf->fields) ) {
+			throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
+		}
+		// Build descriptor
+		//    Parse Config file
+		//      Fields
+		$parent = isset($conf->parent) ? static::load($conf->parent) : null;
+		$fields = isset($parent) ? $parent->getFields() : array();
+		$fields['id'] = (object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
+		foreach( $conf->fields as $field => $fieldInfos ) {
+			$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
+			$parse					= static::parseType($type);
+			$Field					= (object) array(
+				'name' => $field,
+				'type' => $parse->type,
+			);
+			$TYPE					= static::getType($Field->type);
+			$Field->args			= $TYPE->parseArgs($parse->args);
+			$Field->default			= $parse->default;
+			// Type's default
+			$Field->writable		= $TYPE->isWritable();
+			$Field->nullable		= $TYPE->isNullable();
+			// Default if no type's default
+			if( !isset($Field->writable) ) { $Field->writable = true; }
+			if( !isset($Field->nullable) ) { $Field->nullable = false; }
+			// Field flags
+			if( !isset($fieldInfos['writable']) ) {
+				$Field->writable = !empty($fieldInfos['writable']);
+			} else if( $Field->writable ) {
+				$Field->writable = !in_array('readonly', $parse->flags); 
+			} else {
+				$Field->writable = in_array('writable', $parse->flags); 
+			}
+			if( !isset($fieldInfos['nullable']) ) {
+				$Field->nullable = !empty($fieldInfos['nullable']);
+			} else if( $Field->nullable ) {
+				$Field->nullable = !in_array('notnull', $parse->flags); 
+			} else {
+				$Field->nullable = in_array('nullable', $parse->flags); 
+			}
+			$fields[$field]	= $Field;
+		}
+
+		//      Indexes
+		$indexes = array();
+		if( !empty($conf->indexes) ) {
+			foreach( $conf->indexes as $index ) {
+				$indexes[] = static::parseType($type);
+			}
+		}
+		//    Save cache output
+		$descriptor = new EntityDescriptor($name, $fields, $indexes, $class);
+		$cache->set($descriptor);
+		return $descriptor;
+	}
+	public function __construct($name, $fields, $indexes, $class=null) {
+		$this->name		= $name;
+		$this->class	= $class;
+		$this->fields	= $fields;
+		$this->indexes	= $indexes;
 	}
 	
 	public function getName() {
