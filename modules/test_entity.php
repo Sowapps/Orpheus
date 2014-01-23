@@ -28,6 +28,7 @@ displayReportsHTML();
 ?>
 <form method="POST">
 
+<label>Slug</label><input type="text" name="data[slug]" /><br />
 <label>Name</label><input type="text" name="data[name]" /><br />
 <label>Published</label><input type="checkbox" name="data[published]" /><br />
 
