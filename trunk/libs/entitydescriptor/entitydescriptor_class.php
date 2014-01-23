@@ -236,8 +236,8 @@ class EntityDescriptor {
 			} else
 			if( $result['default'][strlen($result['default'])-1]==')' ) {
 				$result['default'] = static::parseType($result['default']);
-				text('DEFAULT');
-				text($result['default']);
+// 				text('DEFAULT');
+// 				text($result['default']);
 			}
 		}
 		return (object) $result;
