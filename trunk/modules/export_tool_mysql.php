@@ -14,8 +14,8 @@ function generateSQLCreate($ed) {
 	foreach( $ed->getFields() as $fName => $field ) {
 		$TYPE = EntityDescriptor::getType($field->type);
 		$cType = '';
-		if( $TYPE->knowType('string') ) {
-			$max = $TYPE->knowType('password') ? 128 : $field->args->max;
+		if( $TYPE instanceof TypeString ) {
+			$max = $TYPE instanceof TypePassword ? 128 : $field->args->max;
 			if( $max < 256 ) {
 				$cType = "VARCHAR({$field->args->max})";
 			} else
@@ -28,7 +28,7 @@ function generateSQLCreate($ed) {
 				$cType = "LONGTEXT";
 			}
 		} else
-		if( $TYPE->knowType('number') ) {
+		if( $TYPE instanceof TypeNumber ) {
 			if( !isset($field->args->max) ) {
 				text('Issue with '.$fName);
 				text($field->args);
@@ -64,10 +64,10 @@ function generateSQLCreate($ed) {
 				$cType .= "({$dc}, {$field->args->decimals})";
 			}
 		} else
-		if( $TYPE->knowType('date') ) {
+		if( $TYPE instanceof TypeDate ) {
 			$cType = 'DATE';
 		} else
-		if( $TYPE->knowType('datetime') ) {
+		if( $TYPE instanceof TypeDatetime ) {
 			$cType = 'DATETIME';
 		} else {
 			throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
