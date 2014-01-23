@@ -3,7 +3,10 @@
 try {
 	if( isPOST('submitSave') ) {
 		text(DemoEntity::getValidator());
-		$de = DemoEntity::load(DemoEntity::create(POST('data')));
+		$formData = POST('data');
+		$formData['user_id'] = 5;
+		$formData['user_name'] = 'The avenger';
+		$de = DemoEntity::load(DemoEntity::create($formData));
 		text($de);
 		reportSuccess('successSave', DemoEntity::getDomain());
 	}
