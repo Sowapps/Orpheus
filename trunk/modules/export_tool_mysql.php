@@ -121,7 +121,7 @@ foreach( $entities as $filename ) {
 	$pi = pathinfo($filename);
 	if( $pi['extension'] != 'yaml' ) { continue; }
 	echo '
-<label>'.$pi['filename'].'</label><input type="checkbox" name="entities['.$pi['filename'].']" '.(POST('entities/'.$pi['filename']) ? ' checked' : '').'/><br />';
+<label>'.$pi['filename'].'</label><input type="checkbox" name="entities['.$pi['filename'].']" '.(isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/><br />';
 }
 ?>
 <label>Output</label><select name="output">
