@@ -370,6 +370,11 @@ class TypeBool extends TypeInteger {
 	public function parseArgs($fArgs) {
 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>1);
 	}
+	
+	public function validate($Field, &$value) {
+		$value = (int) !empty($value);
+		parent::validate($Field, $value);
+	}
 }
 EntityDescriptor::registerType(new TypeBool());
 
@@ -431,6 +436,7 @@ class TypeEmail extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		if( !is_email($value) ) {
 			throw new FE('notEmail');
 		}
@@ -446,6 +452,7 @@ class TypePassword extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		if( empty($inputData[$Field->name.'_conf']) || $value!=$inputData[$Field->name.'_conf'] ) {
 			throw new FE('invalidConfirmation');
 		}
@@ -465,6 +472,7 @@ class TypePhone extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		// FR Only for now
 		if( !is_phone_number($value) ) {
 			throw new FE('notPhoneNumber');
@@ -486,6 +494,7 @@ class TypeURL extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		if( !is_url($value) ) {
 			throw new FE('notURL');
 		}
@@ -505,6 +514,7 @@ class TypeIP extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		if( !is_ip($value) ) {
 			throw new FE('notIPAddress');
 		}	
@@ -524,6 +534,7 @@ class TypeEnum extends TypeString {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		parent::validate($Field, $value, $inputData);
 		if( !in_array($value, call_user_func($Field->args->source)) ) {
 			throw new FE('notEnumValue');
 		}
