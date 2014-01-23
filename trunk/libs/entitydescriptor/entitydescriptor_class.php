@@ -373,7 +373,7 @@ class TypeBool extends TypeInteger {
 
 	public function validate($Field, &$value, $inputData) {
 		$value = (int) !empty($value);
-		parent::validate($Field, $value);
+		parent::validate($Field, $value, $inputData);
 	}
 }
 EntityDescriptor::registerType(new TypeBool());
