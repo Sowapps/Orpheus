@@ -124,6 +124,12 @@ class EntityDescriptor {
 		}
 		
 		if( is_null($value) ) {
+			if( isset($Field->default) ) {
+				$value = $Field->default;
+				if( is_object($value) ) {
+					$value = call_user_func_array($value->type, (array) $value->args);
+				}
+			} else
 			if( !$Field->nullable ) {
 				throw new InvalidFieldException('requiredField', $field, $value);
 			}
@@ -153,20 +159,9 @@ class EntityDescriptor {
 			try {
 				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
 				if( !isset($this->fields[$field]) || !$this->fields[$field]->writable ) { continue; }
-// 				text('$field : '.$field);
 				if( !isset($uInputData[$field]) ) {
 					$uInputData[$field] = null;
-					if( is_null($ref) ) {
-						$uInputData[$field] = $this->fields[$field]->default;
-						if( is_object($uInputData[$field]) ) {
-// 							text('default value callback');
-// 							text($uInputData[$field]->type);
-// 							text((array) $uInputData[$field]->args);
-							$uInputData[$field] = call_user_func_array($uInputData[$field]->type, (array) $uInputData[$field]->args);
-						}
-					}
 				}
-// 				text($uInputData[$field]);
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
 
 			} catch( UserException $e ) {
