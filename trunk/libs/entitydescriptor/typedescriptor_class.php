@@ -37,7 +37,7 @@ abstract class TypeDescriptor {
 // 		return isset($this->argsParser) ? call_user_func($this->argsParser, $args) : new stdClass();
 // 	}
 	
-	public function validate($FIELD, &$value, $inputData) {
+	public function validate($Field, &$value, $inputData) {
 // 		if( isset($this->parent) ) {
 // 			$this->parent->validate($args, $value, $inputData);
 // 		} else
