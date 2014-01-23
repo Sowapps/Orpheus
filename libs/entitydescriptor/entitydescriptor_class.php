@@ -9,7 +9,7 @@ class EntityDescriptor {
 	
 	const DESCRIPTORCLASS='EntityDescriptor';
 
-	public function load($name, $class=null) {
+	public static function load($name, $class=null) {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( $cache->get($descriptor) ) {
