@@ -19,6 +19,7 @@ fields:
     an_ip: ip()
     a_ref: ref()
     an_enum: enum(getEnumValues)
+    
 #    name:
 #        type: string(6,50)
 #        validator: is_name
