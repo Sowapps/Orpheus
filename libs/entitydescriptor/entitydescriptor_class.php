@@ -295,7 +295,7 @@ class TypeString extends TypeDescriptor {
 		return $args;
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		$len = strlen($value);
 		if( $len < $Field->args->min ) {
 			throw new FE('belowMinLength');
@@ -310,7 +310,7 @@ EntityDescriptor::registerType(new TypeString());
 class TypeDate extends TypeDescriptor {
 	protected $name = 'date';
 	
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		// FR Only for now
 		if( !is_date($value, false, $time) && !is_date($value, false, $time, 'SQL') ) {
 			throw new FE('notDate');
@@ -328,7 +328,7 @@ EntityDescriptor::registerType(new TypeDate());
 class TypeDatetime extends TypeDescriptor {
 	protected $name = 'datetime';
 	
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		// FR Only for now
 		if( !is_date($value, true, $time) && !is_date($value, true, $time, 'SQL') ) {
 			throw new FE('notDatetime');
@@ -430,7 +430,7 @@ class TypeEmail extends TypeString {
 		return (object) array('min'=>5, 'max'=>100);
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		if( !is_email($value) ) {
 			throw new FE('notEmail');
 		}
@@ -445,7 +445,7 @@ class TypePassword extends TypeString {
 		return (object) array('min'=>5, 'max'=>128);
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		if( empty($inputData[$Field->name.'_conf']) || $value!=$inputData[$Field->name.'_conf'] ) {
 			throw new FE('invalidConfirmation');
 		}
@@ -464,7 +464,7 @@ class TypePhone extends TypeString {
 		return (object) array('min'=>10, 'max'=>20);
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		// FR Only for now
 		if( !is_phone_number($value) ) {
 			throw new FE('notPhoneNumber');
@@ -485,7 +485,7 @@ class TypeURL extends TypeString {
 		return (object) array('min'=>10, 'max'=>200);
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		if( !is_url($value) ) {
 			throw new FE('notURL');
 		}
@@ -504,7 +504,7 @@ class TypeIP extends TypeString {
 		return $args;
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		if( !is_ip($value) ) {
 			throw new FE('notIPAddress');
 		}	
@@ -523,7 +523,7 @@ class TypeEnum extends TypeString {
 		return $args;
 	}
 
-	public function validate($Field, &$value) {
+	public function validate($Field, &$value, $inputData) {
 		if( !in_array($value, call_user_func($Field->args->source)) ) {
 			throw new FE('notEnumValue');
 		}
