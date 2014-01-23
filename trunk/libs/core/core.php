@@ -1104,6 +1104,14 @@ function sqlDatetime($time=TIME) {
 	return strftime('%Y-%m-%d %H:%M:%S', $time);
 }
 
+//! Gets the client public IP
+/*!
+ * \return The ip of the client
+*/
+function clientIP() {
+	return $_SERVER['REMOTE_ADDR'];
+}
+
 //! Generates a new password
 /*!
  * \param $length Thelength of the generated password.
