@@ -85,9 +85,15 @@ function mysqlColumnDefinition($field) {
 		(!empty($field->autoIncrement) ? ' AUTO_INCREMENT' : '').(!empty($field->primaryKey) ? ' PRIMARY KEY' : '');
 }
 
-function mysqlTableMatch($ed) {
+function mysqlIndexDefinition($index) {
+	return (!empty($index->name) ? SQLAdapter::doEscapeIdentifier($index->name) : '').' '.
+		$field->type.' ('.implode(', ', $index->fields).')';
+}
+
+function mysqlEntityMatch($ed) {
 	$query = '';
 	if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
+		// Fields
 		$fields = $ed->getFields();
 		$alter = '';
 		foreach( $columns as $cc ) {
@@ -112,6 +118,43 @@ function mysqlTableMatch($ed) {
 		}
 		if( empty($alter) ) {
 			return null;
+		}
+		// Indexes
+		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
+			$indexes = $ed->getIndexes();
+			$cIndexes = array();
+			foreach( $rawIndexes as $ci ) {
+				$ci = (object) $ci;
+				if( $ci->Key_name=='PRIMARY' ) { continue; }
+				if( !isset($cIndexes[$ci->Key_name]) ) {
+					$type		= 'INDEX';
+					if( !$ci->Non_unique ) {
+						$type	= 'UNIQUE';
+					} else
+					if( !$ci->Index_type=='FULLTEXT' ) {
+						$type	= 'FULLTEXT';
+					}
+					$cIndexes[$ci->Key_name] = (object) array('name'=>$ci->Key_name, 'type'=>$type, 'fields'=>array());
+				}
+				$cIndexes[$ci->Key_name]->fields[] = $ci->Column_name;
+			}
+			foreach($cIndexes as $ci) {
+				$found = 0;
+				foreach( $indexes as $ii => $i ) {
+					if( $i->type==$ci->type && $i->fields==$ci->fields ) {
+						unset($indexes[$ii]);
+						$found = 1;
+						break;
+					}
+				}
+				if( !$found ) {
+					// Remove index
+					$alter .= (!empty($alter) ? ", \n" : '')."\t DROP INDEX ".SQLAdapter::doEscapeIdentifier($ci['name']);
+				}
+			}
+			foreach( $indexes as $i ) {
+				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD INDEX ".mysqlIndexDefinition($f);
+			}
 		}
 		return 'ALTER TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName())."\n".$alter.';';
 	} else {
@@ -146,7 +189,7 @@ if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities
 // 		text("- $entityName");
 		try {
 // 			$query = mysqlCreate(EntityDescriptor::load($entityName));
-			$query = mysqlTableMatch(EntityDescriptor::load($entityName));
+			$query = mysqlEntityMatch(EntityDescriptor::load($entityName));
 			if( empty($query) ) {
 				throw new UserException('No changes');
 // 				throw new UserException('Empty query');
