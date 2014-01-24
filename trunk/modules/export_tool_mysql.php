@@ -87,7 +87,7 @@ function mysqlColumnDefinition($field) {
 
 function mysqlTableMatch($ed) {
 	$query = '';
-	if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOEXEC|PDOERROR_MINOR) ) {
+	if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
 		$fields = $ed->getFields();
 		$alter = '';
 		foreach( $columns as $cc ) {
