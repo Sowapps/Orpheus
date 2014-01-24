@@ -70,7 +70,7 @@ function mysqlColumnInfosFromField($field) {
 	}
 	//, 'primaryKey'=>false, 'autoIncrement'=>false
 	$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>!!$field->nullable);
-	$r['autoIncrement'] = $r['primary_key'] = ($field->name=='id');
+	$r['autoIncrement'] = $r['primaryKey'] = ($field->name=='id');
 	//, 'key'=>'', 'extra'=>''
 // 	if( $field->name=='id' ) {
 // 		$r['primary_key'] = $r['autoIncrement'] = true;
@@ -101,9 +101,9 @@ function mysqlTableMatch($ed) {
 				// Current definition is different from former
 				if( $f!=$cf ) {
 					text('Different columns');
-					text($f);
-					text($cf);
-					text(array_diff_assoc($f, $cf));
+// 					text($f);
+// 					text($cf);
+// 					text(array_diff_assoc($f, $cf));
 					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']).' '.mysqlColumnDefinition($f);
 				}
 			} else {
