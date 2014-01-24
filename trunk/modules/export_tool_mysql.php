@@ -117,6 +117,7 @@ function mysqlEntityMatch($ed) {
 		foreach( $fields as $f ) {
 			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition(mysqlColumnInfosFromField($f));
 		}
+		unset($fields, $f, $cc, $cf, $columns);
 		// Indexes
 		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
 			$indexes = $ed->getIndexes();
@@ -151,7 +152,7 @@ function mysqlEntityMatch($ed) {
 				}
 			}
 			foreach( $indexes as $i ) {
-				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD INDEX ".mysqlIndexDefinition($f);
+				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD INDEX ".mysqlIndexDefinition($i);
 			}
 		}
 		if( empty($alter) ) {
