@@ -100,10 +100,6 @@ function mysqlTableMatch($ed) {
 				unset($fields[$cf['name']]);
 				// Current definition is different from former
 				if( $f!=$cf ) {
-// 					text('Different columns');
-// 					text($f);
-// 					text($cf);
-// 					text(array_diff_assoc($f, $cf));
 					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']).' '.mysqlColumnDefinition($f);
 				}
 			} else {

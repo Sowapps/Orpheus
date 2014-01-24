@@ -4,8 +4,7 @@
 parent: publications
 
 fields:
-    slug: string(4, 30)
-    email: email
+    slug: string(4, 20)
 
 
 indexes: []
