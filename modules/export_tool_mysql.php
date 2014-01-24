@@ -103,6 +103,7 @@ function mysqlTableMatch($ed) {
 					text('Different columns');
 					text($f);
 					text($cf);
+					text(array_diff_assoc($f, $cf));
 					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']).' '.mysqlColumnDefinition($f);
 				}
 			} else {
