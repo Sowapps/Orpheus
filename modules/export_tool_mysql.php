@@ -112,7 +112,7 @@ function mysqlTableMatch($ed) {
 			}
 		}
 		foreach( $fields as $f ) {
-			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition($f);
+			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition(mysqlColumnInfosFromField($f));
 		}
 		if( empty($alter) ) {
 			return null;
