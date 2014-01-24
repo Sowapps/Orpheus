@@ -6,4 +6,5 @@ parent: publications
 fields:
     slug: string(4, 20)
 
+
 indexes: []
