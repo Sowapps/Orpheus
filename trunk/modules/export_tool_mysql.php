@@ -86,7 +86,6 @@ function mysqlColumnDefinition($field) {
 }
 
 function mysqlIndexDefinition($index) {
-	text($index);
 	return $index->type.(!empty($index->name) ? ' '.SQLAdapter::doEscapeIdentifier($index->name) : '').' (`'.implode('`, `', $index->fields).'`)';
 }
 
@@ -120,8 +119,6 @@ function mysqlEntityMatch($ed) {
 		// Indexes
 		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
 			$indexes = $ed->getIndexes();
-// 			text('$indexes');
-// 			text($indexes);
 			$cIndexes = array();
 			foreach( $rawIndexes as $ci ) {
 				$ci = (object) $ci;
@@ -140,7 +137,11 @@ function mysqlEntityMatch($ed) {
 			}
 			foreach($cIndexes as $ci) {
 				$found = 0;
+				text('$ci');
+				text($ci);
 				foreach( $indexes as $ii => $i ) {
+					text('$i');
+					text($i);
 					if( $i->type==$ci->type && $i->fields==$ci->fields ) {
 						unset($indexes[$ii]);
 						$found = 1;
