@@ -128,7 +128,7 @@ function mysqlEntityMatch($ed) {
 					if( !$ci->Non_unique ) {
 						$type	= 'UNIQUE';
 					} else
-					if( !$ci->Index_type=='FULLTEXT' ) {
+					if( $ci->Index_type=='FULLTEXT' ) {
 						$type	= 'FULLTEXT';
 					}
 					$cIndexes[$ci->Key_name] = (object) array('name'=>$ci->Key_name, 'type'=>$type, 'fields'=>array());
@@ -137,11 +137,11 @@ function mysqlEntityMatch($ed) {
 			}
 			foreach($cIndexes as $ci) {
 				$found = 0;
-				text('$ci');
-				text($ci);
+// 				text('$ci');
+// 				text($ci);
 				foreach( $indexes as $ii => $i ) {
-					text('$i');
-					text($i);
+// 					text('$i');
+// 					text($i);
 					if( $i->type==$ci->type && $i->fields==$ci->fields ) {
 						unset($indexes[$ii]);
 						$found = 1;
