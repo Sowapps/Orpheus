@@ -121,8 +121,8 @@ function mysqlEntityMatch($ed) {
 		// Indexes
 		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
 			$indexes = $ed->getIndexes();
-			text('$indexes');
-			text($indexes);
+// 			text('$indexes');
+// 			text($indexes);
 			$cIndexes = array();
 			foreach( $rawIndexes as $ci ) {
 				$ci = (object) $ci;

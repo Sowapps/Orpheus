@@ -62,10 +62,10 @@ class EntityDescriptor {
 		//      Indexes
 		$indexes = array();
 		if( !empty($conf->indexes) ) {
-			text($conf->indexes);
+// 			text($conf->indexes);
 			foreach( $conf->indexes as $index ) {
-				$iType		= static::parseType($type);
-				text($iType);
+				$iType		= static::parseType($index);
+// 				text($iType);
 				$indexes[]	= (object) array('name'=>$iType->default, 'type'=>strtoupper($iType->type), 'fields'=>$iType->args);
 			}
 		}
@@ -80,6 +80,8 @@ class EntityDescriptor {
 		$this->class	= $class;
 		$this->fields	= $fields;
 		$this->indexes	= $indexes;
+		text('__construct');
+		text($this->indexes);
 	}
 	
 	public function getName() {
