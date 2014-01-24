@@ -79,9 +79,10 @@ function mysqlColumnInfosFromField($field) {
 }
 
 function mysqlColumnDefinition($field) {
+	$field = (object) $field;
 	return SQLAdapter::doEscapeIdentifier($field->name).' '.$field->type.
 		($field->nullable ? ' NULL' : ' NOT NULL').
-		(!empty($r->autoIncrement) ? ' AUTO_INCREMENT' : '').(!empty($r->primaryKey) ? ' PRIMARY KEY' : '');
+		(!empty($field->autoIncrement) ? ' AUTO_INCREMENT' : '').(!empty($field->primaryKey) ? ' PRIMARY KEY' : '');
 }
 
 function mysqlTableMatch($ed) {
