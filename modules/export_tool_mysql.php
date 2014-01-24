@@ -87,8 +87,7 @@ function mysqlColumnDefinition($field) {
 
 function mysqlIndexDefinition($index) {
 	text($index);
-	return (!empty($index->name) ? SQLAdapter::doEscapeIdentifier($index->name) : '').' '.
-		$index->type.' ('.implode(', ', $index->fields).')';
+	return $index->type.(!empty($index->name) ? ' '.SQLAdapter::doEscapeIdentifier($index->name) : '').' (`'.implode('`, `', $index->fields).'`)';
 }
 
 function mysqlEntityMatch($ed) {
@@ -154,7 +153,7 @@ function mysqlEntityMatch($ed) {
 				}
 			}
 			foreach( $indexes as $i ) {
-				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD INDEX ".mysqlIndexDefinition($i);
+				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD ".mysqlIndexDefinition($i);
 			}
 		}
 		if( empty($alter) ) {
@@ -183,20 +182,13 @@ CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 ) ENGINE=MYISAM CHARACTER SET utf8;';
 }
 
-// text(isPOST('submitGenerateSQL'));
-// text(isPOST('entities'));
-// text(isPOST('entities') && is_array(POST('entities')));
 if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities')) ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
-// 	text($output);
 	foreach( POST('entities') as $entityName => $on ) {
-// 		text("- $entityName");
 		try {
-// 			$query = mysqlCreate(EntityDescriptor::load($entityName));
 			$query = mysqlEntityMatch(EntityDescriptor::load($entityName));
 			if( empty($query) ) {
 				throw new UserException('No changes');
-// 				throw new UserException('Empty query');
 			}
 			if( $output==OUTPUT_APPLY ) {
 				pdo_query($query, PDOEXEC);
