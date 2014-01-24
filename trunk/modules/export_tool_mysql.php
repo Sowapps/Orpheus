@@ -110,6 +110,10 @@ function mysqlTableMatch($ed) {
 		foreach( $fields as $f ) {
 			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition($f);
 		}
+		if( empty($alter) ) {
+			return null;
+		}
+		return "ALTER TABLE tbl_name\n".$alter;
 	} else {
 		return mysqlCreate($ed);
 	}
@@ -144,7 +148,8 @@ if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities
 // 			$query = mysqlCreate(EntityDescriptor::load($entityName));
 			$query = mysqlTableMatch(EntityDescriptor::load($entityName));
 			if( empty($query) ) {
-				throw new UserException('Empty query');
+				throw new UserException('No changes');
+// 				throw new UserException('Empty query');
 			}
 			if( $output==OUTPUT_APPLY ) {
 				pdo_query($query, PDOEXEC);
