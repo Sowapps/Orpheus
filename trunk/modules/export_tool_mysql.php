@@ -70,7 +70,7 @@ function mysqlColumnInfosFromField($field) {
 	}
 	//, 'primaryKey'=>false, 'autoIncrement'=>false
 	$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>$field->nullable);
-	$r['primary_key'] = $r['autoIncrement'] = ($field->name=='id');
+	$r['autoIncrement'] = $r['primary_key'] = ($field->name=='id');
 	//, 'key'=>'', 'extra'=>''
 // 	if( $field->name=='id' ) {
 // 		$r['primary_key'] = $r['autoIncrement'] = true;
