@@ -117,6 +117,7 @@ function mysqlTableMatch($ed) {
 
 function mysqlCreate($ed) {
 	$columns = '';
+	text($ed);
 	foreach( $ed->getFields() as $field ) {
 		text($field);
 		$columns .= (!empty($columns) ? ", \n" : '')."\t".mysqlColumnDefinition(mysqlColumnInfosFromField($field));
