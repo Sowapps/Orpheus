@@ -6,74 +6,118 @@ define('OUTPUT_DISPLAY', 2);
 //define('OUTPUT_SQLDOWNLOAD');
 
 // MySQL Generator
-function generateSQLCreate($ed) {
-	$columns = '';
-	$i = 0;
-	foreach( $ed->getFields() as $fName => $field ) {
-		$TYPE = EntityDescriptor::getType($field->type);
-		$cType = '';
-		if( $TYPE instanceof TypeString ) {
-			$max = $TYPE instanceof TypePassword ? 128 : $field->args->max;
-			if( $max < 256 ) {
-				$cType = "VARCHAR({$field->args->max})";
-			} else
-			if( $max < 65536 ) {
-				$cType = "TEXT";
-			} else
-			if( $max < 16777216 ) {
-				$cType = "MEDIUMTEXT";
-			} else {
-				$cType = "LONGTEXT";
-			}
+function mysqlColumnInfosFromField($field) {
+	$TYPE = EntityDescriptor::getType($field->type);
+	$cType = '';
+	if( $TYPE instanceof TypeString ) {
+		$max = $TYPE instanceof TypePassword ? 128 : $field->args->max;
+		if( $max < 256 ) {
+			$cType = "VARCHAR({$field->args->max})";
 		} else
-		if( $TYPE instanceof TypeNumber ) {
-			if( !isset($field->args->max) ) {
-				text('Issue with '.$fName);
-				text($field->args);
-			}
-			$dc = strlen((int) $field->args->max);
-			if( !$field->args->decimals ) {
-				$max		= (int) $field->args->max;
-				$unsigned	= $field->args->min >= 0 ? 1 : 0;
-				$f			= 1+1*$unsigned;
-				if( $max < 128*$f ) {
-					$cType	= "TINYINT";
-				} else
-				if( $max < 32768*$f ) {
-					$cType	= "SMALLINT";
-				} else
-				if( $max < 8388608*$f ) {
-					$cType	= "MEDIUMINT";
-				} else
-				if( $max < 2147483648*$f ) {
-					$cType	= "INT";
-				} else {
-					$cType	= "BIGINT";
-				}
-				$cType .= '('.strlen($max).')';
-				
-			} else {
-				$dc += $field->args->decimals;
-				if( $dc+$field->args->decimals < 7 ) {// Approx accurate to 7 decimals
-					$cType = "FLOAT({$dc}, {$field->args->decimals})";
-				} else {// Approx accurate to 15 decimals
-					$cType = "DOUBLE";
-				}
-				$cType .= "({$dc}, {$field->args->decimals})";
-			}
+		if( $max < 65536 ) {
+			$cType = "TEXT";
 		} else
-		if( $TYPE instanceof TypeDate ) {
-			$cType = 'DATE';
-		} else
-		if( $TYPE instanceof TypeDatetime ) {
-			$cType = 'DATETIME';
+		if( $max < 16777216 ) {
+			$cType = "MEDIUMTEXT";
 		} else {
-			throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
-			return null;
+			$cType = "LONGTEXT";
 		}
-// 		text($fName.' => '.($field->nullable ? ' NULLABLE' : ' NOTNULL'));
-		$columns .= ($i ? ", \n" : '')."\t".SQLAdapter::doEscapeIdentifier($fName).' '.$cType.($field->nullable ? ' NULL' : ' NOT NULL').($fName=='id' ? ' AUTO_INCREMENT PRIMARY KEY' : '');
-		$i++;
+	} else
+	if( $TYPE instanceof TypeNumber ) {
+		if( !isset($field->args->max) ) {
+			text('Issue with '.$fName);
+			text($field->args);
+		}
+		$dc = strlen((int) $field->args->max);
+		if( !$field->args->decimals ) {
+			$max		= (int) $field->args->max;
+			$unsigned	= $field->args->min >= 0 ? 1 : 0;
+			$f			= 1+1*$unsigned;
+			if( $max < 128*$f ) {
+				$cType	= "TINYINT";
+			} else
+			if( $max < 32768*$f ) {
+				$cType	= "SMALLINT";
+			} else
+			if( $max < 8388608*$f ) {
+				$cType	= "MEDIUMINT";
+			} else
+			if( $max < 2147483648*$f ) {
+				$cType	= "INT";
+			} else {
+				$cType	= "BIGINT";
+			}
+			$cType .= '('.strlen($max).')';
+			
+		} else {
+			$dc += $field->args->decimals;
+			if( $dc+$field->args->decimals < 7 ) {// Approx accurate to 7 decimals
+				$cType = "FLOAT({$dc}, {$field->args->decimals})";
+			} else {// Approx accurate to 15 decimals
+				$cType = "DOUBLE";
+			}
+			$cType .= "({$dc}, {$field->args->decimals})";
+		}
+	} else
+	if( $TYPE instanceof TypeDate ) {
+		$cType = 'DATE';
+	} else
+	if( $TYPE instanceof TypeDatetime ) {
+		$cType = 'DATETIME';
+	} else {
+		throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
+// 		return null;
+	}
+	//, 'primaryKey'=>false, 'autoIncrement'=>false
+	$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>$field->nullable);
+	$r['primary_key'] = $r['autoIncrement'] = ($field->name=='id');
+	//, 'key'=>'', 'extra'=>''
+// 	if( $field->name=='id' ) {
+// 		$r['primary_key'] = $r['autoIncrement'] = true;
+// 	}
+	return $r;
+}
+
+function mysqlColumnDefinition($field) {
+	return SQLAdapter::doEscapeIdentifier($field->name).' '.$field->type.
+		($field->nullable ? ' NULL' : ' NOT NULL').
+		(!empty($r->autoIncrement) ? ' AUTO_INCREMENT' : '').(!empty($r->primaryKey) ? ' PRIMARY KEY' : '');
+}
+
+function mysqlTableMatch($ed) {
+	$query = '';
+	if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOEXEC|PDOERROR_MINOR) ) {
+		$fields = $ed->getFields();
+		$alter = '';
+		foreach( $columns as $cc ) {
+			$cc = (object) $cc;
+			$cf = array(
+				'name'=>$cc->Field, 'type'=>strtoupper($cc->Type), 'nullable'=>$cc->Null=='YES',
+				'primaryKey'=>$cc->Key=='PRI', 'autoIncrement'=>strpos($cc->Extra, 'auto_increment')!==false);
+			if( isset($fields[$cf['name']]) ) {
+				$f = mysqlColumnInfosFromField($fields[$cf['name']]);
+				unset($fields[$cf['name']]);
+				// Current definition is different from former
+				if( $f!=$cf ) {
+					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN {$cf['name']} ".mysqlColumnDefinition($f);
+				}
+			} else {
+				// Remove column
+				$alter .= (!empty($alter) ? ", \n" : '')."\t DROP COLUMN ".$cf['name'];
+			}
+		}
+		foreach( $fields as $f ) {
+			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition($f);
+		}
+	} else {
+		return mysqlCreate($ed);
+	}
+}
+
+function mysqlCreate($ed) {
+	$columns = '';
+	foreach( $ed->getFields() as $field ) {
+		$columns .= (!empty($columns) ? ", \n" : '')."\t".mysqlColumnDefinition(mysqlColumnInfosFromField($field));
 	}
 	if( empty($columns) ) {
 		throw new UserException('No columns');
@@ -94,7 +138,8 @@ if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities
 	foreach( POST('entities') as $entityName => $on ) {
 // 		text("- $entityName");
 		try {
-			$query = generateSQLCreate(EntityDescriptor::load($entityName));
+// 			$query = mysqlCreate(EntityDescriptor::load($entityName));
+			$query = mysqlTableMatch(EntityDescriptor::load($entityName));
 			if( empty($query) ) {
 				throw new UserException('Empty query');
 			}

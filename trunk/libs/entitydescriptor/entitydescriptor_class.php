@@ -415,8 +415,10 @@ class TypeDouble extends TypeNumber {
 EntityDescriptor::registerType(new TypeDouble());
 
 class TypeRef extends TypeInteger {
-	protected $name = 'ref';
-	protected $nullable = true;
+	protected $name		= 'ref';
+	protected $nullable	= false;
+	// MySQL needs more logic to select a null field with an index
+	// Prefer to set default to 0 instead of using nullable
 
 	public function parseArgs($fArgs) {
 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
@@ -425,7 +427,7 @@ class TypeRef extends TypeInteger {
 EntityDescriptor::registerType(new TypeRef());
 
 class TypeEmail extends TypeString {
-	protected $name = 'email';
+	protected $name		= 'email';
 
 	public function parseArgs($fArgs) {
 		return (object) array('min'=>5, 'max'=>100);
@@ -441,7 +443,7 @@ class TypeEmail extends TypeString {
 EntityDescriptor::registerType(new TypeEmail());
 
 class TypePassword extends TypeString {
-	protected $name = 'password';
+	protected $name		= 'password';
 
 	public function parseArgs($fArgs) {
 		return (object) array('min'=>5, 'max'=>128);
@@ -461,7 +463,7 @@ class TypePassword extends TypeString {
 EntityDescriptor::registerType(new TypePassword());
 
 class TypePhone extends TypeString {
-	protected $name = 'phone';
+	protected $name		= 'phone';
 
 	public function parseArgs($fArgs) {
 		return (object) array('min'=>10, 'max'=>20);

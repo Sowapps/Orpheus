@@ -32,6 +32,14 @@ define('PDOFETCHALL'		, PDOQUERY | 1<<2);//Query and Fetch All (Set of all resul
 define('PDOFETCHALLCOL'		, PDOQUERY | 0<<3);//All columns
 define('PDOFETCHFIRSTCOL'	, PDOQUERY | 1<<3);//Only the first column
 
+// define('PDOERROR_EXCEP'		, 0<<9);
+// define('PDOERROR_NOEXC'		, 1<<9);
+define('PDOERROR_FATAL'		, 0<<10);
+define('PDOERROR_MINOR'		, 1<<10);
+
+// define('PDOERROR_SILENT'	, PDOERROR_MINOR);
+// define('PDOERROR_SILENT'	, PDOERROR_MINOR | PDOERROR_EXCEP);
+
 //! Ensures to be connected to the database.
 /*
 	\param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
@@ -176,57 +184,43 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 		
 		
 	if( in_array($InstSettings['driver'], array('mysql', 'mssql', 'pgsql', 'sqlite')) ) {
-	
-		if( bintest($Fetch, PDOEXEC) ) {// Exec
-			try {
-				$returnValue = $pdoInstance->exec($Query);
-			} catch (PDOException $e) {
-				pdo_error("EXEC ERROR: ".$e->getMessage(), "Query:".$Query);
-				return 0;
+
+		try {
+			$ERR_ACTION = 'BINTEST';
+			if( bintest($Fetch, PDOEXEC) ) {// Exec
+				$ERR_ACTION = 'EXEC';
+				return $pdoInstance->exec($Query);
 			}
-			return $returnValue;
-		} else {// Query
-			try {
-				$PDOSQuery = $pdoInstance->query($Query);
-			} catch (PDOException $e) {
-				pdo_error("QUERY ERROR: ".$e->getMessage(), "Query:".$Query);
-				return 0;
-			}
+			$ERR_ACTION = 'QUERY';
+			$PDOSQuery = $pdoInstance->query($Query);
 			if( bintest($Fetch, PDOSTMT) ) {
 				return $PDOSQuery;
 			
 			} else if( bintest($Fetch, PDOFETCHALL) ) {
-				try {
-					if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
-						$returnValue = $PDOSQuery->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_COLUMN, 0);
-					} else {
-						$returnValue = $PDOSQuery->fetchAll(PDO::FETCH_ASSOC);
-					}
-				} catch (PDOException $e) {
-					pdo_error("FETCHALL ERROR: ".$e->getMessage(), "Query:".$Query);
-					return 0;
+				$ERR_ACTION = 'FETCHALL';
+				if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
+					$returnValue = $PDOSQuery->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_COLUMN, 0);
+				} else {
+					$returnValue = $PDOSQuery->fetchAll(PDO::FETCH_ASSOC);
 				}
 				
 			} else if( bintest($Fetch, PDOFETCH) ) {
-				try {
-					if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
-						$returnValue = $PDOSQuery->fetchColumn(0);
-					} else {
-						$returnValue = $PDOSQuery->fetch(PDO::FETCH_ASSOC);
-					}
-					$PDOSQuery->fetchAll();
-				} catch (PDOException $e) {
-					pdo_error("FETCH ERROR: ".$e->getMessage(), "Query:".$Query);
-					return 0;
+				$ERR_ACTION = 'FETCH';
+				if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
+					$returnValue = $PDOSQuery->fetchColumn(0);
+				} else {
+					$returnValue = $PDOSQuery->fetch(PDO::FETCH_ASSOC);
 				}
+				$PDOSQuery->fetchAll();
 			}
 			$PDOSQuery->closeCursor();
 			unset($PDOSQuery);
+			return $returnValue;
+		} catch( PDOException $e ) {
+			pdo_error($ERR_ACTION.' ERROR: '.$e->getMessage(), 'Query: '.$Query, $Fetch);
+			return false;
 		}
-		return $returnValue;
-		
 	}
-	
 	//Unknown Driver
 	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or is not implemented yet.', 'Driver Definition');
 }
@@ -253,7 +247,7 @@ function pdo_lastInsertId($Instance=null) {
 
 	Saves the error report $PDOReport in the log file and exit script.
 */
-function pdo_error($PDOReport, $Action='') {
+function pdo_error($PDOReport, $Action='', $Fetch=0) {
 	// Let's system manage this error (> R400)
 	if( function_exists('sql_error') ) {
 		sql_error($PDOReport, $Action);
@@ -263,7 +257,9 @@ function pdo_error($PDOReport, $Action='') {
 	$Error = array("date" => date('c'), "report" => $PDOReport, "action" => $Action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').( (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error');
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	die("An error has occured with the database, retry later please.");
+	if( bintest(PDOERROR_FATAL) ) {
+		die("An error has occured with the database, retry later please.");
+	}
 }
 
 //! Quotes and Escapes
