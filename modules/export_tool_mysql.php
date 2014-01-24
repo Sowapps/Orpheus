@@ -113,7 +113,7 @@ function mysqlTableMatch($ed) {
 		if( empty($alter) ) {
 			return null;
 		}
-		return "ALTER TABLE {}\n".SQLAdapter::doEscapeIdentifier($ed->getName()).';';
+		return 'ALTER TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName())."\n".$alter.';';
 	} else {
 		return mysqlCreate($ed);
 	}
