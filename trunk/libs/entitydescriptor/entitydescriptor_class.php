@@ -24,7 +24,7 @@ class EntityDescriptor {
 		//      Fields
 		$parent = isset($conf->parent) ? static::load($conf->parent) : null;
 		$fields = isset($parent) ? $parent->getFields() : array();
-		$fields['id'] = (object) array('type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
+		$fields['id'] = (object) array('name'=>'id', 'type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
 		foreach( $conf->fields as $field => $fieldInfos ) {
 			$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
 			$parse					= static::parseType($type);
