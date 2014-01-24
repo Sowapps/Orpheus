@@ -146,7 +146,7 @@ function mysqlEntityMatch($ed) {
 				}
 				if( !$found ) {
 					// Remove index
-					$alter .= (!empty($alter) ? ", \n" : '')."\t DROP INDEX ".SQLAdapter::doEscapeIdentifier($ci['name']);
+					$alter .= (!empty($alter) ? ", \n" : '')."\t DROP INDEX ".SQLAdapter::doEscapeIdentifier($ci->name);
 				}
 			}
 			foreach( $indexes as $i ) {
