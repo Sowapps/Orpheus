@@ -13,6 +13,7 @@ fields:
     user_name: string(6, 50)
     published: bool=false
     cache: string[nullable]
+    
 
 
 indexes: []
