@@ -86,6 +86,7 @@ function mysqlColumnDefinition($field) {
 }
 
 function mysqlIndexDefinition($index) {
+	text($index);
 	return (!empty($index->name) ? SQLAdapter::doEscapeIdentifier($index->name) : '').' '.
 		$index->type.' ('.implode(', ', $index->fields).')';
 }
