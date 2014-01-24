@@ -11,3 +11,4 @@ indexes:
  - INDEX(user_id)
  - UNIQUE(name)
  - FULLTEXT(slug, cache)=mySlugIndex
+ 
