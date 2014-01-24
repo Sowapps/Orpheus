@@ -62,6 +62,7 @@ class EntityDescriptor {
 		//      Indexes
 		$indexes = array();
 		if( !empty($conf->indexes) ) {
+			text($conf->indexes);
 			foreach( $conf->indexes as $index ) {
 				$iType		= static::parseType($type);
 				text($iType);
