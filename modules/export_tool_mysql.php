@@ -87,7 +87,7 @@ function mysqlColumnDefinition($field) {
 
 function mysqlIndexDefinition($index) {
 	return (!empty($index->name) ? SQLAdapter::doEscapeIdentifier($index->name) : '').' '.
-		$field->type.' ('.implode(', ', $index->fields).')';
+		$index->type.' ('.implode(', ', $index->fields).')';
 }
 
 function mysqlEntityMatch($ed) {
