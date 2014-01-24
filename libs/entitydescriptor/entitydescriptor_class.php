@@ -81,7 +81,7 @@ class EntityDescriptor {
 		$this->fields	= $fields;
 		$this->indexes	= $indexes;
 		text('__construct');
-		text($this->indexes);
+// 		text($this->indexes);
 	}
 	
 	public function getName() {
