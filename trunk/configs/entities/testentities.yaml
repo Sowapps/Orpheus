@@ -7,4 +7,7 @@ fields:
     slug: string(4, 20)
 
 
-indexes: []
+indexes:
+ - INDEX(user_id)
+ - UNIQUE(name)
+ - FULLTEXT(slug, cache)=mySlugIndex
