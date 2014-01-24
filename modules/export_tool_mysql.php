@@ -100,11 +100,11 @@ function mysqlTableMatch($ed) {
 				unset($fields[$cf['name']]);
 				// Current definition is different from former
 				if( $f!=$cf ) {
-					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN {$cf['name']} ".mysqlColumnDefinition($f);
+					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']).' '.mysqlColumnDefinition($f);
 				}
 			} else {
 				// Remove column
-				$alter .= (!empty($alter) ? ", \n" : '')."\t DROP COLUMN ".$cf['name'];
+				$alter .= (!empty($alter) ? ", \n" : '')."\t DROP COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']);
 			}
 		}
 		foreach( $fields as $f ) {
@@ -113,7 +113,7 @@ function mysqlTableMatch($ed) {
 		if( empty($alter) ) {
 			return null;
 		}
-		return "ALTER TABLE tbl_name\n".$alter;
+		return "ALTER TABLE {}\n".SQLAdapter::doEscapeIdentifier($ed->getName()).';';
 	} else {
 		return mysqlCreate($ed);
 	}
