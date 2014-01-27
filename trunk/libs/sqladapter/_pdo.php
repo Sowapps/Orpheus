@@ -248,6 +248,9 @@ function pdo_lastInsertId($Instance=null) {
 	Saves the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='', $Fetch=0) {
+	if( bintest($Fetch, PDOERROR_MINOR) ) {
+		return;
+	}
 	// Let's system manage this error (> R400)
 	if( function_exists('sql_error') ) {
 		sql_error($PDOReport, $Action);
@@ -257,9 +260,7 @@ function pdo_error($PDOReport, $Action='', $Fetch=0) {
 	$Error = array("date" => date('c'), "report" => $PDOReport, "action" => $Action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').( (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error');
 	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	if( bintest(PDOERROR_FATAL) ) {
-		die("An error has occured with the database, retry later please.");
-	}
+	die("An error has occured with the database, retry later please.");
 }
 
 //! Quotes and Escapes

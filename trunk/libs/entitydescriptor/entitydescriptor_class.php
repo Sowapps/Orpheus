@@ -13,7 +13,7 @@ class EntityDescriptor {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache = new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( $cache->get($descriptor) ) {
-			return $descriptor;
+// 			return $descriptor;
 		}
 		$conf = YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
@@ -42,6 +42,7 @@ class EntityDescriptor {
 				'name' => $field,
 				'type' => $parse->type,
 			);
+// 			text('Field: '.$field);
 			$TYPE					= static::getType($Field->type);
 			$Field->args			= $TYPE->parseArgs($parse->args);
 			$Field->default			= $parse->default;
@@ -51,19 +52,21 @@ class EntityDescriptor {
 			// Default if no type's default
 			if( !isset($Field->writable) ) { $Field->writable = true; }
 			if( !isset($Field->nullable) ) { $Field->nullable = false; }
+// 			text('Type nullable: '.b($Field->nullable));
 			// Field flags
-			if( !isset($fieldInfos['writable']) ) {
+			if( isset($fieldInfos['writable']) ) {
 				$Field->writable = !empty($fieldInfos['writable']);
 			} else if( $Field->writable ) {
 				$Field->writable = !in_array('readonly', $parse->flags); 
 			} else {
 				$Field->writable = in_array('writable', $parse->flags); 
 			}
-			if( !isset($fieldInfos['nullable']) ) {
+			if( isset($fieldInfos['nullable']) ) {
 				$Field->nullable = !empty($fieldInfos['nullable']);
 			} else if( $Field->nullable ) {
 				$Field->nullable = !in_array('notnull', $parse->flags); 
 			} else {
+// 				text($parse->flags);
 				$Field->nullable = in_array('nullable', $parse->flags); 
 			}
 			$fields[$field]	= $Field;
@@ -90,8 +93,6 @@ class EntityDescriptor {
 		$this->class	= $class;
 		$this->fields	= $fields;
 		$this->indexes	= $indexes;
-		text('__construct');
-// 		text($this->indexes);
 	}
 	
 	public function getName() {
@@ -429,15 +430,24 @@ class TypeDouble extends TypeNumber {
 }
 EntityDescriptor::registerType(new TypeDouble());
 
-class TypeRef extends TypeInteger {
-	protected $name		= 'ref';
-	protected $nullable	= false;
-	// MySQL needs more logic to select a null field with an index
-	// Prefer to set default to 0 instead of using nullable
+class TypeNatural extends TypeInteger {
+	protected $name		= 'natural';
 
 	public function parseArgs($fArgs) {
 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
 	}
+}
+EntityDescriptor::registerType(new TypeNatural());
+
+class TypeRef extends TypeNatural {
+	protected $name		= 'ref';
+// 	protected $nullable	= false;
+	// MySQL needs more logic to select a null field with an index
+	// Prefer to set default to 0 instead of using nullable
+
+// 	public function parseArgs($fArgs) {
+// 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
+// 	}
 }
 EntityDescriptor::registerType(new TypeRef());
 
