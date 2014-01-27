@@ -66,19 +66,15 @@ function mysqlColumnInfosFromField($field) {
 		$cType = 'DATETIME';
 	} else {
 		throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
-// 		return null;
 	}
-	//, 'primaryKey'=>false, 'autoIncrement'=>false
 	$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>!!$field->nullable);
 	$r['autoIncrement'] = $r['primaryKey'] = ($field->name=='id');
-	//, 'key'=>'', 'extra'=>''
-// 	if( $field->name=='id' ) {
-// 		$r['primary_key'] = $r['autoIncrement'] = true;
-// 	}
 	return $r;
 }
 
 function mysqlColumnDefinition($field) {
+// 	text('mysqlColumnDefinition()');
+// 	text($field);
 	$field = (object) $field;
 	return SQLAdapter::doEscapeIdentifier($field->name).' '.$field->type.
 		($field->nullable ? ' NULL' : ' NOT NULL').
@@ -118,6 +114,8 @@ function mysqlEntityMatch($ed) {
 		unset($fields, $f, $cc, $cf, $columns);
 		// Indexes
 		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
+// 			text('Indexes of '.$ed->getName());
+// 			text($rawIndexes);
 			$indexes = $ed->getIndexes();
 			$cIndexes = array();
 			foreach( $rawIndexes as $ci ) {
@@ -135,13 +133,10 @@ function mysqlEntityMatch($ed) {
 				}
 				$cIndexes[$ci->Key_name]->fields[] = $ci->Column_name;
 			}
+// 			text($cIndexes);
 			foreach($cIndexes as $ci) {
 				$found = 0;
-// 				text('$ci');
-// 				text($ci);
 				foreach( $indexes as $ii => $i ) {
-// 					text('$i');
-// 					text($i);
 					if( $i->type==$ci->type && $i->fields==$ci->fields ) {
 						unset($indexes[$ii]);
 						$found = 1;
@@ -167,10 +162,10 @@ function mysqlEntityMatch($ed) {
 }
 
 function mysqlCreate($ed) {
+// 	text('mysqlCreate()');
+// 	text($ed);
 	$columns = '';
-	text($ed);
 	foreach( $ed->getFields() as $field ) {
-		text($field);
 		$columns .= (!empty($columns) ? ", \n" : '')."\t".mysqlColumnDefinition(mysqlColumnInfosFromField($field));
 	}
 	if( empty($columns) ) {
@@ -180,27 +175,30 @@ function mysqlCreate($ed) {
 	return '
 CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
 '.$columns.'
-) ENGINE=MYISAM CHARACTER SET utf8;';
+) ENGINE=MYISAM CHARACTER SET utf8;
+';
 }
 
 if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities')) ) {
 	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
-	foreach( POST('entities') as $entityName => $on ) {
-		try {
-			$query = mysqlEntityMatch(EntityDescriptor::load($entityName));
-			if( empty($query) ) {
-				throw new UserException('No changes');
-			}
-			if( $output==OUTPUT_APPLY ) {
-				pdo_query($query, PDOEXEC);
-				reportSuccess('Database contents applied successfully !');
-				
-			} else {
-				echo '<pre>'.$query.'</pre>';
-			}
-		} catch( UserException $e ) {
-			reportError($e);
+	$query = '';
+	try {
+		foreach( POST('entities') as $entityName => $on ) {
+			$query .= mysqlEntityMatch(EntityDescriptor::load($entityName));
 		}
+		if( empty($query) ) {
+			throw new UserException('No changes');
+		}
+		if( $output==OUTPUT_APPLY ) {
+			pdo_query($query, PDOEXEC);
+			reportSuccess('Database contents applied successfully !');
+			
+		} else {
+			echo '<pre>'.$query.'</pre>';
+		}
+		
+	} catch( UserException $e ) {
+		reportError($e);
 	}
 }
 ?>
@@ -227,6 +225,7 @@ foreach( $entities as $filename ) {
 <!--
 label {
 	width: 200px;
+	display: inline-block;
 }
 -->
 </style>
