@@ -22,8 +22,18 @@ class EntityDescriptor {
 		// Build descriptor
 		//    Parse Config file
 		//      Fields
-		$parent = isset($conf->parent) ? static::load($conf->parent) : null;
-		$fields = isset($parent) ? $parent->getFields() : array();
+		$fields = array();
+		if( !empty($conf->parent) ) {
+			if( !is_array($conf->parent) ) {
+				$conf->parent = array($conf->parent);
+			}
+			foreach( $conf->parent as $p ) {
+				$p = static::load($p);
+				if( !empty($p) ) {
+					$fields = array_merge($fields, $p->getFields());
+				}
+			}
+		}
 		$fields['id'] = (object) array('name'=>'id', 'type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
 		foreach( $conf->fields as $field => $fieldInfos ) {
 			$type					= is_array($fieldInfos) ? $fieldInfos['type'] : $fieldInfos;
@@ -226,18 +236,18 @@ class EntityDescriptor {
 		$result['type']			= trim($matches[1]);
 		$result['args']			= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
 		$result['flags']		= !empty($matches[3]) ? preg_split('#\s#', $matches[3], -1, PREG_SPLIT_NO_EMPTY) : array();
-		if( !empty($matches[4]) ) {
+		if( isset($matches[4]) ) {
 			$result['default']	= $matches[4];
 			if( $result['default']==='true' ) {
 				$result['default'] = true;
 			} else
 			if( $result['default']==='false' ) {
 				$result['default'] = false;
-			} else
-			if( $result['default'][strlen($result['default'])-1]==')' ) {
-				$result['default'] = static::parseType($result['default']);
-// 				text('DEFAULT');
-// 				text($result['default']);
+			} else {
+				$len = strlen($result['default']);
+				if( $len && $result['default'][$len-1]==')' ) {
+					$result['default'] = static::parseType($result['default']);
+				}
 			}
 		}
 		return (object) $result;
