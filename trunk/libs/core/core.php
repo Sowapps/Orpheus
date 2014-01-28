@@ -1112,6 +1112,15 @@ function clientIP() {
 	return $_SERVER['REMOTE_ADDR'];
 }
 
+//! Gets the id of the current user
+/*!
+ * \return The user's id
+*/
+function userID() {
+	global $USER;
+	return !empty($USER) ? $USER->id() : null;
+}
+
 //! Generates a new password
 /*!
  * \param $length Thelength of the generated password.
