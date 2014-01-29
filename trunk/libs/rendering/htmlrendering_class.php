@@ -25,33 +25,53 @@ class HTMLRendering extends Rendering {
 		include static::getModelsPath().$model.'.php';
 	}
 	
-	//! Gets the models path.
+	//! Gets the theme path.
 	/*!
-		\return The models path.
+		\return The theme path.
+		
+		Gets the path to the current theme.
+	*/
+	public static function getThemePath() {
+		return THEMESDIR.static::$theme.'/';
+	}
+	
+	//! Gets the models theme path.
+	/*!
+		\return The models theme path.
 		
 		Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
+		return pathOf(static::getThemePath().static::$modelsPath);
 	}
 
-	//! Gets the CSS files path.
+	//! Gets the css theme path.
 	/*!
-		\return The CSS path.
+		\return The css theme path.
 		
-		Gets the path to the CSS files.
+		Gets the path to the css files.
 	*/
 	public static function getCSSPath() {
-		return static::getThemeURL().static::$cssPath;
+		return pathOf(static::getThemePath().static::$cssPath);
 	}
 
 	//! Gets the theme path.
 	/*!
 		\return The theme path.
 		
-		Gets the path to the theme files.
+		Gets the URL to the current theme.
 	*/
 	public static function getThemeURL() {
 		return THEMESURL.static::$theme.'/';
+	}
+
+	//! Gets the CSS files path.
+	/*!
+		\return The CSS path.
+		
+		Gets the URL to the CSS files.
+	*/
+	public static function getCSSURL() {
+		return static::getThemeURL().static::$cssPath;
 	}
 }

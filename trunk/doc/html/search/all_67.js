@@ -9,7 +9,7 @@ var searchData=
   ['getbysessid',['getBySessID',['../class_d_b_session.html#a606250d86f0e0386ea8367acff79bdb3',1,'DBSession\getBySessID()'],['../class_f_s_session.html#a0fbaa6a06425d3b35765e3afdb15fcb8',1,'FSSession\getBySessID()'],['../interface_session_interface.html#ad65afcf292523c53a9e727a06c3489f4',1,'SessionInterface\getBySessID()']]],
   ['getcachepath',['getCachePath',['../class_twig_rendering.html#a772c79660a47775cf294eb7a4c1cdc55',1,'TwigRendering']]],
   ['getclass',['getClass',['../class_permanent_object.html#a6ba5fefedb61a22bbf3fc3eb513e2300',1,'PermanentObject']]],
-  ['getcsspath',['getCSSPath',['../class_h_t_m_l_rendering.html#a59ab6f1a8ab47432b14811a3eba088e1',1,'HTMLRendering\getCSSPath()'],['../class_twig_rendering.html#a23b78137d84c4859924e050a475937fd',1,'TwigRendering\getCSSPath()']]],
+  ['getcsspath',['getCSSURL',['../class_h_t_m_l_rendering.html#a59ab6f1a8ab47432b14811a3eba088e1',1,'HTMLRendering\getCSSURL()'],['../class_twig_rendering.html#a23b78137d84c4859924e050a475937fd',1,'TwigRendering\getCSSURL()']]],
   ['getdefaultstatus',['getDefaultStatus',['../class_abstract_status.html#aa4399273f51a109e292556b4b1c575dc',1,'AbstractStatus']]],
   ['getdomain',['getDomain',['../class_user_exception.html#a886d24a7dd9764bf075be7cfc3c6a54f',1,'UserException\getDomain()'],['../class_permanent_object.html#aee0304188b4655a1029a0736f354e4cb',1,'PermanentObject\getDomain()']]],
   ['getfieldname',['getFieldName',['../class_field_not_found_exception.html#a3c02f8c6a00687928c4aa46650d3cc9e',1,'FieldNotFoundException']]],

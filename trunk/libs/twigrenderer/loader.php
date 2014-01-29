@@ -12,4 +12,4 @@ Twig_Autoloader::register();
 
 TwigRendering::init();
 
-$GLOBALS['TWIG_CSSFOLDERURL'] = TwigRendering::getCSSPath();
+$GLOBALS['TWIG_CSSFOLDERURL'] = TwigRendering::getCSSURL();
