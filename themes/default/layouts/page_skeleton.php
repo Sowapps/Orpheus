@@ -19,17 +19,17 @@ if( !empty($METAPROP) ) {
 }
 ?>
 
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-theme.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>font-awesome.css" type="text/css" media="screen" />
-<!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-theme.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>font-awesome.css" type="text/css" media="screen" />
+<!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 if( !empty($CSS_FILES) ) {
 	foreach($CSS_FILES as $file) {
 		?>
 		
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath().$file; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL().$file; ?>" type="text/css" media="screen" />
 	<?php
 	}
 }

@@ -19,14 +19,14 @@ if( !empty($METAPROP) ) {
 }
 ?>
 
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap.css" type="text/css" media="screen" />
 	
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>sb-admin.css" type="text/css" media="screen">
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>font-awesome.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>sb-admin.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>font-awesome.min.css" type="text/css" media="screen">
 	
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
 	
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSPath(); ?>style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 	
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="js/jquery.js"></script>
