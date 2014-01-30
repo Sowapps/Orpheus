@@ -137,7 +137,6 @@ if( !empty($METAPROP) ) {
 
 	<?php echo $Page; ?>
 	
-
 	</div><!-- /#page-wrapper -->
 
 </div><!-- /#wrapper -->
