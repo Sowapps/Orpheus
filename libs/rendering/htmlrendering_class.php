@@ -12,17 +12,43 @@ class HTMLRendering extends Rendering {
 	public static $cssPath			= 'css/';
 	public static $modelsPath		= 'layouts/';
 	
+	public static $cssFiles			= array();// CSS files
+	public static $jsFiles			= array();// Javascript files
+	public static $metaprop			= array();// Meta-properties
+	
 	//! Renders the model.
 	/*!
 		\copydoc Rendering::render()
 	*/
 	public function render($model=null, $env=array()) {
+		ob_start();
+		$this->display($model, $env);
+		return ob_get_flush();
+	}
+
+	//! Displays the model.
+	/*!
+	 \copydoc Rendering::display()
+	*/
+	public function display($model=null, $env=array()) {
 		if( !isset($model) ) {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env);
 		
 		include static::getModelsPath().$model.'.php';
+	}
+	
+	public static function addCSSFile($basename) {
+		static::$cssFiles[] = $basename;
+	}
+	
+	public static function addJSFile($basename) {
+		static::$jsFiles[] = $basename;
+	}
+	
+	public static function addMetaProperty($property, $content) {
+		static::$metaprop[$property] = $content;
 	}
 	
 	//! Gets the theme path.
