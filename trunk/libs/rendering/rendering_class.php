@@ -161,4 +161,38 @@ abstract class Rendering {
 		}
 		return get_class(self::$rendering);
 	}
+
+// 	protected static $layoutStack = null;
+	
+	//! Uses layout until the next endCurrentLayout()
+	/*!
+	 * \param $layout The layout to use.
+	 * \sa endCurrentLayout()
+	 * 
+	 * Uses layout until the next endCurrentLayout() is encountered.
+	 * 
+	 * Warning: According to the ob_start() documentation, you can't call functions using output buffering in your layout.
+	 * http://www.php.net/manual/en/function.ob-start.php#refsect1-function.ob-start-parameters
+	 */
+	final public static function useLayout($layout) {
+// 		if( is_null(static::$layoutStack) ) {
+// 			static::$layoutStack = array();
+
+// 			Hook::register('checkModule', function($module, $content) {
+				
+// 			});
+// 		}
+		ob_start(function($content) use($layout) {
+			if( is_null($env) ) { $env = $GLOBALS; }
+			$env['Content'] = $content;
+			return static::doRender($layout, $env);
+		});
+	}
+	
+	final public static function endCurrentLayout() {
+		if( ob_get_level() > OBLEVEL_INIT ) { return false; }
+		ob_end_flush();
+// 		ob_get_flush();
+		return true;
+	}
 }

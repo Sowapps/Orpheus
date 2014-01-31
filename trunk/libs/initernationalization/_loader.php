@@ -69,6 +69,9 @@ function t($k, $domain='global', $values=array()) {
 	}
 	return $r;
 }
+function _t($k, $domain='global', $values=array()) {
+	echo t($k, $domain, $values);
+}
 
 //! Checks if this key exists.
 /*!

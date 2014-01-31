@@ -465,11 +465,56 @@ function addAutoload($className, $classPath) {
 	return true;
 }
 
+//! Starts a new report stream
+/*!
+ * \param $stream The new report stream name
+ * \sa endReportStream()
+
+ * A new report stream starts, all new reports will be added to this stream.
+*/
+function startReportStream($stream) {
+	global $REPORT_STREAM;
+	$REPORT_STREAM = $stream;
+}
+
+//! Ends the current stream
+/*!
+ * \sa startReportStream()
+ * Ends the current stream by setting current stream to the global one, so you can not end global stream.
+*/
+function endReportStream() {
+	startReportStream('global');
+}
+endReportStream();
+
+//! Transfers the stream reports to another
+/*!
+ * \param $from Transfers $from this stream. Default value is null (current stream).
+ * \param $to Transfers $to this stream. Default value is global.
+ * 
+ * Transfers the stream reports to another
+*/
+function transferReportStream($from=null, $to='global') {
+	if( is_null($from) ) {
+		$from = $GLOBALS['REPORT_STREAM'];
+	}
+	if( $from==$to ) { return false; }
+	global $REPORTS;
+	if( !empty($REPORTS[$from]) ) {
+		if( !isset($REPORTS[$to]) ) {
+			$REPORTS[$to] = array();
+		}
+		$REPORTS[$to] = isset($REPORTS[$to]) ? array_merge_recursive($REPORTS[$to], $REPORTS[$from]) : $REPORTS[$from];
+		unset($REPORTS[$from]);
+	}
+	return true;
+}
+
 //! Adds a report
 /*!
- * \param $report The report (Commonly a string or an UserException=.
+ * \param $report The report (Commonly a string or an UserException).
  * \param $type The type of the message.
- * \param $domain The domain fo the message. Not used for translation. Default value is global.
+ * \param $domain The domain to use to automatically translate the message. Default value is 'global'.
  * \return False if rejected.
  * \sa reportSuccess(), reportError()
 
@@ -477,27 +522,19 @@ function addAutoload($className, $classPath) {
  * The type of the message is commonly 'success' or 'error'.
 */
 function addReport($report, $type, $domain='global') {
-	global $REPORTS, $REJREPORTS, $DISABLE_REPORT;
+	global $REPORTS, $REPORT_STREAM, $REJREPORTS, $DISABLE_REPORT;
+	$report = "$report";
 	if( !empty($DISABLE_REPORT) ) { return false; }
-	if( isset($REJREPORTS[$k="$report"]) ) {
-		$rej = 1;
-		if( !empty($REJREPORTS[$k]['t']) && !in_array($type, $REJREPORTS[$k]['t']) ) {
-			$rej = 0;
-			
-		} else if( !empty($REJREPORTS[$k]['d']) && !in_array($domain, $REJREPORTS[$k]['d']) ) {
-			$rej = 0;
-		}
-		if( $rej ) {
-			return false;
-		}
+	if( isset($REJREPORTS[$report]) && (empty($REJREPORTS[$report]['t']) || in_array($type, $REJREPORTS[$report]['t'])) ) {
+		return false;
 	}
-	if( !isset($REPORTS[$domain]) ) {
-		$REPORTS[$domain] = array();
+	if( !isset($REPORTS[$REPORT_STREAM]) ) {
+		$REPORTS[$REPORT_STREAM] = array();
 	}
-	if( !isset($REPORTS[$domain][$type]) ) {
-		$REPORTS[$domain][$type] = array();
+	if( !isset($REPORTS[$REPORT_STREAM][$type]) ) {
+		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
-	$REPORTS[$domain][$type][] = $report;
+	$REPORTS[$REPORT_STREAM][$type][] = t($report, $domain);
 	return true;
 }
 
@@ -535,11 +572,11 @@ function reportError($report, $domain=null) {
 /*!
  * \return True if there is any error report.
 */
-function hasErrorReports($except=array()) {
+function hasErrorReports() {
 	global $REPORTS;
 	if( empty($REPORTS) ) { return false; }
-	foreach($REPORTS as $d => $tl) {
-		if( !empty($tl['error']) ) {
+	foreach($REPORTS as $stream => $types) {
+		if( !empty($types['error']) ) {
 			return true;
 		}
 	}
@@ -550,13 +587,12 @@ function hasErrorReports($except=array()) {
 /*!
  * \param $report The report message to reject, could be an array.
  * \param $type Filter reject by type, could be an array. Default value is null, not filtering.
- * \param $domain Filter reject by domain, could be an array. Default value is "all", not filtering.
  * \sa addReport()
  * 
  * Register this report to be rejected in the future, addReport() will check it.
  * All previous values for this report will be replaced.
 */
-function rejectReport($report, $type=null, $domain='all') {
+function rejectReport($report, $type=null) {
 	global $REJREPORTS;
 	if( !isset($REJREPORTS) ) { $REJREPORTS = array(); }
 	if( !is_array($report) ) {
@@ -565,9 +601,6 @@ function rejectReport($report, $type=null, $domain='all') {
 	$d = array();
 	if( isset($type) ) {
 		$d['t'] = is_array($type) ? $type : array($type);
-	}
-	if( $domain != 'all' ) {
-		$d['d'] = is_array($domain) ? $domain : array($domain);
 	}
 	foreach( $report as $r ) {
 		$d['r'] = $r;
@@ -584,52 +617,47 @@ function rejectReport($report, $type=null, $domain='all') {
 
  * Gets all reports from the list of $domain optionnally filtered by type.
 */
-function getReports($domain='all', $type=null, $delete=1) {
+function getReports($stream='global', $type=null, $delete=1) {
 	global $REPORTS;
-	if( empty($REPORTS) ) { return array(); }
-	$reports = $domain=='all' ? $REPORTS : array_intersect_key($REPORTS, array($domain=>''));
+	if( empty($REPORTS[$stream]) ) { return array(); }
+	// Type specified
 	if( !empty($type) ) {
-		foreach( $reports as $d => &$tl ) {
-			$tl = array_intersect_key($tl, array($type=>''));
-			if( empty($tl) ) {
-				unset($reports[$d]);
-			}
-			if( $delete ) {
-				unset($REPORTS[$d][$type]);
-			}
+		if( empty($REPORTS[$stream][$type]) ) { return array(); }
+		$r = $REPORTS[$stream][$type];
+		if( $delete ) {
+			unset($REPORTS[$stream][$type]);
 		}
-	} else if( $delete ) {
-		if( $domain=='all' ) {
-			$REPORTS = null;
-			//unset($REPORTS);// Global variable is not unset by this way
-		} else {
-			unset($REPORTS[$domain]);
-		}
+		return array($type=>$r);
 	}
-	return $reports;
+	// All types
+	$r = $REPORTS[$stream];
+	if( $delete ) {
+		$REPORTS[$stream] = array();
+	}
+	return $r;
 }
 
 //! Gets some/all reports as HTML
 /*!
- * \param $domain The translation domain and the domain of the report. Default value is 'all' (All domains).
- * \param $rejected An array of rejected messages.
- * \param $delete True to delete entries from the list.
+ * \param $stream The stream to get the reports. Default value is 'global'.
+ * \param $rejected An array of rejected messages. Default value is an empty array.
+ * \param $delete True to delete entries from the list. Default value is true.
  * \sa displayReportsHTML()
  * \sa getHTMLReport()
 
  * Gets all reports from the list of $domain and generates the HTML source to display.
 */
-function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
-	$reports = getReports($domain, null, $delete);
+function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
+	$reports = getReports($stream, null, $delete);
+// 	text('Got reports');
+// 	text($reports);
 	if( empty($reports) ) { return ''; }
 	$reportHTML = '';
-	foreach( $reports as $d => &$tl ) {
-		foreach( $tl as $t => &$rl ) {
-			foreach( $rl as $r) {
-				$message = "$r";
-				if( !in_array($message, $rejected) ) {
-					$reportHTML .= getHTMLReport($message, $t, $d);
-				}
+	foreach( $reports as $type => &$rl ) {
+		foreach( $rl as $report) {
+			$report = "$report";
+			if( !in_array($report, $rejected) ) {
+				$reportHTML .= getHTMLReport($report, $type, $stream);
 			}
 		}
 	}
@@ -638,35 +666,35 @@ function getReportsHTML($domain='all', $rejected=array(), $delete=1) {
 
 //! Gets one report as HTML
 /*!
- * \param $message The message to report.
- * \param $type The type of the message.
- * \param $domain The domain fo the message. Not used for translation. Default value is global.
+ * \param $message	The message to report.
+ * \param $type		The type of the report.
+ * \param $stream	The stream of the report.
 
  * Returns a valid HTML report.
  * This function is only a HTML generator.
 */
-function getHTMLReport($message, $type, $domain='global') {
+function getHTMLReport($report, $type, $stream) {
 	return '
-		<div class="report report_'.$domain.' '.$type.'">'.nl2br(t($message, $domain)).'</div>';
+		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
 }
 
 //! Displays reports as HTML
 /*!
- * \param $domain The translation domain and the domain of the report. Default value is 'all'.
+ * \param $stream The stream to display. Default value is 'global'.
  * \param $rejected An array of rejected messages. Can be the first parameter.
  * \param $delete True to delete entries from the list.
  * \sa getReportsHTML()
 
  * Displays all reports from the list of $domain and displays generated HTML source.
 */
-function displayReportsHTML($domain='all', $rejected=array(), $delete=1) {
-	if( is_array($domain) && empty($rejected) ) {
-		$rejected = $domain;
-		$domain = 'all';
+function displayReportsHTML($stream='global', $rejected=array(), $delete=1) {
+	if( is_array($stream) && empty($rejected) ) {
+		$rejected = $stream;
+		$domain = 'global';
 	}
 	echo '
-	<div class="reports '.$domain.'">
-	'.getReportsHTML($domain, $rejected, $delete).'
+	<div class="reports '.$stream.'">
+	'.getReportsHTML($stream, $rejected, $delete).'
 	</div>';
 }
 
@@ -1186,3 +1214,4 @@ function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 	}
 	return str_replace(array('.', ' ', '-'), $delimiter, $number);
 }
+

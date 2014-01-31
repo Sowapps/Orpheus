@@ -12,4 +12,5 @@ addAutoload('Hook',						'hooks/hook');
 Hook::create('startSession');
 Hook::create('checkModule');
 Hook::create('runModule');
+// Hook::create('endModule');
 Hook::create('showRendering');
