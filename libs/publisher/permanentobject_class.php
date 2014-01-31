@@ -517,14 +517,15 @@ abstract class PermanentObject {
 	//! Creates a new permanent object
 	/*!
 	 * \param $inputData The input data we will check, extract and create the new object.
+	 * \param $fields The array of fields to check. Default value is null.
 	 * \return The ID of the new permanent object.
 	 * \sa testUserInput()
 	 * 
 	 * Creates a new permanent object from ths input data.
 	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
-	public static function create($inputData=array()) {
-		$data = static::checkUserInput($inputData, null, null, $errCount);
+	public static function create($inputData=array(), $fields=null) {
+		$data = static::checkUserInput($inputData, $fields, null, $errCount);
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}

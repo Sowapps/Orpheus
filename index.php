@@ -240,10 +240,11 @@ try {
 	}
 	
 	if( empty($Module) || !is_name($Module) ) {
+		header("HTTP/1.1 400 Bad Request");
 		throw new UserException('invalidModuleName');
 	}
 	if( !existsPathOf(MODDIR.$Module.'.php') ) {
-// 		die('inexistantModule : '.$Module);
+		header("HTTP/1.1 404 Not Found");
 		throw new UserException('inexistantModule');
 	}
 	
@@ -259,13 +260,24 @@ try {
 	
 	$coreAction = 'running_'.$Module;
 	$Module = Hook::trigger('runModule', false, $Module);
+	
 	define('OBLEVEL_INIT', ob_get_level());
 	ob_start();
+	
 	require_once pathOf(MODDIR.$Module.'.php');
-	$Page = ob_get_contents();
+	
+	// Terminate all layout
+	while(Rendering::endCurrentLayout());
+	
+	$Page = ob_get_contents();// Review usage
+	// Future feature ? Need to place it somewhere smartly
+// 	$Page = Hook::trigger('endModule', false, $Page, $Module);
 	ob_end_clean();
 	
 } catch(UserException $e) {
+	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
+		ob_end_clean();
+	}
 	reportError($e);
 	$Page = getReportsHTML();
 	
@@ -277,10 +289,7 @@ try {
 	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-// 	ob_start();
 	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
-// 	$Page = ob_get_contents();
-// 	ob_end_clean();
 }
 
 try {
