@@ -162,7 +162,7 @@ abstract class Rendering {
 		return get_class(self::$rendering);
 	}
 
-// 	protected static $layoutStack = null;
+	protected static $layoutStack = null;
 	
 	//! Uses layout until the next endCurrentLayout()
 	/*!
@@ -174,25 +174,39 @@ abstract class Rendering {
 	 * Warning: According to the ob_start() documentation, you can't call functions using output buffering in your layout.
 	 * http://www.php.net/manual/en/function.ob-start.php#refsect1-function.ob-start-parameters
 	 */
-	final public static function useLayout($layout) {
-// 		if( is_null(static::$layoutStack) ) {
-// 			static::$layoutStack = array();
+	public static function useLayout($layout) {
+		if( is_null(static::$layoutStack) ) {
+			static::$layoutStack = array();
 
-// 			Hook::register('checkModule', function($module, $content) {
-				
-// 			});
-// 		}
-		ob_start(function($content) use($layout) {
-			if( is_null($env) ) { $env = $GLOBALS; }
-			$env['Content'] = $content;
-			return static::doRender($layout, $env);
-		});
+// // 			Hook::register('checkModule', function($module, $content) {});
+		}
+
+		static::$layoutStack[] = $layout;
+		ob_start();
+		// Does not work, we can not start output buffer in this callback
+// 		ob_start(function($content) use($layout) {
+// 			$env = $GLOBALS;
+// 			$env['Content'] = $content;
+// 			return static::doRender($layout, $env);
+// 		});
 	}
 	
-	final public static function endCurrentLayout() {
-		if( ob_get_level() > OBLEVEL_INIT ) { return false; }
-		ob_end_flush();
-// 		ob_get_flush();
+	public static function endCurrentLayout() {
+// 		text(__FILE__.':'.__LINE__);
+		if( ob_get_level() < OBLEVEL_INIT+1 || empty(static::$layoutStack) ) { return false; }
+// 		text(__FILE__.':'.__LINE__);
+		$env = $GLOBALS;
+		$env['Content'] = ob_get_clean();
+// 		$env['Content'] = ob_get_flush();// Returns and displays
+// 		text(__FILE__.':'.__LINE__);
+		static::doDisplay(array_pop(static::$layoutStack), $env);
+// 		text(__FILE__.':'.__LINE__);
 		return true;
 	}
+	
+// 	final public static function endCurrentLayout() {
+// 		if( ob_get_level() <= OBLEVEL_INIT+1 ) { return false; }
+// 		ob_end_flush();
+// 		return true;
+// 	}
 }
