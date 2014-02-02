@@ -15,10 +15,31 @@ addAutoload('Session',							'sessionhandler/dbsession');
 
 // Hooks
 
-//! Hook 'startSession'
+//! Hook 'runModule'
+Hook::register('runModule', function($module) {
+	if( getModuleAccess($module) > 0 ) {
+		HTMLRendering::$theme = 'admin';
+	}
+});
 
+//! Hook 'startSession'
 Hook::register('startSession', function () {
 	if( version_compare(PHP_VERSION, '5.4', '>=') ) {
 		OSessionHandler::register();
 	}
 });
+
+function getModuleAccess($module=null) {
+	if( is_null($module) ) {
+		$module = &$GLOBALS['Module'];
+	}
+	global $ACCESS;
+	return !empty($ACCESS) && isset($ACCESS->$module) ? $ACCESS->$module : -2;
+}
+
+function debug($s, $d=-1) {
+	if( $d !== -1 ) {
+		$s .= ': '.htmlSecret($d);
+	}
+	text($s);
+}
