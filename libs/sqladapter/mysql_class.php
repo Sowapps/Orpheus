@@ -64,13 +64,14 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No selection');
 		}
-		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
-		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
-		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
+		$WHAT		= ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
+		$WC			= ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
+		$ORDERBY	= ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		$LIMIT		= ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
+		$TABLE		= static::escapeIdentifier($options['table']);
 		
-		$QUERY = "SELECT {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "SELECT {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
@@ -101,16 +102,17 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No field');
 		}
-		$OPTIONS = '';
-		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
-		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
-		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
-		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
-		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
+		$OPTIONS	= '';
+		$OPTIONS	.= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
+		$OPTIONS	.= (!empty($options['ignore'])) ? ' IGNORE' : '';
+		$WHAT		= ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
+		$WC			= ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
+		$ORDERBY	= ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		$LIMIT		= ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
+		$TABLE		= static::escapeIdentifier($options['table']);
 	
-		$QUERY = "UPDATE {$OPTIONS} {$options['table']} SET {$WHAT} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "UPDATE {$OPTIONS} {$TABLE} SET {$WHAT} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
@@ -129,16 +131,17 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
 		}
-		$OPTIONS = '';
-		$OPTIONS .= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
-		$OPTIONS .= (!empty($options['quick'])) ? ' QUICK' : '';
-		$OPTIONS .= (!empty($options['ignore'])) ? ' IGNORE' : '';
-		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY = ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
-		$LIMIT = ( $options['number'] > 0 ) ? 'LIMIT '.
+		$OPTIONS	= '';
+		$OPTIONS	.= (!empty($options['lowpriority'])) ? ' LOW_PRIORITY' : '';
+		$OPTIONS	.= (!empty($options['quick'])) ? ' QUICK' : '';
+		$OPTIONS	.= (!empty($options['ignore'])) ? ' IGNORE' : '';
+		$WC			= ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
+		$ORDERBY	= ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
+		$LIMIT		= ( $options['number'] > 0 ) ? 'LIMIT '.
 			( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
+		$TABLE		= static::escapeIdentifier($options['table']);
 		
-		$QUERY = "DELETE {$OPTIONS} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "DELETE {$OPTIONS} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
@@ -186,8 +189,9 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		} else {
 			$WHAT = $options['what'];
 		}
+		$TABLE		= static::escapeIdentifier($options['table']);
 		
-		$QUERY = "INSERT {$OPTIONS} {$options['table']} {$COLS} {$WHAT};";
+		$QUERY = "INSERT {$OPTIONS} {$TABLE} {$COLS} {$WHAT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
