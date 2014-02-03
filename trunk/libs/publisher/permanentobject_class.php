@@ -582,7 +582,7 @@ abstract class PermanentObject {
 	 * \param $ipAdd A specified IP Adress to use for logging event.
 	 * \sa logEvent()
 	 * 
-	 * Builds a new log event for $event for this time and the user IP adress.
+	 * Builds a new log event for $event for this time and the user IP address.
 	*/
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(

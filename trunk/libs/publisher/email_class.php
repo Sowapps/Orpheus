@@ -211,9 +211,9 @@ class Email {
 	
 	//! Sends the mail to the given address
 	/*!
-	 * \param $ToAddress The email adress to send this mail
+	 * \param $ToAddress The email address to send this mail
 	 * 
-	 * Sends the mail to the given adress.
+	 * Sends the mail to the given address.
 	 * You can pass an array of address to send it to multiple recipients.
 	 */
 	public function send($ToAddress) {
@@ -406,7 +406,7 @@ BODY;
 	
 	//! Sets the ReplyTo value of the mail
 	/*!
-	 * \param $Email The email adress to send this mail
+	 * \param $Email The email address to send this mail
 	 */
 	public function setReplyTo($Email) {
 		$this->setHeader('Return-Path', $Email);
@@ -415,8 +415,8 @@ BODY;
 	
 	//! Sets the Sender value of the mail
 	/*!
-	 * \param $SenderEmail The email adress to send this mail
-	 * \param $SenderName The email adress to send this mail. Default value is null.
+	 * \param $SenderEmail The email address to send this mail
+	 * \param $SenderName The email address to send this mail. Default value is null.
 	 * 
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.
