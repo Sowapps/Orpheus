@@ -11,11 +11,9 @@
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
 <?php
-if( !empty($METAPROP) ) {
-	foreach($METAPROP as $property => $content) {
-		echo "
-	<meta property=\"{$property}\" content=\"{$content}\"/>";
-	}
+foreach(HTMLRendering::$metaprop as $property => $content) {
+	echo '
+	<meta property="'.$property.'" content="'.$content.'"/>';
 }
 ?>
 
@@ -25,18 +23,14 @@ if( !empty($METAPROP) ) {
 <!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
-if( !empty($CSS_FILES) ) {
-	foreach($CSS_FILES as $file) {
-		?>
-		
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL().$file; ?>" type="text/css" media="screen" />
-	<?php
-	}
+foreach(HTMLRendering::$cssFiles as $file) {
+	echo '
+	<link rel="stylesheet" type="text/css" href="'.HTMLRendering::getCSSURL().$file.'" media="screen" />';
 }
 ?>
 	
 	<!-- External JS libraries -->
-	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="/js/jquery.js"></script>
 </head>
 <body class="<?php echo $Module; ?>">
 
@@ -55,17 +49,15 @@ if( !empty($CSS_FILES) ) {
 
 </div>
 	<!-- JS libraries -->
-	<script type="text/javascript" src="js/jquery-ui.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="/js/jquery-ui.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.js"></script>
 	
 	<!-- Our JS scripts -->
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
 <?php
-if( !empty($JS_FILES) ) {
-	foreach($JS_FILES as $file) {
-		echo "
-	<script type=\"text/javascript\" src=\"{$file}\"></script>";
-	}
+foreach(HTMLRendering::$jsFiles as $file) {
+	echo '
+	<script type="text/javascript" src="/js/'.$file.'"></script>';
 }
 ?>
 
