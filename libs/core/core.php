@@ -650,8 +650,6 @@ function getReports($stream='global', $type=null, $delete=1) {
 */
 function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 	$reports = getReports($stream, null, $delete);
-// 	text('Got reports');
-// 	text($reports);
 	if( empty($reports) ) { return ''; }
 	$reportHTML = '';
 	foreach( $reports as $type => &$rl ) {
@@ -888,38 +886,29 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 // }
 
 function htmlText($fieldPath, $default='', $addAttr='') {
-// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
-// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
 }
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
-// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
 }
 
 function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
-// 	$f = explode('/', $fieldPath); $fl=count($f)-1; if( $fl && isset($f[0], $f[$fl]) ) { $GLOBALS['FORM_FIELDS'][$f[0]][] = $f[$fl]; } 
 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
 	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
-// 	$selected = fillInputValue($value, $fieldPath, false) ? !empty($value) : $default;
-// 	text("htmlCheckbox($fieldPath): default: $default");
 	// 			If Value found,	we consider this one, else we use default
 	$selected = ($r = fillInputValue($value, $fieldPath, $default, true)) ? !empty($value) : $default;
-// 	text($selected ? 'SELECTED' : 'NOT SELECTED');
-// 	text($r ? 'VALUE NOT NULL' : 'NULL VALUE');
-// 	text('VALUE: '.$value);
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 

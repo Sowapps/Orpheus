@@ -49,21 +49,32 @@ function t($k, $domain='global', $values=array()) {
 		$values = $domain;
 		$domain = 'global';
 	}
-// 	loadLangFile($domain);
 	$r = hasTranslation($k, $domain) ? $LANG[$domain][$k] : $k;
+	while( isset($r[0]) && $r[0]=='%' ) {
+		$k = substr($r, 1);
+		if( hasTranslation($k, $domain) ) {
+			$r = $LANG[$domain][$k];
+		} else {
+			break;
+		}
+	}
 	if( !empty($values) ) {
 		if( !is_array($values) ) {
-			$values = array_slice(func_get_args(), 2);
+			$values		= array_slice(func_get_args(), 2);
 		}
 		if( !empty($values[0]) ) {
+			text($values);
 			if( !is_array($values[0]) ) {
 				return vsprintf($r, $values);
 			}
-			$rkeys = $values[0];
-			$rvalues = !empty($values[1]) ? $values[1] : '';
+			$rkeys		= $values[0];
+			$rvalues	= !empty($values[1]) ? $values[1] : '';
 		} else {
-			$rkeys = array_map(function ($v) { return "#{$v}#"; }, array_keys($values));
-			$rvalues = array_values($values);
+// 			text('Mapping keys');
+			$rkeys		= array_map(function ($v) { return "#{$v}#"; }, array_keys($values));
+			$rvalues	= array_values($values);
+// 			text($rkeys);
+// 			text($rvalues);
 		}
 		$r = str_replace($rkeys, $rvalues, $r);
 	}
