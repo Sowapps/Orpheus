@@ -71,7 +71,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
 		$TABLE		= static::escapeIdentifier($options['table']);
 		
-		$QUERY		= "SELECT {$WHAT} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}

@@ -119,7 +119,7 @@ abstract class PermanentObject {
 	 * Gets this object ID according to the IDFIELD attribute.
 	 */
 	public function id() {
-		return $this->{static::$IDFIELD};
+		return $this->getValue(static::$IDFIELD);
 	}
 	
 	//! Updates this permanent object
@@ -288,7 +288,6 @@ abstract class PermanentObject {
 		if( empty($key) ) {
 			return $this->data;
 		}
-// 		if( !isset($this->data[$key]) ) {
 		if( !array_key_exists($key, $this->data) ) {
 			log_debug('Key "'.$key.'" not found in array :');
 			log_debug($this->data);
