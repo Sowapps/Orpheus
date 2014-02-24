@@ -63,7 +63,6 @@ function t($k, $domain='global', $values=array()) {
 			$values		= array_slice(func_get_args(), 2);
 		}
 		if( !empty($values[0]) ) {
-			text($values);
 			if( !is_array($values[0]) ) {
 				return vsprintf($r, $values);
 			}

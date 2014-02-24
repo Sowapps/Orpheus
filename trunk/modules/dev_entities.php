@@ -1,5 +1,7 @@
 <?php
 using('entitydescriptor.entitydescriptor');
+using('entitydescriptor.sqlgenerator_mysql');
+using('entitydescriptor.langgenerator');
 
 define('OUTPUT_APPLY',		1);
 define('OUTPUT_DISPLAY',	2);
@@ -7,233 +9,93 @@ define('OUTPUT_DLRAW',		3);
 define('OUTPUT_DLZIP',		4);
 //define('OUTPUT_SQLDOWNLOAD');
 
-// MySQL Generator
-function mysqlColumnInfosFromField($field) {
-	$TYPE = EntityDescriptor::getType($field->type);
-	$cType = '';
-	if( $TYPE instanceof TypeString ) {
-		$max = $TYPE instanceof TypePassword ? 128 : $field->args->max;
-		if( $max < 256 ) {
-			$cType = "VARCHAR({$field->args->max})";
-		} else
-		if( $max < 65536 ) {
-			$cType = "TEXT";
-		} else
-		if( $max < 16777216 ) {
-			$cType = "MEDIUMTEXT";
-		} else {
-			$cType = "LONGTEXT";
-		}
-	} else
-	if( $TYPE instanceof TypeNumber ) {
-		if( !isset($field->args->max) ) {
-			text('Issue with '.$fName);
-			text($field->args);
-		}
-		$dc = strlen((int) $field->args->max);
-		if( !$field->args->decimals ) {
-			$max		= (int) $field->args->max;
-			$unsigned	= $field->args->min >= 0 ? 1 : 0;
-			$f			= 1+1*$unsigned;
-			if( $max < 128*$f ) {
-				$cType	= "TINYINT";
-			} else
-			if( $max < 32768*$f ) {
-				$cType	= "SMALLINT";
-			} else
-			if( $max < 8388608*$f ) {
-				$cType	= "MEDIUMINT";
-			} else
-			if( $max < 2147483648*$f ) {
-				$cType	= "INT";
-			} else {
-				$cType	= "BIGINT";
-			}
-			$cType .= '('.strlen($max).')';
-			
-		} else {
-			$dc += $field->args->decimals;
-			if( $dc+$field->args->decimals < 7 ) {// Approx accurate to 7 decimals
-				$cType = "FLOAT({$dc}, {$field->args->decimals})";
-			} else {// Approx accurate to 15 decimals
-				$cType = "DOUBLE";
-			}
-			$cType .= "({$dc}, {$field->args->decimals})";
-		}
-	} else
-	if( $TYPE instanceof TypeDate ) {
-		$cType = 'DATE';
-	} else
-	if( $TYPE instanceof TypeDatetime ) {
-		$cType = 'DATETIME';
-	} else {
-		throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
-	}
-	$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>!!$field->nullable);
-	$r['autoIncrement'] = $r['primaryKey'] = ($field->name=='id');
-	return $r;
-}
 
-function mysqlColumnDefinition($field) {
-// 	text('mysqlColumnDefinition()');
-// 	text($field);
-	$field = (object) $field;
-	return SQLAdapter::doEscapeIdentifier($field->name).' '.$field->type.
-		($field->nullable ? ' NULL' : ' NOT NULL').
-		(!empty($field->autoIncrement) ? ' AUTO_INCREMENT' : '').(!empty($field->primaryKey) ? ' PRIMARY KEY' : '');
-}
-
-function mysqlIndexDefinition($index) {
-	return $index->type.(!empty($index->name) ? ' '.SQLAdapter::doEscapeIdentifier($index->name) : '').' (`'.implode('`, `', $index->fields).'`)';
-}
-
-function mysqlEntityMatch($ed) {
-	$query = '';
-	if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
-		// Fields
-		$fields = $ed->getFields();
-		$alter = '';
-		foreach( $columns as $cc ) {
-			$cc = (object) $cc;
-			$cf = array(
-				'name'=>$cc->Field, 'type'=>strtoupper($cc->Type), 'nullable'=>$cc->Null=='YES',
-				'primaryKey'=>$cc->Key=='PRI', 'autoIncrement'=>strpos($cc->Extra, 'auto_increment')!==false);
-			if( isset($fields[$cf['name']]) ) {
-				$f = mysqlColumnInfosFromField($fields[$cf['name']]);
-				unset($fields[$cf['name']]);
-				// Current definition is different from former
-				if( $f!=$cf ) {
-					$alter .= (!empty($alter) ? ", \n" : '')."\t CHANGE COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']).' '.mysqlColumnDefinition($f);
-				}
-			} else {
-				// Remove column
-				$alter .= (!empty($alter) ? ", \n" : '')."\t DROP COLUMN ".SQLAdapter::doEscapeIdentifier($cf['name']);
-			}
-		}
-		foreach( $fields as $f ) {
-			$alter .= (!empty($alter) ? ", \n" : '')."\t ADD COLUMN ".mysqlColumnDefinition(mysqlColumnInfosFromField($f));
-		}
-		unset($fields, $f, $cc, $cf, $columns);
-		// Indexes
-		if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
-// 			text('Indexes of '.$ed->getName());
-// 			text($rawIndexes);
-			$indexes = $ed->getIndexes();
-			$cIndexes = array();
-			foreach( $rawIndexes as $ci ) {
-				$ci = (object) $ci;
-				if( $ci->Key_name=='PRIMARY' ) { continue; }
-				if( !isset($cIndexes[$ci->Key_name]) ) {
-					$type		= 'INDEX';
-					if( !$ci->Non_unique ) {
-						$type	= 'UNIQUE';
-					} else
-					if( $ci->Index_type=='FULLTEXT' ) {
-						$type	= 'FULLTEXT';
-					}
-					$cIndexes[$ci->Key_name] = (object) array('name'=>$ci->Key_name, 'type'=>$type, 'fields'=>array());
-				}
-				$cIndexes[$ci->Key_name]->fields[] = $ci->Column_name;
-			}
-// 			text($cIndexes);
-			foreach($cIndexes as $ci) {
-				$found = 0;
-				foreach( $indexes as $ii => $i ) {
-					if( $i->type==$ci->type && $i->fields==$ci->fields ) {
-						unset($indexes[$ii]);
-						$found = 1;
-						break;
-					}
-				}
-				if( !$found ) {
-					// Remove index
-					$alter .= (!empty($alter) ? ", \n" : '')."\t DROP INDEX ".SQLAdapter::doEscapeIdentifier($ci->name);
-				}
-			}
-			foreach( $indexes as $i ) {
-				$alter .= (!empty($alter) ? ", \n" : '')."\t ADD ".mysqlIndexDefinition($i);
-			}
-		}
-		if( empty($alter) ) {
-			return null;
-		}
-		return 'ALTER TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName())."\n".$alter.';';
-	} else {
-		return mysqlCreate($ed);
-	}
-}
-
-function mysqlCreate($ed) {
-// 	text('mysqlCreate()');
-// 	text($ed);
-	$columns = '';
-	foreach( $ed->getFields() as $field ) {
-		$columns .= (!empty($columns) ? ", \n" : '')."\t".mysqlColumnDefinition(mysqlColumnInfosFromField($field));
-	}
-	if( empty($columns) ) {
-		throw new UserException('No columns');
-		return null;
-	}
-	return '
-CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
-'.$columns.'
-) ENGINE=MYISAM CHARACTER SET utf8;
-';
-}
-
-if( isPOST('submitGenerateSQL') && isPOST('entities') && is_array(POST('entities')) ) {
-	$output = isPOST('output') && POST('output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
-	$query = '';
-	try {
+try {
+if( isPOST('entities') && is_array(POST('entities')) ) {
+	if( isPOST('submitGenerateSQL') ) {
+		$output		= POST('sql_output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+		$generator	= new SQLGenerator_MySQL;
+		$result		= '';
 		foreach( POST('entities') as $entityName => $on ) {
-			$query .= mysqlEntityMatch(EntityDescriptor::load($entityName));
+			$result	.= $generator->matchEntity(EntityDescriptor::load($entityName));
 		}
-		if( empty($query) ) {
+		if( empty($result) ) {
 			throw new UserException('No changes');
 		}
 		if( $output==OUTPUT_APPLY ) {
-			pdo_query($query, PDOEXEC);
-			reportSuccess('Database contents applied successfully !');
+			pdo_query($result, PDOEXEC);
+			reportSuccess('successSQLApply');
 			
 		} else {
-			echo '<pre>'.$query.'</pre>';
+			echo '<pre style="tab-size: 4; -moz-tab-size: 4;">'.$result.'</pre>';
 		}
-		
-	} catch( UserException $e ) {
-		reportError($e);
+	} else
+	if( isPOST('submitGenerateVE') ) {
+		$output		= POST('ve_output')==OUTPUT_DLRAW ? OUTPUT_DLRAW : OUTPUT_DISPLAY;
+		$generator	= new LangGenerator;
+		$result		= '';
+		foreach( POST('entities') as $entityName => $on ) {
+			$result	.= "\n\n\t$entityName.ini\n";
+			foreach( $generator->getRows(EntityDescriptor::load($entityName)) as $k => $exc ) {
+				/* @var $exc InvalidFieldException */
+				$exc->setDomain('entity_model');
+				$exc->removeArgs();//Does not replace arguments
+				// Tab size is 4 (as my editor's config)
+				$result .= $k.str_repeat("\t", 11-floor(strlen($k)/4)).'= "'.$exc->getText()."\"\n";
+			}
+			//paymentsbyexchangeaccepted_aboveMaxValue\t\t\t
+		}
+		if( $output==OUTPUT_APPLY ) {
+// 			reportSuccess('Output not implemented !');
+			reportError('Output not implemented !');
+			
+		} else {
+			echo '<pre style="tab-size: 4; -moz-tab-size: 4;">'.$result.'</pre>';
+		}
 	}
+}
+} catch( UserException $e ) {
+	reportError($e);
 }
 /*
 
 		<p>This tool allows you to generate SQL source for MySQL.</p>
  */
 ?>
-<form method="POST" role="form">
+<form method="POST" role="form" class="form-horizontal">
 
 <div class="row">
 	<div class="col-lg-6">
 		<h2>Entities found</h2>
+		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);">Check all</button>
 		<?php 
 		$entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
 		foreach( $entities as $filename ) {
 			$pi = pathinfo($filename);
 			if( $pi['extension'] != 'yaml' ) { continue; }
 			echo '
-		<div class="checkbox"><label><input type="checkbox" name="entities['.$pi['filename'].']"'.(isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/> '.$pi['filename'].'</label></div>';
+		<div class="checkbox"><label><input class="entitycb" type="checkbox" name="entities['.$pi['filename'].']"'.(isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/> '.$pi['filename'].'</label></div>';
 		}
 		?>
+		
 		<div class="form-group">
-			<label for="genMySQLOutput" class="col-sm-2 control-label">Output</label>
-			<div class="col-sm-2">
-				<select name="output" class="form-control">
-					<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
-					<option value="<?php echo OUTPUT_APPLY; ?>">Apply</option>
-				</select>
-			</div>
-			<div class="col-sm-2">
-				<button type="submit" class="btn btn-default" name="submitGenerateSQL">Generate</button>
-			</div>
+			<label class="col-sm-4 control-label">SQL</label>
+			<div class="col-sm-3"><select name="sql_output" class="form-control">
+				<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
+				<option value="<?php echo OUTPUT_APPLY; ?>">Apply</option>
+			</select></div>
+			<button type="submit" class="btn btn-default" name="submitGenerateSQL">Generate</button>
 		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Validation Errors</label>
+			<div class="col-sm-3"><select name="ve_output" class="form-control">
+				<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
+				<option value="<?php echo OUTPUT_DLRAW; ?>">Download (TXT)</option>
+			</select></div>
+			<button type="submit" class="btn btn-default" name="submitGenerateVE">Generate</button>
+		</div>
+		
 	</div>
 </div>
 

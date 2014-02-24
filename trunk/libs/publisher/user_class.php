@@ -153,20 +153,6 @@ class User extends AbstractStatus {
 		return $this->equals($object) || ( $this->checkPerm($action) && ( !($object instanceof User) || $this->canAlter($object) ) );
 	}
 	
-	//! Updates this publication object
-	/*!
-	 * \sa PermanentObject::update()
-	 * 
-	 * This update method manages 'name', 'email', 'email_public', 'password' and 'accesslevel' fields.
-	 */
-	// Prevents password recovery and other user edits...
-// 	public function update($uInputData, $fields=null) {
-// 		if( !static::loggedCanDo(static::$table.'_edit', $this) ) {
-// 			static::throwException('forbiddenUpdate');
-// 		}
-// 		return parent::update($uInputData, $fields);
-// 	}
-	
 	// *** METHODES STATIQUES ***
 	
 	//! Logs in a user from data

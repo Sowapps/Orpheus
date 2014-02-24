@@ -665,14 +665,14 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 
 //! Gets one report as HTML
 /*!
+ * \param $stream	The stream of the report.
  * \param $message	The message to report.
  * \param $type		The type of the report.
- * \param $stream	The stream of the report.
 
  * Returns a valid HTML report.
  * This function is only a HTML generator.
 */
-function getHTMLReport($report, $type, $stream) {
+function getHTMLReport($stream, $report, $type) {
 	return '
 		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
 }
@@ -885,18 +885,21 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 // 	return (isset($data[$field]) && $value == $data[$field]) ? 'selected="selected"' : '';
 // }
 
-function htmlText($fieldPath, $default='', $addAttr='') {
-	$value = fillInputValue($value, $fieldPath) ? $value : $default;
-	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
+function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
+// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	fillInputValue($value, $fieldPath, $default);
+	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ').$addAttr.'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
-	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	fillInputValue($value, $fieldPath, $default);
 	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
 }
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
-	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
+	fillInputValue($value, $fieldPath, $default);
 	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
 }
 
@@ -1000,7 +1003,7 @@ function convertSpecialChars($string) {
 			'Ž','ž','Z','z','Z','z',
 			'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ',
 		' '),
-		//'”','“','‘','’',"'","\n","\r",'£','$','€','¤'), //Just deleted
+		//'”','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
 		array(
 			'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
 			'C','c','C','c','C','c',
@@ -1049,9 +1052,18 @@ defifn('CAMELCASE',			1<<0);
 defifn('LOWERCAMELCASE',	CAMELCASE);
 defifn('UPPERCAMELCASE',	CAMELCASE | 1<<1);
 
-//! Converts the boolean into a string
-function bool2str($v) {
-	return ($v ? 'True' : 'False');
+// //! Converts the boolean into a string
+// function bool2str($v) {
+// 	return ($v ? 'True' : 'False');
+// }
+
+//! Gets the string of a boolean
+/*!
+ * \param $b The boolean.
+* \return The boolean's string.
+*/
+function b($b) {
+	return $b ? 'TRUE' : 'FALSE';
 }
 
 //! Splits a string by string in limited values
@@ -1077,22 +1089,13 @@ function hashString($str) {
 	return hash('sha512', $salt.$str.'7');
 }
 
-//! Gets the string of a boolean
-/*!
- * \param $b The boolean.
-* \return The boolean's string.
-*/
-function b($b) {
-	return $b ? 'TRUE' : 'FALSE';
-}
-
 //! Gets the date as string
 /*!
  * \param $time The UNIX timestamp.
-* \return The date using 'dateFormat' translation key
+ * \return The date using 'dateFormat' translation key
 */
 function d($time=TIME) {
-	return strftime(t('dateFormat'), $time);
+	return strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time));
 }
 
 //! Gets the date time as string
@@ -1107,7 +1110,7 @@ function dt($time=TIME) {
 //! Gets the date as string in SQL format
 /*!
  * \param $time The UNIX timestamp.
-* \return The date using sql format
+ * \return The date using sql format
 */
 function sqlDate($time=TIME) {
 	return strftime('%Y-%m-%d', $time);
@@ -1141,19 +1144,18 @@ function userID() {
 
 //! Generates a new password
 /*!
- * \param $length Thelength of the generated password.
- * \param $chars The characters to use to generate password.
- * \param $notlast Avoid $notlast characters at end of $chars.
+ * \param $length The length of the generated password. Default value is 10.
+ * \param $chars The characters to use to generate password. Default value is 'abcdefghijklmnopqrstuvwxyz0123456789'
  * \return The generated password.
  * 
  * This generator is made for humans, it avoids some special letters as first/last one.
  * So, place these characters at the end of $chars.
 */
-function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz0123456789?!$@+-', $notlast=2) {
+function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz0123456789') {
 	$max = strlen($chars)-1;
 	$r = '';
 	for( $i=0; $i<$length; $i++ ) {
-		$c = $chars[mt_rand(0, (!$i || $i>=($length-1)) ? $max-$notlast : $max)];
+		$c = $chars[mt_rand(0, $max)];
 		$r .= mt_rand(0, 1) ? strtoupper($c) : $c;
 	}
 	return $r;
