@@ -2,10 +2,10 @@
 if( !isset($_SERVER['REDIRECT_STATUS']) ) {
 	redirectToHome();
 }
-$CODE = $_SERVER['REDIRECT_STATUS'];
-$TCODE = $CODE==404 ? $CODE : 'other';
+$CODE	= $_SERVER['REDIRECT_STATUS'];
+$TCODE	= $CODE==404 ? $CODE : 'other';
 
-log_report('HTTP Error : '.$CODE, SERVLOGFILENAME, 'accessing page', null);
+log_report('HTTP Error : '.$CODE.' for page '.$_SERVER['REQUEST_URI'], SERVLOGFILENAME, 'accessing page', null);
 
 ?>
 
