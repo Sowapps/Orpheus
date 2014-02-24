@@ -31,6 +31,13 @@ abstract class PermanentObject {
 		static::$fields = array(static::$IDFIELD);
 	}
 	
+	public static function set2Array(array $array) {
+		foreach( $array as &$value ) {
+			$value	= $value->getValue();
+		}
+		return $array;
+	}
+	
 	// *** OVERRIDDEN METHODS ***
 	
 	//! Constructor
@@ -41,7 +48,7 @@ abstract class PermanentObject {
 		foreach( static::$fields as $fieldname ) {
 			// We condiser null as a valid value.
 			if( !array_key_exists($fieldname, $data) ) {
-				throw new FieldNotFoundException($fieldname);
+				throw new FieldNotFoundException($fieldname, static::getClass());
 			}
 			$this->data[$fieldname] = $data[$fieldname];
 		}
@@ -72,7 +79,7 @@ abstract class PermanentObject {
 	 * 'all' returns all fields.
 	*/
 	public function __get($name) {
-		return $this->getValue(($name == 'all') ? null : $name);
+		return $this->getValue($name == 'all' ? null : $name);
 	}
 	
 	//! Magic setter
@@ -125,7 +132,8 @@ abstract class PermanentObject {
 	//! Updates this permanent object
 	/*!
 	 * \param $uInputData The input data we will check and extract, used by children.
-	 * \param $fields The array of fields to check. Default value is null.
+	 * \param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
+	 * \param $noEmptyError True to do not throw exception for empty data (instead return 0). Default value is false.
 	 * \return 1 in case of success, else 0.
 	 * \overrideit
 	 * \sa runForUpdate()
@@ -137,23 +145,25 @@ abstract class PermanentObject {
 	 * Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
-	public function update($uInputData, $fields=null) {
+	public function update($uInputData, $fields, $noEmptyError=false) {
 		$data = static::checkUserInput($uInputData, $fields, $this);
+		debug('data', $data);
 		// Don't care about some errors, other fields should be updated.
 		try {
 			if( empty($data) ) {
-				static::throwException('updateEmptyData');
+				if( $noEmptyError ) {
+					return 0;
+				} else {
+					static::throwException('updateEmptyData');
+				}
 			}
 			static::checkForObject(static::completeFields($data), $this);
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
 		$oldData = $this->all;
 		foreach($data as $fieldname => $fieldvalue) {
-			if( isset($fieldvalue) && $fieldname != static::$IDFIELD && in_array($fieldname, static::$editableFields) ) {
-				$this->$fieldname = $fieldvalue;
-// 			} else {
-// 				Do not delete real_password
-// 				unset($data[$fieldname]);
+			if( static::isFieldEditable($fieldname) ) {
+				$this->setValue($fieldname, $fieldvalue);
 			}
 		}
 		static::logEvent('edit');
@@ -203,6 +213,10 @@ abstract class PermanentObject {
 		return SQLAdapter::doUpdate($options, static::$DBInstance, static::$IDFIELD);
 	}
 	
+	public function remove() {
+		return static::delete($this->id());
+	}
+	
 	//! Reloads fields from database
 	/*!
 	 * \param $field The field to reload, default is null (all fields).
@@ -216,7 +230,7 @@ abstract class PermanentObject {
 		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_FIRST);
 		if( !is_null($field) ) {
 			if( !in_array($field, $fields) ) {
-				throw new FieldNotFoundException($field);
+				throw new FieldNotFoundException($field, static::getClass());
 			}
 			$i = array_search($this->modFields);
 			if( $i !== false ) {
@@ -227,11 +241,16 @@ abstract class PermanentObject {
 			$this->modFields = array();
 		}
 		$data = static::get($options);
+		if( empty($data) ) {
+			$this->markAsDeleted();
+			return false;
+		}
 		if( !is_null($field) ) {
 			$this->data[$field] = $data[$field];
 		} else {
 			$this->data = $data;
 		}
+		return true;
 	}
 	
 	//! Marks the field as modified
@@ -289,9 +308,8 @@ abstract class PermanentObject {
 			return $this->data;
 		}
 		if( !array_key_exists($key, $this->data) ) {
-			log_debug('Key "'.$key.'" not found in array :');
-			log_debug($this->data);
-			throw new FieldNotFoundException($key);
+			log_debug('Key "'.$key.'" not found in array : '.print_r($this->data, 1));
+			throw new FieldNotFoundException($key, static::getClass());
 		}
 		return $this->data[$key];
 	}
@@ -305,16 +323,17 @@ abstract class PermanentObject {
 	*/
 	public function setValue($key, $value) {
 		if( !isset($key) ) {//$value
-			static::throwException("nullValue");
-			
-		} else if( !in_array($key, static::$fields) ) {
-			throw new FieldNotFoundException($key);
-			
-		} else {
-			if( empty($this->data[$key]) || $value !== $this->data[$key] ) {
-				$this->addModFields($key);
-				$this->data[$key] = $value;
-			}
+			throw new Exception("nullKey");
+		} else
+		if( !in_array($key, static::$fields) ) {
+			throw new FieldNotFoundException($key, static::getClass());
+		} else
+		if( $key == static::$IDFIELD ) {
+			throw new Exception("idNotEditable");
+		} else
+		if( empty($this->data[$key]) || $value !== $this->data[$key] ) {
+			$this->addModFields($key);
+			$this->data[$key] = $value;
 		}
 	}
 	
@@ -344,7 +363,7 @@ abstract class PermanentObject {
 			$this->setValue($event.'_time', $log[$event.'_time']);
 		} else
 		if( in_array($event.'_date', static::$fields) ) {
-			$this->setValue($event.'_date', $log[$event.'_time']);
+			$this->setValue($event.'_date', sqlDatetime($log[$event.'_time']));
 		} else {
 			return;
 		}
@@ -354,6 +373,13 @@ abstract class PermanentObject {
 	}
 	
 	// *** STATIC METHODS ***
+
+	public static function isFieldEditable($fieldname) {
+		if( $fieldname == static::$IDFIELD ) { return false; }
+		if( !is_null(static::$editableFields) ) { return in_array($fieldname, static::$editableFields); }
+		if( method_exists(static::$validator, 'isFieldEditable') ) { return in_array($fieldname, static::$editableFields); }
+		return in_array($fieldname, static::$fields);
+	}
 	
 	//! Loads a permanent object
 	/*!
@@ -362,19 +388,27 @@ abstract class PermanentObject {
 	 * \sa get()
 	 * Exceptions invalidParameter_IN
 	
-	 * Loads the object with the ID $id or the array data
+	 * Loads the object with the ID $id or the array data.
+	 * The return value is always a static object (no null, no array, no other object).
 	*/
+	/**
+	 * @param int|mixed[] $in
+	 * @return static
+	 */
 	public static function load($in) {
 		if( empty($in) ) {
 			static::throwException('invalidParameter_IN');
 		}
-		$IDFIELD=static::$IDFIELD;
+		if( is_object($in) && $in instanceof static ) {
+			return $in;
+		}
+		$IDFIELD	= static::$IDFIELD;
 		// If $in is an array, we trust him, as data of the object.
 		if( is_array($in) ) {
-			$id = $in[$IDFIELD];
-			$data = $in;
+			$id		= $in[$IDFIELD];
+			$data	= $in;
 		} else {
-			$id = $in;
+			$id		= $in;
 		}
 		if( !is_ID($id) ) {
 			static::throwException('invalidID');
@@ -423,6 +457,11 @@ abstract class PermanentObject {
 		if( !ctype_digit("$in") ) {
 			static::throwException('invalidID');
 		}
+		if( isset(static::$instances[static::getClass()][$in]) ) {
+			/* @var $obj static */
+			$obj = &static::$instances[static::getClass()][$in];
+			if( $obj->isDeleted() ) { return 1; }
+		}
 		$IDFIELD=static::$IDFIELD;
 		$options = array(
 			'table'	=> static::$table,
@@ -431,8 +470,8 @@ abstract class PermanentObject {
 		);
 		$r = SQLAdapter::doDelete($options, static::$DBInstance, static::$IDFIELD);
 		if( $r ) {
-			if( isset(static::$instances[static::getClass()][$in]) ) {
-				static::$instances[static::getClass()][$in]->markAsDeleted();
+			if( isset($obj) ) {
+				$obj->markAsDeleted();
 			}
 			static::runForDeletion($in);
 		}
@@ -480,6 +519,10 @@ abstract class PermanentObject {
 	 * Take care that output=SQLAdapter::ARR_OBJECTS and number=1 is different from output=SQLAdapter::OBJECT
 	 * 
 	*/
+	/**
+	 * @param array $options
+	 * @return static|static[]
+	 */
 	public static function get(array $options=array()) {
 		$options['table'] = static::$table;
 		// May be incompatible with old revisions (< R398)
@@ -528,13 +571,7 @@ abstract class PermanentObject {
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
-		
-		if( in_array('create_time', static::$fields) ) {
-			$data += static::getLogEvent('create');
-		}
-		if( in_array('edit_time', static::$fields) ) {
-			$data += static::getLogEvent('edit');
-		}
+		$data = static::getLogEvent('create') + static::getLogEvent('edit') + $data;
 		
 		// Check if entry already exist
 		static::checkForObject($data);
@@ -574,6 +611,10 @@ abstract class PermanentObject {
 		return $data;
 	}
 	
+	public static function getFields() {
+		return static::$fields;
+	}
+	
 	//! Gets the log of an event
 	/*!
 	 * \param $event The event to log in this object.
@@ -586,7 +627,7 @@ abstract class PermanentObject {
 	public static function getLogEvent($event, $time=null, $ipAdd=null) {
 		return array(
 			$event.'_time'	=> isset($time) ? $time : time(),
-			$event.'_date'	=> isset($time) ? sqlDatetime : sqlDatetime(),
+			$event.'_date'	=> isset($time) ? sqlDatetime($time) : sqlDatetime(),
 			$event.'_ip'	=> isset($ipAdd) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
 		);
 	}

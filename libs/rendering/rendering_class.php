@@ -31,47 +31,61 @@ abstract class Rendering {
 		echo $this->render($model, $env);
 	}
 	
+	public function getMenuItems($menu) {
+		if( !isset(self::$menusConf) ) {
+			self::$menusConf = Config::build('menus', true);
+		}
+		if( empty(self::$menusConf) || empty(self::$menusConf->$menu) ) {
+			return array();
+		}
+		return self::$menusConf->$menu;
+	}
+	
 	//! Displays rendering.
 	/*!
-	 * \param $env An environment variable.
-	 * \param $model The model to use.
+	 * \param $env		An environment variable.
+	 * \param $model	The model to use.
+	 * \param $active	The active menu item.
 	 * 
 	 * Displays the model rendering using $env.
 	 */
-	public function showMenu($menu, $layout=null) {
+	public function showMenu($menu, $layout=null, $active=null) {
 // 		self::checkRendering();
 		
 		global $USER_CLASS;
-		if( !isset(self::$menusConf) ) {
-			self::$menusConf = Config::build('menus', true);
-// 			self::$menusConf = self::$menusConf->all;
+		if( !class_exists($USER_CLASS) ) { return false; }
+		
+		if( !is_null($active) ) {
+			list($actModule, $actAction) = explodeList('-', $active, 2);
+		} else {
+			$actModule	= &$GLOBALS['Module'];
+			$actAction	= &$GLOBALS['Action'];
 		}
-		if( empty(self::$menusConf) || empty(self::$menusConf->$menu)
-			|| !class_exists($USER_CLASS) ) {
-			return false;
-		}
-
 		
 		if( is_null($layout) ) {
 			$layout = defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
 		}
 		
-		$env = array('menu'=>$menu, 'items'=>array());
-		foreach( self::$menusConf->$menu as $modData ) {
+		$env	= array('menu'=>$menu, 'items'=>array());
+		$items	= $this->getMenuItems($menu);
+		if( empty($items) ) { return false; }
+		foreach( $items as $modData ) {
+			if( empty($modData) ) { continue; }
 			$item = new stdClass;
 			if( $modData[0] == '#' ) {
 				list($item->link, $item->label) = explode('|', substr($modData, 1));
 			} else {
-				$modData = explode('-', $modData);
-				$module = $modData[0];
+				$modData	= explode('-', $modData);
+				$module		= $modData[0];
 				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
 					|| !Hook::trigger('menuItemAccess', true, true, $module) ) { continue; }
-				$action = ( count($modData) > 1 ) ? $modData[1] : '';
-				$queryStr = ( count($modData) > 2 ) ? $modData[2] : '';
-				$item->link = u($module, $action, $queryStr);
-				$item->label = t($module.( (!empty($action)) ? '_'.$action : ''));
-				$item->module = $module;
-				if( $module==$GLOBALS['Module'] && (!isset($Action) || $Action==$action) ) {
+				$action			= ( count($modData) > 1 ) ? $modData[1] : '';
+				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
+				$queryStr		= count($modData) > 2 ? $modData[2] : '';
+				$item->link		= u($module, $action, $queryStr);
+				$item->label	= ( !empty($action) && hasTranslation($module.'_'.$action) ) ? t($module.'_'.$action) : t($module);
+				$item->module	= $module;
+				if( $module==$actModule && (is_null($actAction) || $actAction==$action) ) {
 					$item->current = 1;
 				}
 			}

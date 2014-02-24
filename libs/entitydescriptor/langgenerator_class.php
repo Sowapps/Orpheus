@@ -26,7 +26,7 @@ class LangGenerator {
 			try {
 				$ed->validateFieldValue($field, $value);
 			} catch( InvalidFieldException $e ) {
-				$r["$e"] = $e;
+				$r[$e->getKey()] = $e;
 			}
 		}
 		return $r;

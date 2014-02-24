@@ -7,7 +7,8 @@
 abstract class PermanentEntity extends PermanentObject {
 
 	//Attributes
-	protected static $table = null;
+	protected static $table				= null;
+	protected static $editableFields	= null;
 	
 	// Final class attributes, please inherits them
 	/*
@@ -24,5 +25,9 @@ abstract class PermanentEntity extends PermanentObject {
 		if( is_null(static::$domain) ) {
 			static::$domain = static::$table;
 		}
+	}
+	
+	public static function getField($field) {
+		static::$validator->getField($field);
 	}
 }

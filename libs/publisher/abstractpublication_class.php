@@ -58,11 +58,11 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * 
 	 * This update method manages 'name' and 'user_name' fields.
 	 */
-	public function update($uInputData, $fields=null) {
+	public function update($uInputData, $fields=null, $noEmptyError=false) {
 		if( !User::loggedCanDo(static::$table.'_edit') ) {
 			throw new UserException('forbiddenUpdate');
 		}
-		return parent::update($uInputData, $fields);
+		return parent::update($uInputData, $fields, $noEmptyError);
 	}
 	
 	//! Gets HTML contents

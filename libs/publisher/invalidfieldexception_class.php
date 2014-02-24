@@ -12,6 +12,7 @@ class InvalidFieldException extends UserException {
 	
 	// $field is INPUT field (not always the same as db field)
 	public function __construct($message, $field, $value, $type=null, $domain=null, $typeArgs=array()) {
+// 		debug('Creating with domain', $domain);
 		parent::__construct($message, $domain);
 		$this->field	= $field;
 		$this->type		= $type;
@@ -32,6 +33,10 @@ class InvalidFieldException extends UserException {
 		return $this->value;
 	}
 	
+	public function removeArgs() {
+		$this->args	= array();
+	}
+	
 	public function getArgs() {
 		return $this->args;
 	}
@@ -41,22 +46,21 @@ class InvalidFieldException extends UserException {
 // 	}
 	
 	public function getText() {
-		$m = $this->getMessage();
-		$args = $this->args;
-		if( hasTranslation($this->getMessage().'_field', $this->getDomain()) ) {
-			$m = $this->getMessage().'_field';
-			$args = array_merge(array('FIELD'=>t($this->getField(), $this->getDomain())), $args);
+		$args	= $this->args;
+		$msg	= $this->getKey();
+		if( !hasTranslation($msg, $this->domain) && hasTranslation($this->getMessage().'_field', $this->domain) ) {
+			$msg	= $this->getMessage().'_field';
+			$args	= array_merge(array('FIELD'=>t($this->getField(), $this->domain)), $args);
 		}
-		return t($m, $this->getDomain(), $args);
+		return t($msg, $this->domain, $args);
 	}
 	
-	public function __toString() {
+	public function getKey() {
 		return $this->field.'_'.$this->getMessage();
 	}
 	
 	public function getReport() {
 		return array(static::getText(), $this->field);
-// 		return array(t($this->getMessage(), $this->getDomain(), $this->args), $this->field);
 	}
 	
 	public static function from(UserException $e, $field, $value, $type=null, $args=array()) {

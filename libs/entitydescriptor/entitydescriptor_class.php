@@ -99,6 +99,10 @@ class EntityDescriptor {
 		return $this->name;
 	}
 	
+	public function getField($field) {
+		return isset($this->fields[$field]) ? $this->fields[$field] : null;
+	}
+	
 	public function getFields() {
 		return $this->fields;
 	}
@@ -110,36 +114,23 @@ class EntityDescriptor {
 	public function getFieldsName() {
 		return array_keys($this->fields);
 	}
-	/*
-	protected function callValidator($type, $args, &$value) {
-		if( isset($type->parent) ) {
-			$parent = static::getType($type->parent);
-			$this->callValidator($parent, $args, $value);
-		}
-		call_user_func($type->validator, $args, $value);
-	}
 	
-	protected function callFormatter($type, $args, &$value) {
-		if( isset($type->parent) ) {
-			$parent = static::getType($type->parent);
-			$this->callFormatter($parent, $args, $value);
-		}
-		if( $type->formatter ) {
-			call_user_func($type->formatter, $args, $value);
-		}
-	}
-	*/
+	
 	
 	public function validateFieldValue($field, &$value, $inputData=array(), $ref=null) {
+// 		text("validateFieldValue($field, $value)");
 		if( !isset($this->fields[$field]) ) {
-			throw new InvalidFieldException('unknownField', $field, $value);
+			throw new InvalidFieldException('unknownField', $field, $value, null, $this->name);
 		}
 		$Field	= $this->fields[$field];
 		if( !$Field->writable ) {
-			throw new InvalidFieldException('readOnlyField', $field, $value);
+			throw new InvalidFieldException('readOnlyField', $field, $value, null, $this->name);
 		}
 		
-		if( is_null($value) ) {
+		$TYPE	= static::getType($Field->type);
+		
+		if( is_null($value) || ($value==='' && $TYPE->emptyIsNull($Field)) ) {
+			$value	= null;
 			if( isset($Field->default) ) {
 				$value = $Field->default;
 				if( is_object($value) ) {
@@ -147,12 +138,11 @@ class EntityDescriptor {
 				}
 			} else
 			if( !$Field->nullable ) {
-				throw new InvalidFieldException('requiredField', $field, $value);
+				throw new InvalidFieldException('requiredField', $field, $value, null, $this->name);
 			}
 			// We will format valid null value later (in formatter)
 			return;
 		}
-		$TYPE	= static::getType($Field->type);
 		// TYPE Validator - Use inheritance, mandatory in super class
 		try {
 			$TYPE->validate($Field, $value, $inputData);
@@ -161,7 +151,7 @@ class EntityDescriptor {
 				call_user_func_array($Field->validator, array($Field, &$value, $inputData));
 			}
 		} catch( FE $e ) {
-			throw new InvalidFieldException($e->getMessage(), $field, $value, $Field->type, null, $Field->args);
+			throw new InvalidFieldException($e->getMessage(), $field, $value, $Field->type, $this->name, $Field->args);
 		}
 
 		// TYPE Formatter - Use inheritance, mandatory in super class
@@ -170,15 +160,25 @@ class EntityDescriptor {
 	}
 	
 	public function validate(&$uInputData, $fields=null, $ref=null, &$errCount=0) {
+		$inputData	= array();
 // 		$class = $this->class;
-		foreach( $this->fields as $field => $fData ) {
+		foreach( $this->fields as $field => &$fData ) {
 			try {
-				if( !is_null($fields) && !in_array($field, $fields) ) { continue; }
-				if( !isset($this->fields[$field]) || !$this->fields[$field]->writable ) { continue; }
+				if( !is_null($fields) && !in_array($field, $fields) ) {
+					unset($uInputData[$field]);
+// 					if( !is_null($ref) ) { unset($uInputData[$field]); }
+					continue;
+				}
+				if( !$fData->writable ) { continue; }
+// 				if( !isset($this->fields[$field]) || !$fData->writable ) { continue; }
 				if( !isset($uInputData[$field]) ) {
+// 					if( !is_null($ref) ) { continue; }
 					$uInputData[$field] = null;
 				}
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
+				if( !isset($ref) || $uInputData[$field]!=$ref->getValue($field) ) {
+					$inputData[$field]	= $uInputData[$field];
+				}
 
 			} catch( UserException $e ) {
 				$errCount++;
@@ -190,9 +190,8 @@ class EntityDescriptor {
 				throw $e;
 			}
 		}
-		return $uInputData;
+		return $inputData;
 	}
-
 
 	protected static $types = array();
 	
@@ -207,27 +206,6 @@ class EntityDescriptor {
 		$type = &static::$types[$name];
 		return $type;
 	}
-	/*
-	protected static $types = array();
-
-	public static function getType($name, &$type=null) {
-		if( !isset(static::$types[$name]) ) {
-			throw new Exception('unknownType_'.$name);
-		}
-		$type = &static::$types[$name];
-		return $type;
-	}
-	
-	public static function registerType($name, $parent, $argsParser=null, $validator=null, $formatter=null, $writable=null, $nullable=null) {
-		// If previously registered, we just replace it
-		static::$types[$name] = new TypeDescriptor($name, isset($parent) ? static::getType($parent) : null, $argsParser, $validator, $formatter, $writable, $nullable);
-// 		static::$types[$name] = (object) array(
-// 			'argsParser'	=> $argsParser,
-// 			'validator'		=> $validator,
-// 			'formatter'		=> $formatter,
-// 		);
-	}
-	*/
 
 	public static function parseType($string) {
 		$result = array('type'=>null, 'args'=>array(), 'default'=>null, 'flags'=>array());
@@ -280,6 +258,7 @@ class TypeNumber extends TypeDescriptor {
 	}
 
 	public function validate($Field, &$value, $inputData) {
+		$value	= str_replace(',', '.', $value);
 		if( !is_numeric($value) ) {
 			throw new FE('notNumeric');
 		}
@@ -289,6 +268,10 @@ class TypeNumber extends TypeDescriptor {
 		if( $value > $Field->args->max ) {
 			throw new FE('aboveMaxValue');
 		}
+	}
+	
+	public function htmlInputAttr($args) {
+		return ' maxlength="'.strlen($args->max).'"';
 	}
 }
 EntityDescriptor::registerType(new TypeNumber());
@@ -316,6 +299,14 @@ class TypeString extends TypeDescriptor {
 			throw new FE('aboveMaxLength');
 		}
 	}
+	
+	public function htmlInputAttr($args) {
+		return ' maxlength="'.$args->max.'"';
+	}
+	
+	public function emptyIsNull($field) {
+		return $field->args->min > 0;
+	}
 }
 EntityDescriptor::registerType(new TypeString());
 
@@ -323,7 +314,7 @@ class TypeDate extends TypeDescriptor {
 	protected $name = 'date';
 	
 	public function validate($Field, &$value, $inputData) {
-		// FR Only for now
+		// FR Only for now - Should use user language
 		if( !is_date($value, false, $time) && !is_date($value, false, $time, 'SQL') ) {
 			throw new FE('notDate');
 		}
@@ -341,7 +332,7 @@ class TypeDatetime extends TypeDescriptor {
 	protected $name = 'datetime';
 	
 	public function validate($Field, &$value, $inputData) {
-		// FR Only for now
+		// FR Only for now - Should use user language
 		if( !is_date($value, true, $time) && !is_date($value, true, $time, 'SQL') ) {
 			throw new FE('notDatetime');
 		}
@@ -445,9 +436,6 @@ class TypeRef extends TypeNatural {
 	// MySQL needs more logic to select a null field with an index
 	// Prefer to set default to 0 instead of using nullable
 
-// 	public function parseArgs($fArgs) {
-// 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);	
-// 	}
 }
 EntityDescriptor::registerType(new TypeRef());
 
@@ -496,14 +484,14 @@ class TypePhone extends TypeString {
 
 	public function validate($Field, &$value, $inputData) {
 		parent::validate($Field, $value, $inputData);
-		// FR Only for now
+		// FR Only for now - Should use user language
 		if( !is_phone_number($value) ) {
 			throw new FE('notPhoneNumber');
 		}
 	}
 	
 	public function format($Field, &$value) {
-		// FR Only for now
+		// FR Only for now - Should use user language
 		$value = standardizePhoneNumber_FR($value, '.', 2);
 	}
 }
@@ -558,7 +546,11 @@ class TypeEnum extends TypeString {
 
 	public function validate($Field, &$value, $inputData) {
 		parent::validate($Field, $value, $inputData);
-		if( !in_array($value, call_user_func($Field->args->source)) ) {
+		$values = call_user_func($Field->args->source);
+		if( isset($values[$value]) ) {
+			$value = $values[$value];
+		} else
+		if( !in_array($value, $values) ) {
 			throw new FE('notEnumValue');
 		}
 	}

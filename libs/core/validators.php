@@ -51,7 +51,8 @@ function is_personalname($name, $charnb_max=50, $charnb_min=3) {
  * The ID number is an integer.
  */
 function is_ID($Number) {
-	return ctype_digit("$Number");
+	$Number	= "$Number";
+	return is_scalar($Number) && ctype_digit($Number);
 }
 
 //! Checks if the input is a date.

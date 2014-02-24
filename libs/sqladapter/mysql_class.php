@@ -141,7 +141,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 			( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
 		$TABLE		= static::escapeIdentifier($options['table']);
 		
-		$QUERY		= "DELETE {$OPTIONS} FROM {$options['table']} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "DELETE {$OPTIONS} FROM {$TABLE} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}

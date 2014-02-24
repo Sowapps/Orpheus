@@ -80,24 +80,24 @@ register_shutdown_function(
 */
 function() {
 	if( $error = error_get_last() ) {
-		switch($error['type']){
-			case E_ERROR:
-			case E_CORE_ERROR:
-			case E_COMPILE_ERROR:
-			case E_USER_ERROR: {
-				$Page = ob_get_contents();
+// 		switch( $error['type'] ) {
+// 			case E_ERROR:
+// 			case E_CORE_ERROR:
+// 			case E_COMPILE_ERROR:
+// 			case E_USER_ERROR: {
+// 				$Page = ob_get_contents();
 				ob_end_clean();
-				$message = $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
-PAGE:<br /><div style="clear: both;">'.$Page.'</div>';
 				
 				if( !function_exists('log_error') ) {
-					die($message);
+					die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
+PAGE:<br /><div style="clear: both;">'.$Page.'</div>' : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 				}
-				log_error($message, 'Shutdown script');
+				log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
+// 				log_error($error['message'].' in '.$error['file'].' ('.$error['line'].')<br />', 'Shutdown script');
 // 				die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 				break;
-			}
-		}
+// 			}
+// 		}
 	}
 });
 
@@ -282,14 +282,15 @@ try {
 	$Page = getReportsHTML();
 	
 } catch(Exception $e) {
-	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
-		$Page = ob_get_contents();
-		ob_end_clean();
-	}
 	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
 	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+	
+	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
+		$Page = ob_get_contents();
+		ob_end_clean();
+	}
 }
 
 try {
