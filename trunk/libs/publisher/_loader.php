@@ -44,3 +44,7 @@ Hook::register('runModule', function () {
 		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : u(DEFAULTMOD));
 	}
 });
+
+function id(&$id) {
+	return $id = is_object($id) ? $id->id() : $id;
+}

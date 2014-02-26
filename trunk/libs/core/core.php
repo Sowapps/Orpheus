@@ -1207,3 +1207,7 @@ function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 	return str_replace(array('.', ' ', '-'), $delimiter, $number);
 }
 
+function count_intersect_keys($array1, $array2) {
+	return count(array_intersect_key($array1, $array2));
+}
+
