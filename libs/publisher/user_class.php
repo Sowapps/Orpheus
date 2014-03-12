@@ -253,6 +253,21 @@ class User extends AbstractStatus {
 		return ( !empty($USER) && $USER->accesslevel > 0 );
 	}
 	
+	public static function getAccessOf($module) {
+		/* @var $ACCESS Config */
+		global $ACCESS;
+// 		text("getAccessOf($module)");
+		if( empty($ACCESS) || !isset($ACCESS->$module) ) { return null; }
+		$v	= $ACCESS->$module;
+// 		text("Value: $v");
+		if( is_numeric($v) ) { return $v; }
+		global $RIGHTS;
+// 		debug("Reference, search in rights", $RIGHTS);
+		if( isset($RIGHTS->$v) ) { return $RIGHTS->$v; }
+// 		text("Reference to right not found, look for a reference to another access");
+		return static::getAccessOf($v);
+	}
+	
 	//! Checks if this user can access to a module
 	/*!
 	 * \param $module The module to look for.
@@ -261,11 +276,17 @@ class User extends AbstractStatus {
 	 * Checks if this user can access to $module.
 	 */
 	public static function canAccess($module) {
-		global $USER, $ACCESS;
-		return !empty($ACCESS) && (is_null($ACCESS->$module) || 
-			( empty($USER) && $ACCESS->$module < 0 ) ||
-			( !empty($USER) && $ACCESS->$module >= 0 && $USER instanceof SiteUser
-				&& $USER->checkPerm((int) $ACCESS->$module)));
+		/* @var $USER SiteUser */
+		global $USER;
+// 		text("canAccess($module)");
+		$access	= static::getAccessOf($module);
+// 		text('$access : '.$access);
+		if( is_null($access) ) { return true; }
+		$access	= (int) $access;
+		return is_null($access) || 
+			( empty($USER) && $access < 0 ) ||
+			( !empty($USER) && $access >= 0 &&
+				$USER instanceof SiteUser && $USER->checkPerm($access));
 	}
 	
 	//! Checks if this user can do a restricted action
@@ -380,18 +401,19 @@ class User extends AbstractStatus {
 		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
 			static::throwException('invalidAccessLevel');
 		}
-		if( !defined('ALLOW_USER_GRANTING') ) { // Special case for developers
-			global $USER;
-			if( !User::loggedCanDo('users_grants', $ref) // Can the current user do this action ? This user try to edit himself ?
+// 		if( !defined('ALLOW_USER_GRANTING') ) { // Special case for developers
+// 			global $USER;
+// 			if( !User::loggedCanDo('users_grants', $ref) // Can the current user do this action ? This user try to edit himself ?
 // 				|| (isset($ref) && !$USER->checkPerm($ref->accesslevel)) // Has the current user less accesslevel that the edited one ? - Already check in canDo()
-				|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
-			) {
-				static::throwException('forbiddenGrant');
-			}
-			if( isset($ref) && $inputData['accesslevel'] == $ref->accesslevel ) {
-				static::throwException('sameAccessLevel');
-			}
-		}
+// 				|| !$USER->checkPerm($inputData['accesslevel']) // Has the current user less accesslevel that he want to grant ?
+// 			) {
+// 				static::throwException('forbiddenGrant');
+// 			}
+// 			if( isset($ref) && $inputData['accesslevel'] == $ref->accesslevel ) {
+// 				return null;
+// 				static::throwException('sameAccessLevel');
+// 			}
+// 		}
 		return (int) $inputData['accesslevel'];
 	}
 	

@@ -34,7 +34,7 @@ class Email {
 	private $AttFiles = array();
 	
 	private $Subject;
-	private $Type=0;// Bit value, 1=>Text, 2=>HTML
+	private $Type = 0;// Bit value, 1=>Text, 2=>HTML
 	private $MIMEBoundary = array();
 	
 	public static $TEXTTYPE = 1;
@@ -355,32 +355,25 @@ BODY;
 				$this->setHeader('Content-Type', 'text/plain; charset="UTF-8"');
 				$this->setHeader('Content-Transfer-Encoding', 'quoted-printable');
 				$Body = $this->TEXTBody;
-			
 			}
-			
 		}
 		if( empty($Body) ) {
-			throw new Exception('EmptyMail');
+			throw new Exception('emptyMailBody');
 		}
 		
 		$Headers = '';
-		foreach($this->Headers as $headerName => $headerValue ) {
+		foreach( $this->Headers as $headerName => $headerValue ) {
 			if( !empty($headerValue) ) {
 				$Headers .= "{$headerName}: {$headerValue}\r\n";
 			}
 		}
 		$Headers .= "\r\n";
-// 		text();
-// 		debug('$Headers', $Headers);
-// 		text();
-// 		debug('$Body', $Body);
-// 		text();
 		if( !is_array($ToAddress) ) {
 			if( !mail($ToAddress, $this->Subject, $Body, $Headers) ) {
-				throw new Exception("ProblemSendingMail");
+				throw new Exception("issueSendingEmail");
 			}
 		} else {
-			foreach($ToAddress as $MailToData) {
+			foreach(array_unique($ToAddress) as $MailToData) {
 				$MailToEmail = '';
 				if( self::is_email($MailToData) ) {
 					$MailToEmail = $MailToData;
@@ -393,11 +386,11 @@ BODY;
 						$MailToEmail = $MailToData['email'];
 					}
 				}
-				if( empty($MailToEmail) ) {
-					throw new Exception("EmptyEmailAddress");
-				}
+				if( empty($MailToEmail) ) { continue; }
+// 					throw new Exception("EmptyEmailAddress");
+
 				if( !mail($MailToEmail, $this->Subject, $Body, $Headers)) {
-					throw new Exception("ProblemSendingMail");
+					throw new Exception("issueSendingEmail");
 				}
 			}
 		}
