@@ -13,7 +13,7 @@ class FieldNotFoundException extends Exception {
 		\param $fieldname The name of the missing field.
 	*/
 	public function __construct($fieldname, $source=null) {
-		parent::__construct('fieldNotFound['.(isset($source) ? $source.'_' : '').$fieldname.']', 1001);
+		parent::__construct('fieldNotFound['.(isset($source) ? $source.'-' : '').$fieldname.']', 1001);
 		$this->fieldname	= (string) $fieldname;
 		$this->source		= (string) $source;
 	}

@@ -46,12 +46,26 @@ class InvalidFieldException extends UserException {
 // 	}
 	
 	public function getText() {
+// 		text('InvalidFieldException::getText()');
 		$args	= $this->args;
-		$msg	= $this->getKey();
-		if( !hasTranslation($msg, $this->domain) && hasTranslation($this->getMessage().'_field', $this->domain) ) {
-			$msg	= $this->getMessage().'_field';
-			$args	= array_merge(array('FIELD'=>t($this->getField(), $this->domain)), $args);
+		$msg	= $this->field.'_'.$this->getMessage();
+		if( !hasTranslation($msg, $this->domain) ) {
+			if( hasTranslation($this->getMessage().'_field', $this->domain) ) {
+				$msg	= $this->getMessage().'_field';
+				$args	= array_merge(array('FIELD'=>t($this->getField(), $this->domain)), $args);
+			} else
+			if( hasTranslation($this->getMessage(), $this->domain) ) {
+				$msg	= $this->getMessage();
+			}
 		}
+// 		if( !hasTranslation($msg, $this->domain) ) {
+// 			$this->field.'_'.
+// 			if( !hasTranslation($msg, $this->domain) && hasTranslation($this->getMessage().'_field', $this->domain) ) {
+// 				$msg	= $this->getMessage().'_field';
+// 				$args	= array_merge(array('FIELD'=>t($this->getField(), $this->domain)), $args);
+// 			}
+// 		}
+// 		text("$msg");
 		return t($msg, $this->domain, $args);
 	}
 	

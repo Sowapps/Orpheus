@@ -96,3 +96,7 @@ function hasTranslation($k, $domain='global') {
 	loadLangFile($domain);
 	return isset($LANG[$domain]) && isset($LANG[$domain][$k]);
 }
+
+if( hasTranslation('locale') ) {
+	setlocale(LC_ALL, t('locale'));
+}

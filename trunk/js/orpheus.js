@@ -138,6 +138,38 @@ $.fn.watch = function(cb) {
 	});
 };
 
+$.fn.pressEnter = function(cb) {
+	$(this).keydown(function(e) {
+		debug('This key down : '+e.which);
+		if( e.which==KeyEvent.DOM_VK_RETURN ) {
+			e.preventDefault();
+			this.callback	= cb;
+			this.callback(e);
+		}
+	});
+};
+
+function centerInViewport(el) {
+	el = $(el);
+	debug(el);
+	var viewportWidth = jQuery(window).width(),
+	viewportHeight = jQuery(window).height(),
+	elWidth = el.width(),
+	elHeight = el.height(),
+	elOffset = el.offset();
+	jQuery(window)
+	.scrollTop(elOffset.top + (elHeight/2) - (viewportHeight/2))
+	.scrollLeft(elOffset.left + (elWidth/2) - (viewportWidth/2));
+}
+
+function moveOnMouse(el, e) {
+	el = $(el);
+	var elHeight = el.height(),
+	elOffset = el.offset();
+	var scrollTop = jQuery(window).scrollTop()-((e.pageY - (elHeight/2)) - elOffset.top);
+	$(window).scrollTop(scrollTop);
+}
+
 if( typeof KeyEvent == "undefined" ) {
     var KeyEvent = {
         DOM_VK_CANCEL: 3,

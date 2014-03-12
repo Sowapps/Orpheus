@@ -154,6 +154,19 @@ function cleanscandir($dir, $sorting_order=0) {
 	return $result;
 }
 
+function stringify($s) {
+	if( is_object($s) && $s instanceof Exception ) {
+		$s = formatException($s);
+	} else {
+		$s = "\n".print_r($s, 1);
+	}
+	return $s;
+}
+
+function formatException($e) {
+	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message').' in '.$e->getFile().':'.$e->getLine()."\n".$e->getTraceAsString();
+}
+
 //! Logs a report in a file.
 /*!
  * \param $report The report to log.
@@ -173,12 +186,12 @@ function cleanscandir($dir, $sorting_order=0) {
 */
 function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		if( is_object($report) && $report instanceof Exception ) {
-			$report = 'Exception \''.get_class($report).'\' with '.( $report->getMessage() ? " message '{$report->getMessage()}'" : 'no message').' in '.$report->getFile().':'.$report->getLine()."\n".$report->getTraceAsString();
-		} else {
-			$report = "\n".print_r($report, 1);
-		}
-		$report = 'NON-SCALAR::'.$report;//."\n".print_r($report, 1);
+// 		if( is_object($report) && $report instanceof Exception ) {
+// 			$report = formatException($report);
+// 		} else {
+// 			$report = "\n".print_r($report, 1);
+// 		}
+		$report = 'NON-SCALAR::'.stringify($report);//."\n".print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
@@ -524,8 +537,8 @@ function transferReportStream($from=null, $to='global') {
 */
 function addReport($report, $type, $domain='global') {
 	global $REPORTS, $REPORT_STREAM, $REJREPORTS, $DISABLE_REPORT;
-	$report = "$report";
 	if( !empty($DISABLE_REPORT) ) { return false; }
+	$report = "$report";
 	if( isset($REJREPORTS[$report]) && (empty($REJREPORTS[$report]['t']) || in_array($type, $REJREPORTS[$report]['t'])) ) {
 		return false;
 	}
@@ -551,6 +564,19 @@ function reportSuccess($report, $domain='global') {
 	return addReport($report, 'success', $domain);
 }
 
+//! Reports a warning
+/*!
+ * \param $report The message to report.
+ * \param $domain The domain fo the message. Not used for translation. Default value is global.
+ * \sa addReport()
+
+ * Adds the report $message to the list of reports for this type 'warning'.
+ * Warning come in some special cases, we meet it when we do automatic checks before loading contents and there is something to report to the user.
+*/
+function reportWarning($report, $domain='global') {
+	return addReport($report, 'warning', $domain);
+}
+
 //! Reports an error
 /*!
  * \param $report The report.
@@ -560,10 +586,8 @@ function reportSuccess($report, $domain='global') {
  * Adds the report $message to the list of reports for this type 'error'.
 */
 function reportError($report, $domain=null) {
-	if( $report instanceof UserException ) {
-		if( is_null($domain) ) {
-			$domain = $report->getDomain();
-		}
+	if( $report instanceof UserException && is_null($domain) ) {
+		$domain = $report->getDomain();
 	}
 // 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
 	return addReport($report, 'error', is_null($domain) ? 'global' : $domain);
@@ -656,7 +680,7 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 		foreach( $rl as $report) {
 			$report = "$report";
 			if( !in_array($report, $rejected) ) {
-				$reportHTML .= getHTMLReport($report, $type, $stream);
+				$reportHTML .= getHTMLReport($stream, $report, $type);
 			}
 		}
 	}
@@ -852,8 +876,13 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 		if( is_array($elValue) ) {
 			list($elValue, $addAttr) = array_pad($elValue, 2, null);
 		}
-		$optLabel = bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
-		$optValue = bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
+		if( bintest($matches, OPT_PERMANENTOBJECT) ) {
+			$optLabel = "$elValue";
+			$optValue = $elValue->id();
+		} else {
+			$optLabel = bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
+			$optValue = bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
+		}
 		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), $selValue==$optValue, $addAttr);
 	}
 	return $opts;
@@ -862,6 +891,7 @@ define('OPT_VALUE_IS_VALUE'	 , 0);
 define('OPT_VALUE_IS_KEY'	 , 1);
 define('OPT_LABEL_IS_VALUE'	 , 0);
 define('OPT_LABEL_IS_KEY'	 , 2);
+define('OPT_PERMANENTOBJECT' , 4);
 define('OPT_LABEL2VALUE'	 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_KEY);
 define('OPT_VALUE2LABEL'	 , OPT_VALUE_IS_KEY | OPT_LABEL_IS_VALUE);
 define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
@@ -884,6 +914,10 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 // 	}
 // 	return (isset($data[$field]) && $value == $data[$field]) ? 'selected="selected"' : '';
 // }
+
+function htmlFileUpload($fieldPath, $addAttr='') {
+	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
+}
 
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 // 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
@@ -1037,10 +1071,9 @@ function convertSpecialChars($string) {
  * Converts string to lower case and converts all special characters. 
 */
 function toSlug($string, $case=null) {
-	$string = strtolower($string);
+	$string = str_replace(' ', '', ucwords(str_replace('&', 'and',strtolower($string))));
 	if( isset($case) ) {
 		if( bintest($case, CAMELCASE) ) {
-			$string = str_replace(' ', '', ucwords(str_replace('&', 'and', $string)));
 			if( $case == LOWERCAMELCASE ) {
 				$string = lcfirst($string);
 			}
@@ -1195,6 +1228,7 @@ function monthTime($day=1, $time=null) {
  * Returns a standard phone number for FR country format.
  */
 function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
+// 	text('$number '.$number.' : '.strlen($number));
 	// If there is not delimiter we try to put one
 	if( is_id($number[strlen($number)-$limit-1]) ) {
 		$number = str_replace(array('.', ' ', '-'), '', $number);
@@ -1209,5 +1243,17 @@ function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 
 function count_intersect_keys($array1, $array2) {
 	return count(array_intersect_key($array1, $array2));
+}
+
+function getMimeType($filePath) {
+	if( function_exists('finfo_open') ) {
+// 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $filePath);
+	}
+	return mime_content_type($filePath);
+}
+
+function checkDir($filePath) {
+	return is_dir($filePath) || mkdir($filePath, 0772, true);
 }
 

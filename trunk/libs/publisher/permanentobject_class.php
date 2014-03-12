@@ -16,7 +16,7 @@ abstract class PermanentObject {
 	// Contains all fields
 	protected static $fields = array();
 	// Contains fields editables by users
-	protected static $editableFields = array();
+	protected static $editableFields = null;
 	// Contains the validator. The default one is an array system.
 	protected static $validator = array();//! See checkUserInput()
 	// Contains the domain. Used as default UserException domain.
@@ -133,7 +133,7 @@ abstract class PermanentObject {
 	/*!
 	 * \param $uInputData The input data we will check and extract, used by children.
 	 * \param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
-	 * \param $noEmptyError True to do not throw exception for empty data (instead return 0). Default value is false.
+	 * \param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is false.
 	 * \return 1 in case of success, else 0.
 	 * \overrideit
 	 * \sa runForUpdate()
@@ -145,17 +145,16 @@ abstract class PermanentObject {
 	 * Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
-	public function update($uInputData, $fields, $noEmptyError=false) {
+	public function update($uInputData, $fields, $noEmptyWarning=false) {
 		$data = static::checkUserInput($uInputData, $fields, $this);
-		debug('data', $data);
 		// Don't care about some errors, other fields should be updated.
 		try {
 			if( empty($data) ) {
-				if( $noEmptyError ) {
-					return 0;
-				} else {
-					static::throwException('updateEmptyData');
+				if( !$noEmptyWarning ) {
+					reportWarning('updateEmptyData', static::getDomain());
 				}
+				return 0;
+// 				static::throwException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data), $this);
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
@@ -373,6 +372,10 @@ abstract class PermanentObject {
 	}
 	
 	// *** STATIC METHODS ***
+
+	public static function object(&$obj) {
+		return $obj = is_id($obj) ? static::load($obj) : $obj;
+	}
 
 	public static function isFieldEditable($fieldname) {
 		if( $fieldname == static::$IDFIELD ) { return false; }
@@ -736,9 +739,7 @@ abstract class PermanentObject {
 			$data = array();
 			foreach( $fields as $field ) {
 				// If editing the id field
-				if( $field == static::$IDFIELD ) {
-					continue;
-				}
+				if( $field == static::$IDFIELD ) { continue; }
 				$value = $notset = null;
 				try {
 					try {
@@ -824,7 +825,9 @@ abstract class PermanentObject {
 		if( empty($parent) ) { return; }
 		
 		static::$fields = array_unique(array_merge(static::$fields, $parent::$fields));
-		static::$editableFields = array_unique(array_merge(static::$editableFields, $parent::$editableFields));
+		if( !is_null($parent::$editableFields) ) {
+			static::$editableFields = is_null(static::$editableFields) ? $parent::$editableFields : array_unique(array_merge(static::$editableFields, $parent::$editableFields));
+		}
 		if( is_array(static::$validator) && is_array($parent::$validator) ) {
 			static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
 		}
