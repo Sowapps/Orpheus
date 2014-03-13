@@ -5,7 +5,8 @@ if( !isset($_SERVER['REDIRECT_STATUS']) ) {
 $CODE	= $_SERVER['REDIRECT_STATUS'];
 $TCODE	= $CODE==404 ? $CODE : 'other';
 
-log_report('HTTP Error : '.$CODE.' for page '.$_SERVER['REQUEST_URI'], SERVLOGFILENAME, 'accessing page', null);
+log_report('HTTP Error : '.$CODE.' for URI "'.$_SERVER['REQUEST_URI'].'" 
+[ IP: '.$_SERVER['REMOTE_ADDR'].'; agent: '.$_SERVER['HTTP_USER_AGENT'].'; referer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A').' ]', SERVLOGFILENAME, 'HTTP Error', null);
 
 ?>
 
