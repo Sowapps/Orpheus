@@ -8,23 +8,23 @@ using('sqladapter.SQLAdapter');
 abstract class PermanentObject {
 	
 	//Attributes
-	protected static $IDFIELD = 'id';
-	protected static $instances = array();
+	protected static $IDFIELD			= 'id';
+	protected static $instances			= array();
 	
-	protected static $table = null;
-	protected static $DBInstance = null;
+	protected static $table				= null;
+	protected static $DBInstance		= null;
 	// Contains all fields
-	protected static $fields = array();
+	protected static $fields			= array();
 	// Contains fields editables by users
-	protected static $editableFields = null;
+	protected static $editableFields	= null;
 	// Contains the validator. The default one is an array system.
-	protected static $validator = array();//! See checkUserInput()
+	protected static $validator			= array();//! See checkUserInput()
 	// Contains the domain. Used as default UserException domain.
-	protected static $domain = null;
+	protected static $domain			= null;
 	
-	protected $modFields = array();
-	protected $data = array();
-	protected $isDeleted = false;
+	protected $modFields	= array();
+	protected $data			= array();
+	protected $isDeleted	= false;
 	
 	//! Internal static initialization
 	public static function selfInit() {
@@ -48,7 +48,15 @@ abstract class PermanentObject {
 		foreach( static::$fields as $fieldname ) {
 			// We condiser null as a valid value.
 			if( !array_key_exists($fieldname, $data) ) {
-				throw new FieldNotFoundException($fieldname, static::getClass());
+				if( !in_array($fieldname, static::$fields) ) {
+					throw new FieldNotFoundException($fieldname, static::getClass());
+				}
+				// Data not found but should be, this object is out of date
+				$this->reload();
+				// Data not in DB, this class is invalid
+				if( !array_key_exists($fieldname, $data) ) {
+					throw new Exception('incompatibleObject_'.static::getClass().'_'.$fieldname);
+				}
 			}
 			$this->data[$fieldname] = $data[$fieldname];
 		}
@@ -809,12 +817,11 @@ abstract class PermanentObject {
 	*/
 	public static function testUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data = static::checkUserInput($uInputData, $fields, $ref, $errCount);
-		if( $errCount ) {
-			return;
-		}
+		if( $errCount ) { return; }
 		try {
 			static::checkForObject($data, $ref);
 		} catch(UserException $e) {
+			$errCount++;
 			reportError($e, static::getDomain());
 		}
 	}
