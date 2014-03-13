@@ -203,6 +203,10 @@ try {
 	
 	includePath(LIBSDIR);// Require some hooks.
 	
+	// Checks and Gets global inputs.
+	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
+	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
+	
 	// Here starts Hooks and Session too.
 	Hook::trigger('startSession');
 
@@ -213,22 +217,25 @@ try {
 		session_start();
 		if( !isset($_SESSION['ORPHEUS']) ) {
 			$_SESSION['ORPHEUS'] = array('LAST_REGENERATEID' => 0);
+			if( defined('SESSION_VERSION') ) {
+				$_SESSION['ORPHEUS']['SESSION_VERSION']	= SESSION_VERSION;
+			}
+		} else // Outdated session version
+		if( defined('SESSION_VERSION') && (!isset($_SESSION['ORPHEUS']['SESSION_VERSION']) || floor($_SESSION['ORPHEUS']['SESSION_VERSION']) != floor(SESSION_VERSION)) ) {
+			$_SESSION = array('ORPHEUS'=>array('LAST_REGENERATEID' => 0, 'SESSION_VERSION' => SESSION_VERSION));
+			throw new UserException('outdatedSession');
 		}
 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
 			// Only version >= 4.3.3 can regenerate session id without losing data
-			//http://php.net/manual/fr/function.session-regenerate-id.php
+			// http://php.net/manual/fr/function.session-regenerate-id.php
 			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
-				$_SESSION['ORPHEUS']['LAST_REGENERATEID'] = TIME;
+				$_SESSION['ORPHEUS']['LAST_REGENERATEID']	= TIME;
 				session_regenerate_id();
 			}
 		}
 	
 		$NO_EXCEPTION = 0;
 	}
-	
-	// Checks and Gets global inputs.
-	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
-	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
 	
 	Hook::trigger('checkModule');
 	
