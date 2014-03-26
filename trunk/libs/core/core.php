@@ -279,7 +279,7 @@ function log_error($report, $action='', $fatal=true) {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action);
+	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL for Exception
 // 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);//, t('errorOccurredWithDB'));
 // 	throw new Exception('errorOccurredWithDB');
 }
@@ -917,6 +917,10 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 
 function htmlFileUpload($fieldPath, $addAttr='') {
 	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
+}
+
+function htmlPassword($fieldPath, $addAttr='') {
+	return '<input type="password" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
 }
 
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {

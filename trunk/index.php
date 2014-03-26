@@ -76,28 +76,20 @@ function($errno, $errstr, $errfile, $errline ) {
 register_shutdown_function(
 //! Shutdown Handler
 /*!
-	System function to handle PHP shutdown and catch uncaught errors.
-*/
+ System function to handle PHP shutdown and catch uncaught errors.
+ */
 function() {
 	if( $error = error_get_last() ) {
-// 		switch( $error['type'] ) {
-// 			case E_ERROR:
-// 			case E_CORE_ERROR:
-// 			case E_COMPILE_ERROR:
-// 			case E_USER_ERROR: {
-// 				$Page = ob_get_contents();
-				ob_end_clean();
-				
-				if( !function_exists('log_error') ) {
-					die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
+		if( ERROR_LEVEL == DEV_LEVEL ) {
+			ob_end_flush();
+		} else {
+			ob_end_clean();
+		}
+		if( !function_exists('log_error') ) {
+			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
 PAGE:<br /><div style="clear: both;">'.$Page.'</div>' : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
-				}
-				log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
-// 				log_error($error['message'].' in '.$error['file'].' ('.$error['line'].')<br />', 'Shutdown script');
-// 				die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
-				break;
-// 			}
-// 		}
+		}
+		log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
 	}
 });
 
