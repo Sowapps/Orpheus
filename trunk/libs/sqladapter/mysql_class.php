@@ -8,6 +8,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '*',//* => All fields
+			'join'			=> '',//* => All fields
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
 			'number'		=> -1,//-1 => All
@@ -70,8 +71,9 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		$LIMIT		= ( $options['number'] > 0 ) ? 'LIMIT '.
 				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
 		$TABLE		= static::escapeIdentifier($options['table']);
+		$JOIN		= $options['join'];
 		
-		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}
