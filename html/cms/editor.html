@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Orpheus Forum</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="Description" content=""/>
+	<meta name="Author" content="Florent HAZARD"/>
+	<meta name="application-name" content="Orpheus" />
+	<meta name="msapplication-starturl" content="http://dev.orpheus.cartman34.fr/" />
+	<meta name="Keywords" content="projet"/>
+	<meta name="Robots" content="Index, Follow"/>
+	<meta name="revisit-after" content="16 days"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="../../themes/default/css/jquery-ui.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../../themes/default/css/bootstrap.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../../themes/default/css/bootstrap-theme.min.css" type="text/css" media="screen" />
+	
+	<link rel="stylesheet" href="../../themes/default/css/style.css" type="text/css" media="screen" />
+	
+<!-- 	<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet"> -->
+<!-- 	<link href="../../themes/default/css/font-awesome.css" rel="stylesheet"> -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	
+	<!-- External JS libraries -->
+	<script type="text/javascript" src="../../js/jquery.js"></script>
+</head>
+<body>
+
+<div id="page-container" class="cms-editable" style="width:900px; height:400px;">
+
+
+
+
+</div>
+
+
+
+
+<script>
+$(function() {
+	var blocktools	= $('<div class="cms-blocktools"><button class="fa fa-arrows move" title="Move block"></button><button class="fa fa-arrows-alt resize" title="Resize block"></button><button class="fa fa-edit edit" title="Edit content"></button></div>');
+	$(".cms-editable").hover(function() {
+		var cmsblock	= blocktools.parent();
+		if( cmsblock.hasClass("cms-locked") ) { return; }
+		$(this).prepend(blocktools);
+	});
+	blocktools.find("button.resize").click(function() {
+		var cmsblock	= blocktools.parent();
+		if( cmsblock.hasClass("cms-locked") ) {
+			// Locked to Unlocked
+			cmsblock.removeClass("cms-locked cmd-resizing");
+			cmsblock.resizable("destroy");
+			return;
+		}
+		// Unlocked to Locked
+		cmsblock.addClass("cms-locked cmd-resizing");
+		cmsblock.resizable();
+	});
+});
+</script>
+<style>
+.cms-editable {
+	min-width:	16px;
+	min-height:	16px;
+	position:	relative;
+	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;
+}
+.cms-editable:hover, .cms-editable.cms-locked {
+	border: 1px solid #333333;
+}
+.cms-blocktools {
+	display:	none;
+	position:	absolute;
+	top:	0;
+	left:	0;
+}
+.cms-editable:hover > .cms-blocktools, .cms-editable.cms-locked > .cms-blocktools {
+	display:	inline-block;
+}
+
+.fa {
+	background:	none;
+	border:	0;
+}
+
+#page-container {
+	margin: auto;
+}
+</style>
+
+<script type="text/javascript" src="../../js/jquery-ui.js"></script>
+<script type="text/javascript" src="../../js/bootstrap.js"></script>
+<!-- <script type="text/javascript" src="../../js/bootstrap-wysiwyg.js"></script> -->
+<script type="text/javascript" src="../../js/debug.js"></script>
+<script type="text/javascript" src="./page-editor.js"></script>
+
+</body>
+</html>
