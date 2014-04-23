@@ -28,9 +28,9 @@ class DemoTest extends PermanentObject {
 	 */
 	public static function checkName($inputData, $ref=null) {
 		if( empty($inputData['name']) ) {
-			if( is_null($ref) ) {// Updating
-				return null;
-			}
+			throw new UserException('emptyName');
+		}
+		if( strlen($inputData['name'])<10 ) {
 			throw new UserException('emptyName');
 		}
 		return strip_tags($inputData['name']);

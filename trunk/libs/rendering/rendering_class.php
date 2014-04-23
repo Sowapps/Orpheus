@@ -63,8 +63,9 @@ abstract class Rendering {
 		}
 		
 		if( is_null($layout) ) {
-			$layout = defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
+			$layout	= defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
 		}
+		text("Layout : $layout");
 		
 		$env	= array('menu'=>$menu, 'items'=>array());
 		$items	= $this->getMenuItems($menu);

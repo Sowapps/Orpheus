@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+/* @var $this HTMLRendering */
+?><!DOCTYPE html>
 <html>
 <head>
 	<title><?php echo ( (!empty($MODTITLE)) ? $MODTITLE.' :: ' : '' ).SITENAME ?></title>
@@ -21,6 +23,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-theme.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>font-awesome.css" type="text/css" media="screen" />
 <!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 foreach(HTMLRendering::$cssFiles as $file) {
@@ -38,7 +41,7 @@ foreach(HTMLRendering::$cssFiles as $file) {
 		<div class="container">
 			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
 			<div class="collapse navbar-collapse">
-<?php SiteUser::is_login() ? $this->showMenu('topmenu') :  $this->showMenu('topmenu_member') ; ?>
+<?php SiteUser::is_login() ? $this->showMenu('topmenu') : $this->showMenu('topmenu_member') ; ?>
 			</div>
 		</div>
 	</div>
