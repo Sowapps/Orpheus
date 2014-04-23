@@ -27,11 +27,13 @@ displayReportsHTML();
 ?>
 	<form method="POST">
 	<fieldset>
-		<legend>Using multiple DB instance feature and MS SQL server, try to create you own DemoTest object</legend>
-		<label>Create it from a new value</label>
-		<input type="text" name="data[name]" placeholder="Type new value...">
+		<legend>Try to create you own DemoTest object</legend>
+		<div class="form-group">
+			<label class="w200">Create it from a new value</label>
+			<input class="w300" type="text" name="data[name]" placeholder="Type new value, longer than 10 characters">
+		</div>
 		<span class="help-block">Submit a new value to see this working test in action.</span>
-		<button id="submitDemoTest" type="submit" class="btn">Insert it !</button>
+		<button id="submitDemoTest" type="submit" class="btn btn-primary">Insert it !</button>
 	</fieldset>
 	</form>
 </section>

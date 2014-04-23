@@ -1,4 +1,5 @@
 <?php
+text($items);
 echo '
 <ul class="nav navbar-nav">';
 foreach( $items as $item ) {
