@@ -179,6 +179,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
 	// Checks connection
 	$Instance		= ensure_pdoinstance($Instance);
+	if( empty($pdoInstances[$Instance]) ) { return; }
 	$InstSettings	= $DBS[$Instance];
 	$pdoInstance	= $pdoInstances[$Instance];
 		
