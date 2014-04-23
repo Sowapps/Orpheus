@@ -37,14 +37,22 @@ foreach(HTMLRendering::$cssFiles as $file) {
 </head>
 <body class="<?php echo $Module; ?>">
 
-	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<div class="navbar-header">
 			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
-			<div class="collapse navbar-collapse">
+		</div>
+		<div class="collapse navbar-collapse">
 <?php SiteUser::is_login() ? $this->showMenu('topmenu') : $this->showMenu('topmenu_member') ; ?>
-			</div>
 		</div>
 	</div>
+</div>
 
 <div class="container">
 
