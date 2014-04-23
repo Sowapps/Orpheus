@@ -26,6 +26,10 @@ form {
 	margin: 0;
 }
 
+.btn {
+	text-decoration: none;
+}
+
 /*
 section {
 	margin-top: 30px;
