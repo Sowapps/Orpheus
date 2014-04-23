@@ -49,7 +49,7 @@ foreach(HTMLRendering::$cssFiles as $file) {
 			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
 		</div>
 		<div class="collapse navbar-collapse">
-<?php SiteUser::is_login() ? $this->showMenu('topmenu') : $this->showMenu('topmenu_member') ; ?>
+<?php SiteUser::is_login() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu') ; ?>
 		</div>
 	</div>
 </div>
