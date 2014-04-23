@@ -31,7 +31,7 @@ class DemoTest extends PermanentObject {
 			throw new UserException('emptyName');
 		}
 		if( strlen($inputData['name'])<10 ) {
-			throw new UserException('emptyName');
+			throw new UserException('tooShortName');
 		}
 		return strip_tags($inputData['name']);
 	}
@@ -46,12 +46,10 @@ class DemoTest extends PermanentObject {
 		}
 		$options = array(
 			'number'=> 1,
-			'where'	=> 'name='.SQLAdapter::quote($data['name']),
+			'where'	=> 'name='.static::formatValue($data['name']),
 		);
 		$data = static::get($options);
-		if( empty($data) ) {
-			return;//No data got
-		}
+		if( empty($data) ) { return; }// No data got 
 		throw new UserException("existingObject");
 	}
 }
