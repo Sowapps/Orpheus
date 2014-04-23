@@ -1,4 +1,4 @@
 <?php
-HTMLRendering::$theme = 'admin';
+HTMLRendering::$theme	= 'admin';
 
 Rendering::doDisplay('admin_demo');
