@@ -11,6 +11,9 @@ a,.link {
 	border: 0;
 	background: none;
 }
+button {
+	font-family: inherit;
+}
 a:hover, a:focus, .link:hover, .link:focus {
 /* 	color: #558710; */
 }
@@ -60,6 +63,9 @@ script, style {
 .w420 {	width: 420px !important; }
 .w500 {	width: 500px !important; }
 .w560 {	width: 560px !important; }
+.w600 {	width: 600px !important; }
+.w700 {	width: 700px !important; }
+.w800 {	width: 800px !important; }
 
 .wf {	width: 100% !important; }
 
@@ -67,6 +73,7 @@ script, style {
 .h25  {	height: 25px !important; }
 .h35  {	height: 35px !important; }
 
+.mt5  { margin-top: 5px !important; }
 .mt10 { margin-top: 10px !important; }
 .mt20 { margin-top: 20px !important; }
 
@@ -96,11 +103,17 @@ script, style {
 
 .pr0  { padding-right: 0 !important; }
 .pr10 { padding-right: 10px !important; }
+
 .pb10 { padding-bottom: 10px !important; }
+.pb20 { padding-bottom: 20px !important; }
+.pb30 { padding-bottom: 30px !important; }
+.pb40 { padding-bottom: 40px !important; }
 
 .pl0  { padding-left: 0 !important; }
 .pl10 { padding-left: 10px !important; }
 .pl20 { padding-left: 20px !important; }
+.pl30 { padding-left: 30px !important; }
+.pl40 { padding-left: 40px !important; }
 
 .bl	{ display: block !important; }
 .in	{ display: inline !important; }
@@ -116,6 +129,15 @@ script, style {
 .cr { clear: right; }
 
 .center { margin: auto; }
+
+.b, .bold	{ font-weight: bold; }
+.i, .italic	{ font-style: italic; }
+
+.fs11 { font-size: 11px; }
+.fs12 { font-size: 12px; }
+.fs13 { font-size: 13px; }
+.fs14 { font-size: 14px; }
+.fs15 { font-size: 15px; }
 /*
 .left {
 	float: left;
@@ -132,11 +154,13 @@ script, style {
 /* Layouts */
 
 .hlayout {
-	width:		100%;
-	height:		35px;
-	line-height:	35px;
-	padding:	5px;/* Protect box shadow */
-	display:	block;
+	width:			100%;
+	min-height:		25px;
+	line-height:	25px;
+/* 	height:			35px; */
+/* 	line-height:	35px; */
+	padding:		5px;/* Protect box shadow */
+	display:		block;
 /* 	overflow:	hidden; */
 }
 .hlayout .hlayout {
@@ -158,6 +182,8 @@ script, style {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	
+	font-size: 13px;
 }
 .hlayout.h35 {
 	line-height:	35px;
@@ -170,7 +196,6 @@ script, style {
 /* 	height: 35px; */
 /* 	line-height: 35px; */
 /* } */
-
 
 /** Inherit Color **/
 .ic { color: inherit !important; }
