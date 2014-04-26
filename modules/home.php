@@ -46,7 +46,7 @@ if( isPOST('data') ) {
 <p>The framework provides you all tools to debug your application, it catches all error that occurred running your scripts and log it for you.</p>
 			</div>
 			<div class="col-xs-4">
-<h3>Edit the content <span class="badge">Building</span></h3>
+<h3>Edit the content online <span class="badge">Building</span></h3>
 <p>The framework will provide a CMS library soon, you will be able to edit your application online &amp; inline.</p>
 			</div>
 			<div class="col-xs-4">
