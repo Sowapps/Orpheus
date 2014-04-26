@@ -154,7 +154,7 @@ abstract class PermanentObject {
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
 	public function update($uInputData, $fields, $noEmptyWarning=false) {
-		$data = static::checkUserInput($uInputData, $fields, $this);
+		$data	= static::checkUserInput($uInputData, $fields, $this);
 		// Don't care about some errors, other fields should be updated.
 		try {
 			if( empty($data) ) {
@@ -167,9 +167,11 @@ abstract class PermanentObject {
 			static::checkForObject(static::completeFields($data), $this);
 		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
 		
-		$oldData = $this->all;
+		$oldData	= $this->all;
 		foreach($data as $fieldname => $fieldvalue) {
-			if( static::isFieldEditable($fieldname) ) {
+			if( in_array($fieldname, static::$fields) && in_array($fieldname, $fields) ) {
+// 			if( static::isFieldEditable($fieldname) ) {
+// 				text('Set value of '.$fieldname.' to '.($fieldvalue === NULL ? 'NULL' : (is_bool($fieldvalue) ? b($fieldvalue) : $fieldvalue)));
 				$this->setValue($fieldname, $fieldvalue);
 			}
 		}
@@ -534,30 +536,38 @@ abstract class PermanentObject {
 	 * @param array $options
 	 * @return static|static[]
 	 */
-	public static function get(array $options=array()) {
+	public static function get($options=array()) {
+		if( is_string($options) ) {
+			$options	= array();
+			$args		= func_get_args();
+			foreach( array('where', 'orderby') as $i => $key ) {
+				if( !isset($args[$i]) ) { break; }
+				$options[$key]	= $args[$i];
+			}
+		}
 		$options['table'] = static::$table;
 		// May be incompatible with old revisions (< R398)
 		if( !isset($options['output']) ) {
 			$options['output'] = SQLAdapter::ARR_OBJECTS;
 		}
 		//This method intercepts outputs of array of objects.
-		if( $options['output'] == SQLAdapter::ARR_OBJECTS || $options['output'] == SQLAdapter::OBJECT ) {
+		if( in_array($options['output'], array(SQLAdapter::ARR_OBJECTS, SQLAdapter::OBJECT)) ) {
 			if( $options['output'] == SQLAdapter::OBJECT ) {
-				$options['number'] = 1;
-				$onlyOne = 1;
+				$options['number']	= 1;
+				$onlyOne	= 1;
 			}
-			$options['output'] = SQLAdapter::ARR_ASSOC;
-			$options['what'] = '*';
-			$objects = 1;
+			$options['output']	= SQLAdapter::ARR_ASSOC;
+// 			$options['what'] = '*';// Could be * or something derived for order e.g
+			$objects	= 1;
 		}
-		$r = SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
+		$r	= SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
 		if( empty($r) && in_array($options['output'], array(SQLAdapter::ARR_ASSOC, SQLAdapter::ARR_OBJECTS, SQLAdapter::ARR_FIRST)) ) {
 			return array();
 		}
 		if( !empty($r) && isset($objects) ) {
 // 			if( isset($options['number']) && $options['number'] == 1 ) {
 			if( isset($onlyOne) ) {
-				$r = static::load($r[0]);
+				$r	= static::load($r[0]);
 			} else {
 				foreach( $r as &$rdata ) {
 					$rdata = static::load($rdata);
@@ -738,12 +748,10 @@ abstract class PermanentObject {
 // 			$fields = null;
 // 		}
 		if( is_array(static::$validator) ) {
-			if( is_null($fields) ) {
-				$fields = static::$editableFields;
+			if( $fields===NULL ) {
+				$fields	= static::$editableFields;
 			}
-			if( empty($fields) ) {
-				return array();
-			}
+			if( empty($fields) ) { return array(); }
 			$data = array();
 			foreach( $fields as $field ) {
 				// If editing the id field
@@ -753,31 +761,31 @@ abstract class PermanentObject {
 					try {
 						// Field to validate
 						if( !empty(static::$validator[$field]) ) {
-							$checkMeth = static::$validator[$field];
+							$checkMeth	= static::$validator[$field];
 							// If not defined, we just get the value without check
-							$value = static::$checkMeth($uInputData, $ref);
+							$value	= static::$checkMeth($uInputData, $ref);
 	
 						// Field to NOT validate
 						} else if( array_key_exists($field, $uInputData) ) {
-							$value = $uInputData[$field];
+							$value	= $uInputData[$field];
 						} else {
-							$notset = 1;
+							$notset	= 1;
 						}
 						if( !isset($notset) &&
-							(is_null($ref) || $value != $ref->$field) &&
-							(is_null($fields) || in_array($field, $fields))
+							( $ref===NULL || $value != $ref->$field) &&
+							( $fields===NULL || in_array($field, $fields))
 						) {
-							$data[$field] = $value;
+							$data[$field]	= $value;
 						}
 
-					} catch(UserException $e) {
-						if( is_null($value) && isset($uInputData[$field]) ) {
-							$value = $uInputData[$field];
+					} catch( UserException $e ) {
+						if( $value===NULL && isset($uInputData[$field]) ) {
+							$value	= $uInputData[$field];
 						}
 						throw InvalidFieldException::from($e, $field, $value);
 					}
 					
-				} catch(InvalidFieldException $e) {
+				} catch( InvalidFieldException $e ) {
 					$errCount++;
 					reportError($e, static::getDomain());
 				}

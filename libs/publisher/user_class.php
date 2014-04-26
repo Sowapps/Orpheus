@@ -313,9 +313,9 @@ class User extends AbstractStatus {
 	 * Validates the name in array $inputData.
 	 */
 	public static function checkName($inputData, $ref=null) {
-		if( !isset($inputData['name']) && isset($ref) ) {
-			return null;
-		}
+// 		if( !isset($inputData['name']) && isset($ref) ) {
+// 			return null;
+// 		}
 		if( empty($inputData['name']) || !is_name($inputData['name']) ) {
 			static::throwException('invalidName');
 		}
@@ -332,9 +332,9 @@ class User extends AbstractStatus {
 	 */
 	public static function checkPassword($inputData, $ref=null) {
 		if( empty($inputData['password']) ) {
-			if( isset($ref) ) {//UPDATE
-				return null;
-			}
+// 			if( isset($ref) ) {//UPDATE
+// 				return null;
+// 			}
 			static::throwException('invalidPassword');
 		} else if( isset($inputData['password_conf']) && (empty($inputData['password_conf']) || $inputData['password'] != $inputData['password_conf']) ) {
 			static::throwException('invalidPasswordConf');
@@ -352,9 +352,6 @@ class User extends AbstractStatus {
 	 */
 	public static function checkEmail($inputData, $ref=null) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
-			if( empty($inputData['email']) && isset($ref) ) {//UPDATE
-				return null;
-			}
 			static::throwException('invalidEmail');
 		}
 		return $inputData['email'];

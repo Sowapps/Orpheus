@@ -316,10 +316,23 @@ function str_limit($string, $max, $strend='...') {
  * \return The escaped string.
 
  * Escape the text $str from special characters.
- * This function as the overall framework is made for UTF-8.
 */
 function escapeText($str) {
 	return htmlentities(str_replace("\'", "'", $str), ENT_NOQUOTES, 'UTF-8', false); 	
+}
+
+//! Formats a string to be a html attribute value
+/*!
+ * \param $str The string to format.
+ * \return The escaped string.
+
+* Escape the text $str from special characters for HTML Attribute usage.
+*/
+function htmlFormATtr($v) {
+	if( !is_scalar($v) ) {
+		$v	= json_encode($v);
+	}
+	return htmlentities($v, ENT_HTML5 | ENT_QUOTES | ENT_IGNORE, 'UTF-8', false); 	
 }
 
 //! Encodes to an internal URL
@@ -710,8 +723,8 @@ function getHTMLReport($stream, $report, $type) {
 */
 function displayReportsHTML($stream='global', $rejected=array(), $delete=1) {
 	if( is_array($stream) && empty($rejected) ) {
-		$rejected = $stream;
-		$domain = 'global';
+		$rejected	= $stream;
+		$stream		= 'global';
 	}
 	echo '
 	<div class="reports '.$stream.'">
@@ -758,7 +771,8 @@ function GET($path=null) {
  * We advise to use the name of your submit button, but you can also use another important field of your form.
 */
 function isPOST($apath=null) {
-	return isset($_POST) && (is_null($apath) || !is_null(POST($apath)));
+	// !empty because $_POST is always set in case of web access, but is an empty array
+	return !empty($_POST) && ($apath===NULL || POST($apath)!==NULL);
 }
 
 //! Checks the GET status
@@ -772,7 +786,8 @@ function isPOST($apath=null) {
  * We advise to use the name of your submit button, but you can also use another important field of your form.
 */
 function isGET($apath=null) {
-	return isset($_GET) && (is_null($apath) || !is_null(GET($apath)));
+	// !empty because $_GET is always set in case of web access, but is an empty array
+	return !empty($_GET) && ($apath===NULL || GET($apath)!==NULL);
 }
 
 //! Extracts data from array using apath
@@ -868,22 +883,29 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 	if( is_null($matches) ) { $matches = OPT_VALUE2LABEL; }
 	// Value of selected/default option
 	fillInputValue($selValue, $fieldPath, $default);
-	$opts = '';
+	$opts	= '';
 	foreach( $values as $dataKey => $elValue ) {
-		$addAttr = '';
+		if( is_array($elValue) ) {
+			$opts .= '<optgroup label="'.t($prefix.$dataKey, $domain).'">'.htmlOptions($fieldPath, $elValue, $default, $matches, $prefix, $domain).'</optgroup>';
+			continue;
+		}
+		$addAttr	= '';
 		if( is_array($elValue) ) {
 			list($elValue, $addAttr) = array_pad($elValue, 2, null);
 		}
 		if( bintest($matches, OPT_PERMANENTOBJECT) ) {
-			$optLabel = "$elValue";
-			$optValue = $elValue->id();
+			$optLabel	= "$elValue";
+			$optValue	= $elValue->id();
 		} else {
-			$optLabel = bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
-			$optValue = bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
+			$optLabel	= bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
+			$optValue	= bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
 		}
 		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), $selValue==$optValue, $addAttr);
 	}
 	return $opts;
+}
+function _htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
+	echo htmlOptions($fieldPath, $values, $default, $matches, $prefix, $domain);
 }
 define('OPT_VALUE_IS_VALUE'	 , 0);
 define('OPT_VALUE_IS_KEY'	 , 1);
@@ -922,21 +944,18 @@ function htmlPassword($fieldPath, $addAttr='') {
 }
 
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
-// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="text" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ').$addAttr.'/>';
+	return '<input type="text" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
-// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	fillInputValue($value, $fieldPath, $default);
 	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
 }
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
-// 	$value = fillInputValue($value, $fieldPath) ? $value : $default;
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(empty($value) ? '' : 'value="'.$value.'" ').$addAttr.'/>';
+	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.$value.'" ' : '').$addAttr.'/>';
 }
 
 function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
@@ -947,13 +966,12 @@ function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 	// 			If Value found,	we consider this one, else we use default
-	$selected = ($r = fillInputValue($value, $fieldPath, $default, true)) ? !empty($value) : $default;
+	fillInputValue($selected, $fieldPath, $default, true);
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
 }
 
 function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
 	if( is_null($label) ) { $label = $elValue; }
-// 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
 	return '<option value="'.$elValue.'"'.($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
 }
 
@@ -1005,10 +1023,10 @@ function fillFormData(&$data) {
  */
 function fillInputValue(&$value, $fieldPath, $default=null, $pathRequired=false) {
 	$value = apath_get(getFormData(), $fieldPath, $default, $pathRequired);
-	if( is_null($value) ) {
+	if( $value === NULL ) {
 		$value = $default;
 	}
-	return !is_null($value);
+	return $value !== NULL;
 }
 
 //! Converts special characters to non-special ones
@@ -1022,12 +1040,12 @@ function convertSpecialChars($string) {
 	// Replaces all letter special characters.
 	$string = str_replace(
 		array(
-			'À','à','Á','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
+			'À','à','�?','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
 			'C','c','C','c','Ç','ç',
-			'D','d','Ð','d',
+			'D','d','�?','d',
 			'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
 			'G','g',
-			'Ì','ì','Í','í','Î','î','Ï','ï',
+			'Ì','ì','�?','í','Î','î','�?','ï',
 			'L','l','L','l','L','l',
 			'Ñ','ñ','N','n','N','n',
 			'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
@@ -1035,11 +1053,11 @@ function convertSpecialChars($string) {
 			'Š','š','S','s','S','s',
 			'T','t','T','t','T','t',
 			'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
-			'Ÿ','ÿ','ý','Ý',
+			'Ÿ','ÿ','ý','�?',
 			'Ž','ž','Z','z','Z','z',
-			'Þ','þ','Ð','ð','ß','Œ','œ','Æ','æ','µ',
+			'Þ','þ','�?','ð','ß','Œ','œ','Æ','æ','µ',
 		' '),
-		//'”','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
+		//'�?','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
 		array(
 			'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
 			'C','c','C','c','C','c',
@@ -1130,7 +1148,7 @@ function hashString($str) {
  * \return The date using 'dateFormat' translation key
 */
 function d($time=TIME) {
-	return strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time));
+	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
 }
 
 //! Gets the date time as string
@@ -1139,7 +1157,7 @@ function d($time=TIME) {
  * \return The date using 'timeFormat' translation key
 */
 function dt($time=TIME) {
-	return strftime(t('timeFormat'), $time);
+	return !empty($time) ? strftime(t('timeFormat'), $time) : null;
 }
 
 //! Gets the date as string in SQL format
@@ -1232,15 +1250,14 @@ function monthTime($day=1, $time=null) {
 function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 // 	text('$number '.$number.' : '.strlen($number));
 	// If there is not delimiter we try to put one
-	if( is_id($number[strlen($number)-$limit-1]) ) {
-		$number = str_replace(array('.', ' ', '-'), '', $number);
-		$n = '';
-		for( $i=strlen($number)-$limit; $i>3 || ($number[0]!='+' && $i>($limit-1)); $i-=$limit ) {
-			$n = $delimiter.substr($number, $i, $limit).$n;
-		}
-		return substr($number, 0, $i+2).$n;
+	$number = str_replace(array('.', ' ', '-'), '', $number);
+	$length	= strlen($number);
+	if( $length < 10  ) { return ''; }
+	$n = '';
+	for( $i=strlen($number)-$limit; $i>3 || ($number[0]!='+' && $i>($limit-1)); $i-=$limit ) {
+		$n = $delimiter.substr($number, $i, $limit).$n;
 	}
-	return str_replace(array('.', ' ', '-'), $delimiter, $number);
+	return substr($number, 0, $i+2).$n;
 }
 
 function count_intersect_keys($array1, $array2) {

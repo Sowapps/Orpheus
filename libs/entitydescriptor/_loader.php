@@ -4,6 +4,7 @@
 
 addAutoload('EntityDescriptor',					'entitydescriptor/entitydescriptor');
 addAutoload('TypeDescriptor',					'entitydescriptor/typedescriptor');
+addAutoload('FieldDescriptor',					'entitydescriptor/fielddescriptor');
 
 addAutoload('PermanentEntity',					'entitydescriptor/permanententity');
 

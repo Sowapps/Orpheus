@@ -6,7 +6,7 @@
 class DemoEntity extends PermanentEntity {
 	
 	//Attributes
-	protected static $table = 'testentities';
+	protected static $table		= 'testentities';
 	
 	// Final attributes
 	protected static $fields	= null;

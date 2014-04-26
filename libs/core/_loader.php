@@ -12,3 +12,4 @@ require_once pathOf(LIBSDIR.'core/hooks.php');
 require_once pathOf(LIBSDIR.'core/validators.php');
 
 addAutoload('UserException',					'core/userexception_class.php');
+addAutoload('FormToken',						'core/formtoken_class.php');

@@ -153,7 +153,7 @@ class SQLGenerator_MySQL {
 			if( empty($alter) ) {
 				return null;
 			}
-			return 'ALTER TABLE '.SQLAdapter::doEscapeIdentifier($ed->getName())."\n{$alter};\n";
+			return '<div class="table-operation table-alter">ALTER TABLE <div class="table-name">'.SQLAdapter::doEscapeIdentifier($ed->getName())."</div>\n{$alter};</div>";
 		}
 		return $this->getCreate($ed);
 	}
@@ -170,9 +170,8 @@ class SQLGenerator_MySQL {
 			return null;
 		}
 		return '
-CREATE TABLE IF NOT EXISTS '.SQLAdapter::doEscapeIdentifier($ed->getName()).' (
+<div class="table-operation table-create">CREATE TABLE IF NOT EXISTS <div class="table-name">'.SQLAdapter::doEscapeIdentifier($ed->getName()).'</div> (
 '.$columns.'
-) ENGINE=MYISAM CHARACTER SET utf8;
-';
+) ENGINE=MYISAM CHARACTER SET utf8;</div>';
 	}
 }
