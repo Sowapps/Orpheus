@@ -8,7 +8,10 @@ $users	= SiteUser::get(array(
 
 displayReportsHTML();
 ?>
-<h3>Users list</h3>
+<div class="page-header">
+  <h1>Members <small>Member list</small></h1>
+</div>
+
 <table class="table">
 	<tr>
 		<th>Name</th>
