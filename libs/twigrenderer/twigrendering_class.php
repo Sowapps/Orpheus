@@ -23,7 +23,6 @@ class TwigRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		$env['RENDERER']	= $this;
-		text('Render model '.$model.'.twig');
 		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
