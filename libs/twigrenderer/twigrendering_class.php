@@ -36,7 +36,8 @@ class TwigRendering extends Rendering {
 			return;// Already done ?
 		}
 		static::$twigenv	= new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
-			'cache' => static::getCachePath(),
+			'cache' => false,
+// 			'cache' => static::getCachePath(),
 		));
 		static::setTwigEnvironment(static::$twigenv);
 	}
