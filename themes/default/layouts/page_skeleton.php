@@ -37,7 +37,6 @@ foreach(HTMLRendering::$cssFiles as $file) {
 </head>
 <body class="<?php echo $Module; ?>">
 
-HTML PAGE SKELETON
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
