@@ -58,7 +58,7 @@ if( User::is_login() ) {
 			</div>
 			<div class="form-group">
 				<label for="registerFullname">Your public name</label>
-				<input type="text" class="form-control" id="registerFullname" name="register[fullname]" required placeholder="the displayed name, e.g. Eric Cartman" />
+				<input type="text" class="form-control" id="registerFullname" name="register[fullname]" required placeholder="The displayed name, e.g. Eric Cartman" />
 			</div>
 			<div class="form-group">
 				<label for="registerEmail">Email</label>
