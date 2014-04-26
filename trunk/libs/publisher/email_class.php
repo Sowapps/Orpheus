@@ -16,11 +16,12 @@ class Email {
 		'From' => 'no-reply@nodomain.com',//Override PHP's default
 		'Sender' => '',
 		'X-Sender' => '',
-		'Reply-To' => '',//Return Email Address
+		'Reply-To' => '',//Reply Email Address
 		'Return-Path' => '',//Return Email Address
 		'Organization' => '',
 		'X-Priority' => '3',
 		'X-Mailer' => 'Orpheus\'s Mailer',
+// 		'X-PHP-Originating-Script' => 'Orpheus\'s Publisher Lib Email Class',
 		'Bcc' => '',
 	);
 	
@@ -209,6 +210,33 @@ class Email {
 		$this->AltBody = $Body;
 	}
 	
+	//! Sets the ReplyTo value of the mail
+	/*!
+	 * \param $Email The email address to send this mail
+	 */
+	public function setReplyTo($Email) {
+		$this->setHeader('Return-Path', $Email);
+		$this->setHeader('Reply-To', $Email);
+	}
+	
+	//! Sets the Sender value of the mail
+	/*!
+	 * \param $SenderEmail The email address to send this mail
+	 * \param $SenderName The email address to send this mail. Default value is null.
+	 * 
+	 * Sets the Sender value of the mail.
+	 * This function also sets the ReplyTo value if undefined.
+	 * If a sender name is provided, it sets the "From" header to NOM \<EMAIL\>
+	 */
+	public function setSender($SenderEmail, $SenderName=null) {
+		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
+		$this->setHeader('From', is_null($SenderName) ? $SenderEmail : '=?utf-8?b?'.base64_encode($SenderName).'?= <'.$SenderEmail.'>');
+		$this->setHeader('Sender', $SenderEmail);
+		if( empty($Headers['Return-Path']) ) {
+			$this->setReplyTo($SenderEmail);
+		}
+	}
+	
 	//! Sends the mail to the given address
 	/*!
 	 * \param $ToAddress The email address to send this mail
@@ -395,33 +423,6 @@ BODY;
 			}
 		}
 		return true;
-	}
-	
-	//! Sets the ReplyTo value of the mail
-	/*!
-	 * \param $Email The email address to send this mail
-	 */
-	public function setReplyTo($Email) {
-		$this->setHeader('Return-Path', $Email);
-		$this->setHeader('Reply-To', $Email);
-	}
-	
-	//! Sets the Sender value of the mail
-	/*!
-	 * \param $SenderEmail The email address to send this mail
-	 * \param $SenderName The email address to send this mail. Default value is null.
-	 * 
-	 * Sets the Sender value of the mail.
-	 * This function also sets the ReplyTo value if undefined.
-	 * If a sender name is provided, it sets the "From" header to NOM \<EMAIL\>
-	 */
-	public function setSender($SenderEmail, $SenderName=null) {
-		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
-		$this->setHeader('From', is_null($SenderName) ? $SenderEmail : '=?utf-8?b?'.base64_encode($SenderName).'?= <'.$SenderEmail.'>');
-		$this->setHeader('Sender', $SenderEmail);
-		if( empty($Headers['Return-Path']) ) {
-			$this->setReplyTo($SenderEmail);
-		}
 	}
 	
 	//! Gets a boundary

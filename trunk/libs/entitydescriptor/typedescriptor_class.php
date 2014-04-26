@@ -25,6 +25,10 @@ abstract class TypeDescriptor {
 		return '';
 	}
 	
+	public function getHTMLInputAttr($Field) {
+		return array();
+	}
+	
 	public function emptyIsNull($field) {
 		return true;
 	}
@@ -34,7 +38,7 @@ abstract class TypeDescriptor {
 		return new stdClass();
 	}
 	
-	public function validate($Field, &$value, $inputData) {}
+	public function validate($Field, &$value, $inputData, &$ref) {}
 	
 	public function format($args, &$value) {}
 	

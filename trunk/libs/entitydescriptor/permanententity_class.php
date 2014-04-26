@@ -16,6 +16,15 @@ abstract class PermanentEntity extends PermanentObject {
 	protected static $validator	= null;
 	protected static $domain	= null;
 	*/
+	
+	public function validateValue($field, $value) {
+		static::$validator->validateFieldValue($field, $value, null, $this);
+	}
+	
+	public static function putValue($field, $value) {
+		$this->validateValue($field, $value);
+		$this->setValue($field, $value);
+	}
 
 	//! Initializes class - REQUIRED
 	public static function init() {
@@ -28,6 +37,6 @@ abstract class PermanentEntity extends PermanentObject {
 	}
 	
 	public static function getField($field) {
-		static::$validator->getField($field);
+		return static::$validator->getField($field);
 	}
 }

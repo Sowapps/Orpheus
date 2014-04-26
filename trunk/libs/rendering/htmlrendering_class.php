@@ -23,7 +23,7 @@ class HTMLRendering extends Rendering {
 	public function render($model=null, $env=array()) {
 		ob_start();
 		$this->display($model, $env);
-		return ob_get_flush();
+		return ob_get_clean();
 	}
 
 	//! Displays the model.
@@ -34,7 +34,7 @@ class HTMLRendering extends Rendering {
 		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
 		}
-		extract($env);
+		extract($env, EXTR_SKIP);
 		
 		include static::getModelsPath().$model.'.php';
 	}

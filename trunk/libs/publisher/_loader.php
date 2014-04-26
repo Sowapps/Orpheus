@@ -46,5 +46,5 @@ Hook::register('runModule', function () {
 });
 
 function id(&$id) {
-	return $id = is_object($id) ? $id->id() : $id;
+	return $id = intval(is_object($id) ? $id->id() : $id);
 }
