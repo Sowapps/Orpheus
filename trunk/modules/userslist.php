@@ -15,7 +15,7 @@ foreach( $users as $user ) {
 	echo "
 	<li>
 		<span>{$user->name}</span>
-		<span>{$user->public_email}</span>
+		<span>{$user->email_public}</span>
 	</li>";
 }
 ?>
