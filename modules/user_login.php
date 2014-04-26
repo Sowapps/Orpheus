@@ -28,9 +28,9 @@ if( User::is_login() ) {
 	echo "<p>Welcome {$USER->fullname} </p>";
 }
 ?>
-<div class="row show-grid">
+<div class="row">
 	
-	<div class="span3">
+	<div class="col-xs-6">
 		<form method="POST" role="form">
 		<fieldset>
 			<legend>Sign in</legend>
@@ -47,7 +47,7 @@ if( User::is_login() ) {
 		</form>
 	</div>
 		
-	<div class="span6 offset1">
+	<div class="col-xs-6">
 		<form method="POST" role="form">
 		<fieldset>
 			<legend>Register</legend>
