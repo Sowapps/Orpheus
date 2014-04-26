@@ -69,7 +69,7 @@ function($errno, $errstr, $errfile, $errline ) {
 			die($errstr."<br />\n{$backtrace}");
 		}
 		log_error($errstr."<br />\n{$backtrace}");
-		die("A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(ERROR_LEVEL == DEV_LEVEL ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
 	}
 });
 
@@ -87,7 +87,7 @@ function() {
 		}
 		if( !function_exists('log_error') ) {
 			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
-PAGE:<br /><div style="clear: both;">'.$Page.'</div>' : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+PAGE:<br /><div style="clear: both;">'.$Page.'</div>'.(ERROR_LEVEL == DEV_LEVEL ? '<br />Reported in '.__FILE__.' : '.__LINE : '') : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 		}
 		log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
 	}

@@ -39,20 +39,10 @@
 			<a class="navbar-brand" href="{{ constant('SITEROOT') }}">{{ constant('SITENAME') }}</a>
 		</div>
 		<div class="collapse navbar-collapse">
-<?php SiteUser::is_login() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu') ; ?>
+{{ RENDERER.showMenu('topmenu') }}
 		</div>
 	</div>
 </div>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
-          <a class="brand" href="#">{{ constant('SITENAME') }}</a>
-          <div class="nav-collapse collapse">
-{{ RENDERER.showMenu('topmenu') }}
-          </div>
-        </div>
-      </div>
-    </div>
 
 <div class="container">
 
