@@ -1,7 +1,7 @@
 <?php
 
 $users	= SiteUser::get(array(
-	'where'		=> ( User::canDo('users_seedev') ) ? '' : 'accesslevel<='.Config::get('perm_status/administrator'),
+	'where'		=> ( SiteUser::loggedCanDo('users_seedev') ) ? '' : 'accesslevel<'.Config::get('perm_status/administrator'),
 	'orderby'	=> 'fullname ASC',
 // 	'output'	=> SQLAdapter::ARR_OBJECTS
 ));
