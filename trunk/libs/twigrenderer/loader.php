@@ -6,10 +6,11 @@
 
 addAutoload('TwigRendering', 'twigrenderer/twigrendering_class.php');
 
-require_once dirname(__FILE__).'/Twig/lib/Twig/Autoloader.php';
+require_once dirname(__FILE__).'/Twig/Autoloader.php';
+// require_once dirname(__FILE__).'/Twig/lib/Twig/Autoloader.php';
 
 Twig_Autoloader::register();
 
 TwigRendering::init();
 
-$GLOBALS['TWIG_CSSFOLDERURL'] = TwigRendering::getCSSURL();
+$GLOBALS['TWIG_CSSFOLDERURL']	= TwigRendering::getCSSURL();

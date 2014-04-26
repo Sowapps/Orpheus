@@ -5,12 +5,12 @@
 */
 class TwigRendering extends Rendering {
 	
-	protected static $SHOWMODEL = 'layout';
-	public static $theme = 'default';
+	protected static $SHOWMODEL	= 'layout';
+	public static $theme		= 'default';
 	
-	public static $cssPath = 'css/';
-	public static $modelsPath = '';
-	public static $cachePath = 'cache/';
+	public static $cssPath		= 'css/';
+	public static $modelsPath	= '';
+	public static $cachePath	= 'cache/';
 	
 	protected static $twigenv;
 	
@@ -19,9 +19,10 @@ class TwigRendering extends Rendering {
 	 * \copydoc Rendering::render()
 	 */
 	public function render($model=null, $env=array()) {
-		if( !isset($model) ) {
+		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
 		}
+		$env['RENDERER']	= $this;
 		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
@@ -33,7 +34,7 @@ class TwigRendering extends Rendering {
 		if( isset(static::$twigenv) ) {
 			return;// Already done ?
 		}
-		static::$twigenv = new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
+		static::$twigenv	= new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
 			'cache' => static::getCachePath(),
 		));
 		static::setTwigEnvironment(static::$twigenv);
@@ -44,7 +45,7 @@ class TwigRendering extends Rendering {
 	 * \param $twigEnv The new Twig_Environment object.
 	 */
 	public static function setTwigEnvironment(Twig_Environment $twigEnv) {
-		static::$twigenv = $twigEnv;
+		static::$twigenv	= $twigEnv;
 	}
 	
 	//! Gets the Twig Environment

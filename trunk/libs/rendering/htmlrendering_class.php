@@ -5,7 +5,7 @@
 */
 class HTMLRendering extends Rendering {
 	
-	protected static $SHOWMODEL = 'page_skeleton';
+	protected static $SHOWMODEL		= 'page_skeleton';
 	
 	public static $theme			= 'default';
 	
@@ -31,7 +31,7 @@ class HTMLRendering extends Rendering {
 	 \copydoc Rendering::display()
 	*/
 	public function display($model=null, $env=array()) {
-		if( !isset($model) ) {
+		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env);
