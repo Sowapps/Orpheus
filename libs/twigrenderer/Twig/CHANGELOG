@@ -1,3 +1,141 @@
+* 1.15.1 (2013-02-13)
+
+ * fixed the conversion of the special '0000-00-00 00:00' date
+ * added an error message when trying to import an undefined block from a trait
+ * fixed a C extension crash when accessing defined but uninitialized property.
+
+* 1.15.0 (2013-12-06)
+
+ * made ignoreStrictCheck in Template::getAttribute() works with __call() methods throwing BadMethodCallException
+ * added min and max functions
+ * added the round filter
+ * fixed a bug that prevented the optimizers to be enabled/disabled selectively
+ * fixed first and last filters for UTF-8 strings
+ * added a source function to include the content of a template without rendering it
+ * fixed the C extension sandbox behavior when get or set is prepend to method name
+
+* 1.14.2 (2013-10-30)
+
+ * fixed error filename/line when an error occurs in an included file
+ * allowed operators that contain whitespaces to have more than one whitespace
+ * allowed tests to be made of 1 or 2 words (like "same as" or "divisible by")
+
+* 1.14.1 (2013-10-15)
+
+ * made it possible to use named operators as variables
+ * fixed the possibility to have a variable named 'matches'
+ * added support for PHP 5.5 DateTimeInterface
+
+* 1.14.0 (2013-10-03)
+
+ * fixed usage of the html_attr escaping strategy to avoid double-escaping with the html strategy
+ * added new operators: ends with, starts with, and matches
+ * fixed some compatibility issues with HHVM
+ * added a way to add custom escaping strategies
+ * fixed the C extension compilation on Windows
+ * fixed the batch filter when using a fill argument with an exact match of elements to batch
+ * fixed the filesystem loader cache when a template name exists in several namespaces
+ * fixed template_from_string when the template includes or extends other ones
+ * fixed a crash of the C extension on an edge case
+
+* 1.13.2 (2013-08-03)
+
+ * fixed the error line number for an error occurs in and embedded template
+ * fixed crashes of the C extension on some edge cases
+
+* 1.13.1 (2013-06-06)
+
+ * added the possibility to ignore the filesystem constructor argument in Twig_Loader_Filesystem
+ * fixed Twig_Loader_Chain::exists() for a loader which implements Twig_ExistsLoaderInterface
+ * adjusted backtrace call to reduce memory usage when an error occurs
+ * added support for object instances as the second argument of the constant test
+ * fixed the include function when used in an assignment
+
+* 1.13.0 (2013-05-10)
+
+ * fixed getting a numeric-like item on a variable ('09' for instance)
+ * fixed getting a boolean or float key on an array, so it is consistent with PHP's array access:
+   `{{ array[false] }}` behaves the same as `echo $array[false];` (equals `$array[0]`)
+ * made the escape filter 20% faster for happy path (escaping string for html with UTF-8)
+ * changed ☃ to § in tests
+ * enforced usage of named arguments after positional ones
+
+* 1.12.3 (2013-04-08)
+
+ * fixed a security issue in the filesystem loader where it was possible to include a template one
+   level above the configured path
+ * fixed fatal error that should be an exception when adding a filter/function/test too late
+ * added a batch filter
+ * added support for encoding an array as query string in the url_encode filter
+
+* 1.12.2 (2013-02-09)
+
+ * fixed the timezone used by the date filter and function when the given date contains a timezone (like 2010-01-28T15:00:00+02:00)
+ * fixed globals when getGlobals is called early on
+ * added the first and last filter
+
+* 1.12.1 (2013-01-15)
+
+ * added support for object instances as the second argument of the constant function
+ * relaxed globals management to avoid a BC break
+ * added support for {{ some_string[:2] }}
+
+* 1.12.0 (2013-01-08)
+
+ * added verbatim as an alias for the raw tag to avoid confusion with the raw filter
+ * fixed registration of tests and functions as anonymous functions
+ * fixed globals management
+
+* 1.12.0-RC1 (2012-12-29)
+
+ * added an include function (does the same as the include tag but in a more flexible way)
+ * added the ability to use any PHP callable to define filters, functions, and tests
+ * added a syntax error when using a loop variable that is not defined
+ * added the ability to set default values for macro arguments
+ * added support for named arguments for filters, tests, and functions
+ * moved filters/functions/tests syntax errors to the parser
+ * added support for extended ternary operator syntaxes
+
+* 1.11.1 (2012-11-11)
+
+ * fixed debug info line numbering (was off by 2)
+ * fixed escaping when calling a macro inside another one (regression introduced in 1.9.1)
+ * optimized variable access on PHP 5.4
+ * fixed a crash of the C extension when an exception was thrown from a macro called without being imported (using _self.XXX)
+
+* 1.11.0 (2012-11-07)
+
+ * fixed macro compilation when a variable name is a PHP reserved keyword
+ * changed the date filter behavior to always apply the default timezone, except if false is passed as the timezone
+ * fixed bitwise operator precedences
+ * added the template_from_string function
+ * fixed default timezone usage for the date function
+ * optimized the way Twig exceptions are managed (to make them faster)
+ * added Twig_ExistsLoaderInterface (implementing this interface in your loader make the chain loader much faster)
+
+* 1.10.3 (2012-10-19)
+
+ * fixed wrong template location in some error messages
+ * reverted a BC break introduced in 1.10.2
+ * added a split filter
+
+* 1.10.2 (2012-10-15)
+
+ * fixed macro calls on PHP 5.4
+
+* 1.10.1 (2012-10-15)
+
+ * made a speed optimization to macro calls when imported via the "import" tag
+ * fixed C extension compilation on Windows
+ * fixed a segfault in the C extension when using DateTime objects
+
+* 1.10.0 (2012-09-28)
+
+ * extracted functional tests framework to make it reusable for third-party extensions
+ * added namespaced templates support in Twig_Loader_Filesystem
+ * added Twig_Loader_Filesystem::prependPath()
+ * fixed an error when a token parser pass a closure as a test to the subparse() method
+
 * 1.9.2 (2012-08-25)
 
  * fixed the in operator for objects that contain circular references
@@ -313,7 +451,7 @@ Changes:
  * enhanced error messages when an unexpected token is parsed in an expression
  * fixed filename not being added to syntax error messages
  * added the autoescape option to enable/disable autoescaping
- * removed the newline after a comment (mimicks PHP behavior)
+ * removed the newline after a comment (mimics PHP behavior)
  * added a syntax error exception when parent block is used on a template that does not extend another one
  * made the Escaper extension enabled by default
  * fixed sandbox extension when used with auto output escaping
