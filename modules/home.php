@@ -22,6 +22,27 @@ if( isPOST('data') ) {
 	<p><a href="downloads/" class="btn btn-primary btn-large">&darr; Download &darr;</a></p>
 </div>
 
+<div class="row">
+	<div class="col-xs-6">
+
+		<div class="row">
+			<div class="col-xs-4">
+<h3>Persistant Entity System</h3>
+<p>Blah Blah Blah Blah Blah Blah Blah</p>
+			</div>
+			<div class="col-xs-4">
+<h3>A Light &amp; Powerful Renderer</h3>
+<p>Blah Blah Blah Blah Blah Blah Blah</p>
+			</div>
+			<div class="col-xs-4">
+<h3>i18n - Internationalization</h3>
+<p>Blah Blah Blah Blah Blah Blah Blah</p>
+			</div>
+		</div>
+		
+	</div>
+	<div class="col-xs-6">
+
 <section id="demotest">
 <?php
 displayReportsHTML();
@@ -38,3 +59,5 @@ displayReportsHTML();
 	</fieldset>
 	</form>
 </section>
+	</div>
+</div>
