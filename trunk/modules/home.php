@@ -23,25 +23,25 @@ if( isPOST('data') ) {
 </div>
 
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-xs-8">
 
 		<div class="row">
 			<div class="col-xs-4">
 <h3>Persistant Entity System</h3>
-<p>Blah Blah Blah Blah Blah Blah Blah</p>
+<p>The framework allow you to do not manipulate SQL queries anymore. It includes a SQL Adapter system with a full object entity handling.</p>
 			</div>
 			<div class="col-xs-4">
 <h3>A Light &amp; Powerful Renderer</h3>
-<p>Blah Blah Blah Blah Blah Blah Blah</p>
+<p>You can choose the the renderer on-the-fly, as the theme you want. Basically, it includes a Raw Renderer, a HTML Renderer and a Twig Rendering Adapter.</p>
 			</div>
 			<div class="col-xs-4">
 <h3>i18n - Internationalization</h3>
-<p>Blah Blah Blah Blah Blah Blah Blah</p>
+<p>All features allow you to translate contents using our easy-to-use internationalization library. The translation functions also allow you to pass replacement values.</p>
 			</div>
 		</div>
 		
 	</div>
-	<div class="col-xs-6">
+	<div class="col-xs-4">
 
 <section id="demotest">
 <?php
