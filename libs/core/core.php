@@ -186,20 +186,15 @@ function formatException($e) {
 */
 function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-// 		if( is_object($report) && $report instanceof Exception ) {
-// 			$report = formatException($report);
-// 		} else {
-// 			$report = "\n".print_r($report, 1);
-// 		}
 		$report = 'NON-SCALAR::'.stringify($report);//."\n".print_r($report, 1);
 	}
 	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	if( !is_null($message) ) {
+	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( ERROR_LEVEL == DEV_LEVEL ) {
-			$Error['message'] = $message;
-			$Error['page'] = nl2br(htmlentities($GLOBALS['Page']));
+			$Error['message']	= $message;
+			$Error['page']		= nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
 			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
 				// If we fail in our display of this error, this is fatal.
@@ -266,7 +261,10 @@ function sys_error($report, $action='', $silent=false) {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
 function log_error($report, $action='', $fatal=true) {
-	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.').(ERROR_LEVEL == DEV_LEVEL ? '<br />'.nl2br(print_r(debug_backtrace(), 1)) : ''));
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action,
+		empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null :
+			(is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.').
+			(ERROR_LEVEL == DEV_LEVEL ? '<br />'.nl2br(print_r(debug_backtrace(), 1)) : ''));
 }
 
 //! Logs a sql error.
