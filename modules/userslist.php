@@ -9,14 +9,18 @@ $users	= SiteUser::get(array(
 displayReportsHTML();
 ?>
 <h3>Users list</h3>
-<ul class="userslist">
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Email</th>
+	</tr>
 <?php
 foreach( $users as $user ) {
-	echo "
-	<li>
-		<span>{$user->name}</span>
-		<span>{$user->email_public}</span>
-	</li>";
+	echo '
+	<tr>
+		<td>'.$user.'</td>
+		<td>'.( !empty($user->email_public) ? $user->email_public : 'Hidden').'</td>
+	</tr>';
 }
 ?>
-</ul>
+</table>
