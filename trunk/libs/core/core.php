@@ -266,7 +266,7 @@ function sys_error($report, $action='', $silent=false) {
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
 */
 function log_error($report, $action='', $fatal=true) {
-	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard."));
+	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action, empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null : (is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.').(ERROR_LEVEL == DEV_LEVEL ? '<br />'.nl2br(print_r(debug_backtrace(), 1)) : ''));
 }
 
 //! Logs a sql error.
