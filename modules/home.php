@@ -46,15 +46,18 @@ if( isPOST('data') ) {
 <p>The framework provides you all tools to debug your application, it catches all error that occurred running your scripts and log it for you.</p>
 			</div>
 			<div class="col-xs-4">
-<h3>Edit the content <span class="label label-warning">Building</span></h3>
+<h3>Edit the content <span class="badge">Building</span></h3>
 <p>The framework will provide a CMS library soon, you will be able to edit your application online &amp; inline.</p>
 			</div>
 			<div class="col-xs-4">
-<h3>Speak about it <span class="label label-warning">Warning</span></h3>
+<h3>Speak about it <span class="badge">Building</span></h3>
 <p>We are developing a forum library for our framework, you will be able to create and integrate a forum in your App !</p>
 			</div>
 		</div>
-		
+<!--
+badge
+label label-warning
+-->
 	</div>
 	<div class="col-xs-4">
 
