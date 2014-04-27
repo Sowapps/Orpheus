@@ -3,6 +3,7 @@
 
 $ALLOW_EDITOR	= SiteUser::loggedCanDo('forum_manage');
 
+HTMLRendering::addJSFile('debug.js');
 HTMLRendering::addJSFile('bootstrap-wysiwyg.js');
 HTMLRendering::addJSFile('forum-forums.js');
 if( $ALLOW_EDITOR ) {
