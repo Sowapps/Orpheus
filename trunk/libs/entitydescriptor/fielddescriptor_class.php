@@ -16,7 +16,7 @@ class FieldDescriptor {
 	}
 	
 	public function __toString() {
-		return $name;
+		return $this->name;
 	}
 	
 	// Getter
