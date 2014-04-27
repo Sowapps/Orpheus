@@ -3,4 +3,4 @@
 
 http://getbootstrap.com/
 http://fortawesome.github.io/Font-Awesome/icons/
-http://mindmup.github.io/bootstrap-wysiwyg/
+https://github.com/mindmup/bootstrap-wysiwyg
