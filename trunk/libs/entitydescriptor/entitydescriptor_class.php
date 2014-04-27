@@ -135,14 +135,16 @@ class EntityDescriptor {
 	public function validate(&$uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data	= array();
 // 		$class = $this->class;
+		debug('Validating $uInputData', $uInputData);
 		foreach( $this->fields as $field => &$fData ) {
 			try {
-				if( !is_null($fields) && !in_array($field, $fields) ) {
+				if( $fields!==NULL && !in_array($field, $fields) ) {
 					unset($uInputData[$field]);
 // 					if( !is_null($ref) ) { unset($uInputData[$field]); }
 					continue;
 				}
 				if( !$fData->writable ) { continue; }
+				text('$field : '.$field);
 // 				if( !isset($this->fields[$field]) || !$fData->writable ) { continue; }
 				if( !isset($uInputData[$field]) ) {
 // 					if( !is_null($ref) ) { continue; }
