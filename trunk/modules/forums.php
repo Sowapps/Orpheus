@@ -20,7 +20,9 @@ $TOPBAR_CONTENTS	= '
 
 debug('POST', POST());
 if( isPOST('submitCreateForum') ) {
+	debug('Create forum');
 	$forumData	= POST('newforum');
+	debug('$forumData', $forumData);
 	if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
 	$forumData['position']	= Forum::getMaxPosition($forumData['parent_id']);
 	Forum::create(POST('newforum'), array('parent_id', 'name', 'position'));
