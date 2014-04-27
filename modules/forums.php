@@ -18,6 +18,11 @@ $TOPBAR_CONTENTS	= '
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
 </form>';
 
+debug('POST', POST());
+if( isPOST() ) {
+	
+}
+
 $AllForums	= Forum::getAll();
 $Forums		= array();
 foreach( $AllForums as $forum ) {
@@ -346,7 +351,9 @@ displayForumList();
 </div>
 </div>
 </div>
-
+<?php
+if( $ALLOW_EDITOR ) {
+	?>
 <div id="newForumForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
@@ -372,6 +379,9 @@ displayForumList();
 </div>
 </div>
 </div>
+<?php
+}
+?>
 
 <style>
 body.editor {
