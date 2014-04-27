@@ -11,9 +11,11 @@ if( $ALLOW_EDITOR ) {
 }
 
 $TOPBAR_CONTENTS	= '
-<form class="navbar-form navbar-right">'.( $ALLOW_EDITOR ? '
+<form class="navbar-form navbar-right">
+	'.( $ALLOW_EDITOR ? '
 	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="icon-edit"></span></button>' : '').'
-	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="icon-off"></span></button>
+	'.( !SiteUser::is_login() ? '
+	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="icon-off"></span></button>' : '').'
 	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
 </form>';
@@ -29,7 +31,7 @@ try {
 		$forumData['user_id']	= $USER->id();
 		$forumData['user_name']	= $USER->fullname;
 		$forumData['published']	= 1;
-		Forum::create(POST('newforum'), array('parent_id', 'user_id', 'user_name', 'name', 'position'));
+		Forum::create(POST('newforum'), array('parent_id', 'user_id', 'user_name', 'published', 'name', 'position'));
 		reportSuccess('successCreate', Forum::getDomain());
 	}
 } catch( UserException $e ) {
@@ -88,6 +90,7 @@ function displayForumList($forumID=0) {
 </div>';
 }
 
+displayReportsHTML();
 displayForumList();
 
 /*
