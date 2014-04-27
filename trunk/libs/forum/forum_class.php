@@ -15,5 +15,13 @@ class Forum extends PermanentEntity {
 	public static function getAll($parent=0, $publishedOnly=true) {
 		return static::get('1'.($parent ? ' AND parent_id='.$parent : '').($publishedOnly ? ' AND published' : ''), 'position ASC');
 	}
+
+	public static function getMaxPosition($forum) {
+		return (int) ForumPost::get(array(
+			'what'		=> 'MAX(position) max',
+			'where'		=> 'parent_id='.id($forum),
+			'output'	=> SQLAdapter::ARR_FIRST
+		));
+	}
 }
 Forum::init();

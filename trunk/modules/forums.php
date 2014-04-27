@@ -19,8 +19,11 @@ $TOPBAR_CONTENTS	= '
 </form>';
 
 debug('POST', POST());
-if( isPOST() ) {
-	
+if( isPOST('submitCreateForum') ) {
+	$forumData	= POST('newforum');
+	if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
+	$forumData['position']	= Forum::getMaxPosition($forumData['parent_id']);
+	Forum::create(POST('newforum'), array('parent_id', 'name', 'position'));
 }
 
 $AllForums	= Forum::getAll();
@@ -359,7 +362,7 @@ if( $ALLOW_EDITOR ) {
 <div class="modal-content">
 <form method="POST" class="">
 <!-- form-horizontal -->
-	<input type="hidden" name="data[fid]" id="nff_fid" />
+	<input type="hidden" name="newforum[parent_id]" id="nff_fid" />
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3 id="myModalLabel">Create new Forum</h3>
@@ -368,7 +371,7 @@ if( $ALLOW_EDITOR ) {
 		<h3 id="ntf_title"></h3>
 		<div class="control-group">
 			<label class="control-label" for="inputName">Title</label>
-			<input class="form-control" type="text" name="data[name]" id="inputName" placeholder="Enter the title of your new forum">
+			<input class="form-control" type="text" name="newforum[name]" id="inputName" placeholder="Enter the title of your new forum">
 		</div>
 	</div>
 	<div class="modal-footer">
