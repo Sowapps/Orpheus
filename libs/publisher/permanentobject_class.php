@@ -588,29 +588,30 @@ abstract class PermanentObject {
 	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array(), $fields=null) {
-		$data = static::checkUserInput($inputData, $fields, null, $errCount);
+		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
+		debug('create checked data', $data);
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
-		$data = static::getLogEvent('create') + static::getLogEvent('edit') + $data;
+		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
 		
 		// Check if entry already exist
 		static::checkForObject($data);
 		// To do before insertion
 		static::runForObject($data);
 		
-		$what = array();
+		$what	= array();
 		foreach($data as $fieldname => $fieldvalue) {
 			if( in_array($fieldname, static::$fields) ) {
-				$what[$fieldname] = static::formatValue($fieldvalue);
+				$what[$fieldname]	= static::formatValue($fieldvalue);
 			}
 		}
-		$options = array(
+		$options	= array(
 			'table'	=> static::$table,
 			'what'=> $what,
 		);
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
-		$LastInsert = SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
+		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
 		static::applyToObject($data, $LastInsert);
 		return $LastInsert;

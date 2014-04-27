@@ -31,6 +31,7 @@ try {
 		$forumData['user_id']	= $USER->id();
 		$forumData['user_name']	= $USER->fullname;
 		$forumData['published']	= true;
+		debug('$forumData', $forumData);
 		Forum::create(POST('newforum'), array('parent_id', 'user_id', 'user_name', 'published', 'name', 'position'));
 		reportSuccess('successCreate', Forum::getDomain());
 	}
