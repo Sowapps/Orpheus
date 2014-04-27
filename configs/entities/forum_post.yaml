@@ -7,6 +7,7 @@ fields:
     message:    string
     forum_id:   ref
     parent_id:  ref=0
+    post_date:  datetime[nullable]    # Last date a post of the forum was edited/added
 
 
 indexes:

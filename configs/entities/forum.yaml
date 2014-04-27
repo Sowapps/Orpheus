@@ -4,9 +4,10 @@
 parent: publications
 
 fields:
-    description:  string
-    position:     integer
-    parent_id:    ref=0
+    description:    string
+    position:       integer
+    parent_id:      ref=0
+    post_date:      datetime    # Last date a sub-post or this post was edited/added
 
 
 indexes:

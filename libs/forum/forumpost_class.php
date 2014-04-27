@@ -1,9 +1,4 @@
 <?php
-//! The post class for threads
-/*!
- *
- * Require core and publisher plugin.
- */
 
 class ForumPost extends PermanentEntity {
 
