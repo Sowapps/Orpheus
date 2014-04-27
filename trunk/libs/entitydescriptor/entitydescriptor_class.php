@@ -94,8 +94,6 @@ class EntityDescriptor {
 			throw new InvalidFieldException('readOnlyField', $field, $value, null, $this->name);
 		}
 		$TYPE	= $Field->getType();
-		debug($field.' - Type', $TYPE);
-		debug('Value is', $value);
 // 		$TYPE	= static::getType($Field->type);
 		
 		if( $value === NULL || ($value==='' && $TYPE->emptyIsNull($Field)) ) {
@@ -118,7 +116,6 @@ class EntityDescriptor {
 		// TYPE Validator - Use inheritance, mandatory in super class
 		try {
 			$TYPE->validate($Field, $value, $inputData, $ref);
-			debug($Field.' - Value', $value);
 			// Field Validator - Could be undefined
 			if( !empty($Field->validator) ) {
 				call_user_func_array($Field->validator, array($Field, &$value, $inputData, &$ref));
@@ -135,19 +132,14 @@ class EntityDescriptor {
 	public function validate(&$uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data	= array();
 // 		$class = $this->class;
-		debug('Validating $uInputData', $uInputData);
 		foreach( $this->fields as $field => &$fData ) {
 			try {
 				if( $fields!==NULL && !in_array($field, $fields) ) {
 					unset($uInputData[$field]);
-// 					if( !is_null($ref) ) { unset($uInputData[$field]); }
 					continue;
 				}
 				if( !$fData->writable ) { continue; }
-				text('$field : '.$field);
-// 				if( !isset($this->fields[$field]) || !$fData->writable ) { continue; }
 				if( !isset($uInputData[$field]) ) {
-// 					if( !is_null($ref) ) { continue; }
 					$uInputData[$field] = null;
 				}
 				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);

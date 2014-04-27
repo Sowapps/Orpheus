@@ -589,7 +589,6 @@ abstract class PermanentObject {
 	*/
 	public static function create($inputData=array(), $fields=null) {
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
-		debug('create checked data', $data);
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
