@@ -19,13 +19,21 @@ $TOPBAR_CONTENTS	= '
 </form>';
 
 debug('POST', POST());
-if( isPOST('submitCreateForum') ) {
-	debug('Create forum');
-	$forumData	= POST('newforum');
-	debug('$forumData', $forumData);
-	if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
-	$forumData['position']	= Forum::getMaxPosition($forumData['parent_id']);
-	Forum::create(POST('newforum'), array('parent_id', 'name', 'position'));
+try {
+	if( $ALLOW_EDITOR && isPOST('submitCreateForum') ) {
+		debug('Create forum');
+		$forumData	= POST('newforum');
+		debug('$forumData', $forumData);
+		if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
+		$forumData['position']	= Forum::getMaxPosition($forumData['parent_id'])+1;
+		$forumData['user_id']	= $USER->id();
+		$forumData['user_name']	= $USER->fullname;
+		$forumData['published']	= 1;
+		Forum::create(POST('newforum'), array('parent_id', 'user_id', 'user_name', 'name', 'position'));
+		reportSuccess('successCreate', Forum::getDomain());
+	}
+} catch( UserException $e ) {
+	reportError($e);
 }
 
 $AllForums	= Forum::getAll();
