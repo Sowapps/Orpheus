@@ -3,7 +3,7 @@
 class Forum extends PermanentEntity {
 
 	//Attributes
-	protected static $table		= 'forum_post';
+	protected static $table		= 'forum';
 	protected static $fields	= null;
 	protected static $validator	= null;
 	protected static $domain	= null;
