@@ -2,8 +2,9 @@
 /* Loader File for the forum sources
  */
 
-addAutoload('Forum',		'forum/forum_class.php');
-addAutoload('Post',			'forum/post_class.php');
+addAutoload('Forum',			'forum/forum_class.php');
+addAutoload('ForumPost',		'forum/forumpost_class.php');
+addAutoload('ForumPostView',	'forum/forumpostview_class.php');
 
 // Hooks
 
