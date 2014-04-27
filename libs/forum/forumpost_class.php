@@ -8,11 +8,5 @@ class ForumPost extends PermanentEntity {
 	protected static $validator	= null;
 	protected static $domain	= null;
 
-	// *** OVERRIDDEN METHODS ***
-	
-	// *** DEV METHODS ***
-	
-	// *** STATIC METHODS ***
-	
 }
 ForumPost::init();
