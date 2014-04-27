@@ -94,9 +94,11 @@ class EntityDescriptor {
 			throw new InvalidFieldException('readOnlyField', $field, $value, null, $this->name);
 		}
 		$TYPE	= $Field->getType();
+		debug($field.' - Type', $TYPE);
+		debug('Value is', $value);
 // 		$TYPE	= static::getType($Field->type);
 		
-		if( is_null($value) || ($value==='' && $TYPE->emptyIsNull($Field)) ) {
+		if( $value === NULL || ($value==='' && $TYPE->emptyIsNull($Field)) ) {
 			$value	= null;
 			// Look for default value
 			if( isset($Field->default) ) {
@@ -116,6 +118,7 @@ class EntityDescriptor {
 		// TYPE Validator - Use inheritance, mandatory in super class
 		try {
 			$TYPE->validate($Field, $value, $inputData, $ref);
+			debug($Field.' - Value', $value);
 			// Field Validator - Could be undefined
 			if( !empty($Field->validator) ) {
 				call_user_func_array($Field->validator, array($Field, &$value, $inputData, &$ref));
