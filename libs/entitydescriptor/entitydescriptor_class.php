@@ -16,7 +16,7 @@ class EntityDescriptor {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache	= new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		if( $cache->get($descriptor) ) {
-// 			return $descriptor;
+			return $descriptor;
 		}
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
