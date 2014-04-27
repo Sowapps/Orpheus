@@ -34,9 +34,8 @@ function displayForumList($forumID=0) {
 	global $Forums, $userPostViews;
 // 	if( empty($Forums[$forumID]) ) { return; }
 	if( !isset($Forums[$forumID]) ) { $Forums[$forumID]	= array(); }
-	echo <<<EOF
-<div class="forumlist" id="forumlist-{$forumID}">
-EOF;
+	echo '
+<div class="forumlist" id="forumlist-'.$forumID.'">';
 	foreach( $Forums[$forumID] as $forum ) {
 		/* @var $forum Forum */
 		echo '
@@ -69,7 +68,6 @@ EOF;
 	}
 	echo '
 </div>';
-EOF;
 }
 
 displayForumList();
