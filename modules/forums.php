@@ -30,7 +30,7 @@ try {
 		$forumData['position']	= Forum::getMaxPosition($forumData['parent_id'])+1;
 		$forumData['user_id']	= $USER->id();
 		$forumData['user_name']	= $USER->fullname;
-		$forumData['published']	= 1;
+		$forumData['published']	= true;
 		Forum::create(POST('newforum'), array('parent_id', 'user_id', 'user_name', 'published', 'name', 'position'));
 		reportSuccess('successCreate', Forum::getDomain());
 	}
