@@ -1,4 +1,5 @@
 <?php
+/* @var $USER SiteUser */
 
 $TOPBAR_CONTENTS	= <<<EOF
 <form class="navbar-form navbar-right">
@@ -19,8 +20,10 @@ foreach( $AllForums as $forum ) {
 }
 unset($AllForums);
 
+$userPostViews	= SiteUser::is_login() ? $USER->getAllPostViews() : array();
+
 function displayForumList($forumID=0) {
-	global $Forums;
+	global $Forums, $userPostViews;
 	if( empty($Forums[$forumID]) ) { return; }
 	echo <<<EOF
 <div class="forumlist" id="forumlist-{$forumID}">
@@ -38,6 +41,19 @@ EOF;
 			<div class="panel-body">';
 		displayForumList($forum->id());
 		echo '
+				<div class="threadWrapper">
+					<h4>Threads of '.$forum.'</h4>
+					<ul>';
+		foreach( $forum->getPosts() as $post ) {
+			$viewed	= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
+			echo '
+						<li><div class="icon-set"><span class="icon-eye-'.($viewed ? 'open' : 'close').'"></span></div><a href="'.$post->getLink().'">'.$post.'</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 21/05/2013</span></li>';
+		}
+// 						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
+// 						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>';
+		echo '
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>';
@@ -48,8 +64,8 @@ EOF;
 }
 
 displayForumList();
-?>
 
+/*
 <div class="forumlist" id="forumlist-0">
 	<div class="panel panel-default">
 		<div class="panel-heading" data-id="1">
@@ -149,6 +165,8 @@ displayForumList();
 		</div>
 	</div>
 </div>
+*/
+?>
 
 <div class="modal fade">
   <div class="modal-dialog">
