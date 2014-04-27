@@ -43,3 +43,15 @@ function debug($s, $d=-1) {
 	}
 	text($s);
 }
+
+function htmlSecret($message) {
+	if( is_null($message) ) {
+		$message = '{NULL}';
+	} else if( $message === false ) {
+		$message = '{FALSE}';
+	} else if( !is_scalar($message) ) {
+		$message = '<pre>'.print_r($message, 1).'</pre>';
+	}
+	return '<button type="button" onclick="var next = this.nextSibling.style.display; next === \'none\' ? \'block\' : \'none\'; return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+// 	return '<button type="button" onclick="$(this).next().toggle(); return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+}
