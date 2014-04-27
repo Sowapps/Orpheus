@@ -15,6 +15,10 @@ class FieldDescriptor {
 		$this->type	= $type;
 	}
 	
+	public function __toString() {
+		return $name;
+	}
+	
 	// Getter
 	public function __get($key) {
 		return $this->$key;
