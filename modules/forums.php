@@ -1,6 +1,13 @@
 <?php
 /* @var $USER SiteUser */
 
+HTMLRendering::addJSFile('forum-forums');
+$ALLOW_EDITOR	= SiteUser::loggedCanDo('forum_manage');
+
+if( $ALLOW_EDITOR ) {
+	HTMLRendering::addJSFile('forum-editor');
+}
+
 $TOPBAR_CONTENTS	= <<<EOF
 <form class="navbar-form navbar-right">
 	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="icon-edit"></span></button>

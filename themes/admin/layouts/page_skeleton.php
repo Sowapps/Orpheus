@@ -55,7 +55,7 @@ if( !empty($CSS_FILES) ) {
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html"><?php _t('adminpanel_title'); ?></a>
+			<a class="navbar-brand" href="/"><?php _t('adminpanel_title'); ?></a>
 		</div>
 	
 		<!-- Collect the nav links, forms, and other content for toggling -->
