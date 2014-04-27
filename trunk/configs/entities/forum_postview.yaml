@@ -14,5 +14,5 @@ fields:
 
 indexes:
      - INDEX(user_id)
-     - FULLTEXT(message)
+     - INDEX(user_id, post_id)
      
