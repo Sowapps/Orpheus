@@ -10,14 +10,13 @@ if( $ALLOW_EDITOR ) {
 	HTMLRendering::addJSFile('forum-editor.js');
 }
 
-$TOPBAR_CONTENTS	= <<<EOF
-<form class="navbar-form navbar-right">
-	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="icon-edit"></span></button>
+$TOPBAR_CONTENTS	= '
+<form class="navbar-form navbar-right">'.( $ALLOW_EDITOR ? '
+	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="icon-edit"></span></button>' : '').'
 	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="icon-off"></span></button>
-	<input type="text" placeholder="What are you lookin' for ?" autofocus="autofocus" class="form-control search-query">
+	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
-</form>
-EOF;
+</form>';
 
 $AllForums	= Forum::getAll();
 $Forums		= array();
@@ -33,7 +32,8 @@ $userPostViews	= SiteUser::is_login() ? $USER->getAllPostViews() : array();
 
 function displayForumList($forumID=0) {
 	global $Forums, $userPostViews;
-	if( empty($Forums[$forumID]) ) { return; }
+// 	if( empty($Forums[$forumID]) ) { return; }
+	if( !isset($Forums[$forumID]) ) { $Forums[$forumID]	= array(); }
 	echo <<<EOF
 <div class="forumlist" id="forumlist-{$forumID}">
 EOF;
