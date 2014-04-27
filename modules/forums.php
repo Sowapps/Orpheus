@@ -1,11 +1,11 @@
 <?php
 /* @var $USER SiteUser */
 
-HTMLRendering::addJSFile('forum-forums');
 $ALLOW_EDITOR	= SiteUser::loggedCanDo('forum_manage');
 
+HTMLRendering::addJSFile('forum-forums.js');
 if( $ALLOW_EDITOR ) {
-	HTMLRendering::addJSFile('forum-editor');
+	HTMLRendering::addJSFile('forum-editor.js');
 }
 
 $TOPBAR_CONTENTS	= <<<EOF
