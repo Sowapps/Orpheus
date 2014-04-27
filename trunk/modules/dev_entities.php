@@ -9,11 +9,14 @@ define('OUTPUT_DLRAW',		3);
 define('OUTPUT_DLZIP',		4);
 //define('OUTPUT_SQLDOWNLOAD');
 
-
+$FormToken	= new FormToken();
 try {
 if( isPOST('entities') && is_array(POST('entities')) ) {
+	if( !$FormToken->validateForm() ) {
+		throw new UserException('invalidFormToken');
+	}
 	if( isPOST('submitGenerateSQL') ) {
-		$output		= POST('sql_output')==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+		$output		= key(POST('submitGenerateSQL'))==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 		$generator	= new SQLGenerator_MySQL;
 		$result		= '';
 		foreach( POST('entities') as $entityName => $on ) {
@@ -22,12 +25,19 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 		if( empty($result) ) {
 			throw new UserException('No changes');
 		}
+		echo '<div>'.$result.'</div>';
+		if( $output==OUTPUT_DISPLAY ) {
+			echo '
+<form method="POST">'.$FormToken;
+			foreach( POST('entities') as $entityName => $on ) {
+				echo htmlHidden('entities/'.$entityName);
+			}
+			echo '
+<button type="submit" class="btn btn-primary" name="submitGenerateSQL['.OUTPUT_APPLY.']">Apply</button></form>';
+		} else
 		if( $output==OUTPUT_APPLY ) {
-			pdo_query($result, PDOEXEC);
+			pdo_query(strip_tags($result), PDOEXEC);
 			reportSuccess('successSQLApply');
-			
-		} else {
-			echo '<pre style="tab-size: 4; -moz-tab-size: 4;">'.$result.'</pre>';
 		}
 	} else
 	if( isPOST('submitGenerateVE') ) {
@@ -63,28 +73,35 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
  */
 ?>
 <form method="POST" role="form" class="form-horizontal">
+<?php echo $FormToken; ?>
 
 <div class="row">
 	<div class="col-lg-6">
 		<h2>Entities found</h2>
 		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);">Check all</button>
+		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);">Uncheck all</button>
 		<?php 
 		$entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
 		foreach( $entities as $filename ) {
 			$pi = pathinfo($filename);
 			if( $pi['extension'] != 'yaml' ) { continue; }
 			echo '
-		<div class="checkbox"><label><input class="entitycb" type="checkbox" name="entities['.$pi['filename'].']"'.(isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/> '.$pi['filename'].'</label></div>';
+		<div class="checkbox"><label><input class="entitycb" type="checkbox" name="entities['.$pi['filename'].']"'.(!isPOST() || isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/> '.$pi['filename'].'</label></div>';
 		}
-		?>
-		
-		<div class="form-group">
+		/*
 			<label class="col-sm-4 control-label">SQL</label>
 			<div class="col-sm-3"><select name="sql_output" class="form-control">
 				<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
 				<option value="<?php echo OUTPUT_APPLY; ?>">Apply</option>
 			</select></div>
-			<button type="submit" class="btn btn-default" name="submitGenerateSQL">Generate</button>
+			*/
+		?>
+		
+		<div class="row form-group">
+			<label class="col-sm-4 control-label">SQL</label>
+			<div class="col-sm-3">
+				<button type="submit" class="btn btn-default" name="submitGenerateSQL[<?php echo OUTPUT_DISPLAY; ?>]">Generate</button>
+			</div>
 		</div>
 		
 		<div class="form-group">
@@ -100,3 +117,17 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 </div>
 
 </form>
+<style>
+.table-operation {
+	margin-bottom: 10px;
+	white-space: pre;
+	tab-size: 4;
+	-moz-tab-size: 4;
+	font-size: 12px;
+}
+.table-name {
+	display: inline;
+	font-weight: bold;
+}
+
+</style>
