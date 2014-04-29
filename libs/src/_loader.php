@@ -49,6 +49,8 @@ function htmlSecret($message) {
 		$message = '{NULL}';
 	} else if( $message === false ) {
 		$message = '{FALSE}';
+	} else if( $message === true ) {
+		$message = '{TRUE}';
 	} else if( !is_scalar($message) ) {
 		$message = '<pre>'.print_r($message, 1).'</pre>';
 	}
