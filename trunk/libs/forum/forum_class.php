@@ -8,6 +8,10 @@ class Forum extends PermanentEntity {
 	protected static $validator	= null;
 	protected static $domain	= null;
 
+	public function __toString() {
+		return $this->name;
+	}
+	
 	public function getPosts($publishedOnly=true) {
 		return ForumPost::get('forum_id='.$this->id().($publishedOnly ? ' AND published' : ''));
 	}
