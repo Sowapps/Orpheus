@@ -71,6 +71,7 @@ function displayForumList($forumID=0) {
 		displayForumList($forum->id());
 		echo '
 				<div class="threadWrapper">
+					<a class="btn btn-default btn-sm right newthreadbtn"><i class="icon-plus"></i> New thread</a>
 					<h4>Threads of '.$forum.'</h4>
 					<ul>';
 		foreach( $forum->getPosts() as $post ) {

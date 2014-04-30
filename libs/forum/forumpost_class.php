@@ -8,5 +8,8 @@ class ForumPost extends PermanentEntity {
 	protected static $validator	= null;
 	protected static $domain	= null;
 
+	public function __toString() {
+		return $this->name;
+	}
 }
 ForumPost::init();
