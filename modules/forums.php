@@ -32,7 +32,7 @@ try {
 		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
 		$post	= POST('newpost');
 		$post['user_id']	= $USER->id();
-		$post['user_name']	= "$USER";
+		$post['user_name']	= $USER->fullname;
 		$post['published']	= 1;
 		$post['post_date']	= sqlDatetime();
 // 		$post['parent_id']	= 0;// Or answer
@@ -94,12 +94,16 @@ function displayForumList($forumID=0) {
 					<h4>Threads of '.$forum.'</h4>
 					<ul>';
 		foreach( $forum->getPosts() as $post ) {
-			$viewed	= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
+			$viewed		= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
+			$lastAnswer	= $post->getLastAnswer();
 			echo '
-						<li><div class="icon-set"><span class="fa fa-eye'.($viewed ? 'open' : '-slash').'"></span></div><a href="'.$post->getLink().'">'.$post.'</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 21/05/2013</span></li>';
+						<li>
+							<i class="fa fa-eye'.($viewed ? 'open' : '-slash').'"></i> 
+							<a href="'.$post->getLink().'">'.$post.'</a>
+							<span class="thread_infos"><a href="'.$lastAnswer->getLink().'">Last message</a> by 
+							<a href="'.SiteUser::genLink($lastAnswer->user_id).'">'.$lastAnswer->getAuthorName().'</a>, at '.$lastAnswer->getCreationDate().'</span>
+						</li>';
 		}
-// 						<li><div class="icon-set"><span class="fa fa-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
-// 						<li><div class="icon-set"><span class="fa fa-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>';
 		echo '
 					</ul>
 				</div>

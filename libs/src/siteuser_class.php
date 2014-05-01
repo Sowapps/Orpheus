@@ -70,5 +70,9 @@ class SiteUser extends User {
 		}
 		$this->postViews	= null;// Should be rarely effective
 	}
+	
+	public static function genLink($id) {
+		return u('profile', $id);
+	}
 }
 SiteUser::init();

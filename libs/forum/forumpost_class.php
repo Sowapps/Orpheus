@@ -9,7 +9,23 @@ class ForumPost extends PermanentEntity {
 	protected static $domain	= null;
 
 	public function __toString() {
-		return $this->name;
+		return escapeText($this->name);
+	}
+	
+	public function getCreationDate() {
+		return d($this->create_date);
+	}
+	
+	public function getAuthor() {
+		return SiteUser::load($this->user_id);
+	}
+	
+	public function getAuthorName() {
+		return escapeText($this->user_name);
+	}
+
+	public function getLastAnswer() {
+		return $this->last_answer_id ? static::load($this->last_answer_id) : $this;
 	}
 
 	public function getLink() {
