@@ -9,9 +9,13 @@ class Forum extends PermanentEntity {
 	protected static $domain	= null;
 
 	public function __toString() {
-		return $this->name;
+		return escapeText($this->name);
 	}
 	
+	/**
+	 * @param boolean $publishedOnly
+	 * @return multitype:static
+	 */
 	public function getPosts($publishedOnly=true) {
 		return ForumPost::get('forum_id='.$this->id().($publishedOnly ? ' AND published' : ''));
 	}
