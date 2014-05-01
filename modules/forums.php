@@ -18,9 +18,9 @@ if( $ALLOW_EDITOR ) {
 $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
 	'.( $ALLOW_EDITOR ? '
-	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="icon-edit"></span></button>' : '').'
+	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="fa fa-edit"></span></button>' : '').'
 	'.( !SiteUser::is_login() ? '
-	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="icon-off"></span></button>' : '').'
+	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="fa fa-power-off"></span></button>' : '').'
 	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
 </form>';
@@ -88,16 +88,16 @@ function displayForumList($forumID=0) {
 		displayForumList($forum->id());
 		echo '
 				<div class="threadWrapper">
-					<a class="btn btn-default btn-sm right newthreadbtn"><i class="icon-plus"></i> New thread</a>
+					<a class="btn btn-default btn-sm right newthreadbtn"><i class="fa fa-plus"></i> New thread</a>
 					<h4>Threads of '.$forum.'</h4>
 					<ul>';
 		foreach( $forum->getPosts() as $post ) {
 			$viewed	= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
 			echo '
-						<li><div class="icon-set"><span class="icon-eye-'.($viewed ? 'open' : 'close').'"></span></div><a href="'.$post->getLink().'">'.$post.'</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 21/05/2013</span></li>';
+						<li><div class="icon-set"><span class="fa fa-eye'.($viewed ? 'open' : '-slash').'"></span></div><a href="'.$post->getLink().'">'.$post.'</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 21/05/2013</span></li>';
 		}
-// 						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
-// 						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>';
+// 						<li><div class="icon-set"><span class="fa fa-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
+// 						<li><div class="icon-set"><span class="fa fa-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>';
 		echo '
 					</ul>
 				</div>
@@ -112,107 +112,6 @@ function displayForumList($forumID=0) {
 displayReportsHTML();
 displayForumList();
 
-/*
-<div class="forumlist" id="forumlist-0">
-	<div class="panel panel-default">
-		<div class="panel-heading" data-id="1">
-			<div class="panel-title">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-1">
-				Spare-time Forum (3/9)
-				</a>
-			</div>
-		</div>
-		<div id="collapse-1" class="panel-collapse collapse in">
-			<div class="panel-body">
-			
-				<div class="forumlist" id="forumlist-1">
-					<div class="panel panel-default">
-						<div class="panel-heading"  data-id="3" data-label="Literacy Of Idiots Forum">
-							<div class="panel-title">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-3">
-								Literacy Of Idiots Forum (2/3)
-								</a>
-							</div>
-						</div>
-						<div id="collapse-3" class="panel-collapse collapse in">
-							<div class="panel-body">
-								<div class="threadWrapper">
-									<a class="btn btn-default btn-sm right newthreadbtn"><i class="icon-plus"></i> New thread</a>
-									
-									<h4>Threads of Literacy Of Idiots Forum</h4>
-									<ul>
-										<li class="unread"><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">How to go so far with only a bukket ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 02/06/2013</span></li>
-										<li class="unread"><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
-										<li class="read"><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading forum-entry">
-							<div class="panel-title">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-4">
-								The Timeless Beer Forum (0/3)
-								</a>
-							</div>
-						</div>
-						<div id="collapse-4" class="panel-collapse collapse">
-							<div class="panel-body">
-								<div class="threadWrapper">
-									<h4>Threads of The Timeless Beer Forum</h4>
-									<ul>
-										<li class="unread"><a href="#">Where to go for holidays ?</a></li>
-										<li class="unread"><a href="#">What is your last favorite films ?</a></li>
-										<li class="read"><a href="#">The death of Michael Jackson</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="threadWrapper">
-					<h4>Threads of Spare-time Forum (1/3)</h4>
-					<ul>
-						<li><div class="icon-set"><span class="icon-eye-close"></span></div><a href="#">Where to go for holidays ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 21/05/2013</span></li>
-						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">What is your last favorite films ?</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">Math1</a>, at 19/05/2013</span></li>
-						<li><div class="icon-set"><span class="icon-eye-open"></span></div><a href="#">The death of Michael Jackson</a><span class="thread_infos"><a href="#">Last message</a> by <a href="#">T1b0</a>, at 19/05/2013</span></li>
-						<!--
-						<li><a href="#">Where to go for holidays ?</a><a href="#" class="thread_infos">Last message by T1b0, at 21/05/2013</a></li>
-						<li><a href="#">What is your last favorite films ?</a><a href="#" class="thread_infos">Last message by Math1, at 19/05/2013</a></li>
-						<li><a href="#">The death of Michael Jackson</a><a href="#" class="thread_infos">Last message by T1b0, at 19/05/2013</a></li>
-						-->
-					</ul>
-				</div>
-				
-				
-			</div>
-		</div>
-	</div>
-	<div class="panel panel-default">
-		<div class="panel-heading forum-entry">
-			<div class="panel-title">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-2">
-				Anti-Racist Forum (0/3)
-				</a>
-			</div>
-		</div>
-		<div id="collapse-2" class="panel-collapse collapse">
-		<div class="panel-body">
-			<div class="threadWrapper">
-				<h4>Threads of Anti-Racist Forum</h4>
-				<ul>
-					<li><a href="#">Where to go for holidays ?</a></li>
-					<li><a href="#">What is your last favorite films ?</a></li>
-					<li><a href="#">The death of Michael Jackson</a></li>
-				</ul>
-			</div>
-		</div>
-		</div>
-	</div>
-</div>
-*/
 ?>
 
 <div class="modal fade">
