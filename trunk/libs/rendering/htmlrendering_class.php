@@ -12,8 +12,8 @@ class HTMLRendering extends Rendering {
 	public static $cssPath			= 'css/';
 	public static $modelsPath		= 'layouts/';
 	
-	public static $cssFiles			= array();// CSS files
-	public static $jsFiles			= array();// Javascript files
+	public static $cssURLs			= array();// CSS files
+	public static $jsURLs			= array();// Javascript files
 	public static $metaprop			= array();// Meta-properties
 	
 	//! Renders the model.
@@ -39,12 +39,18 @@ class HTMLRendering extends Rendering {
 		include static::getModelsPath().$model.'.php';
 	}
 	
-	public static function addCSSFile($basename) {
-		static::$cssFiles[] = $basename;
+	public static function addCSSFile($filename) {
+		static::addCSSURL(static::getCSSURL().$filename);
+	}
+	public static function addCSSURL($url) {
+		static::$cssURLs[]	= $url;
 	}
 	
-	public static function addJSFile($basename) {
-		static::$jsFiles[] = $basename;
+	public static function addJSFile($filename) {
+		static::addJSURL(JSURL.$filename);
+	}
+	public static function addJSURL($url) {
+		static::$jsURLs[]	= $url;
 	}
 	
 	public static function addMetaProperty($property, $content) {

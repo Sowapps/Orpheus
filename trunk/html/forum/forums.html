@@ -134,7 +134,7 @@ body > .container {
 			
 				<div class="forumlist" id="forumlist-1">
 					<div class="panel panel-default">
-						<div class="panel-heading"  data-id="3" data-label="Literacy Of Idiots Forum">
+						<div class="panel-heading" data-id="3" data-label="Literacy Of Idiots Forum">
 							<div class="panel-title">
 								<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-1" href="#collapse-3">
 								Literacy Of Idiots Forum (2/3)
@@ -311,7 +311,7 @@ body > .container {
 <div id="newThreadForm" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
-<!-- <form method="POST" class=""> -->
+<form method="POST">
 <!-- form-horizontal -->
 	<input type="hidden" name="data[tid]" id="ntf_fid" />
 	<div class="modal-header">
@@ -370,8 +370,9 @@ body > .container {
 				<a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 			</div>
 		</div>
+		<textarea class="lead" data-editor="editor" placeholder="This is a basic example with a simple toolbar." style="display: none;"></textarea>
 <!-- 		<textarea id="editor" name="data[message]" placeholder="Enter your message here..."></textarea> -->
-		<div id="editor" class="lead" placeholder="This is a basic example with a simple toolbar."></div>
+<!-- 		<div id="editor" class="lead" placeholder="This is a basic example with a simple toolbar."></div> -->
 <!-- 		<div id="editor" placeholder="Go ahead"></div> -->
 <!-- 		<textarea name="data[message]" placeholder="Enter your message here..."></textarea> -->
 <!-- 		<div class="control-group"> -->
@@ -383,9 +384,9 @@ body > .container {
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button onclick='debug($("#editor").html());' type="button" name="submitCreateThread" class="btn btn-primary">Save</button>
+		<button type="submit" name="submitCreateThread" class="btn btn-primary">Save</button>
 	</div>
-<!-- </form> -->
+</form>
 </div>
 </div>
 </div>
