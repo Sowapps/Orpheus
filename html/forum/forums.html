@@ -13,6 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="../../themes/default/css/bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../../themes/default/css/base.css" type="text/css" media="screen" />
 <!-- 	<link rel="stylesheet" href="../../themes/default/css/bootstrap-responsive.css" type="text/css" media="screen" /> -->
 <!-- 	<link rel="stylesheet" href="../../themes/default/css/bootstrap-glyphicons.css" type="text/css" media="screen" /> -->
 	<link rel="stylesheet" href="../../themes/default/css/style.css" type="text/css" media="screen" />
@@ -25,7 +26,13 @@
 	<script type="text/javascript" src="../../js/jquery.js"></script>
 	<script type="text/javascript" src="../../js/jquery-ui.js"></script>
 	<script type="text/javascript" src="../../js/bootstrap.js"></script>
-	<script type="text/javascript" src="../../js/bootstrap-wysiwyg.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap-wysiwyg.min.js"></script>
+	
+<!-- 	<script src="../../js/external/jquery.hotkeys.js"></script> -->
+<!-- 	<script src="../../js/external/google-code-prettify/prettify.js"></script> -->
+	<script src="../../js/external/jquery.hotkeys.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" rel="stylesheet">
 	
 	<script type="text/javascript" src="../../js/debug.js"></script>
 	<script type="text/javascript" src="../../js/forum-forums.js"></script>
@@ -319,13 +326,11 @@ body > .container {
 		</div>
 		
 <!-- 	#editor	#newThreadForm textarea -->
-		<div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+		<div class="btn-toolbar mt5 mb5" data-role="editor-toolbar" data-target="#editor">
 			<div class="btn-group">
-				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
-				<ul class="dropdown-menu"></ul>
-			</div>
-			<div class="btn-group">
-				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
+					class="caret"></b>
+				</a>
 				<ul class="dropdown-menu">
 					<li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
 					<li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
@@ -351,25 +356,23 @@ body > .container {
 				<a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
 			</div>
 			<div class="btn-group">
-				<button class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></button>
+				<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
 				<div class="dropdown-menu input-append">
-					<input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-					<button class="btn btn-default" type="button">Add</button>
+					<input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+					<button class="btn" type="button">Add</button>
 				</div>
 				<a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-			</div>
-			<div class="btn-group">
 				<a class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureUploadBtn"><i class="fa fa-picture-o"></i></a>
-	   			<input style="display: none;" id="pictureUploadInput" type="file" data-role="magic-overlay" data-target="#pictureUploadBtn" data-edit="insertImage" />
+				<input id="pictureUploadInput" style="display: none;" type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
 			</div>
 			<div class="btn-group">
 				<a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
 				<a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 			</div>
-			<input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
 		</div>
 <!-- 		<textarea id="editor" name="data[message]" placeholder="Enter your message here..."></textarea> -->
-		<div id="editor" placeholder="Go ahead"></div>
+		<div id="editor" class="lead" placeholder="This is a basic example with a simple toolbar."></div>
+<!-- 		<div id="editor" placeholder="Go ahead"></div> -->
 <!-- 		<textarea name="data[message]" placeholder="Enter your message here..."></textarea> -->
 <!-- 		<div class="control-group"> -->
 <!-- 			<label class="control-label" for="inputMessage"></label> -->
@@ -380,12 +383,13 @@ body > .container {
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button type="submit" name="submitCreateThread" class="btn btn-primary">Save</button>
+		<button onclick='debug($("#editor").html());' type="button" name="submitCreateThread" class="btn btn-primary">Save</button>
 	</div>
 <!-- </form> -->
 </div>
 </div>
 </div>
+<!-- <script type='text/javascript'>$('#editor').wysiwyg();</script> -->
 
 <div id="newForumForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
@@ -440,49 +444,81 @@ body > .container {
 	max-height: 250px;
 	height: 250px;
 	background-color: white;
-	border-collapse: separate; 
-	border: 1px solid rgb(204, 204, 204); 
-	padding: 4px; 
-	box-sizing: content-box; 
-	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; 
-	box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+	border-collapse: separate;
+  	border: 1px solid rgb(204, 204, 204);
+ 	padding: 4px;
+ 	box-sizing: content-box;
+ 	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px 0 inset;
+ 	box-shadow: rgba(0, 0, 0, 0.0745098) 0 1px 1px 0 inset;
 	border-top-right-radius: 3px; border-bottom-right-radius: 3px;
 	border-bottom-left-radius: 3px; border-top-left-radius: 3px;
 	overflow: scroll;
 	outline: none;
+/* 	background-color: white; */
+/* 	border-collapse: separate;  */
+/* 	border: 1px solid rgb(204, 204, 204);  */
+/* 	padding: 4px;  */
+/* 	box-sizing: content-box;  */
+/* 	-webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;  */
+/* 	box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; */
+/* 	border-top-right-radius: 3px; border-bottom-right-radius: 3px; */
+/* 	border-bottom-left-radius: 3px; border-top-left-radius: 3px; */
+/* 	overflow: scroll; */
+/* 	outline: none; */
+	
+	text-align: left;
+	font-size: medium;
 }
-#voiceBtn {
-  width: 20px;
-  color: transparent;
-  background-color: transparent;
-  transform: scale(2.0, 2.0);
-  -webkit-transform: scale(2.0, 2.0);
-  -moz-transform: scale(2.0, 2.0);
-  border: transparent;
-  cursor: pointer;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-div[data-role="editor-toolbar"] {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.dropdown-menu a {
-  cursor: pointer;
+#editor:focus{
+    border-color:rgba(82, 168, 236, 0.8);
+    outline:0;
+    outline:thin dotted \9;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
 }
 
+#voiceBtn {
+	width: 20px;
+	color: transparent;
+	background-color: transparent;
+	transform: scale(2.0, 2.0);
+	-webkit-transform: scale(2.0, 2.0);
+	-moz-transform: scale(2.0, 2.0);
+	border: transparent;
+	cursor: pointer;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+}
+
+div[data-role="editor-toolbar"] {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.dropdown-menu a {
+	cursor: pointer;
+}
+.btn-toolbar {
+	padding: 10px 0px 10px 0px;
+}
+.placeholderText {
+	color: #777777;
+}
+/*
 .cover {
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
-/* 	opacity: 0.5; */
+/* 	opacity: 0.5; * /
 	background: #FFFFFF;
 	z-index: 1500;
 }
+*/
 </style>
 <!-- <div class="cover"></div> -->
 
