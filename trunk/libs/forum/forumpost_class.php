@@ -11,5 +11,9 @@ class ForumPost extends PermanentEntity {
 	public function __toString() {
 		return $this->name;
 	}
+
+	public function getLink() {
+		return u('forum_post', $this->id());
+	}
 }
 ForumPost::init();
