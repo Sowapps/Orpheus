@@ -205,7 +205,7 @@ displayForumList();
 <div id="newThreadForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">
 <div class="modal-content">
-<!-- <form method="POST" class=""> -->
+<form method="POST" class="">
 <!-- form-horizontal -->
 	<input type="hidden" name="newpost[forum_id]" id="ntf_fid" />
 	<div class="modal-header">
@@ -270,7 +270,7 @@ displayForumList();
 		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		<button type="submit" name="submitCreatePost" class="btn btn-primary">Save</button>
 	</div>
-<!-- </form> -->
+</form>
 </div>
 </div>
 </div>
