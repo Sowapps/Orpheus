@@ -16,6 +16,13 @@ class ForumPost extends PermanentEntity {
 		return d($this->create_date);
 	}
 	
+	public function getMessage() {
+		return $this->message;
+	}
+	
+	/**
+	 * @return SiteUser
+	 */
 	public function getAuthor() {
 		return SiteUser::load($this->user_id);
 	}
@@ -30,6 +37,10 @@ class ForumPost extends PermanentEntity {
 
 	public function getLastAnswer() {
 		return $this->last_answer_id ? static::load($this->last_answer_id) : $this;
+	}
+	
+	public function getAnswers($page=1, $number=20) {
+		return static::get(array('where' => 'published AND parent_id='.$this->id(), 'orderby'=>'create_date ASC', 'offset'=>$number*($page-1), 'number'=>$number));
 	}
 
 	public function addAnswer($input) {
@@ -49,6 +60,7 @@ class ForumPost extends PermanentEntity {
 		$input['user_name']	= $USER->fullname;
 		$input['published']	= 1;
 		$input['post_date']	= sqlDatetime();
+		// TODO: SECURE MESSAGE
 		return static::create($input, array('parent_id', 'forum_id', 'name', 'message', 'published', 'user_id', 'user_name', 'post_date'));
 	}
 
