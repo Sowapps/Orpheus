@@ -10,6 +10,7 @@ HTMLRendering::addCSSURL('https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/p
 
 HTMLRendering::addJSFile('debug.js');
 HTMLRendering::addJSFile('bootstrap-wysiwyg.min.js');
+HTMLRendering::addCSSFile('forum');
 HTMLRendering::addJSFile('forum-forums.js');
 if( $ALLOW_EDITOR ) {
 	HTMLRendering::addJSFile('forum-editor.js');
