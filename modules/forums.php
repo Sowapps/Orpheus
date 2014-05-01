@@ -36,6 +36,7 @@ try {
 		$post['published']	= 1;
 		$post['post_date']	= sqlDatetime();
 // 		$post['parent_id']	= 0;// Or answer
+		text('ForumPost domain is : '.ForumPost);
 		ForumPost::create($post, array('parent_id', 'forum_id', 'published', 'name', 'message', 'user_id', 'user_name'));
 	} else
 	if( $ALLOW_EDITOR ) {
