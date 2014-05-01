@@ -202,14 +202,16 @@ div[data-role="editor-toolbar"] {
 }
 
 article:first-child {
-	background-color: #F8F8F8;
+	background-color:	#F0F0F0;
+	border:	1px solid #00CC88;
+/* 	background-color: #F8F8F8; */
 }
 article .post_head {
-	float: right;
-	border: 1px solid #E5E5E5;
-	border-top: 0;
-	border-right: 0;
-	padding: 5px 8px;
+	float:	right;
+	border:	1px solid #E5E5E5;
+	border-top:		0;
+	border-right:	0;
+	padding:	5px 8px;
 }
 article:hover, article.active {
 	border: 1px solid #0088CC;

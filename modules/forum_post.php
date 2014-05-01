@@ -1,8 +1,6 @@
 <?php
 /* @var $USER SiteUser */
 
-$ALLOW_EDITOR	= SiteUser::loggedCanDo('forum_manage');
-
 HTMLRendering::addJSFile('external/jquery.hotkeys.js');
 
 HTMLRendering::addJSURL('https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js');
@@ -38,37 +36,10 @@ try {
 		$post['parent_id']	= 0;// Use addAnswer() to add an answer
 // 		text('ForumPost domain is : '.ForumPost);
 		ForumPost::make($post);
-	} else
-	if( $ALLOW_EDITOR ) {
-		if( isPOST('submitCreateForum') ) {
-			debug('Create forum');
-			$forumData	= POST('newforum');
-			debug('$forumData', $forumData);
-			if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
-			$forumData['position']	= Forum::getMaxPosition($forumData['parent_id'])+1;
-			$forumData['user_id']	= $USER->id();
-			$forumData['user_name']	= $USER->fullname;
-			$forumData['published']	= true;
-			debug('$forumData', $forumData);
-			Forum::create($forumData, array('parent_id', 'user_id', 'user_name', 'published', 'name', 'position'));
-			reportSuccess('successCreate', Forum::getDomain());
-		}
 	}
 } catch( UserException $e ) {
 	reportError($e);
 }
-
-$AllForums	= Forum::getAll();
-$Forums		= array();
-foreach( $AllForums as $forum ) {
-	if( !isset($Forums[$forum->parent_id]) ) {
-		$Forums[$forum->parent_id]	= array();
-	}
-	$Forums[$forum->parent_id][]	= $forum;
-}
-unset($AllForums);
-
-$userPostViews	= SiteUser::is_login() ? $USER->getAllPostViews() : array();
 
 function displayForumList($forumID=0) {
 	global $Forums, $userPostViews;
@@ -116,96 +87,10 @@ function displayForumList($forumID=0) {
 }
 
 displayReportsHTML();
-displayForumList();
+
+
 
 ?>
-
-<div class="modal fade">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-<div id="connectForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel">
-<div class="modal-dialog">
-<div class="modal-content">
-<form method="POST" class="form-horizontal">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 id="myModalLabel">Log in</h3>
-	</div>
-	<div class="modal-body" style="text-align: center;">
-		<div class="control-group">
-			<label class="control-label" for="inputLogin">Username / Email</label>
-<!-- 			<div class="controls"> -->
-<!-- 				<input type="text" name="data[login]" id="inputLogin" placeholder="Enter your ID"> -->
-<!-- 			</div> -->
-			<input class="form-control" type="text" name="data[login]" id="inputLogin" placeholder="Enter your ID">
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputPassword">Password</label>
-			<input class="form-control" type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
-		</div>
-		<div class="control-group">
-			<button id="registerBtn" class="btn btn-link" style="margin: 0 0 0 350px;" data-toggle="modal" data-target="#registerForm">Register</button>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button type="submit" name="submitLogin" class="btn btn-primary">Connect</button>
-	</div>
-</form>
-</div>
-</div>
-</div>
-
-<div id="registerForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<form method="POST" class="form-horizontal">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 id="myModalLabel">Register</h3>
-	</div>
-	<div class="modal-body" style="text-align: center;">
-		<div class="control-group">
-			<label class="control-label" for="inputName">Your Username</label>
-			<input class="form-control" type="text" name="data[name]" id="inputName" placeholder="Enter your name">
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputEmail">Your Email</label>
-			<input class="form-control" type="text" name="data[email]" id="inputEmail" placeholder="Enter your email">
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputPassword">Your Password</label>
-			<input class="form-control" type="password" name="data[password]" id="inputPassword" placeholder="Enter your password">
-		</div>
-		<div class="control-group">
-			<label class="control-label" for="inputConfPassword">Confirm password</label>
-			<input class="form-control" type="password" name="data[password_conf]" id="inputConfPassword" placeholder="Enter your password">
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button type="submit" name="submitRegister" class="btn btn-primary">Register</button>
-	</div>
-</form>
-</div>
-</div>
-</div>
 
 <div id="newThreadForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 <div class="modal-dialog">

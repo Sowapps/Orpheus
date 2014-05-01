@@ -23,13 +23,55 @@ class ForumPost extends PermanentEntity {
 	public function getAuthorName() {
 		return escapeText($this->user_name);
 	}
+	
+	public function getParent() {
+		return static::load($this->parent_id);
+	}
 
 	public function getLastAnswer() {
 		return $this->last_answer_id ? static::load($this->last_answer_id) : $this;
 	}
 
+	public function addAnswer($input) {
+		if( empty($input['name']) ) {
+			$input['name']	= 'Re: '.$this->name;
+		}
+		$input['forum_id']	= $this->forum_id;
+		$input['parent_id']	= $this->id();
+		$this->last_answer_id = $r = static::make($input);
+		$this->post_date	= sqlDatetime();
+		return $r;
+	}
+
+	public static function make($input) {
+		global $USER;
+		$input['user_id']	= $USER->id();
+		$input['user_name']	= $USER->fullname;
+		$input['published']	= 1;
+		$input['post_date']	= sqlDatetime();
+		return static::create($input, array('parent_id', 'forum_id', 'name', 'message', 'published', 'user_id', 'user_name', 'post_date'));
+	}
+
+	/**
+	 * @return string The link to the post ifself, with its answers.
+	 */
 	public function getLink() {
-		return u('forum_post', $this->id());
+		return static::genLink($this->id());
+	}
+	/**
+	 * @return string The link to the post ifself, with its answers.
+	 */
+	public static function genLink($id) {
+		return u('forum_post', $id);
+	}
+	
+	/**
+	 * @return string The link to the post in the parent context.
+	 * 
+	 * If post has no parent post, we target the post itself
+	 */
+	public function getThreadLink() {
+		return static::genLink($this->parent_id).'#Post-'.$this->id();
 	}
 }
 ForumPost::init();
