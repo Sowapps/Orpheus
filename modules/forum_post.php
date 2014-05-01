@@ -24,6 +24,12 @@ $TOPBAR_CONTENTS	= '
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
 </form>';
 
+try {
+	$Post	= ForumPost::load($Action);
+} catch( UserException $e ) {
+	reportError($e); displayReportsHTML(); return;
+}
+
 debug('POST', POST());
 try {
 	if( isPOST('submitCreatePost') ) {
@@ -41,55 +47,37 @@ try {
 	reportError($e);
 }
 
-function displayForumList($forumID=0) {
-	global $Forums, $userPostViews;
-// 	if( empty($Forums[$forumID]) ) { return; }
-	if( !isset($Forums[$forumID]) ) { $Forums[$forumID]	= array(); }
-	echo '
-<div class="forumlist" id="forumlist-'.$forumID.'">';
-	foreach( $Forums[$forumID] as $forum ) {
-		/* @var $forum Forum */
-		echo '
-	<div class="panel panel-default">
-		<div class="panel-heading" data-id="'.$forum->id().'">
-			<div class="panel-title">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-'.$forum->id().'">'.$forum.'</a>
-			</div>
-		</div>
-		<div id="collapse-'.$forum->id().'" class="panel-collapse collapse in">
-			<div class="panel-body">';
-		displayForumList($forum->id());
-		echo '
-				<div class="threadWrapper">
-					<a class="btn btn-default btn-sm right newthreadbtn"><i class="fa fa-plus"></i> New thread</a>
-					<h4>Threads of '.$forum.'</h4>
-					<ul>';
-		foreach( $forum->getPosts() as $post ) {
-			$viewed		= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
-			$lastAnswer	= $post->getLastAnswer();
-			echo '
-						<li>
-							<i class="fa fa-eye'.($viewed ? 'open' : '-slash').'"></i> 
-							<a href="'.$post->getLink().'">'.$post.'</a>
-							<span class="thread_infos"><a href="'.$lastAnswer->getLink().'">Last message</a> by 
-							<a href="'.SiteUser::genLink($lastAnswer->user_id).'">'.$lastAnswer->getAuthorName().'</a>, at '.$lastAnswer->getCreationDate().'</span>
-						</li>';
-		}
-		echo '
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>';
-	}
-	echo '
-</div>';
-}
-
 displayReportsHTML();
 
+echo '
+<div class="thread_head">';
+echo '
+	<ul class="breadcrumb">
+		<li><a href="#">Spare-time Forum</a></li>
+		<li><a href="#">Literacy Of Idiots Forum </a></li>
+		<li class="active">Reading post</li>
+	</ul>';
 
-
+echo '
+	<h3><a href="#">How to go so far with only a bukket ?</a></h3>
+</div>
+<div class="postlist">';
+foreach( $Post->getAnswers() as $post ) {
+	$author	= $post->getAuthor();
+	echo '
+	<article>
+		<div class="post_head">
+<!--			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">-->
+			<div class="post_infos">
+				<a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'
+			</div>
+		</div>
+		<div class="post_body">'.$post->getMessage().'</div>
+<!--		<div style="clear: both; height: 10px;"></div>-->
+	</article>';
+}
+echo '
+</div>';
 ?>
 
 <div id="newThreadForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

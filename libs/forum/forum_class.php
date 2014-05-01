@@ -17,7 +17,7 @@ class Forum extends PermanentEntity {
 	 * @return multitype:static
 	 */
 	public function getPosts($publishedOnly=true) {
-		return ForumPost::get('forum_id='.$this->id().($publishedOnly ? ' AND published' : ''));
+		return ForumPost::get('!parent_id AND forum_id='.$this->id().($publishedOnly ? ' AND published' : ''));
 	}
 	
 	public static function getAll($parent=0, $publishedOnly=true) {

@@ -71,6 +71,9 @@ class SiteUser extends User {
 		$this->postViews	= null;// Should be rarely effective
 	}
 	
+	public function getLink() {
+		return static::genLink($this->id());
+	}
 	public static function genLink($id) {
 		return u('profile', $id);
 	}
