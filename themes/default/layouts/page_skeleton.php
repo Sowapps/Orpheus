@@ -26,9 +26,9 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
-foreach(HTMLRendering::$cssFiles as $file) {
+foreach(HTMLRendering::$cssURLs as $url) {
 	echo '
-	<link rel="stylesheet" type="text/css" href="'.HTMLRendering::getCSSURL().$file.'" media="screen" />';
+	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
 }
 ?>
 	
@@ -70,9 +70,9 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 	<!-- Our JS scripts -->
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php
-foreach(HTMLRendering::$jsFiles as $file) {
+foreach(HTMLRendering::$jsURLs as $url) {
 	echo '
-	<script type="text/javascript" src="/js/'.$file.'"></script>';
+	<script type="text/javascript" src="'.$url.'"></script>';
 }
 ?>
 

@@ -28,10 +28,21 @@ $(function() {
 	// Wysiwyg
 // 	$("#newThreadForm textarea").wysiwyg();
 //	$('#editor').wysiwyg();
-	$("#editor").wysiwyg();
+	$(":input[data-editor]").each(function() {
+		var _		= $(this);
+		var editor	= $('<div id="editor" class="lead"></div>');
+		editor.attr("id", _.data("editor")).attr("placeholder", _.attr("placeholder")).addClass(_.attr("class"));
+		_.after(editor).hide();
+		editor.wysiwyg();
+		editor.closest("form").submit(function(e) {
+			_.val(editor.hasClass("placeholderText") ? "" : editor.cleanHtml());
+//			alert(_.val());
+		});
+	});
+//	$("#editor").wysiwyg();
 	
-	debug($(document).height());
-	debug($("body > .container"));
+//	debug($(document).height());
+//	debug($("body > .container"));
 	
 	updateContainerHeight();
 	$(window).resize(updateContainerHeight);
