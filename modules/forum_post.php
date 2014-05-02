@@ -16,8 +16,6 @@ if( $ALLOW_EDITOR ) {
 
 $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
-	'.( $ALLOW_EDITOR ? '
-	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="fa fa-edit"></span></button>' : '').'
 	'.( !SiteUser::is_login() ? '
 	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="fa fa-power-off"></span></button>' : '').'
 	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
