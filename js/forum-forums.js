@@ -9,6 +9,15 @@ function openCollapse(collapse) {
 	collapse.collapse('show');
 }
 
+function answerTo(post) {
+//	debug(post);
+	if( $("#postid").val() == post.data("id") ) { return; }
+	$("#postid").val(post.data("id"));
+//	debug(post.is(":first-child"));
+	$("#answerEditorTitle").html(post.is(":first-child") ? "Your answer" : "Your answer to <a href='#"+post.attr("id")+"'>#"+post.data("id")+"</a>");
+//	$("#answerEditorTitle").text(post.is(":first-child") ? "Reply to the thread" : "Reply to answer <a href='#"+post.attr("id")+"'>#"+post.data("id")+"</a>");
+}
+
 $(function() {
 	
 	// New thread modal
@@ -63,6 +72,10 @@ $(function() {
 //		debug("resized document, updating container height");
 //		$("body > .container").height($(window).height()-110);
 //	});
+	
+	$(".postlist > article .replybtn").click(function() {
+		answerTo($(this).closest("article"));
+	});
 	
 });
 
