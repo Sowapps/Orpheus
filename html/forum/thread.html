@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Orpheus Forum</title>
+	<title>Orpheus Forum Thread</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="Florent HAZARD"/>
@@ -10,19 +10,27 @@
 	<meta name="Keywords" content="projet"/>
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="../../themes/default/css/bootstrap.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="../../themes/default/css/bootstrap-responsive.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="../../themes/default/css/base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../../themes/default/css/style.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="../../themes/default/css/forum.css" type="text/css" media="screen" />
+	
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 	
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="../../js/jquery.js"></script>
 	<script type="text/javascript" src="../../js/jquery-ui.js"></script>
 	<script type="text/javascript" src="../../js/bootstrap.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap-wysiwyg.min.js"></script>
 	
-	<script type="text/javascript" src="../../js/core.js"></script>
+	<script src="../../js/external/jquery.hotkeys.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" rel="stylesheet">
+	
 	<script type="text/javascript" src="../../js/debug.js"></script>
+	<script type="text/javascript" src="../../js/forum-forums.js"></script>
 </head>
 <body class="thread">
 
@@ -70,6 +78,9 @@
 			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">
 			<div class="post_infos">
 				<a href="#">T1b0</a>At 02/06/2013
+			</div>
+			<div class="btn-group">
+				<button>Reply <i></i></button>
 			</div>
 		</div>
 		<div class="post_body">
@@ -171,6 +182,56 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 	</article>
 	
 </div>
+
+<form method="post">
+<div class="btn-toolbar mt5 mb5" data-role="editor-toolbar" data-target="#editor">
+	<div class="btn-group">
+		<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
+			class="caret"></b>
+		</a>
+		<ul class="dropdown-menu">
+			<li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
+			<li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
+			<li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
+		</ul>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-default" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+		<a class="btn btn-default" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+		<a class="btn btn-default" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+		<a class="btn btn-default" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-default" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+		<a class="btn btn-default" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+		<a class="btn btn-default" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-indent"></i></a>
+		<a class="btn btn-default" data-edit="indent" title="Indent (Tab)"><i class="fa fa-outdent"></i></a>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-default" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+		<a class="btn btn-default" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+		<a class="btn btn-default" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+		<a class="btn btn-default" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+		<div class="dropdown-menu input-append">
+			<input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+			<button class="btn" type="button">Add</button>
+		</div>
+		<a class="btn btn-default" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+		<a class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureUploadBtn"><i class="fa fa-picture-o"></i></a>
+		<input id="pictureUploadInput" style="display: none;" type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+	</div>
+	<div class="btn-group">
+		<a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
+		<a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
+	</div>
+	<button class="btn btn-primary pull-right" name="submitCreatePost" type="submit">Save</button>
+</div>
+<textarea name="newpost[message]" class="lead" data-editor="editor" placeholder="Enter your message here..." style="display: none;"></textarea>
+</form>
+
 </div>
 
 <footer class="">
@@ -193,11 +254,11 @@ function setArticleActive(article, e=null, force=false) {
 	$(article).addClass("active");
 	
 	// Center
-	if( e ) {
-		moveOnMouse(article, e);
-	} else {
-		centerInViewport(article);
-	}
+// 	if( e ) {
+// 		moveOnMouse(article, e);
+// 	} else {
+// 		centerInViewport(article);
+// 	}
 }
 
 $(function() {
