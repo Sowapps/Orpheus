@@ -1,5 +1,20 @@
 /** Forum CSS **/
 
+body {
+    overflow: hidden;
+}
+body > .container {
+    height: 500px;
+    min-height: 400px;
+    overflow-y: scroll;
+}
+
+body.editor {
+	background-color: #D9D9D9;
+/* 	background-color: #F0F0F0; */
+}
+
+
 /* Global */
 
 .login-btn {

@@ -10,9 +10,6 @@ HTMLRendering::addJSFile('debug.js');
 HTMLRendering::addJSFile('bootstrap-wysiwyg.min.js');
 HTMLRendering::addCSSFile('forum');
 HTMLRendering::addJSFile('forum-forums.js');
-if( $ALLOW_EDITOR ) {
-	HTMLRendering::addJSFile('forum-editor.js');
-}
 
 $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
@@ -162,74 +159,8 @@ echo '
 </div>
 </div>
 </div>
-<?php
-if( $ALLOW_EDITOR ) {
-	?>
-<div id="newForumForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<form method="POST" class="">
-<!-- form-horizontal -->
-	<input type="hidden" name="newforum[parent_id]" id="nff_fid" />
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 id="myModalLabel">Create new Forum</h3>
-	</div>
-	<div class="modal-body" style="text-align: center;">
-		<h3 id="ntf_title"></h3>
-		<div class="control-group">
-			<label class="control-label" for="inputName">Title</label>
-			<input class="form-control" type="text" name="newforum[name]" id="inputName" placeholder="Enter the title of your new forum">
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		<button type="submit" name="submitCreateForum" class="btn btn-primary">Save</button>
-	</div>
-</form>
-</div>
-</div>
-</div>
-<?php
-}
-?>
 
 <style>
-body.editor {
-	background-color: #D9D9D9;
-/* 	background-color: #F0F0F0; */
-}
-
-body {
-    overflow: hidden;
-}
-body > .container {
-    height: 500px;
-    min-height: 400px;
-    overflow-y: scroll;
-}
-
-/* #editor {overflow:scroll; max-height:300px} */
-/* #newThreadForm { */
-/* 	width: 900px;  */
-/* 	margin-left: -450px;  */
-/* } */
-/* #newThreadForm label { */
-/* 	width: 100px;  */
-/* } */
-/* #newThreadForm .controls { */
-/* 	margin-left: 100px; */
-/* } */
-/* #newThreadForm input { */
-/* 	width: 306px; */
-/* } */
-/* #newThreadForm textarea { */
-/* 	width: 406px; */
-/* 	height: 250px; */
-/* 	overflow:scroll; */
-/* } */
-/* #editor { */
-/* #newThreadForm textarea { */
 #editor {
 	max-height: 250px;
 	height: 250px;
