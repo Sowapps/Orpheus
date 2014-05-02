@@ -3,6 +3,12 @@ function updateContainerHeight() {
 	$("body > .container").height($(window).height()-110);
 }
 
+function openCollapse(collapse) {
+	if( !collapse || !collapse.length ) { return; }
+	openCollapse(collapse.closest(".collapse"));
+	collapse.collapse('show');
+}
+
 $(function() {
 	
 	// New thread modal
@@ -46,6 +52,13 @@ $(function() {
 	
 	updateContainerHeight();
 	$(window).resize(updateContainerHeight);
+	
+	var anchor = window.location.hash;//.replace("#", "");
+	if( !anchor ) { return; }
+//	debug("Collapse to "+anchor);
+	$(".collapse").collapse('hide');
+	openCollapse($(anchor));
+// 	$("#" + anchor).collapse('show');
 //			function() {
 //		debug("resized document, updating container height");
 //		$("body > .container").height($(window).height()-110);
