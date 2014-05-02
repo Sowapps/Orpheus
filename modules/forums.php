@@ -312,41 +312,6 @@ if( $ALLOW_EDITOR ) {
 ?>
 
 <style>
-body.editor {
-	background-color: #D9D9D9;
-/* 	background-color: #F0F0F0; */
-}
-
-body {
-    overflow: hidden;
-}
-body > .container {
-    height: 500px;
-    min-height: 400px;
-    overflow-y: scroll;
-}
-
-/* #editor {overflow:scroll; max-height:300px} */
-/* #newThreadForm { */
-/* 	width: 900px;  */
-/* 	margin-left: -450px;  */
-/* } */
-/* #newThreadForm label { */
-/* 	width: 100px;  */
-/* } */
-/* #newThreadForm .controls { */
-/* 	margin-left: 100px; */
-/* } */
-/* #newThreadForm input { */
-/* 	width: 306px; */
-/* } */
-/* #newThreadForm textarea { */
-/* 	width: 406px; */
-/* 	height: 250px; */
-/* 	overflow:scroll; */
-/* } */
-/* #editor { */
-/* #newThreadForm textarea { */
 #editor {
 	max-height: 250px;
 	height: 250px;
