@@ -1,7 +1,7 @@
 /** Common bootstrap modification **/
 
 body {
-	padding-bottom: 40px;
+/* 	padding-bottom: 40px; Cause issue, page height is too high */
 	padding-top: 60px;
 }
 

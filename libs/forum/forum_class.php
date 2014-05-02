@@ -11,6 +11,10 @@ class Forum extends PermanentEntity {
 	public function __toString() {
 		return escapeText($this->name);
 	}
+
+	public function getLink() {
+		return u('forums').'#forum-'.$this->id();
+	}
 	
 	/**
 	 * @param boolean $publishedOnly

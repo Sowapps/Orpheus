@@ -82,10 +82,10 @@ function displayForumList($forumID=0) {
 	<div class="panel panel-default">
 		<div class="panel-heading" data-id="'.$forum->id().'">
 			<div class="panel-title">
-				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#collapse-'.$forum->id().'">'.$forum.'</a>
+				<a class="accordion-toggle" data-toggle="collapse" data-parent="#forumlist-0" href="#forum-'.$forum->id().'">'.$forum.'</a>
 			</div>
 		</div>
-		<div id="collapse-'.$forum->id().'" class="panel-collapse collapse in">
+		<div id="forum-'.$forum->id().'" class="panel-collapse collapse in">
 			<div class="panel-body">';
 		displayForumList($forum->id());
 		echo '
@@ -97,8 +97,8 @@ function displayForumList($forumID=0) {
 			$viewed		= isset($userPostViews[$post->id()]) && $userPostViews[$post->id()]->isViewedAfter($post);
 			$lastAnswer	= $post->getLastAnswer();
 			echo '
-						<li>
-							<i class="fa fa-eye'.($viewed ? 'open' : '-slash').'"></i> 
+						<li class="'.($viewed ? '' : 'un').'read">
+							<i class="fa fa-eye'.($viewed ? '' : '-slash').'"></i> 
 							<a href="'.$post->getLink().'">'.$post.'</a>
 							<span class="thread_infos"><a href="'.$lastAnswer->getLink().'">Last message</a> by 
 							<a href="'.SiteUser::genLink($lastAnswer->user_id).'">'.$lastAnswer->getAuthorName().'</a>, at '.$lastAnswer->getCreationDate().'</span>

@@ -49,23 +49,10 @@ try {
 
 displayReportsHTML();
 
-echo '
-<div class="thread_head">';
-echo '
-	<ul class="breadcrumb">
-		<li><a href="#">Spare-time Forum</a></li>
-		<li><a href="#">Literacy Of Idiots Forum </a></li>
-		<li class="active">Reading post</li>
-	</ul>';
-
-echo '
-	<h3><a href="#">How to go so far with only a bukket ?</a></h3>
-</div>
-<div class="postlist">';
-foreach( $Post->getAnswers() as $post ) {
+function displayPost(ForumPost $post) {
 	$author	= $post->getAuthor();
 	echo '
-	<article>
+	<article id="'.$post->id().'">
 		<div class="post_head">
 <!--			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">-->
 			<div class="post_infos">
@@ -75,6 +62,31 @@ foreach( $Post->getAnswers() as $post ) {
 		<div class="post_body">'.$post->getMessage().'</div>
 <!--		<div style="clear: both; height: 10px;"></div>-->
 	</article>';
+}
+
+echo '
+<div class="thread_head">
+	<ul class="breadcrumb">';
+$breadcrumb	= '';
+$prev	= $Post->forum_id;
+while( $prev ) {
+	$forum	= Forum::load($prev);
+	$prev	= $forum->parent_id;
+	$breadcrumb	= '
+		<li><a href="'.$forum->getLink().'">'.$forum.'</a></li>'.$breadcrumb;
+// 	$breadcrumb[]	= $forum;
+}
+
+echo $breadcrumb;
+
+echo '
+	</ul>
+	<h3><a href="'.$Post->getLink().'">'.$Post.'</a></h3>
+</div>
+<div class="postlist">';
+displayPost($Post);
+foreach( $Post->getAnswers() as $post ) {
+	displayPost($post);
 }
 echo '
 </div>';
