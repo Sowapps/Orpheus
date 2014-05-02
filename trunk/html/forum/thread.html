@@ -34,26 +34,30 @@
 </head>
 <body class="thread">
 
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="brand" href="#">Orpheus Forum</a>
-          <div class="nav-collapse collapse">
-
-	<ul class="nav menu topmenu">
-		<li class="item forums current active"><a href="forums.html">Forums</a></li>
-		<li class="item members"><a href="members.html">Members</a></li>
-	</ul>
-	<form class="navbar-form pull-right">
-		<button class="login-btn btn"><span class="icon-off"></span>Connexion</button>
-	    <input type="text" class="input-medium search-query" style="width: 166px;" placeholder="What are you lookin' for ?" autofocus="autofocus">
-	    <button type="submit" class="btn" name="submitSearch">Search</button>
-	</form>
-	
-          </div>
-        </div>
-      </div>
-    </div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Orpheus Forum</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav menu topmenu">
+					<li class="item forums current active"><a href="forums.html">Forums</a></li>
+					<li class="item members"><a href="members.html">Members</a></li>
+				</ul>
+				<form class="navbar-form navbar-right">
+					<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="fa fa-edit"></span></button>
+					<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="fa fa-power-off"></span></button>
+					<input type="text" placeholder="What are you lookin' for ?" autofocus="autofocus" class="form-control search-query">
+				    <button type="submit" class="btn btn-default" name="submitSearch">Search</button>
+				</form>
+			</div>
+		</div>
+	</div>
 	
 <div class="container">
 
@@ -68,7 +72,7 @@
 
 <div class="postlist">
 	
-	<article>
+	<article id="Post-1001" data-id="1001">
 	<!--
 		<div class="post_head">
 			<h3><a href="#">How to go so far with only a bukket ?</a></h3>
@@ -80,7 +84,7 @@
 				<a href="#">T1b0</a>At 02/06/2013
 			</div>
 			<div class="btn-group btn-group-xs">
-				<a href="#ReplyEditor" class="btn btn-default">Reply <i class="fa fa-reply"></i></a>
+				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>
 			</div>
 		</div>
 		<div class="post_body">
@@ -95,7 +99,7 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 		<div style="clear: both; height: 10px;"></div>
 	</article>
 	
-	<article class="">
+	<article id="Post-1002" data-id="1002">
 	<!--
 		<div class="post_head">
 			<h3><a href="#">How to go so far with only a bukket ?</a></h3>
@@ -105,6 +109,9 @@ Alios autem dicere aiunt multo etiam inhumanius (quem locum breviter paulo ante 
 			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">
 			<div class="post_infos">
 				<a href="#">Infernato Del Arte</a>At 02/06/2013
+			</div>
+			<div class="btn-group btn-group-xs">
+				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>
 			</div>
 		</div>
 		<div class="post_body">
@@ -117,7 +124,7 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 		<div style="clear: both; height: 10px;"></div>
 	</article>
 	
-	<article>
+	<article id="Post-1003" data-id="1003">
 	<!--
 		<div class="post_head">
 			<h3><a href="#">How to go so far with only a bukket ?</a></h3>
@@ -126,6 +133,9 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 		<div class="post_head">
 			<div class="post_infos">
 				<a href="#">Infernato Del Arte</a>At 02/06/2013
+			</div>
+			<div class="btn-group btn-group-xs">
+				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>
 			</div>
 		</div>
 		<div class="post_body">
@@ -184,6 +194,7 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 </div>
 
 <form method="post">
+<h3 id="answerEditorTitle">Your answer</h3>
 <div id="ReplyEditor" class="btn-toolbar mt5 mb5" data-role="editor-toolbar" data-target="#editor">
 	<div class="btn-group">
 		<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
@@ -229,7 +240,8 @@ Ideo urbs venerabilis post superbas efferatarum gentium cervices oppressas latas
 	</div>
 	<button class="btn btn-primary pull-right" name="submitCreatePost" type="submit">Save</button>
 </div>
-<textarea name="newpost[message]" class="lead" data-editor="editor" placeholder="Enter your message here..." style="display: none;"></textarea>
+<textarea name="answer[message]" class="lead" data-editor="editor" placeholder="Enter your message here..." style="display: none;"></textarea>
+<input type="hidden" name="answer[parent_id]" id="postid" />
 </form>
 
 </div>
