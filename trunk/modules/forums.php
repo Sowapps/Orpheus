@@ -38,6 +38,7 @@ try {
 		$post['parent_id']	= 0;// Use addAnswer() to add an answer
 // 		text('ForumPost domain is : '.ForumPost);
 		ForumPost::make($post);
+		reportSuccess('successCreateThread');
 	} else
 	if( $ALLOW_EDITOR ) {
 		if( isPOST('submitCreateForum') ) {

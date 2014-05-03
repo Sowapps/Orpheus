@@ -27,16 +27,11 @@ try {
 
 debug('POST', POST());
 try {
-	if( isPOST('submitCreatePost') ) {
+	if( isPOST('submitAnswer') ) {
 		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
-		$post	= POST('newpost');
-// 		$post['user_id']	= $USER->id();
-// 		$post['user_name']	= $USER->fullname;
-// 		$post['published']	= 1;
-// 		$post['post_date']	= sqlDatetime();
-		$post['parent_id']	= 0;// Use addAnswer() to add an answer
-// 		text('ForumPost domain is : '.ForumPost);
-		ForumPost::make($post);
+		$sPost	= Post::load(POST('postid'));
+		$sPost->addAnswer(POST('answer'));
+		reportSuccess('successAddAnswer');
 	}
 } catch( UserException $e ) {
 	reportError($e);
@@ -46,16 +41,21 @@ displayReportsHTML();
 
 function displayPost(ForumPost $post) {
 	$author	= $post->getAuthor();
+	/*
+			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">
+		<div style="clear: both; height: 10px;"></div>
+	*/
 	echo '
-	<article id="'.$post->id().'">
+	<article id="Post-'.$post->id().'" data-id="'.$post->id().'">
 		<div class="post_head">
-<!--			<img src="../../themes/default/images/empty_140.png" class="user_avatar img-rounded">-->
 			<div class="post_infos">
 				<a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'
 			</div>
+			<div class="btn-group btn-group-xs">
+				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>
+			</div>
 		</div>
 		<div class="post_body">'.$post->getMessage().'</div>
-<!--		<div style="clear: both; height: 10px;"></div>-->
 	</article>';
 }
 
@@ -87,6 +87,9 @@ foreach( $Post->getAnswers() as $post ) {
 echo '
 </div>';
 ?>
+
+<form method="post">
+<h3 id="answerEditorTitle">Your answer</h3>
 <div class="btn-toolbar mt5 mb5" data-role="editor-toolbar" data-target="#editor">
 	<div class="btn-group">
 		<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b
@@ -130,5 +133,8 @@ echo '
 		<a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
 		<a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 	</div>
+	<button class="btn btn-primary pull-right" name="submitAnswer" type="submit">Save</button>
 </div>
-<textarea name="newpost[message]" class="lead" data-editor="editor" placeholder="Enter your message here..." style="display: none;"></textarea>
+<textarea name="answer[message]" class="lead" data-editor="editor" placeholder="Enter your message here..." style="display: none;"></textarea>
+<input type="hidden" name="postid" id="postid" />
+</form>
