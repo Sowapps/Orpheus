@@ -10,10 +10,10 @@ function openCollapse(collapse) {
 }
 
 function answerTo(post) {
-	debug(post);
+//	debug(post);
 	if( $("#postid").val() == post.data("id") ) { return; }
 	$("#postid").val(post.data("id"));
-	debug(post.is(":first-child"));
+//	debug(post.is(":first-child"));
 	$("#answerEditorTitle").html(post.is(":first-child") ? "Your answer" : "Your answer to <a href='#"+post.attr("id")+"'>#"+post.data("id")+"</a>");
 //	$("#answerEditorTitle").text(post.is(":first-child") ? "Reply to the thread" : "Reply to answer <a href='#"+post.attr("id")+"'>#"+post.data("id")+"</a>");
 }
