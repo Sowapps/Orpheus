@@ -47,7 +47,7 @@ function displayPost(ForumPost $post) {
 	*/
 	echo '
 	<article id="Post-'.$post->id().'" data-id="'.$post->id().'">
-		<div class="post_meta">#'.$post->id().' | '.$post.'</div>
+		<a class="post_meta" href="'.$post->getThreadLink().'">#'.$post->id().' | '.$post.'</a>
 		<div class="post_head">
 			<div class="post_infos"><a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'</div>
 			<div class="btn-group btn-group-xs"><a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a></div>
