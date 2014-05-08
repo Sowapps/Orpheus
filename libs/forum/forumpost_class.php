@@ -83,7 +83,7 @@ class ForumPost extends PermanentEntity {
 	 * If post has no parent post, we target the post itself
 	 */
 	public function getThreadLink() {
-		return static::genLink($this->parent_id).'#Post-'.$this->id();
+		return static::genLink($this->parent_id ? $this->parent_id : $this->id()).'#Post-'.$this->id();
 	}
 }
 ForumPost::init();
