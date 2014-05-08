@@ -224,6 +224,12 @@ article:first-child {
 	border:	1px solid #00CC88;
 /* 	background-color: #F8F8F8; */
 }
+article .post_meta {
+	padding: 2px 5px;
+	float: left;
+	color: #777777;
+	font-size: 15px;
+}
 article .post_head {
 	float:	right;
 	border:	1px solid #E5E5E5;
@@ -255,9 +261,10 @@ article .post_infos a {
 }
 
 article .post_body {
-	padding: 8px 15px;
+/* 	padding: 8px 15px; */
+	padding: 0 15px 8px;
+	clear: left;
 }
 article .post_body br {
 	clear: none;
 }
-
