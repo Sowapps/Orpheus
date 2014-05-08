@@ -29,7 +29,7 @@ debug('POST', POST());
 try {
 	if( isPOST('submitAnswer') ) {
 		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
-		$sPost	= ForumPost::load(POST('postid'));
+		$sPost	= POST('postid') ? ForumPost::load(POST('postid')) : $Post;
 		$sPost->addAnswer(POST('answer'));
 		reportSuccess('successAddAnswer');
 	}
