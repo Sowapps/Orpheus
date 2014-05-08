@@ -47,15 +47,11 @@ function displayPost(ForumPost $post) {
 	*/
 	echo '
 	<article id="Post-'.$post->id().'" data-id="'.$post->id().'">
+		<div class="post_meta">#'.$post->id().' | '.$post.'</div>
 		<div class="post_head">
-			<div class="post_infos">
-				<a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'
-			</div>
-			<div class="btn-group btn-group-xs">
-				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>
-			</div>
-		</div>
-		<div class="post_body">'.$post->getMessage().'</div>
+			<div class="post_infos"><a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'</div>
+			<div class="btn-group btn-group-xs"><a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a></div>
+		</div><div class="post_body">'.$post->getMessage().'</div>
 	</article>';
 }
 
