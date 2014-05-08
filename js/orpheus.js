@@ -1,4 +1,37 @@
 
+var Dialog	= {
+	"dialog" :	'<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>',
+	"confirm" : function(callback, title, message) {
+		debug("Dialog.confirm");
+		if( typeof this.dialog == "string" ) {
+			this.dialog	= $(this.dialog);
+			this.dialog.appendTo("body");
+			this.dialog.modal({"show": false});
+		}
+		var dialog	= this.dialog;
+		dialog.find(".modal-title").text(title);
+		dialog.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary okbtn">OK !</button>');
+		dialog.find(".modal-footer .okbtn").click(function() {
+			dialog.callback	= callback;
+			dialog.callback();
+			dialog.modal('hide');
+		});
+		if( message ) {
+			dialog.find(".modal-footer").css({"border-top": "", "margin-top": ""});
+			dialog.find(".modal-body").show().html(message)
+		} else {
+			dialog.find(".modal-footer").css({"border-top": "none", "margin-top": "0"});
+			dialog.find(".modal-body").hide();
+		}
+		dialog.modal('show');
+	}
+};
+
+//$(function() {
+//	debug("Doc ready");
+//	Dialog.confirm(function() { console.log("Confirmed") }, "Do you confirm what you are doing ?", "This require your attention and you should take care about what we are asking for.");
+//});
+
 function debug(t) {
 	console.log(t);
 }
