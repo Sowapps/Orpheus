@@ -40,7 +40,8 @@ input.search-query {
 }
 
 footer {
-	margin-top: 10px;
+	margin-top: 5px;
+/* 	margin-top: 10px; */
 }
 footer > .container {
 	background-color: #F5F5F5;
@@ -48,8 +49,11 @@ footer > .container {
 }
 
 .credits {
-	margin: 10px 0;
-	text-align: center;
+	padding:	5px 0;
+	font-size:	11px;
+	text-align:	center;
+/* 	margin: 10px 0; */
+/* 	text-align: center; */
 }
 
 footer.fixed {
