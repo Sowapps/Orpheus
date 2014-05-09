@@ -16,6 +16,7 @@ if( $ALLOW_EDITOR ) {
 	HTMLRendering::addJSFile('forum-editor.js');
 }
 
+$MODTITLE	= "Forums";
 $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
 	'.( $ALLOW_EDITOR ? '

@@ -47,6 +47,9 @@ class ForumPost extends PermanentEntity {
 		if( empty($input['name']) ) {
 			$input['name']	= 'Re: '.$this->name;
 		}
+		if( !empty($input['message']) ) {
+			$input['message']	= strip_tags($input['message'], '<a><p><br><b><i><u><strike><font><ol><ul><li><blockquote><div>');
+		}
 		$input['forum_id']	= $this->forum_id;
 		$input['parent_id']	= $this->id();
 		$this->last_answer_id = $r = static::make($input);
