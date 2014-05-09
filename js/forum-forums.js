@@ -1,6 +1,7 @@
 
 function updateContainerHeight() {
-	$("body > .container").height($(window).height()-110);
+	$("body > .container").height($(window).height()-90);
+//	$("body > .container").height($(window).height()-110);
 }
 
 function openCollapse(collapse) {
