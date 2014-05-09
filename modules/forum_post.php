@@ -21,6 +21,7 @@ $TOPBAR_CONTENTS	= '
 
 try {
 	$Post	= ForumPost::load($Action);
+	$MODTITLE	= "$Post";
 } catch( UserException $e ) {
 	reportError($e); displayReportsHTML(); return;
 }
