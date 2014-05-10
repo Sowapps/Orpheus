@@ -47,6 +47,13 @@ class SiteUser extends User {
 		return $data;
 	}
 	
+	public function getLink() {
+		return static::genLink($this->id());
+	}
+	public static function genLink($id) {
+		return u('profile', $id);
+	}
+	
 	// *** FORUM LIB ***
 	protected $postViews	= NULL;
 	
@@ -71,11 +78,17 @@ class SiteUser extends User {
 		$this->postViews	= null;// Should be rarely effective
 	}
 	
-	public function getLink() {
-		return static::genLink($this->id());
+	public function canForumPostUpdate($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
+		if( $this->canDo('forumpost_update') ) { return true; }
+		if( $context == CRAC_CONTEXT_APPLICATION ) { return false; }
+		$PostDelay	= Forum::config('post_update_delay', 0);
+		return CRAC_CONTEXT_RESOURCE && $this->id == $contextResource->user_id && (!$PostDelay || (TIME-$contextResource->getCreateTime())/60 < $PostDelay);
 	}
-	public static function genLink($id) {
-		return u('profile', $id);
+	public function canForumPostDelete($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
+		if( $this->canDo('forumpost_delete') ) { return true; }
+		if( $context == CRAC_CONTEXT_APPLICATION ) { return false; }
+		$PostDelay	= Forum::config('post_delete_delay');
+		return CRAC_CONTEXT_RESOURCE && $this->id == $contextResource->user_id && (!$PostDelay || (TIME-$contextResource->getCreateTime())/60 < $PostDelay);
 	}
 }
 SiteUser::init();

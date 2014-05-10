@@ -35,5 +35,13 @@ class Forum extends PermanentEntity {
 			'output'	=> SQLAdapter::ARR_FIRST
 		));
 	}
+	
+	protected static $config;
+	protected static function config($key, $default=null) {
+		if( static::$config === NULL ) {
+			static::$config	= Config::build('forum', true);
+		}
+		return static::$config->get($key, $default);
+	}
 }
 Forum::init();

@@ -51,7 +51,11 @@ function displayPost(ForumPost $post) {
 		<a class="post_meta" href="'.$post->getThreadLink().'">#'.$post->id().' | '.$post.'</a>
 		<div class="post_head">
 			<div class="post_infos"><a href="'.$author->getLink().'">'.$author.'</a>At '.$post->getCreationDate().'</div>
-			<div class="btn-group btn-group-xs"><a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a></div>
+			<div class="btn-group btn-group-xs">
+				<a href="#ReplyEditor" class="btn btn-default replybtn">Reply <i class="fa fa-reply"></i></a>'.
+				((!empty($USER) && $USER->canForumPostUpdate(CRAC_CONTEXT_RESOURCE, $post)) ? '<a href="#" class="btn btn-default" title="Edit the post"><i class="fa fa-edit"></i></a>' : '').
+				((!empty($USER) && $USER->canForumPostDelete(CRAC_CONTEXT_RESOURCE, $post)) ? '<button type="submit" name="removePost['.$post->id().']" class="btn btn-default" title="Delete the post"><i class="fa fa-trash-o"></i></button>' : '').
+			'</div>
 		</div><div class="post_body">'.$post->getMessage().'</div>
 	</article>';
 }
