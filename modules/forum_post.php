@@ -33,6 +33,11 @@ try {
 		$sPost	= POST('postid') ? ForumPost::load(POST('postid')) : $Post;
 		$sPost->addAnswer(POST('answer'));
 		reportSuccess('successAddAnswer');
+	} else
+	if( isPOST('submitDelete') ) {
+		$sPost	= ForumPost::load(POST('submitDelete'));
+		if( empty($USER) || !$USER->canForumPostDelete(CRAC_CONTEXT_RESOURCE, $post) ) { SiteUser::throwException('forbiddenOperation'); }
+		$sPost->remove();
 	}
 } catch( UserException $e ) {
 	reportError($e);
