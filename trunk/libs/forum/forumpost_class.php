@@ -39,6 +39,10 @@ class ForumPost extends PermanentEntity {
 		return $this->last_answer_id ? static::load($this->last_answer_id) : $this;
 	}
 	
+	public function getAllAnswers() {
+		return static::get('parent_id='.$this->id());
+	}
+	
 	public function getAnswers($page=1, $number=20) {
 		return static::get(array('where' => 'published AND parent_id='.$this->id(), 'orderby'=>'create_date ASC', 'offset'=>$number*($page-1), 'number'=>$number));
 	}
@@ -55,6 +59,13 @@ class ForumPost extends PermanentEntity {
 		$this->last_answer_id = $r = static::make($input);
 		$this->post_date	= sqlDatetime();
 		return $r;
+	}
+	
+	public function remove() {
+		foreach( $this->getAllAnswers() as $post ) {
+			$post->remove();
+		}
+		return parent::remove();
 	}
 
 	public static function make($input) {
