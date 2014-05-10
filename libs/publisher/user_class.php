@@ -27,9 +27,9 @@ class User extends AbstractStatus {
 		'accesslevel'	=> 'checkAccessLevel'
 	);
 
-	const NOT_LOGGED = 0;
-	const IS_LOGGED = 1;
-	const LOGGED_FORCED = 3;
+	const NOT_LOGGED	= 0;
+	const IS_LOGGED		= 1;
+	const LOGGED_FORCED	= 3;
 	protected $login = self::NOT_LOGGED;
 
 	// *** METHODES SURCHARGEES ***

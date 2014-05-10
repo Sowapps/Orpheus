@@ -16,12 +16,16 @@ abstract class PermanentEntity extends PermanentObject {
 	protected static $validator	= null;
 	protected static $domain	= null;
 	*/
+
+	public function getCreateTime() {
+		return strtotime($this->create_date);
+	}
 	
 	public function validateValue($field, $value) {
 		static::$validator->validateFieldValue($field, $value, null, $this);
 	}
 	
-	public static function putValue($field, $value) {
+	public function putValue($field, $value) {
 		$this->validateValue($field, $value);
 		$this->setValue($field, $value);
 	}
