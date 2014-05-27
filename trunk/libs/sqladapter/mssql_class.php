@@ -120,12 +120,12 @@ class SQLAdapter_MSSQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No field');
 		}
-		$WC = ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
+		$WC	= ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
 		if( empty($options['orderby']) ) {
 			$options['orderby'] = $this->IDFIELD; 
 		}
-		$ORDERBY = 'ORDER BY '.$options['orderby'];
-		$WHAT = ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
+		$ORDERBY	= 'ORDER BY '.$options['orderby'];
+		$WHAT		= is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		
 		if( $options['number'] > 0 ) {
 			// ORDER BY is required

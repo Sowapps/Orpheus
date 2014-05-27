@@ -33,7 +33,13 @@ var Dialog	= {
 //});
 
 function debug(t) {
-	console.log(t);
+	for( var i in arguments ) {
+		console.log(arguments[i]);
+	}
+}
+
+function formatDouble(n) {
+	return (""+n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
 
 function getAllProp(Object, dispFunc) {
@@ -63,7 +69,7 @@ function daysInMonth(year, month) {
 }
 
 function str2date(val) {
-	if( !val ) { debug(val); return null; }
+	if( !val ) { /*debug(val);*/ return null; }
 	var d = val.split("/");
 	if( !d || !d.length || d.length < 3 ) { return false; }
 	return new Date(d[2], d[1]-1, d[0]);
@@ -96,7 +102,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 	return s.join(dec);
 }
 
-
 var cache = {};
 function requestAutocomplete(what, term, response) {
 	if( cache[what] && term in cache[what] ) {
@@ -106,25 +111,26 @@ function requestAutocomplete(what, term, response) {
 	if( !cache[what] ) {
 		cache[what] = {};
 	}
-	lastXhr = $.getJSON("remote-get-what="+what+"&term="+term+".json", function( data, status, xhr ) {
-		if ( xhr === lastXhr && data.code == "OK" ) {
-			var r=[], i=0;
-			for( var k in data.other ) {
-				r[i++] = data.other[k].name;
-//				r[i++] = (field == 'all') ? data.other[k] : data.other[k][field];
-			}
-			cache[what][term] = r;
-			response(r);
+	lastXhr = $.getJSON("remote-search-what="+what+"&term="+term+".json", function( data, status, xhr ) {
+		if( xhr === lastXhr && data.code == "OK" ) {
+			response(data.other);
+			return;
 		}
+		response([]);
 	});
 }
 
 String.prototype.capitalize = function () {
+	if( typeof this != "string" ) {
+//		console.log("Unable to capitalize non-string value.");
+//		console.log(this);
+		return this;
+	}
 	return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 };
 
 Date.prototype.getFullDay = function() {
-	return this.getFullYear()+this.getMonth()+this.getDay();
+	return ""+this.getFullYear()+leadZero(this.getMonth())+leadZero(this.getDate());
 };
 
 /*
@@ -173,7 +179,6 @@ $.fn.watch = function(cb) {
 
 $.fn.pressEnter = function(cb) {
 	$(this).keydown(function(e) {
-		debug('This key down : '+e.which);
 		if( e.which==KeyEvent.DOM_VK_RETURN ) {
 			e.preventDefault();
 			this.callback	= cb;
@@ -322,3 +327,93 @@ if( typeof KeyEvent == "undefined" ) {
         DOM_VK_META: 224
     };
 }
+
+/* Orpheus Widget & JS Plugins */
+
+(function ($) {
+	$.each([["show", "shown", function() { return $(this).is(":visible"); }], ["hide", "hidden", function() { return $(this).is(":hidden"); }]], function (i, ev) {
+		var fun	= $.fn[ev[0]];
+		$.fn[ev[0]]	= function () {
+			var r	= this.trigger(ev[0]);
+			if( r === false ) { return r; }
+			r		= fun.apply(this, arguments);
+			this.trigger(ev[1]);
+			var children	= this.find("*");
+			if( ev.length>2 ) {
+				children.filter(ev[2]);
+			}
+			children.trigger(ev[1]);
+			return r;
+		};
+//		if( ev.length>2 ) {
+//			if( ev[2]() ) {
+//				this.trigger(ev[1]);
+//			}
+//		}
+	});
+	$.fn.shown = function(callback) {
+		$(this).bind("shown", callback);
+		if( $(this).is(":visible") ) {
+			this.callback	= callback;
+			this.callback();
+//			$(this).trigger("shown");
+		}
+	};
+
+	$.fn.scrollTo = function(option, event) {
+		if( !option ) {
+			option = "center";
+		}
+		var el = $(this).first();
+		if( !el.length ) { return; }
+		var viewportWidth = $(window).width(), viewportHeight = $(window).height(),
+			elWidth = $(el).width(), elHeight = $(el).height(), elOffset = $(el).offset();
+		if( option == "top" ) {
+//			debug("Scroll top to: "+(elOffset.top + elHeight/2 - 100));
+			$(window).scrollTop(elOffset.top + elHeight/2 - 100);
+		} else {
+			// Default is center
+			$(window).scrollTop(elOffset.top + elHeight/2 - viewportHeight/2);
+		}
+		$(window).scrollLeft(elOffset.left + elWidth/2 - viewportWidth/2);
+	};
+
+	$.fn.watch	= function(cb, sel) {
+		sel ? $(this).on("change", sel, cb) : $(this).change(cb);
+		$(this).each(function() {
+			this.cb	= cb;
+			this.cb();
+		});
+	};
+
+	$.fn.pressEnter	= function(cb) {
+		$(this).keydown(function(e) {
+			if( e.which==KeyEvent.DOM_VK_RETURN ) {
+				e.preventDefault();
+				this.callback	= cb;
+				this.callback(e);
+			}
+		});
+	};
+})(jQuery);
+
+//$.fn.refreshAutocompletes = function() {
+$(function() {
+	$("input.autocomplete.auto").shown(function() {
+//		debug("Shown");
+//		debug(this);
+	//$("input.autocomplete.auto").each(function() {
+		if( $(this).data("autocomplete-auto") ) { return; }
+		$(this).data("autocomplete-auto", 1);
+		var _	= $(this);
+		_.autocomplete({
+			minLength:	2,
+			source:		function(request, response) {
+				var query = _.data("query") ? "&"+_.data("query") : "";
+				// Targetting the autocomplete itself
+				requestAutocomplete(_.data('what'), request.term+query, response, _.data("label"));
+			}
+		});
+	});
+});
+//};

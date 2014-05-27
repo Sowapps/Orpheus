@@ -11,11 +11,9 @@
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
 <?php
-if( !empty($METAPROP) ) {
-	foreach($METAPROP as $property => $content) {
-		echo "
-	<meta property=\"{$property}\" content=\"{$content}\"/>";
-	}
+foreach(HTMLRendering::$metaprop as $property => $content) {
+	echo '
+	<meta property="'.$property.'" content="'.$content.'"/>';
 }
 ?>
 
@@ -28,13 +26,19 @@ if( !empty($METAPROP) ) {
 	
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
+/*
 if( !empty($CSS_FILES) ) {
 	foreach($CSS_FILES as $file) {
 		?>
-		
+	
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL().$file; ?>" type="text/css" media="screen" />
 	<?php
 	}
+}
+*/
+foreach(HTMLRendering::$cssURLs as $url) {
+	echo '
+	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
 }
 ?>
 	
@@ -187,5 +191,11 @@ if( !empty($CSS_FILES) ) {
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/morris/chart-data-morris.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/tablesorter/jquery.tablesorter.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/tablesorter/tables.js"></script>
+<?php
+foreach(HTMLRendering::$jsURLs as $url) {
+	echo '
+	<script type="text/javascript" src="'.$url.'"></script>';
+}
+?>
 </body>
 </html>

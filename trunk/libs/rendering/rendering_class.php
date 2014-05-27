@@ -51,41 +51,40 @@ abstract class Rendering {
 	 */
 	public function showMenu($menu, $layout=null, $active=null) {
 // 		self::checkRendering();
-		
 		global $USER_CLASS;
 		if( !class_exists($USER_CLASS) ) { return false; }
 		
-		if( !is_null($active) ) {
+		if( $active!==NULL ) {
 			list($actModule, $actAction) = explodeList('-', $active, 2);
 		} else {
 			$actModule	= &$GLOBALS['Module'];
 			$actAction	= &$GLOBALS['Action'];
 		}
 		
-		if( is_null($layout) ) {
+		if( $layout===NULL ) {
 			$layout	= defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
 		}
 		
 		$env	= array('menu'=>$menu, 'items'=>array());
 		$items	= $this->getMenuItems($menu);
 		if( empty($items) ) { return false; }
-		foreach( $items as $modData ) {
-			if( empty($modData) ) { continue; }
+		foreach( $items as $itemConf ) {
+			if( empty($itemConf) ) { continue; }
 			$item = new stdClass;
-			if( $modData[0] == '#' ) {
-				list($item->link, $item->label) = explode('|', substr($modData, 1));
+			if( $itemConf[0] == '#' ) {
+				list($item->link, $item->label) = explode('|', substr($itemConf, 1));
 			} else {
-				$modData	= explode('-', $modData);
-				$module		= $modData[0];
+				$itemConf	= explode('-', $itemConf);
+				$module		= $itemConf[0];
 				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
 					|| !Hook::trigger('menuItemAccess', true, true, $module) ) { continue; }
-				$action			= ( count($modData) > 1 ) ? $modData[1] : '';
+				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
-				$queryStr		= count($modData) > 2 ? $modData[2] : '';
+				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';
 				$item->link		= u($module, $action, $queryStr);
 				$item->label	= ( !empty($action) && hasTranslation($module.'_'.$action) ) ? t($module.'_'.$action) : t($module);
 				$item->module	= $module;
-				if( $module==$actModule && (is_null($actAction) || $actAction==$action) ) {
+				if( $module==$actModule && ($actAction===NULL || $actAction==$action) ) {
 					$item->current = 1;
 				}
 			}
@@ -150,7 +149,7 @@ abstract class Rendering {
 	final public static function doDisplay($model=null, $env=null) {
 		self::checkRendering();
 		if( !isset(self::$rendering) ) { return false; }
-		if( is_null($env) ) { $env = $GLOBALS; }
+		if( $env === NULL ) { $env = $GLOBALS; }
 		self::$rendering->display($model, $env);
 		return true;
 	}

@@ -55,7 +55,7 @@ abstract class PermanentObject {
 				$this->reload();
 				// Data not in DB, this class is invalid
 				if( !array_key_exists($fieldname, $data) ) {
-					throw new Exception('incompatibleObject_'.static::getClass().'_'.$fieldname);
+					throw new Exception('The class '.static::getClass().' is out of date, the field "'.$fieldname.'" is unknown in database.');
 				}
 			}
 			$this->data[$fieldname] = $data[$fieldname];
@@ -317,7 +317,7 @@ abstract class PermanentObject {
 			return $this->data;
 		}
 		if( !array_key_exists($key, $this->data) ) {
-			log_debug('Key "'.$key.'" not found in array : '.print_r($this->data, 1));
+// 			log_debug('Key "'.$key.'" not found in array : '.print_r($this->data, 1));
 			throw new FieldNotFoundException($key, static::getClass());
 		}
 		return $this->data[$key];
@@ -607,7 +607,7 @@ abstract class PermanentObject {
 		}
 		$options	= array(
 			'table'	=> static::$table,
-			'what'=> $what,
+			'what'	=> $what,
 		);
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
@@ -684,7 +684,7 @@ abstract class PermanentObject {
 	 * Gets the domain of this class, can be guessed from $table or specified in $domain.
 	*/
 	public static function getDomain() {
-		return ( !is_null(static::$domain) ) ? static::$domain : static::$table;
+		return static::$domain !== NULL ? static::$domain : static::$table;
 	}
 	
 	//! Gets the validator of this class
