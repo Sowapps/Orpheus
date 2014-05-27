@@ -129,7 +129,7 @@ class EntityDescriptor {
 		// Field Formatter - Could be undefined
 	}
 	
-	public function validate(&$uInputData, $fields=null, $ref=null, &$errCount=0) {
+	public function validate(array &$uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data	= array();
 // 		$class = $this->class;
 		foreach( $this->fields as $field => &$fData ) {
@@ -155,11 +155,12 @@ class EntityDescriptor {
 			} catch( UserException $e ) {
 				$errCount++;
 				if( isset($this->class) ) {
-					$c = $this->class;
+					$c	= $this->class;
 					$c::reportException($e);
-					return;
+				} else {
+					reportError($e);
+// 					throw $e;
 				}
-				throw $e;
 			}
 		}
 		return $data;
@@ -577,7 +578,7 @@ class TypeState extends TypeEnum {
 		if( $ref===NULL ) {
 			$value	= key($values);
 		} else if( !isset($ref->{$Field->name}) || !isset($values[$ref->{$Field->name}]) || !in_array($value, $values[$ref->{$Field->name}]) ) {
-			throw new FE('unknownValue');
+			throw new FE('unreachableValue');
 		}
 	}
 }

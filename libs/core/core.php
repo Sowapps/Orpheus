@@ -387,17 +387,41 @@ function parseFields(array $fields, $quote='"') {
  * If $default is not null and returned value is null, you can infer your parameters are invalids.
 */
 function apath_get($array, $apath, $default=null, $pathRequired=false) {
-	if( empty($array) || !is_array($array) || is_null($apath) ) {
+	if( empty($array) || !is_array($array) || $apath === NULL ) {
 		return null;
 	}
-	$rpaths = explode('/', $apath, 2);
+	list($key, $suffix)	= explodeList('/', $apath, 2);
 	// If element does not exist in array
-	if( !isset($array[$rpaths[0]]) ) {
+	if( !isset($array[$key]) ) {
 		// If has a child, the child could not be found
 		// Else container exists, but element not found.
-		return ($pathRequired && isset($rpaths[1])) ? null : $default;
+		return ($pathRequired && $suffix !== NULL) ? null : $default;
+// 		return ($pathRequired && isset($rpaths[1])) ? null : $default;
 	}
-	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
+	return $suffix !== NULL ? apath_get($array[$key], $suffix) : $array[$key];
+// 	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
+}
+
+function apath_setp(&$array, $apath, $value) {
+	if( $array === NULL ) {
+		$array	= array();
+	}
+// 	debug("Set array $apath to value $value", $array);
+// 	if( empty($array) || !is_array($array) || $apath === NULL ) {
+// 		return null;
+// 	}
+	
+	list($key, $suffix)	= explodeList('/', $apath, 2);//('/', $apath, 2);
+	// The path is ends here
+	if( $suffix === NULL ) {
+		$array[$key]	= $value;
+		return;
+	}
+	// The path continues
+	if( !isset($array[$key]) ) {
+		$array[$key]	= array();
+	}
+	apath_setp($array[$key], $suffix, $value);
 }
 
 //! Build all path to browse array
@@ -597,11 +621,11 @@ function reportWarning($report, $domain='global') {
  * Adds the report $message to the list of reports for this type 'error'.
 */
 function reportError($report, $domain=null) {
-	if( $report instanceof UserException && is_null($domain) ) {
+	if( $report instanceof UserException && $domain === NULL ) {
 		$domain = $report->getDomain();
 	}
 // 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport($report, 'error', is_null($domain) ? 'global' : $domain);
+	return addReport($report, 'error', $domain === NULL ? 'global' : $domain);
 }
 
 //! Checks if there is error reports
@@ -800,7 +824,7 @@ function isGET($apath=null) {
  * If $apath is null, all data are returned.
 */
 function extractFrom($apath, $array) {
-	return is_null($apath) ? $array : apath_get($array, $apath);
+	return $apath===NULL ? $array : apath_get($array, $apath);
 // 	return is_null($path) ? $array : ( (!is_null($v = apath_get($array, $path))) ? $v : false) ;
 }
 
@@ -880,7 +904,7 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 * The label is prefixed with $prefix and translated using t().
 */
 function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
-	if( is_null($matches) ) { $matches = OPT_VALUE2LABEL; }
+	if( $matches===NULL ) { $matches = OPT_VALUE2LABEL; }
 	// Value of selected/default option
 	fillInputValue($selValue, $fieldPath, $default);
 	$opts	= '';
@@ -943,6 +967,9 @@ function htmlPassword($fieldPath, $addAttr='') {
 	return '<input type="password" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
 }
 
+function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
+	echo htmlText($fieldPath, $default, $addAttr, $formatter);
+}
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 	fillInputValue($value, $fieldPath, $default);
 	return '<input type="text" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.'/>';
@@ -1040,12 +1067,12 @@ function convertSpecialChars($string) {
 	// Replaces all letter special characters.
 	$string = str_replace(
 		array(
-			'À','à','�?','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
+			'À','à','�?','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
 			'C','c','C','c','Ç','ç',
-			'D','d','�?','d',
+			'D','d','�?','d',
 			'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
 			'G','g',
-			'Ì','ì','�?','í','Î','î','�?','ï',
+			'Ì','ì','�?','í','Î','î','�?','ï',
 			'L','l','L','l','L','l',
 			'Ñ','ñ','N','n','N','n',
 			'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
@@ -1053,11 +1080,11 @@ function convertSpecialChars($string) {
 			'Š','š','S','s','S','s',
 			'T','t','T','t','T','t',
 			'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
-			'Ÿ','ÿ','ý','�?',
+			'Ÿ','ÿ','ý','�?',
 			'Ž','ž','Z','z','Z','z',
-			'Þ','þ','�?','ð','ß','Œ','œ','Æ','æ','µ',
+			'Þ','þ','�?','ð','ß','Œ','œ','Æ','æ','µ',
 		' '),
-		//'�?','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
+		//'�?','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
 		array(
 			'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
 			'C','c','C','c','C','c',
@@ -1248,7 +1275,6 @@ function monthTime($day=1, $time=null) {
  * Returns a standard phone number for FR country format.
  */
 function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
-// 	text('$number '.$number.' : '.strlen($number));
 	// If there is not delimiter we try to put one
 	$number = str_replace(array('.', ' ', '-'), '', $number);
 	$length	= strlen($number);
@@ -1274,5 +1300,25 @@ function getMimeType($filePath) {
 
 function checkDir($filePath) {
 	return is_dir($filePath) || mkdir($filePath, 0772, true);
+}
+
+function array_insert(&$array, $position, $value) {
+	array_splice($array, $position, 0, $value);
+}
+
+function array_index($array, $key) {
+	return array_search($key, array_keys($array));
+// 	return array_search($key, array_keys(array_values($array)));
+}
+
+function array_last($array) {
+	// Copy of array, the pointer is not moved
+	return end($array);
+}
+
+function array_get($array, $index, $default=false) {
+	$array	= array_values($array);
+// 	debug('array_get('.$index.') values', $array);
+	return isset($array[$index]) ? $array[$index] : $default;
 }
 

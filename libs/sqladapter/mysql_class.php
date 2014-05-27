@@ -189,7 +189,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 			
 		//Is a string
 		} else {
-			$WHAT = $options['what'];
+			$WHAT	= $options['what'];
 		}
 		$TABLE		= static::escapeIdentifier($options['table']);
 		

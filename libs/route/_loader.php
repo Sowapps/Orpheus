@@ -45,7 +45,7 @@ function u($module, $action='', $queryStr='') {
 			$queryStr = str_replace('&', '&amp;', $queryStr);
 		}
 	}
-	return SITEROOT.$module.((!empty($action) && empty($actionProcessed)) ? '-'.$action : '').((!empty($queryStr)) ? '-'.$queryStr : '').'.html';
+	return SITEROOT.$module.((!empty($action) && empty($actionProcessed)) ? '-'.$action : '').(!empty($queryStr) ? '-'.$queryStr : '').'.html';
 }
 
 //! Displays the full url of a module

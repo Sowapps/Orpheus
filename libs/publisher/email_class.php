@@ -57,17 +57,19 @@ class Email {
 	//! Initializes the object
 	private function init() {
 		$this->Headers['Date'] = date('r');
+		$allowReply	= true;
 		if( defined('REPLYEMAIL') ) {
-			$sendEmail = REPLYEMAIL;
+			$sendEmail	= REPLYEMAIL;
+			$allowReply	= false;
 		} else if( defined('ADMINEMAIL') ) {
-			$sendEmail = ADMINEMAIL;
+			$sendEmail	= ADMINEMAIL;
 		} else {
 			return;
 		}
 		if( defined('SITENAME') ) {
-			$this->setSender($sendEmail, SITENAME);
+			$this->setSender($sendEmail, SITENAME, $allowReply);
 		} else {
-			$this->setSender($sendEmail);
+			$this->setSender($sendEmail, null, $allowReply);
 		}
 	}
 	
@@ -228,11 +230,11 @@ class Email {
 	 * This function also sets the ReplyTo value if undefined.
 	 * If a sender name is provided, it sets the "From" header to NOM \<EMAIL\>
 	 */
-	public function setSender($SenderEmail, $SenderName=null) {
+	public function setSender($SenderEmail, $SenderName=null, $allowReply=true) {
 		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
 		$this->setHeader('From', is_null($SenderName) ? $SenderEmail : '=?utf-8?b?'.base64_encode($SenderName).'?= <'.$SenderEmail.'>');
 		$this->setHeader('Sender', $SenderEmail);
-		if( empty($Headers['Return-Path']) ) {
+		if( $allowReply && empty($Headers['Return-Path']) ) {
 			$this->setReplyTo($SenderEmail);
 		}
 	}
