@@ -4,6 +4,10 @@ body {
 	padding: 0;
 }
 
+h1, h2, h3, h4 {
+	position: relative;
+}
+
 a,.link {
 	text-decoration: underline;
 /* 	color: #88ba14; */
@@ -61,8 +65,14 @@ script, style {
 .w380 {	width: 380px !important; }
 .w400 {	width: 400px !important; }
 .w420 {	width: 420px !important; }
+.w440 {	width: 440px !important; }
+.w460 {	width: 460px !important; }
+.w480 {	width: 480px !important; }
 .w500 {	width: 500px !important; }
+.w520 {	width: 520px !important; }
+.w540 {	width: 540px !important; }
 .w560 {	width: 560px !important; }
+.w580 {	width: 580px !important; }
 .w600 {	width: 600px !important; }
 .w700 {	width: 700px !important; }
 .w800 {	width: 800px !important; }
@@ -73,13 +83,18 @@ script, style {
 .h25  {	height: 25px !important; }
 .h35  {	height: 35px !important; }
 
+.mt0  { margin-top: 0 !important; }
 .mt5  { margin-top: 5px !important; }
 .mt10 { margin-top: 10px !important; }
 .mt20 { margin-top: 20px !important; }
+.mt30 { margin-top: 30px !important; }
+.mt40 { margin-top: 40px !important; }
 
+.mr0  { margin-right: 0 !important; }
 .mr10 { margin-right: 10px !important; }
 .mr20 { margin-right: 20px !important; }
 
+.mb0  { margin-bottom: 0 !important; }
 .mb5  { margin-bottom: 5px !important; }
 .mb10 { margin-bottom: 10px !important; }
 .mb20 { margin-bottom: 20px !important; }
@@ -102,22 +117,36 @@ script, style {
 .tac { text-align: center !important; }
 .toe { text-overflow: ellipsis !important; overflow: hidden; white-space: nowrap; }
 
+.p0   { padding: 0 !important; }
+.p10  { padding: 10px !important; }
+.p20  { padding: 20px !important; }
+
+.pt0  { padding-top: 0 !important; }
+.pt10 { padding-top: 10px !important; }
+.pt20 { padding-top: 20px !important; }
+.pt30 { padding-top: 30px !important; }
+
 .pr0  { padding-right: 0 !important; }
 .pr10 { padding-right: 10px !important; }
+.pr20 { padding-right: 20px !important; }
+.pr30 { padding-right: 30px !important; }
 
+.pb0  { padding-bottom: 0 !important; }
 .pb10 { padding-bottom: 10px !important; }
 .pb20 { padding-bottom: 20px !important; }
 .pb30 { padding-bottom: 30px !important; }
 .pb40 { padding-bottom: 40px !important; }
 
 .pl0  { padding-left: 0 !important; }
+.pl5  { padding-left: 5px !important; }
 .pl10 { padding-left: 10px !important; }
+.pl15 { padding-left: 15px !important; }
 .pl20 { padding-left: 20px !important; }
 .pl30 { padding-left: 30px !important; }
 .pl40 { padding-left: 40px !important; }
 
 .bl	{ display: block !important; }
-.in	{ display: inline !important; }
+.il	{ display: inline !important; }
 .ib	{ display: inline-block !important; }
 
 .fl	{ float: left !important; }
@@ -125,9 +154,10 @@ script, style {
 .pull-left	{ float: left !important; }
 .pull-right	{ float: right !important; }
 
-.cb { clear: both; }
-.cl { clear: left; }
-.cr { clear: right; }
+.cb { clear: both !important; }
+.cl { clear: left !important; }
+.cr { clear: right !important; }
+.cn { clear: none !important; }
 
 .center { margin: auto; }
 
@@ -139,6 +169,16 @@ script, style {
 .fs13 { font-size: 13px; }
 .fs14 { font-size: 14px; }
 .fs15 { font-size: 15px; }
+.fs16 { font-size: 16px; }
+.fs17 { font-size: 17px; }
+.fs18 { font-size: 18px; }
+.fs19 { font-size: 19px; }
+.fs20 { font-size: 20px; }
+
+.bsbb { -webkit-box-sizing: border-box;  -moz-box-sizing: border-box;  box-sizing: border-box; }
+.bscb { -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
+
+.force-hide { display: none !important; }
 /*
 .left {
 	float: left;
@@ -155,19 +195,31 @@ script, style {
 /* Layouts */
 
 .hlayout {
-	width:			100%;
+/* 	width:			100%; incompatible with overflow: auto; (scrollbar appearing) */
 	min-height:		25px;
 	line-height:	25px;
 /* 	height:			35px; */
 /* 	line-height:	35px; */
 	padding:		5px;/* Protect box shadow */
 	display:		block;
+/* 	display:		inline-block;Fit the content size */
+	overflow:		auto;/* Fit the content size */
+	clear:			both;
+/* 	float:			left;Experimental, if display: inline-block, the height is not respected without it => animations do not support floating content */
 /* 	overflow:	hidden; */
 }
+/*
+.vlayout .hlayout {
+	padding-left:	0;
+	padding-right:	0;
+}
+*/
+/*
 .hlayout .hlayout {
 	width: auto;
 	padding: 0;
 }
+*/
 .hlayout > * {
 	display: block;
 	float: left;
@@ -186,7 +238,7 @@ script, style {
 	
 	font-size: 13px;
 }
-.hlayout.h35 {
+.hlayout.h35, h1.h35 {
 	line-height:	35px;
 }
 .hlayout label {
