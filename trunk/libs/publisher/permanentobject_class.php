@@ -153,7 +153,7 @@ abstract class PermanentObject {
 	 * Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
-	public function update($uInputData, $fields, $noEmptyWarning=false) {
+	public function update($uInputData, $fields, $noEmptyWarning=true) {
 		$data	= static::checkUserInput($uInputData, $fields, $this);
 		// Don't care about some errors, other fields should be updated.
 		try {
