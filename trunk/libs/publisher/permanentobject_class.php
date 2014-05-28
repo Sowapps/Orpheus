@@ -141,7 +141,7 @@ abstract class PermanentObject {
 	/*!
 	 * \param $uInputData The input data we will check and extract, used by children.
 	 * \param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
-	 * \param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is false.
+	 * \param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
 	 * \return 1 in case of success, else 0.
 	 * \overrideit
 	 * \sa runForUpdate()
@@ -587,9 +587,11 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
+// 	public static function create($inputData=array(), $fields=null, &$errCount=0) {
 	public static function create($inputData=array(), $fields=null) {
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
 		if( $errCount ) {
+// 			return 0;
 			static::throwException('errorCreateChecking');
 		}
 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;

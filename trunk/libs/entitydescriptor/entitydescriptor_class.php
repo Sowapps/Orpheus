@@ -323,16 +323,19 @@ class TypeDatetime extends TypeDescriptor {
 	protected $name = 'datetime';
 	
 	public function validate($Field, &$value, $inputData, &$ref) {
+		if( !empty($inputData[$Field->name.'_time']) ) {
+			$value	.= ' '.$inputData[$Field->name.'_time'];//Allow HH:MM:SS and HH:MM
+		}
 		// FR Only for now - Should use user language
 		if( !is_date($value, true, $time) && !is_date($value, true, $time, 'SQL') ) {
 			throw new FE('notDatetime');
 		}
 		// Format to timestamp
-		$value = $time;
+		$value	= $time;
 	}
 	
 	public function format($Field, &$value) {
-		$value = sqlDatetime($value);
+		$value	= sqlDatetime($value);
 	}
 }
 EntityDescriptor::registerType(new TypeDatetime());

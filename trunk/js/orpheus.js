@@ -133,6 +133,13 @@ Date.prototype.getFullDay = function() {
 	return ""+this.getFullYear()+leadZero(this.getMonth())+leadZero(this.getDate());
 };
 
+$.fn.disableFields = function() {
+	return $(this).find(':input').prop("disabled", true);
+};
+$.fn.enableFields = function() {
+	return $(this).find(':input').prop("disabled", false);
+};
+
 /*
  * This function run completable if cond is true and pass it complete to set the complete callback, but if cond is false, it just calls the complete callback immediatly
  */

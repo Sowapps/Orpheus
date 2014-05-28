@@ -970,9 +970,9 @@ function htmlPassword($fieldPath, $addAttr='') {
 function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 	echo htmlText($fieldPath, $default, $addAttr, $formatter);
 }
-function htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
+function htmlText($fieldPath, $default='', $addAttr='', $formatter=null, $type='text') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="text" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.'/>';
+	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
@@ -1119,6 +1119,26 @@ function convertSpecialChars($string) {
 */
 function toSlug($string, $case=null) {
 	$string = str_replace(' ', '', ucwords(str_replace('&', 'and',strtolower($string))));
+	if( isset($case) ) {
+		if( bintest($case, CAMELCASE) ) {
+			if( $case == LOWERCAMELCASE ) {
+				$string = lcfirst($string);
+			}
+		}
+	}
+	return convertSpecialChars($string);
+}
+
+//! Converts the string into a slug
+/*!
+ * \param $string The string to convert.
+ * \param $case The case style to use, values: null (default), LOWERCAMELCASE or UPPERCAMELCASE.
+ * \return The slug version.
+ *
+ * Converts string to lower case and converts all special characters. 
+*/
+function slug($string, $case=null) {
+	$string = preg_replace('#[^a-z0-9\-_]#i', '', ucwords(str_replace('&', 'and',strtolower($string))));
 	if( isset($case) ) {
 		if( bintest($case, CAMELCASE) ) {
 			if( $case == LOWERCAMELCASE ) {

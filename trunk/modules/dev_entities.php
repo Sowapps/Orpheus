@@ -9,12 +9,10 @@ define('OUTPUT_DLRAW',		3);
 define('OUTPUT_DLZIP',		4);
 //define('OUTPUT_SQLDOWNLOAD');
 
-$FormToken	= new FormToken();
+$FORM_TOKEN	= new FormToken();
 try {
 if( isPOST('entities') && is_array(POST('entities')) ) {
-	if( !$FormToken->validateForm() ) {
-		throw new UserException('invalidFormToken');
-	}
+	$FORM_TOKEN->validateForm();
 	if( isPOST('submitGenerateSQL') ) {
 		$output		= key(POST('submitGenerateSQL'))==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 		$generator	= new SQLGenerator_MySQL;
@@ -28,7 +26,7 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 		echo '<div>'.$result.'</div>';
 		if( $output==OUTPUT_DISPLAY ) {
 			echo '
-<form method="POST">'.$FormToken;
+<form method="POST">'.$FORM_TOKEN;
 			foreach( POST('entities') as $entityName => $on ) {
 				echo htmlHidden('entities/'.$entityName);
 			}
@@ -73,7 +71,7 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
  */
 ?>
 <form method="POST" role="form" class="form-horizontal">
-<?php echo $FormToken; ?>
+<?php echo $FORM_TOKEN; ?>
 
 <div class="row">
 	<div class="col-lg-6">

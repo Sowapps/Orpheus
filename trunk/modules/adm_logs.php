@@ -2,6 +2,8 @@
 $logs = array(
 	'pdo' => array('label' => t('PDO'), 'file' => LOGSPATH.PDOLOGFILENAME),
 	'sys' => array('label' => t('System'), 'file' => LOGSPATH.SYSLOGFILENAME),
+	'hack' => array('label' => t('HackLogs'), 'file' => LOGSPATH.HACKLOGFILENAME),
+	'server' => array('label' => t('ServerLogs'), 'file' => LOGSPATH.SERVLOGFILENAME),
 	'debug' => array('label' => t('Debug'), 'file' => LOGSPATH.DEBUGFILENAME),
 );
 
