@@ -78,6 +78,8 @@ script, style {
 .w800 {	width: 800px !important; }
 
 .wf {	width: 100% !important; }
+.wh {	width: 50% !important; }
+.wq {	width: 25% !important; }
 
 .h20  {	height: 20px !important; }
 .h25  {	height: 25px !important; }
@@ -91,6 +93,7 @@ script, style {
 .mt40 { margin-top: 40px !important; }
 
 .mr0  { margin-right: 0 !important; }
+.mr5  { margin-right: 5px !important; }
 .mr10 { margin-right: 10px !important; }
 .mr20 { margin-right: 20px !important; }
 
@@ -102,6 +105,7 @@ script, style {
 .mb60 { margin-bottom: 60px !important; }
 
 .ml0   { margin-left: 0 !important; }
+.ml5   { margin-left: 5px !important; }
 .ml10  { margin-left: 10px !important; }
 .ml20  { margin-left: 20px !important; }
 .ml30  { margin-left: 30px !important; }
