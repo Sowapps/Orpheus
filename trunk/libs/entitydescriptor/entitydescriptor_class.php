@@ -31,9 +31,9 @@ class EntityDescriptor {
 				$conf->parent = array($conf->parent);
 			}
 			foreach( $conf->parent as $p ) {
-				$p = static::load($p);
+				$p	= static::load($p);
 				if( !empty($p) ) {
-					$fields = array_merge($fields, $p->getFields());
+					$fields	= array_merge($fields, $p->getFields());
 				}
 			}
 		}
@@ -547,7 +547,9 @@ class TypeEnum extends TypeString {
 		if( !isset($Field->args->source) ) { return; }
 		$values		= call_user_func($Field->args->source, $inputData, $ref);
 		if( isset($values[$value]) ) {
-			$value	= $values[$value];
+			if( is_scalar($values[$value]) ) {
+				$value	= $values[$value];
+			}
 		} else
 		if( !in_array($value, $values) ) {
 			throw new FE('notEnumValue');
