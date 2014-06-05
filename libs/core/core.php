@@ -231,8 +231,8 @@ function log_debug($report, $action='') {
  * Logs a hack attemp.
  * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
 */
-function log_hack($report, $message='') {
-	log_report($report, defined("HACKLOGFILENAME") ? HACKLOGFILENAME : '.hack', '', $message);
+function log_hack($report, $action='', $message=null) {
+	log_report($report, defined("HACKLOGFILENAME") ? HACKLOGFILENAME : '.hack', $action, $message);
 }
 
 //! Logs a system error.
@@ -924,7 +924,7 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 			$optLabel	= bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
 			$optValue	= bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
 		}
-		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), $selValue==$optValue, $addAttr);
+		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), "$selValue"==="$optValue", $addAttr);
 	}
 	return $opts;
 }

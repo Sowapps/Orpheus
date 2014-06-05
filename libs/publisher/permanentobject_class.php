@@ -156,8 +156,17 @@ abstract class PermanentObject {
 	public function update($uInputData, $fields, $noEmptyWarning=true) {
 		$data	= static::checkUserInput($uInputData, $fields, $this);
 		// Don't care about some errors, other fields should be updated.
+		$found	= 0;
+		foreach( $data as $fieldname => $fieldvalue ) {
+			if( in_array($fieldname, static::$fields) ) {
+				$found	= 1;
+				continue;
+			}
+		}
+// 		debug('$data', $data);
 		try {
-			if( empty($data) ) {
+			if( !$found ) {
+// 			if( empty($data) ) {
 				if( !$noEmptyWarning ) {
 					reportWarning('updateEmptyData', static::getDomain());
 				}
@@ -375,6 +384,12 @@ abstract class PermanentObject {
 			$this->setValue($event.'_date', sqlDatetime($log[$event.'_time']));
 		} else {
 			return;
+		}
+		if( in_array($event.'_agent', static::$fields) && isset($_SERVER['HTTP_USER_AGENT']) ) {
+			$this->setValue($event.'_agent', $_SERVER['HTTP_USER_AGENT']);
+		}
+		if( in_array($event.'_referer', static::$fields) && isset($_SERVER['HTTP_REFERER']) ) {
+			$this->setValue($event.'_referer', $_SERVER['HTTP_REFERER']);
 		}
 		try {
 			$this->setValue($event.'_ip', $log[$event.'_ip']);
