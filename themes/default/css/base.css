@@ -122,7 +122,9 @@ script, style {
 .toe { text-overflow: ellipsis !important; overflow: hidden; white-space: nowrap; }
 
 .p0   { padding: 0 !important; }
+.p5   { padding: 5px !important; }
 .p10  { padding: 10px !important; }
+.p15  { padding: 15px !important; }
 .p20  { padding: 20px !important; }
 
 .pt0  { padding-top: 0 !important; }
@@ -197,6 +199,10 @@ script, style {
 */
 
 /* Layouts */
+
+.vlayout {
+	float: left;
+}
 
 .hlayout {
 /* 	width:			100%; incompatible with overflow: auto; (scrollbar appearing) */
