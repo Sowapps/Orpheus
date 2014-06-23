@@ -203,6 +203,18 @@ class User extends AbstractStatus {
 	 */
 	public static function is_login() {
 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
+// 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
+	}
+
+	//! Checks if the client is logged in
+	/*!
+	 * \return True if the current client is logged in.
+	*
+	* Checks if the client is logged in.
+	*/
+	public static function isLogged() {
+		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
+// 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
 	
 	//! Gets ID if user is logged

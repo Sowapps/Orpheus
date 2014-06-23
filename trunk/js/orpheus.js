@@ -18,7 +18,7 @@ var Dialog	= {
 		});
 		if( message ) {
 			dialog.find(".modal-footer").css({"border-top": "", "margin-top": ""});
-			dialog.find(".modal-body").show().html(message)
+			dialog.find(".modal-body").show().html(message);
 		} else {
 			dialog.find(".modal-footer").css({"border-top": "none", "margin-top": "0"});
 			dialog.find(".modal-body").hide();
@@ -337,7 +337,7 @@ if( typeof KeyEvent == "undefined" ) {
 
 /* Orpheus Widget & JS Plugins */
 
-(function ($) {
+(function ($) {// Preserve our jQuery
 	$.each([["show", "shown", function() { return $(this).is(":visible"); }], ["hide", "hidden", function() { return $(this).is(":hidden"); }]], function (i, ev) {
 		var fun	= $.fn[ev[0]];
 		$.fn[ev[0]]	= function () {
@@ -352,12 +352,8 @@ if( typeof KeyEvent == "undefined" ) {
 			children.trigger(ev[1]);
 			return r;
 		};
-//		if( ev.length>2 ) {
-//			if( ev[2]() ) {
-//				this.trigger(ev[1]);
-//			}
-//		}
 	});
+	// Call when element is shown
 	$.fn.shown = function(callback) {
 		$(this).bind("shown", callback);
 		if( $(this).is(":visible") ) {
@@ -366,7 +362,7 @@ if( typeof KeyEvent == "undefined" ) {
 //			$(this).trigger("shown");
 		}
 	};
-
+	// Scroll to element
 	$.fn.scrollTo = function(option, event) {
 		if( !option ) {
 			option = "center";
@@ -384,7 +380,7 @@ if( typeof KeyEvent == "undefined" ) {
 		}
 		$(window).scrollLeft(elOffset.left + elWidth/2 - viewportWidth/2);
 	};
-
+	// Apply on load and on change
 	$.fn.watch	= function(cb, sel) {
 		sel ? $(this).on("change", sel, cb) : $(this).change(cb);
 		$(this).each(function() {
@@ -402,25 +398,21 @@ if( typeof KeyEvent == "undefined" ) {
 			}
 		});
 	};
-})(jQuery);
 
-//$.fn.refreshAutocompletes = function() {
-$(function() {
-	$("input.autocomplete.auto").shown(function() {
-//		debug("Shown");
-//		debug(this);
-	//$("input.autocomplete.auto").each(function() {
-		if( $(this).data("autocomplete-auto") ) { return; }
-		$(this).data("autocomplete-auto", 1);
-		var _	= $(this);
-		_.autocomplete({
-			minLength:	2,
-			source:		function(request, response) {
-				var query = _.data("query") ? "&"+_.data("query") : "";
-				// Targetting the autocomplete itself
-				requestAutocomplete(_.data('what'), request.term+query, response, _.data("label"));
-			}
+	$(function() {
+		$("input.autocomplete.auto").shown(function() {
+			if( $(this).data("autocomplete-auto") ) { return; }
+			$(this).data("autocomplete-auto", 1);
+			var _	= $(this);
+			_.autocomplete({
+				minLength:	2,
+				source:		function(request, response) {
+					var query = _.data("query") ? "&"+_.data("query") : "";
+					// Targetting the autocomplete itself
+					requestAutocomplete(_.data('what'), request.term+query, response, _.data("label"));
+				}
+			});
 		});
 	});
-});
+})(jQuery);
 //};

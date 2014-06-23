@@ -25,7 +25,7 @@ class FieldDescriptor {
 	}
 	
 	public function arg($key) {
-		return $this->args->$key;
+		return isset($this->args->$key) ? $this->args->$key : null;
 	}
 	
 	public function getHTMLInputAttr() {

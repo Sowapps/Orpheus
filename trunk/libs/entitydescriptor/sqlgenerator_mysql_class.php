@@ -86,14 +86,14 @@ class SQLGenerator_MySQL {
 	}
 	
 	public function matchEntity($ed) {
-		if( $columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
+		try {
+			$columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR);
 			// Fields
-			$fields = $ed->getFields();
-			$alter = '';
+			$fields	= $ed->getFields();
+			$alter	= '';
 			foreach( $columns as $cc ) {
-				$cc = (object) $cc;
-				$cf = array(
-					'name'=>$cc->Field, 'type'=>strtoupper($cc->Type), 'nullable'=>$cc->Null=='YES',
+				$cc	= (object) $cc;
+				$cf = array( 'name'=>$cc->Field, 'type'=>strtoupper($cc->Type), 'nullable'=>$cc->Null=='YES',
 					'primaryKey'=>$cc->Key=='PRI', 'autoIncrement'=>strpos($cc->Extra, 'auto_increment')!==false);
 				if( isset($fields[$cf['name']]) ) {
 					$f = $this->getColumnInfosFromField($fields[$cf['name']]);
@@ -112,11 +112,12 @@ class SQLGenerator_MySQL {
 			}
 			unset($fields, $f, $cc, $cf, $columns);
 			// Indexes
-			if( $rawIndexes=pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR) ) {
+			try {
+				$rawIndexes	= pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR);
 				// 			text('Indexes of '.$ed->getName());
 				// 			text($rawIndexes);
-				$indexes = $ed->getIndexes();
-				$cIndexes = array();
+				$indexes	= $ed->getIndexes();
+				$cIndexes	= array();
 				foreach( $rawIndexes as $ci ) {
 					$ci = (object) $ci;
 					if( $ci->Key_name=='PRIMARY' ) { continue; }
@@ -149,13 +150,14 @@ class SQLGenerator_MySQL {
 				foreach( $indexes as $i ) {
 					$alter .= (!empty($alter) ? ", \n" : '')."\t ADD ".$this->getIndexDefinition($i);
 				}
-			}
-			if( empty($alter) ) {
+			} catch( PDOException $e ) {
 				return null;
 			}
+			if( empty($alter) ) { return null; }
 			return '<div class="table-operation table-alter">ALTER TABLE <div class="table-name">'.SQLAdapter::doEscapeIdentifier($ed->getName())."</div>\n{$alter};</div>";
+		} catch( PDOException $e ) {
+			return $this->getCreate($ed);
 		}
-		return $this->getCreate($ed);
 	}
 	
 	public function getCreate($ed) {

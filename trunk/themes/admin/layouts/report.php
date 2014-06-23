@@ -1,13 +1,11 @@
-	<div class="fatalerror report report_global error">
-		An error has occurred, here is more informations:<br />
-		Action: <?php echo $action; ?><br />
-		Date: <?php echo $date; ?><br />
-		Report: <?php echo $report; ?><br />
-		<?php
-		if( !empty($message) ) { echo 'Message: '.$message.'<br />'; }
-		?>
-		Set the ERROR_LEVEL constant value to PROD_LEVEL in your constant file if you don't want to display errors.<br />
-		Error reports are saved in logs in both cases.<br />
-		Page: <button type="button" onclick="$(this).next().toggle(); return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
-		<br />
-	</div>
+<?php
+$icons	= array(
+	'success'	=> 'fa-check-circle-o',
+	'error'		=> 'fa-exclamation-triangle'
+);
+// text(get_defined_vars());
+?>
+<div class="report report_<?php echo $Stream; ?> <?php echo $Type; ?>">
+	<?php echo isset($icons[$Type]) ? '<i class="fa '.$icons[$Type].'"></i>' : ''; ?>
+	<div class="report-text"><?php echo $Report; ?></div>
+</div>
