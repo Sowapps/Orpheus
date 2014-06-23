@@ -12,9 +12,11 @@ define('OUTPUT_DLZIP',		4);
 $FORM_TOKEN	= new FormToken();
 try {
 if( isPOST('entities') && is_array(POST('entities')) ) {
-	$FORM_TOKEN->validateForm();
 	if( isPOST('submitGenerateSQL') ) {
 		$output		= key(POST('submitGenerateSQL'))==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+		if( $output==OUTPUT_APPLY ) {
+			$FORM_TOKEN->validateForm();
+		}
 		$generator	= new SQLGenerator_MySQL;
 		$result		= '';
 		foreach( POST('entities') as $entityName => $on ) {
@@ -65,11 +67,10 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 } catch( UserException $e ) {
 	reportError($e);
 }
-/*
-
-		<p>This tool allows you to generate SQL source for MySQL.</p>
- */
 ?>
+<div class="mt10">
+	<a href="<?php _u('dev_entities_merge'); ?>">Merge tool</a>
+</div>
 <form method="POST" role="form" class="form-horizontal">
 <?php echo $FORM_TOKEN; ?>
 
@@ -78,13 +79,15 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 		<h2>Entities found</h2>
 		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);">Check all</button>
 		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);">Uncheck all</button>
-		<?php 
-		$entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
-		foreach( $entities as $filename ) {
-			$pi = pathinfo($filename);
-			if( $pi['extension'] != 'yaml' ) { continue; }
+		
+		<div class="row">
+		<?php
+// 		$entities = cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
+		foreach( EntityDescriptor::getAllEntities() as $entity ) {
+// 			$pi = pathinfo($filename);
+// 			if( $pi['extension'] != 'yaml' ) { continue; }
 			echo '
-		<div class="checkbox"><label><input class="entitycb" type="checkbox" name="entities['.$pi['filename'].']"'.(!isPOST() || isPOST('entities/'.$pi['filename']) ? ' checked' : '').'/> '.$pi['filename'].'</label></div>';
+		<div class="checkbox col-sm-4"><label><input class="entitycb" type="checkbox" name="entities['.$entity.']"'.(!isPOST() || isPOST('entities/'.$entity) ? ' checked' : '').'/> '.$entity.'</label></div>';
 		}
 		/*
 			<label class="col-sm-4 control-label">SQL</label>
@@ -94,6 +97,7 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 			</select></div>
 			*/
 		?>
+		</div>
 		
 		<div class="row form-group">
 			<label class="col-sm-4 control-label">SQL</label>

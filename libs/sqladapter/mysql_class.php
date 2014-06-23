@@ -65,15 +65,16 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No selection');
 		}
-		$WHAT		= ( is_array($options['what']) ) ? implode(', ', $options['what']) : $options['what'];
-		$WC			= ( !empty($options['where']) ) ? 'WHERE '.$options['where'] : '';
-		$ORDERBY	= ( !empty($options['orderby']) ) ? 'ORDER BY '.$options['orderby'] : '';
-		$LIMIT		= ( $options['number'] > 0 ) ? 'LIMIT '.
-				( ($options['offset'] > 0) ? $options['offset'].', ' : '' ).$options['number'] : '';
+		$WHAT		= is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
+		$WC			= !empty($options['where']) ? 'WHERE '.$options['where'] : '';
+		$GROUPBY	= !empty($options['groupby']) ? 'GROUP BY '.$options['groupby'] : '';
+		$ORDERBY	= !empty($options['orderby']) ? 'ORDER BY '.$options['orderby'] : '';
+		$LIMIT		= $options['number'] > 0 ? 'LIMIT '.
+				( $options['offset'] > 0 ? $options['offset'].', ' : '' ).$options['number'] : '';
 		$TABLE		= static::escapeIdentifier($options['table']);
 		$JOIN		= $options['join'];
 		
-		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$GROUPBY} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}

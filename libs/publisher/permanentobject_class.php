@@ -119,9 +119,10 @@ abstract class PermanentObject {
 	*/
 	public function __toString() {
 		try {
-			return '#'.$this->{static::$IDFIELD}.' ('.get_class($this).')';
+			return static::getClass().'#'.$this->{static::$IDFIELD};
+// 			return '#'.$this->{static::$IDFIELD}.' ('.get_class($this).')';
 		} catch( Exception $e ) {
-			log_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__toString()');
+			log_error($e->getMessage()."<br />\n".$e->getTraceAsString(), 'PermanentObject::__toString()', false);
 		}
 	}
 	
@@ -153,8 +154,8 @@ abstract class PermanentObject {
 	 * Before saving, runForUpdate() is called to let child classes to run custom instructions.
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
-	public function update($uInputData, $fields, $noEmptyWarning=true) {
-		$data	= static::checkUserInput($uInputData, $fields, $this);
+	public function update($uInputData, $fields, $noEmptyWarning=true, &$errCount=0, &$successCount=0) {
+		$data	= static::checkUserInput($uInputData, $fields, $this, $errCount);
 		// Don't care about some errors, other fields should be updated.
 		$found	= 0;
 		foreach( $data as $fieldname => $fieldvalue ) {
@@ -182,6 +183,7 @@ abstract class PermanentObject {
 // 			if( static::isFieldEditable($fieldname) ) {
 // 				text('Set value of '.$fieldname.' to '.($fieldvalue === NULL ? 'NULL' : (is_bool($fieldvalue) ? b($fieldvalue) : $fieldvalue)));
 				$this->setValue($fieldname, $fieldvalue);
+				$successCount++;
 			}
 		}
 		static::logEvent('edit');
@@ -220,9 +222,9 @@ abstract class PermanentObject {
 				$updQ .= ( (!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.static::formatValue($this->$fieldname);
 			}
 		}
-		$IDFIELD=static::$IDFIELD;
-		$this->modFields = array();
-		$options = array(
+		$IDFIELD	= static::$IDFIELD;
+		$this->modFields	= array();
+		$options	= array(
 			'what'	=> $updQ,
 			'table'	=> static::$table,
 			'where'	=> "{$IDFIELD}={$this->{$IDFIELD}}",
@@ -232,6 +234,7 @@ abstract class PermanentObject {
 	}
 	
 	public function remove() {
+		if( $this->isDeleted() ) { return; }
 		return static::delete($this->id());
 	}
 	
@@ -449,7 +452,7 @@ abstract class PermanentObject {
 		if( empty($data) ) {
 			// Getting data
 			$obj = static::get(array(
-				'where'	=> "{$IDFIELD}={$id}",
+				'where'	=> $IDFIELD.'='.$id,
 				'output'=> SQLAdapter::OBJECT,
 			));
 			// Ho no, we don't have the data, we can't load the object !
@@ -476,13 +479,11 @@ abstract class PermanentObject {
 	 * We advise you to use only one class of one item row or to use it read-only.
 	*/
 	public static function delete($in) {
-		
 		if( is_array($in) ) {
 			$in['table'] = static::$table;
 			return SQLAdapter::doDelete($in, static::$DBInstance, static::$IDFIELD);
 		}
-		
-		if( !ctype_digit("$in") ) {
+		if( !is_id($in) ) {
 			static::throwException('invalidID');
 		}
 		if( isset(static::$instances[static::getClass()][$in]) ) {
@@ -490,11 +491,11 @@ abstract class PermanentObject {
 			$obj = &static::$instances[static::getClass()][$in];
 			if( $obj->isDeleted() ) { return 1; }
 		}
-		$IDFIELD=static::$IDFIELD;
-		$options = array(
-			'table'	=> static::$table,
-			'number'=> 1,
-			'where'	=> "{$IDFIELD}={$in}",
+		$IDFIELD	= static::$IDFIELD;
+		$options	= array(
+			'table'		=> static::$table,
+			'number'	=> 1,
+			'where'		=> "{$IDFIELD}={$in}",
 		);
 		$r = SQLAdapter::doDelete($options, static::$DBInstance, static::$IDFIELD);
 		if( $r ) {
@@ -504,6 +505,19 @@ abstract class PermanentObject {
 			static::runForDeletion($in);
 		}
 		return $r;
+	}
+	
+	/**
+	 * Removes deleted instances
+	 */
+	public static function clearInstances() {
+		if( !isset(static::$instances[static::getClass()]) ) { return; }
+		$instances	= &static::$instances[static::getClass()];
+		foreach( $instances as $id => $obj ) {
+			if( $obj->isDeleted() ) {
+				unset($instances[$id]);
+			}
+		}
 	}
 	
 	//! Escape identifier through instance
@@ -602,11 +616,9 @@ abstract class PermanentObject {
 	 * Creates a new permanent object from ths input data.
 	 * When really creating an object, we expect that it is valid, else we throw an exception.
 	*/
-// 	public static function create($inputData=array(), $fields=null, &$errCount=0) {
-	public static function create($inputData=array(), $fields=null) {
+	public static function create($inputData=array(), $fields=null, &$errCount=0) {
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
 		if( $errCount ) {
-// 			return 0;
 			static::throwException('errorCreateChecking');
 		}
 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
@@ -842,13 +854,15 @@ abstract class PermanentObject {
 	*/
 	public static function testUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data = static::checkUserInput($uInputData, $fields, $ref, $errCount);
-		if( $errCount ) { return; }
+		if( $errCount ) { return false; }
 		try {
 			static::checkForObject($data, $ref);
 		} catch(UserException $e) {
 			$errCount++;
 			reportError($e, static::getDomain());
+			return false;
 		}
+		return true;
 	}
 	
 	//! Initializes class
@@ -877,6 +891,16 @@ abstract class PermanentObject {
 	*/
 	public static function throwException($message) {
 		throw new UserException($message, static::$domain);
+	}
+	
+	//! Translates text according to the object domain
+	/*!
+	 * \param $text The text to translate
+	 * 
+	 * Translates text according to the object domain
+	*/
+	public static function text($text) {
+		return t($text, static::$domain);
 	}
 	
 	//! Reports an UserException

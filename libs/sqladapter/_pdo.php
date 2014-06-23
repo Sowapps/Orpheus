@@ -82,86 +82,75 @@ function ensure_pdoinstance($Instance=null) {
 	
 	// Loading instance
 	$InstSettings = $DBS[$Instance];
-	
-	//If There is no driver given, it is an error.
-	if( empty($InstSettings['driver']) ) {
-		pdo_error('Database setting "driver" should have the driver name (not empty)', 'Driver Definition');
-		
-	//If driver is mysql
-	} else if( $InstSettings['driver'] == 'mysql' ) {
-		//If Instance does not exist yet, it is not connected, we create it & link it.
-		if( empty($pdoInstances[$Instance]) ) {
-			$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-			}
-			try {
+
+	try {
+		//If There is no driver given, it is an error.
+		if( empty($InstSettings['driver']) ) {
+			pdo_error('Database setting "driver" should have the driver name (not empty)', 'Driver Definition');
+			
+		//If driver is mysql
+		} else if( $InstSettings['driver'] == 'mysql' ) {
+			//If Instance does not exist yet, it is not connected, we create it & link it.
+			if( empty($pdoInstances[$Instance]) ) {
+				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
+				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
+				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
+				if( empty($InstSettings["dbname"]) ) {
+					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				}
 				$pdoInstances[$Instance] = new PDO(
 					"mysql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"],
 					array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", PDO::MYSQL_ATTR_DIRECT_QUERY=>true)
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			} catch (PDOException $e) {
-				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
 			}
-		}
-		
-	//If driver is mssql
-	} else if( $InstSettings['driver'] == 'mssql' ) {
-		//If Instance does not exist yet, it is not connected, we create it & link it.
-		if( empty($pdoInstances[$Instance]) ) {
-			$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-			}
-			try {
+			
+		//If driver is mssql
+		} else if( $InstSettings['driver'] == 'mssql' ) {
+			//If Instance does not exist yet, it is not connected, we create it & link it.
+			if( empty($pdoInstances[$Instance]) ) {
+				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
+				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
+				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
+				if( empty($InstSettings["dbname"]) ) {
+					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				}
 				$pdoInstances[$Instance] = new PDO(
 					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			} catch (PDOException $e) {
-				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
 			}
-		}
-		
-	} else if( $InstSettings['driver'] == 'pgsql' ) {
-		//If Instance does not exist yet, it is not connected, we create it & link it.
-		if( empty($pdoInstances[$Instance]) ) {
-			$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-			$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-			$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-			if( empty($InstSettings["dbname"]) ) {
-				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-			}
-			try {
+			
+		} else if( $InstSettings['driver'] == 'pgsql' ) {
+			//If Instance does not exist yet, it is not connected, we create it & link it.
+			if( empty($pdoInstances[$Instance]) ) {
+				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
+				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
+				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
+				if( empty($InstSettings["dbname"]) ) {
+					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
+				}
 				$pdoInstances[$Instance] = new PDO(
 					"pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};password={$InstSettings["passwd"]}"
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			} catch (PDOException $e) {
-				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
 			}
-		}
-		
-	} else if( $InstSettings['driver'] == 'sqlite' ) {
-		//If Instance does not exist yet, it is not connected, we create it & link it.
-		if( empty($pdoInstances[$Instance]) ) {
-			$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
-			try {
+			
+		} else if( $InstSettings['driver'] == 'sqlite' ) {
+			//If Instance does not exist yet, it is not connected, we create it & link it.
+			if( empty($pdoInstances[$Instance]) ) {
+				$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
 				$pdoInstances[$Instance] = new PDO(
 					"sqlite:{$InstSettings["path"]}"
 				);
 				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			} catch (PDOException $e) {
-				pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
 			}
 		}
+	} catch( PDOException $e ) {
+		pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
+		throw $e;
 	}
 	return $Instance;
 }
@@ -187,18 +176,18 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	if( in_array($InstSettings['driver'], array('mysql', 'mssql', 'pgsql', 'sqlite')) ) {
 
 		try {
-			$ERR_ACTION = 'BINTEST';
+			$ERR_ACTION	= 'BINTEST';
 			if( bintest($Fetch, PDOEXEC) ) {// Exec
-				$ERR_ACTION = 'EXEC';
+				$ERR_ACTION	= 'EXEC';
 				return $pdoInstance->exec($Query);
 			}
-			$ERR_ACTION = 'QUERY';
-			$PDOSQuery = $pdoInstance->query($Query);
+			$ERR_ACTION	= 'QUERY';
+			$PDOSQuery	= $pdoInstance->query($Query);
 			if( bintest($Fetch, PDOSTMT) ) {
 				return $PDOSQuery;
 			
 			} else if( bintest($Fetch, PDOFETCHALL) ) {
-				$ERR_ACTION = 'FETCHALL';
+				$ERR_ACTION	= 'FETCHALL';
 				if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
 					$returnValue = $PDOSQuery->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_COLUMN, 0);
 				} else {
@@ -206,7 +195,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 				}
 				
 			} else if( bintest($Fetch, PDOFETCH) ) {
-				$ERR_ACTION = 'FETCH';
+				$ERR_ACTION	= 'FETCH';
 				if( bintest($Fetch, PDOFETCHFIRSTCOL) ) {
 					$returnValue = $PDOSQuery->fetchColumn(0);
 				} else {
@@ -219,6 +208,7 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 			return $returnValue;
 		} catch( PDOException $e ) {
 			pdo_error($ERR_ACTION.' ERROR: '.$e->getMessage(), 'Query: '.$Query, $Fetch);
+			throw $e;
 			return false;
 		}
 	}
@@ -249,19 +239,8 @@ function pdo_lastInsertId($Instance=null) {
 	Saves the error report $PDOReport in the log file and exit script.
 */
 function pdo_error($PDOReport, $Action='', $Fetch=0) {
-	if( bintest($Fetch, PDOERROR_MINOR) ) {
-		return;
-	}
-	// Let's system manage this error (> R400)
-	if( function_exists('sql_error') ) {
-		sql_error($PDOReport, $Action);
-		return;
-	}
-	// Manage error by myself (compatibility with olds version)
-	$Error = array("date" => date('c'), "report" => $PDOReport, "action" => $Action);
-	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').( (defined("PDOLOGFILENAME")) ? PDOLOGFILENAME : '.pdo_error');
-	file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
-	die("An error has occured with the database, retry later please.");
+	if( bintest($Fetch, PDOERROR_MINOR) ) { return; }
+	sql_error($PDOReport, $Action);
 }
 
 //! Quotes and Escapes

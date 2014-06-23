@@ -5,7 +5,7 @@
  * \author Florent Hazard
  * \copyright The MIT License, see LICENSE.txt
  * 
- * PHP File for the website core.
+ * Website core.
  */
 
 if( isset($SRCPATHS) ) {
@@ -76,8 +76,8 @@ function($errno, $errstr, $errfile, $errline ) {
 register_shutdown_function(
 //! Shutdown Handler
 /*!
- System function to handle PHP shutdown and catch uncaught errors.
- */
+	System function to handle PHP shutdown and catch uncaught errors.
+*/
 function() {
 	if( $error = error_get_last() ) {
 		if( ERROR_LEVEL == DEV_LEVEL ) {
@@ -87,7 +87,7 @@ function() {
 		}
 		if( !function_exists('log_error') ) {
 			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />
-PAGE:<br /><div style="clear: both;">'.$Page.'</div>'.(ERROR_LEVEL == DEV_LEVEL ? '<br />Reported in '.__FILE__.' : '.__LINE : '') : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+PAGE:<br /><div style="clear: both;">'.$Page.'</div><br />Reported in '.__FILE__.' : '.__LINE : '' : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 		}
 		log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
 	}
@@ -147,7 +147,7 @@ function($className) {
 					return;
 				}
 			}
-			throw new Exception("Bad use of Autoloads. Please use addAutoload().");
+			throw new Exception('Wrong use of Autoloads. Please use addAutoload().');
 			
 		// NOT USED, PREFER ADDAUTOLOAD()
 // 		// If the class file is directly in the libs directory
@@ -192,6 +192,8 @@ try {
 	includePath(CONFDIR);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
+	
+	$RENDERING	= Config::get('default_rendering');
 	
 	includePath(LIBSDIR);// Require some hooks.
 	
@@ -266,25 +268,26 @@ try {
 	require_once pathOf(MODDIR.$Module.'.php');
 	
 	// Terminate all layout
-	while(Rendering::endCurrentLayout());
+	while($RENDERING::endCurrentLayout());
+// 	while(Rendering::endCurrentLayout());
 	
 	$Page = ob_get_contents();// Review usage
 	// Future feature ? Need to place it somewhere smartly
 // 	$Page = Hook::trigger('endModule', false, $Page, $Module);
 	ob_end_clean();
 	
-} catch(UserException $e) {
+} catch( UserException $e ) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		ob_end_clean();
 	}
 	reportError($e);
 	$Page = getReportsHTML();
 	
-} catch(Exception $e) {
+} catch( Exception $e ) {
 	if( !function_exists('log_error') ) {
-		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
+		die($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>');
 	}
-	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+	log_error($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
 	
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		$Page = ob_get_contents();
@@ -297,13 +300,15 @@ try {
 	if( class_exists('Hook') ) {
 		Hook::trigger('showRendering', true);
 	}
-	if( class_exists('Rendering') ) {
-		Rendering::doShow();//Generic final display.
+	if( class_exists($RENDERING) ) {
+		$RENDERING::doShow();//Generic final display.
+// 	if( class_exists('Rendering') ) {
+// 		Rendering::doShow();//Generic final display.
 	} else {
 		echo $Page;
 	}
 	
 } catch(Exception $e) {
-	@log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+	@log_error($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
 // 	die('A fatal display error occured.');
 }

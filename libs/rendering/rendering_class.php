@@ -57,7 +57,7 @@ abstract class Rendering {
 		if( $active!==NULL ) {
 			list($actModule, $actAction) = explodeList('-', $active, 2);
 		} else {
-			$actModule	= &$GLOBALS['Module'];
+			$actModule	= !empty($GLOBALS['MenuModule']) ? $GLOBALS['MenuModule'] : $GLOBALS['Module'];
 			$actAction	= &$GLOBALS['Action'];
 		}
 		
@@ -159,7 +159,7 @@ abstract class Rendering {
 	 * Checks the rendering and try to create a valid one.
 	 */
 	final private static function checkRendering() {
-		if( is_null(self::$rendering) ) {
+		if( self::$rendering===NULL ) {
 			if( class_exists('Config') ) {
 				$c = Config::get('default_rendering');
 			}
@@ -188,28 +188,19 @@ abstract class Rendering {
 	 * http://www.php.net/manual/en/function.ob-start.php#refsect1-function.ob-start-parameters
 	 */
 	public static function useLayout($layout) {
-		if( is_null(static::$layoutStack) ) {
+		if( static::$layoutStack===NULL ) {
 			static::$layoutStack = array();
-
-// // 			Hook::register('checkModule', function($module, $content) {});
 		}
-
 		static::$layoutStack[] = $layout;
 		ob_start();
-		// Does not work, we can not start output buffer in this callback
-// 		ob_start(function($content) use($layout) {
-// 			$env = $GLOBALS;
-// 			$env['Content'] = $content;
-// 			return static::doRender($layout, $env);
-// 		});
 	}
 	
 	public static function endCurrentLayout() {
 // 		text(__FILE__.':'.__LINE__);
 		if( ob_get_level() < OBLEVEL_INIT+1 || empty(static::$layoutStack) ) { return false; }
 // 		text(__FILE__.':'.__LINE__);
-		$env = $GLOBALS;
-		$env['Content'] = ob_get_clean();
+		$env	= $GLOBALS;
+		$env['Content']	= ob_get_clean();
 // 		$env['Content'] = ob_get_flush();// Returns and displays
 // 		text(__FILE__.':'.__LINE__);
 		static::doDisplay(array_pop(static::$layoutStack), $env);

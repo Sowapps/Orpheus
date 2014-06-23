@@ -36,7 +36,23 @@ class HTMLRendering extends Rendering {
 		}
 		extract($env, EXTR_SKIP);
 		
-		include static::getModelsPath().$model.'.php';
+		include static::getModelPath($model);
+	}
+	
+	public static function getModelPath($model) {
+		return static::getModelsPath().$model.'.php';
+	}
+	
+	public static function renderReport($report, $type, $stream) {
+		$report	= nl2br($report);
+		if( file_exists(static::getModelPath('report-'.$type)) ) {
+			return static::doRender('report-'.$type, array('Report'=>$report, 'Type'=>$type, 'Stream'=>$stream));
+		}
+		if( file_exists(static::getModelPath('report')) ) {
+			return static::doRender('report', array('Report'=>$report, 'Type'=>$type, 'Stream'=>$stream));
+		}
+		return '
+		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
 	}
 	
 	public static function addCSSFile($filename) {
@@ -65,6 +81,16 @@ class HTMLRendering extends Rendering {
 	*/
 	public static function getThemePath() {
 		return THEMESDIR.static::$theme.'/';
+	}
+	
+	//! Gets the absolute theme path.
+	/*!
+		\return The theme path.
+		
+		Gets the absolute path to the current theme.
+	*/
+	public static function getAbsThemePath() {
+		return pathOf(static::getThemePath());
 	}
 	
 	//! Gets the models theme path.
