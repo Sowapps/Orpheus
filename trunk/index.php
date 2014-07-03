@@ -231,22 +231,25 @@ try {
 		$NO_EXCEPTION = 0;
 	}
 	
-	Hook::trigger('checkModule');
-	
 	$Module = GET('module');
 	
 	if( empty($Module) ) {
 // 		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;
 		$Module = DEFAULTMOD;
 	}
+	$RequestedModule	= $Module;
+	
+	Hook::trigger('checkModule');
 	
 	if( empty($Module) || !is_name($Module) ) {
 		header("HTTP/1.1 400 Bad Request");
-		throw new UserException('invalidModuleName');
+		$CODE	= 400; $Module = 'http_error';
+// 		throw new UserException('invalidModuleName');
 	}
 	if( !existsPathOf(MODDIR.$Module.'.php') ) {
 		header("HTTP/1.1 404 Not Found");
-		throw new UserException('inexistantModule');
+		$CODE	= 404; $Module = 'http_error';
+// 		throw new UserException('inexistantModule');
 	}
 	
 	$allowedFormats = Config::get('module_formats');
@@ -260,9 +263,10 @@ try {
 	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
 	
 	$coreAction = 'running_'.$Module;
-	$Module = Hook::trigger('runModule', false, $Module);
+	Hook::trigger(HOOK_RUNMODULE, false, $Module);
 	
 	define('OBLEVEL_INIT', ob_get_level());
+// 	text('Running module '.$Module.' / '.$GLOBALS['Module']);
 	ob_start();
 	
 	require_once pathOf(MODDIR.$Module.'.php');

@@ -4,7 +4,7 @@ using('entitydescriptor.entitydescriptor');
 $FORM_TOKEN	= new FormToken();
 
 try {
-	debug('POST()', POST());
+// 	debug('POST()', POST());
 // 	isPOST() && $FORM_TOKEN->validateForm();
 	if( isPOST('submitAnalyze') ) {
 // 		$entity	= POST('merge/entity');
@@ -29,11 +29,11 @@ try {
 				$row	= $entityClass::load($rowID);
 				foreach( $fields as $field => $val ) {
 					if( !$val ) {
-						debug('Remove row', $row);
+// 						debug('Remove row', $row);
 // 						$row->remove();
 						break;
 					}
-					text($row->getEntity().'#'.$row->id().' - '.$field.' => '.$to->id());
+// 					text($row->getEntity().'#'.$row->id().' - '.$field.' => '.$to->id());
 					$row->{$field} = $to->id();
 				}
 				$row->save();// Check if valid
@@ -43,7 +43,7 @@ try {
 		transfer['.$entity.']['.$fromRow->id().']['.$rfields['id'].']" type="hidden" value="0"/>
 		<input name="transfer['.$entity.']['.$fromRow->id().']['.$rfields['id'].']
 		*/
-		debug('Remove from', $from);
+// 		debug('Remove from', $from);
 		reportSuccess('successEntityMerge');
 		$from->remove();
 	}

@@ -16,6 +16,8 @@ global $USER_CLASS;
 $USER_CLASS = USER_CLASS;
 
 // Hooks
+define('HOOK_ACCESSDENIED', 	'accessDenied');
+Hook::create(HOOK_ACCESSDENIED);
 
 //! Hook 'checkModule'
 Hook::register('checkModule', function () {
@@ -36,12 +38,18 @@ Hook::register('checkModule', function () {
 
 //! Hook 'runModule'
 Hook::register('runModule', function () {
-	global $USER_CLASS;
+	global $USER_CLASS, $Module;
 	// If user can not access to this module, we redirect him to default but if default is forbidden, we can not redirect indefinitely.
 	// User should always access to default, even if it redirects him to another module.
-	if( !$USER_CLASS::canAccess($GLOBALS['Module']) && DEFAULTMOD != $GLOBALS['Module'] ) {
-		//log_debug(__FILE__.'('.__LINE__.'): Redirecting to default');
-		redirectTo(( defined('ACCESSDENIEDMOD') ) ? u(ACCESSDENIEDMOD) : u(DEFAULTMOD));
+	if( !$USER_CLASS::canAccess($Module) && DEFAULTMOD != $Module ) {
+		$module	= $Module;
+		// If the trigger returns null, 0, '' or false (false equality), it redirects the user if the module has not changed during trigger process
+		// If the trigger returns true, 1 or a value, it cancels the redirects
+		// This allows the dev to override the authentication, but it allows to use another limitation, like in page authentication or error message
+		if( !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module==$Module ) {
+			redirectTo(u(defined('ACCESSDENIEDMOD') ? ACCESSDENIEDMOD : DEFAULTMOD));
+		}
+// 		text('Run module hook ending with mod '.$GLOBALS['Module']);
 	}
 });
 

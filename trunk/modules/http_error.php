@@ -2,7 +2,9 @@
 if( !isset($_SERVER['REDIRECT_STATUS']) ) {
 	redirectToHome();
 }
-$CODE	= $_SERVER['REDIRECT_STATUS'];
+if( !isset($CODE) ) {
+	$CODE	= $_SERVER['REDIRECT_STATUS'];
+}
 $TCODE	= $CODE==404 ? $CODE : 'other';
 
 log_report('HTTP Error : '.$CODE.' for URI "'.$_SERVER['REQUEST_URI'].'" 
