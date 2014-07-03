@@ -138,6 +138,16 @@ abstract class PermanentObject {
 		return $this->getValue(static::$IDFIELD);
 	}
 	
+	//! Gets this permanent object's unique ID
+	/*!
+	 * \return The uid of this object.
+	 * 
+	 * Gets this object ID according to the table and id.
+	 */
+	public function uid() {
+		return $this->getTable().'#'.$this->id();
+	}
+	
 	//! Updates this permanent object
 	/*!
 	 * \param $uInputData The input data we will check and extract, used by children.
@@ -643,6 +653,10 @@ abstract class PermanentObject {
 		// To do after insertion
 		static::applyToObject($data, $LastInsert);
 		return $LastInsert;
+	}
+	
+	public static function createAndGet($inputData=array(), $fields=null, &$errCount=0) {
+		return static::load(static::create($inputData, $fields, $errCount));
 	}
 	
 	//! Completes missing fields

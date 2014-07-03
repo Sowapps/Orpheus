@@ -132,26 +132,26 @@ String.prototype.capitalize = function () {
 Date.prototype.getFullDay = function() {
 	return ""+this.getFullYear()+leadZero(this.getMonth())+leadZero(this.getDate());
 };
-
-$.fn.disableFields = function() {
-	return $(this).find(':input').prop("disabled", true);
-};
-$.fn.enableFields = function() {
-	return $(this).find(':input').prop("disabled", false);
-};
+var pageScrolled;
+function PageScrollTo(sel, paddingTop) {
+//	console.log("PageScrollTo()", sel);
+	if( pageScrolled ) { return; }
+	sel	= $(sel).first();
+	if( !sel.length ) { return; }
+//	debug("Go scroll");
+	pageScrolled=1;
+	if( paddingTop === undefined ) {
+		paddingTop	= 10;
+	}
+	var offset = $(sel).offset();
+	if( offset && offset.top ) {
+		var to = offset.top - paddingTop;
+	 	$("html").scrollTop(to);// Firefox 
+	 	$("body").animate({scrollTop: to}, 0);// Chrome, Safari 
+	}
+}
 
 /*
- * This function run completable if cond is true and pass it complete to set the complete callback, but if cond is false, it just calls the complete callback immediatly
- */
-$.fn.cond = function(cond, completable, complete) {
-	this.completable	= completable;
-	this.complete		= complete;
-	if( cond && ( cond == "boolean" || (cond instanceof jQuery && cond.length) ) ) {
-		return this.completable(this.complete);
-	}
-	return this.complete();
-};
-$.cond = $.fn.cond;
 //$.cond = function(cond, completable, complete) {
 //	$(window).cond(cond, completable, complete);
 //};
@@ -193,6 +193,7 @@ $.fn.pressEnter = function(cb) {
 		}
 	});
 };
+*/
 
 function centerInViewport(el) {
 	el = $(el);
@@ -338,6 +339,27 @@ if( typeof KeyEvent == "undefined" ) {
 /* Orpheus Widget & JS Plugins */
 
 (function ($) {// Preserve our jQuery
+
+	$.fn.disableFields = function() {
+		return $(this).find(':input').prop("disabled", true);
+	};
+	$.fn.enableFields = function() {
+		return $(this).find(':input').prop("disabled", false);
+	};
+
+	/*
+	 * This function run completable if cond is true and pass it complete to set the complete callback, but if cond is false, it just calls the complete callback immediatly
+	 */
+	$.fn.cond = function(cond, completable, complete) {
+		this.completable	= completable;
+		this.complete		= complete;
+		if( cond && ( cond == "boolean" || (cond instanceof jQuery && cond.length) ) ) {
+			return this.completable(this.complete);
+		}
+		return this.complete();
+	};
+	$.cond = $.fn.cond;
+	
 	$.each([["show", "shown", function() { return $(this).is(":visible"); }], ["hide", "hidden", function() { return $(this).is(":hidden"); }]], function (i, ev) {
 		var fun	= $.fn[ev[0]];
 		$.fn[ev[0]]	= function () {
@@ -380,8 +402,10 @@ if( typeof KeyEvent == "undefined" ) {
 		}
 		$(window).scrollLeft(elOffset.left + elWidth/2 - viewportWidth/2);
 	};
+	
 	// Apply on load and on change
 	$.fn.watch	= function(cb, sel) {
+//		console.log("Starting watch with selector: "+sel);
 		sel ? $(this).on("change", sel, cb) : $(this).change(cb);
 		$(this).each(function() {
 			this.cb	= cb;

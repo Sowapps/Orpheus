@@ -55,12 +55,13 @@ function ensure_pdoinstance($Instance=null) {
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
-		$config = Config::build(DBCONF, true);
-		$DBS = $config->all;
+		$config	= Config::build(DBCONF, true);
+		$DBS	= $config->all;
 	}
-	
+// 	debug('$DBS', $DBS);
 	// Using default instance
 	if( empty($Instance) ) {
+// 		text('Empty $Instance');
 		// Default is constant PDODEFINSTNAME
 		if( defined('PDODEFINSTNAME') ) {
 			$Instance = PDODEFINSTNAME;
@@ -77,7 +78,8 @@ function ensure_pdoinstance($Instance=null) {
 			pdo_error('No instance given in parameter and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
 		}
 	} else if( empty($DBS[$Instance]) ) {
-		pdo_error('Parameter Instance is unknown.', 'Instance Setting Definition');
+// 		text('Empty $DBS[$Instance]');
+		pdo_error('Parameter Instance " '.$Instance.' " is unknown.', 'Instance Setting Definition');
 	}
 	
 	// Loading instance
@@ -149,8 +151,8 @@ function ensure_pdoinstance($Instance=null) {
 			}
 		}
 	} catch( PDOException $e ) {
-		pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection');
-		throw $e;
+		pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection', 0, $e);
+// 		throw $e;
 	}
 	return $Instance;
 }
@@ -207,8 +209,9 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 			unset($PDOSQuery);
 			return $returnValue;
 		} catch( PDOException $e ) {
-			pdo_error($ERR_ACTION.' ERROR: '.$e->getMessage(), 'Query: '.$Query, $Fetch);
-			throw $e;
+			pdo_error($ERR_ACTION.' ERROR: '.$e->getMessage(), 'Query: '.$Query, $Fetch, $e);
+// 			pdo_error($ERR_ACTION.' ERROR: '.$e->getMessage(), 'Query: '.$Query, $Fetch);
+// 			throw $e;
 			return false;
 		}
 	}
@@ -233,14 +236,15 @@ function pdo_lastInsertId($Instance=null) {
 
 //! Logs a PDO error
 /*
-	\param $PDOReport The PDO report to save.
+	\param $report The report to save.
 	\param $Action Optional information about what the script was doing.
 
-	Saves the error report $PDOReport in the log file and exit script.
+	Saves the error report $report in the log file and exit script.
 */
-function pdo_error($PDOReport, $Action='', $Fetch=0) {
+function pdo_error($report, $Action='', $Fetch=0, $Original=null) {
 	if( bintest($Fetch, PDOERROR_MINOR) ) { return; }
-	sql_error($PDOReport, $Action);
+	sql_error($report, $Action);
+	throw new SQLException($report, $Original);
 }
 
 //! Quotes and Escapes

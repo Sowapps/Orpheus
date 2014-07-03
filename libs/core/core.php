@@ -31,7 +31,8 @@ function redirectTo($destination=null) {
  * The only difference with redirectTo() is the status code sent to the client.
 */
 function permanentRedirectTo($destination=null) {
-	header('HTTP/1.1 301 Moved Permanently', false, 301);
+	header('HTTP/1.1 301 Moved Permanently', true, 301);
+// 	header('HTTP/1.1 301 Moved Permanently', false, 301);
 	redirectTo($destination);
 }
 
@@ -164,7 +165,7 @@ function stringify($s) {
 }
 
 function formatException($e) {
-	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message').' in '.$e->getFile().':'.$e->getLine()."\n".$e->getTraceAsString();
+	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message').' in '.$e->getFile().':'.$e->getLine();//."\n".$e->getTraceAsString();
 }
 
 //! Logs a report in a file.
@@ -186,17 +187,18 @@ function formatException($e) {
 */
 function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
-		$report = 'NON-SCALAR::'.stringify($report);//."\n".print_r($report, 1);
+		$report	= 'NON-SCALAR::'.stringify($report);//."\n".print_r($report, 1);
 	}
-	$Error = array('date' => date('c'), 'report' => $report, 'action' => $action);
-	$logFilePath = ( ( defined("LOGSPATH") && is_dir(LOGSPATH) ) ? LOGSPATH : '').$file;
+	$Error	= array('date' => date('c'), 'report' => $report, 'action' => $action);
+	$logFilePath	= ((defined("LOGSPATH") && is_dir(LOGSPATH)) ? LOGSPATH : '').$file;
 	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( ERROR_LEVEL == DEV_LEVEL ) {
 			$Error['message']	= $message;
 			$Error['page']		= nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
-			if( !class_exists('Rendering') || !Rendering::doDisplay('report', $Error) ) {
+			global $RENDERING;
+			if( !class_exists($RENDERING) || !$RENDERING::doDisplay('error', $Error) ) {
 				// If we fail in our display of this error, this is fatal.
 				echo print_r($Error, 1);
 			}
@@ -264,7 +266,7 @@ function log_error($report, $action='', $fatal=true) {
 	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action,
 		empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null :
 			(is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.').
-			(ERROR_LEVEL == DEV_LEVEL ? '<br />'.nl2br(print_r(debug_backtrace(), 1)) : ''));
+			(ERROR_LEVEL == DEV_LEVEL ? '<br /><pre>'.print_r(debug_backtrace(), 1).'</pre>' : ''));
 }
 
 //! Logs a sql error.
@@ -277,9 +279,10 @@ function log_error($report, $action='', $fatal=true) {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL for Exception
+	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// Empty to return an exception
+// 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL for to do nothing
 // 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);//, t('errorOccurredWithDB'));
-// 	throw new Exception('errorOccurredWithDB');
+// 	throw new SQLException('errorOccurredWithDB');
 }
 
 //! Limits the length of a string
@@ -732,6 +735,9 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
  * This function is only a HTML generator.
 */
 function getHTMLReport($stream, $report, $type) {
+	if( class_exists('HTMLRendering', true) ) {
+		return HTMLRendering::renderReport($report, $type, $stream);
+	} 
 	return '
 		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
 }
@@ -909,6 +915,7 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 	fillInputValue($selValue, $fieldPath, $default);
 	$opts	= '';
 	foreach( $values as $dataKey => $elValue ) {
+		if( $elValue===null ) { continue; }
 		if( is_array($elValue) ) {
 			$opts .= '<optgroup label="'.t($prefix.$dataKey, $domain).'">'.htmlOptions($fieldPath, $elValue, $default, $matches, $prefix, $domain).'</optgroup>';
 			continue;
@@ -959,12 +966,18 @@ define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
 // 	return (isset($data[$field]) && $value == $data[$field]) ? 'selected="selected"' : '';
 // }
 
+global $FORM_EDITABLE;
+$FORM_EDITABLE	= true;
+function htmlDisabledAttr() {
+	global $FORM_EDITABLE;
+	return $FORM_EDITABLE ? '' : ' disabled';
+}
 function htmlFileUpload($fieldPath, $addAttr='') {
-	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
+	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlPassword($fieldPath, $addAttr='') {
-	return '<input type="password" name="'.apath_html($fieldPath).'" '.$addAttr.'/>';
+	return '<input type="password" name="'.apath_html($fieldPath).'" '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
@@ -972,29 +985,29 @@ function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 }
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null, $type='text') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.'/>';
+	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.'>'.$value.'</textarea>';
+	return '<textarea name="'.apath_html($fieldPath).'" '.$addAttr.htmlDisabledAttr().'>'.$value.'</textarea>';
 }
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.$value.'" ' : '').$addAttr.'/>';
+	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.$value.'" ' : '').$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
-	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
+	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 	// 			If Value found,	we consider this one, else we use default
 	fillInputValue($selected, $fieldPath, $default, true);
-	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.'/>';
+	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
@@ -1248,8 +1261,7 @@ function userID() {
  * \param $chars The characters to use to generate password. Default value is 'abcdefghijklmnopqrstuvwxyz0123456789'
  * \return The generated password.
  * 
- * This generator is made for humans, it avoids some special letters as first/last one.
- * So, place these characters at the end of $chars.
+ * Letters are randomly uppercased
 */
 function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz0123456789') {
 	$max = strlen($chars)-1;
@@ -1340,5 +1352,22 @@ function array_get($array, $index, $default=false) {
 	$array	= array_values($array);
 // 	debug('array_get('.$index.') values', $array);
 	return isset($array[$index]) ? $array[$index] : $default;
+}
+
+function array_apply($array, $callback, $userdata=null, &$success=null) {
+	$success	= array_walk($array, $callback, $userdata);
+	return $array;
+}
+
+function array_peer($array, $peerGlue=': ') {
+	return array_apply($array, function(&$v, $k) use($peerGlue) { $v = $k.$peerGlue.$v; });
+}
+
+function str_ucfirst($str) {
+	return ucfirst(strtolower($str));
+}
+
+function str_ucwords($str) {
+	return ucwords(strtolower($str));
 }
 

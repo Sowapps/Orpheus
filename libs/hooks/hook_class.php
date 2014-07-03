@@ -58,20 +58,13 @@ class Hook {
 				0 => $params,
 			); 
 		}
-		/*
-		//Not used yet.
-		$Params = array();
-		foreach($params as $k => &$params){
-			$Params[$k] = &$params;
-		}
-		*/
 		foreach($this->callbacks as $callback) {
-			$r = call_user_func_array($callback, $params);
-			if( !is_null($r) ) {
+			$r	= call_user_func_array($callback, $params);
+			if( $r!==NULL ) {
 				$params[0] = $r;
 			}
 		}
-		return (isset($params[0])) ? $params[0] : null;
+		return isset($params[0]) ? $params[0] : null;
 	}
 	
 	//! Gets slug
@@ -129,9 +122,7 @@ class Hook {
 			$silent = false;// Default
 		}
 		if( empty(static::$hooks[$name]) ) {
-			if( $silent ) {
-				return;
-			}
+			if( $silent ) { return; }
 			throw new Exception('No hook with this name');
 		}
 		$params = null;

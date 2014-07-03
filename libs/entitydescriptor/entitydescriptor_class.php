@@ -11,13 +11,27 @@ class EntityDescriptor {
 	protected $indexes	= array();
 	
 	const DESCRIPTORCLASS	= 'EntityDescriptor';
+	const IDFIELD			= 'id';
 
+	public static function getAllEntities() {
+		$entities	= cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
+		foreach( $entities as $i => &$filename ) {
+			$pi	= pathinfo($filename);
+			if( $pi['extension'] != 'yaml' ) {
+				unset($entities[$i]);
+				continue;
+			}
+			$filename	= $pi['filename'];
+		}
+		return $entities;
+	}
 	public static function load($name, $class=null) {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache	= new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
-		if( $cache->get($descriptor) ) {
-			return $descriptor;
-		}
+		
+		// Comment when editing class and entity field types
+		if( $cache->get($descriptor) ) { return $descriptor; }
+
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
 			throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
@@ -37,7 +51,8 @@ class EntityDescriptor {
 				}
 			}
 		}
-		$fields['id']	= (object) array('name'=>'id', 'type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
+		$IDField	= $class ? $class::getIDField() : self::IDFIELD;
+		$fields[$IDField]	= (object) array('name'=>$IDField, 'type'=>'ref', 'args'=>(object)array('decimals'=>0, 'min'=>0, 'max'=>4294967295), 'writable'=>false, 'nullable'=>false);
 		foreach( $conf->fields as $field => $fieldInfos ) {
 			$fields[$field]	= FieldDescriptor::parseType($field, $fieldInfos);
 		}
@@ -71,6 +86,9 @@ class EntityDescriptor {
 		return isset($this->fields[$field]) ? $this->fields[$field] : null;
 	}
 	
+	/**
+	 * @return FieldDescriptor[] $fields
+	 */
 	public function getFields() {
 		return $this->fields;
 	}
@@ -433,7 +451,14 @@ class TypeRef extends TypeNatural {
 // 	protected $nullable	= false;
 	// MySQL needs more logic to select a null field with an index
 	// Prefer to set default to 0 instead of using nullable
-
+	
+	public function parseArgs($fArgs) {
+		$args = (object) array('entity'=>null, 'decimals'=>0, 'min'=>0, 'max'=>4294967295);
+		if( isset($fArgs[0]) ) {
+			$args->entity			= $fArgs[0];
+		}
+		return $args;
+	}
 }
 EntityDescriptor::registerType(new TypeRef());
 

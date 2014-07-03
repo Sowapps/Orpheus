@@ -1,6 +1,146 @@
 
-/* table sorter 2.0 */
-.tablesorter-header-inner .fa {
-	line-height: inherit;
-	float: right;
+body {
+	margin-top:	0;
+	padding-top:	50px;
 }
+
+/*
+html, body {
+	height:	100%;	
+}
+.wrapper, .page-wrapper,  {
+}
+*/
+
+/* Select2 */
+.select2-results {
+	max-height:	300px;
+}
+
+/* Table sorter 2.0 */
+th .fa {
+	line-height:	inherit;
+	float:	right;
+}
+
+td .btn {
+	padding:	2px 6px;
+}
+
+table.table input {
+	width:	100%;
+}
+table.table input[type="radio"], table.table input[type="checkbox"] {
+	width:	auto;
+}
+/* .tablesorter-header-inner .fa { */
+/* 	line-height: inherit; */
+/* 	float: right; */
+/* } */
+
+/* Bootstrap customization */
+
+/* Fit the parent title panel for accordion */
+.panel-title > a {
+	display:	inherit;
+}
+.panel-title > a:hover {
+	text-decoration:	none;
+}
+
+/* Let the padding to the right items of the top navbar */
+.navbar-nav.navbar-right:last-child {
+	margin-right:	0;
+}
+
+.modal-center {
+	position:	absolute;
+	top:	50%;
+	margin:	0;
+/* 	left: 50%; */
+}
+.modal-compact .modal-footer {
+	border-top: 0;
+	margin-top: 0;
+}
+
+.close {
+	position:	relative;
+	z-index:	1;
+}
+
+/* Font Awesome customization */
+a.fa, .link.fa {
+	text-decoration:	none;
+	color:	#000000;
+}
+button.fa, input[type=button].fa {
+	padding: 0;
+	border: 0;
+	background: none;
+}
+/*
+.button > .fr.fa {
+	line-height: inherit;
+}
+.button.normal > .fa {
+	font-size: 14px;
+}
+.fa {
+	cursor: default;
+}
+*/
+
+/* Radio Panel */
+.radiopanel {
+	border-radius: 3px;
+/*	 margin: 5px 0; */
+	padding: 10px;
+/*	 margin: 5px 0; */
+/*	 padding: 10px 5px; */
+}
+.radiopanel.active {
+	background-color: #F3F3F3;
+}
+
+/* Application */
+.logo.enterprise {
+	display: block;
+	cursor: pointer;
+}
+.logo.enterprise.mini {
+	max-width:	200px;
+	max-height:	34px;
+}
+
+/* Form Control */
+input[type="date"]::-webkit-calendar-picker-indicator {
+/* 	display:	inline-block; */
+/* 	float:		right; */
+/* 	margin-top:	2%; */
+	/* Not compatile with little input & Bootstrap */
+	-webkit-appearance:	none;
+}
+input[type="date"]::-webkit-inner-spin-button {
+	/* display: none; <- Crashes Chrome on hover */
+	-webkit-appearance:	none;
+	margin:	0;
+}
+/*
+input[type="date"]::-webkit-calendar-picker-indicator {
+	-webkit-padding-start: 1px;
+}
+input::-webkit-datetime-edit {
+	-webkit-flex: 1;
+	-webkit-user-modify: read-only !important;
+	display: inline-block;
+	min-width: 0;
+	overflow: hidden;
+}
+input::-webkit-datetime-edit-fields-wrapper {
+	-webkit-user-modify: read-only !important;
+	display: inline-block;
+	padding: 1px 0;
+	white-space: pre;
+}
+*/

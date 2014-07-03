@@ -87,7 +87,7 @@ class SQLGenerator_MySQL {
 	
 	public function matchEntity($ed) {
 		try {
-			$columns=pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR);
+			$columns	= pdo_query('SHOW COLUMNS FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL);//|PDOERROR_MINOR
 			// Fields
 			$fields	= $ed->getFields();
 			$alter	= '';
@@ -113,7 +113,7 @@ class SQLGenerator_MySQL {
 			unset($fields, $f, $cc, $cf, $columns);
 			// Indexes
 			try {
-				$rawIndexes	= pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL|PDOERROR_MINOR);
+				$rawIndexes	= pdo_query('SHOW INDEX FROM '.SQLAdapter::doEscapeIdentifier($ed->getName()), PDOFETCHALL);//|PDOERROR_MINOR
 				// 			text('Indexes of '.$ed->getName());
 				// 			text($rawIndexes);
 				$indexes	= $ed->getIndexes();
@@ -150,12 +150,12 @@ class SQLGenerator_MySQL {
 				foreach( $indexes as $i ) {
 					$alter .= (!empty($alter) ? ", \n" : '')."\t ADD ".$this->getIndexDefinition($i);
 				}
-			} catch( PDOException $e ) {
+			} catch( SQLException $e ) {
 				return null;
 			}
 			if( empty($alter) ) { return null; }
 			return '<div class="table-operation table-alter">ALTER TABLE <div class="table-name">'.SQLAdapter::doEscapeIdentifier($ed->getName())."</div>\n{$alter};</div>";
-		} catch( PDOException $e ) {
+		} catch( SQLException $e ) {
 			return $this->getCreate($ed);
 		}
 	}
