@@ -13,26 +13,26 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 		reportError('notFound');
 	}
 	if( isPOST('submitEdituser') ) {
-		$formUserData = $_POST['userdata'];
+		$userInput = $_POST['userdata'];
 		$result = $user->update($_POST['userdata']);
 		if( $result ) {
 			reportSuccess('User edited.');
 		}
 		
-		$formUserData['email_public'] = (!empty($formUserData['email_public']) && $formUserData['email_public']=='on') ? $formUserData['email'] : $formUserData['email_public'];
+		$userInput['email_public'] = !empty($userInput['email_public']) ? $userInput['email'] : $userInput['email_public'];
 	} else {
-		$formUserData = $user->getValue();
+		$userInput = $user->getValue();
 	}
 	
 	displayReportsHTML($noReportErrors);
 ?>You are editing user #<?php echo $user->id; ?> named "<?php echo $user->name; ?>".<br />
 <form method="POST">
-	<label for="email">Email : </label> <input id="email" type="text" name="userdata[email]" <?php echo (!empty($formUserData['email'])) ? "value=\"{$formUserData['email']}\" " : ''; ?>/>
-	<label for="email_public">Public Email : </label><input id="email_public" name="userdata[email_public]" type="text"<?php echo (!empty($formUserData['email_public'])) ? "value=\"{$formUserData['email_public']}\" " : ''; ?>/><br />
-	<label for="fullname">Displayed name : </label> <input id="fullname" type="text" name="userdata[fullname]" <?php echo (!empty($formUserData['fullname'])) ? "value=\"{$formUserData['fullname']}\" " : ''; ?>/><br />
-	<label for="name">User name : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($formUserData['name'])) ? "value=\"{$formUserData['name']}\" " : ''; ?>/><br />
+	<label for="email">Email : </label> <input id="email" type="text" name="userdata[email]" <?php echo (!empty($userInput['email'])) ? "value=\"{$userInput['email']}\" " : ''; ?>/>
+	<label for="email_public">Public Email : </label><input id="email_public" name="userdata[email_public]" type="text"<?php echo (!empty($userInput['email_public'])) ? "value=\"{$userInput['email_public']}\" " : ''; ?>/><br />
+	<label for="fullname">Displayed name : </label> <input id="fullname" type="text" name="userdata[fullname]" <?php echo (!empty($userInput['fullname'])) ? "value=\"{$userInput['fullname']}\" " : ''; ?>/><br />
+	<label for="name">User name : </label> <input id="name" type="text" name="userdata[name]" <?php echo (!empty($userInput['name'])) ? "value=\"{$userInput['name']}\" " : ''; ?>/><br />
 	<label for="password">Password : </label> <input id="password" type="password" name="userdata[password]"/><br />
-	<label for="accesslevel">Access level : </label> <input id="accesslevel" type="text" name="userdata[accesslevel]" <?php echo (isset($formUserData['accesslevel'])) ? "value=\"{$formUserData['accesslevel']}\" " : ''; ?>/><br />
+	<label for="accesslevel">Access level : </label> <input id="accesslevel" type="text" name="userdata[accesslevel]" <?php echo (isset($userInput['accesslevel'])) ? "value=\"{$userInput['accesslevel']}\" " : ''; ?>/><br />
 
 	<input type="submit" name="submitEdituser" value="Save" /><br />
 </form>
@@ -41,7 +41,7 @@ if( $Action == 'edit' && User::canDo('users_edit') ) {
 }
 
 $formRegData = array();
-if( !empty($_POST['submitRegister']) ) {
+if( isPOST('submitRegister') ) {
 	
 	try {
 		$formRegData = $_POST['regdata'];
@@ -52,7 +52,7 @@ if( !empty($_POST['submitRegister']) ) {
 		reportError($e);
 	}
 	
-} else if( !empty($_POST['submitDeleteUser']) && User::canDo('users_delete') ) {
+} else if( isPOST('submitDeleteUser') && SiteUser::loggedCanDo('users_delete') ) {
 	
 	try {
 		$delCount = SiteUser::delete(key($_POST['submitDeleteUser']));
@@ -64,9 +64,9 @@ if( !empty($_POST['submitRegister']) ) {
 }
 
 $UsersArr = SiteUser::get(array(
-		'where'		=> ( User::canDo('users_seedev') ) ? '' : 'accesslevel<='.Config::get('perm_status/administrator'),
-		'orderby'	=> 'fullname ASC',
-		'output'	=> SQLAdapter::ARR_OBJECTS
+	'where'		=> SiteUser::loggedCanDo('users_seedev') ? '' : 'accesslevel<='.Config::get('perm_status/administrator'),
+	'orderby'	=> 'fullname ASC',
+	'output'	=> SQLAdapter::ARR_OBJECTS
 ));
 
 displayReportsHTML();
@@ -80,8 +80,8 @@ foreach( $UsersArr as $user ) {
 	<li>
 		<span>#{$user->id}</span>
 		<span>{$user->name}</span>".
-		( (User::canDo('users_delete', $user)) ? "<span><input type='submit' name='submitDeleteUser[{$user->id}]' value='Delete'/></span>" : '').
-		( (User::canDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Edit</a></span>" : '').
+		( (SiteUser::loggedCanDo('users_delete', $user)) ? "<span><input type='submit' name='submitDeleteUser[{$user->id}]' value='Delete'/></span>" : '').
+		( (SiteUser::canDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Edit</a></span>" : '').
 		"
 	</li>";
 }
