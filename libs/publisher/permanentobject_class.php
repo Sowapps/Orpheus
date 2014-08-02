@@ -626,7 +626,9 @@ abstract class PermanentObject {
 		text('create() - doLastID');
 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
+		text('create() - Apply to object');
 		static::applyToObject($data, $LastInsert);
+		text('create() - Return');
 		return $LastInsert;
 	}
 
@@ -729,8 +731,8 @@ abstract class PermanentObject {
 	public static function runForObject(&$data) { }
 	
 	/** Apply for new object
-	 * @param $data The new data to process.
-	 * @param $id The ID of the new object.
+	 * @param mixed[] $data The new data to process.
+	 * @param integer $id The ID of the new object.
 	 * @see create()
 	 * 
 	 * This function is called by create() after inserting new data.
