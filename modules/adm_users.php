@@ -81,7 +81,7 @@ foreach( $UsersArr as $user ) {
 		<span>#{$user->id}</span>
 		<span>{$user->name}</span>".
 		( (SiteUser::loggedCanDo('users_delete', $user)) ? "<span><input type='submit' name='submitDeleteUser[{$user->id}]' value='Delete'/></span>" : '').
-		( (SiteUser::canDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Edit</a></span>" : '').
+		( (SiteUser::loggedCanDo('users_edit', $user)) ? "<span><a href=\"adm_users-edit-uid={$user->id}.html\">Edit</a></span>" : '').
 		"
 	</li>";
 }
