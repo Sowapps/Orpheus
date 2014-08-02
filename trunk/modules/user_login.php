@@ -1,12 +1,12 @@
-<a href="./">Basic demo</a><br />
-<br />
 <?php
+// <a href="./">Basic demo</a><br />
+// <br />
 $formregister = array();
 if( isPOST('submitLogin') ) {
 	
 	try {
 		SiteUser::userLogin($_POST['login']);
-		reportSuccess('You\'re successfully loggued in.');
+		reportSuccess('You\'re successfully logged in.');
 		
 	} catch(UserException $e) {
 		reportError($e);
