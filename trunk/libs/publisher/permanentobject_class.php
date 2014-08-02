@@ -597,14 +597,17 @@ abstract class PermanentObject {
 	 * To create an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array(), $fields=null, &$errCount=0) {
+		text('create()');
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
-		
+
+		text('create() - checkForObject');
 		// Check if entry already exist
 		static::checkForObject($data);
+		text('create() - runForObject');
 		// To do before insertion
 		static::runForObject($data);
 		
@@ -618,6 +621,7 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'	=> $what,
 		);
+		text('create() - doInsert');
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion

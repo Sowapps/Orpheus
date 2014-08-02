@@ -1,7 +1,7 @@
 <?php
 if( isPOST('data') ) {
 	try {
-		text('Create Demotest');
+		text('Demotest');
 		DemoTest::isFieldEditable('id');
 		text('Create Demotest');
 		$test = DemoTest::create($_POST['data']);
