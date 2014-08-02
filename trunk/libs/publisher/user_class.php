@@ -61,7 +61,7 @@ class User extends AbstractStatus {
 	//! Log in this user to the current session.
 	public function login($force=false) {
 		if( !$force && static::is_login() ) {
-			static::throwException('alreadyLogguedIn');
+			static::throwException('alreadyLoggedin');
 		}
 		global $USER;
 		$_SESSION['USER'] = $USER = $this;
@@ -298,7 +298,7 @@ class User extends AbstractStatus {
 		return is_null($access) || 
 			( empty($USER) && $access < 0 ) ||
 			( !empty($USER) && $access >= 0 &&
-				$USER instanceof SiteUser && $USER->checkPerm($access));
+				$USER instanceof User && $USER->checkPerm($access));
 	}
 	
 	//! Checks if this user can do a restricted action

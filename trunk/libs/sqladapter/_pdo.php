@@ -244,7 +244,7 @@ function pdo_lastInsertId($Instance=null) {
 function pdo_error($report, $Action='', $Fetch=0, $Original=null) {
 	if( bintest($Fetch, PDOERROR_MINOR) ) { return; }
 	sql_error($report, $Action);
-	throw new SQLException($report, $Original);
+	throw new SQLException($report, $Action, $Original);
 }
 
 //! Quotes and Escapes
