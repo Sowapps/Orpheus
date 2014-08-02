@@ -1,18 +1,26 @@
 <?php
 
+/** A class to describe an entity
+ * 
+ * @author Florent HAZARD
+ * 
+ * This class uses a YAML configuration file to describe the entity.
+ * Thus you can easily update your database using dev_entities module and it validate the input data for you.
+ */
 class EntityDescriptor {
 
 	protected $class;
 	protected $name;
-    /**
-     * @var $fields Field[]
-     */
+    /* @var $fields Field[] */
 	protected $fields	= array();
 	protected $indexes	= array();
 	
 	const DESCRIPTORCLASS	= 'EntityDescriptor';
 	const IDFIELD			= 'id';
 
+	/** Get all available entities
+	 * @return string[]
+	 */
 	public static function getAllEntities() {
 		$entities	= cleanscandir(pathOf(CONFDIR.ENTITY_DESCRIPTOR_CONFIG_PATH));
 		foreach( $entities as $i => &$filename ) {
@@ -25,6 +33,13 @@ class EntityDescriptor {
 		}
 		return $entities;
 	}
+	
+	/** Load an entity descriptor from configuraiton file
+	 * @param string $name
+	 * @param string $class
+	 * @throws Exception
+	 * @return EntityDescriptor
+	 */
 	public static function load($name, $class=null) {
 		$descriptorPath	= ENTITY_DESCRIPTOR_CONFIG_PATH.$name;
 		$cache	= new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
@@ -71,6 +86,12 @@ class EntityDescriptor {
 		return $descriptor;
 	}
 	
+	/** Constructs the entity descriptor
+	 * @param string $name
+	 * @param FieldDescriptor[] $fields
+	 * @param stdClass[] $indexes
+	 * @param string $class
+	 */
 	protected function __construct($name, $fields, $indexes, $class=null) {
 		$this->name		= $name;
 		$this->class	= $class;
@@ -78,25 +99,38 @@ class EntityDescriptor {
 		$this->indexes	= $indexes;
 	}
 	
+	/** Get the name of the entity
+	 * @return string
+	 */
 	public function getName() {
 		return $this->name;
 	}
-	
+
+	/** Get one field by name
+	 * @param $field The field name
+	 * @return FieldDescriptor
+	 */
 	public function getField($field) {
 		return isset($this->fields[$field]) ? $this->fields[$field] : null;
 	}
 	
 	/**
-	 * @return FieldDescriptor[] $fields
+	 * @return FieldDescriptor[]
 	 */
 	public function getFields() {
 		return $this->fields;
 	}
-	
+
+	/**
+	 * @return stdClass[]
+	 */
 	public function getIndexes() {
 		return $this->indexes;
 	}
-	
+
+	/**
+	 * @return string[]
+	 */
 	public function getFieldsName() {
 		return array_keys($this->fields);
 	}
