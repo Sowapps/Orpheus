@@ -5,14 +5,20 @@ if( isPOST('data') ) {
 		DemoTest::isFieldEditable('id');
 		text('Create Demotest');
 		$test = DemoTest::create($_POST['data']);
+		text('Object created');
 		reportSuccess("Object created.");
+		text('Success ok (Object created)');
 		
 		$test = DemoTest::load($test);
+		text('Object loaded');
 		reportSuccess("Object \"{$test}\" loaded, it's named \"{$test->name}\".");
+		text('Success ok (Object loaded)');
 		
 // 		DemoTest::delete($tid);
 		$test->remove();
+		text('Object removed');
 		reportSuccess("Object deleted.");
+		text('Success ok (Object deleted)');
 		
 	} catch (UserException $e) {
 		reportError($e);
