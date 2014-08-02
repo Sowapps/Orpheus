@@ -597,17 +597,14 @@ abstract class PermanentObject {
 	 * To create an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array(), $fields=null, &$errCount=0) {
-		text('create()');
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
 		if( $errCount ) {
 			static::throwException('errorCreateChecking');
 		}
 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
-
-		text('create() - checkForObject');
+		
 		// Check if entry already exist
 		static::checkForObject($data);
-		text('create() - runForObject');
 		// To do before insertion
 		static::runForObject($data);
 		
@@ -621,14 +618,10 @@ abstract class PermanentObject {
 			'table'	=> static::$table,
 			'what'	=> $what,
 		);
-		text('create() - doInsert');
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
-		text('create() - doLastID');
 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
-		text('create() - Apply to object');
 		static::applyToObject($data, $LastInsert);
-		text('create() - Return');
 		return $LastInsert;
 	}
 
@@ -731,8 +724,8 @@ abstract class PermanentObject {
 	public static function runForObject(&$data) { }
 	
 	/** Apply for new object
-	 * @param mixed[] $data The new data to process.
-	 * @param integer $id The ID of the new object.
+	 * @param $data The new data to process.
+	 * @param $id The ID of the new object.
 	 * @see create()
 	 * 
 	 * This function is called by create() after inserting new data.

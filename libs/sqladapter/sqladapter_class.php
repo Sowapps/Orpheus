@@ -193,9 +193,7 @@ abstract class SQLAdapter {
 	 * \sa SQLAdapter::insert()
 	*/
 	public static function doInsert(array $options=array(), $Instance=null, $IDField=null) {
-		text('doInsert()');
 		self::prepareQuery($options, $Instance, $IDField);
-		text('doInsert() - insert');
 		return self::$Adapters[$Instance]->insert($options);
 	}
 	

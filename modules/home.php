@@ -72,7 +72,9 @@ label label-warning
 
 <section id="demotest">
 <?php
+text("Display reports");
 displayReportsHTML();
+text("Displayed reports");
 ?>
 	<form method="POST">
 	<fieldset>
