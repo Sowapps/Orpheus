@@ -99,6 +99,7 @@ function bintest($value, $reference) {
  * This function stops the running script.
 */
 function sendResponse($code, $other='', $domain='global') {
+	header('Content-Type',	'application/json; charset=UTF-8');
 	die( json_encode( array(
 			'code'			=> $code,
 			'description'	=> t($code, $domain),
@@ -279,7 +280,7 @@ function log_error($report, $action='', $fatal=true) {
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
 */
 function sql_error($report, $action='') {
-	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// Empty to return an exception
+	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL to do nothing
 // 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL for to do nothing
 // 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);//, t('errorOccurredWithDB'));
 // 	throw new SQLException('errorOccurredWithDB');
@@ -774,6 +775,23 @@ function displayReportsHTML($stream='global', $rejected=array(), $delete=1) {
 */
 function POST($path=null) {
 	return extractFrom($path, $_POST);
+}
+
+//! Checks an existing post key
+/*!
+ * \param $path The path to the array. The default value is null (search in POST).
+ * \param $value The output value of the item to delete.
+ * \return True if there is an item to delete
+
+ * This function is used to key the key value from an array sent by post
+ * E.g You use POST to delete an item from a list, it's name is delete[ID], where ID is the ID of this item
+ * If you call hasPOSTKey("delete", $itemID), the function will return true if a delete item is defined and $itemID will contain the ID of the item to delete.
+*/
+function hasPOSTKey($path=null, &$value=null) {
+	$v = POST($path);
+	if( !$v || !is_array($v) ) { return false; }
+	$value	= key($v);
+	return true;
 }
 
 //! Gets GET data

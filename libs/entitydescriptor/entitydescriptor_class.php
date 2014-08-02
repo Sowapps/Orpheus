@@ -102,7 +102,6 @@ class EntityDescriptor {
 	}
 	
 	public function validateFieldValue($field, &$value, $inputData=array(), $ref=null) {
-// 		text("validateFieldValue($field, $value)");
 		if( !isset($this->fields[$field]) ) {
 			throw new InvalidFieldException('unknownField', $field, $value, null, $this->name);
 		}
@@ -112,17 +111,12 @@ class EntityDescriptor {
 			throw new InvalidFieldException('readOnlyField', $field, $value, null, $this->name);
 		}
 		$TYPE	= $Field->getType();
-// 		$TYPE	= static::getType($Field->type);
 		
 		if( $value === NULL || ($value==='' && $TYPE->emptyIsNull($Field)) ) {
 			$value	= null;
 			// Look for default value
 			if( isset($Field->default) ) {
 				$value	= $Field->getDefault();
-// 				$value	= $Field->default;
-// 				if( is_object($value) ) {
-// 					$value = call_user_func_array($value->type, (array) $value->args);
-// 				}
 			} else
 			// Reject null value 
 			if( !$Field->nullable ) {
@@ -324,6 +318,7 @@ class TypeDate extends TypeDescriptor {
 	
 	public function validate($Field, &$value, $inputData, &$ref) {
 		// FR Only for now - Should use user language
+		if( is_id($value) ) { return; }
 		if( !is_date($value, false, $time) && !is_date($value, false, $time, 'SQL') ) {
 			throw new FE('notDate');
 		}
@@ -345,6 +340,7 @@ class TypeDatetime extends TypeDescriptor {
 			$value	.= ' '.$inputData[$Field->name.'_time'];//Allow HH:MM:SS and HH:MM
 		}
 		// FR Only for now - Should use user language
+		if( is_id($value) ) { return; }
 		if( !is_date($value, true, $time) && !is_date($value, true, $time, 'SQL') ) {
 			throw new FE('notDatetime');
 		}
@@ -379,8 +375,8 @@ class TypeInteger extends TypeNumber {
 }
 EntityDescriptor::registerType(new TypeInteger());
 
-class TypeBool extends TypeInteger {
-	protected $name = 'bool';
+class TypeBoolean extends TypeInteger {
+	protected $name = 'boolean';
 
 	public function parseArgs($fArgs) {
 		return (object) array('decimals'=>0, 'min'=>0, 'max'=>1);
@@ -391,7 +387,7 @@ class TypeBool extends TypeInteger {
 		parent::validate($Field, $value, $inputData, $ref);
 	}
 }
-EntityDescriptor::registerType(new TypeBool());
+EntityDescriptor::registerType(new TypeBoolean());
 
 class TypeFloat extends TypeNumber {
 	protected $name = 'float';
@@ -458,6 +454,11 @@ class TypeRef extends TypeNatural {
 			$args->entity			= $fArgs[0];
 		}
 		return $args;
+	}
+
+	public function validate($Field, &$value, $inputData, &$ref) {
+		id($value);
+		parent::validate($Field, $value, $inputData, $ref);
 	}
 }
 EntityDescriptor::registerType(new TypeRef());
@@ -571,14 +572,18 @@ class TypeEnum extends TypeString {
 		parent::validate($Field, $value, $inputData, $ref);
 		if( !isset($Field->args->source) ) { return; }
 		$values		= call_user_func($Field->args->source, $inputData, $ref);
-		if( isset($values[$value]) ) {
-			if( is_scalar($values[$value]) ) {
-				$value	= $values[$value];
-			}
-		} else
-		if( !in_array($value, $values) ) {
+		if( (is_id($value) || !isset($values[$value])) && !in_array($value, $values) ) {
 			throw new FE('notEnumValue');
 		}
+		// Make it unable to optimize
+// 		if( isset($values[$value]) ) {
+// 			if( is_scalar($values[$value]) ) {
+// 				$value	= $values[$value];
+// 			}
+// 		} else
+// 		if( !in_array($value, $values) ) {
+// 			throw new FE('notEnumValue');
+// 		}
 	}
 }
 EntityDescriptor::registerType(new TypeEnum());

@@ -65,6 +65,9 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['what']) ) {
 			throw new Exception('No selection');
 		}
+		if( !$options['number'] && $options['output'] == static::ARR_FIRST ) {
+			$options['number']	= 1;
+		}
 		$WHAT		= is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		$WC			= !empty($options['where']) ? 'WHERE '.$options['where'] : '';
 		$GROUPBY	= !empty($options['groupby']) ? 'GROUP BY '.$options['groupby'] : '';

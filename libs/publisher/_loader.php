@@ -10,6 +10,7 @@ addAutoload('PermanentObject',					'publisher/permanentobject_class.php');
 addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
 addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');
 addAutoload('User',								'publisher/user_class.php');
+addAutoload('AbstractUser',						'publisher/abstractuser_class.php');
 
 defifn('USER_CLASS',		'User');
 global $USER_CLASS;
@@ -21,10 +22,11 @@ Hook::create(HOOK_ACCESSDENIED);
 
 //! Hook 'checkModule'
 Hook::register('checkModule', function () {
+	global $USER_CLASS;
 	$GLOBALS['ACCESS'] = Config::build('access', true);
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 	
-	if( User::is_login() ) {
+	if( $USER_CLASS::isLogged() ) {
 		//global $USER;// Do not work in this context.
 		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
 		
@@ -49,7 +51,6 @@ Hook::register('runModule', function () {
 		if( !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module==$Module ) {
 			redirectTo(u(defined('ACCESSDENIEDMOD') ? ACCESSDENIEDMOD : DEFAULTMOD));
 		}
-// 		text('Run module hook ending with mod '.$GLOBALS['Module']);
 	}
 });
 

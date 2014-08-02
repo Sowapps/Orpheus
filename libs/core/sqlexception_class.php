@@ -6,10 +6,16 @@
 class SQLException extends Exception {
 	
 	protected $original;
+	protected $action;
 	
-	public function __construct($message=null, $original=null) {
+	public function __construct($message=null, $action=null, $original=null) {
 		parent::__construct($message);
 		$this->original	= $original;
+		$this->action	= $action;
+	}
+	
+	public function getAction() {
+		return $this->action;
 	}
 	
 	public function getOriginal() {
