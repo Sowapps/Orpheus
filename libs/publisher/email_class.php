@@ -225,6 +225,7 @@ class Email {
 	/*!
 	 * \param $SenderEmail The email address to send this mail
 	 * \param $SenderName The email address to send this mail. Default value is null.
+	 * \param $allowReply True to use this address as reply address. Default value is true.
 	 * 
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.

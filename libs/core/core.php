@@ -228,6 +228,7 @@ function log_debug($report, $action='') {
 //! Logs a hack attemp.
 /*!
  * \param $report The report to log.
+ * \param $action The action associated to the report. Default value is an empty string.
  * \param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
  * \sa log_report()
 
@@ -244,7 +245,7 @@ function log_hack($report, $action='', $message=null) {
  * \param $action The action associated to the report. Default value is an empty string.
  * \param $silent True to not display any report. Default value is false.
  * \sa log_report()
- * \obsolete
+ * \deprecated
 
  * Logs a system error.
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
@@ -332,11 +333,11 @@ function escapeText($str) {
 
 * Escape the text $str from special characters for HTML Attribute usage.
 */
-function htmlFormATtr($v) {
-	if( !is_scalar($v) ) {
-		$v	= json_encode($v);
+function htmlFormATtr($str) {
+	if( !is_scalar($str) ) {
+		$str	= json_encode($str);
 	}
-	return htmlentities($v, ENT_HTML5 | ENT_QUOTES | ENT_IGNORE, 'UTF-8', false); 	
+	return htmlentities($str, ENT_HTML5 | ENT_QUOTES | ENT_IGNORE, 'UTF-8', false); 	
 }
 
 //! Encodes to an internal URL
@@ -674,9 +675,9 @@ function rejectReport($report, $type=null) {
 
 //! Gets some/all reports as HTML
 /*!
- * \param $domain The translation domain and the domain of the report. Default value is 'all' (All domains).
- * \param $type Filter results by report type.
- * \param $delete True to delete entries from the list.
+ * \param $stream The stream to get the reports. Default value is "global".
+ * \param $type Filter results by report type. Default value is null.
+ * \param $delete True to delete entries from the list. Default value is true.
  * \sa getReportsHTML()
 
  * Gets all reports from the list of $domain optionnally filtered by type.
@@ -726,11 +727,10 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 	return $reportHTML;
 }
 
-//! Gets one report as HTML
-/*!
- * \param $stream	The stream of the report.
- * \param $message	The message to report.
- * \param $type		The type of the report.
+/** Gets one report as HTML
+ * @param $stream	The stream of the report.
+ * @param $report	The message to report.
+ * @param $type		The type of the report.
 
  * Returns a valid HTML report.
  * This function is only a HTML generator.

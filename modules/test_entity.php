@@ -35,9 +35,7 @@ displayReportsHTML();
 <button type="submit" name="submitSave">Save</button>
 </form>
 <style>
-<!--
 label {
 	width: 200px;
 }
--->
 </style>

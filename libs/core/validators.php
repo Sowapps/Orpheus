@@ -108,7 +108,7 @@ function is_ip($ip, $flags=null) {
 //! Checks if the input is a phone number.
 /*!
  * \param $number The phone number to check.
- * \param $length The limit of length of the number. Default value is unlimited.
+ * \param $country The country to use to validate the phone number, default is FR, this is the only possible value
  * \return True if $number si a valid phone number.
  * 
  * It can only validate french phone number.

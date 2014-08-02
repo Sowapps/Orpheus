@@ -1,8 +1,7 @@
 <?php
 using('sqladapter.SQLAdapter');
 
-//! The permanent object class
-/*!
+/** The permanent object class
  * Manage a permanent object using the SQL Adapter.
  */
 abstract class PermanentObject {
@@ -40,9 +39,8 @@ abstract class PermanentObject {
 	
 	// *** OVERRIDDEN METHODS ***
 	
-	//! Constructor
-	/*!
-	 * \param $data An array of the object's data to construct
+	/** Constructor
+	 * @param $data An array of the object's data to construct
 	 */
 	public function __construct(array $data) {
 		foreach( static::$fields as $fieldname ) {
@@ -63,8 +61,7 @@ abstract class PermanentObject {
 		$this->modFields = array();
 	}
 	
-	//! Destructor
-	/*!
+	/** Destructor
 	 * If something was modified, it saves the new data.
 	*/
 	public function __destruct() {
@@ -78,10 +75,9 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Magic getter
-	/*!
-	 * \param $name Name of the property to get
-	 * \return The value of field $name
+	/** Magic getter
+	 * @param $name Name of the property to get
+	 * @return The value of field $name
 	 * 
 	 * Gets the value of field $name.
 	 * 'all' returns all fields.
@@ -90,10 +86,9 @@ abstract class PermanentObject {
 		return $this->getValue($name == 'all' ? null : $name);
 	}
 	
-	//! Magic setter
-	/*!
-	 * \param $name Name of the property to set
-	 * \param $value New value of the property
+	/** Magic setter
+	 * @param $name Name of the property to set
+	 * @param $value New value of the property
 	 * 
 	 * Sets the value of field $name.
 	*/
@@ -101,9 +96,8 @@ abstract class PermanentObject {
 		$this->setValue($name, $value);
 	}
 	
-	//! Magic isset
-	/*!
-	 * \param $name Name of the property to check is set
+	/** Magic isset
+	 * @param $name Name of the property to check is set
 	 * 
 	 * Checks if the field $name is set.
 	*/
@@ -111,9 +105,8 @@ abstract class PermanentObject {
         return isset($this->data[$name]);
 	}
 	
-	//! Magic toString
-	/*!
-	 * \return The string value of the object.
+	/** Magic toString
+	 * @return The string value of the object.
 	 * 
 	 * The object's value when casting to string.
 	*/
@@ -128,9 +121,8 @@ abstract class PermanentObject {
 	
 	// *** DEV METHODS ***
 	
-	//! Gets this permanent object's ID
-	/*!
-	 * \return The id of this object.
+	/** Gets this permanent object's ID
+	 * @return The id of this object.
 	 * 
 	 * Gets this object ID according to the IDFIELD attribute.
 	 */
@@ -138,9 +130,8 @@ abstract class PermanentObject {
 		return $this->getValue(static::$IDFIELD);
 	}
 	
-	//! Gets this permanent object's unique ID
-	/*!
-	 * \return The uid of this object.
+	/** Gets this permanent object's unique ID
+	 * @return The uid of this object.
 	 * 
 	 * Gets this object ID according to the table and id.
 	 */
@@ -148,14 +139,13 @@ abstract class PermanentObject {
 		return $this->getTable().'#'.$this->id();
 	}
 	
-	//! Updates this permanent object
-	/*!
-	 * \param $uInputData The input data we will check and extract, used by children.
-	 * \param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
-	 * \param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
-	 * \return 1 in case of success, else 0.
-	 * \overrideit
-	 * \sa runForUpdate()
+	/** Updates this permanent object
+	 * @param $uInputData The input data we will check and extract, used by children.
+	 * @param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
+	 * @param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
+	 * @return 1 in case of success, else 0.
+	 * @overrideit
+	 * @see runForUpdate()
 	 * 
 	 * This method require to be overridden but it still be called too by the child classes.
 	 * Here $uInputData is not used, it is reserved for child classes.
@@ -204,11 +194,10 @@ abstract class PermanentObject {
 		return $r;
 	}
 	
-	//! Runs for Update
-	/*!
-	 * \param $data the new data
-	 * \param $oldData the old data
-	 * \sa update()
+	/** Runs for Update
+	 * @param $data the new data
+	 * @param $oldData the old data
+	 * @see update()
 	 * 
 	 * This function is called by update() before saving new data.
 	 * $data contains only edited data, excluding invalids and not changed ones.
@@ -216,9 +205,8 @@ abstract class PermanentObject {
 	*/
 	public function runForUpdate($data, $oldData) { }
 	
-	//! Saves this permanent object
-	/*!
-	 * \return 1 in case of success, else 0
+	/** Saves this permanent object
+	 * @return 1 in case of success, else 0
 	 * 
 	 * If some fields was modified, it saves these fields using the SQL Adapter.
 	*/
@@ -248,9 +236,8 @@ abstract class PermanentObject {
 		return static::delete($this->id());
 	}
 	
-	//! Reloads fields from database
-	/*!
-	 * \param $field The field to reload, default is null (all fields).
+	/** Reloads fields from database
+	 * @param $field The field to reload, default is null (all fields).
 	 * 
 	 * Updates the current object's fields from database.
 	 * If $field is not set, it reloads only one field else all fields.
@@ -284,9 +271,8 @@ abstract class PermanentObject {
 		return true;
 	}
 	
-	//! Marks the field as modified
-	/*!
-	 * \param $field The field to mark as modified.
+	/** Marks the field as modified
+	 * @param $field The field to mark as modified.
 	 * 
 	 * Adds the $field to the modified fields array.
 	*/
@@ -296,9 +282,8 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Checks if this object is deleted
-	/*!
-	 * \return True if this object is deleted.
+	/** Checks if this object is deleted
+	 * @return True if this object is deleted.
 	 * 
 	 * Checks if this object is known as deleted.
 	*/
@@ -306,9 +291,8 @@ abstract class PermanentObject {
 		return $this->isDeleted;
 	}
 	
-	//! Checks if this object is valid
-	/*!
-	 * \return True if this object is valid.
+	/** Checks if this object is valid
+	 * @return True if this object is valid.
 	 * 
 	 * Checks if this object is not deleted.
 	 * May be used for others cases.
@@ -317,10 +301,9 @@ abstract class PermanentObject {
 		return !$this->isDeleted();
 	}
 	
-	//! Marks this object as deleted
-	/*!
-	 * \sa isDeleted()
-	 * \warning Be sure what you are doing before calling this function (never out of this class' context).
+	/** Marks this object as deleted
+	 * @see isDeleted()
+	 * @warning Be sure what you are doing before calling this function (never out of this class' context).
 	 * 
 	 * Marks this object as deleted
 	 */
@@ -328,9 +311,8 @@ abstract class PermanentObject {
 		$this->isDeleted = true;
 	}
 	
-	//! Gets one value or all values.
-	/*!
-	 * \param $key Name of the field to get.
+	/** Gets one value or all values.
+	 * @param $key Name of the field to get.
 	 * 
 	 * Gets the value of field $key or all data values if $key is null.
 	*/
@@ -345,10 +327,9 @@ abstract class PermanentObject {
 		return $this->data[$key];
 	}
 	
-	//! Sets the value of a field
-	/*!
-	 * \param $key Name of the field to set.
-	 * \param $value New value of the field.
+	/** Sets the value of a field
+	 * @param $key Name of the field to set.
+	 * @param $value New value of the field.
 	 * 
 	 * Sets the field $key with the new $value.
 	*/
@@ -368,10 +349,9 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Verifies equality
-	/*!
-	 * \param $o The object to compare.
-	 * \return True if this object represents the same data, else False.
+	/** Verifies equality
+	 * @param $o The object to compare.
+	 * @return True if this object represents the same data, else False.
 	 * 
 	 * Compares the class and the ID field value of the 2 objects.
 	*/
@@ -379,12 +359,11 @@ abstract class PermanentObject {
 		return (get_class($this)==get_class($o) && $this->id()==$o->id());
 	}
 	
-	//! Logs an event
-	/*!
-	 * \param $event The event to log in this object.
-	 * \param $time A specified time to use for logging event.
-	 * \param $ipAdd A specified IP Adress to use for logging event.
-	 * \sa getLogEvent()
+	/** Logs an event
+	 * @param $event The event to log in this object.
+	 * @param $time A specified time to use for logging event.
+	 * @param $ipAdd A specified IP Adress to use for logging event.
+	 * @see getLogEvent()
 	 * 
 	 * Logs an event to this object's data.
 	*/
@@ -422,19 +401,13 @@ abstract class PermanentObject {
 		return in_array($fieldname, static::$fields);
 	}
 	
-	//! Loads a permanent object
-	/*!
-	 * \param $in The object ID to load or a valid array of the object's data.
-	 * \return The object.
-	 * \sa get()
-	 * Exceptions invalidParameter_IN
-	
+	/** Load a permanent object
+	 * @param mixed|mixed[] $in The object ID to load or a valid array of the object's data
+	 * @return static The object
+	 * @see static::get()
+	 * 
 	 * Loads the object with the ID $id or the array data.
 	 * The return value is always a static object (no null, no array, no other object).
-	*/
-	/**
-	 * @param int|mixed[] $in
-	 * @return static
 	 */
 	public static function load($in) {
 		if( empty($in) ) {
@@ -477,10 +450,9 @@ abstract class PermanentObject {
 		return static::$instances[static::getClass()][$id] = $obj;
 	}
 	
-	//! Deletes a permanent object
-	/*!
-	 * \param $in The object ID to delete or the delete array.
-	 * \return the number of deleted rows.
+	/** Deletes a permanent object
+	 * @param $in The object ID to delete or the delete array.
+	 * @return the number of deleted rows.
 	 * 
 	 * Deletes the object with the ID $id or according to the input array.
 	 * It calls runForDeletion() only in case of $in is an ID.
@@ -531,30 +503,27 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Escape identifier through instance
-	/*!
-	 * \param $Identifier The identifier to escape
-	 * \return The escaped identifier
-	 * \sa SQLAdapter::escapeIdentifier()
+	/** Escape identifier through instance
+	 * @param $Identifier The identifier to escape
+	 * @return The escaped identifier
+	 * @see SQLAdapter::escapeIdentifier()
 	*/
 	public static function escapeIdentifier($Identifier) {
 		return SQLAdapter::doEscapeIdentifier($Identifier, static::$DBInstance);
 	}
 	
-	//! Escape value through instance
-	/*!
-	 * \param $Value The value to format
-	 * \return The formatted $Value
-	 * \sa SQLAdapter::formatValue()
+	/** Escape value through instance
+	 * @param $Value The value to format
+	 * @return The formatted $Value
+	 * @see SQLAdapter::formatValue()
 	*/
 	public static function formatValue($Value) {
 		return SQLAdapter::doFormatValue($Value, static::$DBInstance);
 	}
 	
-	//! Runs for Deletion
-	/*!
-	 * \param $id The deleted object ID.
-	 * \sa delete()
+	/** Runs for Deletion
+	 * @param $id The deleted object ID.
+	 * @see delete()
 	 * 
 	 * This function is called by delete() after deleting the object $id.
 	 * If you need to get the object before, prefer to inherit delete()
@@ -562,11 +531,10 @@ abstract class PermanentObject {
 	*/
 	public static function runForDeletion($id) { }
 	
-	//! Gets some permanent objects
-	/*!
-	 * \param $options The options used to get the permanents object.
-	 * \return An array of array containing object's data.
-	 * \sa SQLAdapter
+	/** Gets some permanent objects
+	 * @param $options The options used to get the permanents object.
+	 * @return An array of array containing object's data.
+	 * @see SQLAdapter
 	 * 
 	 * Gets an objects' list using this class' table.
 	 * Take care that output=SQLAdapter::ARR_OBJECTS and number=1 is different from output=SQLAdapter::OBJECT
@@ -617,15 +585,16 @@ abstract class PermanentObject {
 		return $r;
 	}
 	
-	//! Creates a new permanent object
-	/*!
-	 * \param $inputData The input data we will check, extract and create the new object.
-	 * \param $fields The array of fields to check. Default value is null.
-	 * \return The ID of the new permanent object.
-	 * \sa testUserInput()
+	/** Create a new permanent object
+	 * @param $inputData The input data we will check, extract and create the new object.
+	 * @param $fields The array of fields to check. Default value is null.
+	 * @param $errCount Output parameter to get the number of found errors. Default value is 0
+	 * @return The ID of the new permanent object.
+	 * @see testUserInput()
+	 * @see createAndGet()
 	 * 
-	 * Creates a new permanent object from ths input data.
-	 * When really creating an object, we expect that it is valid, else we throw an exception.
+	 * Create a new permanent object from ths input data.
+	 * To create an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($inputData=array(), $fields=null, &$errCount=0) {
 		$data	= static::checkUserInput($inputData, $fields, null, $errCount);
@@ -655,15 +624,25 @@ abstract class PermanentObject {
 		static::applyToObject($data, $LastInsert);
 		return $LastInsert;
 	}
-	
+
+	/** Create a new permanent object
+	 * @param $inputData The input data we will check, extract and create the new object.
+	 * @param $fields The array of fields to check. Default value is null.
+	 * @param $errCount Output parameter to get the number of found errors. Default value is 0.
+	 * @return The new permanent object
+	 * @see testUserInput()
+	 * @see create()
+	 *
+	 * Create a new permanent object from ths input data.
+	 * To create an object, we expect that it is valid, else we throw an exception.
+	 */
 	public static function createAndGet($inputData=array(), $fields=null, &$errCount=0) {
 		return static::load(static::create($inputData, $fields, $errCount));
 	}
 	
-	//! Completes missing fields
-	/*!
-	 * \param $data The data array to complete.
-	 * \return The completed data array.
+	/** Completes missing fields
+	 * @param $data The data array to complete.
+	 * @return The completed data array.
 	 * 
 	 * Completes an array of data of an object of this class by setting missing fields with empty string.
 	*/
@@ -680,12 +659,11 @@ abstract class PermanentObject {
 		return static::$fields;
 	}
 	
-	//! Gets the log of an event
-	/*!
-	 * \param $event The event to log in this object.
-	 * \param $time A specified time to use for logging event.
-	 * \param $ipAdd A specified IP Adress to use for logging event.
-	 * \sa logEvent()
+	/** Gets the log of an event
+	 * @param $event The event to log in this object.
+	 * @param $time A specified time to use for logging event.
+	 * @param $ipAdd A specified IP Adress to use for logging event.
+	 * @see logEvent()
 	 * 
 	 * Builds a new log event for $event for this time and the user IP address.
 	*/
@@ -697,33 +675,29 @@ abstract class PermanentObject {
 		);
 	}
 	
-	//! Gets the name of this class
-	/*!
-	 * \return The name of this class.
+	/** Gets the name of this class
+	 * @return The name of this class.
 	*/
 	public static function getClass() {
 		return get_called_class();
 	}
 	
-	//! Gets the table of this class
-	/*!
-	 * \return The table of this class.
+	/** Gets the table of this class
+	 * @return The table of this class.
 	*/
 	public static function getTable() {
 		return static::$table;
 	}
 	
-	//! Gets the ID field name of this class
-	/*!
-	 * \return The ID field of this class.
+	/** Gets the ID field name of this class
+	 * @return The ID field of this class.
 	*/
 	public static function getIDField() {
 		return static::$IDFIELD;
 	}
 	
-	//! Gets the domain of this class
-	/*!
-	 * \return The domain of this class.
+	/** Gets the domain of this class
+	 * @return The domain of this class.
 	 * 
 	 * Gets the domain of this class, can be guessed from $table or specified in $domain.
 	*/
@@ -731,9 +705,8 @@ abstract class PermanentObject {
 		return static::$domain !== NULL ? static::$domain : static::$table;
 	}
 	
-	//! Gets the validator of this class
-	/*!
-	 * \return The validator of this class.
+	/** Gets the validator of this class
+	 * @return The validator of this class.
 	 * 
 	 * Gets the validator of this class.
 	*/
@@ -741,21 +714,19 @@ abstract class PermanentObject {
 		return static::$validator;
 	}
 	
-	//! Runs for object
-	/*!
-	 * \param $data The new data to process.
-	 * \sa create()
+	/** Runs for object
+	 * @param $data The new data to process.
+	 * @see create()
 	 * 
 	 * This function is called by create() after checking new data and before inserting them.
 	 * In the base class, this method does nothing.
 	*/
 	public static function runForObject(&$data) { }
 	
-	//! Applies for object
-	/*!
-	 * \param $data The new data to process.
-	 * \param $id The ID of the new object.
-	 * \sa create()
+	/** Apply for new object
+	 * @param $data The new data to process.
+	 * @param $id The ID of the new object.
+	 * @see create()
 	 * 
 	 * This function is called by create() after inserting new data.
 	 * In the base class, this method does nothing.
@@ -764,16 +735,14 @@ abstract class PermanentObject {
 	
 	// 		** VALIDATION METHODS **
 	
-	//! Checks user input
-	/*!
-	 * \param $uInputData The user input data to check.
-	 * \param $fields The array of fields to check. Default value is null.
-	 * \param $ref The referenced object (update only). Default value is null.
-	 * \param $errCount The resulting error count, as pointer. Output parameter.
-	 * \return The valid data.
-	 * \overrideit
+	/** Check user input
+	 * @param $uInputData The user input data to check.
+	 * @param $fields The array of fields to check. Default value is null.
+	 * @param $ref The referenced object (update only). Default value is null.
+	 * @param $errCount The resulting error count, as pointer. Output parameter.
+	 * @return The valid data.
 	 * 
-	 * Checks if the class could generate a valid object from $uInputData.
+	 * Check if the class could generate a valid object from $uInputData.
 	 * The method could modify the user input to fix them but it must return the data.
 	 * The data are passed through the validator, for different cases:
 	 * - If empty, this function return an empty array.
@@ -844,26 +813,24 @@ abstract class PermanentObject {
 		return array();
 	}
 	
-	//! Checks for object
-	/*!
-	 * \param $data The new data to process.
-	 * \param $ref The referenced object (update only). Default value is null.
-	 * \sa create()
-	 * \sa update()
+	/** Checks for object
+	 * @param $data The new data to process.
+	 * @param $ref The referenced object (update only). Default value is null.
+	 * @see create()
+	 * @see update()
 	 * 
 	 * This function is called by create() after checking user input data and before running for them.
 	 * In the base class, this method does nothing.
 	*/
 	public static function checkForObject($data, $ref=null) { }
 	
-	//! Tests user input
-	/*!
-	 * \param $uInputData The new data to process.
-	 * \param $fields The array of fields to check. Default value is null.
-	 * \param $ref The referenced object (update only). Default value is null.
-	 * \param $errCount The resulting error count, as pointer. Output parameter.
-	 * \sa create()
-	 * \sa checkUserInput()
+	/** Tests user input
+	 * @param $uInputData The new data to process.
+	 * @param $fields The array of fields to check. Default value is null.
+	 * @param $ref The referenced object (update only). Default value is null.
+	 * @param $errCount The resulting error count, as pointer. Output parameter.
+	 * @see create()
+	 * @see checkUserInput()
 	 * 
 	 * Does a checkUserInput() and a checkForObject()
 	*/
@@ -897,10 +864,9 @@ abstract class PermanentObject {
 		}
 	}
 	
-	//! Throws an UserException
-	/*!
-	 * \param $message the text message, may be a translation string
-	 * \sa UserException
+	/** Throw an UserException
+	 * @param $message the text message, may be a translation string
+	 * @see UserException
 	 * 
 	 * Throws an UserException with the current domain.
 	*/
@@ -908,9 +874,8 @@ abstract class PermanentObject {
 		throw new UserException($message, static::$domain);
 	}
 	
-	//! Translates text according to the object domain
-	/*!
-	 * \param $text The text to translate
+	/** Translate text according to the object domain
+	 * @param $text The text to translate
 	 * 
 	 * Translates text according to the object domain
 	*/
@@ -918,10 +883,9 @@ abstract class PermanentObject {
 		return t($text, static::$domain);
 	}
 	
-	//! Reports an UserException
-	/*!
-	 * \param $e the UserException
-	 * \sa UserException
+	/** Report an UserException
+	 * @param $e the UserException
+	 * @see UserException
 	 * 
 	 * Throws an UserException with the current domain.
 	*/
