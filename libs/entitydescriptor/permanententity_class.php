@@ -29,6 +29,14 @@ abstract class PermanentEntity extends PermanentObject {
 		$this->validateValue($field, $value);
 		$this->setValue($field, $value);
 	}
+	
+	public function genEntityWhereclause() {
+		return "entity_type LIKE '{$this->getEntity()}' AND entity_id={$this->id()}";
+	}
+	
+	public static function loadEntity($entity, $id) {
+		return $entity::load($id);
+	}
 
 	//! Initializes class - REQUIRED
 	public static function init() {

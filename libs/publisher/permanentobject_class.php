@@ -438,7 +438,8 @@ abstract class PermanentObject {
 	 */
 	public static function load($in) {
 		if( empty($in) ) {
-			static::throwException('invalidParameter_IN');
+// 			static::throwException('invalidParameter_load_'.static::getClass());
+			throw new Exception('invalidParameter_load');
 		}
 		if( is_object($in) && $in instanceof static ) {
 			return $in;
