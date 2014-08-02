@@ -713,16 +713,13 @@ function getReports($stream='global', $type=null, $delete=1) {
  * Gets all reports from the list of $domain and generates the HTML source to display.
 */
 function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
-	text('getReportsHTML()');
 	$reports = getReports($stream, null, $delete);
 	if( empty($reports) ) { return ''; }
 	$reportHTML = '';
-	text('getReportsHTML() loop reports');
 	foreach( $reports as $type => &$rl ) {
 		foreach( $rl as $report) {
 			$report = "$report";
 			if( !in_array($report, $rejected) ) {
-				text('getReportsHTML() get html report');
 				$reportHTML .= getHTMLReport($stream, $report, $type);
 			}
 		}
@@ -760,7 +757,6 @@ function displayReportsHTML($stream='global', $rejected=array(), $delete=1) {
 		$rejected	= $stream;
 		$stream		= 'global';
 	}
-	text('displayReportsHTML() echo');
 	echo '
 	<div class="reports '.$stream.'">
 	'.getReportsHTML($stream, $rejected, $delete).'
