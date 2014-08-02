@@ -61,6 +61,10 @@ defifn('THEMESURL',			SITEROOT.'/'.THEMESDIR);
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');
 
+define('CRAC_CONTEXT_APPLICATION',	1);
+define('CRAC_CONTEXT_AGENCY',		2);
+define('CRAC_CONTEXT_RESOURCE',		3);
+
 defifn('PDOLOGFILENAME',	'.pdo_error');
 defifn('SYSLOGFILENAME',	'.system');
 defifn('DEBUGFILENAME',		'.debug');
