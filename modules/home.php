@@ -21,6 +21,9 @@ if( isPOST('data') ) {
 	<p>This is the home page of my new PHP Framework, named Orpheus. This one is made for you because you want to develop your website quickly with something easy-to-use, optimized, secured and standardized with the simplest way to do it and the maximum customizing capabilities.</p>
 	<p><a href="downloads/" class="btn btn-primary btn-large">&darr; Download &darr;</a></p>
 </div>
+<?php
+displayReportsHTML();
+?>
 
 <div class="row">
 	<div class="col-xs-8">
@@ -62,11 +65,6 @@ label label-warning
 	<div class="col-xs-4">
 
 <section id="demotest">
-<?php
-text("Display reports");
-displayReportsHTML();
-text("Displayed reports");
-?>
 	<form method="POST">
 	<fieldset>
 		<legend>Try to create you own DemoTest object</legend>
