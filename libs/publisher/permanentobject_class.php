@@ -623,6 +623,7 @@ abstract class PermanentObject {
 		);
 		text('create() - doInsert');
 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
+		text('create() - doLastID');
 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
 		// To do after insertion
 		static::applyToObject($data, $LastInsert);
