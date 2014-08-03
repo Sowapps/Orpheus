@@ -8,6 +8,6 @@ if( !empty($message) ) { echo 'Message: '.$message.'<br />'; }
 ?>
 Set the ERROR_LEVEL constant value to PROD_LEVEL in your constant file if you don't want to display errors.<br />
 Error reports are saved in logs in both cases.<br />
-Page: <button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
+Page: <button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === 'none' ? 'block' : 'none'; return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
 <br />
 </div>
