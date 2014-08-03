@@ -13,7 +13,7 @@
  * Libraries do the technical part, Objects link Model and Controller, Modules are the Main controller (The job) and the template are the view.\n
  * Only the core package is necessary, you can use the MVC design pattern if you want, all needed tools are provided, but its use is not mandatory.\n
  * \n
- * The official website for the framework is http://orpheus.cartman34.fr/.\n
+ * The official website for the framework is http://orpheus-framework.com/.\n
  *
  * \section install_sec Installation
  *
@@ -24,7 +24,7 @@
  * \subsection download Step 1: Download
  * 
  * Download The lastest release from our website:\n
- * http://orpheus.cartman34.fr/downloads/latest/\n
+ * http://orpheus-framework.com/downloads/latest/\n
  * (Take basicpack for all basic files)
  * 
  * \subsection embed Step 2: Embed
