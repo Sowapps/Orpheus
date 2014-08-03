@@ -20,7 +20,7 @@ Message :<br/>
 <?php
 if( !empty($page) ) {
 	?>
-Page: <button type="button" onclick="$(this).next().toggle(); return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
+Page: <button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === 'none' ? 'block' : 'none'; return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
 <?php
 }
 ?>
