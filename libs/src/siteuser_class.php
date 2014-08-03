@@ -38,13 +38,13 @@ class SiteUser extends User {
 		return Config::get('user_roles');
 	}
 	public function getAvailRoles() {
-		 $permStatus = static::getAppRoles();
-		 foreach( $permStatus as $status => $accesslevel ) {
+		 $roles = static::getAppRoles();
+		 foreach( $roles as $status => $accesslevel ) {
 		 	if( !$this->checkPerm($accesslevel) ) {
-		 		unset($permStatus[$status]);
+		 		unset($roles[$status]);
 		 	}
 		 }
-		 return $permStatus;
+		 return $roles;
 	}
 	public function getRoleText() {
 		$status = array_flip(static::getAvailRoles());
