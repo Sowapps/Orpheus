@@ -22,7 +22,7 @@ function _adm_htmlCheckbox($fieldPath, $default=false, $class='', $addAttr='') {
 	echo adm_htmlCheckbox($fieldPath, $default, $class, $addAttr);
 }
 function adm_htmlCheckbox($fieldPath, $default=false, $class='', $addAttr='') {
-	if( !is_null($field = getField($fieldPath)) ) {
+	if( ($field = getField($fieldPath)) !== NULL ) {
 		$addAttr .= $field->getType()->htmlInputAttr($field->args);
 	}
 	return htmlCheckBox($fieldPath, $default, $addAttr.' class="checkbox radiobtn_button '.$class.'"');
