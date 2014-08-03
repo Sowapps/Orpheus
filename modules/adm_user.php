@@ -22,6 +22,8 @@ $formData = array('user' => $user->getValue());
 
 $ModuleTitle = 'Utilisateur '.$user;
 // displayReportsHTML();
+
+require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 ?>
 
 <form method="POST">
@@ -32,15 +34,15 @@ $ModuleTitle = 'Utilisateur '.$user;
 		<h2>Ajouter un utilisateur</h2>
 		<div class="form-group">
 			<label>Nom</label>
-			<?php _app_htmlTextInput('user/fullname', 'form-control'); ?>
+			<?php _adm_htmlTextInput('user/fullname', 'form-control'); ?>
 		</div>
 		<div class="form-group">
 			<label>Email</label>
-			<?php _app_htmlTextInput('user/email', 'form-control', 'autocomplete="off"'); ?>
+			<?php _adm_htmlTextInput('user/email', 'form-control', 'autocomplete="off"'); ?>
 		</div>
 		<div class="form-group">
 			<label>Mot de passe</label>
-			<?php _app_htmlPassword('user/password', 'class="form-control" autocomplete="off"'); ?>
+			<?php _adm_htmlPassword('user/password', 'class="form-control" autocomplete="off"'); ?>
 		</div>
 		<div class="form-group">
 			<label>Accréditations</label>
