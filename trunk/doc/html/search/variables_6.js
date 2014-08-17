@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['idfield',['IDFIELD',['../class_entity_descriptor.html#a7fd4b484358e46f82c3fdc3b873e3aad',1,'EntityDescriptor']]],
-  ['if',['if',['../index_8php.html#a54d8872d590f2af6f762e920f9403f04',1,'if():&#160;index.php'],['../default_2layouts_2page__skeleton_8php.html#acb4bdd730e4307d1b7c98caf48e85b5f',1,'if():&#160;page_skeleton.php'],['../default_2layouts_2report_8php.html#a97548b8481dee08bf1bc8014f8107687',1,'if():&#160;report.php']]],
-  ['inside',['INSIDE',['../constants_8php.html#ae4883dff21cc0c52465c83e44ad16fc2',1,'constants.php']]],
-  ['is_5flogged',['IS_LOGGED',['../class_abstract_user.html#afb7411dea5dbb9c1d285b33d90d7c533',1,'AbstractUser\IS_LOGGED()'],['../class_user.html#afb7411dea5dbb9c1d285b33d90d7c533',1,'User\IS_LOGGED()']]]
+  ['hook_5faccessdenied',['HOOK_ACCESSDENIED',['../publisher_2__loader_8php.html#ae527c364abed5f9231fd73b82845e0cb',1,'_loader.php']]],
+  ['hook_5fcheckmodule',['HOOK_CHECKMODULE',['../hooks_2__loader_8php.html#a16addcc667f669e7de62ebe8e32d6857',1,'_loader.php']]],
+  ['hook_5frunmodule',['HOOK_RUNMODULE',['../hooks_2__loader_8php.html#a9ef8181237fba8b0c0af9077a47a0e63',1,'_loader.php']]],
+  ['hook_5fshowrendering',['HOOK_SHOWRENDERING',['../hooks_2__loader_8php.html#a7d481a604297199aac2c05fe188b5842',1,'_loader.php']]],
+  ['hook_5fstartsession',['HOOK_STARTSESSION',['../hooks_2__loader_8php.html#af8a8ad842d07fecdeed0a225d2562b64',1,'_loader.php']]],
+  ['html_5fprefix',['HTML_PREFIX',['../class_form_token.html#a645ce0c60bfbaab4b224744debf3390d',1,'FormToken']]]
 ];

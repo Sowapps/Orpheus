@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['try',['try',['../index_8php.html#a807d03c6c7b9cb4700f73480e7593a23',1,'try():&#160;index.php'],['../dev__entities__merge_8php.html#abe4cc9788f52e49485473dc699537388',1,'try():&#160;dev_entities_merge.php'],['../forum__post_8php.html#abe4cc9788f52e49485473dc699537388',1,'try():&#160;forum_post.php'],['../forums_8php.html#abe4cc9788f52e49485473dc699537388',1,'try():&#160;forums.php'],['../test__entity_8php.html#abe4cc9788f52e49485473dc699537388',1,'try():&#160;test_entity.php']]]
+  ['session_5fkey',['SESSION_KEY',['../class_form_token.html#ac795dc253e2c88377e80cb60089a25e1',1,'FormToken']]],
+  ['sqlquery',['SQLQUERY',['../class_s_q_l_adapter.html#ac4a7ccf976f98823baa8e57bfc2b12c6',1,'SQLAdapter']]],
+  ['statement',['STATEMENT',['../class_s_q_l_adapter.html#a08d95da919ecb2350109abc7c0d78ee7',1,'SQLAdapter']]]
 ];

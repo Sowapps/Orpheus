@@ -13,8 +13,8 @@ var searchData=
   ['opt_5fvalue_5fis_5fvalue',['OPT_VALUE_IS_VALUE',['../core_8php.html#adc6e19e127ed9b871d05a067d3da7e2a',1,'core.php']]],
   ['osessionhandler',['OSessionHandler',['../class_o_session_handler.html',1,'']]],
   ['osessionhandler_5fclass_2ephp',['osessionhandler_class.php',['../osessionhandler__class_8php.html',1,'']]],
-  ['output_5fapply',['OUTPUT_APPLY',['../dev__entities_8php.html#a4146df6fca11b74ad63e838ea8e348a8',1,'OUTPUT_APPLY():&#160;dev_entities.php'],['../export__tool__mysql_8php.html#a4146df6fca11b74ad63e838ea8e348a8',1,'OUTPUT_APPLY():&#160;export_tool_mysql.php']]],
-  ['output_5fdisplay',['OUTPUT_DISPLAY',['../dev__entities_8php.html#a0a75fd392dd6d354a9de85258236e4cf',1,'OUTPUT_DISPLAY():&#160;dev_entities.php'],['../export__tool__mysql_8php.html#a0a75fd392dd6d354a9de85258236e4cf',1,'OUTPUT_DISPLAY():&#160;export_tool_mysql.php']]],
+  ['output_5fapply',['OUTPUT_APPLY',['../dev__entities_8php.html#a4146df6fca11b74ad63e838ea8e348a8',1,'dev_entities.php']]],
+  ['output_5fdisplay',['OUTPUT_DISPLAY',['../dev__entities_8php.html#a0a75fd392dd6d354a9de85258236e4cf',1,'dev_entities.php']]],
   ['output_5fdlraw',['OUTPUT_DLRAW',['../dev__entities_8php.html#a05532ea1fc3165c632ebf64b54c00e24',1,'dev_entities.php']]],
   ['output_5fdlzip',['OUTPUT_DLZIP',['../dev__entities_8php.html#a5dcb8171ad02d200da23cd2c33d60d98',1,'dev_entities.php']]]
 ];

@@ -102,8 +102,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3d0963e68bb313b163a73f2803c64600"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#a3d0963e68bb313b163a73f2803c64600">getName</a> ()</td></tr>
+<tr class="memdesc:a3d0963e68bb313b163a73f2803c64600"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the name of the entity.  <a href="#a3d0963e68bb313b163a73f2803c64600">More...</a><br /></td></tr>
 <tr class="separator:a3d0963e68bb313b163a73f2803c64600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab51a31d365e0a095368688951e663e0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#ab51a31d365e0a095368688951e663e0d">getField</a> ($field)</td></tr>
+<tr class="memdesc:ab51a31d365e0a095368688951e663e0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one field by name.  <a href="#ab51a31d365e0a095368688951e663e0d">More...</a><br /></td></tr>
 <tr class="separator:ab51a31d365e0a095368688951e663e0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff667c8e7e2da76ea9ba77bc12f20027"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#aff667c8e7e2da76ea9ba77bc12f20027">getFields</a> ()</td></tr>
 <tr class="separator:aff667c8e7e2da76ea9ba77bc12f20027"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -119,8 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:afb624bf0ab33e746fba7b615a4aa8bba"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#afb624bf0ab33e746fba7b615a4aa8bba">getAllEntities</a> ()</td></tr>
+<tr class="memdesc:afb624bf0ab33e746fba7b615a4aa8bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get all available entities.  <a href="#afb624bf0ab33e746fba7b615a4aa8bba">More...</a><br /></td></tr>
 <tr class="separator:afb624bf0ab33e746fba7b615a4aa8bba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55640ff0bc1e65f577f354fdcb93e0f4"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#a55640ff0bc1e65f577f354fdcb93e0f4">load</a> ($name, $class=null)</td></tr>
+<tr class="memdesc:a55640ff0bc1e65f577f354fdcb93e0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an entity descriptor from configuraiton file.  <a href="#a55640ff0bc1e65f577f354fdcb93e0f4">More...</a><br /></td></tr>
 <tr class="separator:a55640ff0bc1e65f577f354fdcb93e0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9e6b85b2732b1a76b1a8e28047a4bbb"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#aa9e6b85b2732b1a76b1a8e28047a4bbb">registerType</a> (<a class="el" href="class_type_descriptor.html">TypeDescriptor</a> $type)</td></tr>
 <tr class="separator:aa9e6b85b2732b1a76b1a8e28047a4bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,6 +143,7 @@ Data Fields</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aceec3a2680349c1aeecdb5ab6b05db9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#aceec3a2680349c1aeecdb5ab6b05db9f">__construct</a> ($name, $fields, $indexes, $class=null)</td></tr>
+<tr class="memdesc:aceec3a2680349c1aeecdb5ab6b05db9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the entity descriptor.  <a href="#aceec3a2680349c1aeecdb5ab6b05db9f">More...</a><br /></td></tr>
 <tr class="separator:aceec3a2680349c1aeecdb5ab6b05db9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -204,6 +209,15 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$name</td><td></td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">FieldDescriptor[]</td><td>$fields </td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">stdClass[]</td><td>$indexes </td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$class</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -228,6 +242,7 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string[] </dd></dl>
 
 </div>
 </div>
@@ -244,6 +259,13 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$field</td><td>The field name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_field_descriptor.html">FieldDescriptor</a> </dd></dl>
 
 </div>
 </div>
@@ -259,7 +281,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_field_descriptor.html">FieldDescriptor</a>[] $fields </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_field_descriptor.html">FieldDescriptor</a>[] </dd></dl>
 
 </div>
 </div>
@@ -275,6 +297,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string[] </dd></dl>
 
 </div>
 </div>
@@ -290,6 +313,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>stdClass[] </dd></dl>
 
 </div>
 </div>
@@ -305,6 +329,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>string </dd></dl>
 
 </div>
 </div>
@@ -387,6 +412,20 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$name</td><td></td></tr>
+    <tr><td class="paramtype">string</td><td class="paramname">$class</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Exception</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_entity_descriptor.html" title="A class to describe an entity. ">EntityDescriptor</a> </dd></dl>
 
 </div>
 </div>
@@ -640,12 +679,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>D:/Workspaces/Common/Orpheus/libs/entitydescriptor/<a class="el" href="entitydescriptor__class_8php.html">entitydescriptor_class.php</a></li>
+<li>E:/workspaces/Eclipse PHP/Orpheus/libs/entitydescriptor/<a class="el" href="entitydescriptor__class_8php.html">entitydescriptor_class.php</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Aug 2 2014 15:31:36 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 17 2014 16:03:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

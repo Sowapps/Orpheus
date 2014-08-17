@@ -1,6 +1,6 @@
 Change Log
 
-* 1.0.1 - 02/08/2014 - R
+* 2.0.0 - 02/08/2014 - R701
 - Styling page skeleton
 - Updating bootstrap to 3.0.3
 - Using FontAwesome 4.0.3
