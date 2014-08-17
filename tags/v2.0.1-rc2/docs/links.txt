@@ -1,0 +1,6 @@
+
+*** Bootstrap 3 ***
+
+http://getbootstrap.com/
+http://fortawesome.github.io/Font-Awesome/icons/
+https://github.com/mindmup/bootstrap-wysiwyg
