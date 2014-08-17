@@ -289,11 +289,23 @@
       </topic>
       <topic label="SiteUser" href="class_site_user.html">
         <topic label="__toString" href="class_site_user.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
+        <topic label="canEntityDelete" href="class_site_user.html#a53593efde9ad9d95b17e14d2cb373d50"/>
         <topic label="canForumPostDelete" href="class_site_user.html#a30e4edc346d27672d6e489345161e090"/>
         <topic label="canForumPostUpdate" href="class_site_user.html#aeb58939e2bcc4500b4cbb77534b4832d"/>
+        <topic label="canSeeDevelopers" href="class_site_user.html#a65a6a68426c822cbc1cfd1e70737418a"/>
+        <topic label="canUserCreate" href="class_site_user.html#aeec2a3efb8bea0f75c7347671c365e60"/>
+        <topic label="canUserDelete" href="class_site_user.html#a101456b30d3679e5be3d40ea324e8536"/>
+        <topic label="canUserEdit" href="class_site_user.html#a0d2d73789a6c8586adffda94d2bbaa6a"/>
+        <topic label="canUserGrant" href="class_site_user.html#a425fcef93e9df228bacf98edef933413"/>
+        <topic label="canUserList" href="class_site_user.html#a4545dcd11849bb727a75a44377fe3cda"/>
+        <topic label="canUserStatus" href="class_site_user.html#a4bb868fd8cc677d3fefab8dd23f886e9"/>
+        <topic label="getAdminLink" href="class_site_user.html#a735dee840523463f947c04ad880221ca"/>
         <topic label="getAllPostViews" href="class_site_user.html#ad4540ad1e731de7ae2791e72aba2864a"/>
+        <topic label="getAvailRoles" href="class_site_user.html#abd8a7f28ab7b8a98200db41f7192560b"/>
         <topic label="getLink" href="class_site_user.html#abea978f4dcd47c4289232744d3ed2f01"/>
         <topic label="getNicename" href="class_site_user.html#a432934a581ae076060ec0fe7d2eb61f7"/>
+        <topic label="getRank" href="class_site_user.html#ad9b18cc3c110ea0dc7bd67a701d12a92"/>
+        <topic label="getRoleText" href="class_site_user.html#a0bec894ef37e34698421cc3096436991"/>
         <topic label="setPostView" href="class_site_user.html#a84da8df7aa5f31f990dd375c11d33848"/>
         <topic label="$postViews" href="class_site_user.html#a0dbd6f616169085df41b07c891cfa216"/>
       </topic>
@@ -647,6 +659,9 @@
     <topic label="File List" href="files.html">
       <topic label="configs" href="dir_0d4e9ecbf6bd30435178ac7d44936e3e.html">
         <topic label="constants.php" href="constants_8php.html">
+          <topic label="CRAC_CONTEXT_AGENCY" href="constants_8php.html#a07ab6588710c52ab6b940628204c9830"/>
+          <topic label="CRAC_CONTEXT_APPLICATION" href="constants_8php.html#a3b200b376890a47b14ba36355fd8a136"/>
+          <topic label="CRAC_CONTEXT_RESOURCE" href="constants_8php.html#a1ab1823dee9e60874007aba3f2db877d"/>
           <topic label="DEV_LEVEL" href="constants_8php.html#a06aaf508fd58e00deb605585fcdcc30b"/>
           <topic label="INSIDE" href="constants_8php.html#ae4883dff21cc0c52465c83e44ad16fc2"/>
           <topic label="PROD_LEVEL" href="constants_8php.html#a43979363d85c9f0ba4f7d2d56e097df1"/>
@@ -865,7 +880,9 @@
           </topic>
         </topic>
         <topic label="entitydescriptor" href="dir_be427d7de8f70f1e03bf26789116cd24.html">
-          <topic label="_loader.php" href="entitydescriptor_2__loader_8php.html"/>
+          <topic label="_loader.php" href="entitydescriptor_2__loader_8php.html">
+            <topic label="getField" href="entitydescriptor_2__loader_8php.html#a93b6f582ff27dda4484b34c64aa4952d"/>
+          </topic>
           <topic label="entitydescriptor_class.php" href="entitydescriptor__class_8php.html">
             <topic label="EntityDescriptor" href="class_entity_descriptor.html">
               <topic label="__construct" href="class_entity_descriptor.html#aceec3a2680349c1aeecdb5ab6b05db9f"/>
@@ -1371,6 +1388,26 @@
             <topic label="getModuleAccess" href="src_2__loader_8php.html#a5a5c9eae87d224ab39e1cbb12a965a74"/>
             <topic label="htmlSecret" href="src_2__loader_8php.html#afe638ca95b88a92893700d402c9b19e8"/>
           </topic>
+          <topic label="admin-form.php" href="admin-form_8php.html">
+            <topic label="_adm_htmlCheckbox" href="admin-form_8php.html#a26950c69dfaf2c8801b22669daa34196"/>
+            <topic label="_adm_htmlCheckboxSwitch" href="admin-form_8php.html#a776731a47ca3a425e1fc0704e6d47965"/>
+            <topic label="_adm_htmlDateInput" href="admin-form_8php.html#a7d14d4a59692c32e0b712b79a0192d01"/>
+            <topic label="_adm_htmlFormTimeline" href="admin-form_8php.html#a9059ca61360722d287827952aa2f55c2"/>
+            <topic label="_adm_htmlInput" href="admin-form_8php.html#a07f23b8d6970b6e6762c8f279cae1879"/>
+            <topic label="_adm_htmlMoneyInput" href="admin-form_8php.html#a83b5791ec701849f4cf212bfbbe6f31d"/>
+            <topic label="_adm_htmlPassword" href="admin-form_8php.html#a3ab74ffd3f0d78d444b0a321d6e4fe59"/>
+            <topic label="_adm_htmlRadioBtn" href="admin-form_8php.html#a67b638e1448241402b7cd7606530d117"/>
+            <topic label="_adm_htmlTextArea" href="admin-form_8php.html#aee1589d11897fdfd526d81ed9edabe32"/>
+            <topic label="_adm_htmlTextInput" href="admin-form_8php.html#a0148da7dd5006c7f300039a2b907936e"/>
+            <topic label="adm_htmlCheckbox" href="admin-form_8php.html#a10c4b514005065730558ff232d3b9145"/>
+            <topic label="adm_htmlCheckboxSwitch" href="admin-form_8php.html#a6c6b24ed2dadf79e75bf9af0ae5368cf"/>
+            <topic label="adm_htmlDateInput" href="admin-form_8php.html#a02aa6ee965692d37a367784f44de8d22"/>
+            <topic label="adm_htmlInput" href="admin-form_8php.html#a2f762cf3c0e1f1e05545bf4231420c8e"/>
+            <topic label="adm_htmlMoneyInput" href="admin-form_8php.html#a293e7f6f49f4ce59f6b631df02a3d41d"/>
+            <topic label="adm_htmlRadioBtn" href="admin-form_8php.html#a7aa9371753c41f98f06f1cabceaa9d51"/>
+            <topic label="adm_htmlTextArea" href="admin-form_8php.html#a8058989a42154fac6f6516931a37a60a"/>
+            <topic label="adm_htmlTextInput" href="admin-form_8php.html#ac90175270c398d476df75cb482d618b6"/>
+          </topic>
           <topic label="demoentity_class.php" href="demoentity__class_8php.html">
             <topic label="DemoEntity" href="class_demo_entity.html">
             </topic>
@@ -1386,11 +1423,23 @@
           <topic label="siteuser_class.php" href="siteuser__class_8php.html">
             <topic label="SiteUser" href="class_site_user.html">
               <topic label="__toString" href="class_site_user.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
+              <topic label="canEntityDelete" href="class_site_user.html#a53593efde9ad9d95b17e14d2cb373d50"/>
               <topic label="canForumPostDelete" href="class_site_user.html#a30e4edc346d27672d6e489345161e090"/>
               <topic label="canForumPostUpdate" href="class_site_user.html#aeb58939e2bcc4500b4cbb77534b4832d"/>
+              <topic label="canSeeDevelopers" href="class_site_user.html#a65a6a68426c822cbc1cfd1e70737418a"/>
+              <topic label="canUserCreate" href="class_site_user.html#aeec2a3efb8bea0f75c7347671c365e60"/>
+              <topic label="canUserDelete" href="class_site_user.html#a101456b30d3679e5be3d40ea324e8536"/>
+              <topic label="canUserEdit" href="class_site_user.html#a0d2d73789a6c8586adffda94d2bbaa6a"/>
+              <topic label="canUserGrant" href="class_site_user.html#a425fcef93e9df228bacf98edef933413"/>
+              <topic label="canUserList" href="class_site_user.html#a4545dcd11849bb727a75a44377fe3cda"/>
+              <topic label="canUserStatus" href="class_site_user.html#a4bb868fd8cc677d3fefab8dd23f886e9"/>
+              <topic label="getAdminLink" href="class_site_user.html#a735dee840523463f947c04ad880221ca"/>
               <topic label="getAllPostViews" href="class_site_user.html#ad4540ad1e731de7ae2791e72aba2864a"/>
+              <topic label="getAvailRoles" href="class_site_user.html#abd8a7f28ab7b8a98200db41f7192560b"/>
               <topic label="getLink" href="class_site_user.html#abea978f4dcd47c4289232744d3ed2f01"/>
               <topic label="getNicename" href="class_site_user.html#a432934a581ae076060ec0fe7d2eb61f7"/>
+              <topic label="getRank" href="class_site_user.html#ad9b18cc3c110ea0dc7bd67a701d12a92"/>
+              <topic label="getRoleText" href="class_site_user.html#a0bec894ef37e34698421cc3096436991"/>
               <topic label="setPostView" href="class_site_user.html#a84da8df7aa5f31f990dd375c11d33848"/>
               <topic label="$postViews" href="class_site_user.html#a0dbd6f616169085df41b07c891cfa216"/>
             </topic>
@@ -1421,10 +1470,15 @@
         <topic label="adm_logs.php" href="adm__logs_8php.html">
           <topic label="$logs" href="adm__logs_8php.html#a1985bbbc5349038a012f02c97f5276e6"/>
         </topic>
+        <topic label="adm_user.php" href="adm__user_8php.html">
+          <topic label="$formData" href="adm__user_8php.html#a25fe490bb3e7c027a7b895e5318d047e"/>
+          <topic label="$ModuleTitle" href="adm__user_8php.html#ac6411aadd1ec1799676fffcaae4fbe1b"/>
+          <topic label="try" href="adm__user_8php.html#abe4cc9788f52e49485473dc699537388"/>
+        </topic>
         <topic label="adm_users.php" href="adm__users_8php.html">
-          <topic label="$formRegData" href="adm__users_8php.html#a28db3e6ebc5c9630c22946b6019fb714"/>
-          <topic label="$UsersArr" href="adm__users_8php.html#a1c9ca9ca90888f0e229f186e44a1b1e7"/>
-          <topic label="foreach" href="adm__users_8php.html#ac3716e6ea5022b904223fca49ab688e1"/>
+          <topic label="$formData" href="adm__users_8php.html#ab052ac8d8bf958ae51cb1965ca42695d"/>
+          <topic label="$USER_CAN_USER_EDIT" href="adm__users_8php.html#a944de2bab3b211ed63a1d14878cfe0e2"/>
+          <topic label="$UsersArr" href="adm__users_8php.html#a290806af8a2634ed7b7224fe90c679f0"/>
         </topic>
         <topic label="admin_demo.php" href="modules_2admin__demo_8php.html"/>
         <topic label="dev_entities.php" href="dev__entities_8php.html">
@@ -1440,17 +1494,6 @@
           <topic label="$selected" href="dev__entities__merge_8php.html#a62527ab8d454b7bab631da5e46e8f899"/>
           <topic label="foreach" href="dev__entities__merge_8php.html#a8e192fa1b20f6762c8d269dc68008347"/>
           <topic label="try" href="dev__entities__merge_8php.html#abe4cc9788f52e49485473dc699537388"/>
-        </topic>
-        <topic label="export_tool_mysql.php" href="export__tool__mysql_8php.html">
-          <topic label="mysqlColumnDefinition" href="export__tool__mysql_8php.html#a1a05ad624e1610b8dd25c72a284fb9d9"/>
-          <topic label="mysqlColumnInfosFromField" href="export__tool__mysql_8php.html#a96de3527ba2b41f2f862222bef65f798"/>
-          <topic label="mysqlCreate" href="export__tool__mysql_8php.html#ad0fc9b222b5432da472b55992f23b864"/>
-          <topic label="mysqlEntityMatch" href="export__tool__mysql_8php.html#ae2c4bd28b306f57d88428dbfe105160e"/>
-          <topic label="mysqlIndexDefinition" href="export__tool__mysql_8php.html#a860cffbc0ebcb36af034083a3e4afe53"/>
-          <topic label="$entities" href="export__tool__mysql_8php.html#ab536a0d95f590a75a3a4e3228224e5eb"/>
-          <topic label="foreach" href="export__tool__mysql_8php.html#a072889c7722f36d345bc61f8a80c5189"/>
-          <topic label="OUTPUT_APPLY" href="export__tool__mysql_8php.html#a4146df6fca11b74ad63e838ea8e348a8"/>
-          <topic label="OUTPUT_DISPLAY" href="export__tool__mysql_8php.html#a0a75fd392dd6d354a9de85258236e4cf"/>
         </topic>
         <topic label="faq.php" href="faq_8php.html"/>
         <topic label="forum_post.php" href="forum__post_8php.html">
@@ -1502,12 +1545,11 @@
         <topic label="admin" href="dir_1b8c347ac85ea3af2af1e57a7fbc30a7.html">
           <topic label="layouts" href="dir_0749a629a6ceeff9b60041b9d398fb2f.html">
             <topic label="admin_demo.php" href="themes_2admin_2layouts_2admin__demo_8php.html"/>
-            <topic label="error.php" href="error_8php.html"/>
+            <topic label="error.php" href="admin_2layouts_2error_8php.html"/>
             <topic label="menu-default.php" href="admin_2layouts_2menu-default_8php.html">
               <topic label="foreach" href="admin_2layouts_2menu-default_8php.html#a8f340094063bb18e24b748082cdc4f5d"/>
             </topic>
             <topic label="menu-sidebar.php" href="menu-sidebar_8php.html">
-              <topic label="$modIcons" href="menu-sidebar_8php.html#a0c0debef70eacfe380ae112fa9d94bc3"/>
               <topic label="foreach" href="menu-sidebar_8php.html#a8f340094063bb18e24b748082cdc4f5d"/>
             </topic>
             <topic label="page_skeleton.php" href="admin_2layouts_2page__skeleton_8php.html">
@@ -1520,6 +1562,9 @@
         </topic>
         <topic label="default" href="dir_6fa16a25e17f3e4fbf08770da8ebb922.html">
           <topic label="layouts" href="dir_3417569ea5e8682273c24aef2e306296.html">
+            <topic label="error.php" href="default_2layouts_2error_8php.html">
+              <topic label="if" href="default_2layouts_2error_8php.html#a97548b8481dee08bf1bc8014f8107687"/>
+            </topic>
             <topic label="menu-bootstrap3.php" href="menu-bootstrap3_8php.html">
               <topic label="foreach" href="menu-bootstrap3_8php.html#a8f340094063bb18e24b748082cdc4f5d"/>
             </topic>
@@ -1530,7 +1575,7 @@
               <topic label="if" href="default_2layouts_2page__skeleton_8php.html#acb4bdd730e4307d1b7c98caf48e85b5f"/>
             </topic>
             <topic label="report.php" href="default_2layouts_2report_8php.html">
-              <topic label="if" href="default_2layouts_2report_8php.html#a97548b8481dee08bf1bc8014f8107687"/>
+              <topic label="$icons" href="default_2layouts_2report_8php.html#ae316b0935e2be607945825b6b8a2a263"/>
             </topic>
           </topic>
         </topic>

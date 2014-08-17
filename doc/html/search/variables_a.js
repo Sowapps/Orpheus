@@ -1,14 +1,17 @@
 var searchData=
 [
-  ['pdoerror_5ffatal',['PDOERROR_FATAL',['../__pdo_8php.html#a114bc6e3335f4e39a236762f860fbd23',1,'_pdo.php']]],
-  ['pdoerror_5fminor',['PDOERROR_MINOR',['../__pdo_8php.html#a8498a50fb5726390028bbbf9529ffca0',1,'_pdo.php']]],
-  ['pdoexec',['PDOEXEC',['../__pdo_8php.html#abdd0a8a2c32517cc9c4ee58a71713dd9',1,'_pdo.php']]],
-  ['pdofetch',['PDOFETCH',['../__pdo_8php.html#a511a80b5bd6163e9124753c28d12077e',1,'_pdo.php']]],
-  ['pdofetchall',['PDOFETCHALL',['../__pdo_8php.html#ac6395a76d43769e0cf18a01bd4e14e56',1,'_pdo.php']]],
-  ['pdofetchallcol',['PDOFETCHALLCOL',['../__pdo_8php.html#ada6f941c0a623c3fe257301a254610dc',1,'_pdo.php']]],
-  ['pdofetchfirstcol',['PDOFETCHFIRSTCOL',['../__pdo_8php.html#aee98a69242b93af774183503d8ec1e10',1,'_pdo.php']]],
-  ['pdonostmt',['PDONOSTMT',['../__pdo_8php.html#a480a1b7ad97463e205fd53abbec10b74',1,'_pdo.php']]],
-  ['pdoquery',['PDOQUERY',['../__pdo_8php.html#aed044cd6812828a2c0e2835b0e367061',1,'_pdo.php']]],
-  ['pdostmt',['PDOSTMT',['../__pdo_8php.html#acd47d19a3de4e29b3f5efef79612ffb1',1,'_pdo.php']]],
-  ['prod_5flevel',['PROD_LEVEL',['../constants_8php.html#a43979363d85c9f0ba4f7d2d56e097df1',1,'constants.php']]]
+  ['object',['OBJECT',['../class_s_q_l_adapter.html#aa2f1769baa345f301668853c444000e1',1,'SQLAdapter']]],
+  ['oblevel_5finit',['OBLEVEL_INIT',['../index_8php.html#ab046630b7eea3e9aa3589f66f4fb7680',1,'index.php']]],
+  ['opt_5flabel2value',['OPT_LABEL2VALUE',['../core_8php.html#af5f4fb758d456934a29e90d98652893f',1,'core.php']]],
+  ['opt_5flabel_5fis_5fkey',['OPT_LABEL_IS_KEY',['../core_8php.html#af2c130fb10b4a77fc77505d33f52f912',1,'core.php']]],
+  ['opt_5flabel_5fis_5fvalue',['OPT_LABEL_IS_VALUE',['../core_8php.html#a98363d2963615c17b052e79ff458fe91',1,'core.php']]],
+  ['opt_5fpermanentobject',['OPT_PERMANENTOBJECT',['../core_8php.html#ac0ff3f5a6f5e27683113611c6a878004',1,'core.php']]],
+  ['opt_5fvalue',['OPT_VALUE',['../core_8php.html#a67acaca5d4e608df448b20e444bbd07d',1,'core.php']]],
+  ['opt_5fvalue2label',['OPT_VALUE2LABEL',['../core_8php.html#a9d00fce36b1c888db1e0e2e052463d98',1,'core.php']]],
+  ['opt_5fvalue_5fis_5fkey',['OPT_VALUE_IS_KEY',['../core_8php.html#a76358e5cb88b867cbe24a539c8d73c62',1,'core.php']]],
+  ['opt_5fvalue_5fis_5fvalue',['OPT_VALUE_IS_VALUE',['../core_8php.html#adc6e19e127ed9b871d05a067d3da7e2a',1,'core.php']]],
+  ['output_5fapply',['OUTPUT_APPLY',['../dev__entities_8php.html#a4146df6fca11b74ad63e838ea8e348a8',1,'dev_entities.php']]],
+  ['output_5fdisplay',['OUTPUT_DISPLAY',['../dev__entities_8php.html#a0a75fd392dd6d354a9de85258236e4cf',1,'dev_entities.php']]],
+  ['output_5fdlraw',['OUTPUT_DLRAW',['../dev__entities_8php.html#a05532ea1fc3165c632ebf64b54c00e24',1,'dev_entities.php']]],
+  ['output_5fdlzip',['OUTPUT_DLZIP',['../dev__entities_8php.html#a5dcb8171ad02d200da23cd2c33d60d98',1,'dev_entities.php']]]
 ];

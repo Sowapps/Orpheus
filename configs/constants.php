@@ -17,6 +17,8 @@ define('PROD_LEVEL',		0);//Production
 defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);
 // defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev' || strpos($_SERVER['SCRIPT_FILENAME'], 'debug') !== false) ? DEV_LEVEL : PROD_LEVEL);
 
+defifn('DEV_TOOLS',			ERROR_LEVEL == DEV_LEVEL && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
+
 defifn('USER_CLASS',		'SiteUser');
 
 // Useful paths.
