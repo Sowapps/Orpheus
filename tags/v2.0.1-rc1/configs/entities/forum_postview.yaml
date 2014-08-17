@@ -1,0 +1,18 @@
+
+# Forum Post View descriptor (Forum lib)
+
+fields:
+    # Headers
+    create_date:    datetime=sqlDatetime()
+    create_ip:      ip=clientIP()
+    
+    # Identification
+    post_id:    ref
+    user_id:    ref
+    last_date:  datetime    # Last date a post of the forum was edited/added
+
+
+indexes:
+     - INDEX(user_id)
+     - INDEX(user_id, post_id)
+     
