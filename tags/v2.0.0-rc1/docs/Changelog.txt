@@ -1,0 +1,10 @@
+Change Log
+
+* 1.0.1 - 02/08/2014 - R
+- Styling page skeleton
+- Updating bootstrap to 3.0.3
+- Using FontAwesome 4.0.3
+- Implementing Permanent Entity lib
+
+* 1.0 - 10/01/2014 - R701
+- Importing previous version of Orpheus
