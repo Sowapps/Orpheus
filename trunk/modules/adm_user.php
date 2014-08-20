@@ -31,7 +31,7 @@ require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 <div class="row">
 	<div class="col-lg-6">
 		<div class="adduserform">
-		<h2>Ajouter un utilisateur</h2>
+		<h2>Éditer un utilisateur</h2>
 		<div class="form-group">
 			<label>Nom</label>
 			<?php _adm_htmlTextInput('user/fullname', 'form-control'); ?>
