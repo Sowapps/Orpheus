@@ -17,7 +17,7 @@ try {
 
 ?>
 <div class="row">
-	<div class="col-xs-6">
+	<div class="col-xs-8 col-xs-offset-2">
 
 <h1>Community Thread</h1>
 
@@ -28,9 +28,11 @@ if( SiteUser::isLogged() ) {
 	?>
 	<form method="POST" role="form">
 	<fieldset>
-		<legend>Post a new message (<?php echo $USER; ?>)</legend>
-		<textarea rows="3" name="tm[content]"></textarea>
-		<button name="submitAdd" type="submit" class="btn btn-primary">Post</button>
+		<legend>Post a new message (as <?php echo $USER; ?>)</legend>
+		<div class="form-group">
+			<textarea class="form-control" rows="2" name="tm[content]" placeholder="Enter your message..."></textarea>
+		</div>
+		<button name="submitAdd" type="submit" class="btn btn-primary pull-right">Post</button>
 	</fieldset>
 	</form>
 	<?php
