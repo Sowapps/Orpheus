@@ -23,8 +23,8 @@ require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 
 <div class="row">
 	<div class="col-lg-6 col-lg-offset-3">
-		<?php displayReportsHTML(); ?>
 		<h2>Settings</h2>
+		<?php displayReportsHTML(); ?>
 		<div class="form-group">
 			<label>Displayed name</label>
 			<?php _adm_htmlTextInput('user/fullname', 'form-control'); ?>
