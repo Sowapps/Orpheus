@@ -27,11 +27,11 @@ require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 		<?php displayReportsHTML(); ?>
 		<div class="form-group">
 			<label>Displayed name</label>
-			<?php _adm_htmlTextInput('user/fullname', 'form-control'); ?>
+			<?php _adm_htmlTextInput('user/fullname'); ?>
 		</div>
 		<div class="form-group">
 			<label>Email</label>
-			<?php _adm_htmlTextInput('user/email', 'form-control', 'autocomplete="off"'); ?>
+			<?php _adm_htmlTextInput('user/email', '', 'autocomplete="off"'); ?>
 		</div>
 		<div class="form-group">
 			<label>New password</label>
