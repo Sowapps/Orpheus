@@ -1,15 +1,18 @@
 <?php
 
-if( isPOST('submitUpdate') ) {
-	$input	= POST('user');
-	$fields	= array('fullname', 'email');
-	if( !empty($input['password']) ) {
-		$fields[]	= 'password';
+try {
+	if( isPOST('submitUpdate') ) {
+		$input	= POST('user');
+		$fields	= array('fullname', 'email');
+		if( !empty($input['password']) ) {
+			$fields[]	= 'password';
+		}
+		if( $USER->update($input, $fields) ) {
+			reportSuccess('Settings saved.');
+		}
 	}
-	if( $USER->update($input, $fields) ) {
-		reportSuccess('Settings saved.');
-	}
-	
+} catch(UserException $e) {
+	reportError($e);
 }
 $formData = array('user'=>$USER->all);
 
