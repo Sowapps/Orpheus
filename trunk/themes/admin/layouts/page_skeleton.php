@@ -138,7 +138,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 					</ul>
 				</li>
 			*/
-			if( AppUser::isLogged() ) {
+			if( $USER_CLASS::isLogged() ) {
 				?>
 				<li class="dropdown user-dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $USER; ?> <b class="caret"></b></a>
