@@ -1,11 +1,14 @@
 <?php
-$icons	= array(
-	'success'	=> 'fa-check-circle-o',
-	'error'		=> 'fa-exclamation-triangle'
-);
+// $icons	= array(
+// 	'success'	=> 'fa-check-circle-o',
+// 	'error'		=> 'fa-exclamation-triangle'
+// );
 // text(get_defined_vars());
+if( $Type == 'error' ) {
+	$Type	= 'danger';
+}
 ?>
-<div class="report report_<?php echo $Stream; ?> <?php echo $Type; ?>">
-	<?php echo isset($icons[$Type]) ? '<i class="fa '.$icons[$Type].'"></i>' : ''; ?>
-	<div class="report-text"><?php echo $Report; ?></div>
+<div class="alert alert-<?php echo $Type; ?> alert-dismissable">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<?php echo $Report; ?>
 </div>

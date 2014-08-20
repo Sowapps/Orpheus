@@ -42,7 +42,7 @@ if( SiteUser::isLogged() ) {
 ?>
 </div>
 <div class="row">
-	<h3>Thread</h3>
+	<h4>Thread</h4>
 	<ul class="list-group">
 <?php
 foreach( ThreadMessage::get(array('orderby' => 'create_date')) as $tm ) {

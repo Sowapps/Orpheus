@@ -1,42 +1,43 @@
 <?php
-$MODTITLE = 'Options';
 
-if( isPOST('submitEdituser') && isPOST('data') ) {
-	$noReportErrors = array('invalidPassword', 'invalidName', 'invalidEmail', 'invalidAccessLevel');
-	$form = $_POST['data'];
-	$result = $USER->update($_POST['data']);
-	if( $result ) {
+if( isPOST('submitUpdate') ) {
+	$input	= POST('user');
+	$fields	= array('fullname', 'email');
+	if( !empty($input['password']) ) {
+		$fields[]	= 'password';
+	}
+	if( $USER->update($input, $fields) ) {
 		reportSuccess('Settings saved.');
 	}
 	
 	displayReportsHTML($noReportErrors);
-} else {
-	$form = $USER->all;
 }
+$formData = $USER->all;
 
 ?>
-	<form method="POST">
-	<div class="settingsform form">
-		<div class="fullname">
-			<label for="fullname">Displayed name</label>
-			<input class="input" id="fullname" type="text" name="data[fullname]" value="<?php echo (!empty($form['fullname'])) ? $form['fullname'] : ''; ?>"/>
+<form method="POST">
+
+<div class="row">
+	<div class="col-lg-6">
+		<h2>Settings</h2>
+		<div class="form-group">
+			<label>Displayed name</label>
+			<?php _adm_htmlTextInput('user/fullname', 'form-control'); ?>
 		</div>
-		<div class="email_public">
-			<label for="email_public">Public email</label>
-			<input class="input" id="email_public" type="text" name="data[email_public]" value="<?php echo (!empty($form['email_public'])) ? $form['email_public'] : ''; ?>"/>
+		<div class="form-group">
+			<label>Email</label>
+			<?php _adm_htmlTextInput('user/email', 'form-control', 'autocomplete="off"'); ?>
 		</div>
-		<div class="password">
-			<label for="password">Password</label>
-			<input class="input" id="password" type="password" name="data[password]"/>
-			<span class="help">(Only fill to change it)</span>
+		<div class="form-group">
+			<label>New password</label>
+			<?php _adm_htmlPassword('user/password', 'class="form-control" autocomplete="off"'); ?>
 		</div>
-		<div class="password_conf">
-			<label for="password_conf">Password Confirm</label>
-			<input class="input" id="password_conf" type="password" name="data[password_conf]"/>
+		<div class="form-group">
+			<label>Confirm password</label>
+			<?php _adm_htmlPassword('user/password_conf', 'class="form-control" autocomplete="off"'); ?>
 		</div>
-		<div class="settingsSubmit">
-			<input class="submit" type="submit" name="submitEdituser" value="Save"/>
-		</div>
+		<button class="btn btn-default" type="submit" name="submitUpdate">Save</button>
 	</div>
-	</form>
+</div>
+
 </form>
