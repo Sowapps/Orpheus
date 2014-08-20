@@ -5,7 +5,7 @@ $FORM_TOKEN	= new FormToken();
 
 try {
 // 	debug('POST()', POST());
-// 	isPOST() && $FORM_TOKEN->validateForm();
+	isPOST() && $FORM_TOKEN->validateForm();
 	if( isPOST('submitAnalyze') ) {
 // 		$entity	= POST('merge/entity');
 		$COMPARE	= POST('compare');

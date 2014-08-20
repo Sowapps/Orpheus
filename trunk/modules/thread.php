@@ -1,6 +1,9 @@
 <?php
 
+$FORM_TOKEN	= new FormToken();
+
 try {
+	isPOST() && $FORM_TOKEN->validateForm();
 	if( isPOST('submitAdd') ) {
 		if( !SiteUser::isLogged() ) {
 			SiteUser::throwException('forbiddenOperation');
@@ -26,7 +29,7 @@ try {
 if( SiteUser::isLogged() ) {
 	displayReportsHTML();
 	?>
-	<form method="POST" role="form">
+	<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 	<fieldset>
 		<legend>Post a new message (as <?php echo $USER; ?>)</legend>
 		<div class="form-group">
