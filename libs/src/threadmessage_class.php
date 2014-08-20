@@ -17,8 +17,13 @@ class ThreadMessage extends PermanentEntity {
 		return escapeText($this->content);
 	}
 	
-	public function getISOCreateDate() {
-		return strftime('%Y-%m-%d %R', strtotime($this->create_date));
+// 	public function getISOCreateDate() {
+// 		return strftime('%Y-%m-%d %R', strtotime($this->create_date));
+// 	}
+	
+	public function getAdaptiveDate() {
+		$time	= strtotime($this->create_date);
+		return dayTime($time) == dayTime() ? strftime('%R', $time) : strftime('%Y-%m-%d', $time);
 	}
 }
 
