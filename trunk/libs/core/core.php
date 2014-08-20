@@ -1298,7 +1298,7 @@ function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz01234567
  * Returns the timestamp of the current day of $time according to the midnight hour.
 */
 function dayTime($time=null) {
-	if( is_null($time) ) { $time = time(); }
+	if( $time === NULL ) { $time = time(); }
 	return $time - $time%86400 - date('Z');
 }
 
