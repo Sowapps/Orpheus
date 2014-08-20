@@ -16,6 +16,10 @@ class ThreadMessage extends PermanentEntity {
 	public function __toString() {
 		return escapeText($this->content);
 	}
+	
+	public function getISOCreateDate() {
+		return strftime('%Y-%m-%d %R', strtotime($this->create_date));
+	}
 }
 
 ThreadMessage::init();

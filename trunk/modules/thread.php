@@ -48,7 +48,7 @@ if( SiteUser::isLogged() ) {
 foreach( ThreadMessage::get(array('orderby' => 'create_date')) as $tm ) {
 // 			<span class="badge">14</span>
 	echo '
-		<li class="list-group-item"><b>'.escapeText($tm->user_name).'</b> : '.$tm.'</li>';
+		<li class="list-group-item"><b>'.escapeText($tm->user_name).'</b> ['.$tm->getISOCreateDate().'] : '.$tm.'</li>';
 }
 ?>
 	</ul>
