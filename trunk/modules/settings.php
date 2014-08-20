@@ -10,7 +10,6 @@ if( isPOST('submitUpdate') ) {
 		reportSuccess('Settings saved.');
 	}
 	
-	displayReportsHTML($noReportErrors);
 }
 $formData = array('user'=>$USER->all);
 
@@ -20,7 +19,8 @@ require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 <form method="POST">
 
 <div class="row">
-	<div class="col-lg-6">
+	<div class="col-lg-6 col-lg-offset-3">
+		<?php displayReportsHTML(); ?>
 		<h2>Settings</h2>
 		<div class="form-group">
 			<label>Displayed name</label>
