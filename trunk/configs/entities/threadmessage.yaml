@@ -1,0 +1,14 @@
+
+# Entity Thread Message descriptor
+
+fields:
+    create_date:    datetime=sqlDatetime()
+    create_ip:      ip=clientIP()
+    user_id:        ref
+    user_name:      string(6, 50)
+    content:        string(200)
+
+indexes:
+     - INDEX(user_id)
+#     - FULLTEXT(content)
+     
