@@ -14,6 +14,8 @@ if( isPOST('submitUpdate') ) {
 }
 $formData = $USER->all;
 
+require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
+
 ?>
 <form method="POST">
 
