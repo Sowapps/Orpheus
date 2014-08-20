@@ -19,6 +19,8 @@ try {
 <div class="row">
 	<div class="col-xs-6">
 
+<h1>Community Thread</h1>
+
 <div class="row">
 <?php
 if( SiteUser::isLogged() ) {
