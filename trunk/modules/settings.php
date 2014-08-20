@@ -12,7 +12,7 @@ if( isPOST('submitUpdate') ) {
 	
 	displayReportsHTML($noReportErrors);
 }
-$formData = $USER->all;
+$formData = array('user'=>$USER->all);
 
 require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 
