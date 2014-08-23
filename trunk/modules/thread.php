@@ -43,7 +43,7 @@ if( SiteUser::isLogged() ) {
 	<fieldset>
 		<legend>Post a new message (as <?php echo $USER; ?>)</legend>
 		<div class="form-group">
-			<textarea class="form-control" rows="2" name="tm[content]" placeholder="Enter your message..."></textarea>
+			<textarea class="form-control" rows="3" name="tm[content]" placeholder="Enter your message..."></textarea>
 		</div>
 		<button name="submitAdd" type="submit" class="btn btn-primary pull-right">Post</button>
 	</fieldset>
@@ -59,7 +59,7 @@ if( SiteUser::isLogged() ) {
 	<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 	<ul class="list-group">
 <?php
-foreach( ThreadMessage::get(array('orderby' => 'create_date')) as $tm ) {
+foreach( ThreadMessage::get(array('orderby' => 'create_date DESC')) as $tm ) {
 // 			<span class="badge">14</span>
 	echo '
 		<li class="list-group-item">
