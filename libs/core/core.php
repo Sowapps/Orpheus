@@ -718,9 +718,9 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 	$reportHTML = '';
 	foreach( $reports as $type => &$rl ) {
 		foreach( $rl as $report) {
-			$report = "{$report['r']}";
-			if( !in_array($report, $rejected) ) {
-				$reportHTML .= getHTMLReport($stream, $report, $report['d'], $type);
+			$msg = "{$report['r']}";
+			if( !in_array($msg, $rejected) ) {
+				$reportHTML .= getHTMLReport($stream, $msg, $report['d'], $type);
 			}
 		}
 	}
