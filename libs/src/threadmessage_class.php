@@ -14,7 +14,7 @@ class ThreadMessage extends PermanentEntity {
 	protected static $domain	= null;
 	
 	public function __toString() {
-		return escapeText($this->content);
+		return nl2br(escapeText($this->content));
 	}
 	
 // 	public function getISOCreateDate() {
