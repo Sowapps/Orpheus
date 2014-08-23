@@ -288,15 +288,16 @@ try {
 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
-	if( !function_exists('log_error') ) {
-		die($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>');
-	}
-	log_error($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
-	
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
+	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
+	if( !function_exists('log_error') ) {
+		die($report);
+	}
+	log_error($report, $coreAction);
+	unset($report);
 }
 
 try {
@@ -313,6 +314,6 @@ try {
 	}
 	
 } catch(Exception $e) {
-	@log_error($e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
+	@log_error(get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
 // 	die('A fatal display error occured.');
 }

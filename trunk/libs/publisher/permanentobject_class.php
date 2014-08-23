@@ -493,7 +493,7 @@ abstract class PermanentObject {
 	/**
 	 * Removes deleted instances
 	 */
-	public static function clearInstances() {
+	public static function clearDeletedInstances() {
 		if( !isset(static::$instances[static::getClass()]) ) { return; }
 		$instances	= &static::$instances[static::getClass()];
 		foreach( $instances as $id => $obj ) {
@@ -501,6 +501,20 @@ abstract class PermanentObject {
 				unset($instances[$id]);
 			}
 		}
+	}
+	/**
+	 * Removes deleted instances
+	 */
+	public static function clearInstances() {
+		return static::clearDeletedInstances();
+	}
+	
+	/**
+	 * Removes all instances
+	 */
+	public static function clearAllInstances() {
+		if( !isset(static::$instances[static::getClass()]) ) { return; }
+		unset(static::$instances[static::getClass()]);
 	}
 	
 	/** Escape identifier through instance

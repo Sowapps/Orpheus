@@ -588,7 +588,7 @@ function addReport($report, $type, $domain='global') {
 	if( !isset($REPORTS[$REPORT_STREAM][$type]) ) {
 		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
-	$REPORTS[$REPORT_STREAM][$type][] = t($report, $domain);
+	$REPORTS[$REPORT_STREAM][$type][] = array('r'=>t($report, $domain), 'd'=>$domain);
 	return true;
 }
 
@@ -718,9 +718,9 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 	$reportHTML = '';
 	foreach( $reports as $type => &$rl ) {
 		foreach( $rl as $report) {
-			$report = "$report";
+			$report = "{$report['r']}";
 			if( !in_array($report, $rejected) ) {
-				$reportHTML .= getHTMLReport($stream, $report, $type);
+				$reportHTML .= getHTMLReport($stream, $report, $report['d'], $type);
 			}
 		}
 	}
@@ -735,12 +735,12 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
  * Returns a valid HTML report.
  * This function is only a HTML generator.
 */
-function getHTMLReport($stream, $report, $type) {
+function getHTMLReport($stream, $report, $domain, $type) {
 	if( class_exists('HTMLRendering', true) ) {
-		return HTMLRendering::renderReport($report, $type, $stream);
+		return HTMLRendering::renderReport($report, $domain, $type, $stream);
 	} 
 	return '
-		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
+		<div class="report report_'.$stream.' '.$type.' '.$domain.'">'.nl2br($report).'</div>';
 }
 
 //! Displays reports as HTML
@@ -1096,44 +1096,63 @@ function fillInputValue(&$value, $fieldPath, $default=null, $pathRequired=false)
  */
 function convertSpecialChars($string) {
 	// Replaces all letter special characters.
+	// See http://stackoverflow.com/a/6837302/2610855
+	// The answer is improved
 	$string = str_replace(
 		array(
-			'À','à','�?','á','Â','â','Ã','ã','Ä','ä','Å','å','A','a','A','a',
-			'C','c','C','c','Ç','ç',
-			'D','d','�?','d',
-			'È','è','É','é','Ê','ê','Ë','ë','E','e','E','e',
-			'G','g',
-			'Ì','ì','�?','í','Î','î','�?','ï',
-			'L','l','L','l','L','l',
-			'Ñ','ñ','N','n','N','n',
-			'Ò','ò','Ó','ó','Ô','ô','Õ','õ','Ö','ö','Ø','ø','o',
-			'R','r','R','r',
-			'Š','š','S','s','S','s',
-			'T','t','T','t','T','t',
-			'Ù','ù','Ú','ú','Û','û','Ü','ü','U','u',
-			'Ÿ','ÿ','ý','�?',
-			'Ž','ž','Z','z','Z','z',
-			'Þ','þ','�?','ð','ß','Œ','œ','Æ','æ','µ',
-		' '),
-		//'�?','“','‘','’',"'","\n","\r",'£','$','€','¤'), // Deleted
+			'À','à','Á','á','Â','â','Ã','ã','Ä','ä','Æ','æ','Å','å',
+			'ḃ','Ḃ',
+			'ć','Ć','ĉ','Ĉ','č','Č','ċ','Ċ','ç','Ç',
+			'ď','Ď','ḋ','Ḋ','đ','Đ','ð','Ð',
+			'é','É','è','È','ĕ','Ĕ','ê','Ê','ě','Ě','ë','Ë','ė','Ė','ę','Ę','ē','Ē',
+			'ḟ','Ḟ','ƒ','Ƒ',
+			'ğ','Ğ','ĝ','Ĝ','ġ','Ġ','ģ','Ģ',
+			'ĥ','Ĥ','ħ','Ħ',
+			'í','Í','ì','Ì','î','Î','ï','Ï','ĩ','Ĩ','į','Į','ī','Ī','ĵ',
+			'Ĵ',
+			'ķ','Ķ',
+			'ĺ','Ĺ','ľ','Ľ','ļ','Ļ','ł','Ł',
+			'ṁ','Ṁ',
+			'ń','Ń','ň','Ň','ñ','Ñ','ņ','Ņ',
+			'ó','Ó','ò','Ò','ô','Ô','ő','Ő','õ','Õ','ø','Ø','ō','Ō','ơ','Ơ','ö','Ö',
+			'ṗ','Ṗ',
+			'ŕ','Ŕ','ř','Ř','ŗ','Ŗ',
+			'ś','Ś','ŝ','Ŝ','š','Š','ṡ','Ṡ','ş','Ş','ș','Ș','ß',
+			'ť','Ť','ṫ','Ṫ','ţ','Ţ','ț','Ț','ŧ','Ŧ',
+			'ú','Ú','ù','Ù','ŭ','Ŭ','û','Û','ů','Ů','ű','Ű','ũ','Ũ','ų','Ų','ū','Ū','ư','Ư','ü','Ü',
+			'ẃ','Ẃ','ẁ','Ẁ','ŵ','Ŵ','ẅ','Ẅ',
+			'ý','Ý','ỳ','Ỳ','ŷ','Ŷ','ÿ','Ÿ',
+			'ź','Ź','ž','Ž','ż','Ż',
+			'þ','Þ','µ','а','А','б','Б','в','В','г','Г','д','Д','е','Е','ё','Ё','ж','Ж','з','З','и','И','й','Й','к','К','л','Л','м','М','н','Н','о','О','п','П','р','Р','с','С','т','Т','у','У','ф','Ф','х','Х','ц','Ц','ч','Ч','ш','Ш','щ','Щ','ъ' => '', 'Ъ' => '', 'ы','Ы','ь' => '', 'Ь' => '', 'э','Э','ю','Ю','я','Я',
+			' ','&'
+		),
 		array(
-			'A','a','A','a','A','a','A','a','Ae','ae','A','a','A','a','A','a',
-			'C','c','C','c','C','c',
-			'D','d','D','d',
-			'E','e','E','e','E','e','E','e','E','e','E','e',
-			'G','g',
-			'I','i','I','i','I','i','I','i',
-			'L','l','L','l','L','l',
-			'N','n','N','n','N','n',
-			'O','o','O','o','O','o','O','o','Oe','oe','O','o','o',
-			'R','r','R','r',
-			'S','s','S','s','S','s',
-			'T','t','T','t','T','t',
-			'U','u','U','u','U','u','Ue','ue','U','u',
-			'Y','y','Y','y',
-			'Z','z','Z','z','Z','z',
-			'TH','th','DH','dh','ss','OE','oe','AE','ae','u',
-		'_'), $string);
+			'A','a','A','a','A','a','A','a','Ae','ae','AE','ae','A','a',
+			'b','B',
+			'c','C','c','C','c','C','c','C','c','C',
+			'd','D','d','D','d','D','dh','Dh',
+			'e','E','e','E','e','E','e','E','e','E','e','E','e','E','e','E','e','E',
+			'f','F','f','F',
+			'g','G','g','G','g','G','g','G',
+			'h','H','h','H',
+			'i','I','i','I','i','I','i','I','i','I','i','I','i','I','j',
+			'J',
+			'k','K',
+			'l','L','l','L','l','L','l','L',
+			'm','M',
+			'n','N','n','N','n','N','n','N',
+			'o','O','o','O','o','O','o','O','o','O','oe','OE','o','O','o','O','oe','OE',
+			'p','P',
+			'r','R','r','R','r','R',
+			's','S','s','S','s','S','s','S','s','S','s','S','SS',
+			't','T','t','T','t','T','t','T','t','T',
+			'u','U','u','U','u','U','u','U','u','U','u','U','u','U','u','U','u','U','u','U','ue','UE',
+			'w','W','w','W','w','W','w','W',
+			'y','Y','y','Y','y','Y','y','Y',
+			'z','Z','z','Z','z','Z',
+			'th','Th','u','a','a','b','b','v','v','g','g','d','d','e','E','e','E','zh','zh','z','z','i','i','j','j','k','k','l','l','m','m','n','n','o','o','p','p','r','r','s','s','t','t','u','u','f','f','h','h','c','c','ch','ch','sh','sh','sch','sch','','','y','y','','','e','e','ju','ju','ja','ja',
+			'_','and'
+		), $string);
 		//'','','','','','',''), $string);
 	// Now replaces all other special character by nothing.
 	$string = preg_replace('#[^a-z0-9\-\_\.]#i', '', $string);
@@ -1149,7 +1168,7 @@ function convertSpecialChars($string) {
  * Converts string to lower case and converts all special characters. 
 */
 function toSlug($string, $case=null) {
-	$string = str_replace(' ', '', ucwords(str_replace('&', 'and',strtolower($string))));
+	$string = str_replace(' ', '', ucwords(str_replace('&', 'and', strtolower($string))));
 	if( isset($case) ) {
 		if( bintest($case, CAMELCASE) ) {
 			if( $case == LOWERCAMELCASE ) {
@@ -1226,7 +1245,7 @@ function hashString($str) {
  * \return The date using 'dateFormat' translation key
 */
 function d($time=TIME) {
-	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
+	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
 }
 
 //! Gets the date time as string
@@ -1235,7 +1254,7 @@ function d($time=TIME) {
  * \return The date using 'timeFormat' translation key
 */
 function dt($time=TIME) {
-	return !empty($time) ? strftime(t('timeFormat'), $time) : null;
+	return !empty($time) ? strftime(t('timeFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
 }
 
 //! Gets the date as string in SQL format
@@ -1244,7 +1263,7 @@ function dt($time=TIME) {
  * \return The date using sql format
 */
 function sqlDate($time=TIME) {
-	return strftime('%Y-%m-%d', $time);
+	return gmstrftime('%Y-%m-%d', $time);
 }
 
 //! Gets the date time as string in SQL format
@@ -1253,7 +1272,7 @@ function sqlDate($time=TIME) {
  * \return The date using sql format
 */
 function sqlDatetime($time=TIME) {
-	return strftime('%Y-%m-%d %H:%M:%S', $time);
+	return gmstrftime('%Y-%m-%d %H:%M:%S', $time);
 }
 
 //! Gets the client public IP

@@ -118,9 +118,6 @@ function ensure_pdoinstance($Instance=null) {
 				if( empty($InstSettings["dbname"]) ) {
 					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 				}
-// 				if( DEV_TOOLS ) {
-// 					text("new PDO(dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}, {$InstSettings["user"]}, {$InstSettings["passwd"]});");
-// 				}
 				$pdoInstances[$Instance] = new PDO(
 					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
 					$InstSettings["user"], $InstSettings["passwd"]
