@@ -43,16 +43,16 @@ class HTMLRendering extends Rendering {
 		return static::getModelsPath().$model.'.php';
 	}
 	
-	public static function renderReport($report, $type, $stream) {
+	public static function renderReport($report, $domain, $type, $stream) {
 		$report	= nl2br($report);
 		if( file_exists(static::getModelPath('report-'.$type)) ) {
-			return static::doRender('report-'.$type, array('Report'=>$report, 'Type'=>$type, 'Stream'=>$stream));
+			return static::doRender('report-'.$type, array('Report'=>$report, 'Domain'=>$domain, 'Type'=>$type, 'Stream'=>$stream));
 		}
 		if( file_exists(static::getModelPath('report')) ) {
-			return static::doRender('report', array('Report'=>$report, 'Type'=>$type, 'Stream'=>$stream));
+			return static::doRender('report', array('Report'=>$report, 'Domain'=>$domain, 'Type'=>$type, 'Stream'=>$stream));
 		}
 		return '
-		<div class="report report_'.$stream.' '.$type.'">'.nl2br($report).'</div>';
+		<div class="report report_'.$stream.' '.$type.' '.$domain.'">'.nl2br($report).'</div>';
 	}
 	
 	public static function addCSSFile($filename) {

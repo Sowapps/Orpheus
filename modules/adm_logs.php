@@ -33,13 +33,20 @@ foreach( $logs as $logID => $logData ) {
 			<input type="submit" name="submitEraseLogs[<?php echo $logID; ?>]" value="Tout effacer" /><br />
 			<ul><?php
 			foreach( $logLines as $Line ) {
-				$entryData = json_decode($Line, 1);
-				echo "
-				<li style=\"list-style-type: none; margin-bottom: 30px;\">
-					Date: {$entryData['date']}<br />
-					Action: {$entryData['action']}<br />
-					Rapport: {$entryData['report']}
-				</li>";
+				try {
+					$entryData = json_decode($Line, 1);
+					if( !isset($entryData['date']) )	{ $entryData['date']	= 'N/A'; }
+					if( !isset($entryData['action']) )	{ $entryData['action']	= 'N/A'; }
+					if( !isset($entryData['report']) )	{ $entryData['report']	= 'N/A'; }
+					echo "
+					<li style=\"list-style-type: none; margin-bottom: 30px;\">
+						Date: {$entryData['date']}<br />
+						Action: {$entryData['action']}<br />
+						Rapport: {$entryData['report']}
+					</li>";
+				} catch ( Exception $e ) {
+					echo $e;
+				}
 			}
 			?>
 			</ul>
@@ -49,6 +56,7 @@ foreach( $logs as $logID => $logData ) {
 			?>Aucune entrée connue dans ce journal.<?php
 		}
 	} catch(Exception $e) {
-		echo t($e->__toString());
+		echo t("$e");
+// 		echo t($e->__toString());
 	}
 }

@@ -8,7 +8,7 @@ if( !isset($CODE) ) {
 $TCODE	= $CODE==404 ? $CODE : 'other';
 
 log_report('HTTP Error : '.$CODE.' for URI "'.$_SERVER['REQUEST_URI'].'" 
-[ IP: '.$_SERVER['REMOTE_ADDR'].'; agent: '.$_SERVER['HTTP_USER_AGENT'].'; referer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A').' ]', SERVLOGFILENAME, 'HTTP Error', null);
+[ IP: '.$_SERVER['REMOTE_ADDR'].'; agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A').'; referer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A').' ]', SERVLOGFILENAME, 'HTTP Error', null);
 
 ?>
 

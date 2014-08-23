@@ -64,6 +64,9 @@ if( isPOST('entities') && is_array(POST('entities')) ) {
 		}
 	}
 }
+} catch( SQLException $e ) {
+	HTMLRendering::doDisplay('error', array('date' => date('c'), 'report' => $e->getMessage(), 'action' => $e->getAction()));
+
 } catch( UserException $e ) {
 	reportError($e);
 }

@@ -203,10 +203,4 @@ abstract class Rendering {
 // 		text(__FILE__.':'.__LINE__);
 		return true;
 	}
-	
-// 	final public static function endCurrentLayout() {
-// 		if( ob_get_level() <= OBLEVEL_INIT+1 ) { return false; }
-// 		ob_end_flush();
-// 		return true;
-// 	}
 }

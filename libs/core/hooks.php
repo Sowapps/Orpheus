@@ -10,15 +10,23 @@ using('hooks');
 
 //! Callback for Hook 'runModule'
 Hook::register('runModule', function ($Module) {
-	if( defined('TERMINAL') ) {
-		return;
-	}
+	if( defined('TERMINAL') ) { return; }
+	$path		= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+	$isNotRoot	= !empty($path) && $path[strlen($path)-1] != '/';
+
+// 	text('PATH => '.PATH);
+// 	debug('_SERVER', $_SERVER);
+// 	text('_SERVER[REQUEST_URI] => '.$_SERVER['REQUEST_URI']);
+// 	text('last char of request uri is different from / => '.b($_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/'));
+// 	text('Current path: '.$path);
+// 	die('Stopped for tests');
+
 	//If user try to override url rewriting and the requested page is not root.
-	if( empty($_SERVER['REDIRECT_rewritten']) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' && $Module != 'remote' ) {
+	if( $Module != 'remote' && empty($_SERVER['REDIRECT_rewritten']) && $isNotRoot ) {
 		permanentRedirectTo(u($Module));
 	}
 	// If the module is the default but with wrong link.
-	if( $Module == DEFAULTMOD && empty($GLOBALS['Action']) && !empty($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'][strlen($_SERVER['REQUEST_URI'])-1] != '/' ) {
+	if( $Module == DEFAULTMOD && empty($GLOBALS['Action']) && $isNotRoot ) {
 		permanentRedirectTo(DEFAULTLINK);
 	}
 });
