@@ -101,6 +101,10 @@ class SiteUser extends User {
 		return $this->canDo('entity_delete');// Only App admins can do it.
 	}
 	
+	public function canThreadMessageManage($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
+		return $this->canDo('threadmessage_manage');// Only App admins can do it.
+	}
+	
 
 	// 		** CHECK METHODS **
 
