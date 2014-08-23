@@ -22,7 +22,7 @@ class ThreadMessage extends PermanentEntity {
 // 	}
 	
 	public function getAdaptiveDate() {
-		$time	= strtotime($this->create_date);
+		$time	= strtotime($this->create_date.' GMT');
 		return dayTime($time) == dayTime() ? strftime('%R', $time) : strftime('%Y-%m-%d', $time);
 	}
 }
