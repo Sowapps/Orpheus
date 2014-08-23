@@ -63,7 +63,7 @@ foreach( ThreadMessage::get(array('orderby' => 'create_date')) as $tm ) {
 // 			<span class="badge">14</span>
 	echo '
 		<li class="list-group-item">
-			'.($USER_CAN_THREADMESSAGE_MANAGE ? '<div class="btn-group tm-actions"><button name="submitDelete['.$tm->id().']" type="submit" class="btn btn-default"><i class="fa fa-trash"></i></button></div>' : '').'
+			'.($USER_CAN_THREADMESSAGE_MANAGE ? '<div class="btn-group tm-actions"><button name="submitDelete['.$tm->id().']" type="submit" class="btn btn-default"><i class="fa fa-trash-o"></i></button></div>' : '').'
 			['.$tm->getAdaptiveDate().'] <b>'.escapeText($tm->user_name).'</b> : '.$tm.'</li>';
 }
 ?>
@@ -78,5 +78,12 @@ foreach( ThreadMessage::get(array('orderby' => 'create_date')) as $tm ) {
 	position: absolute;
 	top:	0;
 	right:	0;
+	display:	none;
+}
+.list-group-item:hover .tm-actions {
+	display:	block;
+}
+.tm-actions > button {
+	padding:	4px 8px;
 }
 </style>
