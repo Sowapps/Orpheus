@@ -41,6 +41,8 @@ defifn('LAYOUT_MENU',		'menu-bootstrap3');
 // LIB Initernationalization
 defifn('LANGDIR',			'languages/');
 defifn('LANG',				'en_US');
+defifn('LANGBASE',			'en');
+// defifn('LANGBASE',			array_shift(explode('_', LANG, 2)));
 defifn('LOCALE',			LANG.'.utf8');
 
 
