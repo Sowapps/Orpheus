@@ -1,0 +1,82 @@
+
+# Primary types
+
+string([[min=0,] max=65535])
+	 MySQL:
+	IF max <= 200
+		Type = VARCHAR
+	ELSE
+		Type = TEXT
+	
+number([[[precision=0,] min=-2147483648,] max=2147483647])
+	 MySQL:
+	Unsigned = MIN >= 0
+	IF precision==0
+		IF max < 128*(1+1*Unsigned)
+			Type = TINYINT
+		ELSE IF max < 32768*(1+1*Unsigned)
+			Type = SMALLINT
+		ELSE IF max < 8388608*(1+1*Unsigned)
+			Type = MEDIUMINT
+		ELSE IF max < 2147483648*(1+1*Unsigned)
+			Type = INT
+		ELSE IF max < 9223372036854775808*(1+1*Unsigned)
+			Type = BIGINT
+	ELSE
+		IF strlen((INT) max)+precision < 25
+			Type = FLOAT
+		ELSE
+			Type = DOUBLE
+
+date(country)
+	MySQL Type = DATE
+	validator = is_date
+
+datetime(country)
+	MySQL Type = DATETIME
+	validator = is_date
+
+# Derived Types
+
+email()
+	inherit = string(0, 100)
+	validator = is_email
+	
+password([min=6, [max=30]])
+	inherit = string(0, 128)
+	formatter = hashString
+	MySQL Type = VARCHAR(128)
+
+phone(country)
+	inherit = string(0, 15)
+	validator = is_phone
+	
+url()
+	inherit = string(0, 15)
+	validator = is_phone
+	
+ip([version])
+	inherit = string(0, 15)
+	validator = is_phone
+		
+integer([[min=-2147483648,] max=2147483647])
+	inherit = number(0, min, max)
+	validator = ctype_digit
+		
+ref()
+	inherit = integer(0, 4294967295)
+		
+enum(source)
+	# source could be (in this order)
+	# - an array (JSON) => Search in this array								[NOT USED]
+	# - a String => Look in a config file for this name, to find an array	[NOT USED]
+	# - a callback => Expect the callback return an array
+	inherit = string
+	validator = isValueOfEnum
+
+
+# Indexes
+
+INDEX(field, ...)
+UNIQUE(field, ...)
+FULLTEXT(field, ...)
