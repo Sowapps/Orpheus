@@ -1,0 +1,6 @@
+
+<ul class="nav menu {{ menu }}">
+{% for item in items %}
+	<li class="item {{ item.module }}{% if item.current %} current active{% endif %}"><a href="{{ item.link }}"><span>{{ item.label }}</span></a></li>
+{% endfor %}
+</ul>
