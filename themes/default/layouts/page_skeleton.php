@@ -74,7 +74,8 @@ foreach(HTMLRendering::$jsURLs as $url) {
 	echo '
 	<script type="text/javascript" src="'.$url.'"></script>';
 }
-if( HOST == '' ) {
+if( ERROR_LEVEL===PROD_LEVEL && HOST === 'orpheus-framework.com' ) {
+	// Replace by your own & remove HOST condition
 	?>
 	
 	
