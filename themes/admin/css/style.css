@@ -40,6 +40,13 @@ table.table input[type="radio"], table.table input[type="checkbox"] {
 
 /* Bootstrap customization */
 
+/* Fix bootstrap transform incompatibility */
+.navbar-fixed-top, .navbar-fixed-bottom {
+	-webkit-transform: initial;
+	-o-transform: initial;
+	transform: initial;
+}
+
 /* Fit the parent title panel for accordion */
 .panel-title > a {
 	display:	inherit;
