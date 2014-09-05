@@ -53,8 +53,8 @@ defifn('DEFAULTPATH',		'');
 
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
 defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
-defifn('HOST',				(!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
-defifn('PATH',				(!defined("TERMINAL")) ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
+defifn('HOST',				!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
+defifn('PATH',				!defined("TERMINAL") ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
 defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
 
