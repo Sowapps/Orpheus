@@ -35,6 +35,9 @@ Hook::register('checkModule', function () {
 			$USER->logout('loggedFromAnotherComputer');
 			return;
 		}
+	} else
+	if( isset($_SERVER['PHP_AUTH_USER']) && Config::get('httpauth_enabled') ) {
+		$USER_CLASS::httpAuthenticate();
 	}
 });
 

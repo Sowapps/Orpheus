@@ -41,3 +41,9 @@ class UserException extends Exception {
 		return '';
 	}
 }
+
+class NotFoundException extends UserException {
+	public function __construct($domain=null, $message=null) {
+		parent::__construct($message ? $message : 'notFound', $domain);
+	}
+}

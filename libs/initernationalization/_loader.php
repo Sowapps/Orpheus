@@ -49,7 +49,8 @@ function t($k, $domain='global', $values=array()) {
 		$values = $domain;
 		$domain = 'global';
 	}
-	$r = hasTranslation($k, $domain) ? $LANG[$domain][$k] : $k;
+	$k	= "$k";
+	$r	= hasTranslation($k, $domain) ? $LANG[$domain][$k] : $k;
 	while( isset($r[0]) && $r[0]=='%' ) {
 		$k = substr($r, 1);
 		if( hasTranslation($k, $domain) ) {
