@@ -235,6 +235,14 @@ abstract class PermanentObject {
 		if( $this->isDeleted() ) { return; }
 		return static::delete($this->id());
 	}
+	public function free() {
+		if( $this->remove() ) {
+			$this->data			= null;
+			$this->modFields	= null;
+			return true;
+		}
+		return false;
+	}
 	
 	/** Reloads fields from database
 	 * @param $field The field to reload, default is null (all fields).
@@ -886,6 +894,10 @@ abstract class PermanentObject {
 	*/
 	public static function throwException($message) {
 		throw new UserException($message, static::$domain);
+	}
+	
+	public static function throwNotFound($message=null) {
+		throw new NotFoundException(static::$domain, $message);
 	}
 	
 	/** Translate text according to the object domain

@@ -50,7 +50,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 		</div>
 		<div class="collapse navbar-collapse">
 <?php
-SiteUser::is_login() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
+$USER_CLASS::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
 if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 ?>
 

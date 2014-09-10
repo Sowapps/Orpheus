@@ -151,34 +151,68 @@ class AbstractUser extends PermanentEntity {
 	
 	// *** METHODES STATIQUES ***
 	
-	//! Logs in a user from data
-	/*!
-	 * \param $data The data for user authentification.
-	 * 
-	 * Log in a user from the given data.
-	 * It tries to validate given data, in case of errors, UserException are thrown.
-	 */
-	public static function userLogin($data) {
-		$name = self::checkName($data);
-		$password = self::checkPassword($data);
-		//self::checkForEntry() does not return password and id now.
+// 	//! Logs in an user from data
+// 	/*!
+// 	 * \param $data The data for user authentification.
+// 	 * 
+// 	 * Log in a user from the given data.
+// 	 * It tries to validate given data, in case of errors, UserException are thrown.
+// 	 */
+// 	public static function userLogin($data) {
+// 		//self::checkForEntry() does not return password and id now.
 		
+// 	}
+
+	//! Log in an user from HTTP authentication
+	public static function httpLogin() {
 		$user = static::get(array(
-			'where' => 'name LIKE '.static::formatValue($name),
-			'number' => 1,
+			'where' => 'name LIKE '.static::formatValue($_SERVER['PHP_AUTH_USER']),
+// 			'number' => 1,
 			'output' => SQLAdapter::OBJECT
 		));
 		if( empty($user) )  {
-			static::throwException("unknownName");
+			static::throwNotFound();
 		}
-		if( $user->password != $password )  {
+		if( $user->password != static::hashPassword($_SERVER['PHP_AUTH_PW']) )  {
 			static::throwException("wrongPassword");
 		}
 		$user->logout();
 		$user->login();
 	}
+
+	//! Create user from HTTP authentication
+	/*!
+	 * \return User object
+	 * \warning Require other data than name and password ard optional
+	 *
+	 * Create user from HTTP authentication
+	 */
+	public static function httpCreate() {
+		return static::createAndGet(array('name'=>$_SERVER['PHP_AUTH_USER'], 'password'=>$_SERVER['PHP_AUTH_PW']));
+	}
+
+	//! Create user from HTTP authentication
+	/*!
+	 * \return User object
+	 * \warning Require other data than name and password ard optional
+	 *
+	 * Create user from HTTP authentication
+	 */
+	public static function httpAuthenticate() {
+		try { 
+			static::httpLogin();
+			return true;
+		} catch( NotFoundException $e ) {
+			if( Config::get('httpauth_autocreate') ) {
+				$user	= static::httpCreate();
+				$user->login();
+				return true;
+			}
+		} catch( UserException $e ) { }
+		return false;
+	}
 	
-	//! Hashes a password
+	//! Hash a password
 	/*!
 	 * \param $str The clear password.
 	 * \return The hashed string.

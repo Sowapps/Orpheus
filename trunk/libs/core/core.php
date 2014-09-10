@@ -236,7 +236,9 @@ function log_debug($report, $action='') {
  * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
 */
 function log_hack($report, $action='', $message=null) {
-	log_report($report, defined("HACKLOGFILENAME") ? HACKLOGFILENAME : '.hack', $action, $message);
+	global $USER;
+	log_report($report.' 
+[ IP: '.$_SERVER['REMOTE_ADDR'].'; User: '.(isset($USER) ? "$USER #".$USER->id() : 'N/A').'; agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'N/A').'; referer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'N/A').' ]', defined("HACKLOGFILENAME") ? HACKLOGFILENAME : '.hack', $action, $message);
 }
 
 //! Logs a system error.
