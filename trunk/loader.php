@@ -71,7 +71,7 @@ function pathOf($commonPath, $silent=false) {
  * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
  */
 function existsPathOf($commonPath, &$path=null) {
-	return !is_null($path=pathOf($commonPath, true));
+	return ($path=pathOf($commonPath, true))!==NULL;
 }
 
 //! Adds the path to the known paths.

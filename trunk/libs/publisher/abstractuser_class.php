@@ -158,10 +158,25 @@ class AbstractUser extends PermanentEntity {
 // 	 * Log in a user from the given data.
 // 	 * It tries to validate given data, in case of errors, UserException are thrown.
 // 	 */
-// 	public static function userLogin($data) {
-// 		//self::checkForEntry() does not return password and id now.
+	public static function userLogin($data) {
+		$name = self::checkName($data);
+		$password = self::checkPassword($data);
+		//self::checkForEntry() does not return password and id now.
 		
-// 	}
+		$user = static::get(array(
+			'where' => 'name LIKE '.static::formatValue($name),
+			'number' => 1,
+			'output' => SQLAdapter::OBJECT
+		));
+		if( empty($user) )  {
+			static::throwException("unknownName");
+		}
+		if( $user->password != $password )  {
+			static::throwException("wrongPassword");
+		}
+		$user->logout();
+		$user->login();
+	}
 
 	//! Log in an user from HTTP authentication
 	public static function httpLogin() {

@@ -11,6 +11,7 @@
 // // 	'dev_entities'	=> 'fa-gears',
 // );
 
+if( empty($items) ) { return; }
 echo '
 <ul class="nav navbar-nav side-nav menu '.$menu.'">';
 foreach( $items as $item ) {
