@@ -19,7 +19,10 @@ if( isPOST('data') ) {
 <div class="jumbotron">
 	<h1>Hello PHP developer !</h1>
 	<p>This is the home page of my new PHP Framework, named Orpheus. This one is made for you because you want to develop your website quickly with something easy-to-use, optimized, secured and standardized with the simplest way to do it and the maximum customizing capabilities.</p>
-	<p><a href="/downloads/latest/" class="btn btn-primary btn-large">&darr; Download &darr;</a></p>
+	<p>
+		<a href="/downloads/latest/orpheus-fullpack-v2.0.1-rc2.zip" class="btn btn-primary btn-large">&darr; Download Full pack&darr;</a>
+		<a href="/downloads/latest/" class="link">&darr; Choose your pack &darr;</a>
+	</p>
 </div>
 <?php
 displayReportsHTML();
