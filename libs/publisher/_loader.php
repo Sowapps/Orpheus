@@ -29,6 +29,10 @@ Hook::register('checkModule', function () {
 	if( $USER_CLASS::isLogged() ) {
 		//global $USER;// Do not work in this context.
 		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
+		if( !$USER->reload() ) {
+			// User does not exist anymore
+			$USER->logout();
+		}
 		
 		// If login ip is different from current one, protect against cookie stealing
 		if( Config::get('deny_multiple_connections', false) && !$USER->isLogin(User::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {

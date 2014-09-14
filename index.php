@@ -243,13 +243,11 @@ try {
 	
 	if( empty($Module) || !is_name($Module) ) {
 		header("HTTP/1.1 400 Bad Request");
-		$CODE	= 400; $Module = 'http_error';
-// 		throw new UserException('invalidModuleName');
+		$CODE	= 400; $Module = 'http_error'; $Format = 'html';
 	}
 	if( !existsPathOf(MODDIR.$Module.'.php') ) {
 		header("HTTP/1.1 404 Not Found");
-		$CODE	= 404; $Module = 'http_error';
-// 		throw new UserException('inexistantModule');
+		$CODE	= 404; $Module = 'http_error'; $Format = 'html';
 	}
 	
 	$allowedFormats = Config::get('module_formats');
