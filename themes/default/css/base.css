@@ -9,11 +9,13 @@ h1, h2, h3, h4 {
 }
 
 a,.link {
-	text-decoration: underline;
 /* 	color: #88ba14; */
 	cursor: pointer;
 	border: 0;
 	background: none;
+}
+.link {
+	text-decoration: underline;
 }
 button {
 	font-family: inherit;
