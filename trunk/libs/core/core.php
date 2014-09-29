@@ -18,6 +18,7 @@ function redirectTo($destination=null) {
 		$destination = $_SERVER['SCRIPT_NAME'];
 	}
 	header('Location: '.$destination);
+	die();
 }
 
 //! Redirects permanently the client to a destination by HTTP

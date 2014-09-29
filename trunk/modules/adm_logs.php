@@ -1,4 +1,6 @@
 <?php
+$AdminPage = 1;
+
 $logs = array(
 	'pdo' => array('label' => t('PDO'), 'file' => LOGSPATH.PDOLOGFILENAME),
 	'sys' => array('label' => t('System'), 'file' => LOGSPATH.SYSLOGFILENAME),

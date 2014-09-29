@@ -283,7 +283,8 @@ class TypeNumber extends TypeDescriptor {
 	}
 
 	public function validate($Field, &$value, $inputData, &$ref) {
-		$value	= str_replace(',', '.', $value);
+		$value	= sanitizeNumber($value);
+// 		$value	= str_replace(array(tc('decimal_point'), tc('thousands_sep')), array('.', ''), $value);
 		if( !is_numeric($value) ) {
 			throw new FE('notNumeric');
 		}
@@ -295,14 +296,18 @@ class TypeNumber extends TypeDescriptor {
 		}
 	}
 	
+	public static function getMaxLengthOf($number, $decimals) {
+		return strlen((int) $number) + ($decimals ? 1+$decimals : 0);
+	}
 	public function getHTMLInputAttr($Field) {
-		$min	= $Field->arg('min');
-		$max	= $Field->arg('max');
-		return array('maxlength'=>max(strlen($min), strlen($max)), 'min'=>$min, 'max'=>$max, 'type'=>'number');
+		$min		= $Field->arg('min');
+		$max		= $Field->arg('max');
+		$decimals	= $Field->arg('decimals');
+		return array('maxlength'=>max(static::getMaxLengthOf($min, $decimals), static::getMaxLengthOf($max, $decimals)), 'min'=>$min, 'max'=>$max, 'type'=>'number');
 	}
 	
 	public function htmlInputAttr($args) {
-		return ' maxlength="'.strlen($args->max).'"';
+		return ' maxlength="'.max(static::getMaxLengthOf($args->min, $args->decimals), static::getMaxLengthOf($args->max, $args->decimals)).'"';
 	}
 }
 EntityDescriptor::registerType(new TypeNumber());
@@ -606,7 +611,16 @@ class TypeEnum extends TypeString {
 		parent::validate($Field, $value, $inputData, $ref);
 		if( !isset($Field->args->source) ) { return; }
 		$values		= call_user_func($Field->args->source, $inputData, $ref);
-		if( (is_id($value) || !isset($values[$value])) && !in_array($value, $values) ) {
+// 		debug('is_id('.$value.') => '.b(is_id($value)));
+// 		debug('isset($values[$value]) => '.b(isset($values[$value])));
+		if( is_id($value) ) {
+			if( !isset($values[$value]) ) {
+				throw new FE('notEnumValue');
+			}
+			// Get the real enum value from index
+			$value	= $values[$value];
+		} else
+		if( !isset($values[$value]) && !in_array($value, $values) ) {
 			throw new FE('notEnumValue');
 		}
 		// Make it unable to optimize
