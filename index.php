@@ -205,19 +205,39 @@ try {
 	Hook::trigger('startSession');
 
 	if( !defined('TERMINAL') ) {
-		$NO_EXCEPTION = 1;
-	
+
+		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
+		// Set session cookie parameters, HTTPS session is only HTTPS
+		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
+
 		//PHP is unable to manage exception thrown during session_start()
+		$NO_EXCEPTION	= 1;
 		session_start();
-		if( !isset($_SESSION['ORPHEUS']) ) {
-			$_SESSION['ORPHEUS'] = array('LAST_REGENERATEID' => 0);
+		$NO_EXCEPTION = 0;
+		
+// 		text('clientIP() => '.clientIP());
+		
+// 		debug('$_SESSION start', $_SESSION);
+		$initSession	= function() {
+// 			die('Init session');
+			$_SESSION	= array('ORPHEUS' => array('LAST_REGENERATEID'=>TIME, 'CLIENT_IP'=>clientIP()));
 			if( defined('SESSION_VERSION') ) {
 				$_SESSION['ORPHEUS']['SESSION_VERSION']	= SESSION_VERSION;
 			}
+		};
+		if( !isset($_SESSION['ORPHEUS']) ) {
+			$initSession();
 		} else // Outdated session version
 		if( defined('SESSION_VERSION') && (!isset($_SESSION['ORPHEUS']['SESSION_VERSION']) || floor($_SESSION['ORPHEUS']['SESSION_VERSION']) != floor(SESSION_VERSION)) ) {
-			$_SESSION = array('ORPHEUS'=>array('LAST_REGENERATEID' => 0, 'SESSION_VERSION' => SESSION_VERSION));
+			$initSession();
 			throw new UserException('outdatedSession');
+		} else // Old session (Will be removed)
+		if( !isset($_SESSION['ORPHEUS']['CLIENT_IP']) ) {
+			$_SESSION['ORPHEUS']['CLIENT_IP']	= clientIP();
+		} else // Hack Attemp' - Session stolen
+		if( $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
+			$initSession();
+			throw new UserException('movedSession');
 		}
 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
 			// Only version >= 4.3.3 can regenerate session id without losing data
@@ -227,11 +247,11 @@ try {
 				session_regenerate_id();
 			}
 		}
+		unset($initSession);
 	
-		$NO_EXCEPTION = 0;
 	}
 	
-	$Module = GET('module');
+	$Module	= GET('module');
 	
 	if( empty($Module) ) {
 // 		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;

@@ -75,12 +75,10 @@ class User extends AbstractStatus {
 	//! Log out this user from the current session.
 	public function logout($reason=null) {
 		global $USER;
-		if( !$this->login ) {
-			return false;
-		}
-		$this->login = self::NOT_LOGGED;
-		$_SESSION['USER'] = $USER = null;
-		$_SESSION['LOGOUT_REASON'] = $reason;
+		if( !$this->login ) { return false; }
+		$this->login	= self::NOT_LOGGED;
+		$_SESSION['USER']	= $USER	= null;
+		$_SESSION['LOGOUT_REASON']	= $reason;
 		return true;
 	}
 
