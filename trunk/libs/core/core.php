@@ -17,9 +17,7 @@ function redirectTo($destination=null) {
 	if( !isset($destination) ) {
 		$destination = $_SERVER['SCRIPT_NAME'];
 	}
-// 	log_debug(debug_backtrace(), 'redirectTo()');
 	header('Location: '.$destination);
-	die();
 }
 
 //! Redirects permanently the client to a destination by HTTP
@@ -992,6 +990,9 @@ function htmlDisabledAttr() {
 	global $FORM_EDITABLE;
 	return $FORM_EDITABLE ? '' : ' disabled';
 }
+function valueField($v) {
+	return 'value="'.addcslashes($v, '"').'"';
+}
 function htmlFileUpload($fieldPath, $addAttr='') {
 	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.htmlDisabledAttr().'/>';
 }
@@ -1005,7 +1006,7 @@ function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 }
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null, $type='text') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.(isset($formatter) ? call_user_func($formatter, $value) : $value).'" ' : '').$addAttr.htmlDisabledAttr().'/>';
+	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.valueField(isset($value) ? isset($formatter) ? call_user_func($formatter, $value) : $value.' ' : '').$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
@@ -1015,12 +1016,12 @@ function htmlTextArea($fieldPath, $default='', $addAttr='') {
 
 function htmlHidden($fieldPath, $default='', $addAttr='') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(isset($value) ? 'value="'.$value.'" ' : '').$addAttr.htmlDisabledAttr().'/>';
+	return '<input type="hidden" name="'.apath_html($fieldPath).'" '.(isset($value) ? valueField($value).' ' : '').$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 	$selected = fillInputValue($value, $fieldPath) ? $value==$elValue : $default;
-	return '<input type="radio" name="'.apath_html($fieldPath).'" value="'.$elValue.'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
+	return '<input type="radio" name="'.apath_html($fieldPath).'" '.valueField($elValue).' '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
@@ -1032,7 +1033,7 @@ function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 
 function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
 	if( is_null($label) ) { $label = $elValue; }
-	return '<option value="'.$elValue.'"'.($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
+	return '<option '.valueField($elValue).($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
 }
 
 function apath_html($apath) {

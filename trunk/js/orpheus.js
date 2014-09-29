@@ -122,8 +122,6 @@ function requestAutocomplete(what, term, response) {
 
 String.prototype.capitalize = function () {
 	if( typeof this != "string" ) {
-//		console.log("Unable to capitalize non-string value.");
-//		console.log(this);
 		return this;
 	}
 	return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
