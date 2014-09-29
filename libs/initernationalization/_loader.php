@@ -98,6 +98,38 @@ function hasTranslation($k, $domain='global') {
 	return isset($LANG[$domain]) && isset($LANG[$domain][$k]);
 }
 
+//! Checks if this key exists.
+/*!
+ * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * \param $default The default translation value to use.
+ * \param $domain The domain to apply the Key. Default value is 'global'.
+ * \return The translation
+ * 
+ * This function translate the key without any fail.
+ * If no translation is available, it uses the $default.
+ */
+function translate($k, $default, $domain='global') {
+	return hasTranslation($k, $domain) ? t($k, $domain) : $default;
+}
+
 if( hasTranslation('locale') ) {
 	setlocale(LC_ALL, t('locale'));
+} else
+if( defined('LOCALE') ) {
+	setlocale(LC_ALL, LOCALE);
 }
+
+function tc($k) {
+	if( hasTranslation($k) ) { return t($k); }
+	global $LOCALECONV;
+	if( !isset($LOCALECONV) ) {
+		$LOCALECONV	= localeconv();
+	}
+	return isset($LOCALECONV[$k]) ? $LOCALECONV[$k] : null;
+}
+
+function sanitizeNumber($value) {
+	return str_replace(array(tc('decimal_point'), tc('thousands_sep')), array('.', ''), $value);
+}
+
+// define('LOCALE_', 'decimal_point');

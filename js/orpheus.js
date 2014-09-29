@@ -85,17 +85,18 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 	prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
 	sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
 	dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-	s = '',
+//	s = '',
 	toFixedFix = function (n, prec) {
 		var k = Math.pow(10, prec);
-		return '' + Math.round(n * k) / k;
+		return '' + Math.floor(n * k) / k;
 	};
 	// Fix for IE parseFloat(0.55).toFixed(0) = 0;
-	s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+	s = toFixedFix(n, prec).split('.');
+//	s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
 	if (s[0].length > 3) {
 		s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
 	}
-	if ((s[1] || '').length < prec) {
+	if( (s[1] || '').length < prec ) {
 		s[1] = s[1] || '';
 		s[1] += new Array(prec - s[1].length + 1).join('0');
 	}
@@ -122,6 +123,8 @@ function requestAutocomplete(what, term, response) {
 
 String.prototype.capitalize = function () {
 	if( typeof this != "string" ) {
+//		console.log("Unable to capitalize non-string value.");
+//		console.log(this);
 		return this;
 	}
 	return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
