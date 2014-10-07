@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['yaml',['YAML',['../class_y_a_m_l.html',1,'']]]
+  ['unknownkeyexception',['UnknownKeyException',['../class_unknown_key_exception.html',1,'']]],
+  ['user',['User',['../class_user.html',1,'']]],
+  ['userexception',['UserException',['../class_user_exception.html',1,'']]]
 ];

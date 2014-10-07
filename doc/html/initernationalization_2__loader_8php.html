@@ -106,6 +106,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a6e6d59264ed542a63ce0ab5bcc186706"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initernationalization_2__loader_8php.html#a6e6d59264ed542a63ce0ab5bcc186706">hasTranslation</a> ($k, $domain='global')</td></tr>
 <tr class="memdesc:a6e6d59264ed542a63ce0ab5bcc186706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this key exists.  <a href="#a6e6d59264ed542a63ce0ab5bcc186706">More...</a><br /></td></tr>
 <tr class="separator:a6e6d59264ed542a63ce0ab5bcc186706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa7c51794318ee66251e5e9e4d2eec85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initernationalization_2__loader_8php.html#afa7c51794318ee66251e5e9e4d2eec85">translate</a> ($k, $default, $domain='global')</td></tr>
+<tr class="memdesc:afa7c51794318ee66251e5e9e4d2eec85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this key exists.  <a href="#afa7c51794318ee66251e5e9e4d2eec85">More...</a><br /></td></tr>
+<tr class="separator:afa7c51794318ee66251e5e9e4d2eec85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a682a206f7af47edafb43ad08ce00d3f5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a>(<a class="el" href="initernationalization_2__loader_8php.html#a6e6d59264ed542a63ce0ab5bcc186706">hasTranslation</a>('locale')) <br class="typebreak" />
+<a class="el" href="index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7">else</a> <a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a>(defined('LOCALE'))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initernationalization_2__loader_8php.html#a682a206f7af47edafb43ad08ce00d3f5">tc</a> ($k)</td></tr>
+<tr class="separator:a682a206f7af47edafb43ad08ce00d3f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d7bb6b13b54cb2403e423bb81414131"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="initernationalization_2__loader_8php.html#a4d7bb6b13b54cb2403e423bb81414131">sanitizeNumber</a> ($value)</td></tr>
+<tr class="separator:a4d7bb6b13b54cb2403e423bb81414131"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a012901536af6ae29192885e4ae70c798"></a>
@@ -200,6 +208,22 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a4d7bb6b13b54cb2403e423bb81414131"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sanitizeNumber </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a736d7464faa3ce2e5954af8cedde55b0"></a>
 <div class="memitem">
 <div class="memproto">
@@ -247,10 +271,68 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a682a206f7af47edafb43ad08ce00d3f5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a> (<a class="el" href="initernationalization_2__loader_8php.html#a6e6d59264ed542a63ce0ab5bcc186706">hasTranslation</a>('locale')) <a class="el" href="index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7">else</a> <a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a> (defined('LOCALE')) tc </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$k</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="afa7c51794318ee66251e5e9e4d2eec85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">translate </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$default</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em> = <code>'global'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$k</td><td>The Key to translate, prefer to use an internal language (English CamelCase). </td></tr>
+    <tr><td class="paramname">$default</td><td>The default translation value to use. </td></tr>
+    <tr><td class="paramname">$domain</td><td>The domain to apply the Key. Default value is 'global'. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The translation</dd></dl>
+<p>This function translate the key without any fail. If no translation is available, it uses the $default. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 17 2014 16:03:46 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 7 2014 14:46:55 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['sanitizenumber',['sanitizeNumber',['../initernationalization_2__loader_8php.html#a4d7bb6b13b54cb2403e423bb81414131',1,'_loader.php']]],
   ['save',['save',['../class_permanent_object.html#afc8a3c62679cf00ade9f15fb2a6d6132',1,'PermanentObject\save()'],['../interface_session_interface.html#afc8a3c62679cf00ade9f15fb2a6d6132',1,'SessionInterface\save()']]],
   ['select',['select',['../class_s_q_l_adapter___m_s_s_q_l.html#a4b47a5293b88f0b286240b28c16650f9',1,'SQLAdapter_MSSQL\select()'],['../class_s_q_l_adapter___my_s_q_l.html#a4b47a5293b88f0b286240b28c16650f9',1,'SQLAdapter_MySQL\select()'],['../class_s_q_l_adapter___pg_s_q_l.html#a4b47a5293b88f0b286240b28c16650f9',1,'SQLAdapter_PgSQL\select()'],['../class_s_q_l_adapter.html#a4b47a5293b88f0b286240b28c16650f9',1,'SQLAdapter\select()']]],
   ['selfinit',['selfInit',['../class_permanent_object.html#a2fb553e0bfa325495125bba5240e9c9f',1,'PermanentObject']]],

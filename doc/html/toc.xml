@@ -134,7 +134,6 @@
       <topic label="FE" href="class_f_e.html"/>
       <topic label="FieldDescriptor" href="class_field_descriptor.html">
         <topic label="__construct" href="class_field_descriptor.html#a1d7fc17011d3bb8cb8c2bb074d3bab04"/>
-        <topic label="__get" href="class_field_descriptor.html#a4537dad3b44254124991341cc91b28fb"/>
         <topic label="__toString" href="class_field_descriptor.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
         <topic label="arg" href="class_field_descriptor.html#a3e2f179d9bdb1021afe80b88525263b9"/>
         <topic label="getDefault" href="class_field_descriptor.html#adc30a2a4d3e48cb6aee21562afbc4022"/>
@@ -227,9 +226,11 @@
         <topic label="removeArgs" href="class_invalid_field_exception.html#ae17159bf68d7510949c769abd0ad1e61"/>
       </topic>
       <topic label="LangGenerator" href="class_lang_generator.html">
-        <topic label="generate" href="class_lang_generator.html#a4e8ae5f31a0596ea37d1c25793e89781"/>
-        <topic label="getErrorsForField" href="class_lang_generator.html#ac634354a6910b6d97cb42453842a23b0"/>
-        <topic label="getRows" href="class_lang_generator.html#a0de3695b6cc57323fe4b01003e8a6c70"/>
+        <topic label="getErrorsForField" href="class_lang_generator.html#a1ea54fa92f1d96a2d06d3611d5fa2f6e"/>
+        <topic label="getRows" href="class_lang_generator.html#a8d0d53ce088a132f5caa03e616d51c76"/>
+      </topic>
+      <topic label="NotFoundException" href="class_not_found_exception.html">
+        <topic label="__construct" href="class_not_found_exception.html#ad0dac556add225012b6e3ff9d1c5e480"/>
       </topic>
       <topic label="OSessionHandler" href="class_o_session_handler.html">
         <topic label="__construct" href="class_o_session_handler.html#a7dced1d9bc8a14f0af12e4597122d48c"/>
@@ -254,6 +255,7 @@
         <topic label="__set" href="class_permanent_object.html#a83c2703c91959192f759992ad5640b67"/>
         <topic label="__toString" href="class_permanent_object.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
         <topic label="equals" href="class_permanent_object.html#af4fac78fe485eeb7ae8c7f58feed49cb"/>
+        <topic label="free" href="class_permanent_object.html#a5ad8044ee4b8a2c8bdb8b5c3dc786424"/>
         <topic label="getValue" href="class_permanent_object.html#a037d90908c0536940ec8e037c77bf1ec"/>
         <topic label="id" href="class_permanent_object.html#a087060b582403885d08e89ad894ecc5d"/>
         <topic label="isDeleted" href="class_permanent_object.html#ae7c7709308082027ea2b479a7bc6c980"/>
@@ -293,6 +295,7 @@
         <topic label="canForumPostDelete" href="class_site_user.html#a30e4edc346d27672d6e489345161e090"/>
         <topic label="canForumPostUpdate" href="class_site_user.html#aeb58939e2bcc4500b4cbb77534b4832d"/>
         <topic label="canSeeDevelopers" href="class_site_user.html#a65a6a68426c822cbc1cfd1e70737418a"/>
+        <topic label="canThreadMessageManage" href="class_site_user.html#ac45980b251f5acb7eb4b87a46fc84cd9"/>
         <topic label="canUserCreate" href="class_site_user.html#aeec2a3efb8bea0f75c7347671c365e60"/>
         <topic label="canUserDelete" href="class_site_user.html#a101456b30d3679e5be3d40ea324e8536"/>
         <topic label="canUserEdit" href="class_site_user.html#a0d2d73789a6c8586adffda94d2bbaa6a"/>
@@ -313,7 +316,7 @@
         <topic label="__construct" href="class_s_q_l_adapter.html#ad9dd28d0a51efe758bd9ed3de6101c09"/>
         <topic label="delete" href="class_s_q_l_adapter.html#a14fcaf804c3491576d15890c9bf8fb39"/>
         <topic label="escapeIdentifier" href="class_s_q_l_adapter.html#ac558b368fb92f0b93f3a9b345e005218"/>
-        <topic label="formatString" href="class_s_q_l_adapter.html#a8595ebd032e92e3c0a8c61723642275a"/>
+        <topic label="formatString" href="class_s_q_l_adapter.html#a49c14e4a5d33116513865e5e3006c807"/>
         <topic label="formatValue" href="class_s_q_l_adapter.html#a0644ffdfd583dcd917f1340d4cf03f9e"/>
         <topic label="insert" href="class_s_q_l_adapter.html#af51fb4755e8f274ace0331d3f8661272"/>
         <topic label="lastID" href="class_s_q_l_adapter.html#a3cdd22b1d83c31678b0f4e6b166e3d4e"/>
@@ -370,6 +373,10 @@
         <topic label="getCreate" href="class_s_q_l_generator___my_s_q_l.html#a21efff4f97c65a1e55df85d945f97b8d"/>
         <topic label="getIndexDefinition" href="class_s_q_l_generator___my_s_q_l.html#a04a1e38272f195e131f4150c8aca75eb"/>
         <topic label="matchEntity" href="class_s_q_l_generator___my_s_q_l.html#a7077619d79e4b1aa8a30fea2af3cfe98"/>
+      </topic>
+      <topic label="ThreadMessage" href="class_thread_message.html">
+        <topic label="__toString" href="class_thread_message.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
+        <topic label="getAdaptiveDate" href="class_thread_message.html#afdc354437f7f97011dee35e2ff424963"/>
       </topic>
       <topic label="TwigRendering" href="class_twig_rendering.html">
         <topic label="render" href="class_twig_rendering.html#a23ee064149796514c2da969166c12754"/>
@@ -530,6 +537,7 @@
         <topic label="UnknownKeyException" href="class_unknown_key_exception.html"/>
         <topic label="UserException" href="class_user_exception.html">
           <topic label="InvalidFieldException" href="class_invalid_field_exception.html"/>
+          <topic label="NotFoundException" href="class_not_found_exception.html"/>
         </topic>
       </topic>
       <topic label="FieldDescriptor" href="class_field_descriptor.html"/>
@@ -558,6 +566,7 @@
           <topic label="Forum" href="class_forum.html"/>
           <topic label="ForumPost" href="class_forum_post.html"/>
           <topic label="ForumPostView" href="class_forum_post_view.html"/>
+          <topic label="ThreadMessage" href="class_thread_message.html"/>
         </topic>
       </topic>
       <topic label="Rendering" href="class_rendering.html">
@@ -761,7 +770,7 @@
             <topic label="generatePassword" href="core_8php.html#aee50268fbd0c80f8876e938b74f7bab0"/>
             <topic label="GET" href="core_8php.html#a91eb0facfcc633e3dfcd94670f15d6eb"/>
             <topic label="getFormData" href="core_8php.html#a8fb3befda17ddc4317b8d2c344fa7e0e"/>
-            <topic label="getHTMLReport" href="core_8php.html#a331f962363bedf10c0f4f36f937ec0ad"/>
+            <topic label="getHTMLReport" href="core_8php.html#abc9d857588b22c4ed4b7332717151358"/>
             <topic label="getMimeType" href="core_8php.html#ace68727734fe855e7528fc2340097d87"/>
             <topic label="getReports" href="core_8php.html#a480c5a2501bb87c213632b27a4a5fa54"/>
             <topic label="getReportsHTML" href="core_8php.html#af0f6edd7daf70c980d7cf92e1838a29d"/>
@@ -817,6 +826,7 @@
             <topic label="transferReportStream" href="core_8php.html#a0c13b1d31c29a9d3d22211d96ad4f88c"/>
             <topic label="userID" href="core_8php.html#aa48a81cea8bc5e5733969c3a5fd69f34"/>
             <topic label="using" href="core_8php.html#a6c366c5bfd3fdec91cdd334d52f03ce3"/>
+            <topic label="valueField" href="core_8php.html#a33710a85368df202c35de4e35dad7bd9"/>
             <topic label="$FORM_EDITABLE" href="core_8php.html#a14d1d0d1685aad55639b884b7f54bab7"/>
             <topic label="OPT_LABEL2VALUE" href="core_8php.html#af5f4fb758d456934a29e90d98652893f"/>
             <topic label="OPT_LABEL_IS_KEY" href="core_8php.html#af2c130fb10b4a77fc77505d33f52f912"/>
@@ -866,6 +876,9 @@
               <topic label="getText" href="class_user_exception.html#a8a2999b1d846c0a7bc77187e28facd99"/>
               <topic label="setDomain" href="class_user_exception.html#ab0340a671be422e71deec8716cbafff0"/>
               <topic label="$domain" href="class_user_exception.html#aef9cf198312d2f89238a8e8e2f0f67f3"/>
+            </topic>
+            <topic label="NotFoundException" href="class_not_found_exception.html">
+              <topic label="__construct" href="class_not_found_exception.html#ad0dac556add225012b6e3ff9d1c5e480"/>
             </topic>
           </topic>
           <topic label="validators.php" href="validators_8php.html">
@@ -993,7 +1006,6 @@
           <topic label="fielddescriptor_class.php" href="fielddescriptor__class_8php.html">
             <topic label="FieldDescriptor" href="class_field_descriptor.html">
               <topic label="__construct" href="class_field_descriptor.html#a1d7fc17011d3bb8cb8c2bb074d3bab04"/>
-              <topic label="__get" href="class_field_descriptor.html#a4537dad3b44254124991341cc91b28fb"/>
               <topic label="__toString" href="class_field_descriptor.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
               <topic label="arg" href="class_field_descriptor.html#a3e2f179d9bdb1021afe80b88525263b9"/>
               <topic label="getDefault" href="class_field_descriptor.html#adc30a2a4d3e48cb6aee21562afbc4022"/>
@@ -1009,9 +1021,8 @@
           </topic>
           <topic label="langgenerator_class.php" href="langgenerator__class_8php.html">
             <topic label="LangGenerator" href="class_lang_generator.html">
-              <topic label="generate" href="class_lang_generator.html#a4e8ae5f31a0596ea37d1c25793e89781"/>
-              <topic label="getErrorsForField" href="class_lang_generator.html#ac634354a6910b6d97cb42453842a23b0"/>
-              <topic label="getRows" href="class_lang_generator.html#a0de3695b6cc57323fe4b01003e8a6c70"/>
+              <topic label="getErrorsForField" href="class_lang_generator.html#a1ea54fa92f1d96a2d06d3611d5fa2f6e"/>
+              <topic label="getRows" href="class_lang_generator.html#a8d0d53ce088a132f5caa03e616d51c76"/>
             </topic>
           </topic>
           <topic label="permanententity_class.php" href="permanententity__class_8php.html">
@@ -1102,7 +1113,10 @@
             <topic label="_t" href="initernationalization_2__loader_8php.html#a012901536af6ae29192885e4ae70c798"/>
             <topic label="hasTranslation" href="initernationalization_2__loader_8php.html#a6e6d59264ed542a63ce0ab5bcc186706"/>
             <topic label="loadLangFile" href="initernationalization_2__loader_8php.html#aa4028fbf0e1b3444cec29878cef208e9"/>
+            <topic label="sanitizeNumber" href="initernationalization_2__loader_8php.html#a4d7bb6b13b54cb2403e423bb81414131"/>
             <topic label="t" href="initernationalization_2__loader_8php.html#a736d7464faa3ce2e5954af8cedde55b0"/>
+            <topic label="tc" href="initernationalization_2__loader_8php.html#a682a206f7af47edafb43ad08ce00d3f5"/>
+            <topic label="translate" href="initernationalization_2__loader_8php.html#afa7c51794318ee66251e5e9e4d2eec85"/>
           </topic>
         </topic>
         <topic label="mirror" href="dir_9dfc11bfb58954005e5006372c924e0f.html">
@@ -1201,6 +1215,7 @@
               <topic label="__set" href="class_permanent_object.html#a83c2703c91959192f759992ad5640b67"/>
               <topic label="__toString" href="class_permanent_object.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
               <topic label="equals" href="class_permanent_object.html#af4fac78fe485eeb7ae8c7f58feed49cb"/>
+              <topic label="free" href="class_permanent_object.html#a5ad8044ee4b8a2c8bdb8b5c3dc786424"/>
               <topic label="getValue" href="class_permanent_object.html#a037d90908c0536940ec8e037c77bf1ec"/>
               <topic label="id" href="class_permanent_object.html#a087060b582403885d08e89ad894ecc5d"/>
               <topic label="isDeleted" href="class_permanent_object.html#ae7c7709308082027ea2b479a7bc6c980"/>
@@ -1362,7 +1377,7 @@
               <topic label="__construct" href="class_s_q_l_adapter.html#ad9dd28d0a51efe758bd9ed3de6101c09"/>
               <topic label="delete" href="class_s_q_l_adapter.html#a14fcaf804c3491576d15890c9bf8fb39"/>
               <topic label="escapeIdentifier" href="class_s_q_l_adapter.html#ac558b368fb92f0b93f3a9b345e005218"/>
-              <topic label="formatString" href="class_s_q_l_adapter.html#a8595ebd032e92e3c0a8c61723642275a"/>
+              <topic label="formatString" href="class_s_q_l_adapter.html#a49c14e4a5d33116513865e5e3006c807"/>
               <topic label="formatValue" href="class_s_q_l_adapter.html#a0644ffdfd583dcd917f1340d4cf03f9e"/>
               <topic label="insert" href="class_s_q_l_adapter.html#af51fb4755e8f274ace0331d3f8661272"/>
               <topic label="lastID" href="class_s_q_l_adapter.html#a3cdd22b1d83c31678b0f4e6b166e3d4e"/>
@@ -1427,6 +1442,7 @@
               <topic label="canForumPostDelete" href="class_site_user.html#a30e4edc346d27672d6e489345161e090"/>
               <topic label="canForumPostUpdate" href="class_site_user.html#aeb58939e2bcc4500b4cbb77534b4832d"/>
               <topic label="canSeeDevelopers" href="class_site_user.html#a65a6a68426c822cbc1cfd1e70737418a"/>
+              <topic label="canThreadMessageManage" href="class_site_user.html#ac45980b251f5acb7eb4b87a46fc84cd9"/>
               <topic label="canUserCreate" href="class_site_user.html#aeec2a3efb8bea0f75c7347671c365e60"/>
               <topic label="canUserDelete" href="class_site_user.html#a101456b30d3679e5be3d40ea324e8536"/>
               <topic label="canUserEdit" href="class_site_user.html#a0d2d73789a6c8586adffda94d2bbaa6a"/>
@@ -1442,6 +1458,12 @@
               <topic label="getRoleText" href="class_site_user.html#a0bec894ef37e34698421cc3096436991"/>
               <topic label="setPostView" href="class_site_user.html#a84da8df7aa5f31f990dd375c11d33848"/>
               <topic label="$postViews" href="class_site_user.html#a0dbd6f616169085df41b07c891cfa216"/>
+            </topic>
+          </topic>
+          <topic label="threadmessage_class.php" href="threadmessage__class_8php.html">
+            <topic label="ThreadMessage" href="class_thread_message.html">
+              <topic label="__toString" href="class_thread_message.html#a7516ca30af0db3cdbf9a7739b48ce91d"/>
+              <topic label="getAdaptiveDate" href="class_thread_message.html#afdc354437f7f97011dee35e2ff424963"/>
             </topic>
           </topic>
         </topic>
@@ -1468,6 +1490,7 @@
       </topic>
       <topic label="modules" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">
         <topic label="adm_logs.php" href="adm__logs_8php.html">
+          <topic label="$AdminPage" href="adm__logs_8php.html#a8abba690ba5f56194ddba76c12394557"/>
           <topic label="$logs" href="adm__logs_8php.html#a1985bbbc5349038a012f02c97f5276e6"/>
         </topic>
         <topic label="adm_user.php" href="adm__user_8php.html">
@@ -1490,9 +1513,11 @@
           <topic label="OUTPUT_DLZIP" href="dev__entities_8php.html#a5dcb8171ad02d200da23cd2c33d60d98"/>
         </topic>
         <topic label="dev_entities_merge.php" href="dev__entities__merge_8php.html">
+          <topic label="compareTable" href="dev__entities__merge_8php.html#ac7dee7db595e71cecea0396c1101ddf6"/>
           <topic label="$FORM_TOKEN" href="dev__entities__merge_8php.html#aad7a936b420edadfe0629a4140449b4a"/>
           <topic label="$selected" href="dev__entities__merge_8php.html#a62527ab8d454b7bab631da5e46e8f899"/>
           <topic label="foreach" href="dev__entities__merge_8php.html#a8e192fa1b20f6762c8d269dc68008347"/>
+          <topic label="if" href="dev__entities__merge_8php.html#a76f710111a0a9b5bede0ade49549c3db"/>
           <topic label="try" href="dev__entities__merge_8php.html#abe4cc9788f52e49485473dc699537388"/>
         </topic>
         <topic label="faq.php" href="faq_8php.html"/>
@@ -1523,8 +1548,7 @@
         <topic label="mssql.php" href="mssql_8php.html"/>
         <topic label="sample_twig.php" href="sample__twig_8php.html"/>
         <topic label="settings.php" href="settings_8php.html">
-          <topic label="$MODTITLE" href="settings_8php.html#ae0549d3a658774a55784938cb8a2ac9f"/>
-          <topic label="else" href="settings_8php.html#abfb930cd7de6352e6d432d4f5e7bbaab"/>
+          <topic label="try" href="settings_8php.html#abe4cc9788f52e49485473dc699537388"/>
         </topic>
         <topic label="test_ed.php" href="test__ed_8php.html">
           <topic label="getEnumValues" href="test__ed_8php.html#afbe9c3671e7d60927f0064b5b220cc7f"/>
@@ -1533,6 +1557,11 @@
         </topic>
         <topic label="test_entity.php" href="test__entity_8php.html">
           <topic label="try" href="test__entity_8php.html#abe4cc9788f52e49485473dc699537388"/>
+        </topic>
+        <topic label="thread.php" href="thread_8php.html">
+          <topic label="$FORM_TOKEN" href="thread_8php.html#aad7a936b420edadfe0629a4140449b4a"/>
+          <topic label="$USER_CAN_THREADMESSAGE_MANAGE" href="thread_8php.html#a0dfe7b021cc461c1405efc957e62e1af"/>
+          <topic label="try" href="thread_8php.html#abe4cc9788f52e49485473dc699537388"/>
         </topic>
         <topic label="user_login.php" href="user__login_8php.html">
           <topic label="$formregister" href="user__login_8php.html#adacdcd9983487cfd48d7d6f5203e3546"/>
@@ -1551,9 +1580,11 @@
             </topic>
             <topic label="menu-sidebar.php" href="menu-sidebar_8php.html">
               <topic label="foreach" href="menu-sidebar_8php.html#a8f340094063bb18e24b748082cdc4f5d"/>
+              <topic label="if" href="menu-sidebar_8php.html#a9b4b8464820c2ded3dc1267ff35fd699"/>
             </topic>
             <topic label="page_skeleton.php" href="admin_2layouts_2page__skeleton_8php.html">
               <topic label="foreach" href="admin_2layouts_2page__skeleton_8php.html#a72945a1755e430729ba265232cb22e8f"/>
+              <topic label="if" href="admin_2layouts_2page__skeleton_8php.html#a8e688d06b706800e6c8e4bbd60a2aeaa"/>
             </topic>
             <topic label="report.php" href="admin_2layouts_2report_8php.html">
               <topic label="$icons" href="admin_2layouts_2report_8php.html#ae316b0935e2be607945825b6b8a2a263"/>
@@ -1575,7 +1606,7 @@
               <topic label="if" href="default_2layouts_2page__skeleton_8php.html#acb4bdd730e4307d1b7c98caf48e85b5f"/>
             </topic>
             <topic label="report.php" href="default_2layouts_2report_8php.html">
-              <topic label="$icons" href="default_2layouts_2report_8php.html#ae316b0935e2be607945825b6b8a2a263"/>
+              <topic label="if" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c"/>
             </topic>
           </topic>
         </topic>
@@ -1641,6 +1672,7 @@
         <topic label="s" href="globals_s.html"/>
         <topic label="t" href="globals_t.html"/>
         <topic label="u" href="globals_u.html"/>
+        <topic label="v" href="globals_v.html"/>
         <topic label="w" href="globals_w.html"/>
       </topic>
       <topic label="Functions" href="globals_func.html"/>

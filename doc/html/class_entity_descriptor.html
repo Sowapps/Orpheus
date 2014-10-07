@@ -114,6 +114,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0829809ba45c68eb2c432eb259000e1e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#a0829809ba45c68eb2c432eb259000e1e">getFieldsName</a> ()</td></tr>
 <tr class="separator:a0829809ba45c68eb2c432eb259000e1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a948b7e11e44750a35b5cf8f1237b0f64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#a948b7e11e44750a35b5cf8f1237b0f64">validateFieldValue</a> ($field, &amp;$value, $inputData=array(), $ref=null)</td></tr>
+<tr class="memdesc:a948b7e11e44750a35b5cf8f1237b0f64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate a value for a specified field, an exception is thrown if the value is invalid.  <a href="#a948b7e11e44750a35b5cf8f1237b0f64">More...</a><br /></td></tr>
 <tr class="separator:a948b7e11e44750a35b5cf8f1237b0f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad63e5eae3ceb7e0ef0c840dac7fb21ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entity_descriptor.html#ad63e5eae3ceb7e0ef0c840dac7fb21ef">validate</a> (array &amp;$uInputData, $fields=null, $ref=null, &amp;$errCount=0)</td></tr>
 <tr class="separator:ad63e5eae3ceb7e0ef0c840dac7fb21ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,10 +212,10 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramtype">string</td><td class="paramname">$name</td><td></td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">FieldDescriptor[]</td><td>$fields </td></tr>
-    <tr><td class="paramtype"></td><td class="paramname">stdClass[]</td><td>$indexes </td></tr>
-    <tr><td class="paramtype">string</td><td class="paramname">$class</td><td></td></tr>
+    <tr><td class="paramname">$name</td><td>string </td></tr>
+    <tr><td class="paramname">$fields</td><td><a class="el" href="class_field_descriptor.html">FieldDescriptor</a>[] </td></tr>
+    <tr><td class="paramname">$indexes</td><td>stdClass[] </td></tr>
+    <tr><td class="paramname">$class</td><td>string </td></tr>
   </table>
   </dd>
 </dl>
@@ -550,6 +551,21 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype">string</td><td class="paramname">$field</td><td>The field to use </td></tr>
+    <tr><td class="paramtype">mixed</td><td class="paramname">$value</td><td>input|output value to validate for this field </td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">$inputData</td><td>string[] </td></tr>
+    <tr><td class="paramtype"><a class="el" href="class_permanent_entity.html" title="The permanent entity class. ">PermanentEntity</a></td><td class="paramname">$ref</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_invalid_field_exception.html">InvalidFieldException</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -684,7 +700,7 @@ Static Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 17 2014 16:03:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 7 2014 14:46:56 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

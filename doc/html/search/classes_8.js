@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['osessionhandler',['OSessionHandler',['../class_o_session_handler.html',1,'']]]
+  ['notfoundexception',['NotFoundException',['../class_not_found_exception.html',1,'']]]
 ];

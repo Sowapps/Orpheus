@@ -10,7 +10,7 @@
  * The author is still dedicated to the continued improvement and growth of this framework.\n
  * \n
  * The framewok is designed in a way to seperate job and technical instructions, this is the Separation of concerns.\n
- * Libraries do the technical part, Objects link Model and Controller, Modules are the Main controller (The job) and the template are the view.\n
+ * Libraries do the technical part, Objects link Model and Controller, Modules are the Main controller (The job) and the template are part of the view.\n
  * Only the core package is necessary, you can use the MVC design pattern if you want, all needed tools are provided, but its use is not mandatory.\n
  * \n
  * The official website for the framework is http://orpheus-framework.com/.\n
