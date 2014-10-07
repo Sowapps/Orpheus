@@ -100,19 +100,19 @@ abstract class SQLAdapter {
 
 	//! Formats SQL string
 	/*!
-	 * \param $String The string to format.
+	 * \param string $str The string to format.
 	 * \return The formatted string.
 	 * 
 	 * Formats the given string as an SQL string.
 	*/
-	public function formatString($String) {
-		return "'".str_replace("'", "''", "$String")."'";
+	public function formatString($str) {
+		return "'".str_replace("'", "''", "$str")."'";
 // 		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
 	}
 
 	//! Formats SQL value
 	/*!
-	 * \param $String The value to format.
+	 * \param string $value The value to format.
 	 * \return The formatted value.
 	 * 
 	 * Formats the given value to the matching SQL type.
@@ -242,7 +242,7 @@ abstract class SQLAdapter {
 
 	//! The static function to quote
 	/*!
-	 * \param $String The string to quote.
+	 * \param string $value The string to quote.
 	 * \param $Instance The db instance used to send the query.
 	 * \return The quoted string.
 	 * \sa SQLAdapter::formatValue()

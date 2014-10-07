@@ -76,7 +76,7 @@ abstract class PermanentObject {
 	}
 	
 	/** Magic getter
-	 * @param $name Name of the property to get
+	 * @param string $name Name of the property to get
 	 * @return The value of field $name
 	 * 
 	 * Gets the value of field $name.
@@ -139,10 +139,13 @@ abstract class PermanentObject {
 		return $this->getTable().'#'.$this->id();
 	}
 	
-	/** Updates this permanent object
+	/** 
+	 * Update this permanent object from input data array
 	 * @param $uInputData The input data we will check and extract, used by children.
 	 * @param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
 	 * @param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
+	 * @param $errCount Output parameter for the number of occurred errors validating fields.
+	 * @param $successCount Output parameter for the number of successes updating fields.
 	 * @return 1 in case of success, else 0.
 	 * @overrideit
 	 * @see runForUpdate()
@@ -410,8 +413,8 @@ abstract class PermanentObject {
 	}
 	
 	/** Load a permanent object
-	 * @param mixed|mixed[] $in The object ID to load or a valid array of the object's data
-	 * @return static The object
+	 * @param	$in mixed|mixed[] The object ID to load or a valid array of the object's data
+	 * @return	static The object
 	 * @see static::get()
 	 * 
 	 * Loads the object with the ID $id or the array data.

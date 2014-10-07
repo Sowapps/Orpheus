@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a03790dbeab61ad2ee2ee469ee838b80c inherit pub_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets this permanent object's unique ID.  <a href="#a03790dbeab61ad2ee2ee469ee838b80c">More...</a><br /></td></tr>
 <tr class="separator:a03790dbeab61ad2ee2ee469ee838b80c inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a112534940b53a4548096a044ab0da206 inherit pub_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a112534940b53a4548096a044ab0da206">update</a> ($uInputData, $fields, $noEmptyWarning=true, &amp;$errCount=0, &amp;$successCount=0)</td></tr>
-<tr class="memdesc:a112534940b53a4548096a044ab0da206 inherit pub_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updates this permanent object.  <a href="#a112534940b53a4548096a044ab0da206">More...</a><br /></td></tr>
+<tr class="memdesc:a112534940b53a4548096a044ab0da206 inherit pub_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update this permanent object from input data array.  <a href="#a112534940b53a4548096a044ab0da206">More...</a><br /></td></tr>
 <tr class="separator:a112534940b53a4548096a044ab0da206 inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace639024468b35171e9bd8741cb1c29e inherit pub_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#ace639024468b35171e9bd8741cb1c29e">runForUpdate</a> ($data, $oldData)</td></tr>
 <tr class="memdesc:ace639024468b35171e9bd8741cb1c29e inherit pub_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs for Update.  <a href="#ace639024468b35171e9bd8741cb1c29e">More...</a><br /></td></tr>
@@ -171,6 +171,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afc8a3c62679cf00ade9f15fb2a6d6132 inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9a1fb07dca963c2c9a8ffe66b45ded inherit pub_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#aff9a1fb07dca963c2c9a8ffe66b45ded">remove</a> ()</td></tr>
 <tr class="separator:aff9a1fb07dca963c2c9a8ffe66b45ded inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ad8044ee4b8a2c8bdb8b5c3dc786424 inherit pub_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a5ad8044ee4b8a2c8bdb8b5c3dc786424">free</a> ()</td></tr>
+<tr class="separator:a5ad8044ee4b8a2c8bdb8b5c3dc786424 inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00bc3d80e6f1f8dcb11fcf693a7ac28d inherit pub_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a00bc3d80e6f1f8dcb11fcf693a7ac28d">reload</a> ($field=null)</td></tr>
 <tr class="memdesc:a00bc3d80e6f1f8dcb11fcf693a7ac28d inherit pub_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reloads fields from database.  <a href="#a00bc3d80e6f1f8dcb11fcf693a7ac28d">More...</a><br /></td></tr>
 <tr class="separator:a00bc3d80e6f1f8dcb11fcf693a7ac28d inherit pub_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,9 +244,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a94b66f53622e6e469baca69a163d9624 inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a94b66f53622e6e469baca69a163d9624">delete</a> ($in)</td></tr>
 <tr class="memdesc:a94b66f53622e6e469baca69a163d9624 inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes a permanent object.  <a href="#a94b66f53622e6e469baca69a163d9624">More...</a><br /></td></tr>
 <tr class="separator:a94b66f53622e6e469baca69a163d9624 inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3f3523fcacb3acce77964c6e85735dc inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#af3f3523fcacb3acce77964c6e85735dc">clearDeletedInstances</a> ()</td></tr>
+<tr class="memdesc:af3f3523fcacb3acce77964c6e85735dc inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes deleted instances.  <a href="#af3f3523fcacb3acce77964c6e85735dc">More...</a><br /></td></tr>
+<tr class="separator:af3f3523fcacb3acce77964c6e85735dc inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d80bfdafc81db3fb2ba81e18a338533 inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a9d80bfdafc81db3fb2ba81e18a338533">clearInstances</a> ()</td></tr>
 <tr class="memdesc:a9d80bfdafc81db3fb2ba81e18a338533 inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes deleted instances.  <a href="#a9d80bfdafc81db3fb2ba81e18a338533">More...</a><br /></td></tr>
 <tr class="separator:a9d80bfdafc81db3fb2ba81e18a338533 inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ce7600a45830215d7c1fffb6c5e58ac inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a3ce7600a45830215d7c1fffb6c5e58ac">clearAllInstances</a> ()</td></tr>
+<tr class="memdesc:a3ce7600a45830215d7c1fffb6c5e58ac inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all instances.  <a href="#a3ce7600a45830215d7c1fffb6c5e58ac">More...</a><br /></td></tr>
+<tr class="separator:a3ce7600a45830215d7c1fffb6c5e58ac inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4225ba3b930c061d1df6a7dd9bae5318 inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a4225ba3b930c061d1df6a7dd9bae5318">escapeIdentifier</a> ($Identifier)</td></tr>
 <tr class="memdesc:a4225ba3b930c061d1df6a7dd9bae5318 inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Escape identifier through instance.  <a href="#a4225ba3b930c061d1df6a7dd9bae5318">More...</a><br /></td></tr>
 <tr class="separator:a4225ba3b930c061d1df6a7dd9bae5318 inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -307,6 +315,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a112af28cce58523a3f2e75596446a65a inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a112af28cce58523a3f2e75596446a65a">throwException</a> ($message)</td></tr>
 <tr class="memdesc:a112af28cce58523a3f2e75596446a65a inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw an <a class="el" href="class_user_exception.html" title="The user exception class. ">UserException</a>.  <a href="#a112af28cce58523a3f2e75596446a65a">More...</a><br /></td></tr>
 <tr class="separator:a112af28cce58523a3f2e75596446a65a inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81677d93a5244f1ce17a6923ed23bed2 inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#a81677d93a5244f1ce17a6923ed23bed2">throwNotFound</a> ($message=null)</td></tr>
+<tr class="separator:a81677d93a5244f1ce17a6923ed23bed2 inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7dee4a6a15010c7b37c10b9c6c6bd0f inherit pub_static_methods_class_permanent_object"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_permanent_object.html#ae7dee4a6a15010c7b37c10b9c6c6bd0f">text</a> ($text)</td></tr>
 <tr class="memdesc:ae7dee4a6a15010c7b37c10b9c6c6bd0f inherit pub_static_methods_class_permanent_object"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate text according to the object domain.  <a href="#ae7dee4a6a15010c7b37c10b9c6c6bd0f">More...</a><br /></td></tr>
 <tr class="separator:ae7dee4a6a15010c7b37c10b9c6c6bd0f inherit pub_static_methods_class_permanent_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -662,7 +672,7 @@ Additional Inherited Members</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_permanent_object.html#a112534940b53a4548096a044ab0da206" title="Updates this permanent object. ">PermanentObject::update()</a></dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="class_permanent_object.html#a112534940b53a4548096a044ab0da206" title="Update this permanent object from input data array. ">PermanentObject::update()</a></dd></dl>
 <p>This update method manages 'name' and 'user_name' fields.Gets HTML contents</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -818,7 +828,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 17 2014 16:03:47 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 7 2014 14:46:55 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

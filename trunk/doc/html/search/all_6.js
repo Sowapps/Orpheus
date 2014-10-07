@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['else',['else',['../index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7',1,'else():&#160;index.php'],['../settings_8php.html#abfb930cd7de6352e6d432d4f5e7bbaab',1,'else():&#160;settings.php']]],
+  ['else',['else',['../index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7',1,'index.php']]],
   ['email',['Email',['../class_email.html',1,'']]],
   ['email_5fclass_2ephp',['email_class.php',['../email__class_8php.html',1,'']]],
   ['emptyisnull',['emptyIsNull',['../class_type_string.html#aff30017f24a9a301f2ba55bd3a479323',1,'TypeString\emptyIsNull()'],['../class_type_descriptor.html#aff30017f24a9a301f2ba55bd3a479323',1,'TypeDescriptor\emptyIsNull()']]],

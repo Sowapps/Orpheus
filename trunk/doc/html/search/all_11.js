@@ -18,7 +18,7 @@ var searchData=
   ['render',['render',['../class_h_t_m_l_rendering.html#a23ee064149796514c2da969166c12754',1,'HTMLRendering\render()'],['../class_raw_rendering.html#a23ee064149796514c2da969166c12754',1,'RawRendering\render()'],['../class_rendering.html#a23ee064149796514c2da969166c12754',1,'Rendering\render()'],['../class_twig_rendering.html#a23ee064149796514c2da969166c12754',1,'TwigRendering\render()']]],
   ['rendering',['Rendering',['../class_rendering.html',1,'']]],
   ['rendering_5fclass_2ephp',['rendering_class.php',['../rendering__class_8php.html',1,'']]],
-  ['renderreport',['renderReport',['../class_h_t_m_l_rendering.html#adc85e9f86ec5104b2d9c10afcba871ee',1,'HTMLRendering']]],
+  ['renderreport',['renderReport',['../class_h_t_m_l_rendering.html#a59cddbbd18f1dbf697ddb5510488acfd',1,'HTMLRendering']]],
   ['report_2ephp',['report.php',['../admin_2layouts_2report_8php.html',1,'']]],
   ['report_2ephp',['report.php',['../default_2layouts_2report_8php.html',1,'']]],
   ['reporterror',['reportError',['../core_8php.html#af3c0cbe326bdca758a5155bfe82db14c',1,'core.php']]],

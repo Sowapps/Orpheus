@@ -87,23 +87,67 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">dev_entities_merge.php File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ac7dee7db595e71cecea0396c1101ddf6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a>(<a class="el" href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a>('submitAnalyze')) <br class="typebreak" />
+<a class="el" href="index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7">else</a> <a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a>(<a class="el" href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a>('submitMerge')) <br class="typebreak" />
+catch(<a class="el" href="class_user_exception.html">UserException</a> $e) catch(Exception <br class="typebreak" />
+$e)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#ac7dee7db595e71cecea0396c1101ddf6">compareTable</a> ($entity, $from, $to)</td></tr>
+<tr class="separator:ac7dee7db595e71cecea0396c1101ddf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:aad7a936b420edadfe0629a4140449b4a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#aad7a936b420edadfe0629a4140449b4a">$FORM_TOKEN</a> = new <a class="el" href="class_form_token.html">FormToken</a>()</td></tr>
 <tr class="separator:aad7a936b420edadfe0629a4140449b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe4cc9788f52e49485473dc699537388"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#abe4cc9788f52e49485473dc699537388">try</a></td></tr>
 <tr class="separator:abe4cc9788f52e49485473dc699537388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76f710111a0a9b5bede0ade49549c3db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#a76f710111a0a9b5bede0ade49549c3db">if</a> (!empty($COMPARE))</td></tr>
+<tr class="separator:a76f710111a0a9b5bede0ade49549c3db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62527ab8d454b7bab631da5e46e8f899"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#a62527ab8d454b7bab631da5e46e8f899">$selected</a> = <a class="el" href="core_8php.html#a5255c6d32ecc62a0c22631d5ab4cabb0">POST</a>('compare/entity')</td></tr>
 <tr class="separator:a62527ab8d454b7bab631da5e46e8f899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e192fa1b20f6762c8d269dc68008347"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dev__entities__merge_8php.html#a8e192fa1b20f6762c8d269dc68008347">foreach</a> (<a class="el" href="class_entity_descriptor.html#afb624bf0ab33e746fba7b615a4aa8bba">EntityDescriptor::getAllEntities</a>() as $entity)</td></tr>
 <tr class="separator:a8e192fa1b20f6762c8d269dc68008347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ac7dee7db595e71cecea0396c1101ddf6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a> (<a class="el" href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a>('submitAnalyze')) <a class="el" href="index_8php.html#af80a44e8587fbbf9d8ae62039491ddc7">else</a> <a class="el" href="default_2layouts_2report_8php.html#a1dd9167014f9fd61802fea8ffc08b38c">if</a> (<a class="el" href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a>('submitMerge')) catch (<a class="el" href="class_user_exception.html">UserException</a> $e) catch (Exception $e) compareTable </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$entity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="aad7a936b420edadfe0629a4140449b4a"></a>
 <div class="memitem">
@@ -141,6 +185,18 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a76f710111a0a9b5bede0ade49549c3db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if(!empty($COMPARE))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="abe4cc9788f52e49485473dc699537388"></a>
 <div class="memitem">
 <div class="memproto">
@@ -150,13 +206,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line"></div>
+<div class="line"> <a class="code" href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a>() &amp;&amp; <a class="code" href="dev__entities__merge_8php.html#aad7a936b420edadfe0629a4140449b4a">$FORM_TOKEN</a>-&gt;validateForm()</div>
+<div class="ttc" id="dev__entities__merge_8php_html_aad7a936b420edadfe0629a4140449b4a"><div class="ttname"><a href="dev__entities__merge_8php.html#aad7a936b420edadfe0629a4140449b4a">$FORM_TOKEN</a></div><div class="ttdeci">$FORM_TOKEN</div><div class="ttdef"><b>Definition:</b> dev_entities_merge.php:4</div></div>
+<div class="ttc" id="core_8php_html_a7ab9b8b1447aee7edbe9fe8533200f05"><div class="ttname"><a href="core_8php.html#a7ab9b8b1447aee7edbe9fe8533200f05">isPOST</a></div><div class="ttdeci">isPOST($apath=null)</div><div class="ttdoc">Checks the POST status. </div><div class="ttdef"><b>Definition:</b> core.php:822</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 17 2014 16:03:46 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 7 2014 14:46:55 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

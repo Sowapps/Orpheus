@@ -10,26 +10,37 @@ class FieldDescriptor {
 	public $nullable;
 	/* Field : String name, TypeDescriptor type, Array args, default, writable, nullable */
 	
+	/** 
+	 * Constructs the Field Descriptor
+	 * @param string $name
+	 * @param string $type
+	 */
 	public function __construct($name, $type) {
 		$this->name	= $name;
 		$this->type	= $type;
 	}
 	
+	/** 
+	 * Magic toString
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->name;
 	}
 	
-	// Getter
-	public function __get($key) {
-		return $this->$key;
-	}
-	
+	/** 
+	 * Get arg value for this field
+	 * @param	$key string The argument key
+	 * @return	string|integer|NULL The argument value
+	 */
 	public function arg($key) {
 		return isset($this->args->$key) ? $this->args->$key : null;
 	}
 	
+	/** Get the HTML input tag for this field
+	 * @return string
+	 */
 	public function getHTMLInputAttr() {
-// 		debug('Type ', $this->getType());
 		return $this->getType()->getHTMLInputAttr($this);
 	}
 	
@@ -45,14 +56,17 @@ class FieldDescriptor {
 	// 		return $this->nullable;
 	// 	}
 	
-	/**
-	 * @param TypeDescriptor $type
+	/** Get the type of the field
+	 * @param TypeDescriptor $type Optional output parameter for the type
 	 * @return TypeDescriptor
 	 */
 	public function getType(&$type=null) {
 		return EntityDescriptor::getType($this->type, $type);
 	}
 	
+	/** Get the default value (if this field is NULL)
+	 * @return string|integer
+	 */
 	public function getDefault() {
 		if( is_object($this->default) ) {
 			$this->default = call_user_func_array($this->default->type, (array) $this->default->args);
@@ -60,6 +74,12 @@ class FieldDescriptor {
 		return $this->default;
 	}
 	
+	/** 
+	 * Parse field type configuration from file string
+	 * @param	$field string
+	 * @param	$desc string|string[]
+	 * @return	FieldDescriptor The parsed field descriptor
+	 */
 	public static function parseType($field, $desc) {
 		$typeDesc				= is_array($desc) ? $desc['type'] : $desc;
 		$parse					= EntityDescriptor::parseType($typeDesc);

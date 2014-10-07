@@ -87,10 +87,10 @@ class EntityDescriptor {
 	}
 	
 	/** Constructs the entity descriptor
-	 * @param string $name
-	 * @param FieldDescriptor[] $fields
-	 * @param stdClass[] $indexes
-	 * @param string $class
+	 * @param $name string
+	 * @param $fields FieldDescriptor[]
+	 * @param $indexes stdClass[]
+	 * @param $class string
 	 */
 	protected function __construct($name, $fields, $indexes, $class=null) {
 		$this->name		= $name;
@@ -135,6 +135,14 @@ class EntityDescriptor {
 		return array_keys($this->fields);
 	}
 	
+	/**
+	 * Validate a value for a specified field, an exception is thrown if the value is invalid
+	 * @param	string $field The field to use
+	 * @param	mixed $value input|output value to validate for this field
+	 * @param	$inputData string[]
+	 * @param	PermanentEntity $ref
+	 * @throws	InvalidFieldException
+	 */
 	public function validateFieldValue($field, &$value, $inputData=array(), $ref=null) {
 		if( !isset($this->fields[$field]) ) {
 			throw new InvalidFieldException('unknownField', $field, $value, null, $this->name);
@@ -636,21 +644,12 @@ class TypeEnum extends TypeString {
 }
 EntityDescriptor::registerType(new TypeEnum());
 
+class TypeState extends TypeEnum {
 /*
  DEFAULT VALUE SHOULD BE THE FIRST OF SOURCE
  */
-class TypeState extends TypeEnum {
 	protected $name = 'state';
 
-	/*
-	public function parseArgs($fArgs) {
-		$args	= (object) array('min'=>1, 'max'=>20, 'source'=>null);
-		if( isset($fArgs[0]) ) {
-			$args->source		= $fArgs[0];
-		}
-		return $args;
-	}
-	*/
 	public function validate($Field, &$value, $inputData, &$ref) {
 		TypeString::validate($Field, $value, $inputData, $ref);
 		if( !isset($Field->args->source) ) { return; }

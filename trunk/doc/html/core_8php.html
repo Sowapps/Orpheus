@@ -207,9 +207,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af0f6edd7daf70c980d7cf92e1838a29d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#af0f6edd7daf70c980d7cf92e1838a29d">getReportsHTML</a> ($stream='global', $rejected=array(), $delete=true)</td></tr>
 <tr class="memdesc:af0f6edd7daf70c980d7cf92e1838a29d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets some/all reports as HTML.  <a href="#af0f6edd7daf70c980d7cf92e1838a29d">More...</a><br /></td></tr>
 <tr class="separator:af0f6edd7daf70c980d7cf92e1838a29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a331f962363bedf10c0f4f36f937ec0ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a331f962363bedf10c0f4f36f937ec0ad">getHTMLReport</a> ($stream, $report, $type)</td></tr>
-<tr class="memdesc:a331f962363bedf10c0f4f36f937ec0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets one report as HTML.  <a href="#a331f962363bedf10c0f4f36f937ec0ad">More...</a><br /></td></tr>
-<tr class="separator:a331f962363bedf10c0f4f36f937ec0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc9d857588b22c4ed4b7332717151358"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#abc9d857588b22c4ed4b7332717151358">getHTMLReport</a> ($stream, $report, $domain, $type)</td></tr>
+<tr class="memdesc:abc9d857588b22c4ed4b7332717151358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets one report as HTML.  <a href="#abc9d857588b22c4ed4b7332717151358">More...</a><br /></td></tr>
+<tr class="separator:abc9d857588b22c4ed4b7332717151358"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a643f1c3fd09bce93f9b68fd44c099b24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a643f1c3fd09bce93f9b68fd44c099b24">displayReportsHTML</a> ($stream='global', $rejected=array(), $delete=1)</td></tr>
 <tr class="memdesc:a643f1c3fd09bce93f9b68fd44c099b24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Displays reports as HTML.  <a href="#a643f1c3fd09bce93f9b68fd44c099b24">More...</a><br /></td></tr>
 <tr class="separator:a643f1c3fd09bce93f9b68fd44c099b24"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,6 +244,8 @@ Functions</h2></td></tr>
 <tr class="separator:a589796a1de36bb5622297b87f7b8f5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bcf8e5ddc6f88cc7988d3dc1c4ea701"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a2bcf8e5ddc6f88cc7988d3dc1c4ea701">htmlDisabledAttr</a> ()</td></tr>
 <tr class="separator:a2bcf8e5ddc6f88cc7988d3dc1c4ea701"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33710a85368df202c35de4e35dad7bd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a33710a85368df202c35de4e35dad7bd9">valueField</a> ($v)</td></tr>
+<tr class="separator:a33710a85368df202c35de4e35dad7bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaae5ba177572aa1ad3e907e292773561"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#aaae5ba177572aa1ad3e907e292773561">htmlFileUpload</a> ($fieldPath, $addAttr='')</td></tr>
 <tr class="separator:aaae5ba177572aa1ad3e907e292773561"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12b31632c7e5c520a8ee2d7d60f09a9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core_8php.html#a12b31632c7e5c520a8ee2d7d60f09a9a">htmlPassword</a> ($fieldPath, $addAttr='')</td></tr>
@@ -1418,7 +1420,7 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a331f962363bedf10c0f4f36f937ec0ad"></a>
+<a class="anchor" id="abc9d857588b22c4ed4b7332717151358"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1433,6 +1435,12 @@ Variables</h2></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>$report</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$domain</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1556,7 +1564,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="core_8php.html#a643f1c3fd09bce93f9b68fd44c099b24" title="Displays reports as HTML. ">displayReportsHTML()</a> </dd>
 <dd>
-<a class="el" href="core_8php.html#a331f962363bedf10c0f4f36f937ec0ad" title="Gets one report as HTML. ">getHTMLReport()</a></dd></dl>
+<a class="el" href="core_8php.html#abc9d857588b22c4ed4b7332717151358" title="Gets one report as HTML. ">getHTMLReport()</a></dd></dl>
 <p>Gets all reports from the list of $domain and generates the HTML source to display. </p>
 
 </div>
@@ -3242,6 +3250,22 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a33710a85368df202c35de4e35dad7bd9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">valueField </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>$v</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="a14d1d0d1685aad55639b884b7f54bab7"></a>
 <div class="memitem">
@@ -3367,7 +3391,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Aug 17 2014 16:03:46 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 7 2014 14:46:55 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

@@ -81,14 +81,14 @@ function adm_htmlInput($fieldPath, $class='', $attr=array(), $default=null, $ref
 	// 	text("$fieldPath, $class, $addAttr, $default");
 	return fieldInput($field, $fieldPath, $class, $attr, $default);
 }
-/**
- * @param FieldDescriptor $field
- * @param string $fieldPath
- * @param string $class
- * @param string $attr
- * @param string $default
- * @return string
- */
+// /**
+//  * @param FieldDescriptor $field
+//  * @param string $fieldPath
+//  * @param string $class
+//  * @param string $attr
+//  * @param string $default
+//  * @return string
+//  */
 // function fieldInput($field, $fieldPath, $class='', $attr=array(), $default=null) {
 // 	$Attr	= array('type'=>'text');
 // 	$Attr	= array_merge($Attr, $field->getHTMLInputAttr());

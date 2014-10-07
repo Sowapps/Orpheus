@@ -9,6 +9,13 @@ addAutoload('FieldDescriptor',					'entitydescriptor/fielddescriptor');
 addAutoload('PermanentEntity',					'entitydescriptor/permanententity');
 
 // Form Things
+
+/** 
+ * Get the field descriptor from a field path
+ * @param string $fieldPath
+ * @param string $class
+ * @return FieldDescriptor
+ */
 function getField($fieldPath, $class=null) {
 	if( $class === NULL ) {
 		$fieldPathArr	= explode('/', $fieldPath);

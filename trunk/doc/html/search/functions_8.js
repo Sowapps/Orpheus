@@ -21,5 +21,8 @@ var searchData=
   ['htmlselect',['htmlSelect',['../core_8php.html#afd8b4c8d98a6839cc8f5c0842935cf9a',1,'core.php']]],
   ['htmltext',['htmlText',['../core_8php.html#a39c64da8b74c9a9e9c06a9c72a3a7be8',1,'core.php']]],
   ['htmltextarea',['htmlTextArea',['../core_8php.html#a05d5207d994648ce7fb02455d78e5989',1,'core.php']]],
-  ['htmlvalue',['htmlValue',['../core_8php.html#ab0018a6d28bb0e5ef51d963440995009',1,'core.php']]]
+  ['htmlvalue',['htmlValue',['../core_8php.html#ab0018a6d28bb0e5ef51d963440995009',1,'core.php']]],
+  ['httpauthenticate',['httpAuthenticate',['../class_abstract_user.html#a2f16109c5746bedee6d83dac1d94d0a7',1,'AbstractUser']]],
+  ['httpcreate',['httpCreate',['../class_abstract_user.html#ac1b4f21c1987a99938226c23d8e6e902',1,'AbstractUser']]],
+  ['httplogin',['httpLogin',['../class_abstract_user.html#a5dc045c1e01ad114f806b17398a6431f',1,'AbstractUser']]]
 ];

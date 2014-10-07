@@ -29,11 +29,9 @@ abstract class Rendering {
 	}
 
 	/** Get menu items
-	 * @param $model The model to use.
-	* @param $env An environment variable.
-	*
-	* Displays the model rendering using $env.
-	*/
+	 * @param $menu The menu to get items
+	 * @return string[] The menu items
+	 */
 	public function getMenuItems($menu) {
 		if( !isset(self::$menusConf) ) {
 			self::$menusConf = Config::build('menus', true);
@@ -44,12 +42,12 @@ abstract class Rendering {
 		return self::$menusConf->$menu;
 	}
 	
-	/** Displays rendering.
-	 * @param $env		An environment variable.
-	 * @param $model	The model to use.
-	 * @param $active	The active menu item.
+	/** Show menu.
+	 * @param $menu string The menu name
+	 * @param $layout string the layout to use
+	 * @param $active Active item
 	 * 
-	 * Displays the model rendering using $env.
+	 * Displays the $menu.
 	 */
 	public function showMenu($menu, $layout=null, $active=null) {
 // 		self::checkRendering();

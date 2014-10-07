@@ -35,5 +35,8 @@ var searchData=
   ['htmltextarea',['htmlTextArea',['../core_8php.html#a05d5207d994648ce7fb02455d78e5989',1,'core.php']]],
   ['htmlvalue',['htmlValue',['../core_8php.html#ab0018a6d28bb0e5ef51d963440995009',1,'core.php']]],
   ['http_5ferror_2ephp',['http_error.php',['../http__error_8php.html',1,'']]],
+  ['httpauthenticate',['httpAuthenticate',['../class_abstract_user.html#a2f16109c5746bedee6d83dac1d94d0a7',1,'AbstractUser']]],
+  ['httpcreate',['httpCreate',['../class_abstract_user.html#ac1b4f21c1987a99938226c23d8e6e902',1,'AbstractUser']]],
+  ['httplogin',['httpLogin',['../class_abstract_user.html#a5dc045c1e01ad114f806b17398a6431f',1,'AbstractUser']]],
   ['hooks_20library',['Hooks Library',['../lib_hooks.html',1,'']]]
 ];

@@ -12,7 +12,7 @@ var searchData=
   ['removeargs',['removeArgs',['../class_invalid_field_exception.html#ae17159bf68d7510949c769abd0ad1e61',1,'InvalidFieldException']]],
   ['removefile',['removeFile',['../class_email.html#ad832bee9f798b300944e2dd4bdef5677',1,'Email']]],
   ['render',['render',['../class_h_t_m_l_rendering.html#a23ee064149796514c2da969166c12754',1,'HTMLRendering\render()'],['../class_raw_rendering.html#a23ee064149796514c2da969166c12754',1,'RawRendering\render()'],['../class_rendering.html#a23ee064149796514c2da969166c12754',1,'Rendering\render()'],['../class_twig_rendering.html#a23ee064149796514c2da969166c12754',1,'TwigRendering\render()']]],
-  ['renderreport',['renderReport',['../class_h_t_m_l_rendering.html#adc85e9f86ec5104b2d9c10afcba871ee',1,'HTMLRendering']]],
+  ['renderreport',['renderReport',['../class_h_t_m_l_rendering.html#a59cddbbd18f1dbf697ddb5510488acfd',1,'HTMLRendering']]],
   ['reporterror',['reportError',['../core_8php.html#af3c0cbe326bdca758a5155bfe82db14c',1,'core.php']]],
   ['reportexception',['reportException',['../class_permanent_object.html#afde256bb593859178ea0ccd330acf4e6',1,'PermanentObject']]],
   ['reportsuccess',['reportSuccess',['../core_8php.html#a43a1be23d6ec016ef7b14edeeb8fa11a',1,'core.php']]],
