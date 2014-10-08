@@ -1007,7 +1007,7 @@ function _htmlText($fieldPath, $default='', $addAttr='', $formatter=null) {
 }
 function htmlText($fieldPath, $default='', $addAttr='', $formatter=null, $type='text') {
 	fillInputValue($value, $fieldPath, $default);
-	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.valueField(isset($value) ? isset($formatter) ? call_user_func($formatter, $value) : $value.' ' : '').$addAttr.htmlDisabledAttr().'/>';
+	return '<input type="'.$type.'" name="'.apath_html($fieldPath).'" '.valueField(isset($value) ? isset($formatter) ? call_user_func($formatter, $value) : $value : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function htmlTextArea($fieldPath, $default='', $addAttr='') {
