@@ -37,6 +37,10 @@ abstract class PermanentObject {
 		return $array;
 	}
 	
+	public function setTo(array &$array) {
+		$array[$this->id()]	= $this;
+	}
+	
 	// *** OVERRIDDEN METHODS ***
 	
 	/** Constructor
