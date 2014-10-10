@@ -68,6 +68,7 @@
         <topic label="get" href="interface_cache.html#a9163db9c3ac3b0fe0f0509779d1261dd"/>
         <topic label="set" href="interface_cache.html#a1a88c3632e752bd78fb46f7c5f81eb7e"/>
       </topic>
+      <topic label="Cast" href="class_cast.html"/>
       <topic label="Config" href="class_config.html">
         <topic label="checkSource" href="class_config.html#a348369508d3093d96c78c7373e24bbe8"/>
         <topic label="load" href="class_config.html#a8de7fd0ec2cf563884320902e171d103"/>
@@ -266,6 +267,7 @@
         <topic label="remove" href="class_permanent_object.html#aff9a1fb07dca963c2c9a8ffe66b45ded"/>
         <topic label="runForUpdate" href="class_permanent_object.html#ace639024468b35171e9bd8741cb1c29e"/>
         <topic label="save" href="class_permanent_object.html#afc8a3c62679cf00ade9f15fb2a6d6132"/>
+        <topic label="setTo" href="class_permanent_object.html#a776abc4998cfc3c4ac31b7d3d9a8d0ab"/>
         <topic label="setValue" href="class_permanent_object.html#a08d7f8d9ecd3f522e4c38bffa0796896"/>
         <topic label="uid" href="class_permanent_object.html#a03790dbeab61ad2ee2ee469ee838b80c"/>
         <topic label="update" href="class_permanent_object.html#a112534940b53a4548096a044ab0da206"/>
@@ -524,6 +526,7 @@
         <topic label="APCache" href="class_a_p_cache.html"/>
         <topic label="FSCache" href="class_f_s_cache.html"/>
       </topic>
+      <topic label="Cast" href="class_cast.html"/>
       <topic label="ConfigCore" href="class_config_core.html">
         <topic label="Config" href="class_config.html"/>
         <topic label="YAML" href="class_y_a_m_l.html"/>
@@ -1226,6 +1229,7 @@
               <topic label="remove" href="class_permanent_object.html#aff9a1fb07dca963c2c9a8ffe66b45ded"/>
               <topic label="runForUpdate" href="class_permanent_object.html#ace639024468b35171e9bd8741cb1c29e"/>
               <topic label="save" href="class_permanent_object.html#afc8a3c62679cf00ade9f15fb2a6d6132"/>
+              <topic label="setTo" href="class_permanent_object.html#a776abc4998cfc3c4ac31b7d3d9a8d0ab"/>
               <topic label="setValue" href="class_permanent_object.html#a08d7f8d9ecd3f522e4c38bffa0796896"/>
               <topic label="uid" href="class_permanent_object.html#a03790dbeab61ad2ee2ee469ee838b80c"/>
               <topic label="update" href="class_permanent_object.html#a112534940b53a4548096a044ab0da206"/>
