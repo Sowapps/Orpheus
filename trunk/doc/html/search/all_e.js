@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['object',['object',['../class_permanent_object.html#af39d7bb000b7a32aae4e0dce9586a5a4',1,'PermanentObject\object()'],['../class_s_q_l_adapter.html#aa2f1769baa345f301668853c444000e1',1,'SQLAdapter\OBJECT()']]],
+  ['object',['OBJECT',['../class_s_q_l_adapter.html#aa2f1769baa345f301668853c444000e1',1,'SQLAdapter\OBJECT()'],['../class_permanent_object.html#af39d7bb000b7a32aae4e0dce9586a5a4',1,'PermanentObject\object()']]],
   ['oblevel_5finit',['OBLEVEL_INIT',['../index_8php.html#ab046630b7eea3e9aa3589f66f4fb7680',1,'index.php']]],
   ['open',['open',['../class_o_session_handler.html#a614b5cf3840833913c7a73260ed28e02',1,'OSessionHandler']]],
   ['opt_5flabel2value',['OPT_LABEL2VALUE',['../core_8php.html#af5f4fb758d456934a29e90d98652893f',1,'core.php']]],

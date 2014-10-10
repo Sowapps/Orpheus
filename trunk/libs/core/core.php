@@ -731,6 +731,7 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 /** Gets one report as HTML
  * @param $stream	The stream of the report.
  * @param $report	The message to report.
+ * @param $domain	The domain of the report.
  * @param $type		The type of the report.
 
  * Returns a valid HTML report.
