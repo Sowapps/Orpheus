@@ -18,6 +18,12 @@ class FormToken {
 	// We store the minimum amount of data to allow no control of expiration
 	public static $DEFAULT_MAXTOKEN	= 10;
 
+	/**
+	 * Constructor
+	 * @param string $name
+	 * @param string $maxToken
+	 * @param number $maxUsage Number of max usage, default value is 1.
+	 */
 	public function __construct($name=NULL, $maxToken=null, $maxUsage=1) {
 		$this->name		= $name===NULL ? $GLOBALS['Module'] : $name;
 		$this->maxToken	= $maxToken===NULL ? static::$DEFAULT_MAXTOKEN : $maxToken;

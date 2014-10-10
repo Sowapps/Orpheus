@@ -4,9 +4,15 @@
  *
  * \page constants Constants
  * 
- * You'll may need configure some constants as AUTHORNAME and SITENAME.\n
- * Configure others carefully and only if it's really necessary.\n
- * Set ERROR_LEVEL to set your website in production (with no error reports to the user).
+ * This file contains all the main constants, you will often work with it and you need to define your own.
+ * You will find here constants like AUTHORNAME and SITENAME, and also path constants.\n
+ * Configure others carefully and only if it's really necessary, libraries may require some.\n
+ * 
+ * Set ERROR_LEVEL to put your website in production (with no error reports to the user).
+ * This is compatible with multi-instance architecture, so you can set a dev version and
+ * a production version using the same sources on you own server.
+ * Official ERROR_LEVEL values are DEV_LEVEL (all errors) and PROD_LEVEL (no errors) and
+ * ERROR_LEVEL is set depending on DEV_VERSION value (if set).
  */
 defifn('TIME',				$_SERVER['REQUEST_TIME']);
 define('INSIDE',			true);
@@ -46,13 +52,13 @@ defifn('LANGBASE',			'en');
 defifn('LOCALE',			LANG.'.utf8');
 
 
-// Miscelanous
+// Route
 defifn('DEFAULTMOD',		'home');
 defifn('DEFAULTHOST',		'domain.com');
 defifn('DEFAULTPATH',		'');
 
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
-defifn('SCHEME',			(HTTPS) ? 'https' : 'http' );
+defifn('SCHEME',			HTTPS ? 'https' : 'http' );
 defifn('HOST',				!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
 defifn('PATH',				!defined("TERMINAL") ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
 defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
