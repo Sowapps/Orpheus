@@ -59,6 +59,7 @@ var searchData=
   ['crac_5fcontext_5fresource',['CRAC_CONTEXT_RESOURCE',['../constants_8php.html#a1ab1823dee9e60874007aba3f2db877d',1,'constants.php']]],
   ['create',['create',['../class_hook.html#aba67e609ea9faf893586516a7556c296',1,'Hook\create()'],['../class_permanent_object.html#a10093157ba1d6bfe1eef472ad28f5f5d',1,'PermanentObject\create()']]],
   ['createandget',['createAndGet',['../class_permanent_object.html#ad61e7cfb6e6bfbbc1439458279871228',1,'PermanentObject']]],
+  ['cache_20library',['Cache Library',['../lib_cache.html',1,'']]],
   ['config_20library',['Config Library',['../lib_config.html',1,'']]],
   ['core_20library',['Core Library',['../lib_core.html',1,'']]]
 ];

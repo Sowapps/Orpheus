@@ -1,6 +1,5 @@
 <?php
-//! The user class
-/*!
+/** The user class
  * The user class represents an user known by the current website as a permanent object.
  * This class is commonly inherited by a user class for registered users.
  * But an user can be a Facebook user or a Site user for example.
@@ -34,17 +33,18 @@ class User extends AbstractStatus {
 
 	// *** METHODES SURCHARGEES ***
 	
-	//! Magic string conversion
-	/*!
-		\return The string valu of this object.
-		
-		The string value is the contents of the publication.
+	/** Magic string conversion
+	 * @return The string valu of this object.
+	 * 
+	 * The string value is the contents of the publication.
 	*/
 	public function __toString() {
 		return $this->name;
 	}
 	
-	//! Method when this object is unserialized.
+	/** Method when this object is unserialized.
+	 * 
+	 */
 	public function __wakeup() {
 		if( $this->login ) {
 			static::logEvent('activity');
@@ -53,12 +53,19 @@ class User extends AbstractStatus {
 	
 	// *** METHODES UTILISATEUR ***
 	
-	//! Gets the Log in status of this user in the current session.
+	/** Gets the Log in status of this user in the current session.
+	 * 
+	 * @param string $f
+	 * @return boolean
+	 */
 	public function isLogin($f=IS_LOGGED) {
 		return bintest($this->login, $f);
 	}
 	
-	//! Log in this user to the current session.
+	/** Log in this user to the current session.
+	 * 
+	 * @param string $force
+	 */
 	public function login($force=false) {
 		if( !$force && static::is_login() ) {
 			static::throwException('alreadyLoggedin');
@@ -72,7 +79,11 @@ class User extends AbstractStatus {
 		static::logEvent('activity');
 	}
 	
-	//! Log out this user from the current session.
+	/** Log out this user from the current session.
+	 * 
+	 * @param string $reason
+	 * @return boolean
+	 */
 	public function logout($reason=null) {
 		global $USER;
 		if( !$this->login ) { return false; }
@@ -82,10 +93,9 @@ class User extends AbstractStatus {
 		return true;
 	}
 
-	//! Checks permissions
-	/*!
-	 * \param $right The right to compare, can be the right string to look for or an integer.
-	 * \return True if this user has enough acess level.
+	/** Checks permissions
+	 * @param $right The right to compare, can be the right string to look for or an integer.
+	 * @return True if this user has enough acess level.
 	 * 
 	 * Compares the accesslevel of this user to the incoming right.
 	 */
@@ -101,12 +111,11 @@ class User extends AbstractStatus {
 		return ( $this->accesslevel >= $right );
 	}
 	
-	//! Checks access permissions
-	/*!
-	 * \param $module The module to check.
-	 * \return True if this user has enough acess level to access to this module.
-	 * \sa checkPerm()
-	 * \warning Obsolete
+	/** Checks access permissions
+	 * @param $module The module to check.
+	 * @return True if this user has enough acess level to access to this module.
+	 * @sa checkPerm()
+	 * @warning Obsolete
 	 */
 	public function checkAccess($module) {
 		//$module pdoit être un nom de module.
@@ -116,19 +125,17 @@ class User extends AbstractStatus {
 		return $this->checkPerm((int) $GLOBALS['ACCESS']->$module);
 	}
 	
-	//! Checks if current logged user can edit this one.
-	/*!
-	 * \param $inputData The input data.
+	/** Checks if current logged user can edit this one.
+	 * @param $inputData The input data.
 	 */
 	public function checkPermissions($inputData) {
 		return static::checkAccessLevel($inputData, $this);
 	}
 	
-	//! Checks if this user can alter data on the given user
-	/*!
-	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user or he is altering himself.
-	 * \sa loggedCanDo()
+	/** Checks if this user can alter data on the given user
+	 * @param $user The user we want to edit.
+	 * @return True if this user has enough acess level to edit $user or he is altering himself.
+	 * @sa loggedCanDo()
 	 * 
 	 * Checks if this user can alter on $user.
 	 */
@@ -137,13 +144,12 @@ class User extends AbstractStatus {
 		return !$user->accesslevel || $this->accesslevel > $user->accesslevel;
 	}
 	
-	//! Checks if this user can affect data on the given user
-	/*!
-	 * \param $action The action to look for.
-	 * \param $object The object we want to edit.
-	 * \return True if this user has enough access level to alter $object (or he is altering himself).
-	 * \sa loggedCanDo()
-	 * \sa canAlter()
+	/** Checks if this user can affect data on the given user
+	 * @param $action The action to look for.
+	 * @param $object The object we want to edit.
+	 * @return True if this user has enough access level to alter $object (or he is altering himself).
+	 * @sa loggedCanDo()
+	 * @sa canAlter()
 	 * 
 	 * Checks if this user can affect $object.
 	 */
@@ -153,9 +159,8 @@ class User extends AbstractStatus {
 	
 	// *** METHODES STATIQUES ***
 	
-	//! Logs in a user from data
-	/*!
-	 * \param $data The data for user authentification.
+	/** Logs in a user from data
+	 * @param $data The data for user authentification.
 	 * 
 	 * Log in a user from the given data.
 	 * It tries to validate given data, in case of errors, UserException are thrown.
@@ -180,21 +185,19 @@ class User extends AbstractStatus {
 		$user->login();
 	}
 	
-	//! Hashes a password
-	/*!
-	 * \param $str The clear password.
-	 * \return The hashed string.
+	/** Hashes a password
+	 * @param $str The clear password.
+	 * @return The hashed string.
 	 * 
-	 * Hashes $str using a salt.
+	 * Hash $str using a salt.
 	 * Define constant USER_SALT to use your own salt.
 	 */
 	public static function hashPassword($str) {
 		return hashString($str);
 	}
 	
-	//! Checks if the client is logged in
-	/*!
-	 * \return True if the current client is logged in.
+	/** Checks if the client is logged in
+	 * @return True if the current client is logged in.
 	 * 
 	 * Checks if the client is logged in.
 	 * It verifies if a valid session exist.
@@ -204,9 +207,8 @@ class User extends AbstractStatus {
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
 
-	//! Checks if the client is logged in
-	/*!
-	 * \return True if the current client is logged in.
+	/** Checks if the client is logged in
+	 * @return True if the current client is logged in.
 	*
 	* Checks if the client is logged in.
 	*/
@@ -215,9 +217,8 @@ class User extends AbstractStatus {
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
 	
-	//! Gets ID if user is logged
-	/*!
-	 * \return The id of the current client logged in.
+	/** Gets ID if user is logged
+	 * @return The id of the current client logged in.
 	 * 
 	 * Gets the ID of the current user or 0.
 	 */
@@ -225,9 +226,8 @@ class User extends AbstractStatus {
 		return static::is_login() ? $_SESSION['USER']->id : 0;
 	}
 	
-	//! Loads an user object
-	/*!
-	 * \sa PermanentObject::load()
+	/** Loads an user object
+	 * @sa PermanentObject::load()
 	 * 
 	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
@@ -238,9 +238,8 @@ class User extends AbstractStatus {
 		return parent::load($id);
 	}
 	
-	//! Deletes an user object
-	/*!
-	 * \sa PermanentObject::delete()
+	/** Delete an user object
+	 * @sa PermanentObject::delete()
 	 * 
 	 * It tries to check current user rights.
 	 */
@@ -251,9 +250,8 @@ class User extends AbstractStatus {
 // 		return parent::delete($id);
 // 	}
 
-	//! Checks if this user has admin right
-	/*!
-	 * \return True if this user is logged and is admin.
+	/** Checks if this user has admin right
+	 * @return True if this user is logged and is admin.
 	 *
 	 * Checks if this user has admin access level.
 	 * This is often used to determine if the current user can access to the admin panel.
@@ -278,10 +276,9 @@ class User extends AbstractStatus {
 		return static::getAccessOf($v);
 	}
 	
-	//! Checks if this user can access to a module
-	/*!
-	 * \param $module The module to look for.
-	 * \return True if this user can access to $module.
+	/** Checks if this user can access to a module
+	 * @param $module The module to look for.
+	 * @return True if this user can access to $module.
 	 * 
 	 * Checks if this user can access to $module.
 	 */
@@ -299,11 +296,10 @@ class User extends AbstractStatus {
 				$USER instanceof User && $USER->checkPerm($access));
 	}
 	
-	//! Checks if this user can do a restricted action
-	/*!
-	 * \param $action The action to look for.
-	 * \param $object The object to edit if editing one or null. Default value is null.
-	 * \return True if this user can do this $action.
+	/** Checks if this user can do a restricted action
+	 * @param $action The action to look for.
+	 * @param $object The object to edit if editing one or null. Default value is null.
+	 * @return True if this user can do this $action.
 	 * 
 	 * Checks if this user can do $action.
 	 */
@@ -314,11 +310,10 @@ class User extends AbstractStatus {
 	
 	// 		** Verification methods **
 	
-	//! Checks a name
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The stripped name.
+	/** Checks a name
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The stripped name.
 	 * 
 	 * Validates the name in array $inputData.
 	 */
@@ -332,13 +327,12 @@ class User extends AbstractStatus {
 		return $inputData['name'];
 	}
 	
-	//! Checks a Password
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The hashed password string.
+	/** Checks a Password
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The hashed password string.
 	 * 
-	 * Validates the password in array $inputData.
+	 * Validate the password in array $inputData.
 	 */
 	public static function checkPassword($inputData, $ref=null) {
 		if( empty($inputData['password']) ) {
@@ -352,13 +346,12 @@ class User extends AbstractStatus {
 		return static::hashPassword($inputData['password']);
 	}
 	
-	//! Checks an Email address
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The email address.
+	/** Check an Email address
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The email address.
 	 * 
-	 * Validates the email address in array $inputData.
+	 * Validate the email address in array $inputData.
 	 */
 	public static function checkEmail($inputData, $ref=null) {
 		if( empty($inputData['email']) || !is_email($inputData['email']) ) {
@@ -367,13 +360,12 @@ class User extends AbstractStatus {
 		return $inputData['email'];
 	}
 	
-	//! Checks a public Email address
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The public email address.
+	/** Check a public Email address
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The public email address.
 	 * 
-	 * Validates the public email address in array $inputData.
+	 * Validate the public email address in array $inputData.
 	 * This address is not required, you can use a checkbox to automatically use the real email address.
 	 * e.g The email is foo@bar.com and public_email is 'on', the returned public_email will be foo@bar.com.
 	 */
@@ -394,13 +386,12 @@ class User extends AbstractStatus {
 		return $inputData['email_public'];
 	}
 	
-	//! Checks a access level
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The access level.
-	 * \see checkPermissions()
-	*/
+	/** Check a access level
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The access level.
+	 * @see checkPermissions()
+	 */
 	public static function checkAccessLevel($inputData, $ref=null) {
 		if( !isset($inputData['accesslevel']) ) {
 			return isset($ref) ? null : 0;
@@ -424,10 +415,9 @@ class User extends AbstractStatus {
 		return (int) $inputData['accesslevel'];
 	}
 	
-	//! Checks for object
-	/*!
-		\sa PermanentObject::checkForObject()
-	*/
+	/** Check for object
+	 * @sa PermanentObject::checkForObject()
+	 */
 	public static function checkForObject($data, $ref=null) {
 		$where = 'email LIKE '.static::formatValue($data['email']);
 		$what = 'email';
@@ -455,10 +445,9 @@ class User extends AbstractStatus {
 	
 	// *** STATUS METHODS ***
 	
-	//! Validates a status
-	/*!
-		\sa AbstractStatus::validateStatus()
-	*/
+	/** Validates a status
+	 * @sa AbstractStatus::validateStatus()
+	 */
 	public static function validateStatus($newStatus, $ref=null, $field='status') {
 		if( !User::loggedCanDo('users_status', $ref) ) {
 			static::throwException('forbiddenUStatus');

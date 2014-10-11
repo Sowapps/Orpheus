@@ -1,6 +1,6 @@
 <?php
-//! The Form Token class
-/*!
+/** The Form Token class
+
 	This class is limit the use of form data to only one shot.
 */
 class FormToken {
@@ -30,6 +30,10 @@ class FormToken {
 		$this->maxUsage	= $maxUsage;
 	}
 
+	/**
+	 * Generate a new token
+	 * @return The token
+	 */
 	public function generateToken() {
 		if( !isset($_SESSION[self::SESSION_KEY][$this->name]) ) {
 			$_SESSION[self::SESSION_KEY][$this->name]	= array();
@@ -45,6 +49,11 @@ class FormToken {
 		return $token;
 	}
 	
+	/**
+	 * Generate a new token and return HTML input tag
+	 * @param string $force
+	 * @return string The HTML input tag
+	 */
 	public function generateTokenHTML($force=false) {
 		if( $force ) {
 			$token	= $this->generateToken();
@@ -56,13 +65,26 @@ class FormToken {
 		}
 		return '<input type="hidden" name="'.self::HTML_PREFIX.$this->name.'" value="'.$token.'" />';
 	}
+	/**
+	 * Generate a new token and display HTML input tag
+	 * @param string $force
+	 */
 	public function _generateTokenHTML($force=false) {
 		echo $this->generateTokenHTML($force);
 	}
+	/**
+	 * Return HTML input tag
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->generateTokenHTML();
 	}
 
+	/**
+	 * Validate the given token
+	 * @param string $token
+	 * @return boolean True if the token is valid 
+	 */
 	public function validate($token) {
 		if( !isset($_SESSION[self::SESSION_KEY][$this->name]) ) {
 			return false;
@@ -77,6 +99,11 @@ class FormToken {
 		}
 		return true;
 	}
+	/**
+	 * Validate the given token from form or throw an UserException
+	 * @param string $domain
+	 * @throws UserException
+	 */
 	public function validateForm($domain=null) {
 		if( !$this->validate(POST(self::HTML_PREFIX.$this->name)) ) {
 			throw new UserException('invalidFormToken', $domain);

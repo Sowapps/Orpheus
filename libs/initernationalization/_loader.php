@@ -1,14 +1,14 @@
 <?php
-//! Initernationalization
-/*!
+/** Initernationalization
+
  * Translation plugin using ini files
  * 
  * Require declaration of constants: LANGDIR, LANG.
  */
 
-//! Loads a language ini file
-/*!
- * \param $domain The domain of the file to load.
+/** Loads a language ini file
+
+ * @param $domain The domain of the file to load.
  * 
  * Loads a language ini file from the file system.
  * You don't have to use this function explicitly.
@@ -26,12 +26,12 @@ function loadLangFile($domain='global') {
 	}
 }
 
-//! Text function for translations.
-/*!
- * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * \param $domain The domain to apply the Key. Default value is 'global'.
- * \param $values The values array to replace in text. Could be used as second parameter.
- * \return The translated human text.
+/** Text function for translations.
+
+ * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param $domain The domain to apply the Key. Default value is 'global'.
+ * @param $values The values array to replace in text. Could be used as second parameter.
+ * @return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
  * It tries to replace $values in text by key using \#key\# format using str_replace() but if $values is a list of values, it uses sprintf().
@@ -84,11 +84,11 @@ function _t($k, $domain='global', $values=array()) {
 	echo t($k, $domain, $values);
 }
 
-//! Checks if this key exists.
-/*!
- * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * \param $domain The domain to apply the Key. Default value is 'global'.
- * \return True if the translation exists in this domain.
+/** Checks if this key exists.
+
+ * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param $domain The domain to apply the Key. Default value is 'global'.
+ * @return True if the translation exists in this domain.
  * 
  * This function checks if the key is known in the translation list.
  */
@@ -98,12 +98,12 @@ function hasTranslation($k, $domain='global') {
 	return isset($LANG[$domain]) && isset($LANG[$domain][$k]);
 }
 
-//! Checks if this key exists.
-/*!
- * \param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * \param $default The default translation value to use.
- * \param $domain The domain to apply the Key. Default value is 'global'.
- * \return The translation
+/** Checks if this key exists.
+
+ * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param $default The default translation value to use.
+ * @param $domain The domain to apply the Key. Default value is 'global'.
+ * @return The translation
  * 
  * This function translate the key without any fail.
  * If no translation is available, it uses the $default.

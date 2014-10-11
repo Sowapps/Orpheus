@@ -1,6 +1,6 @@
 <?php
-//! The Thread Message class
-/*!
+/** The Thread Message class
+
 	This class represent a Thread message object
 */
 class ThreadMessage extends PermanentEntity {

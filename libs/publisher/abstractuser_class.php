@@ -1,6 +1,5 @@
 <?php
-//! The user class
-/*!
+/** The user class
  * The user class represents an user known by the current website as a permanent entity.
  * This class is commonly inherited by a user class for registered users.
  * But an user can be a Facebook user or a Site user for example.
@@ -27,17 +26,17 @@ class AbstractUser extends PermanentEntity {
 
 	// *** METHODES SURCHARGEES ***
 	
-	//! Magic string conversion
-	/*!
-		\return The string valu of this object.
-		
-		The string value is the contents of the publication.
+	/** Magic string conversion
+	 * @return The string valu of this object.
+	 * The string value is the contents of the publication.
 	*/
 	public function __toString() {
 		return $this->fullname;
 	}
 	
-	//! Method when this object is unserialized.
+	/** Method when this object is unserialized.
+	 * 
+	 */
 	public function __wakeup() {
 		if( $this->login ) {
 			static::logEvent('activity');
@@ -46,12 +45,19 @@ class AbstractUser extends PermanentEntity {
 	
 	// *** METHODES UTILISATEUR ***
 	
-	//! Gets the Log in status of this user in the current session.
+	/** Gets the Log in status of this user in the current session.
+	 * 
+	 * @param string $f
+	 * @return boolean True
+	 */
 	public function isLogin($f=IS_LOGGED) {
 		return bintest($this->login, $f);
 	}
 	
-	//! Log in this user to the current session.
+	/** Log in this user to the current session.
+	 * 
+	 * @param string $force
+	 */
 	public function login($force=false) {
 		if( !$force && static::isLogged() ) {
 			static::throwException('alreadyLoggedin');
@@ -65,7 +71,11 @@ class AbstractUser extends PermanentEntity {
 		static::logEvent('activity');
 	}
 	
-	//! Log out this user from the current session.
+	/** Log out this user from the current session.
+	 * 
+	 * @param string $reason
+	 * @return boolean
+	 */
 	public function logout($reason=null) {
 		global $USER;
 		if( !$this->login ) {
@@ -77,10 +87,9 @@ class AbstractUser extends PermanentEntity {
 		return true;
 	}
 
-	//! Checks permissions
-	/*!
-	 * \param $right The right to compare, can be the right string to look for or an integer.
-	 * \return True if this user has enough acess level.
+	/** Checks permissions
+	 * @param $right The right to compare, can be the right string to look for or an integer.
+	 * @return True if this user has enough acess level.
 	 * 
 	 * Compares the accesslevel of this user to the incoming right.
 	 */
@@ -98,12 +107,11 @@ class AbstractUser extends PermanentEntity {
 		return ( $this->accesslevel >= $right );
 	}
 	
-	//! Checks access permissions
-	/*!
-	 * \param $module The module to check.
-	 * \return True if this user has enough acess level to access to this module.
-	 * \sa checkPerm()
-	 * \warning Obsolete
+	/** Checks access permissions
+	 * @param $module The module to check.
+	 * @return True if this user has enough acess level to access to this module.
+	 * @sa checkPerm()
+	 * @warning Obsolete
 	 */
 	public function checkAccess($module) {
 		//$module pdoit être un nom de module.
@@ -113,19 +121,17 @@ class AbstractUser extends PermanentEntity {
 		return $this->checkPerm((int) $GLOBALS['ACCESS']->$module);
 	}
 	
-	//! Checks if current logged user can edit this one.
-	/*!
-	 * \param $inputData The input data.
+	/** Checks if current logged user can edit this one.
+	 * @param $inputData The input data.
 	 */
 	public function checkPermissions($inputData) {
 		return static::checkAccessLevel($inputData, $this);
 	}
 	
-	//! Checks if this user can alter data on the given user
-	/*!
-	 * \param $user The user we want to edit.
-	 * \return True if this user has enough acess level to edit $user or he is altering himself.
-	 * \sa loggedCanDo()
+	/** Checks if this user can alter data on the given user
+	 * @param $user The user we want to edit.
+	 * @return True if this user has enough acess level to edit $user or he is altering himself.
+	 * @sa loggedCanDo()
 	 * 
 	 * Checks if this user can alter on $user.
 	 */
@@ -134,15 +140,14 @@ class AbstractUser extends PermanentEntity {
 		return !$user->accesslevel || $this->accesslevel > $user->accesslevel;
 	}
 	
-	//! Checks if this user can affect data on the given user
-	/*!
-	 * \param $action The action to look for.
-	 * \param $object The object we want to edit.
-	 * \return True if this user has enough access level to alter $object (or he is altering himself).
-	 * \sa loggedCanDo()
-	 * \sa canAlter()
+	/** Check if this user can affect data on the given user
+	 * @param $action The action to look for.
+	 * @param $object The object we want to edit.
+	 * @return True if this user has enough access level to alter $object (or he is altering himself).
+	 * @sa loggedCanDo()
+	 * @sa canAlter()
 	 * 
-	 * Checks if this user can affect $object.
+	 * Check if this user can affect $object.
 	 */
 	public function canDo($action, $object=null) {
 		global $USER_CLASS;
@@ -151,9 +156,9 @@ class AbstractUser extends PermanentEntity {
 	
 	// *** METHODES STATIQUES ***
 	
-// 	//! Logs in an user from data
+// 	/** Logs in an user from data
 // 	/*!
-// 	 * \param $data The data for user authentification.
+// 	 * @param $data The data for user authentification.
 // 	 * 
 // 	 * Log in a user from the given data.
 // 	 * It tries to validate given data, in case of errors, UserException are thrown.
@@ -178,7 +183,9 @@ class AbstractUser extends PermanentEntity {
 		$user->login();
 	}
 
-	//! Log in an user from HTTP authentication
+	/** Log in an user from HTTP authentication
+	 * 
+	 */
 	public static function httpLogin() {
 		$user = static::get(array(
 			'where' => 'name LIKE '.static::formatValue($_SERVER['PHP_AUTH_USER']),
@@ -195,10 +202,9 @@ class AbstractUser extends PermanentEntity {
 		$user->login();
 	}
 
-	//! Create user from HTTP authentication
-	/*!
-	 * \return User object
-	 * \warning Require other data than name and password ard optional
+	/** Create user from HTTP authentication
+	 * @return User object
+	 * @warning Require other data than name and password ard optional
 	 *
 	 * Create user from HTTP authentication
 	 */
@@ -206,10 +212,9 @@ class AbstractUser extends PermanentEntity {
 		return static::createAndGet(array('name'=>$_SERVER['PHP_AUTH_USER'], 'password'=>$_SERVER['PHP_AUTH_PW']));
 	}
 
-	//! Create user from HTTP authentication
-	/*!
-	 * \return User object
-	 * \warning Require other data than name and password ard optional
+	/** Create user from HTTP authentication
+	 * @return User object
+	 * @warning Require other data than name and password ard optional
 	 *
 	 * Create user from HTTP authentication
 	 */
@@ -227,23 +232,21 @@ class AbstractUser extends PermanentEntity {
 		return false;
 	}
 	
-	//! Hash a password
-	/*!
-	 * \param $str The clear password.
-	 * \return The hashed string.
+	/** Hash a password
+	 * @param $str The clear password.
+	 * @return The hashed string.
 	 * 
-	 * Hashes $str using a salt.
+	 * Hash $str using a salt.
 	 * Define constant USER_SALT to use your own salt.
 	 */
 	public static function hashPassword($str) {
 		return hashString($str);
 	}
 	
-	//! Checks if the client is logged in
-	/*!
-	 * \return True if the current client is logged in.
+	/** Check if the client is logged in
+	 * @return True if the current client is logged in.
 	 * 
-	 * Checks if the client is logged in.
+	 * Check if the client is logged in.
 	 * It verifies if a valid session exist.
 	 */
 	public static function is_login() {
@@ -252,30 +255,27 @@ class AbstractUser extends PermanentEntity {
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
 
-	//! Checks if the client is logged in
-	/*!
-	 * \return True if the current client is logged in.
-	*
-	* Checks if the client is logged in.
-	*/
+	/** Checks if the client is logged in
+	 * @return True if the current client is logged in.
+	 *
+	 * Checks if the client is logged in.
+	 */
 	public static function isLogged() {
 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
 	
-	//! Gets ID if user is logged
-	/*!
-	 * \return The id of the current client logged in.
+	/** Get ID if user is logged
+	 * @return The id of the current client logged in.
 	 * 
-	 * Gets the ID of the current user or 0.
+	 * Get the ID of the current user or 0.
 	 */
 	public static function getLoggedUserID() {
 		return static::isLogged() ? $_SESSION['USER']->id : 0;
 	}
 	
-	//! Loads an user object
-	/*!
-	 * \sa PermanentObject::load()
+	/** Load an user object
+	 * @sa PermanentObject::load()
 	 * 
 	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
@@ -286,9 +286,8 @@ class AbstractUser extends PermanentEntity {
 		return parent::load($id);
 	}
 
-	//! Checks if this user has admin right
-	/*!
-	 * \return True if this user is logged and is admin.
+	/** Checks if this user has admin right
+	 * @return True if this user is logged and is admin.
 	 *
 	 * Checks if this user has admin access level.
 	 * This is often used to determine if the current user can access to the admin panel.
@@ -309,10 +308,9 @@ class AbstractUser extends PermanentEntity {
 		return static::getAccessOf($v);
 	}
 	
-	//! Checks if this user can access to a module
-	/*!
-	 * \param $module The module to look for.
-	 * \return True if this user can access to $module.
+	/** Checks if this user can access to a module
+	 * @param $module The module to look for.
+	 * @return True if this user can access to $module.
 	 * 
 	 * Checks if this user can access to $module.
 	 */
@@ -330,11 +328,10 @@ class AbstractUser extends PermanentEntity {
 				$USER instanceof $USER_CLASS && $USER->checkPerm($access));
 	}
 	
-	//! Checks if this user can do a restricted action
-	/*!
-	 * \param $action The action to look for.
-	 * \param $object The object to edit if editing one or null. Default value is null.
-	 * \return True if this user can do this $action.
+	/** Checks if this user can do a restricted action
+	 * @param $action The action to look for.
+	 * @param $object The object to edit if editing one or null. Default value is null.
+	 * @return True if this user can do this $action.
 	 * 
 	 * Checks if this user can do $action.
 	 */
@@ -344,10 +341,9 @@ class AbstractUser extends PermanentEntity {
 		return !empty($USER) && $USER->canDo($action, $object);
 	}
 	
-	//! Checks for object
-	/*!
-		\sa PermanentObject::checkForObject()
-	*/
+	/** Checks for object
+	 * @sa PermanentObject::checkForObject()
+	 */
 	public static function checkForObject($data, $ref=null) {
 		$where	= 'email LIKE '.static::formatValue($data['email']);
 		$what	= 'email';

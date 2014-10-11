@@ -1,23 +1,21 @@
 <?php
-/*!
-	\file _pdo.php
-	\brief Library to easily use PDO
-	\author Florent Hazard
-	\copyright The MIT License, see LICENSE.txt
-	
-Library of PDO functions to easily use ODBC.
-
-Useful constants:
-LOGSPATH
-PDOLOGFILENAME
-
-Required functions:
-bintest() (_core.php)
+/**
+ * @file _pdo.php
+ * @brief Library to easily use PDO
+ * @author Florent Hazard
+ * @copyright The MIT License, see LICENSE.txt
+ * 
+ * Library of PDO functions to easily use ODBC.
+ * 
+ * Useful constants:
+ * LOGSPATH
+ * PDOLOGFILENAME
+ * 
+ * Required functions:
+ * bintest() (Core lib)
 */
 
-if( !defined("INSIDE") ) {
-	return;
-}
+if( !defined("INSIDE") ) { return; }
 
 defifn('DBCONF'				, 'database');
 
@@ -40,15 +38,14 @@ define('PDOERROR_MINOR'		, 1<<10);
 // define('PDOERROR_SILENT'	, PDOERROR_MINOR);
 // define('PDOERROR_SILENT'	, PDOERROR_MINOR | PDOERROR_EXCEP);
 
-//! Ensures to be connected to the database.
-/*
-	\param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
-	\return	Instance ID used.
-
-	Ensures to provide a valid and connected instance of PDO, here are the steps:
-	If it is not loaded, this function attempts to load the database configuration file.
-	If not supplied as a parameter, this function attempts to determine an existing instance name.
-	If the instance is not connected, this function attempts to connect.
+/** Ensures to be connected to the database.
+ * @param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
+ * @return	Instance ID used.
+ * 
+ * Ensures to provide a valid and connected instance of PDO, here are the steps:
+ * If it is not loaded, this function attempts to load the database configuration file.
+ * If not supplied as a parameter, this function attempts to determine an existing instance name.
+ * If the instance is not connected, this function attempts to connect.
 */
 function ensure_pdoinstance($Instance=null) {
 	global $pdoInstances, $DBS;
@@ -157,14 +154,13 @@ function ensure_pdoinstance($Instance=null) {
 	return $Instance;
 }
 
-//! Executes $Query
-/*
-	\param $Query The query to execute.
-	\param $Fetch See PDO constants above. Optional, default is PDOQUERY.
-	\param $Instance The instance to use to execute the query. Optional, default is defined by ensure_pdoinstance().
-	\return The result of the query, of type defined by $Fetch.
-	
-	Executes $Query on the instanciated database.
+/** Execute $Query
+ * @param $Query The query to execute.
+ * @param $Fetch See PDO constants above. Optional, default is PDOQUERY.
+ * @param $Instance The instance to use to execute the query. Optional, default is defined by ensure_pdoinstance().
+ * @return The result of the query, of type defined by $Fetch.
+ * 
+ * Execute $Query on the instanciated database.
 */
 function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	global $pdoInstances, $DBS;
@@ -219,13 +215,12 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or is not implemented yet.', 'Driver Definition');
 }
 
-//! Gets the last inserted ID
-/*
- * \param $Instance The instance to use to get the last inserted id. Optional, default is defined by ensure_pdoinstance().
- * \return The last inserted id.
+/** Gets the last inserted ID
+ * @param $Instance The instance to use to get the last inserted id. Optional, default is defined by ensure_pdoinstance().
+ * @return The last inserted id.
  * 
  * Gets the last inserted ID for this instance
-*/
+ */
 function pdo_lastInsertId($Instance=null) {
 	global $pdoInstances;
 	$Instance		= ensure_pdoinstance($Instance);
@@ -234,26 +229,26 @@ function pdo_lastInsertId($Instance=null) {
 	return $r;
 }
 
-//! Logs a PDO error
-/*
-	\param $report The report to save.
-	\param $Action Optional information about what the script was doing.
-
-	Saves the error report $report in the log file and exit script.
-*/
+/** Log a PDO error
+ * @param $report The report to save.
+ * @param $Action Optional information about what the script was doing.
+ * @param $Fetch The fetch flags, if PDOERROR_MINOR, this function does nothing. Optional, default value is 0.
+ * @param $Original The original exception. Optional, default value is null.
+ * 
+ * Save the error report $report in the log file and throw an exception.
+ */
 function pdo_error($report, $Action='', $Fetch=0, $Original=null) {
 	if( bintest($Fetch, PDOERROR_MINOR) ) { return; }
 	sql_error($report, $Action);
 	throw new SQLException($report, $Action, $Original);
 }
 
-//! Quotes and Escapes
-/*
-	\param $String The value to escape.
-	\return The quoted and escaped value.
-
-	Places quotes around the input string and escapes special characters within the input string, using the current instance.
-*/
+/** Quotes and Escapes
+ * @param $String The value to escape.
+ * @return The quoted and escaped value.
+ * 
+ * Places quotes around the input string and escapes special characters within the input string, using the current instance.
+ */
 function pdo_quote($String) {
 	//Old version, does not protect against SQL Injection.
 	global $pdoInstances;

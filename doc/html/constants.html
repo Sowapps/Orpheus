@@ -80,13 +80,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">Constants </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>You'll may need configure some constants as AUTHORNAME and SITENAME.<br />
-Configure others carefully and only if it's really necessary.<br />
-Set ERROR_LEVEL to set your website in production (with no error reports to the user). </p>
+<div class="textblock"><p>This file contains all the main constants, you will often work with it and you need to define your own.</p>
+<p>You will find here constants like AUTHORNAME and SITENAME, and also path constants.<br />
+Configure others carefully and only if it's really necessary, libraries may require some.<br />
+ Set ERROR_LEVEL to put your website in production (with no error reports to the user). This is compatible with multi-instance architecture, so you can set a dev version and a production version using the same sources on you own server. Official ERROR_LEVEL values are DEV_LEVEL (all errors) and PROD_LEVEL (no errors) and ERROR_LEVEL is set depending on DEV_VERSION value (if set). </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 10 2014 10:39:32 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 11 2014 13:06:30 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -1,6 +1,6 @@
 <?php
-//! The MYSQL Adapter class
-/*!
+/** The MYSQL Adapter class
+
 	This class is the sql adapter for MySQL.
 */
 class SQLAdapter_MySQL extends SQLAdapter {
@@ -48,14 +48,13 @@ class SQLAdapter_MySQL extends SQLAdapter {
 			'output'		=> SQLAdapter::NUMBER,//Number of inserted lines
 	);
 	
-	//! The function to use for SELECT queries
-    /*!
-		\param $options The options used to build the query.
-		\return Mixed return, depending on the 'output' option.
-	 	\sa http://dev.mysql.com/doc/refman/5.0/en/select.html
-	 	\sa SQLAdapter::select()
-	 	
-		Using pdo_query(), It parses the query from an array to a SELECT query.
+	/** The function to use for SELECT queries
+	 * @param $options The options used to build the query.
+	 * @return Mixed return, depending on the 'output' option.
+	 * @sa http://dev.mysql.com/doc/refman/5.0/en/select.html
+	 * @sa SQLAdapter::select()
+	 * 
+	 * Using pdo_query(), It parses the query from an array to a SELECT query.
     */
 	public function select(array $options=array()) {
 		$options += self::$selectDefaults;
@@ -92,13 +91,11 @@ class SQLAdapter_MySQL extends SQLAdapter {
 // 		return (!empty($results) && $options['output'] == static::ARR_ASSOC && $options['number'] == 1) ? $results[0] : $results;
 	}
 	
-	//! The function to use for UPDATE queries
-	/*!
-		\param $options The options used to build the query.
-		\return The number of affected rows.
-		\sa http://dev.mysql.com/doc/refman/5.0/en/update.html
-		
-		Using pdo_query(), It parses the query from an array to a UPDATE query.
+	/** The function to use for UPDATE queries
+	 * @param $options The options used to build the query.
+	 * @return The number of affected rows.
+	 * @sa http://dev.mysql.com/doc/refman/5.0/en/update.html
+	 * Using pdo_query(), It parses the query from an array to a UPDATE query.
 	*/
 	public function update(array $options=array()) {
 		$options += self::$updateDefaults;
@@ -125,12 +122,10 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		return $this->query($QUERY, PDOEXEC);
 	}
 	
-	//! The function to use for DELETE queries
-	/*!
-		\param $options The options used to build the query.
-		\return The number of deleted rows.
-	
-		It parses the query from an array to a DELETE query.
+	/** The function to use for DELETE queries
+	 * @param $options The options used to build the query.
+	 * @return The number of deleted rows.
+	 * It parses the query from an array to a DELETE query.
 	*/
 	public function delete(array $options=array()) {
 		$options += self::$deleteDefaults;
@@ -154,13 +149,12 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		return $this->query($QUERY, PDOEXEC);
 	}
 	
-	//! The function to use for INSERT queries
-	/*!
-		\param $options The options used to build the query.
-		\return The number of inserted rows.
-		
-		It parses the query from an array to a INSERT query.
-		Accept only the String syntax for what option.
+	/** The function to use for INSERT queries
+	 * @param $options The options used to build the query.
+	 * @return The number of inserted rows.
+	 * 
+	 * It parses the query from an array to a INSERT query.
+	 * Accept only the String syntax for what option.
 	*/
 	public function insert(array $options=array()) {
 		$options += self::$insertDefaults;
@@ -204,24 +198,23 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		return $this->query($QUERY, PDOEXEC);
 	}
 	
-	//! The function to get the last inserted ID
-	/*!
-		\param $table The table to get the last inserted id.
-		\param $idfield The field id name.
-		\return The last inserted id value.
-		
-		It requires a successful call of insert() !
+	/** The function to get the last inserted ID
+
+	 * @param $table The table to get the last inserted id.
+	 * @param $idfield The field id name.
+	 * @return The last inserted id value.
+	 * 
+	 * It requires a successful call of insert() !
 	*/
 	public function lastID($table, $idfield='id') {
 		return $this->query("SELECT LAST_INSERT_ID();", PDOFETCHFIRSTCOL);
 	}
 
-	//! Escapes SQL identifiers
-	/*!
-	 * \param $Identifier The identifier to escape.
-	 * \return The escaped identifier.
+	/** Escape SQL identifiers
+	 * @param $Identifier The identifier to escape.
+	 * @return The escaped identifier.
 	 * 
-	 * Escapes the given string as an SQL identifier.
+	 * Escape the given string as an SQL identifier.
 	*/
 	public function escapeIdentifier($Identifier) {
 		return '`'.$Identifier.'`';

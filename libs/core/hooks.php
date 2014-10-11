@@ -1,6 +1,6 @@
 <?php
-/*!
- * \brief The hooks' default callbacks
+/**
+ * @brief The hooks' default callbacks
  * 
  * PHP File containing default registering of hooks' callbacks.
  */
@@ -8,7 +8,9 @@
 using('hooks');
 
 
-//! Callback for Hook 'runModule'
+/** Callback for Hook 'runModule'
+ * 
+ */
 Hook::register('runModule', function ($Module) {
 	if( defined('TERMINAL') ) { return; }
 	$path		= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -31,7 +33,8 @@ Hook::register('runModule', function ($Module) {
 	}
 });
 
-//! Callback for Hook 'checkModule'
+/** Callback for Hook 'checkModule'
+ */
 // Move to Publisher lib
 // Hook::register('checkModule', function () {
 // 	if( User::is_login() ) {

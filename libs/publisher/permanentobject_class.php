@@ -25,11 +25,18 @@ abstract class PermanentObject {
 	protected $data			= array();
 	protected $isDeleted	= false;
 	
-	//! Internal static initialization
+	/** Internal static initialization
+	 * 
+	 */
 	public static function selfInit() {
 		static::$fields = array(static::$IDFIELD);
 	}
 	
+	/**
+	 * Return the object as array
+	 * @param array $array
+	 * @return array The resulting array
+	 */
 	public static function set2Array(array $array) {
 		foreach( $array as &$value ) {
 			$value	= $value->getValue();
@@ -37,6 +44,10 @@ abstract class PermanentObject {
 		return $array;
 	}
 	
+	/**
+	 * Insert this object in the given array using its ID as key
+	 * @param array $array
+	 */
 	public function setTo(array &$array) {
 		$array[$this->id()]	= $this;
 	}

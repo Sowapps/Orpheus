@@ -1,8 +1,8 @@
 <?php
-/*! \file
+/** \file
  * All web site constants.
  *
- * \page constants Constants
+ * @page constants Constants
  * 
  * This file contains all the main constants, you will often work with it and you need to define your own.
  * You will find here constants like AUTHORNAME and SITENAME, and also path constants.\n

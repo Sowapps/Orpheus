@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['session_20handler_20library',['Session Handler Library',['../lib_sessionhandler.html',1,'']]],
   ['sqladapter_20library',['SQLAdapter Library',['../lib_sqladapter.html',1,'']]],
   ['sample_5ftwig_2ephp',['sample_twig.php',['../sample__twig_8php.html',1,'']]],
   ['sanitizenumber',['sanitizeNumber',['../initernationalization_2__loader_8php.html#a4d7bb6b13b54cb2403e423bb81414131',1,'_loader.php']]],

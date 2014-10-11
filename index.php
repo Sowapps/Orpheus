@@ -1,9 +1,9 @@
 <?php
-/*!
- * \file index.php
- * \brief The Orpheus Core
- * \author Florent Hazard
- * \copyright The MIT License, see LICENSE.txt
+/**
+ * @file index.php
+ * @brief The Orpheus Core
+ * @author Florent Hazard
+ * @copyright The MIT License, see LICENSE.txt
  * 
  * Website core.
  */
@@ -47,8 +47,8 @@ define("ERROR_DISPLAY_RAW", 1);
 define("ERROR_IGNORE", 2);
 $ERROR_ACTION = ERROR_THROW_EXCEPTION;
 set_error_handler(
-//! Error Handler
-/*!
+/** Error Handler
+
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline ) {
@@ -74,8 +74,8 @@ function($errno, $errstr, $errfile, $errline ) {
 });
 
 register_shutdown_function(
-//! Shutdown Handler
-/*!
+/** Shutdown Handler
+
 	System function to handle PHP shutdown and catch uncaught errors.
 */
 function() {
@@ -94,8 +94,8 @@ function() {
 });
 
 set_exception_handler(
-//! Exception Handler
-/*!
+/** Exception Handler
+
 	System function to handle all exceptions and stop script execution.
  */
 function($e) {
