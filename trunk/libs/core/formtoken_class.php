@@ -65,6 +65,7 @@ class FormToken {
 		}
 		return '<input type="hidden" name="'.self::HTML_PREFIX.$this->name.'" value="'.$token.'" />';
 	}
+	
 	/**
 	 * Generate a new token and display HTML input tag
 	 * @param string $force
@@ -72,6 +73,7 @@ class FormToken {
 	public function _generateTokenHTML($force=false) {
 		echo $this->generateTokenHTML($force);
 	}
+	
 	/**
 	 * Return HTML input tag
 	 * @return string
