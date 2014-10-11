@@ -1,5 +1,6 @@
 <?php
-/* Loader File for the publisher sources
+/**
+ * Loader File for the publisher sources
  */
 
 addAutoload('AbstractPublication',				'publisher/abstractpublication_class.php');
@@ -20,7 +21,9 @@ $USER_CLASS = USER_CLASS;
 define('HOOK_ACCESSDENIED', 	'accessDenied');
 Hook::create(HOOK_ACCESSDENIED);
 
-//! Hook 'checkModule'
+/** Hook 'checkModule'
+ * 
+ */
 Hook::register('checkModule', function () {
 	global $USER_CLASS;
 	$GLOBALS['ACCESS'] = Config::build('access', true);
@@ -45,7 +48,8 @@ Hook::register('checkModule', function () {
 	}
 });
 
-//! Hook 'runModule'
+/** Hook 'runModule'
+ */
 Hook::register('runModule', function () {
 	global $USER_CLASS, $Module;
 	// If user can not access to this module, we redirect him to default but if default is forbidden, we can not redirect indefinitely.

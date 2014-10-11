@@ -1,5 +1,6 @@
 <?php
-/* Loader File for the orpheus session handler sources
+/**
+ * Loader File for the orpheus session handler sources
  */
 
 addAutoload('OSessionHandler',					'sessionhandler/osessionhandler');
@@ -10,7 +11,9 @@ addAutoload('SessionInterface',					'sessionhandler/sessioninterface');
 
 // Hooks
 
-//! Hook 'startSession'
+/** Hook 'startSession'
+ * 
+ */
 // Hook::register('startSession', function () {
 	
 // });

@@ -1,6 +1,6 @@
 <?php
-//! The inlay class for contents blocks
-/*!
+/** The inlay class for contents blocks
+
  *
  * Require core and publisher plugin.
  */

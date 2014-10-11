@@ -1,6 +1,6 @@
 <?php
-//! A sample Demo Entity class
-/*!
+/** A sample Demo Entity class
+
 	Example of how to use the permanent entity.
 */
 class DemoEntity extends PermanentEntity {

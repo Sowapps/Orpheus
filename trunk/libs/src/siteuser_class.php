@@ -1,6 +1,6 @@
 <?php
-//! The site user class
-/*!
+/** The site user class
+
  * A site user is a registered user.
  * 
  * Require:

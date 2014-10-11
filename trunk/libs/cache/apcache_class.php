@@ -1,7 +1,6 @@
 <?php
 
-//! The apc cache class
-/*!
+/** The apc cache class
  * Uses APC feature to cache data.
  * This class is useful for perishable data.
  * So, it requires the APC lib to be installed on the server.
@@ -13,21 +12,20 @@ class APCache implements Cache {
 	protected $key;
 	protected $ttl;
 	
-	//! Constructor
-	/*!
-	 * \param $class The class of the cache
-	 * \param $name The name of this cache
-	 * \param $ttl The time to live, the delay the cache expires for. Default value is 0 (undefined).
+	/** Constructor
+	 * @param $class The class of the cache
+	 * @param $name The name of this cache
+	 * @param $ttl The time to live, the delay the cache expires for. Default value is 0 (undefined).
 	 */
 	public function __construct($class, $name, $ttl=0) {
 		$this->ttl = $ttl;
 		$this->key = $class.'.'.$name;
+		$this->get($cached);
 	}
 	
-	//! Gets the cache for the given parameters
-	/*!
-	 * \param $cached The output to get the cache
-	 * \return True if cache has been retrieved
+	/** Gets the cache for the given parameters
+	 * @param $cached The output to get the cache
+	 * @return True if cache has been retrieved
 	 * 
 	 * This method uses the apc_fetch() function.
 	 * The type is preserved, even for objects.
@@ -40,10 +38,9 @@ class APCache implements Cache {
 		return $success;
 	}
 	
-	//! Sets the cache for the given parameters
-	/*!
-	 * \param $data The data to put in the cache
-	 * \return True if cache has been saved
+	/** Sets the cache for the given parameters
+	 * @param $data The data to put in the cache
+	 * @return True if cache has been saved
 	 * 
 	 * This method uses the apc_store() function.
 	 */

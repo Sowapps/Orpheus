@@ -1,9 +1,8 @@
 <?php
 
-//! The permanent entity class
-/*!
+/** The permanent entity class
  * A permanent entity class that combine a PermanentObject with EntityDescriptor's features.
-*/
+ */
 abstract class PermanentEntity extends PermanentObject {
 
 	//Attributes
@@ -65,8 +64,7 @@ abstract class PermanentEntity extends PermanentObject {
 		return $entity::load($id);
 	}
 
-	//! Initializes class - REQUIRED
-	/**
+	/** Initializes class - REQUIRED
 	 * Initializes entity class
 	 * You must call this method after the class declaration
 	 */

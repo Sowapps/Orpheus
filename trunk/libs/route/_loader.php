@@ -1,16 +1,16 @@
 <?php
-//! Route Library
-/*!
+/** Route Library
+
  * Route library defining public route (links)
  * 
  */
 
-//! Gets the full url of a module
-/*!
- * \param $module The module.
- * \param $action The action to use for this url. Array allowed only with Route config usage.
- * \param $queryStr The query string to add to the url, can be an array.
- * \return The url of $module.
+/** Gets the full url of a module
+
+ * @param $module The module.
+ * @param $action The action to use for this url. Array allowed only with Route config usage.
+ * @param $queryStr The query string to add to the url, can be an array.
+ * @return The url of $module.
 
 * Gets the full url of a module, using default link for default module.
 */
@@ -48,12 +48,12 @@ function u($module, $action='', $queryStr='') {
 	return SITEROOT.$module.((!empty($action) && empty($actionProcessed)) ? '-'.$action : '').(!empty($queryStr) ? '-'.$queryStr : '').'.html';
 }
 
-//! Displays the full url of a module
-/*!
- * \param $module The module.
- * \param $action The action to use for this url.
- * \param $queryStr The query string to add to the url, can be an array.
- * \sa u()
+/** Displays the full url of a module
+
+ * @param $module The module.
+ * @param $action The action to use for this url.
+ * @param $queryStr The query string to add to the url, can be an array.
+ * @sa u()
 
  * Displays the full url of a module, using default link for default module.
  */

@@ -1,6 +1,6 @@
 <?php
-//! The HTML rendering class
-/*!
+/** The HTML rendering class
+
 	A basic class to render HTML using PHP scripts.
 */
 class HTMLRendering extends Rendering {
@@ -16,8 +16,8 @@ class HTMLRendering extends Rendering {
 	public static $jsURLs			= array();// Javascript files
 	public static $metaprop			= array();// Meta-properties
 	
-	//! Renders the model.
-	/*!
+	/** Renders the model.
+
 		\copydoc Rendering::render()
 	*/
 	public function render($model=null, $env=array()) {
@@ -26,8 +26,8 @@ class HTMLRendering extends Rendering {
 		return ob_get_clean();
 	}
 
-	//! Displays the model.
-	/*!
+	/** Displays the model.
+
 	 \copydoc Rendering::display()
 	*/
 	public function display($model=null, $env=array()) {
@@ -73,8 +73,8 @@ class HTMLRendering extends Rendering {
 		static::$metaprop[$property] = $content;
 	}
 	
-	//! Gets the theme path.
-	/*!
+	/** Gets the theme path.
+
 		\return The theme path.
 		
 		Gets the path to the current theme.
@@ -83,8 +83,8 @@ class HTMLRendering extends Rendering {
 		return THEMESDIR.static::$theme.'/';
 	}
 	
-	//! Gets the absolute theme path.
-	/*!
+	/** Gets the absolute theme path.
+
 		\return The theme path.
 		
 		Gets the absolute path to the current theme.
@@ -93,8 +93,8 @@ class HTMLRendering extends Rendering {
 		return pathOf(static::getThemePath());
 	}
 	
-	//! Gets the models theme path.
-	/*!
+	/** Gets the models theme path.
+
 		\return The models theme path.
 		
 		Gets the path to the models.
@@ -103,8 +103,8 @@ class HTMLRendering extends Rendering {
 		return pathOf(static::getThemePath().static::$modelsPath);
 	}
 
-	//! Gets the css theme path.
-	/*!
+	/** Gets the css theme path.
+
 		\return The css theme path.
 		
 		Gets the path to the css files.
@@ -113,8 +113,8 @@ class HTMLRendering extends Rendering {
 		return pathOf(static::getThemePath().static::$cssPath);
 	}
 
-	//! Gets the theme path.
-	/*!
+	/** Gets the theme path.
+
 		\return The theme path.
 		
 		Gets the URL to the current theme.
@@ -123,8 +123,8 @@ class HTMLRendering extends Rendering {
 		return THEMESURL.static::$theme.'/';
 	}
 
-	//! Gets the CSS files path.
-	/*!
+	/** Gets the CSS files path.
+
 		\return The CSS path.
 		
 		Gets the URL to the CSS files.

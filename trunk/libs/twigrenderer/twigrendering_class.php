@@ -1,6 +1,6 @@
 <?php
-//! The Twig rendering class
-/*!
+/** The Twig rendering class
+
 	A class to render templates with the Twig engine.
 */
 class TwigRendering extends Rendering {
@@ -14,9 +14,9 @@ class TwigRendering extends Rendering {
 	
 	protected static $twigenv;
 	
-	//! Renders the model.
-	/*!
-	 * \copydoc Rendering::render()
+	/** Renders the model.
+
+	 * @copydoc Rendering::render()
 	 */
 	public function render($model=null, $env=array()) {
 		if( $model === NULL ) {
@@ -26,8 +26,8 @@ class TwigRendering extends Rendering {
 		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
-	//! Initializes the Twig rendering
-	/*!
+	/** Initializes the Twig rendering
+
 	 * Initializes the Twig rendering, cache and models' path are defined.
 	 */
 	public static function init() {
@@ -41,25 +41,25 @@ class TwigRendering extends Rendering {
 		static::setTwigEnvironment(static::$twigenv);
 	}
 	
-	//! Sets the Twig Environment
-	/*!
-	 * \param $twigEnv The new Twig_Environment object.
+	/** Sets the Twig Environment
+
+	 * @param $twigEnv The new Twig_Environment object.
 	 */
 	public static function setTwigEnvironment(Twig_Environment $twigEnv) {
 		static::$twigenv	= $twigEnv;
 	}
 	
-	//! Gets the Twig Environment
-	/*!
-	 * \return The Twig_Environment object.
+	/** Gets the Twig Environment
+
+	 * @return The Twig_Environment object.
 	 */
 	public static function getTwigEnvironment() {
 		return static::$twigenv;
 	}
 	
-	//! Gets the models path.
-	/*!
-	 * \return The models path.
+	/** Gets the models path.
+
+	 * @return The models path.
 	 * 
 	 * Gets the path to the models.
 	*/
@@ -67,8 +67,8 @@ class TwigRendering extends Rendering {
 		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
 	}
 
-	//! Gets the CSS files path.
-	/*!
+	/** Gets the CSS files path.
+
 		\return The CSS path.
 		
 		Gets the path to the CSS files.
@@ -77,8 +77,8 @@ class TwigRendering extends Rendering {
 		return THEMESURL.static::$theme.'/'.static::$cssPath;
 	}
 
-	//! Gets the Cache path.
-	/*!
+	/** Gets the Cache path.
+
 		\return The Cache path.
 		
 		Gets the path to the Cache files.

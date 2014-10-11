@@ -1,6 +1,5 @@
 <?php
-//! The abstract publication class
-/*!
+/** The abstract publication class
  * This class implements a publication system to the abstract status class.
  * Its purpose is to be used for articles, posts, comments and other publications.
  * It manages a cache for user editable contents and register automatically some events.
@@ -40,11 +39,10 @@ abstract class AbstractPublication extends AbstractStatus {
 
 	// *** OVERRIDDEN METHODS ***
 	
-	//! Magic string conversion
-	/*!
-		\return The string valu of this object.
-		
-		The string value is the contents of the publication.
+	/** Magic string conversion
+	 * @return The string valu of this object.
+	 * 
+	 * The string value is the contents of the publication.
 	*/
 	public function __toString() {
 		return $this->getHTML();
@@ -52,9 +50,8 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	// *** DEV METHODS ***
 	
-	//! Updates this publication object
-	/*!
-	 * \sa PermanentObject::update()
+	/** Update this publication object
+	 * @sa PermanentObject::update()
 	 * 
 	 * This update method manages 'name' and 'user_name' fields.
 	 */
@@ -65,11 +62,10 @@ abstract class AbstractPublication extends AbstractStatus {
 // 		return parent::update($uInputData, $fields, $noEmptyError);
 // 	}
 	
-	//! Gets HTML contents
-	/*!
-	 * \param $cacheUpdate True to force the cache to update.
-	 * \return The cache content, the generated HTML.
-	 * \sa generateHTML()
+	/** Get HTML contents
+	 * @param $cacheUpdate True to force the cache to update.
+	 * @return The cache content, the generated HTML.
+	 * @sa generateHTML()
 	 */
 	public function getHTML($cacheUpdate=0) {
 		if( !strlen($this->cache) || $cacheUpdate ) {
@@ -78,17 +74,15 @@ abstract class AbstractPublication extends AbstractStatus {
 		return $this->cache;
 	}
 	
-	//! Generate HTML contents
-	/*!
-	 * \return The generated HTML contents.
-	 * \overrideit
+	/** Generate HTML contents
+	 * @return The generated HTML contents.
+	 * @overrideit
 	 */
 	abstract public function generateHTML();
 	
-	//! Gets permalink
-	/*!
-	 * \return The permalink.
-	 * \overrideit
+	/** Gets permalink
+	 * @return The permalink.
+	 * @overrideit
 	 * 
 	 * Gets the unique and permanent link.
 	 */
@@ -96,7 +90,8 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	// *** STATIC METHODS ***
 	
-	//! Erase all cache for this publication type
+	/** Erase all cache for this publication type
+	 */
 	public static function eraseAllCache() {
 		return SQLAdapter::doUpdate(array(
 			'table' => static::$table,
@@ -106,11 +101,10 @@ abstract class AbstractPublication extends AbstractStatus {
 	
 	// 		** VALIDATION METHODS **
 	
-	//! Checks a name
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The stripped name.
+	/** Checks a name
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The stripped name.
 	 * 
 	 * Validates the name field in array $inputData.
 	 */
@@ -124,11 +118,10 @@ abstract class AbstractPublication extends AbstractStatus {
 		return strip_tags($inputData['name']);
 	}
 	
-	//! Checks a user id
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The user id as integer.
+	/** Checks a user id
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The user id as integer.
 	 * 
 	 * Validates the user_id field in array $inputData.
 	 */
@@ -142,11 +135,10 @@ abstract class AbstractPublication extends AbstractStatus {
 		return (int) $inputData['user_id'];
 	}
 	
-	//! Checks a user name
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The stripped user name.
+	/** Checks a user name
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The stripped user name.
 	 * 
 	 * Validates the user_name field in array $inputData.
 	 */
@@ -160,21 +152,19 @@ abstract class AbstractPublication extends AbstractStatus {
 		return strip_tags($inputData['user_name']);
 	}
 	
-	//! Checks published status
-	/*!
-	 * \param $inputData The input data from the user.
-	 * \param $ref The reference to check the field from.
-	 * \return The published status.
+	/** Check published status
+	 * @param $inputData The input data from the user.
+	 * @param $ref The reference to check the field from.
+	 * @return The published status.
 	 * 
-	 * Validates the published field in array $inputData.
+	 * Validate the published field in array $inputData.
 	 */
 	public static function checkPublished($inputData, $ref=null) {
 		return ( !empty($inputData['published']) ) ? 1 : 0;
 	}
 	
-	//! Checks for object
-	/*!
-		\sa PermanentObject::checkForObject()
+	/** Check for object
+	 * @sa PermanentObject::checkForObject()
 	*/
 	public static function checkForObject($data, $ref=null) {
 		if( empty($data['name']) && empty($data['user_id']) && empty($data['create_ip']) ) {

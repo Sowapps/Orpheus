@@ -1,6 +1,6 @@
 <?php
-//! The SQL exception class
-/*!
+/** The SQL exception class
+
 	This exception is thrown when an occured caused by the SQL DBMS (or DBMS tools).
 */
 class SQLException extends Exception {

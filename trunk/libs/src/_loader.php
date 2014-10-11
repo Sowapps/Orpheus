@@ -1,5 +1,5 @@
 <?php
-/* PHP File for the website sources
+/** PHP File for the website sources
  * It's your app's library.
  *
  * Author: Your name.
@@ -16,14 +16,18 @@ addAutoload('Session',							'sessionhandler/dbsession');
 
 // Hooks
 
-//! Hook 'runModule'
+/** Hook 'runModule'
+ * 
+ */
 Hook::register('runModule', function($module) {
 	if( getModuleAccess($module) > 0 ) {
 		HTMLRendering::$theme = 'admin';
 	}
 });
 
-//! Hook 'startSession'
+/** Hook 'startSession'
+ * 
+ */
 Hook::register('startSession', function () {
 	if( version_compare(PHP_VERSION, '5.4', '>=') ) {
 		OSessionHandler::register();

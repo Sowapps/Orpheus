@@ -1,7 +1,6 @@
 <?php
-//! A sample demo test class
-/*!
-	Example of how to use the permanent object.
+/** A sample demo test class
+ * Example of how to use the permanent object.
 */
 class DemoTest extends PermanentObject {
 	
@@ -20,11 +19,10 @@ class DemoTest extends PermanentObject {
 	
 	// 		** CHECK METHODS **
 	
-	//! Checks Field 'name'
-	/*!
-	 * \param $inputData The user input.
-	 * \param $ref The reference to check the field from.
-	 * \return a valid field 'name'.
+	/** Checks Field 'name'
+	 * @param $inputData The user input.
+	 * @param $ref The reference to check the field from.
+	 * @return a valid field 'name'.
 	 */
 	public static function checkName($inputData, $ref=null) {
 		if( empty($inputData['name']) ) {
@@ -36,9 +34,8 @@ class DemoTest extends PermanentObject {
 		return strip_tags($inputData['name']);
 	}
 	
-	//! Checks for object
-	/*!
-		\sa PermanentObject::checkForObject()
+	/** Checks for object
+	 * \sa PermanentObject::checkForObject()
 	*/
 	public static function checkForObject($data, $ref=null) {
 		if( empty($data['name']) ) {

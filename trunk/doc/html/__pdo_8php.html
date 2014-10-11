@@ -103,13 +103,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:a6555d5446052f8afd6f4d8e88b5970a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ensures to be connected to the database.  <a href="#a6555d5446052f8afd6f4d8e88b5970a1">More...</a><br /></td></tr>
 <tr class="separator:a6555d5446052f8afd6f4d8e88b5970a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35c4b204f1ef889f71d48379f60dc464"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__pdo_8php.html#a35c4b204f1ef889f71d48379f60dc464">pdo_query</a> ($Query, $Fetch=<a class="el" href="__pdo_8php.html#aed044cd6812828a2c0e2835b0e367061">PDOQUERY</a>, $Instance=null)</td></tr>
-<tr class="memdesc:a35c4b204f1ef889f71d48379f60dc464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes $Query.  <a href="#a35c4b204f1ef889f71d48379f60dc464">More...</a><br /></td></tr>
+<tr class="memdesc:a35c4b204f1ef889f71d48379f60dc464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute $Query.  <a href="#a35c4b204f1ef889f71d48379f60dc464">More...</a><br /></td></tr>
 <tr class="separator:a35c4b204f1ef889f71d48379f60dc464"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2f74a3c2e28460a2140c81f71d9ebea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__pdo_8php.html#ab2f74a3c2e28460a2140c81f71d9ebea">pdo_lastInsertId</a> ($Instance=null)</td></tr>
 <tr class="memdesc:ab2f74a3c2e28460a2140c81f71d9ebea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the last inserted ID.  <a href="#ab2f74a3c2e28460a2140c81f71d9ebea">More...</a><br /></td></tr>
 <tr class="separator:ab2f74a3c2e28460a2140c81f71d9ebea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc42380d2c88012fccaee8f729330b90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__pdo_8php.html#abc42380d2c88012fccaee8f729330b90">pdo_error</a> ($report, $Action='', $Fetch=0, $Original=null)</td></tr>
-<tr class="memdesc:abc42380d2c88012fccaee8f729330b90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a PDO error.  <a href="#abc42380d2c88012fccaee8f729330b90">More...</a><br /></td></tr>
+<tr class="memdesc:abc42380d2c88012fccaee8f729330b90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a PDO error.  <a href="#abc42380d2c88012fccaee8f729330b90">More...</a><br /></td></tr>
 <tr class="separator:abc42380d2c88012fccaee8f729330b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60db2f1aaa7d3cc2296d6a8a171cc702"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="__pdo_8php.html#a60db2f1aaa7d3cc2296d6a8a171cc702">pdo_quote</a> ($String)</td></tr>
 <tr class="memdesc:a60db2f1aaa7d3cc2296d6a8a171cc702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Quotes and Escapes.  <a href="#a60db2f1aaa7d3cc2296d6a8a171cc702">More...</a><br /></td></tr>
@@ -143,7 +143,7 @@ Variables</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>The MIT License, see LICENSE.txt</dd></dl>
 <p>Library of PDO functions to easily use ODBC.</p>
 <p>Useful constants: LOGSPATH PDOLOGFILENAME</p>
-<p>Required functions: <a class="el" href="core_8php.html#a15d138c2858775879a7f3a6732fb8409" title="Do a binary test. ">bintest()</a> (_core.php) </p>
+<p>Required functions: <a class="el" href="core_8php.html#a15d138c2858775879a7f3a6732fb8409" title="Do a binary test. ">bintest()</a> (Core lib) </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a6555d5446052f8afd6f4d8e88b5970a1"></a>
 <div class="memitem">
@@ -158,6 +158,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$Instance</td><td>If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Instance ID used.</dd></dl>
+<p>Ensures to provide a valid and connected instance of PDO, here are the steps: If it is not loaded, this function attempts to load the database configuration file. If not supplied as a parameter, this function attempts to determine an existing instance name. If the instance is not connected, this function attempts to connect. </p>
 
 </div>
 </div>
@@ -196,6 +204,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$report</td><td>The report to save. </td></tr>
+    <tr><td class="paramname">$Action</td><td>Optional information about what the script was doing. </td></tr>
+    <tr><td class="paramname">$Fetch</td><td>The fetch flags, if PDOERROR_MINOR, this function does nothing. Optional, default value is 0. </td></tr>
+    <tr><td class="paramname">$Original</td><td>The original exception. Optional, default value is null.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Save the error report $report in the log file and throw an exception. </p>
 
 </div>
 </div>
@@ -212,6 +230,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$Instance</td><td>The instance to use to get the last inserted id. Optional, default is defined by <a class="el" href="__pdo_8php.html#a6555d5446052f8afd6f4d8e88b5970a1" title="Ensures to be connected to the database. ">ensure_pdoinstance()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last inserted id.</dd></dl>
+<p>Gets the last inserted ID for this instance </p>
 
 </div>
 </div>
@@ -244,6 +270,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$Query</td><td>The query to execute. </td></tr>
+    <tr><td class="paramname">$Fetch</td><td>See PDO constants above. Optional, default is PDOQUERY. </td></tr>
+    <tr><td class="paramname">$Instance</td><td>The instance to use to execute the query. Optional, default is defined by <a class="el" href="__pdo_8php.html#a6555d5446052f8afd6f4d8e88b5970a1" title="Ensures to be connected to the database. ">ensure_pdoinstance()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of the query, of type defined by $Fetch.</dd></dl>
+<p>Execute $Query on the instanciated database. </p>
 
 </div>
 </div>
@@ -260,6 +296,14 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">$String</td><td>The value to escape. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The quoted and escaped value.</dd></dl>
+<p>Places quotes around the input string and escapes special characters within the input string, using the current instance. </p>
 
 </div>
 </div>
@@ -387,7 +431,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 10 2014 10:39:32 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 11 2014 13:06:30 for Orpheus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

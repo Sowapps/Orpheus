@@ -1,9 +1,9 @@
 <?php
-/*!
- * \file Orpheus/loader.php
- * \brief The Orpheus Loader
- * \author Florent Hazard
- * \copyright The MIT License, see LICENSE.txt
+/**
+ * @file Orpheus/loader.php
+ * @brief The Orpheus Loader
+ * @author Florent Hazard
+ * @copyright The MIT License, see LICENSE.txt
  * 
  * PHP File for the website core.
  */
@@ -12,11 +12,11 @@ if( !isset($SRCPATHS) ) {
 	$SRCPATHS = array();
 }
 
-//! Defines an undefined constant.
-/*!
- * \param $name		The name of the constant.
- * \param $value	The value of the constant.
- * \return True if the constant was defined successfully, else False.
+/** Defines an undefined constant.
+
+ * @param $name		The name of the constant.
+ * @param $value	The value of the constant.
+ * @return True if the constant was defined successfully, else False.
  * 
  *  Defines a constant if this one is not defined yet.
  */
@@ -28,11 +28,11 @@ function defifn($name, $value) {
 	return true;
 }
 
-//! Gets the directory path
-/*!
- * \param $path The path get parent directory
- * \return The secured path
- * \sa dirname()
+/** Gets the directory path
+
+ * @param $path The path get parent directory
+ * @return The secured path
+ * @sa dirname()
  * 
  * Gets the parent directory path of $path
  */
@@ -41,12 +41,12 @@ function dirpath($path) {
 	return ( $dirname == '/' ) ? '/' : $dirname.'/';
 }
 
-//! Gets the path of a file/directory.
-/*!
- * \param $commonPath The common path
- * \param $silent Do not throw exception if path does not exist
- * \return The first valid path or null if there is no valid one.
- * \sa addSrcPath()
+/** Gets the path of a file/directory.
+
+ * @param $commonPath The common path
+ * @param $silent Do not throw exception if path does not exist
+ * @return The first valid path or null if there is no valid one.
+ * @sa addSrcPath()
  * 
  * This function uses global variable $SRCPATHS to get the known paths.
  * It allows developers to get a dynamic path to a file.
@@ -62,11 +62,11 @@ function pathOf($commonPath, $silent=false) {
 	throw new Exception('Path not found: '.$commonPath);
 }
 
-//! Checks if the path exists.
-/*!
- * \param $commonPath The common path.
- * \param $path The output parameter to get the first valid path.
- * \sa pathOf()
+/** Checks if the path exists.
+
+ * @param $commonPath The common path.
+ * @param $path The output parameter to get the first valid path.
+ * @sa pathOf()
  * 
  * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
  */
@@ -74,11 +74,11 @@ function existsPathOf($commonPath, &$path=null) {
 	return ($path=pathOf($commonPath, true))!==NULL;
 }
 
-//! Adds the path to the known paths.
-/*!
- * \param $path The source path to add.
- * \return True if the path was added.
- * \see pathOf()
+/** Adds the path to the known paths.
+
+ * @param $path The source path to add.
+ * @return True if the path was added.
+ * @see pathOf()
  */
 function addSrcPath($path) {
 	global $SRCPATHS;
@@ -89,8 +89,8 @@ function addSrcPath($path) {
 	return true;
 }
 
-//! Includes a directory
-/*!
+/** Includes a directory
+
 	\param $dir The directory to include.
 	\param $importants The files in that are importants to load first.
 	\return The number of files included.
@@ -119,8 +119,8 @@ function includeDir($dir, $importants=array()) {
 	return $i;
 }
 
-//! Includes a directory
-/*!
+/** Includes a directory
+
 	\param $path The relative directory path to include.
 	\param $importants The files in that are importants to load first.
 	\return The number of files included.

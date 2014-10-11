@@ -1,6 +1,6 @@
 <?php
-//! The hook class
-/*!
+/** The hook class
+
 	This class is used by the core to trigger event with custom callbacks.
 */
 class Hook {
@@ -10,16 +10,16 @@ class Hook {
 	protected $name;
 	protected $callbacks = array();
 	
-	//! Constructor
-	/*!
+	/** Constructor
+
 		\param $name The name of the new hook.
 	*/
 	protected function __construct($name) {
 		$this->name = $name;
 	}
 	
-	//! Registers a new callback for this hook.
-	/*!
+	/** Registers a new callback for this hook.
+
 		\param $callback A callback.
 		\sa register()
 		\sa http://php.net/manual/en/language.pseudo-types.php#language.types.callback
@@ -37,8 +37,8 @@ class Hook {
 		$this->callbacks[] = $callback;
 	}
 	
-	//! Triggers this hook.
-	/*!
+	/** Triggers this hook.
+
 		\param $params A callback.
 		\return The first param as result.
 		\sa trigger()
@@ -67,8 +67,8 @@ class Hook {
 		return isset($params[0]) ? $params[0] : null;
 	}
 	
-	//! Gets slug
-	/*!
+	/** Gets slug
+
 		\param $name The hook name.
 		\return The slug name.
 	
@@ -78,8 +78,8 @@ class Hook {
 		return strtolower($name);
 	}
 	
-	//! Creates new Hook
-	/*!
+	/** Creates new Hook
+
 		\param $name The new hook name.
 		\return The new hook.
 	*/
@@ -89,8 +89,8 @@ class Hook {
 		return self::$hooks[$name];
 	}
 	
-	//! Registers a callback
-	/*!
+	/** Registers a callback
+
 		\param $name The hook name.
 		\param $callback The new callback.
 		\return The registerHook() result, usually null.
@@ -105,8 +105,8 @@ class Hook {
 		return static::$hooks[$name]->registerHook($callback);
 	}
 	
-	//! Triggers a hook
-	/*!
+	/** Triggers a hook
+
 		\param $name The hook name.
 		\param $silent Make it silent, no exception thrown. Default value is false.
 		\return The triggerHook() result, usually the first parameter.
