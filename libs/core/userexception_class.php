@@ -1,33 +1,57 @@
 <?php
 /** The user exception class
-
-	This exception is thrown when an occured caused by the user.
-*/
+ * This exception is thrown when an occured caused by the user.
+ */
 class UserException extends Exception {
 	
 	protected $domain;
 	
+	/**
+	 * Constructor
+	 * @param string $message The exception message
+	 * @param string $domain The domain for the message
+	 */
 	public function __construct($message=null, $domain=null) {
 		parent::__construct($message);
 		$this->domain = $domain;
 	}
-	
+
+	/**
+	 * Get the domain
+	 * @return string
+	 */
 	public function getDomain() {
 		return $this->domain;
 	}
 	
+	/**
+	 * Set the domain
+	 * @param string $domain
+	 */
 	public function setDomain($domain) {
 		$this->domain = $domain;
 	}
-	
+
+	/**
+	 * Get the report from this exception
+	 * @return string
+	 */
 	public function getReport() {
 		return $this->getText();
 	}
-	
+
+	/**
+	 * Get the user's message
+	 * @return string The translated message from this exception
+	 */
 	public function getText() {
 		return $this->getMessage();
 	}
-	
+
+	/**
+	 * Return the string representation of this exception
+	 * @return string
+	 */
 	public function __toString() {
 		try {
 			return $this->getText();
@@ -42,6 +66,9 @@ class UserException extends Exception {
 	}
 }
 
+/** The Not Found Exception class
+ * This exception is thrown when something requested is not found.
+ */
 class NotFoundException extends UserException {
 	public function __construct($domain=null, $message=null) {
 		parent::__construct($message ? $message : 'notFound', $domain);

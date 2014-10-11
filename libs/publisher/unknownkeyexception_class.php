@@ -1,6 +1,6 @@
 <?php
 /** The unknown key exception class
- * This exception is thrown when an important key is not found
+ * This exception is thrown when a required key is not found
 */
 class UnknownKeyException extends Exception {
 	
