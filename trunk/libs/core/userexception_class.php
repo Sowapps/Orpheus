@@ -74,3 +74,5 @@ class NotFoundException extends UserException {
 		parent::__construct($message ? $message : 'notFound', $domain);
 	}
 }
+
+class OperationCancelledException extends UserException {}

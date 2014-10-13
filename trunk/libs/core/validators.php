@@ -52,7 +52,7 @@ function is_personalname($name, $charnb_max=50, $charnb_min=3) {
  */
 function is_ID($Number) {
 	$Number	= "$Number";
-	return is_scalar($Number) && ctype_digit($Number);
+	return is_scalar($Number) && ctype_digit($Number) && $Number > 0;
 }
 
 /** Checks if the input is a date.
@@ -116,7 +116,12 @@ function is_ip($ip, $flags=null) {
  * e.g: +336.12.34.56.78, 01-12-34-56-78
  */
 function is_phone_number($number, $country='FR') {
-	$number = str_replace(array('.', ' ', '-'), '', $number);
+	$number	= str_replace(array('.', ' ', '-'), '', $number);
+// 	var_dump($number);
+// 	for( $i=0; $i<strlen($number); $i++ ) {
+// 		debug('char['.$i.'] => '.ord($number[$i]));
+// 	}
+// 	debug('Removed spec char => '.$number.' is ? '.b(preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{9}$#", $number)));
 // 	$length = ( isset($length) && $length > 1 ) ? '{'.($length-1).'}' : '+';
 	return preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{9}$#", $number);
 }
