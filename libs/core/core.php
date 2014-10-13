@@ -157,7 +157,8 @@ function stringify($s) {
 }
 
 function formatException($e) {
-	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message').' in '.$e->getFile().':'.$e->getLine();//."\n".$e->getTraceAsString();
+	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message')
+		.' in '.$e->getFile().':'.$e->getLine()."\n<pre>".$e->getTraceAsString().'</pre>';
 }
 
 /** Logs a report in a file.

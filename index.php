@@ -239,14 +239,14 @@ try {
 			$initSession();
 			throw new UserException('movedSession');
 		}
-		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
-			// Only version >= 4.3.3 can regenerate session id without losing data
-			// http://php.net/manual/fr/function.session-regenerate-id.php
-			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
-				$_SESSION['ORPHEUS']['LAST_REGENERATEID']	= TIME;
-				session_regenerate_id();
-			}
-		}
+// 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
+// 			// Only version >= 4.3.3 can regenerate session id without losing data
+// 			// http://php.net/manual/fr/function.session-regenerate-id.php
+// 			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
+// 				$_SESSION['ORPHEUS']['LAST_REGENERATEID']	= TIME;
+// 				session_regenerate_id();
+// 			}
+// 		}
 		unset($initSession);
 	
 	}
@@ -310,12 +310,12 @@ try {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
-	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
-	if( !function_exists('log_error') ) {
-		die($report);
-	}
-	log_error($report, $coreAction);
-	unset($report);
+// 	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
+// 	if( !function_exists('log_error') ) {
+// 		die($report);
+// 	}
+	log_error($e, $coreAction);
+// 	unset($report);
 }
 
 try {
