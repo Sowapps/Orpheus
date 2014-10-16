@@ -17,13 +17,12 @@
 defifn('TIME',				$_SERVER['REQUEST_TIME']);
 define('INSIDE',			true);
 
-define('DEV_LEVEL',			E_ALL | E_STRICT);//Development
-define('PROD_LEVEL',		0);//Production
-
-defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);
+defifn('DEV_VERSION',		false);
+defifn('ERROR_LEVEL',		DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD_LEVEL);
+// defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);
 // defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev' || strpos($_SERVER['SCRIPT_FILENAME'], 'debug') !== false) ? DEV_LEVEL : PROD_LEVEL);
 
-defifn('DEV_TOOLS',			ERROR_LEVEL == DEV_LEVEL && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
+defifn('DEV_TOOLS',			DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
 
 defifn('USER_CLASS',		'SiteUser');
 

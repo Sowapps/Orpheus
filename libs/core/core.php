@@ -744,8 +744,8 @@ function POST($path=null) {
 }
 
 /** Checks an existing post key
- * @param $path The path to the array. The default value is null (search in POST).
- * @param $value The output value of the item to delete.
+ * @param $path string The path to the array. The default value is null (search in POST).
+ * @param $value int The output value of the item to delete.
  * @return True if there is an item to delete
 
  * This function is used to key the key value from an array sent by post
@@ -870,12 +870,12 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 }
 
 /** Generates the HTML source for options of a SELECT
-* @param $fieldPath The name path to the field.
-* @param $values The values to build the dropdown menu.
-* @param $default The default selected value. Default value is null (no selection).
-* @param $matches Define the associativity between array and option values. Default value is OPT_VALUE2LABEL (as null).
-* @param $prefix The prefix to use for the text name of values. Default value is an empty string.
-* @param $domain The domain to apply the Key. Default value is 'global'.
+* @param $fieldPath string The name path to the field.
+* @param $values string[] The values to build the dropdown menu.
+* @param $default string|integer The default selected value. Default value is null (no selection).
+* @param $matches integer Define the associativity between array and option values. Default value is OPT_VALUE2LABEL (as null).
+* @param $prefix string The prefix to use for the text name of values. Default value is an empty string.
+* @param $domain string The domain to apply the Key. Default value is 'global'.
 * @return A HTML source for the built SELECT tag.
 * @sa htmlOption()
 *
@@ -883,7 +883,7 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 * For associative arrays, we commonly use the value=>label model (OPT_VALUE2LABEL) but sometimes for associative arrays we could prefer the label=>value model (OPT_LABEL2VALUE).
 * You can use your own combination with defined constants OPT_VALUE_IS_VALUE, OPT_VALUE_IS_KEY, OPT_LABEL_IS_VALUE and OPT_LABEL_IS_KEY.
 * Common combinations are OPT_LABEL2VALUE, OPT_VALUE2LABEL and OPT_VALUE.
-* The label is prefixed with $prefix and translated using t().
+* The label is prefixed with $prefix and translated using t(). This function allows bidimensional arrays in $values, used as option group.
 */
 function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
 	if( $matches===NULL ) { $matches = OPT_VALUE2LABEL; }
@@ -1349,4 +1349,3 @@ function str_ucfirst($str) {
 function str_ucwords($str) {
 	return ucwords(strtolower($str));
 }
-

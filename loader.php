@@ -12,6 +12,9 @@ if( !isset($SRCPATHS) ) {
 	$SRCPATHS = array();
 }
 
+define('DEV_LEVEL',			E_ALL | E_STRICT);//Development
+define('PROD_LEVEL',		0);//Production
+
 /** Defines an undefined constant.
 
  * @param $name		The name of the constant.
@@ -131,4 +134,12 @@ function includeDir($dir, $importants=array()) {
 */
 function includePath($path, $importants=array()) {
 	return includeDir(pathOf($path), $importants);
+}
+
+// Experimental
+function ob_end_to($min) {
+	$min	= max($min, 0);
+	while( ob_get_level() > $min ) {
+		ob_end_flush();
+	}
 }
