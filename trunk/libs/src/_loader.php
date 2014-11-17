@@ -82,7 +82,7 @@ BODY
 /**
  * @param ThreadMessage $tm
  */
-function sendAdminRegistrationEmail($tm) {
+function sendNewThreadMessageEmail($tm) {
 // 	$user	= $tm->getUser();
 	$e	= new Email('Orpheus - New message of '.$tm->user_name);
 	$e->setText(<<<BODY
