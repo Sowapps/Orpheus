@@ -1,26 +1,23 @@
 <?php
 // <a href="./">Basic demo</a><br />
 // <br />
-$formregister = array();
-if( isPOST('submitLogin') ) {
-	
-	try {
+// $formregister = array();
+$FORM_TOKEN	= new FormToken();
+
+try {
+	isPOST() && $FORM_TOKEN->validateForm();
+	if( isPOST('submitLogin') ) {
 		SiteUser::userLogin($_POST['login']);
 		reportSuccess('You\'re successfully logged in.');
-		
-	} catch(UserException $e) {
-		reportError($e);
-	}
-} else if( isPOST('submitRegister') ) {
-// 	text('Register');
-	try {
-		$formregister = POST('register');
-// 		text($formregister);
-		$Membre = SiteUser::create($formregister);
+	} else if( isPOST('submitRegister') ) {
+// 		$formregister = POST('register');
+		$user	= SiteUser::createAndGet(POST('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
+		sendAdminRegistrationEmail($user);
+		unset($user);
 		reportSuccess('You\'re successfully registered.');
-	} catch(UserException $e) {
-		reportError($e);
 	}
+} catch(UserException $e) {
+	reportError($e);
 }
 displayReportsHTML();
 
@@ -31,7 +28,7 @@ if( User::is_login() ) {
 <div class="row">
 	
 	<div class="col-xs-6">
-		<form method="POST" role="form">
+		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Sign in</legend>
 			<div class="form-group">
@@ -48,7 +45,7 @@ if( User::is_login() ) {
 	</div>
 		
 	<div class="col-xs-6">
-		<form method="POST" role="form">
+		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Register</legend>
 			

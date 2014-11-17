@@ -50,7 +50,7 @@ function debug($s, $d=-1) {
 }
 
 function htmlSecret($message) {
-	if( is_null($message) ) {
+	if( $message===NULL ) {
 		$message = '{NULL}';
 	} else if( $message === false ) {
 		$message = '{FALSE}';
@@ -61,4 +61,38 @@ function htmlSecret($message) {
 	}
 	return '<button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
 // 	return '<button type="button" onclick="$(this).next().toggle(); return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+}
+
+/**
+ * @param SiteUser $user
+ */
+function sendAdminRegistrationEmail($user) {
+	$e	= new Email('Orpheus - Registration of '.$user->fullname);
+	$e->setText(<<<BODY
+Hi master !
+
+A new dude just registered on <a href="http://orpheus-framework.com/">orpheus-framework.com</a>, he is named {$user}.
+
+Your humble servant, orpheus-framework.com
+BODY
+);
+	return $e->send(ADMINEMAIL);
+}
+
+/**
+ * @param ThreadMessage $tm
+ */
+function sendAdminRegistrationEmail($tm) {
+// 	$user	= $tm->getUser();
+	$e	= new Email('Orpheus - New message of '.$tm->user_name);
+	$e->setText(<<<BODY
+Hi master !
+
+{$tm->getUser()} posted a new thread message:
+{$tm}
+
+Your humble servant, orpheus-framework.com
+BODY
+);
+	return $e->send(ADMINEMAIL);
 }

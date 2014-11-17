@@ -13,7 +13,8 @@ try {
 		$input	= POST('tm');
 		$input['user_id']	= $USER->id();
 		$input['user_name']	= $USER->fullname;
-		ThreadMessage::create($input, array('content', 'user_id', 'user_name'));
+		$tm	= ThreadMessage::createAndGet($input, array('content', 'user_id', 'user_name'));
+		sendNewThreadMessageEmail($tm);
 		reportSuccess('successCreate', ThreadMessage::getDomain());
 	} else
 	if( hasPOSTKey('submitDelete', $tmID) ) {

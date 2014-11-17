@@ -17,6 +17,10 @@ class ThreadMessage extends PermanentEntity {
 		return nl2br(escapeText($this->content));
 	}
 	
+	public function getUser() {
+		return SiteUser::load($this->user_id);
+	}
+	
 // 	public function getISOCreateDate() {
 // 		return strftime('%Y-%m-%d %R', strtotime($this->create_date));
 // 	}
