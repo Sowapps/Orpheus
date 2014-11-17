@@ -71,7 +71,7 @@ function sendAdminRegistrationEmail($user) {
 	$e->setText(<<<BODY
 Hi master !
 
-A new dude just registered on <a href="http://orpheus-framework.com/">orpheus-framework.com</a>, he is named {$user} with email {$user->email}.
+A new dude just registered on <a href="http://orpheus-framework.com/">orpheus-framework.com</a>, he is named {$user} ({$user->name}) with email {$user->email}.
 
 Your humble servant, orpheus-framework.com
 BODY
