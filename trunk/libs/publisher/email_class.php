@@ -175,7 +175,11 @@ class Email {
 		if( !is_string($Body) ) {
 			throw new Exception('RequireStringParameter');
 		}
-		$this->HTMLBody = static::escape($Body);// Supports UTF-8 and Quote printable encoding
+		$this->HTMLBody	= static::convHTMLBody($Body);
+	}
+	public static function convHTMLBody($Body) {
+		// Supports UTF-8 and Quote printable encoding
+		return static::escape(str_replace(array("\r", "\n"), '', '<div dir="ltr">'.$Body.'</div>'));
 	}
 	
 	/** Sets the mail content
@@ -269,20 +273,7 @@ class Email {
 						'Content-Type' => 'text/html; charset="UTF-8"',
 						'Content-Transfer-Encoding' => 'quoted-printable',
 					),
-					'body' => <<<EOF
-<div dir="ltr">{$this->HTMLBody}</div>
-EOF
-		
-// 					'body' => <<<EOF
-// <html>
-// <head>
-// 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-// </head>
-// <body>
-// {$this->HTMLBody}
-// </body>
-// </html>
-// EOF
+					'body' => $this->HTMLBody,
 				);
 			}
 			
