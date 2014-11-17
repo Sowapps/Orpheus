@@ -69,6 +69,7 @@ defifn('THEMESURL',			SITEROOT.'/'.THEMESDIR);
 
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');
+defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
 
 define('CRAC_CONTEXT_APPLICATION',	1);
 define('CRAC_CONTEXT_AGENCY',		2);
