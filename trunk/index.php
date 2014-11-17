@@ -9,11 +9,11 @@
  */
 
 if( isset($SRCPATHS) ) {
-	$t = $SRCPATHS; unset($SRCPATHS);
+	$t	= $SRCPATHS; unset($SRCPATHS);
 }
 require_once 'loader.php';
 
-$f = dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
+$f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 if( file_exists($f) ) {
 	require_once $f;
 }
@@ -51,8 +51,14 @@ set_error_handler(
 
 	System function to handle PHP errors and convert it into exceptions.
 */
-function($errno, $errstr, $errfile, $errline ) {
+function($errno, $errstr, $errfile, $errline) {
+// 	die(__FILE__.' : '.__LINE__);
+// 	debug('(set_error_handler) Error occurred, ob level : '.ob_get_level());
+// 	ob_end_to(1);
+// 	debug('(set_error_handler) Decreased ob level : '.ob_get_level());
+// 	debug("$errstr in $errfile : $errline");
 	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
+// 		debug('(set_error_handler) Error To Exception');
 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else if( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
 		return;
@@ -69,7 +75,7 @@ function($errno, $errstr, $errfile, $errline ) {
 			die($errstr."<br />\n{$backtrace}");
 		}
 		log_error($errstr."<br />\n{$backtrace}");
-		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(ERROR_LEVEL == DEV_LEVEL ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
+		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(DEV_VERSION ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
 	}
 });
 
@@ -79,7 +85,12 @@ register_shutdown_function(
 	System function to handle PHP shutdown and catch uncaught errors.
 */
 function() {
-	if( $error = error_get_last() ) {
+	// If there is an error
+	$error = error_get_last();
+// 	debug('(register_shutdown_function) Shutdown script');
+// 	die(__FILE__.' : '.__LINE__);
+	if( $error ) {
+// 		debug('(register_shutdown_function) There is an error');
 		if( ERROR_LEVEL == DEV_LEVEL ) {
 			ob_end_flush();
 		} else {
@@ -100,6 +111,7 @@ set_exception_handler(
  */
 function($e) {
 	global $coreAction;
+	die(__FILE__.' : '.__LINE__);
 	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
@@ -290,8 +302,7 @@ try {
 	require_once pathOf(MODDIR.$Module.'.php');
 	
 	// Terminate all layout
-	while($RENDERING::endCurrentLayout());
-// 	while(Rendering::endCurrentLayout());
+	while( $RENDERING::endCurrentLayout() );
 	
 	$Page = ob_get_contents();// Review usage
 	// Future feature ? Need to place it somewhere smartly
@@ -306,10 +317,12 @@ try {
 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
+// 	debug('Index Exception line '.__LINE__);
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 		$Page = ob_get_contents();
 		ob_end_clean();
 	}
+// 	debug('Index Exception line '.__LINE__);
 // 	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
 // 	if( !function_exists('log_error') ) {
 // 		die($report);
