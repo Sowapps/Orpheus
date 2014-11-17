@@ -7,21 +7,21 @@
 class Email {
 	//Attributes
 	private $Headers = array(
-		'MIME-Version' => '',
-		'Content-Type' => 'text/plain, charset=UTF-8',
-		'Content-Transfer-Encoding' => '',
+		'MIME-Version'	=> '',
+		'Content-Type'	=> 'text/plain, charset=UTF-8',
+		'Content-Transfer-Encoding'	=> '',
 		//'Content-Transfer-Encoding' => '7bit',
-		'Date' => '',//See init()
-		'From' => 'no-reply@nodomain.com',//Override PHP's default
-		'Sender' => '',
-		'X-Sender' => '',
-		'Reply-To' => '',//Reply Email Address
-		'Return-Path' => '',//Return Email Address
-		'Organization' => '',
-		'X-Priority' => '3',
-		'X-Mailer' => 'Orpheus\'s Mailer',
+		'Date'	=> '',//See init()
+		'From'	=> 'no-reply@nodomain.com',//Override PHP's default
+		'Sender'	=> '',
+		'X-Sender'	=> '',
+		'Reply-To'	=> '',//Reply Email Address
+		'Return-Path'	=> '',//Return Email Address
+		'Organization'	=> '',
+// 		'X-Priority' => '3',
+// 		'X-Mailer' => 'Orpheus\'s Mailer',
 // 		'X-PHP-Originating-Script' => 'Orpheus\'s Publisher Lib Email Class',
-		'Bcc' => '',
+		'Bcc'	=> '',
 	);
 	
 	private $HTMLBody;
@@ -154,7 +154,7 @@ class Email {
 // 		}
 // 		$this->Subject = '=?UTF-8?Q?'.static::escape($Subject).'?=';// Supports UTF-8 and Quote printable encoding
 		// If subject is too long, QP returns a bad string, it's working with b64.
-		$this->Subject = '=?utf-8?b?'.base64_encode("$Subject").'?=';// Supports UTF-8
+		$this->Subject	= static::escapeB64($Subject);// Supports UTF-8
 // 		log_debug("Convert utf8 subject from {$Subject} to {$this->Subject}");
 	}
 	
@@ -165,7 +165,7 @@ class Email {
 		if( !is_string($Body) ) {
 			throw new Exception('RequireStringParameter');
 		}
-		$this->TEXTBody = $Body;
+		$this->TEXTBody = static::escape($Body);
 	}
 
 	/** Sets the html body of the mail
@@ -220,7 +220,7 @@ class Email {
 	 */
 	public function setSender($SenderEmail, $SenderName=null, $allowReply=true) {
 		//=?utf-8?b?".base64_encode($from_name)."?= <".$from_a.">\r\n
-		$this->setHeader('From', is_null($SenderName) ? $SenderEmail : '=?utf-8?b?'.base64_encode($SenderName).'?= <'.$SenderEmail.'>');
+		$this->setHeader('From', $SenderName===NULL ? $SenderEmail : static::escapeB64($SenderName).' <'.$SenderEmail.'>');
 		$this->setHeader('Sender', $SenderEmail);
 		if( $allowReply && empty($Headers['Return-Path']) ) {
 			$this->setReplyTo($SenderEmail);
@@ -249,7 +249,7 @@ class Email {
 					'headers' => array(
 						'Content-Type' => 'multipart/alternative',
 					),
-					'body' => ( mb_detect_encoding($this->AltBody, "UTF-8") == "UTF-8" ) ? utf8_decode($this->AltBody) : $this->AltBody,
+					'body' => ( mb_detect_encoding($this->AltBody, 'UTF-8') === 'UTF-8' ) ? utf8_decode($this->AltBody) : $this->AltBody,
 				);
 			}
 			
@@ -270,15 +270,19 @@ class Email {
 						'Content-Transfer-Encoding' => 'quoted-printable',
 					),
 					'body' => <<<EOF
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-</head>
-<body>
-{$this->HTMLBody}
-</body>
-</html>
+<div dir="ltr">{$this->HTMLBody}</div>
 EOF
+		
+// 					'body' => <<<EOF
+// <html>
+// <head>
+// 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+// </head>
+// <body>
+// {$this->HTMLBody}
+// </body>
+// </html>
+// EOF
 				);
 			}
 			
@@ -296,14 +300,10 @@ EOF
 						$subHeaders = '';
 						$Content['headers']['Content-Type'] .= '; format=flowed';
 						foreach( $Content['headers'] as $headerName => $headerValue ) {
-							$subHeaders .= "{$headerName}: {$headerValue}\n";
+							$subHeaders .= "{$headerName}: {$headerValue}\r\n";
 						}
 						$subBody .= <<<BODY
---{$subBoundary}
-{$subHeaders}
-{$Content['body']}
-
-
+--{$subBoundary}\r\n{$subHeaders}\r\n{$Content['body']}\r\n\r\n
 BODY;
 					}
 					$subBody .= <<<BODY
@@ -345,14 +345,10 @@ BODY;
 						throw new Exception('ContentRequireBody');
 					}
 					foreach( $Content['headers'] as $headerName => $headerValue ) {
-						$ContentHeaders .= "{$headerName}: {$headerValue}\n";
+						$ContentHeaders .= "{$headerName}: {$headerValue}\r\n";
 					}
 					$Body .= <<<BODY
---{$Boundary}
-{$ContentHeaders}
-{$Content['body']}
-
-
+--{$Boundary}\r\n{$ContentHeaders}\r\n{$Content['body']}\r\n\r\n
 BODY;
 				}
 				$Body .= <<<BODY
@@ -420,7 +416,8 @@ BODY;
 	 */
 	public function getBoundary($BoundaryInd=0) {
 		if( empty($this->MIMEBoundary[$BoundaryInd]) ) {
-			$this->MIMEBoundary[$BoundaryInd] = '-=%ORPHEUS_'.md5(microtime(1)+$BoundaryInd).'%=-';
+			$this->MIMEBoundary[$BoundaryInd]	= 'ORPHEUS_'.md5(microtime(1)+$BoundaryInd);
+// 			$this->MIMEBoundary[$BoundaryInd] = '-=%ORPHEUS_'.md5(microtime(1)+$BoundaryInd).'%=-';
 		}
 		return $this->MIMEBoundary[$BoundaryInd];
 	}
@@ -479,6 +476,14 @@ BODY;
 	 */
 	public static function escape($string) {
 		//It seems that utf8_encode() is not sufficient, it does not work, but UTF-8 do.
-		return quoted_printable_encode(( mb_detect_encoding($string, "UTF-8") == "UTF-8" ) ? $string : utf8_encode($string));
+		return quoted_printable_encode(( mb_detect_encoding($string, 'UTF-8') === 'UTF-8' ) ? $string : utf8_encode($string));
+	}
+
+	/** Escape the string using base64 encoding.
+	 * @param	$string String The string to escape.
+	 * @return	String The escaped string in base64.
+	 */
+	public static function escapeB64($string) {
+		return '=?UTF-8?B?'.base64_encode("$string").'?=';
 	}
 }
