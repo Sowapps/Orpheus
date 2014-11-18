@@ -9,6 +9,7 @@ fields:
     parent_id:      ref=0
     post_date:      datetime[nullable]  # Last date a post of the forum was edited/added
     last_answer_id: ref=0               # The ID of the last answer
+    type:           enum(ForumPost::getTypes())   # The type of post
 
 
 indexes:

@@ -27,7 +27,7 @@ $TOPBAR_CONTENTS	= '
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
 </form>';
 
-debug('POST', POST());
+// debug('POST', POST());
 try {
 	if( isPOST('submitCreatePost') ) {
 		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
@@ -37,6 +37,7 @@ try {
 // 		$post['published']	= 1;
 // 		$post['post_date']	= sqlDatetime();
 		$post['parent_id']	= 0;// Use addAnswer() to add an answer
+		$post['type']		= ForumPost::TYPE_STANDARD;
 // 		text('ForumPost domain is : '.ForumPost);
 		ForumPost::make($post);
 		reportSuccess('successCreateThread');

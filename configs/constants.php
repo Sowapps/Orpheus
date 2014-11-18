@@ -80,3 +80,4 @@ defifn('SYSLOGFILENAME',	'.system');
 defifn('DEBUGFILENAME',		'.debug');
 defifn('HACKLOGFILENAME',	'.hack');
 defifn('SERVLOGFILENAME',	'.server');
+
