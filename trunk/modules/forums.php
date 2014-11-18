@@ -8,9 +8,9 @@ HTMLRendering::addJSFile('external/jquery.hotkeys.js');
 HTMLRendering::addJSURL('https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.js');
 HTMLRendering::addCSSURL('https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css');
 
-HTMLRendering::addJSFile('debug.js');
+// HTMLRendering::addJSFile('debug.js');
 HTMLRendering::addJSFile('bootstrap-wysiwyg.min.js');
-HTMLRendering::addCSSFile('forum');
+HTMLRendering::addCSSFile('forum.css');
 HTMLRendering::addJSFile('forum-forums.js');
 if( $ALLOW_EDITOR ) {
 	HTMLRendering::addJSFile('forum-editor.js');
@@ -92,7 +92,7 @@ function displayForumList($forumID=0) {
 		displayForumList($forum->id());
 		echo '
 				<div class="threadWrapper">
-					<a class="btn btn-default btn-sm right newthreadbtn"><i class="fa fa-plus"></i> New thread</a>
+					<button type="button" class="btn btn-default btn-sm right newthreadbtn"><i class="fa fa-plus"></i> New thread</button>
 					<h4>Threads of '.$forum.'</h4>
 					<ul>';
 		foreach( $forum->getPosts() as $post ) {

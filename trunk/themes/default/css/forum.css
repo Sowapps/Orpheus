@@ -73,6 +73,9 @@ footer.fixed .credits {
 	margin: auto 5px;
 }
 
+.newthreadbtn {
+	z-index:	1;
+}
 
 /* Forums Module */
 
