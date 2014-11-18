@@ -68,12 +68,14 @@ $(function() {
 	
 //	$(window).load(function() {
 	$(document).ready(function() {
+		// Issue, we first hide but when we show one, it does not come closed
 		var anchor = window.location.hash;//.replace("#", "");
 		if( !anchor ) { return; }
 		console.log("Collapse to "+anchor);
-		$(".collapse").collapse('hide');
-		console.log($(anchor));
-		openCollapse($(anchor));
+		var collapse	= $(anchor);
+		$(".collapse").not(collapse.add(collapse.parents(".collapse"))).collapse('hide');
+//		console.log($(anchor));
+//		openCollapse($(anchor));
 	});
 	
 // 	$("#" + anchor).collapse('show');
