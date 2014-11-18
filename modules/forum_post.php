@@ -26,7 +26,7 @@ try {
 	reportError($e); displayReportsHTML(); return;
 }
 
-debug('POST', POST());
+// debug('POST', POST());
 try {
 	if( isPOST('submitAnswer') ) {
 		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
