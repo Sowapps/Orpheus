@@ -65,8 +65,9 @@ $(function() {
 	
 	var anchor = window.location.hash;//.replace("#", "");
 	if( !anchor ) { return; }
-//	debug("Collapse to "+anchor);
+	console.log("Collapse to "+anchor);
 	$(".collapse").collapse('hide');
+	console.log($(anchor));
 	openCollapse($(anchor));
 // 	$("#" + anchor).collapse('show');
 //			function() {
