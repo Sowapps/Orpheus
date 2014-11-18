@@ -5,9 +5,12 @@ function updateContainerHeight() {
 }
 
 function openCollapse(collapse) {
-	if( !collapse || !collapse.length ) { return; }
+	if( !collapse || !collapse.length ) { console.log('Return'); return; }
+	console.log("Open parent");
 	openCollapse(collapse.closest(".collapse"));
+	console.log("Parent opened");
 	collapse.collapse('show');
+	console.log("Shown");
 }
 
 function answerTo(post) {
