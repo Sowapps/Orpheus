@@ -43,15 +43,15 @@ try {
 	} else
 	if( $ALLOW_EDITOR ) {
 		if( isPOST('submitCreateForum') ) {
-			debug('Create forum');
+// 			debug('Create forum');
 			$forumData	= POST('newforum');
-			debug('$forumData', $forumData);
+// 			debug('$forumData', $forumData);
 			if( empty($forumData['parent_id']) ) { $forumData['parent_id'] = 0; };
 			$forumData['position']	= Forum::getMaxPosition($forumData['parent_id'])+1;
 			$forumData['user_id']	= $USER->id();
 			$forumData['user_name']	= $USER->fullname;
 			$forumData['published']	= true;
-			debug('$forumData', $forumData);
+// 			debug('$forumData', $forumData);
 			Forum::create($forumData, array('parent_id', 'user_id', 'user_name', 'published', 'name', 'position'));
 			reportSuccess('successCreate', Forum::getDomain());
 		}
@@ -210,7 +210,7 @@ displayForumList();
 </div>
 
 <div id="newThreadForm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
 <div class="modal-content">
 <form method="POST" class="">
 <!-- form-horizontal -->
