@@ -29,7 +29,7 @@ class Forum extends PermanentEntity {
 	}
 
 	public static function getMaxPosition($forum) {
-		return (int) ForumPost::get(array(
+		return (int) static::get(array(
 			'what'		=> 'MAX(position) max',
 			'where'		=> 'parent_id='.id($forum),
 			'output'	=> SQLAdapter::ARR_FIRST
