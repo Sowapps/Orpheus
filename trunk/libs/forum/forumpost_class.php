@@ -99,5 +99,13 @@ class ForumPost extends PermanentEntity {
 	public function getThreadLink() {
 		return static::genLink($this->parent_id ? $this->parent_id : $this->id()).'#Post-'.$this->id();
 	}
+	
+	const TYPE_STANDARD	= 'standard';
+	public static function getTypes() {
+		// 'standard' is a standard thread
+		// 'pinned' is an important thread that is placed before all others
+		// 'question' is a question thread requiring help
+		return array(self::TYPE_STANDARD, 'pinned', 'question');
+	}
 }
 ForumPost::init();
