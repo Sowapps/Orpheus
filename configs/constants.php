@@ -64,8 +64,8 @@ defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
 
 // Static medias
-defifn('JSURL',				SITEROOT.'/js/');
-defifn('THEMESURL',			SITEROOT.'/'.THEMESDIR);
+defifn('JSURL',				SITEROOT.'js/');
+defifn('THEMESURL',			SITEROOT.THEMESDIR);
 
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');
