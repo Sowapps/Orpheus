@@ -88,6 +88,9 @@ footer.fixed .credits {
 .threadWrapper > .btn {
 	margin-left: 5px;
 }
+.threadWrapper > h4 {
+	display: inline-block;
+}
 
 .threadWrapper > ul {
 	margin: 0 0 5px 0;
