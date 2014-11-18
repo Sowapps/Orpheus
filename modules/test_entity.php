@@ -21,7 +21,7 @@ edit_ip: ip
 name: string(6, 50)
 user_id: ref
 user_name: string(6, 50)
-published: bool=false
+published: boolean=false
 */
 
 displayReportsHTML();
