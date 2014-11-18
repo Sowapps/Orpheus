@@ -66,12 +66,15 @@ $(function() {
 	updateContainerHeight();
 	$(window).resize(updateContainerHeight);
 	
-	var anchor = window.location.hash;//.replace("#", "");
-	if( !anchor ) { return; }
-	console.log("Collapse to "+anchor);
-	$(".collapse").collapse('hide');
-	console.log($(anchor));
-	openCollapse($(anchor));
+	$(window).load(function() {
+		var anchor = window.location.hash;//.replace("#", "");
+		if( !anchor ) { return; }
+		console.log("Collapse to "+anchor);
+		$(".collapse").collapse('hide');
+		console.log($(anchor));
+		openCollapse($(anchor));
+	});
+	
 // 	$("#" + anchor).collapse('show');
 //			function() {
 //		debug("resized document, updating container height");
