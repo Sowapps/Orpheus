@@ -49,15 +49,16 @@ class ForumPost extends PermanentEntity {
 
 	public function addAnswer($input) {
 		if( empty($input['name']) ) {
-			$input['name']	= 'Re: '.$this->name;
+			$input['name']		= 'Re: '.$this->name;
 		}
 		if( !empty($input['message']) ) {
 			$input['message']	= strip_tags($input['message'], '<a><p><br><b><i><u><strike><font><ol><ul><li><blockquote><div>');
 		}
-		$input['forum_id']	= $this->forum_id;
-		$input['parent_id']	= $this->id();
-		$this->last_answer_id = $r = static::make($input);
-		$this->post_date	= sqlDatetime();
+		$input['forum_id']		= $this->forum_id;
+		$input['thread_type']	= $this->thread_type;
+		$input['parent_id']		= $this->id();
+		$this->last_answer_id	= $r = static::make($input);
+		$this->post_date		= sqlDatetime();
 		return $r;
 	}
 	
@@ -100,12 +101,12 @@ class ForumPost extends PermanentEntity {
 		return static::genLink($this->parent_id ? $this->parent_id : $this->id()).'#Post-'.$this->id();
 	}
 	
-	const TYPE_STANDARD	= 'standard';
-	public static function getTypes() {
+	const THREADTYPE_STANDARD	= 'standard';
+	public static function getThreadTypes() {
 		// 'standard' is a standard thread
 		// 'pinned' is an important thread that is placed before all others
 		// 'question' is a question thread requiring help
-		return array(self::TYPE_STANDARD, 'pinned', 'question');
+		return array(self::THREADTYPE_STANDARD, 'pinned', 'question');
 	}
 }
 ForumPost::init();

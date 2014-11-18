@@ -37,7 +37,7 @@ try {
 // 		$post['published']	= 1;
 // 		$post['post_date']	= sqlDatetime();
 		$post['parent_id']	= 0;// Use addAnswer() to add an answer
-		$post['type']		= ForumPost::TYPE_STANDARD;
+		$post['thread_type']	= ForumPost::THREADTYPE_STANDARD;
 // 		text('ForumPost domain is : '.ForumPost);
 		ForumPost::make($post);
 		reportSuccess('successCreateThread');

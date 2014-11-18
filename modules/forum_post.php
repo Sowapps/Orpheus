@@ -20,6 +20,7 @@ $TOPBAR_CONTENTS	= '
 </form>';
 
 try {
+	/* @var $sPost ForumPost */
 	$Post	= ForumPost::load($Action);
 	$MODTITLE	= "$Post";
 } catch( UserException $e ) {
