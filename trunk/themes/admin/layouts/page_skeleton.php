@@ -204,6 +204,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 	<script src="//shared.sowapps.com/tablesorter/tablesorter-2.0.5/jquery.tablesorter.min.js"></script>
 	
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/tables.js"></script>
+	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/script.js"></script>
 	
 <?php
 foreach(HTMLRendering::$jsURLs as $url) {
