@@ -120,6 +120,11 @@ button.fa, input[type=button].fa {
 	max-height:	34px;
 }
 
+/* Fatal error style */
+body > .panel-danger {
+	margin: 10px 10px 0 240px;
+}
+
 /* Form Control */
 input[type="date"]::-webkit-calendar-picker-indicator {
 /* 	display:	inline-block; */
