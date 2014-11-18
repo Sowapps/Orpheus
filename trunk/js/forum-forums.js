@@ -5,10 +5,10 @@ function updateContainerHeight() {
 }
 
 function openCollapse(collapse) {
-	if( !collapse || !collapse.length ) { console.log('Return'); return; }
-	console.log("Open parent");
-	openCollapse(collapse.closest(".collapse"));
-	console.log("Parent opened");
+//	if( !collapse || !collapse.length ) { console.log('Return'); return; }
+//	console.log("Open parent");
+//	openCollapse(collapse.closest(".collapse"));
+//	console.log("Parent opened");
 	collapse.collapse('show');
 	console.log("Shown");
 }
@@ -66,7 +66,8 @@ $(function() {
 	updateContainerHeight();
 	$(window).resize(updateContainerHeight);
 	
-	$(window).load(function() {
+//	$(window).load(function() {
+	$(document).ready(function() {
 		var anchor = window.location.hash;//.replace("#", "");
 		if( !anchor ) { return; }
 		console.log("Collapse to "+anchor);
