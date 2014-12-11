@@ -160,7 +160,7 @@ abstract class AbstractPublication extends AbstractStatus {
 	 * Validate the published field in array $inputData.
 	 */
 	public static function checkPublished($inputData, $ref=null) {
-		return ( !empty($inputData['published']) ) ? 1 : 0;
+		return !empty($inputData['published']) ? 1 : 0;
 	}
 	
 	/** Check for object
@@ -181,14 +181,12 @@ abstract class AbstractPublication extends AbstractStatus {
 				),
 			'output' => SQLAdapter::ARR_FIRST
 		));
-		if( empty($publication) ) {
-			return;
-		}
+		if( empty($publication) ) { return; }
 		global $USER_CLASS;
 		if( $publication['name'] == $data['name'] ) {
-			throw new UserException("entryExisting");
+			static::throwException("entryExisting");
 		} else if( static::$floodDelay && !$USER_CLASS::loggedCanDo(static::$table.'_safeUse') ) {
-			throw new UserException("floodDelay");
+			static::throwException("floodDelay");
 		}
 	}
 }
