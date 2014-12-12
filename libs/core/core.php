@@ -183,7 +183,11 @@ function log_report($report, $file, $action='', $message='') {
 	}
 	$Error	= array('date' => date('c'), 'report' => $report, 'action' => $action);
 	$logFilePath	= ((defined("LOGSPATH") && is_dir(LOGSPATH)) ? LOGSPATH : '').$file;
-	@file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
+	try {
+		file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
+	} catch( Exception $e ) {
+		$Error['report'] .= "<br />\n<b>And we met an error logging this report:</b><br />\n".stringify($e);
+	}
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( ERROR_LEVEL == DEV_LEVEL ) {
 			$Error['message']	= $message;
@@ -256,7 +260,7 @@ function sys_error($report, $action='', $silent=false) {
 function log_error($report, $action='', $fatal=true) {
 	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action,
 		empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null :
-			(is_string($fatal) ? $fatal : 'A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.').
+			(is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.").
 			(ERROR_LEVEL == DEV_LEVEL ? '<br /><pre>'.print_r(debug_backtrace(), 1).'</pre>' : ''));
 }
 
@@ -270,7 +274,6 @@ function log_error($report, $action='', $fatal=true) {
 */
 function sql_error($report, $action='') {
 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL to do nothing
-// 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);// NULL for to do nothing
 // 	log_report($report, defined("PDOLOGFILENAME") ? PDOLOGFILENAME : '.pdo_error', $action, null);//, t('errorOccurredWithDB'));
 // 	throw new SQLException('errorOccurredWithDB');
 }

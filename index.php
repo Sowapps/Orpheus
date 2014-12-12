@@ -111,11 +111,11 @@ set_exception_handler(
  */
 function($e) {
 	global $coreAction;
-	die(__FILE__.' : '.__LINE__);
 	if( !function_exists('log_error') ) {
 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
+	log_error($e, $coreAction);
+// 	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 // 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
 
