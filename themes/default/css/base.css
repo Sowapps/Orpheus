@@ -1,12 +1,15 @@
 
 body {
-	margin: 0;
-	padding: 0;
+	margin:		0;
+	padding:	0;
 }
 
+/*
+Issue with Boostrap and modal close button, it comes under the title (h3, h4...)
 h1, h2, h3, h4 {
 	position: relative;
 }
+*/
 
 a,.link {
 /* 	color: #88ba14; */
@@ -108,6 +111,7 @@ script, style {
 .mb0  { margin-bottom: 0 !important; }
 .mb5  { margin-bottom: 5px !important; }
 .mb10 { margin-bottom: 10px !important; }
+.mb15 { margin-bottom: 15px !important; }
 .mb20 { margin-bottom: 20px !important; }
 .mb40 { margin-bottom: 40px !important; }
 .mb60 { margin-bottom: 60px !important; }
@@ -115,6 +119,7 @@ script, style {
 .ml0   { margin-left: 0 !important; }
 .ml5   { margin-left: 5px !important; }
 .ml10  { margin-left: 10px !important; }
+.ml15  { margin-left: 15px !important; }
 .ml20  { margin-left: 20px !important; }
 .ml30  { margin-left: 30px !important; }
 .ml40  { margin-left: 40px !important; }
