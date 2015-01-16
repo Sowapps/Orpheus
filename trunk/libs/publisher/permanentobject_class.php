@@ -599,6 +599,7 @@ abstract class PermanentObject {
 			$options['output'] = SQLAdapter::ARR_OBJECTS;
 		}
 		//This method intercepts outputs of array of objects.
+		$onlyOne	= $objects = 0;
 		if( in_array($options['output'], array(SQLAdapter::ARR_OBJECTS, SQLAdapter::OBJECT)) ) {
 			if( $options['output'] == SQLAdapter::OBJECT ) {
 				$options['number']	= 1;
@@ -610,11 +611,11 @@ abstract class PermanentObject {
 		}
 		$r	= SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
 		if( empty($r) && in_array($options['output'], array(SQLAdapter::ARR_ASSOC, SQLAdapter::ARR_OBJECTS, SQLAdapter::ARR_FIRST)) ) {
-			return array();
+			return $onlyOne && $objects ? null : array();
 		}
-		if( !empty($r) && isset($objects) ) {
+		if( !empty($r) && $objects ) {
 // 			if( isset($options['number']) && $options['number'] == 1 ) {
-			if( isset($onlyOne) ) {
+			if( $onlyOne ) {
 				$r	= static::load($r[0]);
 			} else {
 				foreach( $r as &$rdata ) {
@@ -626,10 +627,10 @@ abstract class PermanentObject {
 	}
 	
 	/** Create a new permanent object
-	 * @param $inputData The input data we will check, extract and create the new object.
-	 * @param $fields The array of fields to check. Default value is null.
-	 * @param $errCount Output parameter to get the number of found errors. Default value is 0
-	 * @return The ID of the new permanent object.
+	 * @param $inputData array The input data we will check, extract and create the new object.
+	 * @param $fields array The array of fields to check. Default value is null.
+	 * @param $errCount integer Output parameter to get the number of found errors. Default value is 0
+	 * @return integer The ID of the new permanent object.
 	 * @see testUserInput()
 	 * @see createAndGet()
 	 * 

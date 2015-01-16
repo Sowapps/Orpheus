@@ -45,7 +45,7 @@ class EntityDescriptor {
 		$cache	= new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		
 		// Comment when editing class and entity field types
-// 		if( $cache->get($descriptor) ) { return $descriptor; }
+		if( !defined('ENTITY_ALWAYS_RELOAD') && $cache->get($descriptor) ) { return $descriptor; }
 
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
@@ -190,7 +190,9 @@ class EntityDescriptor {
 			try {
 				if( $fields!==NULL && !in_array($field, $fields) ) {
 					unset($uInputData[$field]);
-					continue;
+					// If updating, we do not modify a field not in $fields
+					// If creating, we set to default a field not in $fields
+					if( $ref ) { continue; }
 				}
 				if( !$fData->writable ) { continue; }
 				if( !isset($uInputData[$field]) ) {
@@ -362,6 +364,9 @@ EntityDescriptor::registerType(new TypeString());
 
 class TypeDate extends TypeDescriptor {
 	protected $name = 'date';
+	/*
+	 * Date format is storing a date, not a specific moment, we don't care about timezone
+	 */
 	
 	public function validate($Field, &$value, $inputData, &$ref) {
 		// FR Only for now - Should use user language
@@ -381,6 +386,9 @@ EntityDescriptor::registerType(new TypeDate());
 
 class TypeDatetime extends TypeDescriptor {
 	protected $name = 'datetime';
+	/*
+	 * Date format is storing a date, not a specific moment, we don't care about timezone
+	 */
 	
 	public function validate($Field, &$value, $inputData, &$ref) {
 		if( !empty($inputData[$Field->name.'_time']) ) {

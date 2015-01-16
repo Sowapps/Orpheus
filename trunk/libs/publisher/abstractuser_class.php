@@ -27,7 +27,7 @@ class AbstractUser extends PermanentEntity {
 	// *** METHODES SURCHARGEES ***
 	
 	/** Magic string conversion
-	 * @return The string valu of this object.
+	 * @return The string value of this object.
 	 * The string value is the contents of the publication.
 	*/
 	public function __toString() {
@@ -275,7 +275,6 @@ class AbstractUser extends PermanentEntity {
 	}
 	
 	/** Load an user object
-	 * @sa PermanentObject::load()
 	 * 
 	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
@@ -345,11 +344,11 @@ class AbstractUser extends PermanentEntity {
 	 * @sa PermanentObject::checkForObject()
 	 */
 	public static function checkForObject($data, $ref=null) {
-		$where	= 'email LIKE '.static::formatValue($data['email']);
-		$what	= 'email';
 		if( empty($data['email']) ) {
 			return;//Nothing to check. Email is mandatory.
 		}
+		$where	= 'email LIKE '.static::formatValue($data['email']);
+		$what	= 'email';
 		if( !empty($data['name']) ) {
 			$what	.= ', name';
 			$where	.= ' OR name LIKE '.static::formatValue($data['name']);
