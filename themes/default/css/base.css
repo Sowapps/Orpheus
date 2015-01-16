@@ -100,6 +100,7 @@ script, style {
 .mt5  { margin-top: 5px !important; }
 .mt10 { margin-top: 10px !important; }
 .mt20 { margin-top: 20px !important; }
+.mt25 { margin-top: 25px !important; }
 .mt30 { margin-top: 30px !important; }
 .mt40 { margin-top: 40px !important; }
 
@@ -204,10 +205,13 @@ script, style {
 .pa	{ position: absolute !important; }
 .pr	{ position: relative !important; }
 
-.oa	{ overflow: auto !important; }
-.oh	{ overflow: hidden !important; }
-.ov	{ overflow: visible !important; }
-.os	{ overflow: scroll !important; }
+.oa		{ overflow: auto !important; }
+.oh		{ overflow: hidden !important; }
+.ov		{ overflow: visible !important; }
+.os		{ overflow: scroll !important; }
+
+.ohx	{ overflow: hidden !important; }
+.ohy	{ overflow: hidden !important; }
 
 .whnw, .nowrap { white-space: nowrap !important; }
 
