@@ -569,7 +569,6 @@ function addReport($report, $type, $domain='global', $code=null) {
 	if( !isset($REPORTS[$REPORT_STREAM][$type]) ) {
 		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
-// 	debug("t($report, $domain) => ".t($report, $domain));
 	$report	= t($report, $domain);// Added recently, require tests
 	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$code, 'r'=>$report, 'd'=>$domain);
 // 	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$report, 'r'=>t($report, $domain), 'd'=>$domain);

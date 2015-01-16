@@ -15,7 +15,7 @@
 * Gets the full url of a module, using default link for default module.
 */
 function u($module, $action='', $queryStr='') {
-	if( $module == DEFAULTMOD && empty($action) ) {
+	if( $module === DEFAULTMOD && empty($action) ) {
 		return DEFAULTLINK;
 	}
 	global $ROUTES;

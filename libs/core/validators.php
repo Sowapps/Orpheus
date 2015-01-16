@@ -117,11 +117,5 @@ function is_ip($ip, $flags=null) {
  */
 function is_phone_number($number, $country='FR') {
 	$number	= str_replace(array('.', ' ', '-'), '', $number);
-// 	var_dump($number);
-// 	for( $i=0; $i<strlen($number); $i++ ) {
-// 		debug('char['.$i.'] => '.ord($number[$i]));
-// 	}
-// 	debug('Removed spec char => '.$number.' is ? '.b(preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{9}$#", $number)));
-// 	$length = ( isset($length) && $length > 1 ) ? '{'.($length-1).'}' : '+';
 	return preg_match("#^(?:\+[0-9]{1,3}|0)[0-9]{9}$#", $number);
 }

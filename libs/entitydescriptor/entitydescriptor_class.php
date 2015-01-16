@@ -627,8 +627,6 @@ class TypeEnum extends TypeString {
 		parent::validate($Field, $value, $inputData, $ref);
 		if( !isset($Field->args->source) ) { return; }
 		$values		= call_user_func($Field->args->source, $inputData, $ref);
-// 		debug('is_id('.$value.') => '.b(is_id($value)));
-// 		debug('isset($values[$value]) => '.b(isset($values[$value])));
 		if( is_id($value) ) {
 			if( !isset($values[$value]) ) {
 				throw new FE('notEnumValue');

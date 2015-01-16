@@ -316,12 +316,9 @@ class AbstractUser extends PermanentEntity {
 	public static function canAccess($module) {
 		/* @var $USER AbstractUser */
 		global $USER, $USER_CLASS;
-// 		debug('$USER', $USER);
 		$access	= static::getAccessOf($module);
 		if( $access===NULL ) { return true; }
 		$access	= (int) $access;
-// 		text('$access : '.$access);
-// 		text('User has perm ? '.b($USER->checkPerm($access)));
 		return ( empty($USER) && $access < 0 ) ||
 			( !empty($USER) && $access >= 0 &&
 				$USER instanceof $USER_CLASS && $USER->checkPerm($access));

@@ -24,13 +24,11 @@ class InvalidFieldException extends UserException {
 	 * @param array $typeArgs
 	 */
 	public function __construct($message, $field, $value, $type=null, $domain=null, $typeArgs=array()) {
-// 		debug('Creating with domain', $domain);
 		parent::__construct($message, $domain);
 		$this->field	= $field;
 		$this->type		= $type;
 		$this->value	= $value;
 		$this->args		= is_array($typeArgs) ? $typeArgs : (is_object($typeArgs) ? (array) $typeArgs : array($typeArgs));
-// 		$this->path		= static::$Path;
 	}
 	
 	/**
