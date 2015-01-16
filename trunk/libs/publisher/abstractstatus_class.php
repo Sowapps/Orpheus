@@ -85,7 +85,7 @@ abstract class AbstractStatus extends PermanentObject {
 			}
 			return false;
 		}
-		return $this->$field == $status;
+		return $this->$field === $status;
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -102,6 +102,7 @@ abstract class AbstractStatus extends PermanentObject {
 	 * If $currentStatus is null, it considers that the objet haven't it, like new one.
 	 */
 	public static function validateStatus($newStatus, $ref=null, $field='status') {
+		/* @var $ref AbstractStatus */
 		if( empty($newStatus) || !is_scalar($newStatus) ) {
 			static::throwException('invalidStatus'.($field=='status' ? '' : '_'.$field));
 		}
