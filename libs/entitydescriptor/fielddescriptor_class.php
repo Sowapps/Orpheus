@@ -81,7 +81,12 @@ class FieldDescriptor {
 	 * @return	FieldDescriptor The parsed field descriptor
 	 */
 	public static function parseType($field, $desc) {
-		$typeDesc				= is_array($desc) ? $desc['type'] : $desc;
+		if( is_array($desc) ) {
+			$typeDesc				= $desc['type'];
+		} else {
+			$typeDesc				= $desc;
+			$desc					= array();
+		}
 		$parse					= EntityDescriptor::parseType($typeDesc);
 		/* Field : String name, TypeDescriptor type, Array args, default, writable, nullable */
 		$Field					= new static($field, $parse->type);

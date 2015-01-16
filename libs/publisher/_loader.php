@@ -13,7 +13,8 @@ addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');
 addAutoload('User',								'publisher/user_class.php');
 addAutoload('AbstractUser',						'publisher/abstractuser_class.php');
 
-defifn('USER_CLASS',		'User');
+defifn('CHECK_MODULE_ACCESS',	true);
+defifn('USER_CLASS',			'User');
 global $USER_CLASS;
 $USER_CLASS = USER_CLASS;
 
@@ -59,12 +60,12 @@ Hook::register('runModule', function () {
 		// If the trigger returns null, 0, '' or false (false equality), it redirects the user if the module has not changed during trigger process
 		// If the trigger returns true, 1 or a value, it cancels the redirects
 		// This allows the dev to override the authentication, but it allows to use another limitation, like in page authentication or error message
-		if( !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module==$Module ) {
+		if( CHECK_MODULE_ACCESS && !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module==$Module ) {
 			redirectTo(u(defined('ACCESSDENIEDMOD') ? ACCESSDENIEDMOD : DEFAULTMOD));
 		}
 	}
 });
 
 function id(&$id) {
-	return $id = intval(is_object($id) ? $id->id() : $id);
+	return intval($id = intval(is_object($id) ? $id->id() : $id));
 }

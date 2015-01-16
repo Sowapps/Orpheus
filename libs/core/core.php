@@ -82,20 +82,21 @@ function bintest($value, $reference) {
 }
 
 /** Sends a packaged response to the client.
- * @param $code The response code.
- * @param $other Other data to send to the client. Default value is an empty string.
- * @param $domain The translation domain. Default value is 'global'.
+ * @param $code string The response code.
+ * @param $other array Other data to send to the client. Default value is an empty string.
+ * @param $domain string The translation domain. Default value is 'global'.
+ * @param $desc string The alternative description code. Default value is $code.
 
  * The response code is a status code, commonly a string.
  * User $Other to send arrays and objects to the client.
  * The packaged reponse is a json string that very useful for AJAX request.
  * This function stops the running script.
 */
-function sendResponse($code, $other='', $domain='global') {
+function sendResponse($code, $other='', $domain='global', $desc=null) {
 	header('Content-Type',	'application/json; charset=UTF-8');
 	die( json_encode( array(
 			'code'			=> $code,
-			'description'	=> t($code, $domain),
+			'description'	=> t($desc ? $desc : $code, $domain),
 			'other'			=> $other
 	) ) );
 }
@@ -543,19 +544,22 @@ function transferReportStream($from=null, $to='global') {
 }
 
 /** Adds a report
- * @param $report The report (Commonly a string or an UserException).
- * @param $type The type of the message.
- * @param $domain The domain to use to automatically translate the message. Default value is 'global'.
- * @return False if rejected.
+ * @param $report string The report (Commonly a string or an UserException).
+ * @param $type string The type of the message.
+ * @param $domain string The domain to use to automatically translate the message. Default value is 'global'.
+ * @return boolean False if rejected.
  * @sa reportSuccess(), reportError()
 
  * Adds the report $message to the list of reports for this $type.
  * The type of the message is commonly 'success' or 'error'.
 */
-function addReport($report, $type, $domain='global') {
+function addReport($report, $type, $domain='global', $code=null) {
 	global $REPORTS, $REPORT_STREAM, $REJREPORTS, $DISABLE_REPORT;
 	if( !empty($DISABLE_REPORT) ) { return false; }
 	$report = "$report";
+	if( !$code ) {
+		$code	= $report;
+	}
 	if( isset($REJREPORTS[$report]) && (empty($REJREPORTS[$report]['t']) || in_array($type, $REJREPORTS[$report]['t'])) ) {
 		return false;
 	}
@@ -565,13 +569,16 @@ function addReport($report, $type, $domain='global') {
 	if( !isset($REPORTS[$REPORT_STREAM][$type]) ) {
 		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
-	$REPORTS[$REPORT_STREAM][$type][] = array('r'=>t($report, $domain), 'd'=>$domain);
+// 	debug("t($report, $domain) => ".t($report, $domain));
+	$report	= t($report, $domain);// Added recently, require tests
+	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$code, 'r'=>$report, 'd'=>$domain);
+// 	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$report, 'r'=>t($report, $domain), 'd'=>$domain);
 	return true;
 }
 
 /** Reports a success
- * @param $report The message to report.
- * @param $domain The domain fo the message. Not used for translation. Default value is global.
+ * @param $report string The message to report.
+ * @param $domain string The domain fo the message. Not used for translation. Default value is global.
  * @sa addReport()
 
  * Adds the report $message to the list of reports for this type 'success'.
@@ -581,8 +588,8 @@ function reportSuccess($report, $domain='global') {
 }
 
 /** Reports a warning
- * @param $report The message to report.
- * @param $domain The domain fo the message. Not used for translation. Default value is global.
+ * @param $report string The message to report.
+ * @param $domain string The domain fo the message. Not used for translation. Default value is global.
  * @sa addReport()
 
  * Adds the report $message to the list of reports for this type 'warning'.
@@ -593,22 +600,30 @@ function reportWarning($report, $domain='global') {
 }
 
 /** Reports an error
- * @param $report The report.
- * @param $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
+ * @param $report string The report.
+ * @param $domain string The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
  * @sa addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
 */
 function reportError($report, $domain=null) {
-	if( $report instanceof UserException && $domain === NULL ) {
-		$domain = $report->getDomain();
+	$code	= null;
+	if( $report instanceof UserException ) {
+		if( class_exists('InvalidFieldException') && $report instanceof InvalidFieldException ) {
+			// InvalidFieldException translates the message when using __toString method, so we need to get the original code
+			// Should be improved by object inheritance
+			$code	= $report->getMessage();
+		}
+		if( $domain === NULL ) {
+			$domain = $report->getDomain();
+		}
 	}
 // 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport($report, 'error', $domain === NULL ? 'global' : $domain);
+	return addReport($report, 'error', $domain === NULL ? 'global' : $domain, $code);
 }
 
 /** Checks if there is error reports
- * @return True if there is any error report.
+ * @return boolean True if there is any error report.
 */
 function hasErrorReports() {
 	global $REPORTS;
@@ -674,9 +689,10 @@ function getReports($stream='global', $type=null, $delete=1) {
 }
 
 /** Gets some/all reports as HTML
- * @param $stream The stream to get the reports. Default value is 'global'.
- * @param $rejected An array of rejected messages. Default value is an empty array.
- * @param $delete True to delete entries from the list. Default value is true.
+ * @param	$stream string The stream to get the reports. Default value is 'global'.
+ * @param	$rejected array An array of rejected messages. Default value is an empty array.
+ * @param	$delete boolean True to delete entries from the list. Default value is true.
+ * @return	The renderer HTML.
  * @sa displayReportsHTML()
  * @sa getHTMLReport()
 
@@ -1197,14 +1213,18 @@ function hashString($str) {
 /** Gets the date as string
  * @param $time The UNIX timestamp.
  * @return The date using 'dateFormat' translation key
+ * 
+ * Date format is storing a date, not a specific moment, we don't care about timezone
 */
 function d($time=TIME) {
-	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
+	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
 }
 
 /** Gets the date time as string
  * @param $time The UNIX timestamp.
  * @return The date using 'timeFormat' translation key
+ * 
+ * Datetime format is storing a specific moment, we care about timezone
 */
 function dt($time=TIME) {
 	return !empty($time) ? strftime(t('timeFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
@@ -1213,14 +1233,19 @@ function dt($time=TIME) {
 /** Gets the date as string in SQL format
  * @param $time The UNIX timestamp.
  * @return The date using sql format
+ * 
+ * Date format is storing a date, not a specific moment, we don't care about timezone
 */
 function sqlDate($time=TIME) {
-	return gmstrftime('%Y-%m-%d', $time);
+// 	return gmstrftime('%Y-%m-%d', $time);
+	return strftime('%Y-%m-%d', $time);
 }
 
 /** Gets the date time as string in SQL format
  * @param $time The UNIX timestamp.
  * @return The date using sql format
+ * 
+ * Datetime format is storing a specific moment, we care about timezone
 */
 function sqlDatetime($time=TIME) {
 	return gmstrftime('%Y-%m-%d %H:%M:%S', $time);
@@ -1238,7 +1263,7 @@ function clientIP() {
 */
 function userID() {
 	global $USER;
-	return !empty($USER) ? $USER->id() : null;
+	return !empty($USER) ? $USER->id() : 0;
 }
 
 /** Generates a new password
@@ -1351,4 +1376,10 @@ function str_ucfirst($str) {
 
 function str_ucwords($str) {
 	return ucwords(strtolower($str));
+}
+
+function reverse_values(&$val1, &$val2) {
+	$tmp	= $val1;
+	$val1	= $val2;
+	$val2	= $tmp;
 }

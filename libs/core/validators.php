@@ -57,10 +57,10 @@ function is_ID($Number) {
 
 /** Checks if the input is a date.
 
- * @param $date The date to check.
- * @param $withTime True to use datetime format, optional. Default value is false.
- * @param $time The output timestamp of the data, optional.
- * @param $country The country to use the date format, optional. Default and unique value is FR, not used.
+ * @param $date string The date to check.
+ * @param $withTime boolean True to use datetime format, optional. Default value is false.
+ * @param $time integer The output timestamp of the data, optional.
+ * @param $country string The country to use the date format, optional. Default and unique value is FR, not used.
  * @return True if $date si a valid date.
  * 
  * The date have to be well formatted and valid.
