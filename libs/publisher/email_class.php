@@ -43,8 +43,8 @@ class Email {
 	//Methods
 	
 	/** Constructor
-	 * @param $Subject The subject of the mail. Default value is an empty string.
-	 * @param $Text The body of the message, used as text and html. Default value is an empty string.
+	 * @param string $Subject The subject of the mail. Default value is an empty string.
+	 * @param string $Text The body of the message, used as text and html. Default value is an empty string.
 	 */
 	public function __construct($Subject='', $Text='') { //Class' Constructor
 		$this->init();
@@ -52,7 +52,7 @@ class Email {
 		$this->setText($Text);
 	}
 	
-	/** Initializes the object
+	/** Initialize the object
 	 * 
 	 */
 	private function init() {
@@ -73,9 +73,9 @@ class Email {
 		}
 	}
 	
-	/** Sets the value of a header
-	 * @param $Key The key of the header to set.
-	 * @param $Value The new value of the header.
+	/** Set the value of a header
+	 * @param string $Key The key of the header to set.
+	 * @param string $Value The new value of the header.
 	 */
 	public function setHeader($Key, $Value) {
 		if( !isset($this->Headers[$Key]) ) {
@@ -85,10 +85,10 @@ class Email {
 		$this->Headers[$Key] = $Value;
 	}
 	
-	/** Sets the type of the mail
-	 * @param $Type The new Type.
+	/** Set the type of the mail
+	 * @param integer $Type The new Type.
 	 * 
-	 * Sets the type of the mail.
+	 * Set the type of the mail.
 	 * It can be TEXTTYPE or HTMLTYPE. 
 	 */
 	public function setType($Type) {
@@ -104,27 +104,27 @@ class Email {
 		$this->Type = ( empty($Substract) ) ? $this->Type | $Type : $this->Type ^ $Type;
 	}
 	
-	/** Checks if this file is in the files list
-	 * @param $Filename The file name.
-	 * @return True if this file is in the attached files list.
+	/** Check if this file is in the files list
+	 * @param string $Filename The file name.
+	 * @return boolean True if this file is in the attached files list.
 	 */
 	public function containsFile($Filename) {
 		return in_array($Filename, $this->AttFiles);
 	}
 	
-	/** Checks if the file list contains any file.
-	 * @return True if the file list is not empty.
+	/** Check if the file list contains any file.
+	 * @return boolean True if the file list is not empty.
 	 * 
-	 * Checks if the file list is not empty.
+	 * Check if the file list is not empty.
 	 */
 	public function containsFiles() {
 		return !empty($this->AttFiles);
 	}
 	
-	/** Adds a file to the files list
-	 * @param $Filename The file name.
+	/** Add a file to the files list
+	 * @param string $Filename The file name.
 	 * 
-	 * Adds $Filename to the attached files list.
+	 * Add $Filename to the attached files list.
 	 */
 	public function addFile($Filename) {
 		if( $this->containsFile($Filename) ) {
@@ -133,10 +133,10 @@ class Email {
 		$this->AttFiles[] = $Filename;
 	}
 	
-	/** Removes a file from the files list
-	 * @param $Filename The file name.
+	/** Remove a file from the files list
+	 * @param string $Filename The file name.
 	 * 
-	 * Removes $Filename from the attached files list.
+	 * Remove $Filename from the attached files list.
 	 */
 	public function removeFile($Filename) {
 		if( ($key = array_search($Filename, $this->AttFiles)) === false ) {
@@ -145,8 +145,8 @@ class Email {
 		unset($this->AttFiles[$key]);
 	}
 	
-	/** Sets the subject of the mail
-	 * @param $Subject The new subject.
+	/** Set the subject of the mail
+	 * @param string $Subject The new subject.
 	 */
 	public function setSubject($Subject) {
 // 		if( !is_string($Subject) ) {
@@ -159,7 +159,7 @@ class Email {
 	}
 	
 	/** Sets the text body of the mail
-	 * @param $Body The new body.
+	 * @param string $Body The new body.
 	 */
 	public function setTEXTBody($Body) {
 		if( !is_string($Body) ) {
@@ -169,7 +169,7 @@ class Email {
 	}
 
 	/** Sets the html body of the mail
-	 * @param $Body The new body.
+	 * @param string $Body The new body.
 	 */
 	public function setHTMLBody($Body) {
 		if( !is_string($Body) ) {
@@ -177,13 +177,13 @@ class Email {
 		}
 		$this->HTMLBody	= static::convHTMLBody($Body);
 	}
-	public static function convHTMLBody($Body) {
+	protected static function convHTMLBody($Body) {
 		// Supports UTF-8 and Quote printable encoding
 		return static::escape(str_replace(array("\r", "\n"), '', '<div dir="ltr">'.$Body.'</div>'));
 	}
 	
 	/** Sets the mail content
-	 * @param $Text The new text for the mail contents.
+	 * @param string $Text The new text for the mail contents.
 	 * 
 	 * Fills Text and HTML bodies from the given text
 	 */
@@ -196,7 +196,7 @@ class Email {
 	}
 	
 	/** Sets the alternative body of the mail
-	 * @param $Body The new body.
+	 * @param string $Body The new body.
 	 */
 	public function setAltBody($Body) {
 		if( !is_string($Subject) ) {
@@ -206,7 +206,7 @@ class Email {
 	}
 	
 	/** Sets the ReplyTo value of the mail
-	 * @param $Email The email address to send this mail
+	 * @param string $Email The email address to send this mail
 	 */
 	public function setReplyTo($Email) {
 		$this->setHeader('Return-Path', $Email);
@@ -214,9 +214,9 @@ class Email {
 	}
 	
 	/** Sets the Sender value of the mail
-	 * @param $SenderEmail The email address to send this mail
-	 * @param $SenderName The email address to send this mail. Default value is null.
-	 * @param $allowReply True to use this address as reply address. Default value is true.
+	 * @param string	$SenderEmail The email address to send this mail
+	 * @param string	$SenderName The email address to send this mail. Default value is null.
+	 * @param boolean	$allowReply True to use this address as reply address. Default value is true.
 	 * 
 	 * Sets the Sender value of the mail.
 	 * This function also sets the ReplyTo value if undefined.
@@ -232,7 +232,7 @@ class Email {
 	}
 	
 	/** Sends the mail to the given address
-	 * @param $ToAddress The email address to send this mail
+	 * @param string $ToAddress The email address to send this mail
 	 * 
 	 * Sends the mail to the given address.
 	 * You can pass an array of address to send it to multiple recipients.
@@ -402,7 +402,7 @@ BODY;
 	}
 	
 	/** Get a boundary
-	 * @param $BoundaryInd The index of the boundary to get. Default value is 0.
+	 * @param integer $BoundaryInd The index of the boundary to get. Default value is 0.
 	 * @return string The value of the boundary.
 	 */
 	public function getBoundary($BoundaryInd=0) {
@@ -442,7 +442,7 @@ BODY;
 	}
 	
 	/** Check if the given mail address is valid
-	 * @param $email The email address.
+	 * @param string $email The email address.
 	 * @return boolean True if this email is valid.
 	 */
 	public static function is_email($email) {
@@ -450,7 +450,7 @@ BODY;
 	}
 
 	/** Gets the mime type of a file.
-	 * @param $Filename The file name.
+	 * @param string $Filename The file name.
 	 * @return string The mime type of the file.
 	 */
 	public static function getMimeType($Filename) {
@@ -462,7 +462,7 @@ BODY;
 	}
 
 	/** Escape the string for mails.
-	 * @param $string The string to escape.
+	 * @param string $string The string to escape.
 	 * @return string The escaped string for mails.
 	 */
 	public static function escape($string) {
@@ -471,8 +471,8 @@ BODY;
 	}
 
 	/** Escape the string using base64 encoding.
-	 * @param	$string String The string to escape.
-	 * @return	String The escaped string in base64.
+	 * @param	string $string The string to escape.
+	 * @return	string The escaped string in base64.
 	 */
 	public static function escapeB64($string) {
 		return '=?UTF-8?B?'.base64_encode("$string").'?=';

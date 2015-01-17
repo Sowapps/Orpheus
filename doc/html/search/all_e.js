@@ -1,8 +1,10 @@
 var searchData=
 [
+  ['ob_5fend_5fto',['ob_end_to',['../loader_8php.html#a26c93d85e2d69767b6e12268049fd979',1,'loader.php']]],
   ['object',['OBJECT',['../class_s_q_l_adapter.html#aa2f1769baa345f301668853c444000e1',1,'SQLAdapter\OBJECT()'],['../class_permanent_object.html#af39d7bb000b7a32aae4e0dce9586a5a4',1,'PermanentObject\object()']]],
   ['oblevel_5finit',['OBLEVEL_INIT',['../index_8php.html#ab046630b7eea3e9aa3589f66f4fb7680',1,'index.php']]],
   ['open',['open',['../class_o_session_handler.html#a614b5cf3840833913c7a73260ed28e02',1,'OSessionHandler']]],
+  ['operationcancelledexception',['OperationCancelledException',['../class_operation_cancelled_exception.html',1,'']]],
   ['opt_5flabel2value',['OPT_LABEL2VALUE',['../core_8php.html#af5f4fb758d456934a29e90d98652893f',1,'core.php']]],
   ['opt_5flabel_5fis_5fkey',['OPT_LABEL_IS_KEY',['../core_8php.html#af2c130fb10b4a77fc77505d33f52f912',1,'core.php']]],
   ['opt_5flabel_5fis_5fvalue',['OPT_LABEL_IS_VALUE',['../core_8php.html#a98363d2963615c17b052e79ff458fe91',1,'core.php']]],

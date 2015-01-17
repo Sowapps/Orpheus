@@ -25,6 +25,7 @@ var searchData=
   ['reportexception',['reportException',['../class_permanent_object.html#afde256bb593859178ea0ccd330acf4e6',1,'PermanentObject']]],
   ['reportsuccess',['reportSuccess',['../core_8php.html#a43a1be23d6ec016ef7b14edeeb8fa11a',1,'core.php']]],
   ['reportwarning',['reportWarning',['../core_8php.html#a376c9350b361b3aef2d6a4c55220189f',1,'core.php']]],
+  ['reverse_5fvalues',['reverse_values',['../core_8php.html#aa49ca67f9486ff1cd200f938b08f7557',1,'core.php']]],
   ['runfordeletion',['runForDeletion',['../class_permanent_object.html#a26b7cd00ec15a2a7d2a9dc0128856077',1,'PermanentObject']]],
   ['runforobject',['runForObject',['../class_permanent_object.html#ad7e29a8c34b8b84d421591a551cd6bb5',1,'PermanentObject']]],
   ['runforupdate',['runForUpdate',['../class_permanent_object.html#ace639024468b35171e9bd8741cb1c29e',1,'PermanentObject']]]

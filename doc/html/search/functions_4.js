@@ -3,7 +3,7 @@ var searchData=
   ['d',['d',['../core_8php.html#adbac3297710fcd852ea552eb9cae2ffe',1,'core.php']]],
   ['daytime',['dayTime',['../core_8php.html#ac1ecb31c4d1da393285cc8915ceb90d1',1,'core.php']]],
   ['debug',['debug',['../src_2__loader_8php.html#acf28d3279645e416f710154a10c708c6',1,'_loader.php']]],
-  ['defifn',['defifn',['../loader_8php.html#abd1bf7f498a701b1c9dbb0b26b2eee95',1,'loader.php']]],
+  ['defifn',['defifn',['../loader_8php.html#a7ded22765b79029b0acca26547417fe2',1,'loader.php']]],
   ['delete',['delete',['../class_permanent_object.html#a94b66f53622e6e469baca69a163d9624',1,'PermanentObject\delete()'],['../class_s_q_l_adapter___m_s_s_q_l.html#a14fcaf804c3491576d15890c9bf8fb39',1,'SQLAdapter_MSSQL\delete()'],['../class_s_q_l_adapter___my_s_q_l.html#a14fcaf804c3491576d15890c9bf8fb39',1,'SQLAdapter_MySQL\delete()'],['../class_s_q_l_adapter___pg_s_q_l.html#a14fcaf804c3491576d15890c9bf8fb39',1,'SQLAdapter_PgSQL\delete()'],['../class_s_q_l_adapter.html#a14fcaf804c3491576d15890c9bf8fb39',1,'SQLAdapter\delete()']]],
   ['deletebysessid',['deleteBySessID',['../class_d_b_session.html#a64509e5d28ebef4a6b1bc87a726e9bd8',1,'DBSession\deleteBySessID()'],['../class_f_s_session.html#a64509e5d28ebef4a6b1bc87a726e9bd8',1,'FSSession\deleteBySessID()'],['../interface_session_interface.html#a64509e5d28ebef4a6b1bc87a726e9bd8',1,'SessionInterface\deleteBySessID()']]],
   ['deletefrom',['deleteFrom',['../class_d_b_session.html#a6c4179001ea95da870559c3563d759ec',1,'DBSession\deleteFrom()'],['../class_f_s_session.html#a6c4179001ea95da870559c3563d759ec',1,'FSSession\deleteFrom()'],['../interface_session_interface.html#a6c4179001ea95da870559c3563d759ec',1,'SessionInterface\deleteFrom()']]],

@@ -86,8 +86,10 @@ var searchData=
   ['getthemepath',['getThemePath',['../class_h_t_m_l_rendering.html#a7e0e5634d697cb05ebd8d592841a33c6',1,'HTMLRendering']]],
   ['getthemeurl',['getThemeURL',['../class_h_t_m_l_rendering.html#a3aa172e9580582acc5f410aa1e28c870',1,'HTMLRendering']]],
   ['getthreadlink',['getThreadLink',['../class_forum_post.html#a378bbbf99e2126c16d792835d829bab4',1,'ForumPost']]],
+  ['getthreadtypes',['getThreadTypes',['../class_forum_post.html#a2bd52f287f9bc698a501d3890ae2211e',1,'ForumPost']]],
   ['gettwigenvironment',['getTwigEnvironment',['../class_twig_rendering.html#a1222b3b524b8a769da0300ad36d47454',1,'TwigRendering']]],
   ['gettype',['getType',['../class_entity_descriptor.html#a7eb06fbf5de0db9af1afb1c73132bb42',1,'EntityDescriptor\getType()'],['../class_field_descriptor.html#a02e8cd9aeac89bd3fbebb92f635e9b36',1,'FieldDescriptor\getType()'],['../class_invalid_field_exception.html#a830b5c75df72b32396701bc563fbe3c7',1,'InvalidFieldException\getType()']]],
+  ['getuser',['getUser',['../class_thread_message.html#ae81b7186fb97a7c6457edcc68c9aa2ef',1,'ThreadMessage']]],
   ['getvalidator',['getValidator',['../class_permanent_object.html#a1beca1c00cfefaf787b5b15e7baa45fd',1,'PermanentObject']]],
   ['getvalue',['getValue',['../class_invalid_field_exception.html#ac0bc18784b182c89fcfd276625aef435',1,'InvalidFieldException\getValue()'],['../class_permanent_object.html#a037d90908c0536940ec8e037c77bf1ec',1,'PermanentObject\getValue()']]]
 ];

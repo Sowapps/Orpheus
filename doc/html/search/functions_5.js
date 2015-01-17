@@ -7,6 +7,7 @@ var searchData=
   ['equals',['equals',['../class_permanent_object.html#af4fac78fe485eeb7ae8c7f58feed49cb',1,'PermanentObject']]],
   ['eraseallcache',['eraseAllCache',['../class_abstract_publication.html#a112da93e09832dbbcada605d10767a1d',1,'AbstractPublication']]],
   ['escape',['escape',['../class_email.html#ada2df8f7a70c41ff595cd5effb4d0fa7',1,'Email']]],
+  ['escapeb64',['escapeB64',['../class_email.html#a2365d32ecfa55037e5210a1fa5664d20',1,'Email']]],
   ['escapeidentifier',['escapeIdentifier',['../class_permanent_object.html#a4225ba3b930c061d1df6a7dd9bae5318',1,'PermanentObject\escapeIdentifier()'],['../class_s_q_l_adapter___my_s_q_l.html#ac558b368fb92f0b93f3a9b345e005218',1,'SQLAdapter_MySQL\escapeIdentifier()'],['../class_s_q_l_adapter.html#ac558b368fb92f0b93f3a9b345e005218',1,'SQLAdapter\escapeIdentifier()']]],
   ['escapetext',['escapeText',['../core_8php.html#acb95ce6c030db33abec0b3ba8612f97a',1,'core.php']]],
   ['existspathof',['existsPathOf',['../loader_8php.html#a014319626ad107a6e068cd7a0d05544b',1,'loader.php']]],
