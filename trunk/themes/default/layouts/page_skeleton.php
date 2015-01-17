@@ -1,7 +1,7 @@
 <?php
 /* @var $this HTMLRendering */
 ?><!DOCTYPE html>
-<html>
+<html lang="<?php echo LANGBASE; ?>">
 <head>
 	<title><?php echo ( (!empty($MODTITLE)) ? $MODTITLE.' :: ' : '' ).SITENAME ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
