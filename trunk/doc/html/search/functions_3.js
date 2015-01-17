@@ -44,7 +44,8 @@ var searchData=
   ['containsfile',['containsFile',['../class_email.html#ac8e2fdd54f871043d0954b2136dce6a5',1,'Email']]],
   ['containsfiles',['containsFiles',['../class_email.html#a726088b66077e4e5fe24144caf9461de',1,'Email']]],
   ['convertspecialchars',['convertSpecialChars',['../core_8php.html#abad254d750f2204201c9e4b8c2ca5ae6',1,'core.php']]],
+  ['convhtmlbody',['convHTMLBody',['../class_email.html#a27be531237d92cdb0044194087f518ad',1,'Email']]],
   ['count_5fintersect_5fkeys',['count_intersect_keys',['../core_8php.html#ae906949efc1f5a96751c1548c1a01249',1,'core.php']]],
-  ['create',['create',['../class_hook.html#aba67e609ea9faf893586516a7556c296',1,'Hook\create()'],['../class_permanent_object.html#a10093157ba1d6bfe1eef472ad28f5f5d',1,'PermanentObject\create()']]],
+  ['create',['create',['../class_hook.html#aba67e609ea9faf893586516a7556c296',1,'Hook\create()'],['../class_permanent_object.html#a1b23f0f0f21fa7b4b5dcbeeb57273dd7',1,'PermanentObject\create()']]],
   ['createandget',['createAndGet',['../class_permanent_object.html#ad61e7cfb6e6bfbbc1439458279871228',1,'PermanentObject']]]
 ];

@@ -13,7 +13,7 @@ class UserException extends Exception {
 	 */
 	public function __construct($message=null, $domain=null) {
 		parent::__construct($message);
-		$this->domain = $domain;
+		$this->setDomain($domain);
 	}
 
 	/**
@@ -26,7 +26,7 @@ class UserException extends Exception {
 	
 	/**
 	 * Set the domain
-	 * @param string $domain
+	 * @param string $domain The new domain
 	 */
 	public function setDomain($domain) {
 		$this->domain = $domain;
@@ -34,7 +34,7 @@ class UserException extends Exception {
 
 	/**
 	 * Get the report from this exception
-	 * @return string
+	 * @return string The report 
 	 */
 	public function getReport() {
 		return $this->getText();

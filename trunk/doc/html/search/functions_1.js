@@ -9,7 +9,7 @@ var searchData=
   ['addjsfile',['addJSFile',['../class_h_t_m_l_rendering.html#a209fe50578d9871b2c80e8bdfa0ada78',1,'HTMLRendering']]],
   ['addjsurl',['addJSURL',['../class_h_t_m_l_rendering.html#a0c562f862a69cf609c33562a9ce49b51',1,'HTMLRendering']]],
   ['addmetaproperty',['addMetaProperty',['../class_h_t_m_l_rendering.html#ad63152ff6b5b065c93427c05bc3b22e2',1,'HTMLRendering']]],
-  ['addreport',['addReport',['../core_8php.html#aad1995d6da373ded7a1ef257846ace93',1,'core.php']]],
+  ['addreport',['addReport',['../core_8php.html#ab45416f42c1fde7276ced33adcdc9978',1,'core.php']]],
   ['addsrcpath',['addSrcPath',['../loader_8php.html#ae01b30e07681832a265b7b168d02958c',1,'loader.php']]],
   ['adm_5fhtmlcheckbox',['adm_htmlCheckbox',['../admin-form_8php.html#a10c4b514005065730558ff232d3b9145',1,'admin-form.php']]],
   ['adm_5fhtmlcheckboxswitch',['adm_htmlCheckboxSwitch',['../admin-form_8php.html#a6c6b24ed2dadf79e75bf9af0ae5368cf',1,'admin-form.php']]],
