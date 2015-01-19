@@ -1324,6 +1324,15 @@ function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 	return substr($number, 0, $i+2).$n;
 }
 
+function formatDuration_Shortest($duration) {
+	$formats	= array('days'=>86400, 'hours'=>3600, 'minutes'=>60);
+	foreach( $formats as $unit => $time ) {
+		$r	= $duration/$time;
+		if( $r >= 1 ) { break; }
+	}
+	return intval($r).t($unit.'_short');
+}
+
 function count_intersect_keys($array1, $array2) {
 	return count(array_intersect_key($array1, $array2));
 }
