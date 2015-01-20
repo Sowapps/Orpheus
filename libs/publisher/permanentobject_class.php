@@ -467,7 +467,8 @@ abstract class PermanentObject {
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($obj) ) {
-				static::throwException('inexistantObject');
+				throw new NotFoundException(static::getDomain(), 'inexistantObject');
+// 				static::throwException('inexistantObject');
 			}
 		} else {
 			$obj = new static($data);
