@@ -6,6 +6,9 @@
  * Require declaration of constants: LANGDIR, LANG.
  */
 
+define('HOOK_GETLANG', 'getDomainLang');
+Hook::create(HOOK_GETLANG);
+
 /** Loads a language ini file
 
  * @param $domain The domain of the file to load.
@@ -14,15 +17,18 @@
  * You don't have to use this function explicitly.
  */
 function loadLangFile($domain='global') {
-	global $LANG;
+	global $LANG, $USED_LANG;
 	if( isset($LANG[$domain]) ) {
 		return;
 	}
-	if( !empty($domain) && existsPathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini') ) {
-		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.LANG.'/'.$domain.'.ini'));
+	if( !isset($USED_LANG) ) {
+		$USED_LANG	= Hook::trigger(HOOK_GETLANG, true, LANG, $domain);
+	}
+	if( !empty($domain) && existsPathOf(LANGDIR.'/'.$USED_LANG.'/'.$domain.'.ini') ) {
+		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.$USED_LANG.'/'.$domain.'.ini'));
 		
-	} else if( existsPathOf(LANGDIR.'/'.LANG.'.ini') ) {
-		$GLOBALS['LANG'] = parse_ini_file(pathOf(LANGDIR.'/'.LANG.'.ini'));
+	} else if( existsPathOf(LANGDIR.'/'.$USED_LANG.'.ini') ) {
+		$GLOBALS['LANG'] = parse_ini_file(pathOf(LANGDIR.'/'.$USED_LANG.'.ini'));
 	}
 }
 
