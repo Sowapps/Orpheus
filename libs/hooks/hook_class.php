@@ -11,21 +11,21 @@ class Hook {
 	protected $callbacks = array();
 	
 	/** Constructor
-
-		\param $name The name of the new hook.
+	 * 
+	 * @param $name The name of the new hook.
 	*/
 	protected function __construct($name) {
 		$this->name = $name;
 	}
 	
-	/** Registers a new callback for this hook.
-
-		\param $callback A callback.
-		\sa register()
-		\sa http://php.net/manual/en/language.pseudo-types.php#language.types.callback
-		
-		Registers the $callback associating with this hook.
-		The callback will be called when this hook will be triggered.
+	/** Register a new callback for this hook.
+	 * 
+	 * @param $callback A callback.
+	 * @sa register()
+	 * @sa http://php.net/manual/en/language.pseudo-types.php#language.types.callback
+	 * 
+	 * Registers the $callback associating with this hook.
+	 * The callback will be called when this hook will be triggered.
 	*/
 	public function registerHook($callback) {
 		if( !is_callable($callback) ) {
@@ -37,16 +37,16 @@ class Hook {
 		$this->callbacks[] = $callback;
 	}
 	
-	/** Triggers this hook.
-
-		\param $params A callback.
-		\return The first param as result.
-		\sa trigger()
-		
-		Triggers this hook calling all associated callbacks.
-		$params array is passed to the callback as its arguments.
-		The first parameter, $params[0], is considered as the result of the trigger.
-		If $params is not an array, its value is assigned to the second value of a new $params array.
+	/** Trigger this hook.
+	 * 
+	 * @param $params A callback.
+	 * @return The first param as result.
+	 * @sa trigger()
+	 * 
+	 * Triggers this hook calling all associated callbacks.
+	 * $params array is passed to the callback as its arguments.
+	 * The first parameter, $params[0], is considered as the result of the trigger.
+	 * If $params is not an array, its value is assigned to the second value of a new $params array.
 	*/
 	public function triggerHook($params=NULL) {
 		if( !isset($params) ) {
@@ -67,21 +67,21 @@ class Hook {
 		return isset($params[0]) ? $params[0] : null;
 	}
 	
-	/** Gets slug
-
-		\param $name The hook name.
-		\return The slug name.
-	
-		Extracts the slug of a hook name.
+	/** Get slug
+	 * 
+	 * @param $name The hook name.
+	 * @return The slug name.
+	 * 
+	 * Extracts the slug of a hook name.
 	*/
 	protected static function slug($name) {
 		return strtolower($name);
 	}
 	
-	/** Creates new Hook
-
-		\param $name The new hook name.
-		\return The new hook.
+	/** Create new Hook
+	 * 
+	 * @param $name The new hook name.
+	 * @return The new hook.
 	*/
 	public static function create($name) {
 		$name = static::slug($name);
@@ -89,13 +89,13 @@ class Hook {
 		return self::$hooks[$name];
 	}
 	
-	/** Registers a callback
-
-		\param $name The hook name.
-		\param $callback The new callback.
-		\return The registerHook() result, usually null.
-		
-		Adds the callback to those of the hook.
+	/** Register a callback
+	 * 
+	 * @param $name The hook name.
+	 * @param $callback The new callback.
+	 * @return The registerHook() result, usually null.
+	 * 
+	 * Add the callback to those of the hook.
 	*/
 	public static function register($name, $callback) {
 		$name = static::slug($name);
@@ -105,14 +105,14 @@ class Hook {
 		return static::$hooks[$name]->registerHook($callback);
 	}
 	
-	/** Triggers a hook
-
-		\param $name The hook name.
-		\param $silent Make it silent, no exception thrown. Default value is false.
-		\return The triggerHook() result, usually the first parameter.
-		
-		Triggers the hook named $name.
-		e.g trigger('MyHook', true, $parameter1); trigger('MyHook', $parameter1, $parameter2);
+	/** Trigger a hook by name
+	 * 
+	 * @param $name The hook name.
+	 * @param $silent Make it silent, no exception thrown. Default value is false.
+	 * @return The triggerHook() result, usually the first parameter.
+	 * 
+	 * Trigger the hook named $name.
+	 * e.g trigger('MyHook', true, $parameter1); trigger('MyHook', $parameter1, $parameter2);
 	*/
 	public static function trigger($name, $silent=false) {
 		$name = static::slug($name);
