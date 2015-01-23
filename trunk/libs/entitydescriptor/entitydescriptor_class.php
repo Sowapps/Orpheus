@@ -274,11 +274,13 @@ class FE extends Exception { }
 defifn('ENTITY_DESCRIPTOR_CONFIG_PATH', 'entities/');
 
 // Primary Types
+
+// Format number([max=2147483647 [, min=-2147483648 [, decimals=0]]])
 class TypeNumber extends TypeDescriptor {
 	protected $name = 'number';
 	
 	public function parseArgs($fArgs) {
-		$args = (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
+		$args	= (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 		if( isset($fArgs[2]) ) {
 			$args->decimals	= $fArgs[0];
 			$args->min			= $fArgs[1];
@@ -326,7 +328,7 @@ class TypeString extends TypeDescriptor {
 	protected $name = 'string';
 	
 	public function parseArgs($fArgs) {
-		$args = (object) array('min'=>0, 'max'=>65535);
+		$args	= (object) array('min'=>0, 'max'=>65535);
 		if( isset($fArgs[1]) ) {
 			$args->min			= $fArgs[0];
 			$args->max			= $fArgs[1];
@@ -414,7 +416,7 @@ class TypeInteger extends TypeNumber {
 	protected $name = 'integer';
 
 	public function parseArgs($fArgs) {
-		$args = (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
+		$args	= (object) array('decimals'=>0, 'min'=>-2147483648, 'max'=>2147483647);
 		if( isset($fArgs[1]) ) {
 			$args->min			= $fArgs[0];
 			$args->max			= $fArgs[1];
@@ -444,11 +446,12 @@ class TypeBoolean extends TypeInteger {
 }
 EntityDescriptor::registerType(new TypeBoolean());
 
+// Format float([[max=2147483647, min=-2147483648], [decimals=2]]])
 class TypeFloat extends TypeNumber {
 	protected $name = 'float';
 
 	public function parseArgs($fArgs) {
-		$args = (object) array('decimals'=>2, 'min'=>-2147483648, 'max'=>2147483647);
+		$args	= (object) array('decimals'=>2, 'min'=>-2147483648, 'max'=>2147483647);
 		if( isset($fArgs[2]) ) {
 			$args->decimals		= $fArgs[0];
 			$args->min			= $fArgs[1];
@@ -468,7 +471,7 @@ class TypeDouble extends TypeNumber {
 	protected $name = 'double';
 
 	public function parseArgs($fArgs) {
-		$args = (object) array('decimals'=>8, 'min'=>-2147483648, 'max'=>2147483647);	
+		$args	= (object) array('decimals'=>8, 'min'=>-2147483648, 'max'=>2147483647);	
 		if( isset($fArgs[2]) ) {
 			$args->decimals		= $fArgs[0];
 			$args->min			= $fArgs[1];
@@ -488,7 +491,7 @@ class TypeNatural extends TypeInteger {
 	protected $name		= 'natural';
 
 	public function parseArgs($fArgs) {
-		$args = (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);
+		$args	= (object) array('decimals'=>0, 'min'=>0, 'max'=>4294967295);
 		if( isset($fArgs[0]) ) {
 			$args->max			= $fArgs[0];
 		}
@@ -504,7 +507,7 @@ class TypeRef extends TypeNatural {
 	// Prefer to set default to 0 instead of using nullable
 	
 	public function parseArgs($fArgs) {
-		$args = (object) array('entity'=>null, 'decimals'=>0, 'min'=>0, 'max'=>4294967295);
+		$args	= (object) array('entity'=>null, 'decimals'=>0, 'min'=>0, 'max'=>4294967295);
 		if( isset($fArgs[0]) ) {
 			$args->entity			= $fArgs[0];
 		}
