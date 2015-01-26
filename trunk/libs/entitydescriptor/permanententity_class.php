@@ -51,7 +51,7 @@ abstract class PermanentEntity extends PermanentObject {
 	 * Helper method to get whereclause string from an entity.
 	 * The related entity should have entity_type and entity_id fields.
 	 */
-	public function genEntityWhereclause() {
+	public function getEntityWhereclause() {
 		return "entity_type LIKE '{$this->getEntity()}' AND entity_id={$this->id()}";
 	}
 	
