@@ -456,7 +456,7 @@ class User extends AbstractStatus {
 	}
 	
 	/*
-	public static function init() {
+	public static function init($isFinal=true) {
 		//self::$fields = array_unique(array_merge(self::$fields, parent::$fields));
 		self::$editableFields = array_unique(array_merge(self::$editableFields, parent::$editableFields));
 		self::$validator = array_unique(array_merge(self::$validator, parent::$validator));
