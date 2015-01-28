@@ -7,7 +7,7 @@
  * Require core plugin.
  * 
  */
-class AbstractUser extends PermanentEntity {
+abstract class AbstractUser extends PermanentEntity {
 	
 	//Attributes
 	protected static $table		= 'user';
@@ -250,7 +250,7 @@ class AbstractUser extends PermanentEntity {
 	 * It verifies if a valid session exist.
 	 */
 	public static function is_login() {
-		throw new Exception('Obsolete is_login() method');
+		throw new Exception('Method is_login() is obsolete');
 // 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
@@ -369,4 +369,4 @@ class AbstractUser extends PermanentEntity {
 		return generatePassword(mt_rand(8, 12));
 	}
 }
-AbstractUser::init();
+// AbstractUser::init(false);

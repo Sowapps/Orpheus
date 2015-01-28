@@ -9,6 +9,8 @@ abstract class PermanentEntity extends PermanentObject {
 	protected static $table				= null;
 	protected static $editableFields	= null;
 	
+	protected static $entityClasses		= array();
+	
 	// Final class attributes, please inherits them
 	/*
 	protected static $fields	= null;
@@ -44,17 +46,6 @@ abstract class PermanentEntity extends PermanentObject {
 		$this->setValue($field, $value);
 	}
 	
-	/** 
-	 * Helper method to get whereclause string from an entity
-	 * @return string
-	 * 
-	 * Helper method to get whereclause string from an entity.
-	 * The related entity should have entity_type and entity_id fields.
-	 */
-	public function getEntityWhereclause() {
-		return "entity_type LIKE '{$this->getEntity()}' AND entity_id={$this->id()}";
-	}
-	
 	/**
 	 * Try to load entity from an entity string and an id integer
 	 * @param string $entity
@@ -68,13 +59,41 @@ abstract class PermanentEntity extends PermanentObject {
 	 * Initializes entity class
 	 * You must call this method after the class declaration
 	 */
-	public static function init() {
-		$ed					= EntityDescriptor::load(static::$table, static::getClass());
-		static::$fields		= $ed->getFieldsName();
-		static::$validator	= $ed;
+	public static function init($isFinal=true) {
+// 		debug(static::getClass().'::init() ', debug_backtrace());
+		if( static::$validator ) {
+			debug('static::$validator', static::$validator);
+			throw new Exception('Class '.static::getClass().' with table '.static::$table.' is already initialized.');
+		}
 		if( static::$domain === NULL ) {
 			static::$domain = static::$table;
 		}
+		if( $isFinal ) {
+			$ed					= EntityDescriptor::load(static::$table, static::getClass());
+			static::$fields		= $ed->getFieldsName();
+			static::$validator	= $ed;
+			static::$entityClasses[static::$table]	= static::getClass();
+		}
+	}
+	
+	public static function getEntityObject($objType, $objID=null) {
+		if( is_object($objType) ) {
+			$objID		= $objType->entity_id;
+			$objType	= $objType->entity_type;
+		}
+		$class	= isset(static::$entityClasses[$objType]) ? static::$entityClasses[$objType] : $objType;
+		return $class::load($objID);
+	}
+	
+	/** 
+	 * Helper method to get whereclause string from an entity
+	 * @return string
+	 * 
+	 * Helper method to get whereclause string from an entity.
+	 * The related entity should have entity_type and entity_id fields.
+	 */
+	public function getEntityWhereclause() {
+		return 'entity_type LIKE '.static::formatValue(static::getEntity()).' AND entity_id='.$this->id();
 	}
 	
 	/**

@@ -549,8 +549,11 @@ abstract class PermanentObject {
 	 * @return The escaped identifier
 	 * @see SQLAdapter::escapeIdentifier()
 	*/
-	public static function escapeIdentifier($Identifier) {
-		return SQLAdapter::doEscapeIdentifier($Identifier, static::$DBInstance);
+	public static function escapeIdentifier($identifier) {
+		return SQLAdapter::doEscapeIdentifier($identifier, static::$DBInstance);
+	}
+	public static function ei($identifier) {
+		return static::escapeIdentifier($identifier);
 	}
 	
 	/** Escape value through instance
@@ -558,8 +561,21 @@ abstract class PermanentObject {
 	 * @return The formatted $Value
 	 * @see SQLAdapter::formatValue()
 	*/
-	public static function formatValue($Value) {
-		return SQLAdapter::doFormatValue($Value, static::$DBInstance);
+	public static function formatValue($value) {
+		return SQLAdapter::doFormatValue($value, static::$DBInstance);
+	}
+	
+	/** Escape values through instance and return as list string
+	 * @param array $list The list of values
+	 * @return The formatted list string
+	 * @see PermanentObject::formatValue()
+	*/
+	public static function formatValueList(array $list) {
+		$str	= '';
+		foreach( $list as $i => $v ) {
+			$str	.= ($i ? ',' : '').static::formatValue($v);
+		}
+		return $str;
 	}
 	
 	/** Runs for Deletion
@@ -890,7 +906,7 @@ abstract class PermanentObject {
 	}
 	
 	//! Initializes class
-	public static function init() {
+	public static function init($isFinal=true) {
 		$parent = get_parent_class(get_called_class());
 		if( empty($parent) ) { return; }
 		

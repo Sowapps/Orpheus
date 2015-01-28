@@ -11,12 +11,14 @@ class EntityDescriptor {
 
 	protected $class;
 	protected $name;
+	protected $version;
     /* @var $fields Field[] */
 	protected $fields	= array();
 	protected $indexes	= array();
 	
 	const DESCRIPTORCLASS	= 'EntityDescriptor';
 	const IDFIELD			= 'id';
+	const VERSION			= 1;
 
 	/** Get all available entities
 	 * @return string[]
@@ -45,7 +47,7 @@ class EntityDescriptor {
 		$cache	= new FSCache(self::DESCRIPTORCLASS, $name, filemtime(YAML::getFilePath($descriptorPath)));
 		
 		// Comment when editing class and entity field types
-		if( !defined('ENTITY_ALWAYS_RELOAD') && $cache->get($descriptor) ) { return $descriptor; }
+		if( !defined('ENTITY_ALWAYS_RELOAD') && $cache->get($descriptor) && isset($descriptor->version) && $descriptor->version==self::VERSION ) { return $descriptor; }
 
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
@@ -97,6 +99,7 @@ class EntityDescriptor {
 		$this->class	= $class;
 		$this->fields	= $fields;
 		$this->indexes	= $indexes;
+		$this->version	= self::VERSION;
 	}
 	
 	/** Get the name of the entity
