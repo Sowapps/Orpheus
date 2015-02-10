@@ -473,8 +473,15 @@ abstract class PermanentObject {
 		} else {
 			$obj = new static($data);
 		}
-		// Saving cached
-		return static::$instances[static::getClass()][$id] = $obj;
+		// Caching object
+// 		return static::$instances[static::getClass()][$id] = $obj;
+		return $obj->checkCache();
+	}
+	
+	protected function checkCache() {
+		if( isset(static::$instances[static::getClass()][$this->id()]) ) { return static::$instances[static::getClass()][$this->id()]; }
+		static::$instances[static::getClass()][$this->id()]	= $this;
+		return $this;
 	}
 	
 	/** Deletes a permanent object
@@ -563,6 +570,9 @@ abstract class PermanentObject {
 	*/
 	public static function formatValue($value) {
 		return SQLAdapter::doFormatValue($value, static::$DBInstance);
+	}
+	public static function fv($value) {
+		return static::formatValue($value);
 	}
 	
 	/** Escape values through instance and return as list string

@@ -60,7 +60,7 @@ class Hook {
 		}
 		foreach($this->callbacks as $callback) {
 			$r	= call_user_func_array($callback, $params);
-			if( $r!==NULL ) {
+			if( $r !== NULL ) {
 				$params[0] = $r;
 			}
 		}
@@ -107,8 +107,8 @@ class Hook {
 	
 	/** Trigger a hook by name
 	 * 
-	 * @param $name The hook name.
-	 * @param $silent Make it silent, no exception thrown. Default value is false.
+	 * @param string $name The hook name.
+	 * @param boolean $silent Make it silent, no exception thrown. Default value is false.
 	 * @return The triggerHook() result, usually the first parameter.
 	 * 
 	 * Trigger the hook named $name.

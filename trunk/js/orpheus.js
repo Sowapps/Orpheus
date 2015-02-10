@@ -38,6 +38,22 @@ function debug(t) {
 	}
 }
 
+function clone(obj) {
+	var target = {};
+	for( var i in obj ) {
+		if( obj.hasOwnProperty(i) ) {
+			target[i] = obj[i];
+		}
+	}
+	return target;
+}
+
+function nl2br(str, is_xhtml) {
+	//	discuss at: http://phpjs.org/functions/nl2br/
+	var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br/>' : '<br>';
+	return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+
 function formatDouble(n) {
 	return (""+n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
@@ -54,6 +70,18 @@ function getAllProp(Object, dispFunc) {
 
 function isObject(v) {
 	return v != null && typeof(v) === 'object';
+}
+
+function isPureObject(v) {
+	return isObject(v) && v.constructor === Object;
+}
+
+function isArray(v) {
+	return isObject(v) && v.constructor === Array;
+}
+
+function isFunction(v) {
+	return typeof(v) === 'function';
 }
 
 function isJquery(v) {
@@ -113,7 +141,7 @@ function requestAutocomplete(what, term, response) {
 		cache[what] = {};
 	}
 	lastXhr = $.getJSON("remote-search-what="+what+"&term="+term+".json", function( data, status, xhr ) {
-		if( xhr === lastXhr && data.code == "OK" ) {
+		if( xhr === lastXhr && data.code == "ok" ) {
 			response(data.other);
 			return;
 		}
@@ -362,7 +390,12 @@ if( typeof KeyEvent == "undefined" ) {
 
 /* Orpheus Widget & JS Plugins */
 
+var escapeHTML;
 (function ($) {// Preserve our jQuery
+	
+	escapeHTML	= function(str) {
+		return $('<p></p>').text(str).html();
+	}
 
 	$.fn.disableFields = function() {
 		return $(this).find(':input').prop("disabled", true);
@@ -384,6 +417,7 @@ if( typeof KeyEvent == "undefined" ) {
 	};
 	$.cond = $.fn.cond;
 	
+	/*
 	$.each([["show", "shown", function() { return $(this).is(":visible"); }], ["hide", "hidden", function() { return $(this).is(":hidden"); }]], function (i, ev) {
 		var fun	= $.fn[ev[0]];
 		$.fn[ev[0]]	= function () {
@@ -399,6 +433,10 @@ if( typeof KeyEvent == "undefined" ) {
 			return r;
 		};
 	});
+	*/
+	$.fn.showIf = function(cond) {
+		cond ? $(this).show() : $(this).hide();
+	};
 	// Call when element is shown
 	$.fn.shown = function(callback) {
 		$(this).bind("shown", callback);
@@ -436,7 +474,7 @@ if( typeof KeyEvent == "undefined" ) {
 			this.cb();
 		});
 	};
-
+	
 	$.fn.pressEnter	= function(cb) {
 		$(this).keydown(function(e) {
 			if( e.which==KeyEvent.DOM_VK_RETURN ) {

@@ -98,6 +98,13 @@ button.fa, input[type=button].fa {
 }
 */
 
+.input-group-addon.addonbtn {
+	padding:	3px;
+}
+.input-group-addon.addonbtn .btn {
+	padding:	2px 7px;
+}
+
 /* Radio Panel */
 .radiopanel {
 	border-radius: 3px;

@@ -17,13 +17,15 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 }
 ?>
 
-	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.2.0/css/bootstrap.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="//shared.sowapps.com/font-awesome/font-awesome-4.1.0/css/font-awesome.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/css/bootstrap.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/font-awesome/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/select2-bootstrap-css/select2-3.5.2/select2-bootstrap.css" type="text/css" media="screen" />
 	
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
 	
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>sb-admin.css" type="text/css" media="screen">
-	
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>sb-admin.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo THEMESURL.'default/css/base.css'; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 /*
@@ -43,7 +45,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 ?>
 	
 	<!-- External JS libraries -->
-	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.1/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.2/jquery-1.11.2.min.js"></script>
 </head>
 <body class="<?php echo $Module; ?>">
 
@@ -164,8 +166,12 @@ foreach(HTMLRendering::$cssURLs as $url) {
 
 <div class="row">
 	<div class="col-lg-12">
+		<?php
+		if( empty($NO_MODULE_TITLE) ) {
+			?>
 		<h1><?php echo isset($ModuleTitle) ? $ModuleTitle : t($Module); ?> <small><?php _t($Module.'_legend'); ?></small></h1>
 		<?php
+		}
 		/*
 		<ol class="breadcrumb">
 			<li><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -192,18 +198,21 @@ foreach(HTMLRendering::$cssURLs as $url) {
 
 </div>
 
-	<script type="text/javascript" src="//shared.sowapps.com/jquery-ui/jquery-ui-1.11.0/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="//shared.sowapps.com/bootstrap/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/jquery-ui/jquery-ui-1.11.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/js/bootstrap.min.js"></script>
 	
 	<?php /*
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/morris/chart-data-morris.js"></script>
-	*/?>
 	<script src="//shared.sowapps.com/morris.js/morris.js-0.5.1/morris.min.js"></script>
+	*/?>
 	<script src="//shared.sowapps.com/tablesorter/tablesorter-2.0.5/jquery.tablesorter.min.js"></script>
 	
-	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/tables.js"></script>
+	<script src="<?php echo JSURL; ?>orpheus.js"></script>
+	<script src="<?php echo JSURL; ?>script.js"></script>
+	<script src="<?php echo JSURL; ?>form.js"></script>
+	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/orpheus.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/script.js"></script>
 	
 <?php
