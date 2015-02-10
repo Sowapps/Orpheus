@@ -39,6 +39,8 @@ defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
 
+defifn('CHECK_MODULE_ACCESS', true);
+
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 // Errors Actions

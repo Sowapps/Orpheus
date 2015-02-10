@@ -3,7 +3,7 @@
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
-	<title><?php echo ( (!empty($MODTITLE)) ? $MODTITLE.' :: ' : '' ).SITENAME ?></title>
+	<title><?php echo (!empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).SITENAME ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
@@ -19,10 +19,13 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 }
 ?>
 
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/css/bootstrap.min.css" type="text/css" media="screen" />
 <!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-theme.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>font-awesome.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/css/bootstrap-theme.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/font-awesome/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2-bootstrap.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2.css" type="text/css" media="screen" />
+	
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
@@ -33,7 +36,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 ?>
 	
 	<!-- External JS libraries -->
-	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.2/jquery-1.11.2.min.js"></script>
 </head>
 <body class="<?php echo $Module; ?>">
 
@@ -64,17 +67,21 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 
 </div>
 	<!-- JS libraries -->
-	<script type="text/javascript" src="/js/jquery-ui.js"></script>
-	<script type="text/javascript" src="/js/bootstrap.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/jquery-ui/jquery-ui-1.11.2/jquery-ui.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+<!-- 	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2.min.js"></script> -->
+	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2.js"></script>
+	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2_locale_fr.js"></script>
 	
 	<!-- Our JS scripts -->
+	<script type="text/javascript" src="/js/orpheus.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php
 foreach(HTMLRendering::$jsURLs as $url) {
 	echo '
 	<script type="text/javascript" src="'.$url.'"></script>';
 }
-if( ERROR_LEVEL===PROD_LEVEL && HOST === 'orpheus-framework.com' ) {
+if( !DEV_VERSION && HOST === 'orpheus-framework.com' ) {
 	// Replace by your own & remove HOST condition
 	?>
 	
@@ -89,7 +96,6 @@ ga('create', 'UA-54516318-1', 'auto'); ga('send', 'pageview');
 <?php
 }
 ?>
-
 
 </body>
 </html>

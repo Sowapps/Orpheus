@@ -107,8 +107,12 @@ class FormToken {
 	 * @throws UserException
 	 */
 	public function validateForm($domain=null) {
-		if( !$this->validate(POST(self::HTML_PREFIX.$this->name)) ) {
+		if( !$this->validateCurrent() ) {
 			throw new UserException('invalidFormToken', $domain);
 		}
+	}
+	
+	public function validateCurrent($domain=null) {
+		return $this->validate(POST(self::HTML_PREFIX.$this->name));
 	}
 }

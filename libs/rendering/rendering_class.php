@@ -77,7 +77,7 @@ abstract class Rendering {
 				$itemConf	= explode('-', $itemConf);
 				$module		= $itemConf[0];
 				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
-					|| !Hook::trigger('menuItemAccess', true, true, $module) ) { continue; }
+					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $module) ) { continue; }
 				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
 				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';

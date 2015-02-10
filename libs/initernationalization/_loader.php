@@ -17,18 +17,16 @@ Hook::create(HOOK_GETLANG);
  * You don't have to use this function explicitly.
  */
 function loadLangFile($domain='global') {
-	global $LANG, $USED_LANG;
-	if( isset($LANG[$domain]) ) {
-		return;
+	global $LANG, $APP_LANG;
+	if( isset($LANG[$domain]) ) { return; }
+	if( !isset($APP_LANG) ) {
+		$APP_LANG	= Hook::trigger(HOOK_GETLANG, true, LANG, $domain);
 	}
-	if( !isset($USED_LANG) ) {
-		$USED_LANG	= Hook::trigger(HOOK_GETLANG, true, LANG, $domain);
-	}
-	if( !empty($domain) && existsPathOf(LANGDIR.'/'.$USED_LANG.'/'.$domain.'.ini') ) {
-		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.$USED_LANG.'/'.$domain.'.ini'));
+	if( !empty($domain) && existsPathOf(LANGDIR.'/'.$APP_LANG.'/'.$domain.'.ini') ) {
+		$GLOBALS['LANG'][$domain] = parse_ini_file(pathOf(LANGDIR.'/'.$APP_LANG.'/'.$domain.'.ini'));
 		
-	} else if( existsPathOf(LANGDIR.'/'.$USED_LANG.'.ini') ) {
-		$GLOBALS['LANG'] = parse_ini_file(pathOf(LANGDIR.'/'.$USED_LANG.'.ini'));
+	} else if( existsPathOf(LANGDIR.'/'.$APP_LANG.'.ini') ) {
+		$GLOBALS['LANG'] = parse_ini_file(pathOf(LANGDIR.'/'.$APP_LANG.'.ini'));
 	}
 }
 

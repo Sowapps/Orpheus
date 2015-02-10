@@ -25,7 +25,7 @@ function adm_htmlCheckbox($fieldPath, $default=false, $class='', $addAttr='') {
 	if( ($field = getField($fieldPath)) !== NULL ) {
 		$addAttr .= $field->getType()->htmlInputAttr($field->args);
 	}//checkbox radiobtn_button 
-	return htmlCheckBox($fieldPath, $default, $addAttr.' class="'.$class.'"');
+	return htmlCheckBox($fieldPath, $default, $addAttr.' class="'.$class.' form-control"');
 }
 
 function _adm_htmlCheckboxSwitch($fieldPath, $class='', $addAttr='', $default=false) {
@@ -36,7 +36,7 @@ function adm_htmlCheckboxSwitch($fieldPath, $class='', $addAttr='', $default=fal
 	if( !is_null($field = getField($fieldPath)) ) {
 		$addAttr .= $field->getType()->htmlInputAttr($field->args);
 	}
-	return htmlCheckBox($fieldPath, $default, $addAttr.' class="checkboxswitch '.$class.'"');
+	return htmlCheckBox($fieldPath, $default, $addAttr.' class="checkboxswitch '.$class.' form-control"');
 }
 
 function _adm_htmlDateInput($fieldPath, $class='', $addAttr='', $default='') {
@@ -55,15 +55,15 @@ function adm_htmlMoneyInput($fieldPath, $money='€', $class='', $addAttr='', $d
 	// 	echo adm_htmlTextInput($fieldPath, $class, 'placeholder="€" '.$addAttr, $default);
 }
 
-function _adm_htmlPassword($fieldPath, $addAttr='') {
-	echo htmlPassword($fieldPath, $addAttr);
+function _adm_htmlPassword($fieldPath, $class='', $addAttr='') {
+	echo htmlPassword($fieldPath, $addAttr.' class="'.$class.' form-control"');
 }
 
 function _adm_htmlTextInput($fieldPath, $class='', $addAttr='', $default='', $type='text') {
 	echo adm_htmlTextInput($fieldPath, $class, $addAttr, $default, null, $type);
 }
 function adm_htmlTextInput($fieldPath, $class='', $addAttr='', $default='', $formatter=null, $type='text') {
-	if( !is_null($field = getField($fieldPath)) ) {
+	if( ($field = getField($fieldPath)) !== NULL ) {
 		$addAttr .= $field->getType()->htmlInputAttr($field->args);
 	}
 	return htmlText($fieldPath, $default, $addAttr.' class="form-control '.$class.'"', $formatter, $type);

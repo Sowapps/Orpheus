@@ -157,6 +157,19 @@ function stringify($s) {
 	return $s;
 }
 
+function toHtml($s) {
+	if( $s===NULL ) {
+		$s = '{NULL}';
+	} else if( $s === false ) {
+		$s = '{FALSE}';
+	} else if( $s === true ) {
+		$s = '{TRUE}';
+	} else if( !is_scalar($s) ) {
+		$s = '<pre>'.print_r($s, 1).'</pre>';
+	}
+	return $s;
+}
+
 function formatException($e) {
 	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message')
 		.' in '.$e->getFile().':'.$e->getLine()."\n<pre>".$e->getTraceAsString().'</pre>';
@@ -250,9 +263,9 @@ function sys_error($report, $action='', $silent=false) {
 }
 
 /** Logs a system error.
- * @param $report The report to log.
- * @param $action The action associated to the report. Default value is an empty string.
- * @param $fatal True if the error is fatal, it stops script. Default value is true.
+ * @param string $report The report to log.
+ * @param string $action The action associated to the report. Default value is an empty string.
+ * @param boolean $fatal True if the error is fatal, it stops script. Default value is true.
  * @sa log_report()
 
  * Logs a system error.
@@ -326,7 +339,11 @@ function htmlFormATtr($str) {
 	if( !is_scalar($str) ) {
 		$str	= json_encode($str);
 	}
-	return htmlentities($str, ENT_HTML5 | ENT_QUOTES | ENT_IGNORE, 'UTF-8', false); 	
+	$flags	= ENT_QUOTES | ENT_IGNORE;
+	if( defined('ENT_HTML5') ) {
+		$flags |= ENT_HTML5;
+	}
+	return htmlentities($str, $flags, 'UTF-8', false); 	
 }
 
 /** Encodes to an internal URL
@@ -906,7 +923,7 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix='', $domain='global') {
 	if( $matches===NULL ) { $matches = OPT_VALUE2LABEL; }
 	// Value of selected/default option
-	fillInputValue($selValue, $fieldPath, $default);
+	fillInputValue($selValue, $fieldPath, OPT_PERMANENTOBJECT && is_object($default) ? $default->id() : $default);
 	$opts	= '';
 	foreach( $values as $dataKey => $elValue ) {
 		if( $elValue===null ) { continue; }
@@ -940,6 +957,11 @@ define('OPT_PERMANENTOBJECT' , 4);
 define('OPT_LABEL2VALUE'	 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_KEY);
 define('OPT_VALUE2LABEL'	 , OPT_VALUE_IS_KEY | OPT_LABEL_IS_VALUE);
 define('OPT_VALUE'			 , OPT_VALUE_IS_VALUE | OPT_LABEL_IS_VALUE);
+
+function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
+	if( !$label ) { $label = $elValue; }
+	return '<option '.valueField($elValue).($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
+}
 
 /** Generates a selected attribute
 * @param $fieldPath The field path to use to define name.
@@ -1004,11 +1026,6 @@ function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
 	// 			If Value found,	we consider this one, else we use default
 	fillInputValue($selected, $fieldPath, $default, true);
 	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
-}
-
-function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
-	if( is_null($label) ) { $label = $elValue; }
-	return '<option '.valueField($elValue).($selected ? ' selected="selected"' : '').' '.$addAttr.'>'.$label.'</option>';
 }
 
 function apath_html($apath) {
