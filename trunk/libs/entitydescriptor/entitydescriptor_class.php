@@ -451,7 +451,7 @@ EntityDescriptor::registerType(new TypeBoolean());
 
 // Format float([[max=2147483647, min=-2147483648], [decimals=2]]])
 class TypeFloat extends TypeNumber {
-	protected $name = 'float';
+	protected $name	= 'float';
 
 	public function parseArgs($fArgs) {
 		$args	= (object) array('decimals'=>2, 'min'=>-2147483648, 'max'=>2147483647);
@@ -471,7 +471,7 @@ class TypeFloat extends TypeNumber {
 EntityDescriptor::registerType(new TypeFloat());
 
 class TypeDouble extends TypeNumber {
-	protected $name = 'double';
+	protected $name	= 'double';
 
 	public function parseArgs($fArgs) {
 		$args	= (object) array('decimals'=>8, 'min'=>-2147483648, 'max'=>2147483647);	

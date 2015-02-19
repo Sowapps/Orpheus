@@ -87,13 +87,14 @@ abstract class PermanentEntity extends PermanentObject {
 	
 	/** 
 	 * Helper method to get whereclause string from an entity
+	 * @param string $prefix The prefix for fields, e.g "table." (with dot)
 	 * @return string
 	 * 
 	 * Helper method to get whereclause string from an entity.
 	 * The related entity should have entity_type and entity_id fields.
 	 */
-	public function getEntityWhereclause() {
-		return 'entity_type LIKE '.static::formatValue(static::getEntity()).' AND entity_id='.$this->id();
+	public function getEntityWhereclause($prefix='') {
+		return $prefix.'entity_type LIKE '.static::formatValue(static::getEntity()).' AND '.$prefix.'entity_id='.$this->id();
 	}
 	
 	/**

@@ -10,15 +10,16 @@ class HTMLRendering extends Rendering {
 	public static $theme			= 'default';
 	
 	public static $cssPath			= 'css/';
+	public static $jsPath			= 'js/';
 	public static $modelsPath		= 'layouts/';
 	
 	public static $cssURLs			= array();// CSS files
 	public static $jsURLs			= array();// Javascript files
 	public static $metaprop			= array();// Meta-properties
 	
-	/** Renders the model.
-
-		\copydoc Rendering::render()
+	/** 
+	 * Render the model.
+	 * @copydoc Rendering::render()
 	*/
 	public function render($model=null, $env=array()) {
 		ob_start();
@@ -26,10 +27,10 @@ class HTMLRendering extends Rendering {
 		return ob_get_clean();
 	}
 
-	/** Displays the model.
-
-	 \copydoc Rendering::display()
-	*/
+	/** 
+	 * Displays the model.
+	 * @copydoc Rendering::display()
+	 */
 	public function display($model=null, $env=array()) {
 		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
@@ -55,13 +56,19 @@ class HTMLRendering extends Rendering {
 		<div class="report report_'.$stream.' '.$type.' '.$domain.'">'.nl2br($report).'</div>';
 	}
 	
-	public static function addCSSFile($filename) {
+	public static function addThemeCSSFile($filename) {
 		static::addCSSURL(static::getCSSURL().$filename);
+	}
+	public static function addCSSFile($filename) {
+		static::addThemeCSSFile($filename);
 	}
 	public static function addCSSURL($url) {
 		static::$cssURLs[]	= $url;
 	}
 	
+	public static function addThemeJSFile($filename) {
+		static::addJSURL(static::getJSURL().$filename);
+	}
 	public static function addJSFile($filename) {
 		static::addJSURL(JSURL.$filename);
 	}
@@ -123,13 +130,23 @@ class HTMLRendering extends Rendering {
 		return THEMESURL.static::$theme.'/';
 	}
 
-	/** Gets the CSS files path.
-
-		\return The CSS path.
-		
-		Gets the URL to the CSS files.
+	/** 
+	 * Gets the CSS files path.
+	 * @return string The CSS path.
+	 * 
+	 * Gets the URL to the CSS files.
 	*/
 	public static function getCSSURL() {
 		return static::getThemeURL().static::$cssPath;
+	}
+
+	/** 
+	 * Gets the JS files path.
+	 * @return string The JS path.
+	 * 
+	 * Gets the URL to the JS files.
+	*/
+	public static function getJSURL() {
+		return static::getThemeURL().static::$jsPath;
 	}
 }

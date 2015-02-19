@@ -944,7 +944,7 @@ function htmlOptions($fieldPath, $values, $default=null, $matches=null, $prefix=
 			$optLabel	= bintest($matches, OPT_LABEL_IS_KEY) ? $dataKey : $elValue;
 			$optValue	= bintest($matches, OPT_VALUE_IS_KEY) ? $dataKey : $elValue;
 		}
-		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), "$selValue"==="$optValue", $addAttr);
+		$opts .= htmlOption($optValue, t($prefix.$optLabel, $domain), is_array($selValue) ? in_array("$optValue", $selValue) : "$selValue"==="$optValue", $addAttr);
 	}
 	return $opts;
 }
@@ -1023,11 +1023,18 @@ function htmlRadio($fieldPath, $elValue, $default=false, $addAttr='') {
 	return '<input type="radio" name="'.apath_html($fieldPath).'" '.valueField($elValue).' '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
-function htmlCheckBox($fieldPath, $default=false, $addAttr='') {
+function htmlCheckBox($fieldPath, $value=null, $default=false, $addAttr='') {
 	// Checkbox : Null => Undefined, False => Unchecked, 'on' => Checked
 	// 			If Value found,	we consider this one, else we use default
 	fillInputValue($selected, $fieldPath, $default, true);
-	return '<input type="checkbox" name="'.apath_html($fieldPath).'" '.($selected ? 'checked="checked"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
+// 	debug("htmlCheckBox($fieldPath)", $selected);
+// 	debug("is_array($selected) => ".b(is_array($selected)));
+// 	debug("$value!==NULL && is_array($selected) && in_array($value, $selected) => ".b($value!==NULL && is_array($selected) && in_array($value, $selected)));
+	return '<input type="checkbox" name="'.apath_html($fieldPath).($value!==NULL ? '[]' : '').'"'.(
+		(
+			($selected === true) || // Single value => TRUE
+			($value!==NULL && is_array($selected) && in_array($value, $selected)) // Value is in array
+		) ? ' checked' : '').($value!==NULL ? ' value="'.$value.'"' : '').' '.$addAttr.htmlDisabledAttr().'/>';
 }
 
 function apath_html($apath) {

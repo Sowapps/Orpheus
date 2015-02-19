@@ -156,14 +156,14 @@ abstract class PermanentObject {
 	
 	/** 
 	 * Update this permanent object from input data array
-	 * @param $uInputData The input data we will check and extract, used by children.
-	 * @param $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
-	 * @param $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
-	 * @param $errCount Output parameter for the number of occurred errors validating fields.
-	 * @param $successCount Output parameter for the number of successes updating fields.
-	 * @return 1 in case of success, else 0.
-	 * @overrideit
+	 * @param	array $uInputData The input data we will check and extract, used by children.
+	 * @param	string[] $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
+	 * @param	boolean $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
+	 * @param	&int $errCount Output parameter for the number of occurred errors validating fields.
+	 * @param	&int $successCount Output parameter for the number of successes updating fields.
+	 * @return	1 in case of success, else 0.
 	 * @see runForUpdate()
+	 * @overrideit
 	 * 
 	 * This method require to be overridden but it still be called too by the child classes.
 	 * Here $uInputData is not used, it is reserved for child classes.
@@ -193,7 +193,7 @@ abstract class PermanentObject {
 // 				static::throwException('updateEmptyData');
 			}
 			static::checkForObject(static::completeFields($data), $this);
-		} catch(UserException $e) { reportError($e, static::getDomain()); return 0; }
+		} catch( UserException $e ) { reportError($e, static::getDomain()); return 0; }
 		
 		$oldData	= $this->all;
 		foreach($data as $fieldname => $fieldvalue) {
@@ -427,6 +427,61 @@ abstract class PermanentObject {
 		return in_array($fieldname, static::$fields);
 	}
 	
+	/** Gets some permanent objects
+	 * @param $options The options used to get the permanents object.
+	 * @return An array of array containing object's data.
+	 * @see SQLAdapter
+	 * 
+	 * Gets an objects' list using this class' table.
+	 * Take care that output=SQLAdapter::ARR_OBJECTS and number=1 is different from output=SQLAdapter::OBJECT
+	 * 
+	*/
+	/**
+	 * @param array $options
+	 * @return static|static[]
+	 */
+	public static function get($options=array()) {
+		if( is_string($options) ) {
+			$options	= array();
+			$args		= func_get_args();
+			foreach( array('where', 'orderby') as $i => $key ) {
+				if( !isset($args[$i]) ) { break; }
+				$options[$key]	= $args[$i];
+			}
+		}
+		$options['table'] = static::$table;
+		// May be incompatible with old revisions (< R398)
+		if( !isset($options['output']) ) {
+			$options['output'] = SQLAdapter::ARR_OBJECTS;
+		}
+		//This method intercepts outputs of array of objects.
+		$onlyOne	= $objects = 0;
+		if( in_array($options['output'], array(SQLAdapter::ARR_OBJECTS, SQLAdapter::OBJECT)) ) {
+			if( $options['output'] == SQLAdapter::OBJECT ) {
+				$options['number']	= 1;
+				$onlyOne	= 1;
+			}
+			$options['output']	= SQLAdapter::ARR_ASSOC;
+// 			$options['what'] = '*';// Could be * or something derived for order e.g
+			$objects	= 1;
+		}
+		$r	= SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
+		if( empty($r) && in_array($options['output'], array(SQLAdapter::ARR_ASSOC, SQLAdapter::ARR_OBJECTS, SQLAdapter::ARR_FIRST)) ) {
+			return $onlyOne && $objects ? null : array();
+		}
+		if( !empty($r) && $objects ) {
+// 			if( isset($options['number']) && $options['number'] == 1 ) {
+			if( $onlyOne ) {
+				$r	= static::load($r[0]);
+			} else {
+				foreach( $r as &$rdata ) {
+					$rdata = static::load($rdata);
+				}
+			}
+		}
+		return $r;
+	}
+	
 	/** Load a permanent object
 	 * @param	$in mixed|mixed[] The object ID to load or a valid array of the object's data
 	 * @return	static The object
@@ -552,14 +607,14 @@ abstract class PermanentObject {
 	}
 	
 	/** Escape identifier through instance
-	 * @param $Identifier The identifier to escape
-	 * @return The escaped identifier
+	 * @param	$Identifier The identifier to escape. Default is table name.
+	 * @return	The escaped identifier
 	 * @see SQLAdapter::escapeIdentifier()
 	*/
-	public static function escapeIdentifier($identifier) {
-		return SQLAdapter::doEscapeIdentifier($identifier, static::$DBInstance);
+	public static function escapeIdentifier($identifier=null) {
+		return SQLAdapter::doEscapeIdentifier($identifier ? $identifier : static::$table, static::$DBInstance);
 	}
-	public static function ei($identifier) {
+	public static function ei($identifier=null) {
 		return static::escapeIdentifier($identifier);
 	}
 	
@@ -597,61 +652,6 @@ abstract class PermanentObject {
 	 * In the base class, this method does nothing.
 	*/
 	public static function runForDeletion($id) { }
-	
-	/** Gets some permanent objects
-	 * @param $options The options used to get the permanents object.
-	 * @return An array of array containing object's data.
-	 * @see SQLAdapter
-	 * 
-	 * Gets an objects' list using this class' table.
-	 * Take care that output=SQLAdapter::ARR_OBJECTS and number=1 is different from output=SQLAdapter::OBJECT
-	 * 
-	*/
-	/**
-	 * @param array $options
-	 * @return static|static[]
-	 */
-	public static function get($options=array()) {
-		if( is_string($options) ) {
-			$options	= array();
-			$args		= func_get_args();
-			foreach( array('where', 'orderby') as $i => $key ) {
-				if( !isset($args[$i]) ) { break; }
-				$options[$key]	= $args[$i];
-			}
-		}
-		$options['table'] = static::$table;
-		// May be incompatible with old revisions (< R398)
-		if( !isset($options['output']) ) {
-			$options['output'] = SQLAdapter::ARR_OBJECTS;
-		}
-		//This method intercepts outputs of array of objects.
-		$onlyOne	= $objects = 0;
-		if( in_array($options['output'], array(SQLAdapter::ARR_OBJECTS, SQLAdapter::OBJECT)) ) {
-			if( $options['output'] == SQLAdapter::OBJECT ) {
-				$options['number']	= 1;
-				$onlyOne	= 1;
-			}
-			$options['output']	= SQLAdapter::ARR_ASSOC;
-// 			$options['what'] = '*';// Could be * or something derived for order e.g
-			$objects	= 1;
-		}
-		$r	= SQLAdapter::doSelect($options, static::$DBInstance, static::$IDFIELD);
-		if( empty($r) && in_array($options['output'], array(SQLAdapter::ARR_ASSOC, SQLAdapter::ARR_OBJECTS, SQLAdapter::ARR_FIRST)) ) {
-			return $onlyOne && $objects ? null : array();
-		}
-		if( !empty($r) && $objects ) {
-// 			if( isset($options['number']) && $options['number'] == 1 ) {
-			if( $onlyOne ) {
-				$r	= static::load($r[0]);
-			} else {
-				foreach( $r as &$rdata ) {
-					$rdata = static::load($rdata);
-				}
-			}
-		}
-		return $r;
-	}
 	
 	/** Create a new permanent object
 	 * @param	$input array The input data we will check, extract and create the new object.
@@ -907,7 +907,7 @@ abstract class PermanentObject {
 		if( $errCount ) { return false; }
 		try {
 			static::checkForObject($data, $ref);
-		} catch(UserException $e) {
+		} catch( UserException $e ) {
 			$errCount++;
 			reportError($e, static::getDomain());
 			return false;
@@ -939,11 +939,11 @@ abstract class PermanentObject {
 	 * Throws an UserException with the current domain.
 	*/
 	public static function throwException($message) {
-		throw new UserException($message, static::$domain);
+		throw new UserException($message, static::getDomain());
 	}
 	
 	public static function throwNotFound($message=null) {
-		throw new NotFoundException(static::$domain, $message);
+		throw new NotFoundException(static::getDomain(), $message);
 	}
 	
 	/** Translate text according to the object domain
@@ -952,7 +952,16 @@ abstract class PermanentObject {
 	 * Translates text according to the object domain
 	*/
 	public static function text($text) {
-		return t($text, static::$domain);
+		return t($text, static::getDomain(), array_slice(func_get_args(), 1));
+	}
+	
+	/** Translate text according to the object domain
+	 * @param $text The text to translate
+	 * 
+	 * Translates text according to the object domain
+	*/
+	public static function _text($text) {
+		_t($text, static::getDomain(), array_slice(func_get_args(), 1));
 	}
 	
 	/** Report an UserException
@@ -964,6 +973,5 @@ abstract class PermanentObject {
 	public static function reportException(UserException $e) {
 		reportError($e);
 	}
-	
 }
 PermanentObject::selfInit();

@@ -47,8 +47,10 @@ class SQLGenerator_MySQL {
 				$cType .= '('.strlen($max).')';
 					
 			} else {
-				$dc += $field->args->decimals;
-				if( $dc+$field->args->decimals < 7 ) {// Approx accurate to 7 decimals
+				$dc += $field->args->decimals+1;
+				// http://code.rohitink.com/2013/06/12/mysql-integer-float-decimal-data-types-differences/
+				if( $dc < 23 && $field->args->decimals < 8 ) {// Approx accurate to 7 decimals
+// 				if( $dc < 7 ) {// Approx accurate to 7 decimals
 					$cType = "FLOAT";
 				} else {// Approx accurate to 15 decimals
 					$cType = "DOUBLE";
