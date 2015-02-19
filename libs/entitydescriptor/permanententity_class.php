@@ -62,7 +62,7 @@ abstract class PermanentEntity extends PermanentObject {
 	public static function init($isFinal=true) {
 // 		debug(static::getClass().'::init() ', debug_backtrace());
 		if( static::$validator ) {
-			debug('static::$validator', static::$validator);
+//			debug('static::$validator', static::$validator);
 			throw new Exception('Class '.static::getClass().' with table '.static::$table.' is already initialized.');
 		}
 		if( static::$domain === NULL ) {

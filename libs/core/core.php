@@ -570,7 +570,7 @@ function transferReportStream($from=null, $to='global') {
  * Adds the report $message to the list of reports for this $type.
  * The type of the message is commonly 'success' or 'error'.
 */
-function addReport($report, $type, $domain='global', $code=null) {
+function addReport($report, $type, $domain='global', $code=null, $severity=0) {
 	global $REPORTS, $REPORT_STREAM, $REJREPORTS, $DISABLE_REPORT;
 	if( !empty($DISABLE_REPORT) ) { return false; }
 	$report = "$report";
@@ -587,7 +587,7 @@ function addReport($report, $type, $domain='global', $code=null) {
 		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
 	$report	= t($report, $domain);// Added recently, require tests
-	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$code, 'r'=>$report, 'd'=>$domain);
+	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$code, 'r'=>$report, 'd'=>$domain, 's'=>$severity);
 // 	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$report, 'r'=>t($report, $domain), 'd'=>$domain);
 	return true;
 }
@@ -612,17 +612,19 @@ function reportSuccess($report, $domain='global') {
  * Warning come in some special cases, we meet it when we do automatic checks before loading contents and there is something to report to the user.
 */
 function reportWarning($report, $domain='global') {
-	return addReport($report, 'warning', $domain);
+	return reportError($report, $domain, 0);
+// 	return addReport($report, 'warning', $domain);
 }
 
 /** Reports an error
- * @param $report string The report.
- * @param $domain string The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
+ * @param string $report The report.
+ * @param string $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
+ * @param integer $severity The sevirity of the error, commonly 1 for standard user error and 0 for warning. Default value is 1.
  * @sa addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
 */
-function reportError($report, $domain=null) {
+function reportError($report, $domain=null, $severity=1) {
 	$code	= null;
 	if( $report instanceof UserException ) {
 		if( class_exists('InvalidFieldException') && $report instanceof InvalidFieldException ) {
@@ -635,7 +637,7 @@ function reportError($report, $domain=null) {
 		}
 	}
 // 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
-	return addReport($report, 'error', $domain === NULL ? 'global' : $domain, $code);
+	return addReport($report, 'error', $domain === NULL ? 'global' : $domain, $code, $severity);
 }
 
 /** Checks if there is error reports
@@ -1368,6 +1370,10 @@ function checkDir($filePath) {
 
 function array_insert(&$array, $position, $value) {
 	array_splice($array, $position, 0, $value);
+}
+
+function array_add(&$array, $other) {
+	$array	= array_merge($array, $other);
 }
 
 function array_index($array, $key) {
