@@ -13,6 +13,7 @@ class FormToken {
 	
 	const SESSION_KEY			= 'FORM_TOKENS';
 	const HTML_PREFIX			= 'token_';
+	const ERROR_INVALIDTOKEN	= 'invalidFormToken';
 	public static $TOKEN_LENGTH	= 16;
 	// Can not be unlimited or refreshed pages will create a non limited amount of tokens
 	// We store the minimum amount of data to allow no control of expiration
@@ -108,7 +109,7 @@ class FormToken {
 	 */
 	public function validateForm($domain=null) {
 		if( !$this->validateCurrent() ) {
-			throw new UserException('invalidFormToken', $domain);
+			throw new UserException(self::ERROR_INVALIDTOKEN, $domain);
 		}
 	}
 	

@@ -63,11 +63,11 @@ function t($k, $domain='global', $values=array()) {
 			break;
 		}
 	}
-	if( !empty($values) ) {
+	if( $values!==array() ) {
 		if( !is_array($values) ) {
 			$values		= array_slice(func_get_args(), 2);
 		}
-		if( !empty($values[0]) ) {
+		if( isset($values[0]) ) {
 			if( !is_array($values[0]) ) {
 				return vsprintf($r, $values);
 			}
