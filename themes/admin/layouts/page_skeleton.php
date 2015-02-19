@@ -179,10 +179,15 @@ foreach(HTMLRendering::$cssURLs as $url) {
 		</ol>
 		*/
 		foreach( getReports() as $type => $typeReports ) {
-			$type = ($type == 'error') ? 'danger' : $type;
+			$type = ($type === 'error') ? 'danger' : $type;
+// 			debug('$typeReports', $typeReports);
 			foreach( $typeReports as $report ) {
+				$rType	= $type;
+				if( $rType === 'danger' && !$report['s'] ) {
+					$rType	= 'warning';
+				}
 				echo '
-		<div class="alert alert-'.$type.' '.$report['d'].' alert-dismissable">
+		<div class="alert alert-'.$rType.' '.$report['d'].' alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			'.$report['r'].'
 		</div>';
