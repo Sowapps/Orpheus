@@ -14,7 +14,10 @@
 
 * Gets the full url of a module, using default link for default module.
 */
-function u($module, $action='', $queryStr='') {
+function u($module=null, $action='', $queryStr='') {
+	if( !$module ) {
+		$module	= $GLOBALS['Module'];
+	}
 	if( $module === DEFAULTMOD && empty($action) ) {
 		return DEFAULTLINK;
 	}
