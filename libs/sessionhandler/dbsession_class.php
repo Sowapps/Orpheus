@@ -48,13 +48,13 @@ class DBSession extends PermanentObject implements SessionInterface {
 	
 	public static function getBySessID($session_id) {
 		return static::get(array(
-				'where' => 'sessid='.SQLAdapter::quote($session_id),
+				'where' => 'sessid='.SQLAdapter::doFormatString($session_id),
 				'number' => 1,
 		));
 	}
 	public static function deleteBySessID($session_id) {
 		return static::delete(array(
-			'where' => 'sessid='.SQLAdapter::quote($session_id),
+			'where' => 'sessid='.SQLAdapter::doFormatString($session_id),
 			'number' => 1,
 		));
 	}
