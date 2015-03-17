@@ -60,7 +60,7 @@ if( SiteUser::isLogged() ) {
 	<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 	<ul class="list-group">
 <?php
-foreach( ThreadMessage::get(array('orderby' => 'create_date DESC')) as $tm ) {
+foreach( ThreadMessage::getLastOnes() as $tm ) {
 // 			<span class="badge">14</span>
 	echo '
 		<li class="list-group-item">
