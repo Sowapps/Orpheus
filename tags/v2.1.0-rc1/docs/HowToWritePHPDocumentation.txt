@@ -1,0 +1,8 @@
+
+This file ensure compatiblity between PHP Doc generator and the Doxygen doc generator.
+
+For function parameter doc, use
+@param [TYPE] $variable [Description]
+
+For return doc, use
+@return TYPE [Description]

@@ -1,0 +1,18 @@
+
+# Publication descriptor
+
+# Maybe it could define if validation is strict
+
+fields:
+    create_date:    datetime=sqlDatetime()
+    create_ip:      ip=clientIP()
+    edit_date:      datetime[nullable]
+    edit_ip:        ip[nullable]
+    name:           string(6, 50)
+    user_id:        ref
+    user_name:      string(6, 50)
+    published:      boolean=false
+    cache:          string[nullable]
+    
+    
+indexes: []
