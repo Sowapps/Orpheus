@@ -28,11 +28,11 @@ Hook::register('runModule', function($module) {
 /** Hook 'startSession'
  * 
  */
-Hook::register('startSession', function () {
-	if( version_compare(PHP_VERSION, '5.4', '>=') ) {
-		OSessionHandler::register();
-	}
-});
+// Hook::register('startSession', function () {
+// 	if( version_compare(PHP_VERSION, '5.4', '>=') ) {
+// 		OSessionHandler::register();
+// 	}
+// });
 
 function getModuleAccess($module=null) {
 	if( is_null($module) ) {
