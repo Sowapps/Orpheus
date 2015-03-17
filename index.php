@@ -19,7 +19,7 @@ if( file_exists($f) ) {
 }
 unset($f);
 
-if( date_default_timezone_get() ) {
+if( !date_default_timezone_get() ) {
 	date_default_timezone_set('UTC');
 }
 
