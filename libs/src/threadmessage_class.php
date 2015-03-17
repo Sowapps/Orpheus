@@ -29,6 +29,10 @@ class ThreadMessage extends PermanentEntity {
 		$time	= strtotime($this->create_date.' GMT');
 		return dayTime($time) == dayTime() ? strftime('%R', $time) : strftime('%Y-%m-%d', $time);
 	}
+	
+	public static function getLastOnes() {
+		return static::get(array('orderby' => 'create_date DESC'));
+	}
 }
 
 ThreadMessage::init();
