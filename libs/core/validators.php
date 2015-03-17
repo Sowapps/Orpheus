@@ -84,6 +84,13 @@ function is_date($date, $withTime=false, &$time=false, $country='FR') {
 	return $r;
 }
 
+function is_time($time, &$matches=null) {
+	$format	= hasTranslation('timeFormat') ? t('timeFormat') : '%H:%M';
+	//(?:[0-1][0-9]|2[0-3]):[0-5][0-9]
+	return preg_match(timeFormatToRegex($format), $time, $matches);
+// 	if( !$r ) { return false; }
+}
+
 /** Checks if the input is an url.
 
  * @param $Url The url to check.

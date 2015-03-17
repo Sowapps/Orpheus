@@ -13,9 +13,9 @@ class APCache implements Cache {
 	protected $ttl;
 	
 	/** Constructor
-	 * @param $class The class of the cache
-	 * @param $name The name of this cache
-	 * @param $ttl The time to live, the delay the cache expires for. Default value is 0 (undefined).
+	 * @param string $class The class of the cache
+	 * @param string $name The name of this cache
+	 * @param integer $ttl The time to live, the delay the cache expires for. Default value is 0 (undefined).
 	 */
 	public function __construct($class, $name, $ttl=0) {
 		$this->ttl = $ttl;
@@ -24,8 +24,8 @@ class APCache implements Cache {
 	}
 	
 	/** Gets the cache for the given parameters
-	 * @param $cached The output to get the cache
-	 * @return True if cache has been retrieved
+	 * @param mixed $cached The output to get the cache
+	 * @return boolean True if cache has been retrieved
 	 * 
 	 * This method uses the apc_fetch() function.
 	 * The type is preserved, even for objects.
@@ -39,8 +39,8 @@ class APCache implements Cache {
 	}
 	
 	/** Sets the cache for the given parameters
-	 * @param $data The data to put in the cache
-	 * @return True if cache has been saved
+	 * @param mixed $data The data to put in the cache
+	 * @return boolean True if cache has been saved
 	 * 
 	 * This method uses the apc_store() function.
 	 */

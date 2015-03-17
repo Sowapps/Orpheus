@@ -396,6 +396,10 @@ var escapeHTML;
 	escapeHTML	= function(str) {
 		return $('<p></p>').text(str).html();
 	}
+	
+	$.expr[':'].parents = function(a,i,m){
+	    return $(a).parents(m[3]).length < 1;
+	};
 
 	$.fn.disableFields = function() {
 		return $(this).find(':input').prop("disabled", true);

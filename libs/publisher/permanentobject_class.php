@@ -484,7 +484,7 @@ abstract class PermanentObject {
 	
 	/** Load a permanent object
 	 * @param	$in mixed|mixed[] The object ID to load or a valid array of the object's data
-	 * @return	static The object
+	 * @return	PermanentObject The object
 	 * @see static::get()
 	 * 
 	 * Loads the object with the ID $id or the array data.
@@ -533,6 +533,12 @@ abstract class PermanentObject {
 		return $obj->checkCache();
 	}
 	
+	public static function cacheObjects(array &$objects) {
+		foreach( $objects as &$obj ) {
+			$obj	= $obj->checkCache();
+		}
+		return $objects;
+	}
 	protected function checkCache() {
 		if( isset(static::$instances[static::getClass()][$this->id()]) ) { return static::$instances[static::getClass()][$this->id()]; }
 		static::$instances[static::getClass()][$this->id()]	= $this;
@@ -607,20 +613,26 @@ abstract class PermanentObject {
 	}
 	
 	/** Escape identifier through instance
-	 * @param	$Identifier The identifier to escape. Default is table name.
-	 * @return	The escaped identifier
+	 * @param	string $Identifier The identifier to escape. Default is table name.
+	 * @return	string The escaped identifier
 	 * @see SQLAdapter::escapeIdentifier()
+	 * @see static::ei()
 	*/
 	public static function escapeIdentifier($identifier=null) {
 		return SQLAdapter::doEscapeIdentifier($identifier ? $identifier : static::$table, static::$DBInstance);
 	}
+	/** Escape identifier through instance
+	 * @param	string $Identifier The identifier to escape. Default is table name.
+	 * @return	string The escaped identifier
+	 * @see static::escapeIdentifier()
+	*/
 	public static function ei($identifier=null) {
 		return static::escapeIdentifier($identifier);
 	}
 	
 	/** Escape value through instance
 	 * @param $Value The value to format
-	 * @return The formatted $Value
+	 * @return string The formatted $Value
 	 * @see SQLAdapter::formatValue()
 	*/
 	public static function formatValue($value) {
@@ -654,9 +666,9 @@ abstract class PermanentObject {
 	public static function runForDeletion($id) { }
 	
 	/** Create a new permanent object
-	 * @param	$input array The input data we will check, extract and create the new object.
-	 * @param	$fields array The array of fields to check. Default value is null.
-	 * @param	$errCount integer Output parameter to get the number of found errors. Default value is 0
+	 * @param	array $input The input data we will check, extract and create the new object.
+	 * @param	array $fields The array of fields to check. Default value is null.
+	 * @param	integer $errCount Output parameter to get the number of found errors. Default value is 0
 	 * @return	integer The ID of the new permanent object.
 	 * @see		testUserInput()
 	 * @see		createAndGet()
@@ -694,10 +706,10 @@ abstract class PermanentObject {
 	}
 
 	/** Create a new permanent object
-	 * @param $inputData The input data we will check, extract and create the new object.
-	 * @param $fields The array of fields to check. Default value is null.
-	 * @param $errCount Output parameter to get the number of found errors. Default value is 0.
-	 * @return The new permanent object
+	 * @param	array $input The input data we will check, extract and create the new object.
+	 * @param	array $fields The array of fields to check. Default value is null.
+	 * @param	integer $errCount Output parameter to get the number of found errors. Default value is 0
+	 * @return	static The new permanent object
 	 * @see testUserInput()
 	 * @see create()
 	 *
@@ -948,20 +960,25 @@ abstract class PermanentObject {
 	
 	/** Translate text according to the object domain
 	 * @param $text The text to translate
+ 	 * @param array|string $values The values array to replace in text. Could be used as second parameter.
+	 * @return string The translated text
+	 * @see t()
 	 * 
-	 * Translates text according to the object domain
+	 * Translate text according to the object domain
 	*/
-	public static function text($text) {
-		return t($text, static::getDomain(), array_slice(func_get_args(), 1));
+	public static function text($text, $values=array()) {
+		return t($text, static::getDomain(), is_array($values) ? $values : array_slice(func_get_args(), 1));
 	}
 	
 	/** Translate text according to the object domain
-	 * @param $text The text to translate
+	 * @param sting $text The text to translate
+ 	 * @param array|string $values The values array to replace in text. Could be used as second parameter.
+	 * @see t()
 	 * 
-	 * Translates text according to the object domain
+	 * Translate text according to the object domain
 	*/
-	public static function _text($text) {
-		_t($text, static::getDomain(), array_slice(func_get_args(), 1));
+	public static function _text($text, $values=array()) {
+		_t($text, static::getDomain(), is_array($values) ? $values : array_slice(func_get_args(), 1));
 	}
 	
 	/** Report an UserException

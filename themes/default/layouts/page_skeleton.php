@@ -26,7 +26,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2-bootstrap.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2.css" type="text/css" media="screen" />
 	
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>base.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo SITEROOT; ?>'style/base.css'" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 foreach(HTMLRendering::$cssURLs as $url) {

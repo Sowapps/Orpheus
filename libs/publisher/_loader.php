@@ -60,7 +60,7 @@ Hook::register('runModule', function () {
 		// If the trigger returns null, 0, '' or false (false equality), it redirects the user if the module has not changed during trigger process
 		// If the trigger returns true, 1 or a value, it cancels the redirects
 		// This allows the dev to override the authentication, but it allows to use another limitation, like in page authentication or error message
-		if( CHECK_MODULE_ACCESS && !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module==$Module ) {
+		if( CHECK_MODULE_ACCESS && !Hook::trigger(HOOK_ACCESSDENIED, false, false) && $module===$Module ) {
 			redirectTo(u(defined('ACCESSDENIEDMOD') ? ACCESSDENIEDMOD : DEFAULTMOD));
 		}
 	}
