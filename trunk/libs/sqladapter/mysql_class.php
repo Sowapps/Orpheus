@@ -7,7 +7,7 @@ class SQLAdapter_MySQL extends SQLAdapter {
 	
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
-			'what'			=> '*',//* => All fields
+			'what'			=> '',//table.* => All fields
 			'join'			=> '',//* => All fields
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
@@ -61,11 +61,13 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		if( empty($options['table']) ) {
 			throw new Exception('Empty table option');
 		}
-		if( empty($options['what']) ) {
-			throw new Exception('No selection');
-		}
 		if( !$options['number'] && $options['output'] == static::ARR_FIRST ) {
 			$options['number']	= 1;
+		}
+		$TABLE		= static::escapeIdentifier($options['table']);
+		// Auto-satisfy join queries
+		if( empty($options['what']) ) {
+			$options['what'] = $TABLE.'.*';
 		}
 		$WHAT		= is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
 		$WC			= !empty($options['where']) ? 'WHERE '.$options['where'] : '';
@@ -73,7 +75,6 @@ class SQLAdapter_MySQL extends SQLAdapter {
 		$ORDERBY	= !empty($options['orderby']) ? 'ORDER BY '.$options['orderby'] : '';
 		$LIMIT		= $options['number'] > 0 ? 'LIMIT '.
 				( $options['offset'] > 0 ? $options['offset'].', ' : '' ).$options['number'] : '';
-		$TABLE		= static::escapeIdentifier($options['table']);
 		$JOIN		= $options['join'];
 		
 		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$GROUPBY} {$ORDERBY} {$LIMIT};";

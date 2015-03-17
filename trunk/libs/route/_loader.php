@@ -5,26 +5,38 @@
  * 
  */
 
-/** Gets the full url of a module
+define('HOOK_ROUTEMODULE', 'routeModule');
+Hook::create(HOOK_ROUTEMODULE);
 
- * @param $module The module.
- * @param $action The action to use for this url. Array allowed only with Route config usage.
- * @param $queryStr The query string to add to the url, can be an array.
- * @return The url of $module.
+/** Get the absolute url to access a module
 
-* Gets the full url of a module, using default link for default module.
+ * @param string $module The module.
+ * @param string $action The action to use for this url. Array allowed only with Route config usage.
+ * @param mixed $options The options to route URL. Require more updates.
+ * @return string The url of $module.
+
+ * Get the absolute url to access a module, using default link for default module.
+ * This function triggers hook HOOK_ROUTEMODULE with params ($url, $module, $action, $actionProcessed, $options, $isDefault), you can pass you own options using the $options parameter.
 */
-function u($module=null, $action='', $queryStr='') {
+function u($module=null, $action='', $options=null) {
 	if( !$module ) {
 		$module	= $GLOBALS['Module'];
 	}
-	if( $module === DEFAULTMOD && empty($action) ) {
-		return DEFAULTLINK;
+	$isDefault	= 0;
+	if( $module === DEFAULTMOD && !$action ) {
+		$url		= DEFAULTLINK;
+		$isDefault	= 1;
+	}
+	$extension	= 'html';
+// 	debug($options);
+	if( is_array($options) && isset($options['extension']) ) {
+		$extension	= $options['extension'];
 	}
 	global $ROUTES;
 	if( !isset($ROUTES) ) {
 		$ROUTES = Config::build('routes', 1);
 	}
+	$actionProcessed	= 0;
 	if( !empty($ROUTES) ) {
 		if( !empty($ROUTES->{$module.'-'.$action}) ) {
 			$module = $ROUTES->{$module.'-'.$action};
@@ -40,26 +52,32 @@ function u($module=null, $action='', $queryStr='') {
 			$module = $ROUTES->$module;
 		}
 	}
-	if( !empty($queryStr) ) {
-		if( is_array($queryStr) ) {
-			unset($queryStr['module'], $queryStr['action']);
-			$queryStr = http_build_query($queryStr, '', '&amp;');
-		} else {
-			$queryStr = str_replace('&', '&amp;', $queryStr);
-		}
+// 	if( !empty($queryStr) ) {
+// 		if( is_array($queryStr) ) {
+// 			unset($queryStr['module'], $queryStr['action']);
+// 			$queryStr = http_build_query($queryStr, '', '&amp;');
+// 		} else {
+// 			$queryStr = str_replace('&', '&amp;', $queryStr);
+// 		}
+// 	}
+//(!empty($queryStr) ? '-'.$queryStr : '').
+	if( !$isDefault ) {
+		$url	= SITEROOT.$module.(($action && !$actionProcessed) ? '-'.$action : '').'.'.$extension;
 	}
-	return SITEROOT.$module.((!empty($action) && empty($actionProcessed)) ? '-'.$action : '').(!empty($queryStr) ? '-'.$queryStr : '').'.html';
+// 	debug("Trigger HOOK_ROUTEMODULE with parameters $url, $module, $action, $actionProcessed, $options, $isDefault, $extension");
+	$url	= Hook::trigger(HOOK_ROUTEMODULE, false, $url, $module, $action, $actionProcessed, $options, $isDefault, $extension);
+// 	die('URL: '.$url);
+	return $url;
 }
 
-/** Displays the full url of a module
+/** Display the full url of a module
+ * @param string $module The module.
+ * @param string $action The action to use for this url. Array allowed only with Route config usage.
+ * @param mixed $options The options to route URL. Require more updates.
+ * @see u()
 
- * @param $module The module.
- * @param $action The action to use for this url.
- * @param $queryStr The query string to add to the url, can be an array.
- * @sa u()
-
- * Displays the full url of a module, using default link for default module.
+ * Display the full url of a module, using default link for default module.
  */
-function _u($module, $action='', $queryStr='') {
-	echo u($module, $action, $queryStr);
+function _u($module=null, $action='', $options=null) {
+	echo u($module, $action, $options);
 }

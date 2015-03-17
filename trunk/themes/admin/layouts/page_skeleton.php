@@ -25,7 +25,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
 	
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>sb-admin.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo THEMESURL.'default/css/base.css'; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo SITEROOT.'style/base.css'; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 /*

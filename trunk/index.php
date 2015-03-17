@@ -216,11 +216,13 @@ try {
 	includePath(LIBSDIR);// Require some hooks.
 	
 	// Checks and Gets global inputs.
+// 	debug('$_GET', $_GET);
+// 	debug('$_SERVER', $_SERVER);
 	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
 	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
 	
 	// Here starts Hooks and Session too.
-	Hook::trigger('startSession');
+	Hook::trigger(HOOK_STARTSESSION);
 
 	if( !defined('TERMINAL') ) {
 
@@ -277,7 +279,7 @@ try {
 	}
 	$RequestedModule	= $Module;
 	
-	Hook::trigger('checkModule');
+	Hook::trigger(HOOK_CHECKMODULE);
 	
 	if( empty($Module) || !is_name($Module) ) {
 		header("HTTP/1.1 400 Bad Request");
@@ -291,6 +293,9 @@ try {
 	$allowedFormats = Config::get('module_formats');
 	$allowedFormats = isset($allowedFormats[$Module]) ? $allowedFormats[$Module] : 'html';
 	if( $allowedFormats != '*' && $allowedFormats != $Format && (!is_array($allowedFormats) || !in_array($Format, $allowedFormats)) ) {
+// 		debug('$Format', $Format);
+// 		debug('$allowedFormats', $allowedFormats);
+// 		die('unavailableFormat');
 		throw new UserException('unavailableFormat');
 	}
 	unset($allowedFormats);

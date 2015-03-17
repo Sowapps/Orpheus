@@ -414,6 +414,29 @@ class TypeDatetime extends TypeDescriptor {
 }
 EntityDescriptor::registerType(new TypeDatetime());
 
+class TypeTime extends TypeString {
+	protected $name 		= 'time';
+	public static $format	= SYSTEM_TIME_FORMAT;
+	/*
+	 * If $format is changed, don't forget that the current string limit is 5
+	 */
+	
+	public function parseArgs($fArgs) {
+		return (object) array('min'=>5, 'max'=>5);
+	}
+	
+	public function validate($Field, &$value, $inputData, &$ref) {
+		if( !is_time($value, $value) ) {
+			throw new FE('notTime');
+		}
+	}
+	
+	public function format($Field, &$value) {
+		$value	= strftime(static::$format, mktime($value[1], $value[2]));
+	}
+}
+EntityDescriptor::registerType(new TypeTime());
+
 // Derived types
 class TypeInteger extends TypeNumber {
 	protected $name = 'integer';

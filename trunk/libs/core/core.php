@@ -564,6 +564,8 @@ function transferReportStream($from=null, $to='global') {
  * @param $report string The report (Commonly a string or an UserException).
  * @param $type string The type of the message.
  * @param $domain string The domain to use to automatically translate the message. Default value is 'global'.
+ * @param string $code The code to use for this report. Default is $report.
+ * @param integer $severity The severity of report. Default value is 0.
  * @return boolean False if rejected.
  * @sa reportSuccess(), reportError()
 
@@ -619,7 +621,7 @@ function reportWarning($report, $domain='global') {
 /** Reports an error
  * @param string $report The report.
  * @param string $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
- * @param integer $severity The sevirity of the error, commonly 1 for standard user error and 0 for warning. Default value is 1.
+ * @param integer $severity The severity of the error, commonly 1 for standard user error and 0 for warning. Default value is 1.
  * @sa addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
@@ -1247,12 +1249,44 @@ function d($time=TIME) {
 
 /** Gets the date time as string
  * @param $time The UNIX timestamp.
- * @return The date using 'timeFormat' translation key
+ * @return The date using 'datetimeFormat' translation key
  * 
  * Datetime format is storing a specific moment, we care about timezone
 */
 function dt($time=TIME) {
-	return !empty($time) ? strftime(t('timeFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
+	return !empty($time) ? strftime(t('datetimeFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
+}
+
+/** Gets the date time as string
+ * @param $time The time with %H:%M format.
+ * @return The formatted time using 'timeFormat' translation key
+ * 
+ * Convert the system time format to the user time format
+ * The system uses the constant SYSTEM_TIME_FORMAT to get the default format '%H:%M', you can define it by yourself.
+*/
+function ft($time=null) {
+	$userFormat	= translate('timeFormat', SYSTEM_TIME_FORMAT);
+	if( $userFormat===SYSTEM_TIME_FORMAT ) { return $time; }
+	$times	= parseTime(SYSTEM_TIME_FORMAT);
+// 	if( !preg_match(timeFormatToRegex(SYSTEM_TIME_FORMAT), $time, $matches) ) {
+// 		throw new Exception('invalidTimeParameter');
+// 	}
+	return strftime($userFormat, mktime($times[1], $times[2]));
+// 	array_shift($matches);
+// 	return str_replace(array('%H', '%M'), $matches, $userFormat);
+}
+defifn('SYSTEM_TIME_FORMAT', '%H:%M');
+
+function timeFormatToRegex($format) {
+	return '#^'.str_replace(array('%H', '%M'), array('([0-1][0-9]|2[0-3])', '([0-5][0-9])'), $format).'$#';
+}
+
+function parseTime($time, $format=SYSTEM_TIME_FORMAT) {
+	if( !preg_match(timeFormatToRegex($format), $time, $matches) ) {
+		throw new Exception('invalidTimeParameter');
+	}
+	array_shift($matches);
+	return $matches;
 }
 
 /** Gets the date as string in SQL format
@@ -1292,9 +1326,9 @@ function userID() {
 }
 
 /** Generates a new password
- * @param $length The length of the generated password. Default value is 10.
- * @param $chars The characters to use to generate password. Default value is 'abcdefghijklmnopqrstuvwxyz0123456789'
- * @return The generated password.
+ * @param integer $length The length of the generated password. Default value is 10.
+ * @param string $chars The characters to use to generate password. Default value is 'abcdefghijklmnopqrstuvwxyz0123456789'
+ * @return string The generated password.
  * 
  * Letters are randomly uppercased
 */

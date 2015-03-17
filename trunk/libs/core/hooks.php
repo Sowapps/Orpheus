@@ -15,7 +15,10 @@ Hook::register('runModule', function ($Module) {
 	if( defined('TERMINAL') ) { return; }
 	$path		= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	$isNotRoot	= !empty($path) && $path[strlen($path)-1] != '/';
-
+// 	if( $isNotRoot ) {
+// 		debug('Is not root, path => '.$path);
+// 		die();
+// 	}
 // 	text('PATH => '.PATH);
 // 	debug('_SERVER', $_SERVER);
 // 	text('_SERVER[REQUEST_URI] => '.$_SERVER['REQUEST_URI']);

@@ -11,7 +11,7 @@ Hook::create(HOOK_GETLANG);
 
 /** Loads a language ini file
 
- * @param $domain The domain of the file to load.
+ * @param string $domain The domain of the file to load.
  * 
  * Loads a language ini file from the file system.
  * You don't have to use this function explicitly.
@@ -32,9 +32,9 @@ function loadLangFile($domain='global') {
 
 /** Text function for translations.
 
- * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * @param $domain The domain to apply the Key. Default value is 'global'.
- * @param $values The values array to replace in text. Could be used as second parameter.
+ * @param string $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param string $domain The domain to apply the Key. Default value is 'global'.
+ * @param array|string $values The values array to replace in text. Could be used as second parameter.
  * @return The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
@@ -64,6 +64,7 @@ function t($k, $domain='global', $values=array()) {
 		}
 	}
 	if( $values!==array() ) {
+// 		debug($k.' - $values', $values);
 		if( !is_array($values) ) {
 			$values		= array_slice(func_get_args(), 2);
 		}
@@ -90,9 +91,9 @@ function _t($k, $domain='global', $values=array()) {
 
 /** Checks if this key exists.
 
- * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * @param $domain The domain to apply the Key. Default value is 'global'.
- * @return True if the translation exists in this domain.
+ * @param string $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param string $domain The domain to apply the Key. Default value is 'global'.
+ * @return boolean True if the translation exists in this domain.
  * 
  * This function checks if the key is known in the translation list.
  */
@@ -104,9 +105,9 @@ function hasTranslation($k, $domain='global') {
 
 /** Checks if this key exists.
 
- * @param $k The Key to translate, prefer to use an internal language (English CamelCase).
- * @param $default The default translation value to use.
- * @param $domain The domain to apply the Key. Default value is 'global'.
+ * @param string $k The Key to translate, prefer to use an internal language (English CamelCase).
+ * @param string $default The default translation value to use.
+ * @param string $domain The domain to apply the Key. Default value is 'global'.
  * @return The translation
  * 
  * This function translate the key without any fail.
