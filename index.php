@@ -19,6 +19,10 @@ if( file_exists($f) ) {
 }
 unset($f);
 
+if( date_default_timezone_get() ) {
+	date_default_timezone_set('UTC');
+}
+
 // These constants take care about paths through symbolic links.
 defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
