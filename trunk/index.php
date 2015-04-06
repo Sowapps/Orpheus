@@ -19,7 +19,8 @@ if( file_exists($f) ) {
 }
 unset($f);
 
-if( !date_default_timezone_get() ) {
+if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
+	// Set to avoid some PHP warnings
 	date_default_timezone_set('UTC');
 }
 
@@ -48,9 +49,9 @@ defifn('CHECK_MODULE_ACCESS', true);
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 // Errors Actions
-define("ERROR_THROW_EXCEPTION", 0);
-define("ERROR_DISPLAY_RAW", 1);
-define("ERROR_IGNORE", 2);
+define('ERROR_THROW_EXCEPTION', 0);
+define('ERROR_DISPLAY_RAW', 1);
+define('ERROR_IGNORE', 2);
 $ERROR_ACTION = ERROR_THROW_EXCEPTION;
 set_error_handler(
 /** Error Handler
