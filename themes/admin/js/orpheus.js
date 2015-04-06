@@ -174,3 +174,50 @@ $.fn.confirmAction	= function(text) {
 };
 
 })(jQuery);
+
+function makeSelect2(element) {
+	var _		= $(element);
+	var options	= {};
+	var input	= _;
+	if( _.is('input') ) {
+		options.data	= [];
+	}
+	/*
+	if( _.hasClass('allownewvalues') ) {
+		if( _.is("select") ) {
+			// Replace the select with an input
+			input	= $("<input />");
+			input.addClass(_.prop('class'));
+			input.attr('name', $(this).attr('name'));
+			var data	= [];
+			var val		= '';
+			_.find('option').each(function() {
+				data.push({'id':$(this).attr('value'),'text':$(this).text()});
+				if( $(this).prop('selected') ) {
+					val	+= (val ? ',' : '').$(this).attr('value');
+				}
+			});
+			options.data	= data;
+			input.val(val);
+			_.after(input);
+			_.remove();
+		}
+		options.id		= function(object) {
+			return object.text;
+		};
+		//Allow manually entered text in drop down.
+		options.createSearchChoice	= function(term, data) {
+			if( $(data).filter( function() {
+				return this.text.localeCompare(term)===0;
+			}).length===0) {
+				return {id:term, text:term};
+			}
+		};
+	}
+	*/
+//	var options	= {};
+	if( !input.hasClass("searchable") ) {
+		options.minimumResultsForSearch	= -1;
+	}
+	input.select2(options); 
+}

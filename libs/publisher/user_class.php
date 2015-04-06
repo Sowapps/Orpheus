@@ -396,7 +396,7 @@ class User extends AbstractStatus {
 		if( !isset($inputData['accesslevel']) ) {
 			return isset($ref) ? null : 0;
 		}
-		if( !is_id($inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
+		if( !ctype_digit(''.$inputData['accesslevel']) || $inputData['accesslevel'] > 300 ) {
 			static::throwException('invalidAccessLevel');
 		}
 // 		if( !defined('ALLOW_USER_GRANTING') ) { // Special case for developers
