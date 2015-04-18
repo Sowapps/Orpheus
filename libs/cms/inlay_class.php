@@ -16,7 +16,8 @@ class Inlay extends PermanentEntity {
 	protected static $domain	= null;
 	
 	public function analyze() {
-		
+		$tplAnalyzer	= new TemplateAnalyzer($this, new HTMLRendering());
+		return $tplAnalyzer->analyze();
 	}
 	
 	public function render() {
