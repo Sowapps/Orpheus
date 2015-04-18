@@ -8,9 +8,10 @@ fields:
     create_date:        datetime=sqlDatetime()
     create_user_id:     ref(user)=userID()
 
-    identifier:         string
+    identifier:         string(50)
     model:              enum(Inlay::getModels())
     position:           natural=0
+    data:               string(16777215)
 #    message:        string
 #    forum_id:       ref
 #    parent_id:      ref=0

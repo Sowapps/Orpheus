@@ -22,7 +22,7 @@ class SQLGenerator_MySQL {
 		} else
 		if( $TYPE instanceof TypeNumber ) {
 			if( !isset($field->args->max) ) {
-				text('Issue with '.$fName);
+				text('Issue with '.$field->name);
 				text($field->args);
 			}
 			$dc			= strlen((int) $field->args->max);
@@ -67,7 +67,7 @@ class SQLGenerator_MySQL {
 		if( $TYPE instanceof TypeDatetime ) {
 			$cType = 'DATETIME';
 		} else {
-			throw new UserException('Type of '.$fName.' ('.$TYPE->getName().') not found');
+			throw new UserException('Type of '.$field->name.' ('.$TYPE->getName().') not found');
 		}
 		$r = array('name'=>$field->name, 'type'=>$cType, 'nullable'=>!!$field->nullable);
 		$r['autoIncrement'] = $r['primaryKey'] = ($field->name=='id');
