@@ -4,9 +4,9 @@
 */
 class Config extends ConfigCore {
 	
-	const EXT = 'ini';
+	protected static $extension = 'ini';
 
-	/**	Loads configuration from new source.
+	/**	Load configuration from new source.
 	 * @param $source An identifier or a path to get the source.
 	 * @return The loaded configuration array.
 	 * 
@@ -14,16 +14,17 @@ class Config extends ConfigCore {
 	 * Else $source is a full path to the ini configuration file.
 	 */
 	public function load($source) {
-		// Full path given
-		if( is_readable($source) ) {
-			$confPath = $source;
+// 		// Full path given
+// 		if( is_readable($source) ) {
+// 			$confPath = $source;
 			
-		// File in configs folder
-		} else {
-			$confPath = static::getFilePath($source);
-			if( empty($confPath) ) { return false; }
-		}
-		$parsed = parse_ini_file($confPath, true);
+// 		// File in configs folder
+// 		} else {
+// 			$confPath = static::getFilePath($source);
+// 			if( empty($confPath) ) { return false; }
+// 		}
+// 		$parsed = parse_ini_file($confPath, true);
+		$parsed = parse_ini_file(static::getFilePath($source), true);
 		$this->add($parsed);
 		return true;
 	}
@@ -33,21 +34,12 @@ class Config extends ConfigCore {
 	 * 
 	 * Checks the configuration from the source is available.
 	 */
-	public function checkSource($source) {
-		try {
-			return is_readable($source) || is_readable(static::getFilePath($source));
-		} catch( Exception $e ) {
-			return false;
-		}
-	}
-
-	/**	Gets the file path
-	 * @param $source An identifier to get the source.
-	 * @return The configuration file path according to Orpheus file are organized.
-	 * 
-	 * Gets the configuration file path in CONFDIR.
-	*/
-	public static function getFilePath($source) {
-		return pathOf(CONFDIR.$source.'.'.self::EXT, true);
-	}
+// 	public function checkSource($source) {
+// 		try {
+// 			return !!static::getFilePath($source);
+// // 			return is_readable($source) || is_readable(static::getFilePath($source));
+// 		} catch( Exception $e ) {
+// 			return false;
+// 		}
+// 	}
 }

@@ -46,8 +46,8 @@ function dirpath($path) {
 
 /** Gets the path of a file/directory.
 
- * @param $commonPath The common path
- * @param $silent Do not throw exception if path does not exist
+ * @param string $commonPath The common path
+ * @param boolean $silent Do not throw exception if path does not exist
  * @return The first valid path or null if there is no valid one.
  * @sa addSrcPath()
  * 
@@ -67,8 +67,8 @@ function pathOf($commonPath, $silent=false) {
 
 /** Checks if the path exists.
 
- * @param $commonPath The common path.
- * @param $path The output parameter to get the first valid path.
+ * @param string $commonPath The common path.
+ * @param string $path The output parameter to get the first valid path.
  * @sa pathOf()
  * 
  * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
@@ -79,8 +79,8 @@ function existsPathOf($commonPath, &$path=null) {
 
 /** Adds the path to the known paths.
 
- * @param $path The source path to add.
- * @return True if the path was added.
+ * @param string $path The source path to add.
+ * @return boolean True if the path was added.
  * @see pathOf()
  */
 function addSrcPath($path) {
