@@ -3,8 +3,8 @@
  * This class is made to get YAML configuration.
 */
 class YAML extends ConfigCore {
-	
-	const EXT = 'yaml';
+
+	protected static $extension = 'yaml';
 	
 	/**	Loads configuration from new source.
 	 * @param $source An identifier or a path to get the source.
@@ -14,22 +14,23 @@ class YAML extends ConfigCore {
 	 * Else $source is a full path to the YAML configuration file.
 	*/
 	public function load($source) {		
-		// Full path given
-		if( is_readable($source) ) {
-			$confPath = $source;
+// 		// Full path given
+// 		if( is_readable($source) ) {
+// 			$confPath = $source;
 			
-		// File in configs folder
-		} else if( is_readable(static::getFilePath($source)) ) {
-			$confPath = static::getFilePath($source);
-			if( empty($confPath) ) {
-				return false;
-			}
+// 		// File in configs folder
+// 		} else if( is_readable(static::getFilePath($source)) ) {
+// 			$confPath = static::getFilePath($source);
+// 			if( empty($confPath) ) {
+// 				return false;
+// 			}
 			
-		/// File not found
-		} else {
-			return array();
-		}
-		$parsed = yaml_parse_file($confPath);
+// 		/// File not found
+// 		} else {
+// 			return array();
+// 		}
+// 		$parsed = yaml_parse_file($confPath);
+		$parsed = yaml_parse_file(static::getFilePath($source));
 		$this->add($parsed);
 		return true;
 	}
@@ -39,13 +40,13 @@ class YAML extends ConfigCore {
 	 * 
 	 * Checks the configuration from the source is available.
 	*/
-	public function checkSource($source) {
-		try {
-			return is_readable($source) || is_readable(static::getFilePath($source));
-		} catch( Exception $e ) {
-			return false;
-		}
-	}
+// 	public function checkSource($source) {
+// 		try {
+// 			return is_readable($source) || is_readable(static::getFilePath($source));
+// 		} catch( Exception $e ) {
+// 			return false;
+// 		}
+// 	}
 
 	/**	Gets the file path
 	 * @param $source An identifier to get the source.
@@ -53,9 +54,9 @@ class YAML extends ConfigCore {
 	 * 
 	 * Gets the configuration file path in CONFDIR.
 	*/
-	public static function getFilePath($source) {
-		return pathOf(CONFDIR.$source.'.'.self::EXT, true);
-	}
+// 	public static function getFilePath($source) {
+// 		return pathOf(CONFDIR.$source.'.'.self::EXT, true);
+// 	}
 	
 }
 

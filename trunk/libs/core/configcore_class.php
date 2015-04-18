@@ -124,4 +124,60 @@ abstract class ConfigCore {
 		}
 		static::$main->$key = $value;
 	}
+
+	protected static $repositories	= array();
+	
+	/** Add a repository to load configs
+	 * @param mixed $repos The repository to add. Commonly a path to a directory.
+	*/
+	public static function addRepository($repos) {
+		static::$repositories[]	= $repos;
+	}
+	
+	/** Add a repository library to load configs
+	 * @param string $library The library folder
+	*/
+	public static function addRepositoryLibrary($library) {
+		static::addRepository(pathOf(LIBSDIR.$library).CONFDIR);
+	}
+
+	/**	Get the file path
+	 * @param string $source An identifier to get the source.
+	 * @return array The configuration file path according to how Orpheus files are organized.
+	 * 
+	 * Get the configuration file path in CONFDIR.
+	*/
+	public static function getFilePath($source) {
+		if( is_readable($source) ) {
+			return $source;
+		}
+		$configFile	= $source.'.'.static::$extension;
+		foreach( static::$repositories as $repos ) {
+			if( is_readable($repos.$configFile) ) {
+				return $repos.$configFile;
+			}
+		}
+// 		if( is_readable($source) ) {
+// 			return $source;
+// 		}
+// 		if( is_readable(static::getFilePath($source)) ) {
+// 			$confPath = static::getFilePath($source);
+// 			if( empty($confPath) ) {
+// 				return false;
+// 			}
+		return pathOf(CONFDIR.$configFile, true);
+	}
+
+	/**	Check if source is available
+	 * @param string $source An identifier to get the source.
+	 * @return boolean True if source is available
+	 */
+	public function checkSource($source) {
+		try {
+			return !!static::getFilePath($source);
+// 			return is_readable($source) || is_readable(static::getFilePath($source));
+		} catch( Exception $e ) {
+			return false;
+		}
+	}
 }

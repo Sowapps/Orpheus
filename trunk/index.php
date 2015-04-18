@@ -153,30 +153,35 @@ function($className) {
 		
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
-			if( existsPathOf(LIBSDIR.$AUTOLOADS[$bFile], $path) ) {
+			$path	= null;
+			$relativePath	= $AUTOLOADS[$bFile];
+			if( existsPathOf(LIBSDIR.$relativePath, $path) ) {
+				
 				// if the path is a directory, we search the class file into this directory.
 				if( is_dir($path) ) {
-					if( existsPathOf($path.$bFile.'_class.php') ) {
-						require_once pathOf($path.$bFile.'_class.php');
-						return;
+					$relativePath	= 1;
+					if( existsPathOf($path.$bFile.'_class.php', $path) ) {
+						require_once $path;
 					}
+
 				// if the path is a file, we include the class file.
 				} else {
 					require_once $path;
-					return;
 				}
 			}
-			throw new Exception('Wrong use of Autoloads. Please use addAutoload().');
-			
-		// NOT USED, PREFER ADDAUTOLOAD()
-// 		// If the class file is directly in the libs directory
-// 		} else if( is_readable(pathOf(LIBSDIR.$bFile.'_class.php') ) {
-// 			require_once pathOf(LIBSDIR.$bFile.'_class.php';
-			
-			
-// 		// If the class file is in a eponymous sub directory in the libs directory
-// 		} else if( is_readable(pathOf(LIBSDIR.$bFile.'/'.$bFile.'_class.php') ) {
-// 			require_once pathOf(LIBSDIR.$bFile.'/'.$bFile.'_class.php';
+			if( !class_exists($className, false) ) {
+				throw new Exception('Wrong use of Autoloads. Please use addAutoload().');
+			}
+			// We want to do it by another way
+// 			if( method_exists($className, 'onClassLoaded') ) {
+// 				list($library)	= explode('/', $relativePath);
+// 				$className::onClassLoaded((object) array(
+// 					'class_fullpath'	=> $path,
+// 					'class_relpath'		=> $relativePath,
+// 					'library'			=> $library,
+// 					'library_path'		=> pathOf(LIBSDIR.$library),
+// 				));
+// 			}
 			
 		// If the class name is like Package_ClassName, we search the class file "classname" in the "package" directory in libs/.
 		} else {
