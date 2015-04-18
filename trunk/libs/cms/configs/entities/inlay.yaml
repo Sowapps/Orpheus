@@ -4,8 +4,13 @@
 
 fields:
 
-    identifier:     string
-    model:          enum(Inlay::getModels())
+    # Header
+    create_date:        datetime=sqlDatetime()
+    create_user_id:     ref(user)=userID()
+
+    identifier:         string
+    model:              enum(Inlay::getModels())
+    position:           natural=0
 #    message:        string
 #    forum_id:       ref
 #    parent_id:      ref=0
