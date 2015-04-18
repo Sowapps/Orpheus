@@ -22,4 +22,22 @@ class Inlay extends PermanentEntity {
 	public function render() {
 		
 	}
+	
+	public function getModel() {
+		return $this->model;
+	}
+	
+// 	public static function getOneByIdentifier($identifier) {
+// 		return static::get(array(
+// 			'where'		=> 'identifier LIKE '.static::fv($identifier),
+// 			'output'	=> SQLAdapter::OBJECT,
+// 		));
+// 	}
+	
+	public static function getByIdentifier($identifier, $limit) {
+		return static::get(array(
+			'where'		=> 'identifier LIKE '.static::fv($identifier),
+			'number'	=> $limit,
+		));
+	}
 }

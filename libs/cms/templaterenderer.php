@@ -1,7 +1,7 @@
 <?php
 
 
-class TemplateRenderer extends TemplateAnalyzer {
+class TemplateRenderer implements Templatable {
 	
 	private $renderer;
 	
