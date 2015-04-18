@@ -7,6 +7,10 @@ class TemplateAnalyzer extends Templatable {
 	private $model;
 	private $renderer;
 	
+	protected $modelsPath;
+	protected static $modelsFolder	= '';
+// 	protected static $modelsFolder	= 'templates/';
+	
 	private $contents;
 	
 	/**
@@ -20,7 +24,8 @@ class TemplateAnalyzer extends Templatable {
 			$this->inlay	= $inlay;
 			$this->model	= $inlay ? $inlay->getModel() : null;
 		}
-		$this->renderer	= $renderer;
+		$this->renderer		= $renderer;
+		$this->modelsPath	= $renderer->getModelsPath().static::$modelsFolder;
 	}
 	
 	public function analyze() {

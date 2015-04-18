@@ -28,7 +28,7 @@ class HTMLRendering extends Rendering {
 	}
 
 	/** 
-	 * Displays the model.
+	 * Display the model, allow an absolute path to the template file.
 	 * @copydoc Rendering::display()
 	 */
 	public function display($model=null, $env=array()) {
@@ -41,7 +41,7 @@ class HTMLRendering extends Rendering {
 	}
 	
 	public static function getModelPath($model) {
-		return static::getModelsPath().$model.'.php';
+		return is_readable($model) ? $model : static::getModelsPath().$model.'.php';
 	}
 	
 	public static function renderReport($report, $domain, $type, $stream) {
