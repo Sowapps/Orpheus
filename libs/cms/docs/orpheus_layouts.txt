@@ -3,6 +3,7 @@ inlay/
 inset/outset
 layout=template
 
+Le Inlay associe un modèle avec ses données
 Le Template est une représentation d'un Modèle (suivant le renderer) alors que le Modèle est indépendant du renderer
 
 Un Inlay associe un modèle a un ensemble de données (d'un ou plusieurs objets)
@@ -14,8 +15,8 @@ Un Template peut inclure :
 - D'autres Inlays menant à un template
 - Un autre Template
 	Il peut lui même contenir cette liste et être ré-utilisé à travers différents template
-- Des données
-	Brutes, d'un ou plusieurs Objets, accessible obligatoirement par un alias
+//- Des données
+//	Brutes, d'un ou plusieurs Objets, accessible obligatoirement par un alias
 - Un objet, spécifiant le Modèle de représentation
 	Un Inlay adéquat doit exister
 
@@ -24,13 +25,6 @@ On peut effectuer le rendu
 - D'un Template, simplement par son nom
 - D'un Objet, par liste ou identifiant et en précisant l'Inlay devant le modéliser
 - D'un Inlay, simplement par son identifiant
-
-Il y a 2 types de inlay
-- Celui qui contient commun�ment du HTML mais il peut intégrer dans ce HTML des références à d'autres inlays.
-- Le rendu d'un layout en fonction de certaines données.
-
-La différence principale entre les deux est que le premier, la structure HTML est une donn�es en bdd et que pour l'autre, elle est dans un fichier layout.
-Dans le premier cas, le contenu est ajusté dynamiquement.
 
 Un layout est un modèle de présentation alors qu'un inlay associe la structure et ses données.
 Instance Layout => Fichier modèle(layout) + inlays à insérer.
