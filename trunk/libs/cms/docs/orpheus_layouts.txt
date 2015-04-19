@@ -26,14 +26,15 @@ On peut effectuer le rendu
 - D'un Inlay, simplement par son identifiant
 
 Il y a 2 types de inlay
-- celui qui contient commun�ment du HTML mais il peut int�grer dans ce HTML des r�f�rences � d'autres inlays.
-- le rendu d'un layout en fonction de certaines donn�es.
+- Celui qui contient commun�ment du HTML mais il peut intégrer dans ce HTML des références à d'autres inlays.
+- Le rendu d'un layout en fonction de certaines données.
 
-La diff�rence principale entre les deux est que le premier, la structure HTML est une donn�es en bdd et que pour l'autre, elle est dans un fichier layout. Dans le premier cas, le contenu est ajust� dynamiquement.
+La différence principale entre les deux est que le premier, la structure HTML est une donn�es en bdd et que pour l'autre, elle est dans un fichier layout.
+Dans le premier cas, le contenu est ajusté dynamiquement.
 
-Un layout est un mod�le de pr�sentation alors qu'un inlay associe la structure et ses donn�es.
-Instance Layout => Fichier mod�le(layout) + inlays � ins�rer.
-Inlay => HTML + inlays � ins�rer.
+Un layout est un modèle de présentation alors qu'un inlay associe la structure et ses données.
+Instance Layout => Fichier modèle(layout) + inlays à insérer.
+Inlay => HTML + inlays à insérer.
 
 TODO:
-Trouver un nom pour les instances de layout (leur repr�sentation unique en fonction des donn�es).
+Trouver un nom pour les instances de layout (leur représentation unique en fonction des donn�es).
