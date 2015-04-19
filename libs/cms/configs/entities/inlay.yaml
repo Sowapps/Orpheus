@@ -12,6 +12,11 @@ fields:
     model:              enum(Inlay::getModels())
     position:           natural=0
     data:               string(16777215)
+    
+    # Entity could use it, require more reflexion
+#    entity_type:        enum(getEntities)
+#    entity_id:          ref($entity_type)
+    
 #    message:        string
 #    forum_id:       ref
 #    parent_id:      ref=0
@@ -21,6 +26,5 @@ fields:
 
 
 indexes:
-     - INDEX(user_id)
-     - FULLTEXT(message)
+     - INDEX(identifier)
      
