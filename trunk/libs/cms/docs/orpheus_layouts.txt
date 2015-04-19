@@ -1,20 +1,39 @@
 Incrustations/Instance de layout:
 inlay/
 inset/outset
+layout=template
 
-Un layout peut inclure un inlay commun à plusieurs layouts ou unique.
-Un layout peut avoir plusieurs représentations, eux-même des inlays spécifiques.
-Un layout peut inclure d'autres layouts.
+Le Template est une reprÃ©sentation d'un ModÃ¨le (suivant le renderer) alors que le ModÃ¨le est indÃ©pendant du renderer
+
+Un Inlay associe un modÃ¨le a un ensemble de donnÃ©es (d'un ou plusieurs objets)
+Un Inlay est unique et ne sert que pour cet ensemble de donnÃ©es
+Un Objet peut avoir plusieurs modÃ¨les
+Un ModÃ¨le peut avoir diffÃ©rents objets suivants la mÃªme onthologie, d'oÃ¹ le lien par un Inlay
+Un Template peut avoir plusieurs reprÃ©sentations, eux-mÃªme des inlays spÃ©cifiques.
+Un Template peut inclure :
+- D'autres Inlays menant Ã  un template
+- Un autre Template
+	Il peut lui mÃªme contenir cette liste et Ãªtre rÃ©-utilisÃ© Ã  travers diffÃ©rents template
+- Des donnÃ©es
+	Brutes, d'un ou plusieurs Objets, accessible obligatoirement par un alias
+- Un objet, spÃ©cifiant le ModÃ¨le de reprÃ©sentation
+	Un Inlay adÃ©quat doit exister
+
+On peut effectuer le rendu
+- D'une page, c'est un template
+- D'un Template, simplement par son nom
+- D'un Objet, par liste ou identifiant et en prÃ©cisant l'Inlay devant le modÃ©liser
+- D'un Inlay, simplement par son identifiant
 
 Il y a 2 types de inlay
-- celui qui contient communément du HTML mais il peut intégrer dans ce HTML des références à d'autres inlays.
-- le rendu d'un layout en fonction de certaines données.
+- celui qui contient communï¿½ment du HTML mais il peut intï¿½grer dans ce HTML des rï¿½fï¿½rences ï¿½ d'autres inlays.
+- le rendu d'un layout en fonction de certaines donnï¿½es.
 
-La différence principale entre les deux est que le premier, la structure HTML est une données en bdd et que pour l'autre, elle est dans un fichier layout. Dans le premier cas, le contenu est ajusté dynamiquement.
+La diffï¿½rence principale entre les deux est que le premier, la structure HTML est une donnï¿½es en bdd et que pour l'autre, elle est dans un fichier layout. Dans le premier cas, le contenu est ajustï¿½ dynamiquement.
 
-Un layout est un modèle de présentation alors qu'un inlay associe la structure et ses données.
-Instance Layout => Fichier modèle(layout) + inlays à insérer.
-Inlay => HTML + inlays à insérer.
+Un layout est un modï¿½le de prï¿½sentation alors qu'un inlay associe la structure et ses donnï¿½es.
+Instance Layout => Fichier modï¿½le(layout) + inlays ï¿½ insï¿½rer.
+Inlay => HTML + inlays ï¿½ insï¿½rer.
 
 TODO:
-Trouver un nom pour les instances de layout (leur représentation unique en fonction des données).
+Trouver un nom pour les instances de layout (leur reprï¿½sentation unique en fonction des donnï¿½es).

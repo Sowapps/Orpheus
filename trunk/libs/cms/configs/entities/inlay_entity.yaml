@@ -1,0 +1,17 @@
+
+# Inlay Entity descriptor (CMS)
+
+
+fields:
+
+    
+    # Entity could use it, require more reflexion
+    inlay_id:           ref(inlay)
+    entity_type:        enum(getEntities)
+    entity_id:          ref($entity_type)
+    alias:              string(20)
+    
+indexes:
+     - INDEX(inlay_id)
+     - INDEX(entity_type, entity_id)
+     
