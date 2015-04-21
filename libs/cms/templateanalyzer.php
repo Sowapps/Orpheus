@@ -3,30 +3,7 @@
 
 class TemplateAnalyzer extends Templatable {
 	
-	private $inlay;
-	private $model;
-	private $renderer;
-	
-	protected $modelsPath;
-	protected static $modelsFolder	= '';
-// 	protected static $modelsFolder	= 'templates/';
-	
 	private $contents;
-	
-	/**
-	 * @param string|Inlay $inlay Inlay or model
-	 */
-	public function __construct($inlay, $renderer) {
-		if( is_string($inlay) ) {
-			$this->inlay	= null;
-			$this->model	= $inlay;
-		} else {
-			$this->inlay	= $inlay;
-			$this->model	= $inlay ? $inlay->getModel() : null;
-		}
-		$this->renderer		= $renderer;
-		$this->modelsPath	= $renderer->getModelsPath().static::$modelsFolder;
-	}
 	
 	public function analyze() {
 		$this->contents	= array();
@@ -63,26 +40,17 @@ class TemplateAnalyzer extends Templatable {
 			$this->contents[$identifier][]	= $tplAnalyzer->analyze();
 		}
 	}
-	
-	public function setInlay(Inlay $inlay) {
-		$this->inlay	= $inlay;
-		$this->setModel($inlay->getModel());
+
+	// Link to an Inlay
+	public function includeObject($model) {
+		
 	}
-	
-	public function getInlay() {
-		return $this->inlay;
+	// Link to multiple Inlays
+	public function includeObjectList($model) {
+		
 	}
-	
-	public function setModel($model) {
-		$this->model	= $model;
-	}
-	
-	public function getModel() {
-		return $this->model;
-	}
-	
-	public function getRenderer() {
-		return $this->renderer;
-	}
+
+	// Could contains another inlay
+// 	public function includeInlay($identifier, $model, $min=1, $max=1);
 	
 }
