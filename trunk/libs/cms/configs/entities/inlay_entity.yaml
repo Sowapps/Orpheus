@@ -4,7 +4,6 @@
 
 fields:
 
-    
     # Entity could use it, require more reflexion
     inlay_id:           ref(inlay)
     entity_type:        enum(getEntities)

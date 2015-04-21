@@ -41,4 +41,15 @@ class Inlay extends PermanentEntity {
 			'number'	=> $limit,
 		));
 	}
+	
+	public static function getOneByEntityArray(array $entities) {
+		return static::get(array(
+			'where'		=> 'identifier LIKE '.static::fv($identifier),
+			'join'		=> 'LEFT JOIN '
+		));
+	}
+	public static function getOneByEntity() {
+		return static::getByEntityArray(func_get_args());
+	}
 }
+Inlay::init();

@@ -12,11 +12,11 @@ Un Objet peut avoir plusieurs modèles
 Un Modèle peut avoir différents objets suivants la même onthologie, d'où le lien par un Inlay
 Un Template peut avoir plusieurs représentations, eux-même des inlays spécifiques.
 Un Template peut inclure :
-- D'autres Inlays menant à un template
+- D'autres Inlays
 - Un autre Template
 	Il peut lui même contenir cette liste et être ré-utilisé à travers différents template
-//- Des données
-//	Brutes, d'un ou plusieurs Objets, accessible obligatoirement par un alias
+- Des données
+	Brutes, d'un ou plusieurs Objets, accessible obligatoirement par un alias
 - Un objet, spécifiant le Modèle de représentation
 	Un Inlay adéquat doit exister
 
