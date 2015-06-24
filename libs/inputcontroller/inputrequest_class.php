@@ -18,7 +18,17 @@ abstract class InputRequest {
 	 * 
 	 * @return Route
 	 */
-	public function findRoute();
+	public function findFirstMatchingRoute() {
+		foreach( $this->getRoutes() as $route ) {
+			/* @var $route HTTPRoute */
+			if( $route->isMatchingRequest($this) ) {
+				return $route;
+			}
+		}
+		return null;
+	}
+	
+	public function getRoutes();
 
 	/**
 	 * Resolve the current request by calling the matching contoller
@@ -26,8 +36,22 @@ abstract class InputRequest {
 	 * @return Controller
 	 */
 	public function resolve() {
-		$route	= $this->findRoute();
+		$route	= $this->findFirstMatchingRoute();
+		if( !$route ) {
+			throw new NotFoundException('global', 'noRoute');
+		}
 		$route->run();
 	}
+	
+	public function getPath() {
+		return $this->path;
+	}
+	public function getParameters() {
+		return $this->parameters;
+	}
+	public function getInput() {
+		return $this->input;
+	}
+	
 	
 }

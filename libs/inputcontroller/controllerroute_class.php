@@ -1,13 +1,11 @@
 <?php
 
 
-class ControllerRoute {
+abstract class ControllerRoute {
 	
 	protected $name;
 	protected $path;
 	protected $controller;
-	
-	protected static $routes	= array();
 	
 	protected function __construct($name, $path, $controller) {
 		$this->name			= $name;
@@ -21,7 +19,8 @@ class ControllerRoute {
 		if( !$this->controller || !class_exists($this->controller, true) ) {
 			throw NotFoundException('controllerNotFound');
 		}
-		$controller = new {$this->controller}();
+		$class	= $this->controller;
+		$controller = new $class();
 		if( !($controller instanceof Controller) ) {
 			throw Exception('controllerNotFound');
 		}
