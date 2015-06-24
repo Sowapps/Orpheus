@@ -40,12 +40,12 @@ class HTTPRoute extends ControllerRoute {
 				$variables[]	= $var;
 				return $regex;
 			},
-			$line
+			$this->path
 		);
 	}
 	
 	public function isMatchingRequest(HTTPRequest $request) {
-		
+		return $request->get
 	}
 	
 	public static function register($name, $path, $controller, $methods=null) {
@@ -61,7 +61,15 @@ class HTTPRoute extends ControllerRoute {
 	}
 	
 	public static function setTypeRegex($type, $regex) {
-		static::$typesRegex[$type]	= $regex
+		static::$typesRegex[$type]	= $regex;
+	}
+	
+	public static function getRoutes() {
+		return static::$routes;
+	}
+	
+	public static function getKnownMethods() {
+		return static::$knownMethods;
 	}
 	
 }
