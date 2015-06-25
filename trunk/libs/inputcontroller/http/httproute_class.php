@@ -38,14 +38,23 @@ class HTTPRoute extends ControllerRoute {
 					$regex	= '[^\/]+';
 				}
 				$variables[]	= $var;
-				return $regex;
+				return '('.$regex.')';
 			},
 			$this->path
 		);
 	}
 	
-	public function isMatchingRequest(HTTPRequest $request) {
-		return $request->get
+	public function isMatchingRequest(HTTPRequest $request, &$values=array()) {
+		// Method match && Path match (variables included)
+		if( $this->method !== $request->getMethod() ) {
+			return false;
+		}
+		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
+			unset($matches[0]);
+			$values	= array_combine($this->pathVariables, $matches);
+			return true;
+		}
+		return false;
 	}
 	
 	public static function register($name, $path, $controller, $methods=null) {

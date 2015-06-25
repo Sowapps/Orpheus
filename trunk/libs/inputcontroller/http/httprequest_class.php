@@ -31,4 +31,12 @@ class HTTPRequest extends InputRequest {
 	public function getRoutes() {
 		return HTTPRoute::getRoutes();
 	}
+	
+	/**
+	 * Get the method
+	 * @return string
+	 */
+	public function getMethod() {
+		return $this->method;
+	}
 }
