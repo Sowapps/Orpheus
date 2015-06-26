@@ -1,4 +1,7 @@
 <?php
+
+
+die('Bootstrap ok');
 /**
  * @file index.php
  * @brief The Orpheus Core
