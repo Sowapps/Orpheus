@@ -74,7 +74,20 @@ abstract class ConfigCore {
 	 * 
 	 * Checks the configuration from the source is available.
 	 */
-	public abstract function checkSource($source);
+// 	public abstract function checkSource($source);
+
+	/**	Check if source is available
+	 * @param string $source An identifier to get the source.
+	 * @return boolean True if source is available
+	 */
+	public function checkSource($source) {
+		try {
+			return !!static::getFilePath($source);
+// 			return is_readable($source) || is_readable(static::getFilePath($source));
+		} catch( Exception $e ) {
+			return false;
+		}
+	}
 	
 	/**	Builds new configuration source
 	 * @param $source An identifier to build the source.
@@ -166,18 +179,5 @@ abstract class ConfigCore {
 // 				return false;
 // 			}
 		return pathOf(CONFDIR.$configFile, true);
-	}
-
-	/**	Check if source is available
-	 * @param string $source An identifier to get the source.
-	 * @return boolean True if source is available
-	 */
-	public function checkSource($source) {
-		try {
-			return !!static::getFilePath($source);
-// 			return is_readable($source) || is_readable(static::getFilePath($source));
-		} catch( Exception $e ) {
-			return false;
-		}
 	}
 }
