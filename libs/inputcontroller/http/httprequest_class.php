@@ -53,26 +53,37 @@ class HTTPRequest extends InputRequest {
 	
 	/**
 	 * Get the method
-	 * @return string
+	 * @return HTTPRequest
 	 */
 	public function generateFromEnvironment() {
 
-		$input	= null;
+		// Get Content type
 // 		list($contentType, $contentOptions)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
-		list($contentType)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
-		$contentType	= trim($contentType);
-		if( $contentType === 'application/json' ) {
+		list($inputType)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
+		$inputType	= trim($inputType);
+		
+		// Get input
+		$input	= null;
+		if( $inputType === 'application/json' ) {
 // 		if( isset($_SERVER['CONTENT_TYPE']) && strpos(, 'application/json')!==false ) {
 			$input	= json_decode(file_get_contents('php://input'), true);
 			if( $input === null ) {
 				throw new Exception('malformedJSONBody', HTTP_BAD_REQUEST);
 			}
 		} else if( isset($_POST) ) {
+			//application/x-www-form-urlencoded
 			$input	= $_POST;
 		}
 // 		$FORMAT	= isGET('format') ? strtolower(GET('format')) : 'json';
 // 		$PATH	= GET('_path');
 // 		$METHOD	= $_SERVER['REQUEST_METHOD'];
-		return new static($_SERVER['REQUEST_METHOD'], $path, $_GET, getallheaders(), $contentType, $input);
+		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $_GET, getallheaders(), $inputType, $input);
+	}
+
+	public static function handleCurrentRequest() {
+		
+		$request	= HTTPRequest::generateFromEnvironment();
+		$route		= $request->findFirstMatchingRoute();
+		$route->run($request);
 	}
 }
