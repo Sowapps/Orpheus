@@ -209,26 +209,37 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
-	defifn('CORELIB',		'core');
-	defifn('CONFIGLIB',		'config');
+// 	defifn('CORELIB',		'core');
+// 	defifn('CONFIGLIB',		'config');
+	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
+	$REQUEST_HANDLER	= REQUEST_HANDLER;
+// 	unset($REQUEST_HANDLER);
 	
-	includePath(LIBSDIR.CORELIB.'/');// Load engine Core
+// 	defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
+// 	// Edit the constant file according to the system context (OS, directory tree ...).
+// 	require_once CONSTANTSPATH;
+	require_once pathOf('configs/libraries.php');
 	
-	includePath(LIBSDIR.CONFIGLIB.'/');// Load configuration library (Must provide Config class).
+	if( empty($Librairies) ) {
+		throw new Exception('Unable to load libraries, the config variable $Librairies is empty, please edit your configs/libraries.php file.');
+	}
 	
-	includePath(CONFDIR);// Require to be loaded before libraries to get hooks.
+	foreach( $Librairies as $lib ) {
+		require_once LIBSDIR.$lib.'/_loader.php';
+	}
+	
+// 	includePath(LIBSDIR.CORELIB.'/');// Load engine Core
+	
+// 	includePath(LIBSDIR.CONFIGLIB.'/');// Load configuration library (Must provide Config class).
+	
+// 	includePath(CONFDIR);// Require to be loaded before libraries to get hooks.
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	
 	$RENDERING	= Config::get('default_rendering');
 	
-	includePath(LIBSDIR);// Require some hooks.
 	
-	// Checks and Gets global inputs.
-// 	debug('$_GET', $_GET);
-// 	debug('$_SERVER', $_SERVER);
-	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
-	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
+// 	includePath(LIBSDIR);// Require some hooks.
 	
 	// Here starts Hooks and Session too.
 	Hook::trigger(HOOK_STARTSESSION);
@@ -280,6 +291,16 @@ try {
 	
 	}
 	
+	// Handle current request
+	$REQUEST_HANDLER::handleCurrentRequest();
+	
+	/*
+	// Checks and Gets global inputs.
+// 	debug('$_GET', $_GET);
+// 	debug('$_SERVER', $_SERVER);
+	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
+	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
+	
 	$Module	= GET('module');
 	
 	if( empty($Module) ) {
@@ -328,6 +349,7 @@ try {
 	// Future feature ? Need to place it somewhere smartly
 // 	$Page = Hook::trigger('endModule', false, $Page, $Module);
 	ob_end_clean();
+	*/
 	
 } catch( UserException $e ) {
 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
