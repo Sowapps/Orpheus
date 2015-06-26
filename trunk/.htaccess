@@ -1,49 +1,62 @@
-RewriteEngine On
+# Use the front controller as index file. It serves as a fallback solution when
+# every other rewrite/redirect fails (e.g. in an aliased environment without
+# mod_rewrite). Additionally, this reduces the matching process for the
+# start page (path "/") because otherwise Apache will indexly the rewriting rules
+# to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
+DirectoryIndex index.php
 
-# Not an index file
-RewriteCond %{REQUEST_FILENAME} !^.*index.(php|html)$
-# Not an existing file
-RewriteCond %{REQUEST_FILENAME} !-f
-# Not an existing directory
-RewriteCond %{REQUEST_FILENAME} !-d
-# For other requests, the module is variable, allow home.html, users-create.html, users-edit-u=5.html, api-listUsers.json
-RewriteRule ^([a-zA-Z0-9_]+)(?:\-([^\=\&\-]+))?(?:\-([^=\-]+=.+))?\.(.+)$ index.php?module=$1&format=$4&action=$2&$3 [L,E=rewritten:1,QSA]
+# Disabling MultiViews prevents unwanted negotiation, e.g. "/index" should not resolve
+# to the front controller "/index.php" but be rewritten to "/index.php/index".
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
 
-ErrorDocument 400 /http_error-400.html
-ErrorDocument 401 /http_error-401.html
-ErrorDocument 402 /http_error-402.html
-ErrorDocument 403 /http_error-403.html
-ErrorDocument 404 /http_error-404.html
-ErrorDocument 405 /http_error-405.html
-ErrorDocument 406 /http_error-406.html
-ErrorDocument 407 /http_error-407.html
-ErrorDocument 408 /http_error-408.html
-ErrorDocument 409 /http_error-409.html
-ErrorDocument 410 /http_error-410.html
-ErrorDocument 411 /http_error-411.html
-ErrorDocument 412 /http_error-412.html
-ErrorDocument 413 /http_error-413.html
-ErrorDocument 414 /http_error-414.html
-ErrorDocument 415 /http_error-415.html
-ErrorDocument 416 /http_error-416.html
-ErrorDocument 417 /http_error-417.html
-ErrorDocument 418 /http_error-418.html
-ErrorDocument 419 /http_error-419.html
-ErrorDocument 420 /http_error-420.html
-ErrorDocument 421 /http_error-421.html
-ErrorDocument 422 /http_error-422.html
-ErrorDocument 423 /http_error-423.html
-ErrorDocument 424 /http_error-424.html
-ErrorDocument 425 /http_error-425.html
-ErrorDocument 426 /http_error-426.html
-ErrorDocument 500 /http_error-500.html
-ErrorDocument 501 /http_error-501.html
-ErrorDocument 502 /http_error-502.html
-ErrorDocument 503 /http_error-503.html
-ErrorDocument 504 /http_error-504.html
-ErrorDocument 505 /http_error-505.html
-ErrorDocument 506 /http_error-506.html
-ErrorDocument 507 /http_error-507.html
-ErrorDocument 508 /http_error-508.html
-ErrorDocument 509 /http_error-509.html
-ErrorDocument 510 /http_error-510.html
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Determine the RewriteBase automatically and set it as environment variable.
+    # If you are using Apache aliases to do mass virtual hosting or installed the
+    # project in a subdirectory, the base path will be prepended to allow proper
+    # resolution of the index.php file and to redirect to the correct URI. It will
+    # work in environments without path prefix as well, providing a safe, one-size
+    # fits all solution. But as you do not need it in this case, you can comment
+    # the following 2 lines to eliminate the overhead.
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)/(.*)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+
+    # Sets the HTTP_AUTHORIZATION header removed by apache
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect to URI without front controller to prevent duplicate content
+    # (with and without `/index.php`). Only do this redirect on the initial
+    # rewrite by Apache and not on subsequent cycles. Otherwise we would get an
+    # endless redirect loop (request -> rewrite to front controller ->
+    # redirect -> request -> ...).
+    # So in case you get a "too many redirects" error or you always get redirected
+    # to the start page because your Apache does not expose the REDIRECT_STATUS
+    # environment variable, you have 2 choices:
+    # - disable this feature by commenting the following 2 lines or
+    # - use Apache >= 2.3.9 and replace all L flags by END flags and remove the
+    #   following RewriteCond (best solution)
+    RewriteCond %{ENV:REDIRECT_STATUS} ^$
+    RewriteRule ^index\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
+
+    # If the requested filename exists, simply serve it.
+    # We only want to let Apache serve files and not directories.
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule .? - [L]
+
+    # Rewrite all other queries to the front controller.
+    RewriteRule .? %{ENV:BASE}/index.php [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    <IfModule mod_alias.c>
+        # When mod_rewrite is not available, we instruct a temporary redirect of
+        # the start page to the front controller explicitly so that the website
+        # and the generated links can still be used.
+        RedirectMatch 302 ^/$ /index.php/
+        # RedirectTemp cannot be used instead
+    </IfModule>
+</IfModule>
