@@ -41,7 +41,7 @@ function defifn($name, $value) {
  */
 function dirpath($path) {
 	$dirname = dirname($path);
-	return ( $dirname == '/' ) ? '/' : $dirname.'/';
+	return $dirname === '/' ? '/' : $dirname.'/';
 }
 
 /** Gets the path of a file/directory.
