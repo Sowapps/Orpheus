@@ -18,6 +18,7 @@ require_once 'loader.php';
 
 // $f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 $f	= dirname(dirname(__FILE__)).'/instance.php';
+echo $f.'<br />';
 if( file_exists($f) ) {
 	require_once $f;
 }
@@ -33,6 +34,7 @@ if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 defifn('ORPHEUSPATH',		dirpath(__FILE__));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
+echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
 
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);
@@ -45,6 +47,7 @@ if( isset($t) ) {
 }
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
+echo 'DEV_VERSION : '.DEV_VERSION.'<br />';
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
