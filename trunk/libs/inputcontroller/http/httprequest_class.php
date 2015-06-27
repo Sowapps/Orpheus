@@ -7,6 +7,8 @@ class HTTPRequest extends InputRequest {
 	protected $scheme;
 	protected $domain;
 	protected $headers;
+	protected $cookies;
+	protected $files;
 	protected $inputType;
 // 	protected $query;// Parameters
 // 	protected $input;// Input
@@ -79,7 +81,9 @@ class HTTPRequest extends InputRequest {
 		$request->setContent($input, $inputType)
 			->setScheme(!empty($_SERVER['HTTPS']) ? 'https' : 'http')
 			->setDomain($_SERVER['HTTP_HOST'])
-			->setHeaders(getallheaders());
+			->setHeaders(getallheaders())
+			->setCookies($_COOKIE)
+			->setFiles($_FILES);
 // 		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], '', '', $_GET, getallheaders(), $inputType, $input);
 		return $request;
 	}
@@ -141,6 +145,22 @@ class HTTPRequest extends InputRequest {
 	
 	protected function setContent($content, $contentType) {
 		return $this->setInput($content)->setInputType($contentType);
+	}
+	
+	public function getCookies() {
+		return $this->cookies;
+	}
+	protected function setCookies($cookies) {
+		$this->cookies = $cookies;
+		return $this;
+	}
+	
+	public function getFiles() {
+		return $this->files;
+	}
+	protected function setFiles($files) {
+		$this->files = $files;
+		return $this;
 	}
 	
 	
