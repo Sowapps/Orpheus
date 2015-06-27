@@ -17,7 +17,7 @@ if( isset($SRCPATHS) ) {
 }
 require_once 'loader.php';
 
-defifn('WEBPATH',			dirname($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
+defifn('WEBPATH',			dirname($_SERVER['SCRIPT_FILENAME']).'/');	// The Orpheus sources
 
 // $f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 // echo '__FILE__ : '.__FILE__.'<br />';
