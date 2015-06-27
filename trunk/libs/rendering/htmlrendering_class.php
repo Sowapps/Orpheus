@@ -87,7 +87,7 @@ class HTMLRendering extends Rendering {
 		Gets the path to the current theme.
 	*/
 	public static function getThemePath() {
-		return THEMESDIR.static::$theme.'/';
+		return WEBPATH.THEMESDIR.static::$theme.'/';
 	}
 	
 	/** Gets the absolute theme path.
@@ -107,7 +107,7 @@ class HTMLRendering extends Rendering {
 		Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return pathOf(static::getThemePath().static::$modelsPath);
+		return static::getThemePath().static::$modelsPath;
 	}
 
 	/** Gets the css theme path.
@@ -117,7 +117,7 @@ class HTMLRendering extends Rendering {
 		Gets the path to the css files.
 	*/
 	public static function getCSSPath() {
-		return pathOf(static::getThemePath().static::$cssPath);
+		return static::getThemePath().static::$cssPath;
 	}
 
 	/** Gets the theme path.
