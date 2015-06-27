@@ -249,6 +249,7 @@ try {
 	
 	$RENDERING	= Config::get('default_rendering');
 	
+	$_SERVER['PHP_AUTH_PW']	= '******';
 	debug('$_SERVER', $_SERVER);
 	
 	
