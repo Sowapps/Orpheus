@@ -1,7 +1,7 @@
 <?php
 
-echo '<pre>'.print_r($_SERVER, 1).'</pre>';
-die('Bootstrap ok');
+// echo '<pre>'.print_r($_SERVER, 1).'</pre>';
+// die('Bootstrap ok');
 /**
  * @file index.php
  * @brief The Orpheus Core

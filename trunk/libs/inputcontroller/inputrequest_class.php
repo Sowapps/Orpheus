@@ -53,5 +53,10 @@ abstract class InputRequest {
 		return $this->input;
 	}
 	
+	protected static $mainRequest;
+
+	public static function getMainRequest() {
+		return static::$mainRequest;
+	}
 	
 }

@@ -1,0 +1,14 @@
+
+
+http:
+    home:
+        path: "/"
+        method: "GET"
+        controller: "HomeController"
+#    home:
+#        path: "/path/in/array/config"
+#        method: "POST|GET"
+#        controller: "HomeController"
+#    home2: "/path/with/all/methods->HomeController"
+#    home3: "POST(/path/for/POST/method)->HomeController"
+    
