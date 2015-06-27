@@ -18,6 +18,7 @@ if( isset($SRCPATHS) ) {
 require_once 'loader.php';
 
 // $f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
+echo '__FILE__ : '.__FILE__.'<br />';
 $f	= dirname(dirname(__FILE__)).'/instance.php';
 echo $f.'<br />';
 if( file_exists($f) ) {
