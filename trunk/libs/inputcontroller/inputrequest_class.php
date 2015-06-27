@@ -28,7 +28,7 @@ abstract class InputRequest {
 		return null;
 	}
 	
-	public function getRoutes();
+	public abstract function getRoutes();
 
 	/**
 	 * Resolve the current request by calling the matching contoller
