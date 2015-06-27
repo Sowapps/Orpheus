@@ -46,11 +46,25 @@ abstract class InputRequest {
 	public function getPath() {
 		return $this->path;
 	}
+	protected function setPath($path) {
+		$this->path = $path;
+		return $this;
+	}
+	
 	public function getParameters() {
 		return $this->parameters;
 	}
+	protected function setParameters($parameters) {
+		$this->parameters = $parameters;
+		return $this;
+	}
+	
 	public function getInput() {
 		return $this->input;
+	}
+	protected function setInput($input) {
+		$this->input = $input;
+		return $this;
 	}
 	
 	protected static $mainRequest;
@@ -58,5 +72,8 @@ abstract class InputRequest {
 	public static function getMainRequest() {
 		return static::$mainRequest;
 	}
+	
+	
+	
 	
 }

@@ -4,18 +4,19 @@
 class HTTPRequest extends InputRequest {
 
 	protected $method;
-	protected $contentType;
 	protected $scheme;
+	protected $domain;
+	protected $headers;
+	protected $inputType;
 // 	protected $query;// Parameters
 // 	protected $input;// Input
 
 	/**
 	 * @see InputRequest::__construct()
 	 */
-	public function __construct($method, $path, $scheme, $domain, $parameters, $headers, $contentType, $input) {
+	public function __construct($method, $path, $parameters=null, $input=null) {
 		parent::__construct($path, $parameters, $input);
-		$this->method		= $method;
-		$this->contentType	= $contentType;
+		$this->setMethod($method);
 	}
 
 	
@@ -46,17 +47,9 @@ class HTTPRequest extends InputRequest {
 	
 	/**
 	 * Get the method
-	 * @return string
-	 */
-	public function getMethod() {
-		return $this->method;
-	}
-	
-	/**
-	 * Get the method
 	 * @return HTTPRequest
 	 */
-	public function generateFromEnvironment() {
+	public static function generateFromEnvironment() {
 
 		// Get Content type
 // 		list($contentType, $contentOptions)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
@@ -78,7 +71,13 @@ class HTTPRequest extends InputRequest {
 // 		$FORMAT	= isGET('format') ? strtolower(GET('format')) : 'json';
 // 		$PATH	= GET('_path');
 // 		$METHOD	= $_SERVER['REQUEST_METHOD'];
-		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], '', '', $_GET, getallheaders(), $inputType, $input);
+		$request	= new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $_GET);
+		$request->setContent($input, $inputType)
+			->setScheme(!empty($_SERVER['HTTPS']) ? 'https' : 'http')
+			->setDomain($_SERVER['HTTP_HOST'])
+			->setHeaders(getallheaders());
+// 		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], '', '', $_GET, getallheaders(), $inputType, $input);
+		return $request;
 	}
 
 	public static function handleCurrentRequest() {
@@ -89,4 +88,57 @@ class HTTPRequest extends InputRequest {
 		$route		= static::$mainRequest->findFirstMatchingRoute();
 		$route->run(static::$mainRequest);
 	}
+	
+	
+	
+	/**
+	 * Get the method
+	 * @return string
+	 */
+	public function getMethod() {
+		return $this->method;
+	}
+	protected function setMethod($method) {
+		$this->method = $method;
+		return $this;
+	}
+	
+	public function getScheme() {
+		return $this->scheme;
+	}
+	protected function setScheme($scheme) {
+		$this->scheme = $scheme;
+		
+		return $this;
+	}
+	public function getDomain() {
+		return $this->domain;
+	}
+	protected function setDomain($domain) {
+		$this->domain = $domain;
+		return $this;
+	}
+	
+	public function getHeaders() {
+		return $this->headers;
+	}
+	protected function setHeaders($headers) {
+		$this->headers = $headers;
+		return $this;
+	}
+	
+	public function getInputType() {
+		return $this->inputType;
+	}
+	protected function setInputType($inputType) {
+		$this->inputType = $inputType;;
+		return $this;
+	}
+	
+	protected function setContent($content, $contentType) {
+		return $this->setInput($content)->setInputType($contentType);
+	}
+	
+	
+	
 }
