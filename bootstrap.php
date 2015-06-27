@@ -47,7 +47,7 @@ if( isset($t) ) {
 }
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
-echo 'DEV_VERSION : '.DEV_VERSION.'<br />';
+echo 'DEV_VERSION : '.intval(DEV_VERSION).'<br />';
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
