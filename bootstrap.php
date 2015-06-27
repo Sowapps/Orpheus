@@ -249,6 +249,8 @@ try {
 	
 	$RENDERING	= Config::get('default_rendering');
 	
+	debug('$_SERVER', $_SERVER);
+	
 	
 // 	includePath(LIBSDIR);// Require some hooks.
 	
