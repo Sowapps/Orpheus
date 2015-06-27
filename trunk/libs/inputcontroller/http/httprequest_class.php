@@ -5,13 +5,14 @@ class HTTPRequest extends InputRequest {
 
 	protected $method;
 	protected $contentType;
+	protected $scheme;
 // 	protected $query;// Parameters
 // 	protected $input;// Input
 
 	/**
 	 * @see InputRequest::__construct()
 	 */
-	public function __construct($method, $path, $parameters, $headers, $contentType, $input) {
+	public function __construct($method, $path, $scheme, $domain, $parameters, $headers, $contentType, $input) {
 		parent::__construct($path, $parameters, $input);
 		$this->method		= $method;
 		$this->contentType	= $contentType;
@@ -77,7 +78,7 @@ class HTTPRequest extends InputRequest {
 // 		$FORMAT	= isGET('format') ? strtolower(GET('format')) : 'json';
 // 		$PATH	= GET('_path');
 // 		$METHOD	= $_SERVER['REQUEST_METHOD'];
-		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], $_GET, getallheaders(), $inputType, $input);
+		return new static($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI'], '', '', $_GET, getallheaders(), $inputType, $input);
 	}
 
 	public static function handleCurrentRequest() {
