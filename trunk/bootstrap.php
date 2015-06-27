@@ -12,6 +12,7 @@
  */
 
 echo 'Bootstrap<br />';
+die();
 if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
