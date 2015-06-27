@@ -11,6 +11,7 @@
  * Website core.
  */
 
+echo 'Bootstrap<br />';
 if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
