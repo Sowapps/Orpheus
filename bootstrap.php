@@ -38,7 +38,7 @@ defifn('ORPHEUSPATH',		dirpath(dirname($_SERVER['SCRIPT_FILENAME'])));	// The Or
 defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
 echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
-die('Stopping script process');
+// die('Stopping script process');
 
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);
