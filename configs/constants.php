@@ -31,6 +31,7 @@ defifn('CONFDIR',			'configs/');
 defifn('MODDIR',			'modules/');
 defifn('LIBSDIR',			'libs/');
 defifn('THEMESDIR',			'themes/');
+// defifn('WEBPATH',			pathOf('web/'));
 
 defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
 defifn('LOGSPATH',			pathOf('logs/'));

@@ -11,17 +11,19 @@
  * Website core.
  */
 
-echo 'Bootstrap<br />';
+// echo 'Bootstrap<br />';
 if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
 require_once 'loader.php';
 
+defifn('WEBPATH',			dirname($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
+
 // $f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
 // echo '__FILE__ : '.__FILE__.'<br />';
 // echo '$_SERVER[SCRIPT_FILENAME] : '.$_SERVER['SCRIPT_FILENAME'].'<br />';
-$f	= dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))).'/instance.php';
-echo $f.'<br />';
+$f	= dirname(dirname(WEBPATH)).'/instance.php';
+// echo $f.'<br />';
 if( file_exists($f) ) {
 	require_once $f;
 }
@@ -34,10 +36,10 @@ if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 
 // These constants take care about paths through symbolic links.
 // defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
-defifn('ORPHEUSPATH',		dirpath(dirname($_SERVER['SCRIPT_FILENAME'])));	// The Orpheus sources
-defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
-defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
-echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
+defifn('ORPHEUSPATH',		dirpath(WEBPATH));	// The Orpheus sources
+defifn('APPLICATIONPATH',	ORPHEUSPATH);		// The application sources
+defifn('INSTANCEPATH',		APPLICATIONPATH);	// The instance sources
+// echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
 // die('Stopping script process');
 
 addSrcPath(ORPHEUSPATH);
@@ -51,7 +53,7 @@ if( isset($t) ) {
 }
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
-echo 'DEV_VERSION : '.intval(DEV_VERSION).'<br />';
+// echo 'DEV_VERSION : '.intval(DEV_VERSION).'<br />';
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
