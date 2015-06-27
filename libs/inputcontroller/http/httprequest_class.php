@@ -53,8 +53,12 @@ class HTTPRequest extends InputRequest {
 
 		// Get Content type
 // 		list($contentType, $contentOptions)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
-		list($inputType)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
-		$inputType	= trim($inputType);
+		if( !empty($_SERVER['CONTENT_TYPE']) ) {
+			list($inputType)	= explodeList(';', $_SERVER['CONTENT_TYPE'], 2);
+			$inputType	= trim($inputType);
+		} else {
+			$inputType	= 'application/x-www-form-urlencoded';
+		}
 		
 		// Get input
 		$input	= null;
