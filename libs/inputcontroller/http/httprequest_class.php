@@ -82,8 +82,10 @@ class HTTPRequest extends InputRequest {
 
 	public static function handleCurrentRequest() {
 		
-		$request	= HTTPRequest::generateFromEnvironment();
-		$route		= $request->findFirstMatchingRoute();
-		$route->run($request);
+		static::$mainRequest	= HTTPRequest::generateFromEnvironment();
+		debug('$request', static::$mainRequest);
+		die();
+		$route		= static::$mainRequest->findFirstMatchingRoute();
+		$route->run(static::$mainRequest);
 	}
 }
