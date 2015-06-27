@@ -12,7 +12,6 @@
  */
 
 echo 'Bootstrap<br />';
-die();
 if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
@@ -37,6 +36,7 @@ defifn('ORPHEUSPATH',		dirpath(__FILE__));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);							// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);						// The instance sources
 echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
+die('Stopping script process');
 
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);
