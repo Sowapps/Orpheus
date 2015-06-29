@@ -44,7 +44,12 @@ class HTTPRoute extends ControllerRoute {
 		);
 	}
 	
-	public function isMatchingRequest(HTTPRequest $request, &$values=array()) {
+	/**
+	 * @param HTTPRequest $request
+	 * @param array $values
+	 * @see ControllerRoute::isMatchingRequest()
+	 */
+	public function isMatchingRequest(InputRequest $request, &$values=array()) {
 		// Method match && Path match (variables included)
 		if( $this->method !== $request->getMethod() ) {
 			return false;
