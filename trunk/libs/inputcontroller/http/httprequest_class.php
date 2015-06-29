@@ -99,7 +99,7 @@ class HTTPRequest extends InputRequest {
 			}
 			$response	= $route->run(static::$mainRequest);
 		} catch( Exception $e ) {
-			$response	= HTTPResponse::generateFromException($e);
+			$response	= HTMLHTTPResponse::generateFromException($e);
 		}
 		$response->process();
 		die();
