@@ -13,6 +13,7 @@ addAutoload('OutputResponse',				'inputcontroller/outputresponse');
 addAutoload('HTTPRoute',					'inputcontroller/http/httproute');
 addAutoload('HTTPRequest',					'inputcontroller/http/httprequest');
 addAutoload('HTTPResponse',					'inputcontroller/http/httpresponse');
+addAutoload('HTMLHTTPResponse',				'inputcontroller/http/htmlhttpresponse');
 
 // define('HOOK_ROUTEMODULE', 'routeModule');
 // Hook::create(HOOK_ROUTEMODULE);
