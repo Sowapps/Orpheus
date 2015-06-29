@@ -95,7 +95,7 @@ class HTTPRequest extends InputRequest {
 // 		die();
 		$route	= static::$mainRequest->findFirstMatchingRoute();
 		if( !$route ) {
-			throw NotFoundException('routeNotFound');
+			throw new NotFoundException('routeNotFound');
 		}
 		$route->run(static::$mainRequest);
 	}
