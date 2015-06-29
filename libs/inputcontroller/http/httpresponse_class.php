@@ -1,7 +1,10 @@
 <?php
 
 
-class HTTPResponse {
+abstract class HTTPResponse {
 	
-	
+	/**
+	 * Process response to client
+	 */
+	public abstract function process();
 }
