@@ -13,7 +13,7 @@ abstract class ControllerRoute {
 		$this->controller	= $controller;
 	}
 	
-	public function isMatchingRequest(InputRequest $request);
+	public abstract function isMatchingRequest(InputRequest $request);
 	
 	public function run(InputRequest $request) {
 		if( !$this->controller || !class_exists($this->controller, true) ) {
