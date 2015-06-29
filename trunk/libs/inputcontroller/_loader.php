@@ -16,3 +16,12 @@ addAutoload('HTTPResponse',					'inputcontroller/http/httpresponse');
 
 // define('HOOK_ROUTEMODULE', 'routeModule');
 // Hook::create(HOOK_ROUTEMODULE);
+
+
+function u() {
+	
+}
+
+function _u() {
+	
+}
