@@ -15,12 +15,12 @@ class APCache implements Cache {
 	/** Constructor
 	 * @param string $class The class of the cache
 	 * @param string $name The name of this cache
-	 * @param integer $ttl The time to live, the delay the cache expires for. Default value is 0 (undefined).
+	 * @param integer $ttl The time to live in seconds, the delay the cache expires for. Default value is 0 (undefined).
 	 */
 	public function __construct($class, $name, $ttl=0) {
 		$this->ttl = $ttl;
 		$this->key = $class.'.'.$name;
-		$this->get($cached);
+// 		$this->get($cached);
 	}
 	
 	/** Gets the cache for the given parameters
@@ -46,5 +46,14 @@ class APCache implements Cache {
 	 */
 	public function set($data) {
 		return apc_store($this->key, $data, $this->ttl);
+	}
+	
+	/** Reset the cache
+	 * @return boolean True in case of success
+	 * 
+	 * This method uses the apc_delete() function.
+	 */
+	public function reset() {
+		return apc_delete($this->key);
 	}
 }

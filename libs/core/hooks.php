@@ -11,7 +11,7 @@ using('hooks');
 /** Callback for Hook 'runModule'
  * 
  */
-Hook::register('runModule', function ($Module) {
+Hook::register(HOOK_RUNMODULE, function ($Module) {
 	if( defined('TERMINAL') ) { return; }
 	$path		= parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 	$isNotRoot	= !empty($path) && $path[strlen($path)-1] != '/';
