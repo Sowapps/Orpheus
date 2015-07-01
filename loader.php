@@ -143,3 +143,25 @@ function ob_end_to($min) {
 		ob_end_flush();
 	}
 }
+
+function displayExceptionAsHTML(Exception $Exception) {
+	$code	= $Exception->getCode();
+	if( !$code ) {
+		$code	= 500;
+	}
+	http_response_code($code);
+	?>
+<html>
+<head>
+	<title>An error occurred :: Orpheus</title>
+</head>
+<body style="background: #EEEEEE;">
+	<div>
+		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
+		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
+	</div>
+</body>
+</html>
+	<?php
+	die();
+}
