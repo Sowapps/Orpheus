@@ -287,15 +287,15 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	</div>
 	*/ ?>
 <style>
-body {
-	background: #EEE;
-}
 .header {
 	padding-bottom: 20px;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e5e5e5;
 }
 /*
+body {
+	background: #EEE;
+}
 .content {
 	width: 960px;
 	padding: 20px;
