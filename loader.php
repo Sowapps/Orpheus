@@ -238,7 +238,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="panel panel-danger">
 			<div class="panel-heading">An error occurred !</div>
 			<div class="panel-body exception">
-				<h2><?php echo $code.' '.http_response_codetext($code).'<small> - '.get_class($Exception).'</small>'; ?></h2>
+				<h3><?php echo $code.' '.http_response_codetext($code).'<small> - '.get_class($Exception).'</small>'; ?></h3>
 				<blockquote class="exception_message">
 					<?php echo $Exception->getMessage(); ?>
 					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
@@ -264,7 +264,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		}
 		$args	= '';
 		foreach( $trace['args'] as $i => $arg ) {
-			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> <span class="arg_value">'.$arg.'</span></span>';
+			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> "<span class="arg_value">'.$arg.'</span>"</span>';
 // 			$args .= ($i ? ', ' : '').typeOf($arg).' '.str_limit($arg.'', 15);
 		}
 // 		var_dump($trace['args']);
