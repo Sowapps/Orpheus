@@ -150,6 +150,11 @@ function displayExceptionAsHTML(Exception $Exception) {
 		$code	= 500;
 	}
 	http_response_code($code);
+	convertExceptionAsHTMLPage($Exception);
+	die();
+}
+function convertExceptionAsHTMLPage(Exception $Exception, $action) {
+	ob_start();
 	?>
 <html>
 <head>
@@ -164,5 +169,7 @@ function displayExceptionAsHTML(Exception $Exception) {
 </body>
 </html>
 	<?php
-	die();
+	$content	= ob_get_contents();
+	ob_end_clean();
+	return $content;
 }

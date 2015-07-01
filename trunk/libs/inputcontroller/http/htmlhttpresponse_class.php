@@ -27,13 +27,14 @@ class HTMLHTTPResponse extends HTTPResponse {
 	 * @param string $action
 	 */
 	public static function generateFromException(Exception $exception, $action='Handling the request') {
-		$code	= $exception->getCode();
-		http_response_code($code ? $code : 500);
-		$rendering	= new HTMLRendering();
-		return new static($rendering->render('error', array(
-			'action'	=> $action,
-			'date'		=> dt(),
-			'report'	=> $exception->getMessage()."<br />\n<pre>".$exception->getTraceAsString()."</pre>",
-		)));
+		return new static(convertExceptionAsHTMLPage($exception, $action));
+// 		$code	= $exception->getCode();
+// 		http_response_code($code ? $code : 500);
+// 		$rendering	= new HTMLRendering();
+// 		return new static($rendering->render('error', array(
+// 			'action'	=> $action,
+// 			'date'		=> dt(),
+// 			'report'	=> $exception->getMessage()."<br />\n<pre>".$exception->getTraceAsString()."</pre>",
+// 		)));
 	}
 }
