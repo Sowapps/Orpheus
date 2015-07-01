@@ -205,11 +205,11 @@ function log_report($report, $file, $action='', $message='') {
 	} catch( Exception $e ) {
 		$Error['report'] .= "<br />\n<b>And we met an error logging this report:</b><br />\n".stringify($e);
 	}
-	if( ERROR_LEVEL == DEV_LEVEL && isset($exception) ) {
+	if( DEV_VERSION && isset($exception) ) {
 		displayExceptionAsHTML($exception, $action);
 	}
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
-		if( ERROR_LEVEL == DEV_LEVEL ) {
+		if( DEV_VERSION ) {
 			$Error['message']	= $message;
 			$Error['page']		= nl2br(htmlentities($GLOBALS['Page']));
 			// Display a pretty formatted error report
@@ -279,9 +279,9 @@ function sys_error($report, $action='', $silent=false) {
 */
 function log_error($report, $action='', $fatal=true) {
 	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action,
-		empty($fatal) && ERROR_LEVEL != DEV_LEVEL ? null :
+		empty($fatal) && !DEV_VERSION ? null :
 			(is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.").
-			(ERROR_LEVEL == DEV_LEVEL ? '<br /><pre>'.print_r(debug_backtrace(), 1).'</pre>' : ''));
+			(DEV_VERSION ? '<br /><pre>'.print_r(debug_backtrace(), 1).'</pre>' : ''));
 }
 
 /** Logs a sql error.
