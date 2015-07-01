@@ -144,13 +144,13 @@ function ob_end_to($min) {
 	}
 }
 
-function displayExceptionAsHTML(Exception $Exception) {
+function displayExceptionAsHTML(Exception $Exception, $action) {
 	$code	= $Exception->getCode();
 	if( !$code ) {
 		$code	= 500;
 	}
 	http_response_code($code);
-	convertExceptionAsHTMLPage($Exception);
+	convertExceptionAsHTMLPage($Exception, $action);
 	die();
 }
 
