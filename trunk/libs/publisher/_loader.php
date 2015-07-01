@@ -22,10 +22,10 @@ $USER_CLASS = USER_CLASS;
 define('HOOK_ACCESSDENIED', 	'accessDenied');
 Hook::create(HOOK_ACCESSDENIED);
 
-/** Hook 'checkModule'
- * 
+/** Hook HOOK_APPREADY
  */
-Hook::register('checkModule', function () {
+Hook::register(HOOK_APPREADY, function () {
+// 	debug('Publisher HOOK_APPREADY => '.HOOK_APPREADY);
 	global $USER_CLASS;
 	$GLOBALS['ACCESS'] = Config::build('access', true);
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
@@ -51,8 +51,11 @@ Hook::register('checkModule', function () {
 
 /** Hook 'runModule'
  */
-Hook::register('runModule', function () {
+Hook::register(HOOK_RUNMODULE, function () {
 	global $USER_CLASS, $Module;
+	
+// 	debug('Publisher HOOK_RUNMODULE $USER', $USER_CLASS::getLoggedUser());
+// 	debug('$Module', $Module);
 	// If user can not access to this module, we redirect him to default but if default is forbidden, we can not redirect indefinitely.
 	// User should always access to default, even if it redirects him to another module.
 	if( !$USER_CLASS::canAccess($Module) && DEFAULTMOD != $Module ) {

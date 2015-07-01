@@ -22,7 +22,7 @@ abstract class AbstractUser extends PermanentEntity {
 	const NOT_LOGGED	= 0;
 	const IS_LOGGED		= 1;
 	const LOGGED_FORCED	= 3;
-	protected $login = self::NOT_LOGGED;
+	protected $login	= self::NOT_LOGGED;
 
 	// *** METHODES SURCHARGEES ***
 	
@@ -182,6 +182,13 @@ abstract class AbstractUser extends PermanentEntity {
 		$user->logout();
 		$user->login();
 	}
+	
+	public static function userLogout() {
+		global $USER;
+		if( isset($USER) ) {
+			$USER->logout();
+		}
+	}
 
 	/** Log in an user from HTTP authentication
 	 * 
@@ -271,7 +278,16 @@ abstract class AbstractUser extends PermanentEntity {
 	 * Get the ID of the current user or 0.
 	 */
 	public static function getLoggedUserID() {
-		return static::isLogged() ? $_SESSION['USER']->id : 0;
+		return static::isLogged() ? $_SESSION['USER']->id() : 0;
+	}
+	
+	/** Get logged user object
+	 * @return The user of the current client logged in.
+	 * 
+	 * Get the user objectof the current logged client, or null.
+	 */
+	public static function getLoggedUser() {
+		return static::isLogged() ? $_SESSION['USER'] : null;
 	}
 	
 	/** Load an user object

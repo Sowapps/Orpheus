@@ -9,10 +9,16 @@ class UserException extends Exception {
 	/**
 	 * Constructor
 	 * @param string $message The exception message
-	 * @param string $domain The domain for the message
+	 * @param string $domain The domain for the message, optionnal, allow $code
+	 * @param string $code The code of the exception
+	 * @param string $previous The previous exception
 	 */
-	public function __construct($message=null, $domain=null) {
-		parent::__construct($message);
+	public function __construct($message=null, $domain=null, $code=0, $previous=null) {
+		if( is_int($domain) ) {
+			$code	= $domain;
+			$domain	= null;
+		}
+		parent::__construct($message, $code, $previous);
 		$this->setDomain($domain);
 	}
 
@@ -70,9 +76,33 @@ class UserException extends Exception {
  * This exception is thrown when something requested is not found.
  */
 class NotFoundException extends UserException {
-	public function __construct($domain=null, $message=null) {
-		parent::__construct($message ? $message : 'notFound', $domain);
+	public function __construct($domain=null, $message=null, $previous=null) {
+		parent::__construct($message ? $message : 'notFound', $domain, defined('HTTP_NOT_FOUND') ? HTTP_NOT_FOUND : null, $previous);
+	}
+}
+
+/** The Forbidden Exception class
+ * This exception is thrown when something requested require an authentication or more permissions.
+ */
+class ForbiddenException extends UserException {
+	public function __construct($domain=null, $message=null, $previous=null) {
+		parent::__construct($message ? $message : 'forbidden', $domain, defined('HTTP_FORBIDDEN') ? HTTP_FORBIDDEN : null, $previous);
 	}
 }
 
 class OperationCancelledException extends UserException {}
+
+class UserReportsException extends UserException {
+	
+	protected $reports;
+	
+	public function setReports(array $reports) {
+		$this->reports	= $reports;
+		return $this;
+	}
+	
+	public function getReports() {
+		return $this->reports;
+	}
+	
+}

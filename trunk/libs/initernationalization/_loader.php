@@ -35,7 +35,7 @@ function loadLangFile($domain='global') {
  * @param string $k The Key to translate, prefer to use an internal language (English CamelCase).
  * @param string $domain The domain to apply the Key. Default value is 'global'.
  * @param array|string $values The values array to replace in text. Could be used as second parameter.
- * @return The translated human text.
+ * @return string The translated human text.
  * 
  * This function try to translate the given key, in case of failure, it just returns the Key.
  * It tries to replace $values in text by key using \#key\# format using str_replace() but if $values is a list of values, it uses sprintf().
@@ -108,7 +108,7 @@ function hasTranslation($k, $domain='global') {
  * @param string $k The Key to translate, prefer to use an internal language (English CamelCase).
  * @param string $default The default translation value to use.
  * @param string $domain The domain to apply the Key. Default value is 'global'.
- * @return The translation
+ * @return string The translation
  * 
  * This function translate the key without any fail.
  * If no translation is available, it uses the $default.

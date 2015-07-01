@@ -70,8 +70,8 @@ function text($message = '', $html = true) {
 }
 
 /** Do a binary test
- * @param $value The value to compare.
- * @param $reference The reference for the comparison.
+ * @param int $value The value to compare.
+ * @param int $reference The reference for the comparison.
  * @return True if $value is binary included in $reference.
 
  * Do a binary test, compare $value with $reference.
@@ -93,12 +93,58 @@ function bintest($value, $reference) {
  * This function stops the running script.
 */
 function sendResponse($code, $other='', $domain='global', $desc=null) {
-	header('Content-Type',	'application/json; charset=UTF-8');
-	die( json_encode( array(
-			'code'			=> $code,
-			'description'	=> t($desc ? $desc : $code, $domain),
-			'other'			=> $other
-	) ) );
+	sendJSON(array(
+		'code'			=> $code,
+		'description'	=> t($desc ? $desc : $code, $domain),
+		'other'			=> $other
+	));
+}
+
+function sendJSON($data) {
+	header('Content-Type: application/json');
+// 	header('Content-Type',	'application/json; charset=UTF-8');
+// 	debug('sendJSON');
+	die(json_encode($data));
+}
+
+define('HTTP_OK',						200);
+define('HTTP_BAD_REQUEST',				400);
+define('HTTP_UNAUTHORIZED',				401);
+define('HTTP_FORBIDDEN',				403);
+define('HTTP_NOT_FOUND',				404);
+define('HTTP_INTERNAL_SERVER_ERROR',	500);
+function sendRESTfulJSON($data, $code=null) {
+	if( $data instanceof RESTResponse ) {
+		if( !$code ) {
+			$code	= $data->getCode();
+		}
+		$data	= $data->getBody();
+	}
+	if( !$code ) {
+		if( $data instanceof Exception ) {
+			$code	= $data->getCode() ? $data->getCode() : HTTP_INTERNAL_SERVER_ERROR;
+		} else {
+			$code	= HTTP_OK;
+		}
+	}
+	http_response_code($code);
+	if( $code !== HTTP_OK ) {
+		// Formatted JSON Error
+		if( $data instanceof UserReportsException ) {
+			/* @var $data UserReportsException */
+			sendResponse($data->getMessage(), $data->getReports(), $data->getDomain());
+		} else
+		if( $data instanceof Exception ) {
+			sendResponse($data->getMessage(), '', $data->getDomain());
+		} else {
+// 			if( is_string($data) ) {
+// 			}
+			sendResponse($data);
+		}
+	} else {
+		// Pure JSON
+		sendJSON($data);
+	}
 }
 
 /** Runs a SSH2 command.
@@ -585,7 +631,7 @@ function addReport($report, $type, $domain='global', $code=null, $severity=0) {
 	if( !$code ) {
 		$code	= $report;
 	}
-	if( isset($REJREPORTS[$report]) && (empty($REJREPORTS[$report]['t']) || in_array($type, $REJREPORTS[$report]['t'])) ) {
+	if( isset($REJREPORTS[$report]) && (empty($REJREPORTS[$report]['type']) || in_array($type, $REJREPORTS[$report]['type'])) ) {
 		return false;
 	}
 	if( !isset($REPORTS[$REPORT_STREAM]) ) {
@@ -595,7 +641,7 @@ function addReport($report, $type, $domain='global', $code=null, $severity=0) {
 		$REPORTS[$REPORT_STREAM][$type] = array();
 	}
 	$report	= t($report, $domain);// Added recently, require tests
-	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$code, 'r'=>$report, 'd'=>$domain, 's'=>$severity);
+	$REPORTS[$REPORT_STREAM][$type][] = array('code'=>$code, 'report'=>$report, 'domain'=>$domain, 'severity'=>$severity);
 // 	$REPORTS[$REPORT_STREAM][$type][] = array('c'=>$report, 'r'=>t($report, $domain), 'd'=>$domain);
 	return true;
 }
@@ -678,15 +724,15 @@ function rejectReport($report, $type=null) {
 	}
 	$d = array();
 	if( isset($type) ) {
-		$d['t'] = is_array($type) ? $type : array($type);
+		$d['type'] = is_array($type) ? $type : array($type);
 	}
 	foreach( $report as $r ) {
-		$d['r'] = $r;
+		$d['report'] = $r;
 		$REJREPORTS["$r"] = $d;
 	}
 }
 
-/** Gets some/all reports as HTML
+/** Gets some/all reports
  * @param $stream The stream to get the reports. Default value is "global".
  * @param $type Filter results by report type. Default value is null.
  * @param $delete True to delete entries from the list. Default value is true.
@@ -714,6 +760,26 @@ function getReports($stream='global', $type=null, $delete=1) {
 	return $r;
 }
 
+/** Gets some/all reports as flatten array
+ * @param $stream The stream to get the reports. Default value is "global".
+ * @param $type Filter results by report type. Default value is null.
+ * @param $delete True to delete entries from the list. Default value is true.
+ * @return array[].
+ * @see getReports()
+
+ * Gets all reports from the list of $domain optionnally filtered by type.
+*/
+function getFlatReports($stream='global', $type=null, $delete=1) {
+	$reports	= array();
+	foreach( getReports($stream, $type, $delete) as $rType => $rTypeReports ) {
+		foreach( $rTypeReports as $report ) {
+			$report['type']	= $rType;
+			$reports[]		= $report;
+		}
+	}
+	return $reports;
+}
+
 /** Gets some/all reports as HTML
  * @param	$stream string The stream to get the reports. Default value is 'global'.
  * @param	$rejected array An array of rejected messages. Default value is an empty array.
@@ -730,9 +796,9 @@ function getReportsHTML($stream='global', $rejected=array(), $delete=true) {
 	$reportHTML = '';
 	foreach( $reports as $type => &$rl ) {
 		foreach( $rl as $report) {
-			$msg = "{$report['r']}";
+			$msg = "{$report['report']}";
 			if( !in_array($msg, $rejected) ) {
-				$reportHTML .= getHTMLReport($stream, $msg, $report['d'], $type);
+				$reportHTML .= getHTMLReport($stream, $msg, $report['domain'], $type);
 			}
 		}
 	}
@@ -1226,8 +1292,8 @@ function b($b) {
  * @param $string		The input string.
  * @param $limit		The limit of values exploded.
  * @param $default		The default value to use if missing.
- * @return An array of a defined number of values.
- * @sa explode()
+ * @return array The exploded array with a defined limit of values.
+ * @see explode()
  * 
  * Splits a string by string in a limited number of values.
  * The main difference with explode() is this function complete missing values with $default.
@@ -1366,7 +1432,7 @@ function dayTime($time=null) {
  * Returns the timestamp of the $day of current month of $time according to the midnight hour.
 */
 function monthTime($day=1, $time=null) {
-	if( is_null($time) ) { $time = time(); }
+	if( $time === NULL ) { $time = time(); }
 	return dayTime($time - (date('j', $time)-$day)*86400);
 }
 
@@ -1439,25 +1505,147 @@ function array_get($array, $index, $default=false) {
 	return isset($array[$index]) ? $array[$index] : $default;
 }
 
+/**
+ * Apply a user supplied function to every member of an array
+ * @param array $array The input array.
+ * @param callable $callback Typically, callback takes on two parameters. The array parameter's value being the first, and the key/index second.
+ * @param string $userdata If the optional userdata parameter is supplied, it will be passed as the third parameter to the callback.
+ * @param string $success TRUE on success or FALSE on failure.
+ * @return array The resulting array
+ */
 function array_apply($array, $callback, $userdata=null, &$success=null) {
 	$success	= array_walk($array, $callback, $userdata);
 	return $array;
 }
 
+/**
+ * Concat key and value in an array with a glue
+ * @param string[] $array
+ * @param string $peerGlue
+ */
 function array_peer($array, $peerGlue=': ') {
 	return array_apply($array, function(&$v, $k) use($peerGlue) { $v = $k.$peerGlue.$v; });
 }
 
+/**
+ * Make a string's first-only character uppercase
+ * @param string $str
+ * @return string
+ */
 function str_ucfirst($str) {
 	return ucfirst(strtolower($str));
 }
 
+/**
+ * Uppercase the first-only character of each word in a string
+ * @param string $str
+ * @return string
+ */
 function str_ucwords($str) {
 	return ucwords(strtolower($str));
 }
 
+/**
+ * Get the first char of a string
+ * 
+ * @param string $str
+ * @return string
+ */
+function str_first($str) {
+	return $str[0];
+}
+
+/**
+ * Get the last char of a string
+ * 
+ * @param string $str
+ * @return string
+ */
+function str_last($str) {
+	return substr($str, -1);
+}
+
+/**
+ * Reverse values
+ * @param mixed $val1
+ * @param mixed $val2
+ */
 function reverse_values(&$val1, &$val2) {
 	$tmp	= $val1;
 	$val1	= $val2;
 	$val2	= $tmp;
+}
+
+define('SESSION_WITH_COOKIE',		1<<0);
+define('SESSION_WITH_HTTPTOKEN',	1<<1);
+function startSession($type=SESSION_WITH_COOKIE) {
+// 	debug('Start session');
+	Hook::trigger(HOOK_STARTSESSION, $type);
+	if( bintest($type, SESSION_WITH_COOKIE) ) {
+		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
+		// Set session cookie parameters, HTTPS session is only HTTPS
+		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
+	}
+// 	if( bintest($type, SESSION_WITH_HTTPTOKEN) ) {
+// 		$_SERVER['HTTP_ACCEPT_AUTHORIZATION']
+		// Authorization: Bearer TOKEN
+// 		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
+// 		// Set session cookie parameters, HTTPS session is only HTTPS
+// 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
+// 	}
+
+	// PHP is unable to manage exception thrown during session_start()
+	$GLOBALS['NO_EXCEPTION']	= 1;
+	session_start();
+	$GLOBALS['NO_EXCEPTION']	= 0;
+	
+// 	debug('Session started');
+// 	if( isset($_SESSION) ) {
+// 		debug('Session started - session', $_SESSION);
+// 	} else {
+// 		debug('Session started - Session really not started');
+// 	}
+	
+// 		text('clientIP() => '.clientIP());
+		
+// 		debug('$_SESSION start', $_SESSION);
+	$initSession	= function() {
+// 			die('Init session');
+		$_SESSION	= array('ORPHEUS' => array('LAST_REGENERATEID'=>TIME, 'CLIENT_IP'=>clientIP()));
+		if( defined('SESSION_VERSION') ) {
+			$_SESSION['ORPHEUS']['SESSION_VERSION']	= SESSION_VERSION;
+		}
+	};
+	if( !isset($_SESSION['ORPHEUS']) ) {
+		$initSession();
+	} else // Outdated session version
+	if( defined('SESSION_VERSION') && (!isset($_SESSION['ORPHEUS']['SESSION_VERSION']) || floor($_SESSION['ORPHEUS']['SESSION_VERSION']) != floor(SESSION_VERSION)) ) {
+		$initSession();
+		throw new UserException('outdatedSession');
+	} else // Old session (Will be removed)
+	if( !isset($_SESSION['ORPHEUS']['CLIENT_IP']) ) {
+		$_SESSION['ORPHEUS']['CLIENT_IP']	= clientIP();
+	} else // Hack Attemp' - Session stolen
+	if( $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
+		$initSession();
+		throw new UserException('movedSession');
+	}
+// 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
+// 			// Only version >= 4.3.3 can regenerate session id without losing data
+// 			// http://php.net/manual/fr/function.session-regenerate-id.php
+// 			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
+// 				$_SESSION['ORPHEUS']['LAST_REGENERATEID']	= TIME;
+// 				session_regenerate_id();
+// 			}
+// 		}
+	unset($initSession);
+// 	if( isset($_SESSION) ) {
+// 		debug('Session Initialized - session', $_SESSION);
+// 	} else {
+// 		debug('Session Initialized - Session really not started');
+// 	}
+}
+
+function calculateAge($birthday, $relativeTo='today') {
+	return date_diff(date_create($birthday), date_create($relativeTo))->y;
 }
