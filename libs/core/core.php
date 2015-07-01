@@ -323,33 +323,6 @@ function sql_error($report, $action='') {
 // 	throw new SQLException('errorOccurredWithDB');
 }
 
-/** Limits the length of a string
- * @param $string The string to limit length.
- * @param $max The maximum length of the string.
- * @param $strend A string to append to the shortened string.
- * @return The shortened string.
-
- * Limits the length of a string and append $strend.
- * This function do it cleanly, it tries to cut before a word.
-*/
-function str_limit($string, $max, $strend='...') {
-	$max = (int) $max;
-	if( $max <= 0 ) {
-		return '';
-	}
-	if( strlen($string) <= $max ) {
-		return $string;
-	}
-	$subStr = substr($string, 0, $max);
-	if( !in_array($string[$max], array("\n", "\r", "\t", " ")) ) {
-		$lSpaceInd = strrpos($subStr, ' ');
-		if( $max-$lSpaceInd < 10 ) {
-			$subStr = substr($string, 0, $lSpaceInd);
-		}
-	}
-	return $subStr.$strend;
-}
-
 /** Escape a text
  * @param $str The string to escape.
  * @return The escaped string.
