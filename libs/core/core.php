@@ -48,27 +48,6 @@ function htmlRedirectTo($destination, $time=3, $die=0) {
 	}
 }
 
-/** Displays a variable as HTML
- * @param $message The data to display. Default value is an empty string.
- * @param $html True to add html tags. Default value is True.
- * @warning Use it only for debugs.
-
- * Displays a variable as HTML.
- * If the constant TERMINAL is defined, parameter $html is forced to False.
-*/
-function text($message = '', $html = true) {
-	if( defined("TERMINAL") ) {
-		$html = false;
-	}
-	if( !is_scalar($message) ) {
-		$message = print_r($message, 1);
-		if( $html ) {
-			$message = '<pre>'.$message.'</pre>';
-		}
-	}
-	echo $message.(($html) ? '<br />' : '')."\n";
-}
-
 /** Do a binary test
  * @param int $value The value to compare.
  * @param int $reference The reference for the comparison.

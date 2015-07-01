@@ -267,3 +267,45 @@ blockquote {
 	ob_end_clean();
 	return $content;
 }
+
+/** Displays a variable as HTML
+ * @param $message The data to display. Default value is an empty string.
+ * @param $html True to add html tags. Default value is True.
+ * @warning Use it only for debugs.
+
+ * Displays a variable as HTML.
+ * If the constant TERMINAL is defined, parameter $html is forced to False.
+*/
+function text($message = '', $html = true) {
+	if( defined("TERMINAL") ) {
+		$html = false;
+	}
+	if( !is_scalar($message) ) {
+		$message = print_r($message, 1);
+		if( $html ) {
+			$message = '<pre>'.$message.'</pre>';
+		}
+	}
+	echo $message.(($html) ? '<br />' : '')."\n";
+}
+
+function debug($s, $d=-1) {
+	if( $d !== -1 ) {
+		$s .= ': '.htmlSecret($d);
+	}
+	text($s);
+}
+
+function htmlSecret($message) {
+	if( $message===NULL ) {
+		$message = '{NULL}';
+	} else if( $message === false ) {
+		$message = '{FALSE}';
+	} else if( $message === true ) {
+		$message = '{TRUE}';
+	} else if( !is_scalar($message) ) {
+		$message = '<pre>'.print_r($message, 1).'</pre>';
+	}
+	return '<button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+// 	return '<button type="button" onclick="$(this).next().toggle(); return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+}
