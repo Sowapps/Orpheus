@@ -236,11 +236,16 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
 		<div class="panel panel-danger">
-			<div class="panel-heading">An error occurred !</div>
+			<div class="panel-heading"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
 			<div class="panel-body exception">
-				<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
+				<blockquote class="exception_message">
+					<?php echo $Exception->getMessage(); ?>
+					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
+				</blockquote>
+				<?php /*
 				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
 				<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
+				*/ ?>
 			</div>
 		</div>
 		<div class="panel panel-danger">
