@@ -151,9 +151,6 @@ define('HTTP_FORBIDDEN',				403);
 define('HTTP_NOT_FOUND',				404);
 define('HTTP_INTERNAL_SERVER_ERROR',	500);
 
-// function typeOf() {
-// }
-
 function http_response_codetext($code=null) {
 	if( $code === null ) {
 		$code	= http_response_code();
@@ -208,6 +205,9 @@ function displayExceptionAsHTML(Exception $Exception, $action) {
 	http_response_code($code);
 	convertExceptionAsHTMLPage($Exception, $code, $action);
 	die();
+}
+
+function typeOf($var) {
 }
 
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
