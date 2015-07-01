@@ -166,19 +166,20 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 	<title>An error occurred :: Orpheus</title>
 </head>
 <body style="background: #EEE;">
-	<div class="content">
+	<div class="content exception">
 		<h2>Caught an exception !</h2>
 		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
+		<span></span>
 		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
-	<div class="content">
+	<div class="content stacktrace">
 		<h2>Trace</h2>
 		<ol>
 	<?php
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
 		?>
-			<li>
+			<li><?php var_dump($trace); ?>
 				Call <?php $trace['function'].'()' ?><br />
 				<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
 			</li>
