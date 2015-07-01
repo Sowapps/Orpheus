@@ -38,7 +38,7 @@ abstract class InputRequest {
 	public function resolve() {
 		$route	= $this->findFirstMatchingRoute();
 		if( !$route ) {
-			throw new NotFoundException('global', 'noRoute');
+			throw new NotFoundException('noRoute');
 		}
 		$route->run();
 	}
