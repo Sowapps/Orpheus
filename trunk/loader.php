@@ -236,7 +236,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		if( !isset($trace['type']) ) {
 			$trace['type']	= null;
 		}
-// 		var_dump($trace);
+		var_dump($trace['args']);
 		?>
 			<li>
 				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
@@ -250,7 +250,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 <style>
 .content {
 	width: 960px;
-	padding: 10px;
+	padding: 20px;
 	margin: 40px auto;
 	background: #FFF;
 	border: 1px solid #DDD;
