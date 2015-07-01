@@ -17,7 +17,6 @@
 defifn('TIME',				$_SERVER['REQUEST_TIME']);
 define('INSIDE',			true);
 
-defifn('DEV_VERSION',		false);
 defifn('ERROR_LEVEL',		DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD_LEVEL);
 // defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);
 // defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev' || strpos($_SERVER['SCRIPT_FILENAME'], 'debug') !== false) ? DEV_LEVEL : PROD_LEVEL);

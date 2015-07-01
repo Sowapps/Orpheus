@@ -58,7 +58,9 @@ defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
 
-defifn('CHECK_MODULE_ACCESS', true);
+defifn('DEV_VERSION',			false);
+
+defifn('CHECK_MODULE_ACCESS',	true);
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
@@ -383,6 +385,8 @@ try {
 // 	if( !function_exists('log_error') ) {
 // 		die($report);
 // 	}
+	var_dump($e);echo '<br />';
+	echo '$coreAction => '.$coreAction.'<br />';
 	log_error($e, $coreAction, true);
 // 	unset($report);
 }
