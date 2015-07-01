@@ -153,6 +153,11 @@ function displayExceptionAsHTML(Exception $Exception) {
 	convertExceptionAsHTMLPage($Exception);
 	die();
 }
+
+function typeOf() {
+	
+}
+
 function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 	ob_start();
 	?>
@@ -166,14 +171,33 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
 		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
+	<div class="content">
+		<h2>Trace</h2>
+		<ol>
+	<?php
+	foreach( $Exception->getTrace() as $trace ) {
+		// file, line, function, args
+		?>
+			<li>
+				Call <?php $trace['function'].'()' ?><br />
+				<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
+			</li>
+		<?php
+	}
+	?>
+		</ol>
+	</div>
 <style>
 .content {
-	width: 1170px;
+	width: 960px;
 	padding: 10px;
 	margin: 40px auto;
 	background: #FFF;
 	border: 1px solid #DDD;
 	border-radius: 10px;
+}
+blockquote {
+	margin: 5px 10px;
 }
 </style>
 </body>
