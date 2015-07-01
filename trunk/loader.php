@@ -243,13 +243,14 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
 		<div class="panel panel-danger">
-			<div class="panel-heading">We just caught an exception !</div>
+			<div class="panel-heading">An error occurred !</div>
 			<div class="panel-body">
 				Panel content
 			</div>
 		</div>
 	</div>
 	
+	<?php /*
 	<div class="content exception">
 		<h2 class="exception_title"></h2>
 		<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
@@ -284,10 +285,16 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	?>
 		</ol>
 	</div>
+	*/ ?>
 <style>
 body {
 	background: #EEE;
 }
+.header {
+	padding-bottom: 20px;
+	border-bottom: 1px solid #e5e5e5;
+}
+/*
 .content {
 	width: 960px;
 	padding: 20px;
@@ -299,6 +306,7 @@ body {
 blockquote {
 	margin: 5px 10px;
 }
+*/
 </style>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
