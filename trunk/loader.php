@@ -184,8 +184,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 		if( !isset($trace['type']) ) {
 			$trace['type']	= null;
 		}
+		var_dump($trace);
 		?>
-			<li><?php var_dump($trace); ?>
+			<li>
 				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
 				<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
 			</li>
