@@ -319,6 +319,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e5e5e5;
 }
+.arg {
+	font-size: 0.9em;
+}
 .arg_type {
 	font-weight: bold;
 	font-size: 0.9em;
