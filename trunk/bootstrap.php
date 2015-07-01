@@ -365,25 +365,25 @@ try {
 	ob_end_clean();
 	*/
 	
-} catch( UserException $e ) {
-	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
-		ob_end_clean();
-	}
-	reportError($e);
-	$Page = getReportsHTML();
+// } catch( UserException $e ) {
+// 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
+// 		ob_end_clean();
+// 	}
+// 	reportError($e);
+// 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
 // 	debug('Index Exception line '.__LINE__);
-	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
-		$Page = ob_get_contents();
-		ob_end_clean();
-	}
+// 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
+// 		$Page = ob_get_contents();
+// 		ob_end_clean();
+// 	}
 // 	debug('Index Exception line '.__LINE__);
 // 	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
 // 	if( !function_exists('log_error') ) {
 // 		die($report);
 // 	}
-	log_error($e, $coreAction);
+	log_error($e, $coreAction, true);
 // 	unset($report);
 }
 
