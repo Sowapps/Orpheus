@@ -178,6 +178,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 	<?php
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
+		if( !isset($trace['class']) ) {
+			$trace['class']	= null;
+		}
 		?>
 			<li><?php var_dump($trace); ?>
 				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
