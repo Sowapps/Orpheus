@@ -319,6 +319,18 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e5e5e5;
 }
+.arg_value {
+	white-space: nowrap;
+	max-width: 120px;
+	max-width: 15ch;
+	text-overflow: ellipsis;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+.arg_value.nolimit {
+	max-width: none;
+}
 /*
 body {
 	background: #EEE;
@@ -339,6 +351,13 @@ blockquote {
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+	$(".arg_value").click(function() {
+		$(this).toggleClass("nolimit");
+	});
+});
+</script>
 </body>
 </html>
 	<?php
