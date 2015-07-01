@@ -321,7 +321,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 }
 .arg_type {
 	font-weight: bold;
-	font-size: 0.7em;
+	font-size: 0.9em;
 }
 .arg_value {
 	white-space: nowrap;
@@ -331,6 +331,8 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	display: inline-block;
 	overflow: hidden;
 	vertical-align: bottom;
+	
+	font-style: italic;
 	cursor: pointer;
 }
 .arg_value.nolimit {
