@@ -208,24 +208,56 @@ function displayExceptionAsHTML(Exception $Exception, $action) {
 }
 
 function typeOf($var) {
+	$type	= gettype($var);
+	if( $type === 'object' ) {
+		return get_class($var);
+	}
+	return $type;
 }
 
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	ob_start();
 	?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<title>An error occurred :: Orpheus</title>
+	
+	<meta charset="utf-8"
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
-<body style="background: #EEE;">
+<body>
+
+	<div class="container">
+		<div class="header clearfix">
+<!-- 			<nav> -->
+<!-- 				<ul class="nav nav-pills pull-right"> -->
+<!-- 					<li role="presentation" class="active"><a href="#">Home</a></li> -->
+<!-- 					<li role="presentation"><a href="#">About</a></li> -->
+<!-- 					<li role="presentation"><a href="#">Contact</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</nav> -->
+			<h3 class="text-muted">Orpheus</h3>
+		</div>
+		<div class="panel panel-danger">
+			<div class="panel-heading">We just caught an exception !</div>
+			<div class="panel-body">
+				Panel content
+			</div>
+		</div>
+	</div>
+	
 	<div class="content exception">
-		<h2 class="exception_title">Caught an exception !</h2>
+		<h2 class="exception_title"></h2>
 		<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
 		<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
 		<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
 	<div class="content stacktrace">
-		<h2>Trace</h2>
+		<h2 class="stacktrace_title">Stacktrace</h2>
 		<ol>
 	<?php
 	foreach( $Exception->getTrace() as $trace ) {
@@ -236,9 +268,14 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		if( !isset($trace['type']) ) {
 			$trace['type']	= null;
 		}
-		var_dump($trace['args']);
+		$args	= '';
+		foreach( $trace['args'] as $i => $arg ) {
+			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> <span class="arg_value">'.$arg.'</span></span>';
+// 			$args .= ($i ? ', ' : '').typeOf($arg).' '.str_limit($arg.'', 15);
+		}
+// 		var_dump($trace['args']);
 		?>
-			<li>
+			<li class="trace">
 				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
 				<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
 			</li>
@@ -248,6 +285,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		</ol>
 	</div>
 <style>
+body {
+	background: #EEE;
+}
 .content {
 	width: 960px;
 	padding: 20px;
@@ -260,6 +300,9 @@ blockquote {
 	margin: 5px 10px;
 }
 </style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>
 	<?php
@@ -286,7 +329,7 @@ function text($message = '', $html = true) {
 			$message = '<pre>'.$message.'</pre>';
 		}
 	}
-	echo $message.(($html) ? '<br />' : '')."\n";
+	echo $message.($html ? '<br />' : '')."\n";
 }
 
 function debug($s, $d=-1) {
@@ -308,4 +351,31 @@ function htmlSecret($message) {
 	}
 	return '<button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
 // 	return '<button type="button" onclick="$(this).next().toggle(); return 0;">'.t('Show').'</button><div style="display: none;">'.$message.'</div>';
+}
+
+/** Limits the length of a string
+ * @param string $string The string to limit length.
+ * @param int $max The maximum length of the string.
+ * @param int $strend A string to append to the shortened string.
+ * @return The shortened string.
+
+ * Limits the length of a string and append $strend.
+ * This function do it cleanly, it tries to cut before a word.
+*/
+function str_limit($string, $max, $strend='...') {
+	$max = (int) $max;
+	if( $max <= 0 ) {
+		return '';
+	}
+	if( strlen($string) <= $max ) {
+		return $string;
+	}
+	$subStr = substr($string, 0, $max);
+	if( !in_array($string[$max], array("\n", "\r", "\t", " ")) ) {
+		$lSpaceInd = strrpos($subStr, ' ');
+		if( $max-$lSpaceInd < 10 ) {
+			$subStr = substr($string, 0, $lSpaceInd);
+		}
+	}
+	return $subStr.$strend;
 }
