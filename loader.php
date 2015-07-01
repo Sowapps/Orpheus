@@ -160,12 +160,22 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 <head>
 	<title>An error occurred :: Orpheus</title>
 </head>
-<body style="background: #EEEEEE;">
-	<div>
+<body style="background: #EEE;">
+	<div class="content">
 		<h2>Caught an exception !</h2>
 		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
 		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
+<style>
+.content {
+	width: 1170px;
+	padding: 10px;
+	margin: 40px auto;
+	background: #FFF;
+	border: 1px solid #DDD;
+	border-radius: 10px;
+}
+</style>
 </body>
 </html>
 	<?php
