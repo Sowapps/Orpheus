@@ -3,7 +3,7 @@
 // echo '<pre>'.print_r($_SERVER, 1).'</pre>';
 // die('Bootstrap ok');
 /**
- * @file index.php
+ * @file Bootstrap.php
  * @brief The Orpheus Core
  * @author Florent Hazard
  * @copyright The MIT License, see LICENSE.txt
@@ -373,12 +373,12 @@ try {
 // 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
-// 	debug('Index Exception line '.__LINE__);
+	debug('Bootstrap Exception line '.__LINE__);
 // 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 // 		$Page = ob_get_contents();
 // 		ob_end_clean();
 // 	}
-// 	debug('Index Exception line '.__LINE__);
+// 	debug('Bootstrap Exception line '.__LINE__);
 // 	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
 // 	if( !function_exists('log_error') ) {
 // 		die($report);
