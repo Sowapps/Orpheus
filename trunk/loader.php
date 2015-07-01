@@ -157,6 +157,7 @@ function displayExceptionAsHTML(Exception $Exception) {
 </head>
 <body style="background: #EEEEEE;">
 	<div>
+		<h2>Caught an exception !</h2>
 		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
 		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
