@@ -144,21 +144,66 @@ function ob_end_to($min) {
 	}
 }
 
+// function typeOf() {
+// }
+
+function http_response_codetext($code=null) {
+	if( $code === null ) {
+		$code	= http_response_code();
+	}
+	$codeTexts	= array(
+		100	=> 'Continue',
+		101	=> 'Switching Protocols',
+		200	=> 'OK',
+		201	=> 'Created',
+		202	=> 'Accepted',
+		203	=> 'Non-Authoritative Information',
+		204	=> 'No Content',
+		205	=> 'Reset Content',
+		206	=> 'Partial Content',
+		300	=> 'Multiple Choices',
+		301	=> 'Moved Permanently',
+		302	=> 'Moved Temporarily',
+		303	=> 'See Other',
+		304	=> 'Not Modified',
+		305	=> 'Use Proxy',
+		400	=> 'Bad Request',
+		401	=> 'Unauthorized',
+		402	=> 'Payment Required',
+		403	=> 'Forbidden',
+		404	=> 'Not Found',
+		405	=> 'Method Not Allowed',
+		406	=> 'Not Acceptable',
+		407	=> 'Proxy Authentication Required',
+		408	=> 'Request Time-out',
+		409	=> 'Conflict',
+		410	=> 'Gone',
+		411	=> 'Length Required',
+		412	=> 'Precondition Failed',
+		413	=> 'Request Entity Too Large',
+		414	=> 'Request-URI Too Large',
+		415	=> 'Unsupported Media Type',
+		500	=> 'Internal Server Error',
+		501	=> 'Not Implemented',
+		502	=> 'Bad Gateway',
+		503	=> 'Service Unavailable',
+		504	=> 'Gateway Time-out',
+		505	=> 'HTTP Version not supported',
+	);
+	return isset($codeTexts[$code]) ? $codeTexts[$code] : 'Unknown';
+}
+
 function displayExceptionAsHTML(Exception $Exception, $action) {
 	$code	= $Exception->getCode();
 	if( !$code ) {
 		$code	= 500;
 	}
 	http_response_code($code);
-	convertExceptionAsHTMLPage($Exception, $action);
+	convertExceptionAsHTMLPage($Exception, $code, $action);
 	die();
 }
 
-function typeOf() {
-	
-}
-
-function convertExceptionAsHTMLPage(Exception $Exception, $action) {
+function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	ob_start();
 	?>
 <html>
@@ -167,10 +212,10 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 </head>
 <body style="background: #EEE;">
 	<div class="content exception">
-		<h2>Caught an exception !</h2>
-		<blockquote><?php echo $Exception->getMessage(); ?></blockquote>
-		<span></span>
-		<address>In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
+		<h2 class="exception_title">Caught an exception !</h2>
+		<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
+		<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
+		<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
 	<div class="content stacktrace">
 		<h2>Trace</h2>
@@ -184,7 +229,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $action) {
 		if( !isset($trace['type']) ) {
 			$trace['type']	= null;
 		}
-		var_dump($trace);
+// 		var_dump($trace);
 		?>
 			<li>
 				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
