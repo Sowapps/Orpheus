@@ -76,7 +76,7 @@ class UserException extends Exception {
  * This exception is thrown when something requested is not found.
  */
 class NotFoundException extends UserException {
-	public function __construct($domain=null, $message=null, $previous=null) {
+	public function __construct($message=null, $domain=null, $previous=null) {
 		parent::__construct($message ? $message : 'notFound', $domain, defined('HTTP_NOT_FOUND') ? HTTP_NOT_FOUND : null, $previous);
 	}
 }

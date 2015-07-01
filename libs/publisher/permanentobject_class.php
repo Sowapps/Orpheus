@@ -522,7 +522,7 @@ abstract class PermanentObject {
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($obj) ) {
-				throw new NotFoundException(static::getDomain(), 'inexistantObject');
+				throw new NotFoundException('inexistantObject', static::getDomain());
 // 				static::throwException('inexistantObject');
 			}
 		} else {
@@ -955,7 +955,7 @@ abstract class PermanentObject {
 	}
 	
 	public static function throwNotFound($message=null) {
-		throw new NotFoundException(static::getDomain(), $message);
+		throw new NotFoundException($message, static::getDomain());
 	}
 	
 	/** Translate text according to the object domain
