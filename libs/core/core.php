@@ -193,6 +193,9 @@ function formatException($e) {
 */
 function log_report($report, $file, $action='', $message='') {
 	if( !is_scalar($report) ) {
+		if( $report instanceof Exception ) {
+			$exception	= $report;
+		}
 		$report	= 'NON-SCALAR::'.stringify($report);//."\n".print_r($report, 1);
 	}
 	$Error	= array('date' => date('c'), 'report' => $report, 'action' => $action);
@@ -201,6 +204,9 @@ function log_report($report, $file, $action='', $message='') {
 		file_put_contents($logFilePath, json_encode($Error)."\n", FILE_APPEND);
 	} catch( Exception $e ) {
 		$Error['report'] .= "<br />\n<b>And we met an error logging this report:</b><br />\n".stringify($e);
+	}
+	if( ERROR_LEVEL == DEV_LEVEL && isset($exception) ) {
+		displayExceptionAsHTML($exception);
 	}
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( ERROR_LEVEL == DEV_LEVEL ) {
