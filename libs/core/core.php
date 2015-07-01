@@ -206,7 +206,7 @@ function log_report($report, $file, $action='', $message='') {
 		$Error['report'] .= "<br />\n<b>And we met an error logging this report:</b><br />\n".stringify($e);
 	}
 	if( ERROR_LEVEL == DEV_LEVEL && isset($exception) ) {
-		displayExceptionAsHTML($exception);
+		displayExceptionAsHTML($exception, $action);
 	}
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( ERROR_LEVEL == DEV_LEVEL ) {
