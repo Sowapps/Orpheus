@@ -233,29 +233,50 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 
 	<div class="container">
 		<div class="header clearfix">
-<!-- 			<nav> -->
-<!-- 				<ul class="nav nav-pills pull-right"> -->
-<!-- 					<li role="presentation" class="active"><a href="#">Home</a></li> -->
-<!-- 					<li role="presentation"><a href="#">About</a></li> -->
-<!-- 					<li role="presentation"><a href="#">Contact</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</nav> -->
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
 		<div class="panel panel-danger">
 			<div class="panel-heading">An error occurred !</div>
-			<div class="panel-body">
-				Panel content
+			<div class="panel-body exception">
+				<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
+				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
+				<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
+			</div>
+		</div>
+		<div class="panel panel-danger">
+			<div class="panel-heading">Here is the stacktrace...</div>
+			<div class="panel-body exception">
+				<ol>
+	<?php
+	foreach( $Exception->getTrace() as $trace ) {
+		// file, line, function, args
+		if( !isset($trace['class']) ) {
+			$trace['class']	= null;
+		}
+		if( !isset($trace['type']) ) {
+			$trace['type']	= null;
+		}
+		$args	= '';
+		foreach( $trace['args'] as $i => $arg ) {
+			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> <span class="arg_value">'.$arg.'</span></span>';
+// 			$args .= ($i ? ', ' : '').typeOf($arg).' '.str_limit($arg.'', 15);
+		}
+// 		var_dump($trace['args']);
+		?>
+					<li class="trace">
+						Call <?php echo $trace['class'].$trace['type'].$trace['function'].'('.$args.')' ?><br />
+						<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
+					</li>
+		<?php
+	}
+	?>
+				</ol>
 			</div>
 		</div>
 	</div>
 	
 	<?php /*
 	<div class="content exception">
-		<h2 class="exception_title"></h2>
-		<blockquote class="exception_message"><?php echo $Exception->getMessage(); ?></blockquote>
-		<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
-		<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
 	</div>
 	<div class="content stacktrace">
 		<h2 class="stacktrace_title">Stacktrace</h2>
