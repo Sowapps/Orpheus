@@ -21,12 +21,12 @@ abstract class ControllerRoute {
 	
 	public function run(InputRequest $request) {
 		if( !$this->controller || !class_exists($this->controller, true) ) {
-			throw NotFoundException('controllerNotFound');
+			throw new NotFoundException('The controller "'.$this->controller.'" was not found');
 		}
 		$class	= $this->controller;
 		$controller = new $class();
 		if( !($controller instanceof Controller) ) {
-			throw Exception('controllerNotFound');
+			throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
 		}
 		$controller->run($request);
 	}
