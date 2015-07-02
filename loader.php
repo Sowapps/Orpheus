@@ -245,6 +245,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 				</blockquote>
 				<?php
 // 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
+				
 				highlight_source(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
 				?>
 				<?php /*
@@ -381,6 +382,23 @@ $(function() {
 	return $content;
 }
 
+function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
+	$from	= max($lineNumber-$linesBefore, 0);
+	$to		= $lineNumber+$linesAfter;
+	$string	= getFileLines($file, $from, $to, $count);
+	$lines	= '';
+	for( $line=$from; $line<$from+$count; $line++ ) {
+		$lines	.= '<li>'.$line.'</li>';
+	}
+	$string	= highlight_source($string, true);
+	return <<<EOF
+<div class="sourcecode">
+	<ul class="sourcecode_lines">{$lines}</ul>
+ 	{$string}
+</div>
+EOF;
+}
+
 function highlight_source($string, $return=false) {
 // 	$string	= preg_replace();
 // 	$result	= "<?php\n".$string;
@@ -408,6 +426,30 @@ function highlight_source($string, $return=false) {
 		$result	.= $add;
 	}
 	return highlight_string("<?php\n".$result, $return);
+}
+
+// function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
+// 	return getFileLines($file, $lineNumber-$linesBefore, $lineNumber+$linesAfter);
+// }
+
+function getFileLines($file, $from, $to, &$count=0) {
+	if( is_string($file) ) {
+		$file	= fopen($file, 'r');
+	}
+// 	$from	= max($from, 0);
+	$lines	= '';
+	$c		= 0;
+	while( ($line=fgets($file)) !== false ) {
+		$c++;
+		if( $c >= $from ) {
+			if( $c >= $to ) {
+				break;
+			}
+			$lines	.= $line;
+			$count++;
+		}
+	}
+	return $lines;
 }
 
 /** Displays a variable as HTML
@@ -477,26 +519,4 @@ function str_limit($string, $max, $strend='...') {
 		}
 	}
 	return $subStr.$strend;
-}
-
-function getFileLineContext($file, $lineNumber, $linesBefore, $linesAfter) {
-	return getFileLines($file, $lineNumber-$linesBefore, $lineNumber+$linesAfter);
-}
-
-function getFileLines($file, $from, $to) {
-	if( is_string($file) ) {
-		$file	= fopen($file, 'r');
-	}
-	$lines	= '';
-	$c		= 0;
-	while( ($line=fgets($file)) !== false ) {
-		$c++;
-		if( $c >= $from ) {
-			if( $c >= $to ) {
-				break;
-			}
-			$lines	.= $line;
-		}
-	}
-	return $lines;
 }
