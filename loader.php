@@ -343,6 +343,11 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 .arg_value.nolimit {
 	max-width: none;
 }
+.sourcecode_lines {
+	float: left;
+	padding: 0;
+	list-style: none;
+}
 code {
 	width: 100%;
 	display: block;
