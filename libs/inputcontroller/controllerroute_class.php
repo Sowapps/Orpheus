@@ -12,8 +12,8 @@ abstract class ControllerRoute {
 		$this->path			= $path;
 		$this->controller	= $controller;
 	}
-	/* TEST */
 	public abstract function isMatchingRequest(InputRequest $request, &$values=array());
+	
 	
 	public static function registerConfig($name, array $config) {
 		throw new Exception('The class "'.get_called_class().'" should override the `registerConfig()` method from "'.get_class().'"');
