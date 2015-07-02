@@ -345,6 +345,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 }
 .sourcecode {
 	overflow: hidden;
+	display: flex;
 }
 .sourcecode_lines {
 	float: left;
@@ -358,6 +359,7 @@ code {
 	width: 100%;
 	display: block;
 	font-size: 12px;
+	white-space: nowrap;
 }
 /* Hide php tag */
 code > span > span:first-child {
