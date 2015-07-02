@@ -40,9 +40,9 @@ abstract class ControllerRoute {
 		$routes	= $conf->asArray();
 		foreach( $routes as $type => $typeRoutes ) {
 			$routeClass	= $type.'Route';
-			debug('$type => '.$type);
+// 			debug('$type => '.$type);
 			if( !class_exists($routeClass, true) || !in_array(get_class(), class_parents($routeClass)) ) {
-				debug('Invalid class');
+// 				debug('Invalid class');
 				continue;
 			}
 			foreach( $typeRoutes as $routeName => $routeConfig ) {
