@@ -12,6 +12,7 @@ addAutoload('OutputResponse',				'inputcontroller/outputresponse');
 
 addAutoload('HTTPRoute',					'inputcontroller/http/httproute');
 addAutoload('HTTPRequest',					'inputcontroller/http/httprequest');
+addAutoload('HTTPController',				'inputcontroller/http/httpcontroller');
 addAutoload('HTTPResponse',					'inputcontroller/http/httpresponse');
 addAutoload('HTMLHTTPResponse',				'inputcontroller/http/htmlhttpresponse');
 
