@@ -222,7 +222,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		ob_end_clean();
 	}
 // 	debug('ob_get_level() => '.ob_get_level());
-// 		<?php debug_print_backtrace(); ?>
+// 		debug_print_backtrace();
 	ob_start();
 	?>
 <!DOCTYPE html>
