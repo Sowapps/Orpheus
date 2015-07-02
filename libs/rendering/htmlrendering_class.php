@@ -20,7 +20,7 @@ class HTMLRendering extends Rendering {
 	/** 
 	 * Render the model.
 	 * @copydoc Rendering::render()
-	*/
+	 */
 	public function render($model=null, $env=array()) {
 		ob_start();
 		$this->display($model, $env);
@@ -36,8 +36,12 @@ class HTMLRendering extends Rendering {
 			throw new Exception("Invalid Rendering Model");
 		}
 		extract($env, EXTR_SKIP);
-		
+		$prevLayouts	= count(static::$layoutStack);
 		include static::getModelPath($model);
+		$currentLayouts	= count(static::$layoutStack);
+		while( $currentLayouts > $prevLayouts && static::endCurrentLayout() ) {
+			$currentLayouts--;
+		}
 	}
 	
 	public static function getModelPath($model) {

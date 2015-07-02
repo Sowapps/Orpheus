@@ -395,20 +395,20 @@ try {
 // 	unset($report);
 }
 
-try {
-	$coreAction = 'displaying_'.$Module;
-	if( class_exists('Hook') ) {
-		Hook::trigger('showRendering', true);
-	}
-	if( class_exists($RENDERING) ) {
-		$RENDERING::doShow();//Generic final display.
-// 	if( class_exists('Rendering') ) {
-// 		Rendering::doShow();//Generic final display.
-	} else {
-		echo $Page;
-	}
+// try {
+// 	$coreAction = 'displaying_'.$Module;
+// 	if( class_exists('Hook') ) {
+// 		Hook::trigger('showRendering', true);
+// 	}
+// 	if( class_exists($RENDERING) ) {
+// 		$RENDERING::doShow();//Generic final display.
+// // 	if( class_exists('Rendering') ) {
+// // 		Rendering::doShow();//Generic final display.
+// 	} else {
+// 		echo $Page;
+// 	}
 	
-} catch(Exception $e) {
-	@log_error(get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
-// 	die('A fatal display error occured.');
-}
+// } catch(Exception $e) {
+// 	@log_error(get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
+// // 	die('A fatal display error occured.');
+// }
