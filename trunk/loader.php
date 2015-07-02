@@ -379,31 +379,31 @@ $(function() {
 
 function highlight_source($string, $return=false) {
 // 	$string	= preg_replace();
-	$result	= "<?php\n".$string;
-// 	$length	= strlen($string);
-// 	$spaces	= 0;
-// 	$tabSpaces	= 4;
-// 	$result	= '';
-// 	for( $i=0; $i<$length; $i++ ) {
-// 		$char	= $string[$i];
-// 		$add	= $char;
-// 		if( $char === "\t" ) {
-// 			$add	= str_pad('', $tabSpaces-$spaces, ' ', STR_PAD_RIGHT);
-// 			$spaces	= 0;
+// 	$result	= "<?php\n".$string;
+	$length	= strlen($string);
+	$spaces	= 0;
+	$tabSpaces	= 4;
+	$result	= '';
+	for( $i=0; $i<$length; $i++ ) {
+		$char	= $string[$i];
+		$add	= $char;
+		if( $char === "\t" ) {
+			$add	= str_pad('', $tabSpaces-$spaces, ' ', STR_PAD_RIGHT);
+			$spaces	= 0;
 			
-// 		} else
-// 		if( $char === "\r" || $char === "\n" ) {
-// // 		if( $spaces >= $tabSpaces || in_array($char, array("\t", "\r", "\n")) ) {
-// 			$spaces	= 0;
-// 		} else {
-// 			$spaces++;
-// 		}
-// 		if( $spaces >= $tabSpaces ) {
-// 			$spaces	= 0;
-// 		}
-// 		$result	.= $add;
-// 	}
-	return highlight_string($result, $return);
+		} else
+		if( $char === "\r" || $char === "\n" ) {
+// 		if( $spaces >= $tabSpaces || in_array($char, array("\t", "\r", "\n")) ) {
+			$spaces	= 0;
+		} else {
+			$spaces++;
+		}
+		if( $spaces >= $tabSpaces ) {
+			$spaces	= 0;
+		}
+		$result	.= $add;
+	}
+	return highlight_string("<?php\n".$result, $return);
 }
 
 /** Displays a variable as HTML
