@@ -260,6 +260,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			<div class="panel-body exception">
 				<ol>
 	<?php
+	/*
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
@@ -279,6 +280,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					</li>
 		<?php
 	}
+	*/
 	?>
 				</ol>
 			</div>
