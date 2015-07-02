@@ -403,6 +403,7 @@ function highlight_source($string, $return=false) {
 		$result	.= $add;
 	}
 	// The ; forces the parser to create another span element
+	// The " " (space) forces the parser to create a multiline span element
 	return highlight_string("<?php\n ".$result, $return);
 }
 
