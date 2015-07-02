@@ -203,8 +203,7 @@ function displayExceptionAsHTML(Exception $Exception, $action) {
 		$code	= 500;
 	}
 	http_response_code($code);
-	convertExceptionAsHTMLPage($Exception, $code, $action);
-	die();
+	die(convertExceptionAsHTMLPage($Exception, $code, $action));
 }
 
 function typeOf($var) {
