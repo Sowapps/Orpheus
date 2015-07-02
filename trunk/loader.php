@@ -350,12 +350,13 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	float: left;
 	padding: 2px;
 	list-style: none;
-	font-size: 90%;
+	font-size: 12px;
 	margin: 0;
 }
 code {
 	width: 100%;
 	display: block;
+	font-size: 12px;
 }
 /* Hide php tag */
 code > span > span:first-child {
@@ -400,6 +401,7 @@ $(function() {
 function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 	$from	= max($lineNumber-$linesBefore, 0);
 	$to		= $lineNumber+$linesAfter;
+	$count	= 0;
 	$string	= getFileLines($file, $from, $to, $count);
 	$lines	= '';
 	for( $line=$from; $line<$from+$count; $line++ ) {
