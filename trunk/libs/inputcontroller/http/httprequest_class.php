@@ -32,7 +32,7 @@ class HTTPRequest extends InputRequest {
 	 * @return Route
 	 */
 	public function findFirstMatchingRoute() {
-		debug('Routes', $this->getRoutes());
+// 		debug('Routes', $this->getRoutes());
 		foreach( $this->getRoutes() as $methodRoutes ) {
 			if( !isset($methodRoutes[$this->method]) ) { continue; }
 			/* @var $route HTTPRoute */
@@ -95,6 +95,7 @@ class HTTPRequest extends InputRequest {
 
 	public static function handleCurrentRequest() {
 		try {
+			HTTPRoute::initialize();
 			static::$mainRequest	= static::generateFromEnvironment();
 	//		debug('$request', static::$mainRequest);
 	//		die();
