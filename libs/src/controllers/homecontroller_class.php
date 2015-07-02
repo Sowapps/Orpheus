@@ -4,12 +4,11 @@
 class HomeController extends HTTPController {
 	
 	/**
-	 * @see Controller::run()
+	 * @see HTTPController::run()
 	 */
-// 	public function run($request) {
-		
-
-// 	}
+	public function run(HTTPRequest $request) {
+		return new HTMLHTTPResponse('Everything is ok.');
+	}
 
 	
 }
