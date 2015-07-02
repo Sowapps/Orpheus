@@ -62,16 +62,6 @@ class HTTPRoute extends ControllerRoute {
 		return false;
 	}
 	
-	public static function registerConfig($name, array $config) {
-		if( empty($config['path']) ) {
-			throw new Exception('Missing a valid `path` in configuration of route "'.$name.'"');
-		}
-		if( empty($config['controller']) ) {
-			throw new Exception('Missing a valid `controller` in configuration of route "'.$name.'"');
-		}
-		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null);
-	}
-	
 	public static function register($name, $path, $controller, $methods=null) {
 		if( $methods && !is_array($methods) ) {
 			$methods	= array($methods);
