@@ -409,7 +409,7 @@ function highlight_source($string, $return=false) {
 	}
 	// The ; forces the parser to create another span element
 	// The " " (space) forces the parser to create a multiline span element
-	$str	= preg_replace("#<?php<br />#", '', highlight_string("<?php\n".$result, $return), 1, $count);
+	$str	= preg_replace("#<\?php<br />#", '', highlight_string("<?php\n".$result, $return), 1, $count);
 	debug('Replaced => '.$count);
 	echo escapeText($str);
 	return $str;
