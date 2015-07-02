@@ -38,7 +38,12 @@ foreach(HTMLRendering::$cssURLs as $url) {
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.2/jquery-1.11.2.min.js"></script>
 </head>
+<?php
+/*
 <body class="<?php echo $Module; ?>">
+*/
+?>
+<body>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
@@ -63,7 +68,7 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 
 <div class="container">
 
-<?php echo $Page; ?>
+<?php echo $Content; ?>
 
 </div>
 	<!-- JS libraries -->
