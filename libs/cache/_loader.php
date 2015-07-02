@@ -2,6 +2,7 @@
 /* Loader File for the cache sources
  */
 
-addAutoload('Cache',						'cache/cache_class.php');
-addAutoload('FSCache',						'cache/fscache_class.php');
-addAutoload('APCache',						'cache/apcache_class.php');
+debug('Cache lib ok');
+addAutoload('Cache',	'cache/cache');
+addAutoload('FSCache',	'cache/fscache');
+addAutoload('APCache',	'cache/apcache');
