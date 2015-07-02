@@ -98,10 +98,14 @@ abstract class ConfigCore {
 // 			return array();
 // 		}
 // 		$parsed = yaml_parse_file($confPath);
-		$cache	= new APCache('config', $source);
-		if( !$cache->get($parsed) ) {
+		if( class_exists('APCache', true) ) {
+			$cache	= new APCache('config', $source);
+			if( !$cache->get($parsed) ) {
+				$parsed	= static::parse($source);
+				$cache->set($parsed);
+			}
+		} else {
 			$parsed	= static::parse($source);
-			$cache->set($parsed);
 		}
 		$this->add($parsed);
 // 		return true;

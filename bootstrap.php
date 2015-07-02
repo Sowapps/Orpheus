@@ -154,17 +154,18 @@ spl_autoload_register(
 */
 function($className) {
 	try {
-		global $AUTOLOADS, $AUTOLOADSFROMCONF;
+		global $AUTOLOADS;
+// 		, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
-		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
-			try {
-				$alConf = Config::build('autoloads', true);
-				$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
-				$AUTOLOADSFROMCONF = true;
-			} catch( Exception $e ) {
-				// Might be not found (default)
-			}
-		}
+// 		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
+// 			try {
+// 				$AUTOLOADSFROMCONF = true;
+// 				$alConf = Config::build('autoloads', true);
+// 				$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
+// 			} catch( Exception $e ) {
+// 				// Might be not found (default)
+// 			}
+// 		}
 		// PHP's class' names are not case sensitive.
 		$bFile = strtolower($className);
 		
