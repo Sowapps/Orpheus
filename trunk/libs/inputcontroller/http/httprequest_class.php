@@ -22,7 +22,7 @@ class HTTPRequest extends InputRequest {
 	}
 	
 	public function __toString() {
-		return $this->method.'('.$this->path.')';
+		return $this->method.'("'.$this->path.'")';
 	}
 
 	
@@ -32,6 +32,7 @@ class HTTPRequest extends InputRequest {
 	 * @return Route
 	 */
 	public function findFirstMatchingRoute() {
+		debug('Routes', $this->getRoutes());
 		foreach( $this->getRoutes() as $methodRoutes ) {
 			if( !isset($methodRoutes[$this->method]) ) { continue; }
 			/* @var $route HTTPRoute */
