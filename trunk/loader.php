@@ -272,7 +272,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		}
 		$args	= '';
 		foreach( $trace['args'] as $i => $arg ) {
-			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> "<span class="arg_value">'.(is_array($arg) ? '['.count($arg).']' : $arg).'</span>"</span>';
+			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span>'.(is_array($arg) ? '['.count($arg).']' : ' "<span class="arg_value">'.$arg.'</span>"').'</span>';
 		}
 		?>
 					<li class="trace">
@@ -403,7 +403,7 @@ function highlight_source($string, $return=false) {
 		$result	.= $add;
 	}
 	// The ; forces the parser to create another span element
-	return highlight_string("<?php ;\n".$result, $return);
+	return highlight_string("<?php\n ".$result, $return);
 }
 
 // function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
