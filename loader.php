@@ -348,10 +348,11 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 }
 .sourcecode_lines {
 	float: left;
-	padding: 2px;
+	padding: 2px 6px;
 	list-style: none;
 	font-size: 12px;
 	margin: 0;
+	border-right: 1px solid #CCC;
 }
 code {
 	width: 100%;
