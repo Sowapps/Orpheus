@@ -245,7 +245,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 				</blockquote>
 				<?php
 // 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
-				highlight_string(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
+				highlight_source(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
 				?>
 				<?php /*
 				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
@@ -375,6 +375,34 @@ $(function() {
 	$content	= ob_get_contents();
 	ob_end_clean();
 	return $content;
+}
+
+function highlight_source($string, $return=false) {
+	$string	= preg_replace();
+	$length	= strlen($string);
+	$spaces	= 0;
+	$tabSpaces	= 4;
+	$result	= '';
+	for( $i=0; $i<$length; $i++ ) {
+		$char	= $string[$i];
+		$add	= $char;
+		if( $char === "\t" ) {
+			$add	= str_pad('', $tabSpaces-$spaces, ' ', STR_PAD_RIGHT);
+			$spaces	= 0;
+			
+		} else
+		if( $char === "\r" || $char === "\n" ) {
+// 		if( $spaces >= $tabSpaces || in_array($char, array("\t", "\r", "\n")) ) {
+			$spaces	= 0;
+		} else {
+			$spaces++;
+		}
+		if( $spaces >= $tabSpaces ) {
+			$spaces	= 0;
+		}
+		$result	.= $add;
+	}
+	return highlight_string($result, $return);
 }
 
 /** Displays a variable as HTML
