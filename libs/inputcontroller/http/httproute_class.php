@@ -60,6 +60,7 @@ class HTTPRoute extends ControllerRoute {
 			return false;
 		}
 		debug('Method ok');
+		debug('Path regex '.'#^'.$this->pathRegex.'$#i');
 		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
 			unset($matches[0]);
 			$values	= array_combine($this->pathVariables, $matches);
