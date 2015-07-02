@@ -409,7 +409,9 @@ function highlight_source($string, $return=false) {
 	}
 	// The ; forces the parser to create another span element
 	// The " " (space) forces the parser to create a multiline span element
-	return preg_replace("#&lt;\?php<br \/>\n#", '', highlight_string("<?php\n".$result, $return), 1);
+	$str	= preg_replace("#&lt;\?php<br \/>\n#", '', highlight_string("<?php\n".$result, $return), 1);
+	echo escapeText($str);
+	return $str;
 }
 
 // function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
