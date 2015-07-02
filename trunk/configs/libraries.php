@@ -13,6 +13,7 @@ $Librairies	= array(
 	'core',
 	'config',
 	'hooks',
+	'cache',
 	// Config
 	'initernationalization',
 	'yaml',
