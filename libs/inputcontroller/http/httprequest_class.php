@@ -92,7 +92,7 @@ class HTTPRequest extends InputRequest {
 		try {
 			static::$mainRequest	= static::generateFromEnvironment();
 	//		debug('$request', static::$mainRequest);
-	//		die();
+	//re		die();
 			$route	= static::$mainRequest->findFirstMatchingRoute();
 			if( !$route ) {
 				throw new NotFoundException('routeNotFound');
