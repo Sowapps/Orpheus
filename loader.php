@@ -331,9 +331,12 @@ code {
 	overflow-x: scroll;
 }
 /* Hide php tag */
-code > span > span:first-child {
-	margin: -19px 0 0 -6px;
-	display: inline-block;
+/* code > span > span:first-child { */
+code > span > span:first-child,
+code > span > span:nth-child(2) {
+/* 	margin: -19px 0 0 -6px; */
+/* 	display: inline-block; */
+	display: none;
 }
 </style>
 
@@ -399,6 +402,7 @@ function highlight_source($string, $return=false) {
 		}
 		$result	.= $add;
 	}
+	// The ; forces the parser to create another span element
 	return highlight_string("<?php ;\n".$result, $return);
 }
 
