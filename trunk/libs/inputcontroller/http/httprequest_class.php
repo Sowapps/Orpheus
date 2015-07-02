@@ -20,6 +20,10 @@ class HTTPRequest extends InputRequest {
 		parent::__construct($path, $parameters, $input);
 		$this->setMethod($method);
 	}
+	
+	public function __toString() {
+		return $this->method.'('.$this->path.')';
+	}
 
 	
 	/**
@@ -95,7 +99,7 @@ class HTTPRequest extends InputRequest {
 	//		die();
 			$route	= static::$mainRequest->findFirstMatchingRoute();
 			if( !$route ) {
-				throw new NotFoundException('routeNotFound');
+				throw new NotFoundException('No route matches the current request '.static::$mainRequest);
 			}
 			$response	= $route->run(static::$mainRequest);
 		} catch( Exception $e ) {
