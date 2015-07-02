@@ -243,6 +243,12 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					<?php echo $Exception->getMessage(); ?>
 					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
 				</blockquote>
+				<code>
+				<?php
+// 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
+				highlight_string(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
+				?>
+				</code>
 				<?php /*
 				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
 				<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
@@ -440,4 +446,26 @@ function str_limit($string, $max, $strend='...') {
 		}
 	}
 	return $subStr.$strend;
+}
+
+function getFileLineContext($file, $lineNumber, $linesBefore, $linesAfter) {
+	return getFileLines($file, $lineNumber-$linesBefore, $lineNumber+$linesAfter);
+}
+
+function getFileLines($file, $from, $to) {
+	if( is_string($file) ) {
+		$file	= fopen($file, 'r');
+	}
+	$lines	= '';
+	$c		= 0;
+	while( ($line=fgets($file)) !== false ) {
+		$c++;
+		if( $c >= $from ) {
+			if( $c >= $to ) {
+				break;
+			}
+			$lines	.= $line;
+		}
+	}
+	return $lines;
 }
