@@ -55,6 +55,6 @@ class HTMLHTTPResponse extends HTTPResponse {
 	
 	public static function renderWithPHP($layout, $values=array()) {
 		$rendering	= new HTMLRendering();
-		return $rendering->render($layout, $values);
+		return new static($rendering->render($layout, $values));
 	}
 }
