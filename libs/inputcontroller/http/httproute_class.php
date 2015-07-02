@@ -15,6 +15,7 @@ class HTTPRoute extends ControllerRoute {
 	protected function __construct($name, $path, $controller, $method) {
 		parent::__construct($name, $path, $controller);
 		$this->method	= $method;
+		$this->generatePathRegex();
 	}
 	
 	public function __toString() {
