@@ -379,7 +379,7 @@ try {
 // 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
-	debug('Bootstrap Exception line '.__LINE__);
+// 	debug('Bootstrap Exception line '.__LINE__);
 // 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
 // 		$Page = ob_get_contents();
 // 		ob_end_clean();
@@ -389,8 +389,8 @@ try {
 // 	if( !function_exists('log_error') ) {
 // 		die($report);
 // 	}
-	var_dump($e);echo '<br />';
-	echo '$coreAction => '.$coreAction.'<br />';
+// 	var_dump($e);echo '<br />';
+// 	echo '$coreAction => '.$coreAction.'<br />';
 	log_error($e, $coreAction, true);
 // 	unset($report);
 }
