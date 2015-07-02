@@ -275,7 +275,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		?>
 					<li class="trace">
 						Call <?php echo $trace['class'].$trace['type'].$trace['function'].'('.$args.')' ?><br />
-						<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
+						<address>In <?php echo isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file'; ?></address>
 					</li>
 		<?php
 	}
