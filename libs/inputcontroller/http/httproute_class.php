@@ -58,19 +58,19 @@ class HTTPRoute extends ControllerRoute {
 	 */
 	public function isMatchingRequest(InputRequest $request, &$values=array()) {
 		// Method match && Path match (variables included)
-		debug('Route '.$this.' is matching request '.$request);
+// 		debug('Route '.$this.' is matching request '.$request);
 		if( $this->method !== $request->getMethod() ) {
 			return false;
 		}
-		debug('Method ok');
-		debug('Path regex '.'#^'.$this->pathRegex.'$#i');
+// 		debug('Method ok');
+// 		debug('Path regex '.'#^'.$this->pathRegex.'$#i');
 		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
 			unset($matches[0]);
 			$values	= array_combine($this->pathVariables, $matches);
-			debug('Path ok');
+// 			debug('Path ok');
 			return true;
 		}
-		debug('Path does not match');
+// 		debug('Path does not match');
 		return false;
 	}
 	
