@@ -407,12 +407,13 @@ function highlight_source($string, $return=false) {
 		}
 		$result	.= $add;
 	}
-	// The ; forces the parser to create another span element
+	// NOT USED - The ; forces the parser to create another span element
 	// The " " (space) forces the parser to create a multiline span element
-	$str	= preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, $return), 1, $count);
-	debug('Replaced => '.$count);
-	echo escapeText($str);
-	return $str;
+// 	$str	= preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, $return), 1, $count);
+// 	debug('Replaced => '.$count);
+// 	echo escapeText($str);
+// 	return $str;
+	return preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, $return), 1, $count);
 }
 
 // function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
