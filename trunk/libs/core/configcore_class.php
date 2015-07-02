@@ -106,13 +106,6 @@ abstract class ConfigCore {
 		$this->add($parsed);
 // 		return true;
 	}
-
-
-	/**	Parse configuration from given source.
-	 * @param $source An identifier or a path to get the source.
-	 * @return The loaded configuration array.
-	 */
-	public abstract static function parse($source);
 	
 	/**	Loads new configuration source
 	 * @param $source An identifier to get the source.
@@ -121,6 +114,13 @@ abstract class ConfigCore {
 	 * Loads a configuration from a source identified with $source.
 	 */
 	public abstract function load($source, $cached=true);
+
+
+	/**	Parse configuration from given source.
+	 * @param $source An identifier or a path to get the source.
+	 * @return The loaded configuration array.
+	 */
+	public abstract static function parse($source);
 	
 	/**	Checks if configuration source exists
 	 * @param $source An identifier to check the source.
