@@ -75,7 +75,8 @@ set_error_handler(
 	System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline) {
-	die(__FILE__.' : '.__LINE__);
+	echo 'error_handler<br />';
+// 	die(__FILE__.' : '.__LINE__);
 // 	debug('(set_error_handler) Error occurred, ob level : '.ob_get_level());
 // 	ob_end_to(1);
 // 	debug('(set_error_handler) Decreased ob level : '.ob_get_level());
