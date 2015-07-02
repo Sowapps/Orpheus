@@ -216,6 +216,8 @@ function typeOf($var) {
 }
 
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
+	// TODO: Add resubmit button
+	// TODO: Display already sent headers and contents
 	ob_start();
 	?>
 <!DOCTYPE html>
@@ -244,14 +246,8 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
 				</blockquote>
 				<?php
-// 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
 				echo formatSourceAsHTML($Exception->getFile(), $Exception->getLine(), 4, 2);
-// 				highlight_source(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
 				?>
-				<?php /*
-				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
-				<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
-				*/ ?>
 			</div>
 		</div>
 		<div class="panel panel-danger">
@@ -270,9 +266,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		$args	= '';
 		foreach( $trace['args'] as $i => $arg ) {
 			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> "<span class="arg_value">'.$arg.'</span>"</span>';
-// 			$args .= ($i ? ', ' : '').typeOf($arg).' '.str_limit($arg.'', 15);
 		}
-// 		var_dump($trace['args']);
 		?>
 					<li class="trace">
 						Call <?php echo $trace['class'].$trace['type'].$trace['function'].'('.$args.')' ?><br />
@@ -285,39 +279,6 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			</div>
 		</div>
 	</div>
-	
-	<?php /*
-	<div class="content exception">
-	</div>
-	<div class="content stacktrace">
-		<h2 class="stacktrace_title">Stacktrace</h2>
-		<ol>
-	<?php
-	foreach( $Exception->getTrace() as $trace ) {
-		// file, line, function, args
-		if( !isset($trace['class']) ) {
-			$trace['class']	= null;
-		}
-		if( !isset($trace['type']) ) {
-			$trace['type']	= null;
-		}
-		$args	= '';
-		foreach( $trace['args'] as $i => $arg ) {
-			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> <span class="arg_value">'.$arg.'</span></span>';
-// 			$args .= ($i ? ', ' : '').typeOf($arg).' '.str_limit($arg.'', 15);
-		}
-// 		var_dump($trace['args']);
-		?>
-			<li class="trace">
-				Call <?php echo $trace['class'].$trace['type'].$trace['function'].'()' ?><br />
-				<address>In <?php echo $trace['file']; ?> at line <?php echo $trace['line']; ?></address>
-			</li>
-		<?php
-	}
-	?>
-		</ol>
-	</div>
-	*/ ?>
 <style>
 .header {
 	padding-bottom: 20px;
@@ -367,22 +328,6 @@ code > span > span:first-child {
 	margin: -19px 0 0 -6px;
 	display: inline-block;
 }
-/*
-body {
-	background: #EEE;
-}
-.content {
-	width: 960px;
-	padding: 20px;
-	margin: 40px auto;
-	background: #FFF;
-	border: 1px solid #DDD;
-	border-radius: 10px;
-}
-blockquote {
-	margin: 5px 10px;
-}
-*/
 </style>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>

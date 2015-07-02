@@ -8,31 +8,41 @@ class YAML extends ConfigCore {
 	
 	/**	Loads configuration from new source.
 	 * @param $source An identifier or a path to get the source.
+	 * @param $cached True if this configuration should be cached.
 	 * @return The loaded configuration array.
 	 * 
 	 * If an identifier, loads a configuration from a .yaml file in CONFDIR.
 	 * Else $source is a full path to the YAML configuration file.
 	*/
-	public function load($source) {		
-// 		// Full path given
-// 		if( is_readable($source) ) {
-// 			$confPath = $source;
+// 	public function load($source, $cached=true) {		
+// // 		// Full path given
+// // 		if( is_readable($source) ) {
+// // 			$confPath = $source;
 			
-// 		// File in configs folder
-// 		} else if( is_readable(static::getFilePath($source)) ) {
-// 			$confPath = static::getFilePath($source);
-// 			if( empty($confPath) ) {
-// 				return false;
-// 			}
+// // 		// File in configs folder
+// // 		} else if( is_readable(static::getFilePath($source)) ) {
+// // 			$confPath = static::getFilePath($source);
+// // 			if( empty($confPath) ) {
+// // 				return false;
+// // 			}
 			
-// 		/// File not found
-// 		} else {
-// 			return array();
-// 		}
-// 		$parsed = yaml_parse_file($confPath);
-		$parsed = yaml_parse_file(static::getFilePath($source));
-		$this->add($parsed);
-		return true;
+// // 		/// File not found
+// // 		} else {
+// // 			return array();
+// // 		}
+// // 		$parsed = yaml_parse_file($confPath);
+// 		return true;
+// 	}
+
+	/**	Parse configuration from given source.
+	 * @param $source An identifier or a path to get the source.
+	 * @return The loaded configuration array.
+	 *
+	 * If an identifier, load a configuration from a .yaml file in CONFDIR.
+	 * Else $source is a full path to the YAML configuration file.
+	 */
+	public static function parse($source) {	
+		return yaml_parse_file(static::getFilePath($source));
 	}
 
 	/**	Checks if configuration source exists
