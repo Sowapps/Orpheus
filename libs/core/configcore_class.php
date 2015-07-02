@@ -113,7 +113,7 @@ abstract class ConfigCore {
 	 * 
 	 * Loads a configuration from a source identified with $source.
 	 */
-	public abstract function load($source, $cached=true);
+// 	public abstract function load($source, $cached=true);
 
 
 	/**	Parse configuration from given source.
