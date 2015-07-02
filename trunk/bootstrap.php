@@ -111,7 +111,7 @@ register_shutdown_function(
 function() {
 	// If there is an error
 	$error = error_get_last();
-// 	debug('(register_shutdown_function) Shutdown script');
+	echo '(register_shutdown_function) Shutdown script<br />';
 // 	die(__FILE__.' : '.__LINE__);
 	if( $error ) {
 // 		debug('(register_shutdown_function) There is an error');
