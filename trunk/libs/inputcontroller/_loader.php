@@ -20,10 +20,14 @@ addAutoload('HTMLHTTPResponse',				'inputcontroller/http/htmlhttpresponse');
 // Hook::create(HOOK_ROUTEMODULE);
 
 
-function u() {
-	
+function u($routeName, $values=array()) {
+	$routes	= HTTPRoute::getRoutes();
+	if( !isset($routes[$routeName]) ) {
+		throw new Exception('Unable to find route '.$routeName);
+	}
+	$routes[$routeName]
 }
 
-function _u() {
-	
+function _u($route, $values=array()) {
+	echo u($route, $values=array());
 }

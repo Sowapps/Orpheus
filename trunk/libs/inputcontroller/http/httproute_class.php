@@ -8,6 +8,8 @@ class HTTPRoute extends ControllerRoute {
 	protected $pathRegex;
 	protected $pathVariables;
 	
+	const METHOD_GET	= 'GET';
+	
 	protected static $typesRegex	= array();
 	protected static $routes		= array();
 	protected static $knownMethods	= array('GET', 'POST', 'PUT', 'DELETE');
@@ -102,6 +104,7 @@ class HTTPRoute extends ControllerRoute {
 	}
 	
 	public static function getRoutes() {
+// 		$routes	= parent::getRoutes();
 		return static::$routes;
 	}
 	
