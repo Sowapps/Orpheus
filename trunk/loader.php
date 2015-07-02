@@ -218,6 +218,7 @@ function typeOf($var) {
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
+	debug('ob_get_level() => '.ob_get_level());
 	ob_start();
 	?>
 <!DOCTYPE html>
