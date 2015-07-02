@@ -378,7 +378,7 @@ $(function() {
 }
 
 function highlight_source($string, $return=false) {
-	$string	= preg_replace();
+// 	$string	= preg_replace();
 	$length	= strlen($string);
 	$spaces	= 0;
 	$tabSpaces	= 4;
