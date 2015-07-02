@@ -342,6 +342,10 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 .arg_value.nolimit {
 	max-width: none;
 }
+code {
+	width: 100%;
+	display: block;
+}
 /*
 body {
 	background: #EEE;
