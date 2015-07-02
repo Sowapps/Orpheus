@@ -243,12 +243,10 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					<?php echo $Exception->getMessage(); ?>
 					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
 				</blockquote>
-				<code>
 				<?php
 // 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
 				highlight_string(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
 				?>
-				</code>
 				<?php /*
 				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
 				<address class="exception_location">In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?></address>
