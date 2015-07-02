@@ -192,7 +192,8 @@ abstract class Rendering {
 	
 	public static function endCurrentLayout() {
 // 		text(__FILE__.':'.__LINE__);
-		if( ob_get_level() < OBLEVEL_INIT+1 || empty(static::$layoutStack) ) { return false; }
+		if( !ob_get_level() || empty(static::$layoutStack) ) { return false; }
+// 		if( ob_get_level() < OBLEVEL_INIT+1 || empty(static::$layoutStack) ) { return false; }
 // 		text(__FILE__.':'.__LINE__);
 		$env	= $GLOBALS;
 		$env['Content']	= ob_get_clean();
