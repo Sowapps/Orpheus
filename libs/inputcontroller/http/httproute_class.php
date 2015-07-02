@@ -24,7 +24,8 @@ class HTTPRoute extends ControllerRoute {
 	
 	protected function generatePathRegex() {
 		if( $this->pathRegex ) { return; }
-		$variables	= &$this->pathVariables;
+// 		$variables	= &$this->pathVariables;
+		$variables	= array();
 		$this->pathRegex	= preg_replace_callback(
 			'#\{[^\}]+\}#sm',
 			function($matches) use(&$variables) {
@@ -47,6 +48,7 @@ class HTTPRoute extends ControllerRoute {
 			},
 			$this->path
 		);
+		$this->pathVariables	= $variables;
 	}
 	
 	/**
