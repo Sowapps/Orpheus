@@ -15,7 +15,9 @@ abstract class ControllerRoute {
 	
 	public abstract function isMatchingRequest(InputRequest $request, &$values=array());
 	
-	public abstract static function registerConfig($name, array $config);
+	public static function registerConfig($name, array $config) {
+		throw new Exception('The class "'.get_called_class().'" should override the `registerConfig()` method from '.get_class());
+	}
 	
 	public function run(InputRequest $request) {
 		if( !$this->controller || !class_exists($this->controller, true) ) {
