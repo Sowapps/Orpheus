@@ -245,8 +245,8 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 				</blockquote>
 				<?php
 // 				$sources	= getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2);
-				
-				highlight_source(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
+				echo formatSourceAsHTML($Exception->getFile(), $Exception->getLine(), 4, 2);
+// 				highlight_source(getFileLineContext($Exception->getFile(), $Exception->getLine(), 4, 2));
 				?>
 				<?php /*
 				<div class="exception_type"><?php echo $code.' '.http_response_codetext($code).' - '.get_class($Exception); ?></div>
