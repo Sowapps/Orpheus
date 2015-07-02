@@ -343,14 +343,24 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 .arg_value.nolimit {
 	max-width: none;
 }
+.sourcecode {
+	overflow: hidden;
+}
 .sourcecode_lines {
 	float: left;
-	padding: 0;
+	padding: 2px;
 	list-style: none;
+	font-size: 90%;
+	margin: 0;
 }
 code {
 	width: 100%;
 	display: block;
+}
+/* Hide php tag */
+code > span > span:first-child {
+	margin: -19px 0 0 -6px;
+	display: inline-block;
 }
 /*
 body {
