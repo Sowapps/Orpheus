@@ -212,7 +212,7 @@ function($className) {
 			//throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
-		@log_error("$e", 'loading_class_'.$className);
+		log_error("$e", 'loading_class_'.$className);
 // 		die('A fatal error occured loading libraries.');
 	}
 }, true, true );// End of spl_autoload_register()
@@ -223,6 +223,7 @@ $Module = $Page = '';// Useful for initializing errors.
 $coreAction = 'initializing_core';
 
 try {
+	ob_start();
 // 	defifn('CORELIB',		'core');
 // 	defifn('CONFIGLIB',		'config');
 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
@@ -307,6 +308,7 @@ try {
 		unset($initSession);
 	
 	}
+	ob_end_clean();
 	
 	// Handle current request
 	$REQUEST_HANDLER::handleCurrentRequest();
