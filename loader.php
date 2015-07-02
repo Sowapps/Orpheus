@@ -459,7 +459,7 @@ function getFileLines($file, $from, $to, &$count=0) {
 	while( ($line=fgets($file)) !== false ) {
 		$c++;
 		if( $c >= $from ) {
-			if( $c >= $to ) {
+			if( $c > $to ) {
 				break;
 			}
 			$lines	.= $line;
