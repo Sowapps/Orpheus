@@ -360,6 +360,7 @@ code {
 	display: block;
 	font-size: 12px;
 	white-space: nowrap;
+	overflow-x: scroll;
 }
 /* Hide php tag */
 code > span > span:first-child {
