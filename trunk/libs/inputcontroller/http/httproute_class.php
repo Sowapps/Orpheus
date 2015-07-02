@@ -17,6 +17,10 @@ class HTTPRoute extends ControllerRoute {
 		$this->method	= $method;
 	}
 	
+	public function __toString() {
+		return $this->method.'("'.$this->path.'")';
+	}
+	
 	protected function generatePathRegex() {
 		if( $this->pathRegex ) { return; }
 		$variables	= &$this->pathVariables;
@@ -51,19 +55,23 @@ class HTTPRoute extends ControllerRoute {
 	 */
 	public function isMatchingRequest(InputRequest $request, &$values=array()) {
 		// Method match && Path match (variables included)
+		debug('Route '.$this.' is matching request '.$request);
 		if( $this->method !== $request->getMethod() ) {
 			return false;
 		}
+		debug('Method ok');
 		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
 			unset($matches[0]);
 			$values	= array_combine($this->pathVariables, $matches);
+			debug('Path ok');
 			return true;
 		}
+		debug('Path does not match');
 		return false;
 	}
 	
 	public static function registerConfig($name, array $config) {
-		debug('registerConfig('.$name.')', $config);
+// 		debug('registerConfig('.$name.')', $config);
 		if( empty($config['path']) ) {
 			throw new Exception('Missing a valid `path` in configuration of route "'.$name.'"');
 		}
