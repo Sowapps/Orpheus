@@ -170,7 +170,8 @@ abstract class Rendering {
 		return get_class(self::$rendering);
 	}
 
-	protected static $layoutStack = null;
+// 	protected static $layoutStack = null;
+	protected static $layoutStack = array();
 	
 	/** Use layout until the next endCurrentLayout()
 	 * @param $layout The layout to use.
@@ -182,9 +183,9 @@ abstract class Rendering {
 	 * http://www.php.net/manual/en/function.ob-start.php#refsect1-function.ob-start-parameters
 	 */
 	public static function useLayout($layout) {
-		if( static::$layoutStack===NULL ) {
-			static::$layoutStack = array();
-		}
+// 		if( static::$layoutStack===NULL ) {
+// 			static::$layoutStack = array();
+// 		}
 		static::$layoutStack[] = $layout;
 		ob_start();
 	}

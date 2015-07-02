@@ -357,10 +357,11 @@ $(function() {
 </body>
 </html>
 	<?php
-	$content	= ob_get_contents();
-	ob_end_clean();
+	return ob_get_clean();
+// 	$content	= ob_get_contents();
+// 	ob_end_clean();
 // 	debug('End of error report');
-	return $content;
+// 	return $content;
 }
 
 function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {

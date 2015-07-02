@@ -3,7 +3,7 @@
 http:
     home:
         path: "/"
-        method: "GET"
+#        method: "GET"
         controller: "HomeController"
 #    home:
 #        path: "/path/in/array/config"

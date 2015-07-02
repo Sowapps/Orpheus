@@ -2,7 +2,10 @@
 
 
 class HTMLHTTPResponse extends HTTPResponse {
-	
+
+	/**
+	 * @var string
+	 */
 	protected $content;
 	
 	/**
@@ -10,6 +13,13 @@ class HTMLHTTPResponse extends HTTPResponse {
 	 */
 	public function __construct($content) {
 		$this->content	= $content;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->content;
 	}
 	
 	/**
@@ -41,5 +51,10 @@ class HTMLHTTPResponse extends HTTPResponse {
 // 			'date'		=> dt(),
 // 			'report'	=> $exception->getMessage()."<br />\n<pre>".$exception->getTraceAsString()."</pre>",
 // 		)));
+	}
+	
+	public static function renderWithPHP($layout, $values=array()) {
+		$rendering	= new HTMLRendering();
+		return $rendering->render($layout, $values);
 	}
 }
