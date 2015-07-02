@@ -399,7 +399,7 @@ function highlight_source($string, $return=false) {
 		}
 		$result	.= $add;
 	}
-	return highlight_string("<?php\n".$result, $return);
+	return highlight_string("<?php;\n".$result, $return);
 }
 
 // function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
