@@ -351,6 +351,7 @@ $(function() {
 	<?php
 	$content	= ob_get_contents();
 	ob_end_clean();
+	debug('End of error report');
 	return $content;
 }
 
