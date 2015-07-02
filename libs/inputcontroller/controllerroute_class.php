@@ -28,7 +28,7 @@ abstract class ControllerRoute {
 		if( !($controller instanceof Controller) ) {
 			throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
 		}
-		$controller->run($request);
+		return $controller->run($request);
 	}
 	
 	protected static $initialized = false;
