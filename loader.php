@@ -241,6 +241,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="header clearfix">
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
+		<?php debug_print_backtrace(); ?>
 		<div class="panel panel-danger">
 			<div class="panel-heading">An error occurred !</div>
 			<div class="panel-body exception">
@@ -316,7 +317,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 }
 .sourcecode_lines {
 	float: left;
-	padding: 2px 6px;
+	padding: 2px 10px 2px 6px;
 	list-style: none;
 	font-size: 12px;
 	margin: 0;
@@ -361,7 +362,7 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 	$string	= getFileLines($file, $from, $to, $count);
 	$lines	= '';
 	for( $line=$from; $line<$from+$count; $line++ ) {
-		$lines	.= '<li>'.$line.($lineNumber==$line ? ' >' : '').'</li>';
+		$lines	.= '<li>'.$line.($lineNumber==$line ? '&nbsp;&nbsp;>' : '').'</li>';
 	}
 	$string	= highlight_source($string, true);
 	return <<<EOF
