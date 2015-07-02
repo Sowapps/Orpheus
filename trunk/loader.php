@@ -222,6 +222,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		ob_end_clean();
 	}
 // 	debug('ob_get_level() => '.ob_get_level());
+// 		<?php debug_print_backtrace(); ?>
 	ob_start();
 	?>
 <!DOCTYPE html>
@@ -241,7 +242,6 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="header clearfix">
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
-		<?php debug_print_backtrace(); ?>
 		<div class="panel panel-danger">
 			<div class="panel-heading">An error occurred !</div>
 			<div class="panel-body exception">
