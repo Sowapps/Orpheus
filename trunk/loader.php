@@ -272,7 +272,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		}
 		$args	= '';
 		foreach( $trace['args'] as $i => $arg ) {
-			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> "<span class="arg_value">'.$arg.'</span>"</span>';
+			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> "<span class="arg_value">'.(is_array($arg) ? '['.count($arg).']' : $arg).'</span>"</span>';
 		}
 		?>
 					<li class="trace">
