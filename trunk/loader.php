@@ -218,9 +218,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
 	// Clean all buffers
-// 	while( ob_get_level() ) {
-// 		ob_end_clean();
-// 	}
+	while( ob_get_level() ) {
+		ob_end_clean();
+	}
 // 	debug('ob_get_level() => '.ob_get_level());
 	ob_start();
 	?>
@@ -260,6 +260,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 				<ol>
 	<?php
 	/*
+	*/
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
@@ -279,7 +280,6 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					</li>
 		<?php
 	}
-	*/
 	?>
 				</ol>
 			</div>
@@ -350,7 +350,7 @@ $(function() {
 	<?php
 	$content	= ob_get_contents();
 	ob_end_clean();
-	debug('End of error report');
+// 	debug('End of error report');
 	return $content;
 }
 
@@ -361,7 +361,7 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 	$string	= getFileLines($file, $from, $to, $count);
 	$lines	= '';
 	for( $line=$from; $line<$from+$count; $line++ ) {
-		$lines	.= '<li>'.$line.'</li>';
+		$lines	.= '<li>'.$line.($lineNumber==$line ? ' >' : '').'</li>';
 	}
 	$string	= highlight_source($string, true);
 	return <<<EOF
