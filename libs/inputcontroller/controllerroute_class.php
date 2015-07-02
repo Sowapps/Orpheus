@@ -7,6 +7,8 @@ abstract class ControllerRoute {
 	protected $path;
 	protected $controller;
 	
+	protected static $routes = array();
+	
 	protected function __construct($name, $path, $controller) {
 		$this->name			= $name;
 		$this->path			= $path;
@@ -15,8 +17,14 @@ abstract class ControllerRoute {
 	
 	public abstract function isMatchingRequest(InputRequest $request, &$values=array());
 	
+	public static function getRoutes() {
+		static::initialize();
+		return static::$routes;
+// 		throw new Exception('The class "'.get_called_class().'" should override the `getRoutes()` static method from "'.get_class().'"');
+	}
+	
 	public static function registerConfig($name, array $config) {
-		throw new Exception('The class "'.get_called_class().'" should override the `registerConfig()` method from "'.get_class().'"');
+		throw new Exception('The class "'.get_called_class().'" should override the `registerConfig()` static method from "'.get_class().'"');
 	}
 	
 	public function run(InputRequest $request) {
