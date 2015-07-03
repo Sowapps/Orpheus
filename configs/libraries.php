@@ -21,6 +21,8 @@ $Librairies	= array(
 	'inputcontroller',
 	'publisher',
 	'rendering',
+	// Additional
+	'twigrenderer',
 	// Your sources
 	'src',
 );
