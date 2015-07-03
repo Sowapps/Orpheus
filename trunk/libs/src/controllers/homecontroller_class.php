@@ -7,6 +7,7 @@ class HomeController extends HTTPController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
+// 		$request->get
 		if( isPOST('data') ) {
 			try {
 				$test = DemoTest::create($_POST['data']);

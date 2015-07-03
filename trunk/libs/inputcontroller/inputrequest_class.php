@@ -67,6 +67,10 @@ abstract class InputRequest {
 		return $this;
 	}
 	
+	public function getInputValue($key, $default=null) {
+		return apath_get($this->input, $key, $default);
+	}
+	
 	protected static $mainRequest;
 
 	public static function getMainRequest() {
