@@ -241,7 +241,13 @@ try {
 	}
 	
 	foreach( $Librairies as $lib ) {
+		if( !file_exists(LIBSDIR.$lib.'/_loader.php') ) { continue; }
 		require_once LIBSDIR.$lib.'/_loader.php';
+	}
+	
+	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
+	if( file_exists(VENDORPATH.'autoload.php') ) {
+		$PackageLoader	= include VENDORPATH.'autoload.php';
 	}
 	
 	Config::build('engine');// Some libs should require to get some configuration.
