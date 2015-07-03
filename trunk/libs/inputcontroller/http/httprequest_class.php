@@ -176,7 +176,18 @@ class HTTPRequest extends InputRequest {
 		$this->files = $files;
 		return $this;
 	}
+
+	public function getData() {
+		return $this->getInput();
+	}
 	
+	public function getData($key, $default=null) {
+		return $this->getInputValue($key, $default);
+	}
+	
+	public function hasData($key) {
+		return $this->hasInputValue($key);
+	}
 	
 	
 }

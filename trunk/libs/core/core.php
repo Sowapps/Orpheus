@@ -7,7 +7,7 @@
 
 /** Redirects the client to a destination by HTTP
  * @param $destination The destination to go. Default value is SCRIPT_NAME.
- * @sa permanentRedirectTo()
+ * @see permanentRedirectTo()
 
  * Redirects the client to a $destination using HTTP headers.
  * Stops the running script.
@@ -22,7 +22,7 @@ function redirectTo($destination=null) {
 
 /** Redirects permanently the client to a destination by HTTP
  * @param $destination The destination to go. Default value is SCRIPT_NAME.
- * @sa redirectTo()
+ * @see redirectTo()
 
  * Redirects permanently the client to a $destination using the HTTP headers.
  * The only difference with redirectTo() is the status code sent to the client.
@@ -255,7 +255,7 @@ function log_report($report, $file, $action='', $message='') {
 /** Logs a debug.
  * @param $report The debug report to log.
  * @param $action The action associated to the report. Default value is an empty string.
- * @sa log_report()
+ * @see log_report()
 
  * Logs a debug.
  * The log file is the constant DEBUGFILENAME or, if undefined, '.debug'.
@@ -268,7 +268,7 @@ function log_debug($report, $action='') {
  * @param $report The report to log.
  * @param $action The action associated to the report. Default value is an empty string.
  * @param $message If False, it won't display the report, else if a not empty string, it displays it, else it takes the report's value.
- * @sa log_report()
+ * @see log_report()
 
  * Logs a hack attemp.
  * The log file is the constant HACKFILENAME or, if undefined, '.hack'.
@@ -283,7 +283,7 @@ function log_hack($report, $action='', $message=null) {
  * @param $report The report to log.
  * @param $action The action associated to the report. Default value is an empty string.
  * @param $silent True to not display any report. Default value is false.
- * @sa log_report()
+ * @see log_report()
  * @deprecated
 
  * Logs a system error.
@@ -297,7 +297,7 @@ function sys_error($report, $action='', $silent=false) {
  * @param string $report The report to log.
  * @param string $action The action associated to the report. Default value is an empty string.
  * @param boolean $fatal True if the error is fatal, it stops script. Default value is true.
- * @sa log_report()
+ * @see log_report()
 
  * Logs a system error.
  * The log file is the constant SYSLOGFILENAME or, if undefined, '.log_error'.
@@ -312,7 +312,7 @@ function log_error($report, $action='', $fatal=true) {
 /** Logs a sql error.
  * @param $report The report to log.
  * @param $action The action associated to the report. Default value is an empty string.
- * @sa log_report()
+ * @see log_report()
 
  * Logs a sql error.
  * The log file is the constant PDOLOGFILENAME or, if undefined, '.pdo_error'.
@@ -391,7 +391,7 @@ function parseFields(array $fields, $quote='"') {
  * @param mixed $default The default value returned if array is valid but key is not found.
  * @param boolean $pathRequired True if the path is required. Default value is False.
  * @return mixed The value from $apath in $array.
- * @sa build_apath()
+ * @see build_apath()
  *
  * Gets value from an Array Path using / as separator.
  * Returns null if parameters are invalids, $default if the path is not found else the value.
@@ -407,10 +407,8 @@ function apath_get($array, $apath, $default=null, $pathRequired=false) {
 		// If has a child, the child could not be found
 		// Else container exists, but element not found.
 		return ($pathRequired && $suffix !== NULL) ? null : $default;
-// 		return ($pathRequired && isset($rpaths[1])) ? null : $default;
 	}
 	return $suffix !== NULL ? apath_get($array[$key], $suffix) : $array[$key];
-// 	return isset($rpaths[1]) ? apath_get($array[$rpaths[0]], $rpaths[1]) : $array[$rpaths[0]];
 }
 
 function apath_setp(&$array, $apath, $value) {
@@ -439,7 +437,7 @@ function apath_setp(&$array, $apath, $value) {
  * @param $array The array to get the value from.
  * @param $prefix The prefix to get the value, this is for an internal use only.
  * @return An array of apath to get all values.
- * @sa apath_get()
+ * @see apath_get()
  *
  * Builds an array associating all values with their apath of the given one using / as separator.
  * e.g Array('path'=>array('to'=>array('value'=>'value'))) => Array('path/to/value'=>'value')
@@ -524,7 +522,7 @@ function addAutoload($className, $classPath) {
 
 /** Starts a new report stream
  * @param $stream The new report stream name
- * @sa endReportStream()
+ * @see endReportStream()
 
  * A new report stream starts, all new reports will be added to this stream.
 */
@@ -534,7 +532,7 @@ function startReportStream($stream) {
 }
 
 /** Ends the current stream
- * @sa startReportStream()
+ * @see startReportStream()
  * Ends the current stream by setting current stream to the global one, so you can not end global stream.
 */
 function endReportStream() {
@@ -571,7 +569,7 @@ function transferReportStream($from=null, $to='global') {
  * @param string $code The code to use for this report. Default is $report.
  * @param integer $severity The severity of report. Default value is 0.
  * @return boolean False if rejected.
- * @sa reportSuccess(), reportError()
+ * @see reportSuccess(), reportError()
 
  * Adds the report $message to the list of reports for this $type.
  * The type of the message is commonly 'success' or 'error'.
@@ -601,7 +599,7 @@ function addReport($report, $type, $domain='global', $code=null, $severity=0) {
 /** Reports a success
  * @param $report string The message to report.
  * @param $domain string The domain fo the message. Not used for translation. Default value is global.
- * @sa addReport()
+ * @see addReport()
 
  * Adds the report $message to the list of reports for this type 'success'.
 */
@@ -612,7 +610,7 @@ function reportSuccess($report, $domain='global') {
 /** Reports a warning
  * @param $report string The message to report.
  * @param $domain string The domain fo the message. Not used for translation. Default value is global.
- * @sa addReport()
+ * @see addReport()
 
  * Adds the report $message to the list of reports for this type 'warning'.
  * Warning come in some special cases, we meet it when we do automatic checks before loading contents and there is something to report to the user.
@@ -626,7 +624,7 @@ function reportWarning($report, $domain='global') {
  * @param string $report The report.
  * @param string $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
  * @param integer $severity The severity of the error, commonly 1 for standard user error and 0 for warning. Default value is 1.
- * @sa addReport()
+ * @see addReport()
 
  * Adds the report $message to the list of reports for this type 'error'.
 */
@@ -663,7 +661,7 @@ function hasErrorReports() {
 /** Rejects reports
  * @param $report The report message to reject, could be an array.
  * @param $type Filter reject by type, could be an array. Default value is null, not filtering.
- * @sa addReport()
+ * @see addReport()
  * 
  * Register this report to be rejected in the future, addReport() will check it.
  * All previous values for this report will be replaced.
@@ -688,7 +686,7 @@ function rejectReport($report, $type=null) {
  * @param $stream The stream to get the reports. Default value is "global".
  * @param $type Filter results by report type. Default value is null.
  * @param $delete True to delete entries from the list. Default value is true.
- * @sa getReportsHTML()
+ * @see getReportsHTML()
 
  * Gets all reports from the list of $domain optionnally filtered by type.
 */
@@ -737,8 +735,8 @@ function getFlatReports($stream='global', $type=null, $delete=1) {
  * @param	$rejected array An array of rejected messages. Default value is an empty array.
  * @param	$delete boolean True to delete entries from the list. Default value is true.
  * @return	The renderer HTML.
- * @sa displayReportsHTML()
- * @sa getHTMLReport()
+ * @see displayReportsHTML()
+ * @see getHTMLReport()
 
  * Gets all reports from the list of $domain and generates the HTML source to display.
 */
@@ -778,7 +776,7 @@ function getHTMLReport($stream, $report, $domain, $type) {
  * @param $stream The stream to display. Default value is 'global'.
  * @param $rejected An array of rejected messages. Can be the first parameter.
  * @param $delete True to delete entries from the list.
- * @sa getReportsHTML()
+ * @see getReportsHTML()
 
  * Displays all reports from the list of $domain and displays generated HTML source.
 */
@@ -796,8 +794,8 @@ function displayReportsHTML($stream='global', $rejected=array(), $delete=1) {
 /** Gets POST data
  * @param $path The path to retrieve. The default value is null (retrieves all data).
  * @return Data using the path or all data from POST array.
- * @sa isPOST()
- * @sa extractFrom()
+ * @see isPOST()
+ * @see extractFrom()
 
  * Gets data from a POST request using the $path.
  * With no parameter or parameter null, all data are returned.
@@ -825,8 +823,8 @@ function hasPOSTKey($path=null, &$value=null) {
 /** Gets GET data
  * @param $path The path to retrieve. The default value is null (retrieves all data).
  * @return Data using the path or all data from GET array.
- * @sa isGET()
- * @sa extractFrom()
+ * @see isGET()
+ * @see extractFrom()
 
  * Gets data from a GET request using the $path.
  * With no parameter or parameter null, all data are returned.
@@ -838,7 +836,7 @@ function GET($path=null) {
 /** Checks the POST status
  * @param $apath The apath to test.
  * @return True if the request is a POST one. Compares also the $key if not null.
- * @sa POST()
+ * @see POST()
  * 
  * Check the POST status to retrieve data from a form.
  * You can specify the name of your submit button as first parameter.
@@ -852,7 +850,7 @@ function isPOST($apath=null) {
 /** Checks the GET status
  * @param $apath The apath to test.
  * @return True if the request is a GET one. Compares also the $key if not null.
- * @sa GET()
+ * @see GET()
  * 
  * Check the GET status to retrieve data from a form.
  * You can specify the name of your submit button as first parameter.
@@ -899,7 +897,7 @@ function htmlValue($name, $data=null, $default='') {
 * @param $domain The domain to apply the Key. Default value is 'global'.
 * @param $tagAttr Additional attributes for the SELECT tag.
 * @return A HTML source for the built SELECT tag.
-* @sa htmlOptions
+* @see htmlOptions
 * @warning This function is under conflict with name attribute and last form data values, prefer htmlOptions()
 *
 * Generates the HTML source for a SELECT from the $data.
@@ -940,7 +938,7 @@ function htmlSelect($name, $values, $data=null, $selected=null, $prefix='', $dom
 * @param $prefix string The prefix to use for the text name of values. Default value is an empty string.
 * @param $domain string The domain to apply the Key. Default value is 'global'.
 * @return A HTML source for the built SELECT tag.
-* @sa htmlOption()
+* @see htmlOption()
 *
 * Generates the HTML source for a SELECT from the $data.
 * For associative arrays, we commonly use the value=>label model (OPT_VALUE2LABEL) but sometimes for associative arrays we could prefer the label=>value model (OPT_LABEL2VALUE).
@@ -996,8 +994,8 @@ function htmlOption($elValue, $label=null, $selected=false, $addAttr='') {
 * @param $default The default value.
 * @param $addAttr additional attributes.
 * @return A HTML source for the built selected attribute.
-* @sa htmlSelect()
-* @sa htmlOptions()
+* @see htmlSelect()
+* @see htmlOptions()
 *
 * Generates a HTML source as selected attribute for a SELECT.
 * This function is useful for very customized select which could not use htmlSelect().
@@ -1086,7 +1084,7 @@ function getFormData() {
 /** Fills the given data from input form
  * @param $data The data to fill, as pointer.
  * @return The resulting $data.
- * @sa getFormData()
+ * @see getFormData()
  *
  * Fills the given pointer data array with input form data if null.
  * This function is designed to only offset the case where $data is null.
@@ -1101,8 +1099,8 @@ function fillFormData(&$data) {
  * @param $default The default value if not found. Default value is null (apath_get()'s default).
  * @param $pathRequired True if the path is required. Default value is False (apath_get()'s default).
  * @return True if got value is not null (found).
- * @sa getFormData()
- * @sa apath_get()
+ * @see getFormData()
+ * @see apath_get()
  *
  * Fills the given pointer value with input form data or uses default.
  */
@@ -1379,7 +1377,7 @@ function dayTime($time=null) {
 /** Returns the timestamp of the $day of the month using the given integer
  * @param $day The day of the month to get the timestamp. Default value is 1, the first day of the month.
  * @param $time The time to get the month timestamp. Default value is current timestamp.
- * @sa dayTime()
+ * @see dayTime()
  *
  * Returns the timestamp of the $day of current month of $time according to the midnight hour.
 */
@@ -1392,7 +1390,7 @@ function monthTime($day=1, $time=null) {
  * @param $number The input phone number.
  * @param $delimiter The delimiter for series of digits. Default value is current timestamp. Default value is '.'.
  * @param $limit The number of digit in a serie separated by delimiter. Optional, the default value is 2.
- * @sa dayTime()
+ * @see dayTime()
  *
  * Returns a standard phone number for FR country format.
  */
