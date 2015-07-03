@@ -9,6 +9,9 @@ class HTTPRoute extends ControllerRoute {
 	protected $pathVariables;
 	
 	const METHOD_GET	= 'GET';
+	const METHOD_POST	= 'POST';
+	const METHOD_PUT	= 'PUT';
+	const METHOD_DELETE	= 'DELETE';
 	
 	protected static $typesRegex	= array();
 	protected static $routes		= array();
@@ -20,8 +23,50 @@ class HTTPRoute extends ControllerRoute {
 		$this->generatePathRegex();
 	}
 	
+	/**
+	 * Format the current route to get an URL from path
+	 * @param string[] $values
+	 * @return string
+	 * @throws Exception
+	 */
+	public function formatURL($values=array()) {
+		return preg_replace_callback(
+			'#\{[^\}]+\}#sm',
+			function($matches) use($values) {
+				$var = $regex = null;
+				static::extractVariable($matches[0], $var, $regex);
+				if( !isset($values[$var]) ) {
+					throw new Exception('The variable `'.$var.'` is missing to generate URL for route '.$this->name);
+				}
+				$value	= $values[$var].'';
+				if( !preg_match('#^'.$regex.'$#', $value) ) {
+					throw new Exception('The given value "'.$value.'" of variable `'.$var.'` is not matching the regex requirements to generate URL for route '.$this->name);
+				}
+				return $value;
+			},
+			$this->path
+		);
+	}
+	
 	public function __toString() {
 		return $this->method.'("'.$this->path.'")';
+	}
+	
+	protected static function extractVariable($str, &$var=null, &$regex=null) {
+		list($p1, $p2) 	= explodeList(':', $str, 2);
+		// Optionnal only if there is a default value
+		if( $p2 ) {
+			// {regex|type:variable}
+			$var	= $p2;
+			$regex	= $p1;
+			if( ctype_alpha($regex) && isset(static::$typesRegex[$regex]) ) {
+				$regex	= static::$typesRegex[$regex];
+			}
+		} else {
+			// {variable}, regex=[^\/]+
+			$var	= $p1;
+			$regex	= '[^\/]+';
+		}
 	}
 	
 	protected function generatePathRegex() {
@@ -31,20 +76,7 @@ class HTTPRoute extends ControllerRoute {
 		$this->pathRegex	= preg_replace_callback(
 			'#\{[^\}]+\}#sm',
 			function($matches) use(&$variables) {
-				list($p1, $p2) 	= explodeList(':', $matches[0], 2);
-				// Optionnal only if there is a default value
-				if( $p2 ) {
-					// {regex|type:variable}
-					$var	= $p2;
-					$regex	= $p1;
-					if( ctype_alpha($regex) && isset(static::$typesRegex[$regex]) ) {
-						$regex	= static::$typesRegex[$regex];
-					}
-				} else {
-					// {variable}, regex=[^\/]+
-					$var	= $p1;
-					$regex	= '[^\/]+';
-				}
+				static::extractVariable($matches[0], $var, $regex);
 				$variables[]	= $var;
 				return '('.$regex.')';
 			},
