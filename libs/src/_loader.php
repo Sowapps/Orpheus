@@ -10,7 +10,9 @@ addAutoload('DemoTest',							'src/demotest');
 addAutoload('DemoTest_MSSQL',					'src/demotest_mssql');
 addAutoload('DemoEntity',						'src/demoentity');
 addAutoload('ThreadMessage',					'src/threadmessage');
+
 addAutoload('HomeController',					'src/controllers/homecontroller');
+addAutoload('UserLoginController',				'src/controllers/userlogincontroller');
 
 addAutoload('Session',							'sessionhandler/dbsession');
 
