@@ -13,6 +13,7 @@ addAutoload('ThreadMessage',					'src/threadmessage');
 
 addAutoload('HomeController',					'src/controllers/homecontroller');
 addAutoload('UserLoginController',				'src/controllers/userlogincontroller');
+addAutoload('TwigSampleController',				'src/controllers/twigsamplecontroller');
 
 addAutoload('Session',							'sessionhandler/dbsession');
 

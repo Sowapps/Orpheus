@@ -26,7 +26,7 @@ class HomeController extends HTTPController {
 				reportError($e);
 			}
 		}
-		return HTMLHTTPResponse::renderWithPHP('app/home');
+		return HTMLHTTPResponse::render('app/home');
 	}
 
 	

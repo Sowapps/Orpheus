@@ -53,7 +53,24 @@ class HTMLHTTPResponse extends HTTPResponse {
 // 		)));
 	}
 	
-	public static function renderWithPHP($layout, $values=array()) {
+	/**
+	 * @var Rendering
+	 */
+// 	protected static $renderer;
+	
+// 	public static function getRenderer() {
+// 		if( !static::$renderer ) {
+// 			static::setRenderer(new HTMLRendering());
+// 		}
+// 		return static::$renderer;
+// 	}
+	
+// 	public static function setRenderer(Rendering $renderer) {
+// 		static::$renderer	= $renderer;
+// 	}
+	
+	public static function render($layout, $values=array()) {
+// 		$rendering	= static::getRenderer();
 		$rendering	= new HTMLRendering();
 		return new static($rendering->render($layout, $values));
 	}

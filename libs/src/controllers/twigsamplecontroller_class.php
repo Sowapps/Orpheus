@@ -1,6 +1,6 @@
 <?php
 
-class UserLoginController extends HTTPController {
+class TwigSampleController extends HTTPController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request
