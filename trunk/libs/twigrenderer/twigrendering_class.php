@@ -6,9 +6,15 @@
 class TwigRendering extends Rendering {
 	
 	protected static $SHOWMODEL	= 'layout';
-	public static $theme		= 'default';
 	
+	/**
+	 * @var string
+	 */
+	public static $theme		= 'default';
+
 	public static $cssPath		= 'css/';
+	public static $jsPath		= 'js/';
+// 	public static $modelsPath	= 'layouts/';
 	public static $modelsPath	= '';
 	public static $cachePath	= 'cache/';
 	
@@ -41,6 +47,14 @@ class TwigRendering extends Rendering {
 		static::setTwigEnvironment(static::$twigenv);
 	}
 	
+	/**
+	 * Set the default theme used to render layouts
+	 * @param string $theme
+	 */
+	public static function setDefaultTheme($theme) {
+		static::$theme	= $theme;
+	}
+	
 	/** Sets the Twig Environment
 
 	 * @param $twigEnv The new Twig_Environment object.
@@ -57,6 +71,26 @@ class TwigRendering extends Rendering {
 		return static::$twigenv;
 	}
 	
+	/** Gets the theme path.
+
+		\return The theme path.
+		
+		Gets the path to the current theme.
+	*/
+	public static function getThemePath() {
+		return WEBPATH.THEMESDIR.static::$theme.'/';
+	}
+	
+	/** Get the absolute theme path.
+	 * 
+	 * @return The theme path.
+	 * 
+	 * Gets the absolute path to the current theme.
+	*/
+	public static function getAbsThemePath() {
+		return pathOf(static::getThemePath());
+	}
+	
 	/** Gets the models path.
 
 	 * @return The models path.
@@ -64,17 +98,28 @@ class TwigRendering extends Rendering {
 	 * Gets the path to the models.
 	*/
 	public static function getModelsPath() {
-		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
+		return static::getThemePath().static::$modelsPath;
+// 		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
 	}
 
-	/** Gets the CSS files path.
-
-		\return The CSS path.
-		
-		Gets the path to the CSS files.
+	/** 
+	 * Gets the CSS files path.
+	 * @return string The CSS path.
+	 * 
+	 * Gets the URL to the CSS files.
 	*/
 	public static function getCSSURL() {
-		return THEMESURL.static::$theme.'/'.static::$cssPath;
+		return static::getThemeURL().static::$cssPath;
+	}
+
+	/** 
+	 * Gets the JS files path.
+	 * @return string The JS path.
+	 * 
+	 * Gets the URL to the JS files.
+	*/
+	public static function getJSURL() {
+		return static::getThemeURL().static::$jsPath;
 	}
 
 	/** Gets the Cache path.

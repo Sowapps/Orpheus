@@ -104,13 +104,13 @@ class HTMLRendering extends Rendering {
 	public static function getThemePath() {
 		return WEBPATH.THEMESDIR.static::$theme.'/';
 	}
-	
-	/** Gets the absolute theme path.
 
-		\return The theme path.
-		
-		Gets the absolute path to the current theme.
-	*/
+	/** Get the absolute theme path.
+	 *
+	 * @return The theme path.
+	 *
+	 * Gets the absolute path to the current theme.
+	 */
 	public static function getAbsThemePath() {
 		return pathOf(static::getThemePath());
 	}
