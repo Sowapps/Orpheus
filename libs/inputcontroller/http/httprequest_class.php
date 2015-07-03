@@ -177,7 +177,7 @@ class HTTPRequest extends InputRequest {
 		return $this;
 	}
 
-	public function getData() {
+	public function getAllData() {
 		return $this->getInput();
 	}
 	
