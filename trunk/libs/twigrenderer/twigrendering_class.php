@@ -102,6 +102,16 @@ class TwigRendering extends Rendering {
 // 		return pathOf(THEMESDIR.static::$theme.'/'.static::$modelsPath);
 	}
 
+	/** Get the theme path.
+	 * 
+	 * @return The theme path.
+	 * 
+	 * Get the URL to the current theme.
+	*/
+	public static function getThemeURL() {
+		return THEMESURL.static::$theme.'/';
+	}
+
 	/** 
 	 * Gets the CSS files path.
 	 * @return string The CSS path.
