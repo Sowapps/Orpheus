@@ -81,25 +81,32 @@ function($errno, $errstr, $errfile, $errline) {
 // 	ob_end_to(1);
 // 	debug('(set_error_handler) Decreased ob level : '.ob_get_level());
 // 	debug("$errstr in $errfile : $errline");
+	$exception	= new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
 // 		debug('(set_error_handler) Error To Exception');
-		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+		throw $exception;
+// 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else if( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
 		return;
 	} else {//ERROR_DISPLAY_RAW
-		$backtrace = '';
-		foreach( debug_backtrace() as $trace ) {
-			if( !isset($trace['file']) ) {
-				$trace['file'] = $trace['line'] = 'N/A';
-			}
-			$backtrace .= '
-'.$trace['file'].' ('.$trace['line'].'): '.$trace['function'].'('.print_r($trace['args'], 1).')<br />';
-		}
+// 		$backtrace = '';
+// 		foreach( debug_backtrace() as $trace ) {
+// 			if( !isset($trace['file']) ) {
+// 				$trace['file'] = $trace['line'] = 'N/A';
+// 			}
+// 			$backtrace .= '
+// '.$trace['file'].' ('.$trace['line'].'): '.$trace['function'].'('.print_r($trace['args'], 1).')<br />';
+// 		}
 		if( !function_exists('log_error') ) {
-			die($errstr."<br />\n{$backtrace}");
+			if( DEV_VERSION ) {
+				displayExceptionAsHTML($exception, null);
+			} else {
+				die('A fatal error occurred.');
+			}
+// 			die($errstr."<br />\n{$backtrace}");
 		}
-		log_error($errstr."<br />\n{$backtrace}");
-		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(DEV_VERSION ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
+		log_error($exception);
+// 		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(DEV_VERSION ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
 	}
 });
 
@@ -115,16 +122,23 @@ function() {
 // 	die(__FILE__.' : '.__LINE__);
 	if( $error ) {
 // 		debug('(register_shutdown_function) There is an error');
-		if( ERROR_LEVEL == DEV_LEVEL ) {
-			ob_end_flush();
-		} else {
-			ob_end_clean();
-		}
+		// Should be ended by error reporter
+// 		if( DEV_VERSION ) {
+// 			ob_end_flush();
+// 		} else {
+// 			ob_end_clean();
+// 		}
+		$exception	= new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']);
 		if( !function_exists('log_error') ) {
-			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />PAGE:<br /><div style="clear: both;">'.$Page.'</div><br />Reported in '.__FILE__.' : '.__LINE
-				: "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
+			if( DEV_VERSION ) {
+				displayExceptionAsHTML($exception, 'Shutdown script');
+			} else {
+				die('A fatal error occurred.');
+			}
+// 			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />PAGE:<br /><div style="clear: both;">'.$Page.'</div><br />Reported in '.__FILE__.' : '.__LINE
+// 				: "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 		}
-		log_error(new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']), 'Shutdown script');
+		log_error($exception, 'Shutdown script');
 	}
 });
 
@@ -133,12 +147,17 @@ set_exception_handler(
 
 	System function to handle all exceptions and stop script execution.
  */
-function($e) {
+function($exception) {
 	global $coreAction;
 	if( !function_exists('log_error') ) {
-		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
+		if( DEV_VERSION ) {
+			displayExceptionAsHTML($exception, 'Shutdown script');
+		} else {
+			die('A fatal error occurred.');
+		}
+// 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
 	}
-	log_error($e, $coreAction);
+	log_error($exception, $coreAction);
 // 	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
 // 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
@@ -270,9 +289,11 @@ try {
 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
 
 		//PHP is unable to manage exception thrown during session_start()
-		$NO_EXCEPTION	= 1;
+		$ERROR_ACTION	= ERROR_DISPLAY_RAW;
+// 		$NO_EXCEPTION	= 1;
 		session_start();
-		$NO_EXCEPTION = 0;
+		$ERROR_ACTION	= ERROR_THROW_EXCEPTION;
+// 		$NO_EXCEPTION	= 0;
 		
 // 		text('clientIP() => '.clientIP());
 		
