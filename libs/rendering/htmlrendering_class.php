@@ -135,12 +135,13 @@ class HTMLRendering extends Rendering {
 		return static::getThemePath().static::$cssPath;
 	}
 
-	/** Gets the theme path.
 
-		\return The theme path.
-		
-		Gets the URL to the current theme.
-	*/
+	/** Get the theme path.
+	 *
+	 * @return The theme path.
+	 *
+	 * Get the URL to the current theme.
+	 */
 	public static function getThemeURL() {
 		return THEMESURL.static::$theme.'/';
 	}
