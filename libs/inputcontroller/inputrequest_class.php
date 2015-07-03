@@ -51,6 +51,10 @@ abstract class InputRequest {
 		return $this;
 	}
 	
+	public function getParameter($key, $default=null) {
+		return apath_get($this->parameters, $key, $default);
+	}
+	
 	public function getParameters() {
 		return $this->parameters;
 	}
@@ -69,6 +73,10 @@ abstract class InputRequest {
 	
 	public function getInputValue($key, $default=null) {
 		return apath_get($this->input, $key, $default);
+	}
+	
+	public function hasInputValue($key) {
+		return $this->getInputValue($key, null) !== null;
 	}
 	
 	protected static $mainRequest;

@@ -76,11 +76,11 @@ class HTTPRoute extends ControllerRoute {
 		$this->pathRegex	= preg_replace_callback(
 			'#\{[^\}]+\}#sm',
 			function($matches) use(&$variables) {
-				static::extractVariable($matches[0], $var, $regex);
+				static::extractVariable(str_replace('\.', '.', $matches[0]), $var, $regex);
 				$variables[]	= $var;
 				return '('.$regex.')';
 			},
-			$this->path
+			str_replace('.', '\.', $this->path)
 		);
 		$this->pathVariables	= $variables;
 	}

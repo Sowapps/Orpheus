@@ -3,11 +3,15 @@
 http:
     home:
         path: "/"
-#        method: "GET"
         controller: "HomeController"
+    user_login:
+        path: "/user_login.html"
+        controller: "UserLoginController"
+        
 #    home:
 #        path: "/path/in/array/config"
 #        method: "POST|GET"
+#        method: "GET"
 #        controller: "HomeController"
 #    home2: "/path/with/all/methods->HomeController"
 #    home3: "POST(/path/for/POST/method)->HomeController"
