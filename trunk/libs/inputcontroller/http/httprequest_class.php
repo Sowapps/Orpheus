@@ -125,6 +125,11 @@ class HTTPRequest extends InputRequest {
 		return $this;
 	}
 	
+	public function isGET() { return $this->method === HTTPRoute::METHOD_GET; }
+	public function isPOST() { return $this->method === HTTPRoute::METHOD_POST; }
+	public function isPUT() { return $this->method === HTTPRoute::METHOD_PUT; }
+	public function isDELETE() { return $this->method === HTTPRoute::METHOD_DELETE; }
+	
 	public function getScheme() {
 		return $this->scheme;
 	}
@@ -187,6 +192,13 @@ class HTTPRequest extends InputRequest {
 	
 	public function hasData($key) {
 		return $this->hasInputValue($key);
+	}
+	
+	public function hasDataKey($path=null, &$value=null) {
+		$v = $this->getData($path);
+		if( !$v || !is_array($v) ) { return false; }
+		$value	= key($v);
+		return true;
 	}
 	
 	

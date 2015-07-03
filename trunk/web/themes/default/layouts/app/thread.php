@@ -1,33 +1,8 @@
 <?php
-/* @var $USER SiteUser */
+global $USER;
+HTMLRendering::useLayout('page_skeleton');
 
-$FORM_TOKEN	= new FormToken();
-
-$USER_CAN_THREADMESSAGE_MANAGE	= SiteUser::isLogged() && $USER->canThreadMessageManage();
-try {
-	isPOST() && $FORM_TOKEN->validateForm();
-	if( isPOST('submitAdd') ) {
-		if( !SiteUser::isLogged() ) {
-			SiteUser::throwException('forbiddenOperation');
-		}
-		$input	= POST('tm');
-		$input['user_id']	= $USER->id();
-		$input['user_name']	= $USER->fullname;
-		$tm	= ThreadMessage::createAndGet($input, array('content', 'user_id', 'user_name'));
-		sendNewThreadMessageEmail($tm);
-		reportSuccess('successCreate', ThreadMessage::getDomain());
-	} else
-		if( hasPOSTKey('submitDelete', $tmID) ) {
-			if( !$USER_CAN_THREADMESSAGE_MANAGE ) {
-				SiteUser::throwException('forbiddenOperation');
-			}
-			$tm	= ThreadMessage::load($tmID);
-			$tm->remove(); unset($tm);
-			reportSuccess('successDelete', ThreadMessage::getDomain());
-		}
-} catch(UserException $e) {
-	reportError($e);
-}
+displayReportsHTML();
 
 ?>
 <div class="row">

@@ -10,6 +10,12 @@ http:
     sample_twig:
         path: "/sample_twig.html"
         controller: "TwigSampleController"
+    admin_demo:
+        path: "/admin_demo.html"
+        controller: "AdminDemoController"
+    thread:
+        path: "/thread.html"
+        controller: "ThreadController"
         
 #    home:
 #        path: "/path/in/array/config"

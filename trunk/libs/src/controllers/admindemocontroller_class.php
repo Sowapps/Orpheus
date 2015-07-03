@@ -1,6 +1,6 @@
 <?php
 
-class TwigSampleController extends HTTPController {
+class AdminDemoController extends HTTPController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request
@@ -8,7 +8,10 @@ class TwigSampleController extends HTTPController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-		return new HTMLHTTPResponse((new TwigRendering())->render('sample_twig'));
+		
+		HTMLRendering::setDefaultTheme('admin');
+		
+		return HTMLHTTPResponse::render('app/admin_demo');
 	}
 
 }

@@ -7,6 +7,9 @@ class HTMLRendering extends Rendering {
 	
 	protected static $SHOWMODEL		= 'page_skeleton';
 	
+	/**
+	 * @var string
+	 */
 	public static $theme			= 'default';
 	
 	public static $cssPath			= 'css/';
@@ -42,6 +45,14 @@ class HTMLRendering extends Rendering {
 		while( $currentLayouts > $prevLayouts && static::endCurrentLayout() ) {
 			$currentLayouts--;
 		}
+	}
+	
+	/**
+	 * Set the default theme used to render layouts
+	 * @param string $theme
+	 */
+	public static function setDefaultTheme($theme) {
+		static::$theme	= $theme;
 	}
 	
 	public static function getModelPath($model) {
