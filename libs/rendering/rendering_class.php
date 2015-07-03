@@ -55,10 +55,11 @@ abstract class Rendering {
 		if( !class_exists($USER_CLASS) ) { return false; }
 		
 		if( $active!==NULL ) {
-			list($actModule, $actAction) = explodeList('-', $active, 2);
+// 			list($currentModule, $currentAction) = explodeList('-', $active, 2);
+			$currentModule	= $active;
 		} else {
-			$actModule	= !empty($GLOBALS['MenuModule']) ? $GLOBALS['MenuModule'] : $GLOBALS['Module'];
-			$actAction	= &$GLOBALS['Action'];
+			$currentModule	= !empty($GLOBALS['MenuModule']) ? $GLOBALS['MenuModule'] : $GLOBALS['Module'];
+// 			$currentAction	= &$GLOBALS['Action'];
 		}
 		
 		if( $layout===NULL ) {
@@ -74,20 +75,26 @@ abstract class Rendering {
 			if( $itemConf[0] == '#' ) {
 				list($item->link, $item->label) = explode('|', substr($itemConf, 1));
 			} else {
-				$itemConf	= explode('-', $itemConf);
-				$module		= $itemConf[0];
+				// TODO: Allow {var:value} for values, or use a YAML config ?
+// 				$itemConf	= explode('-', $itemConf);
+// 				$module		= $itemConf[0];
+				$module		= $itemConf;
 				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $module) ) { continue; }
-				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
-				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
-				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';
-				$item->link		= u($module, $action, $queryStr);
-				$item->label	= ( !empty($action) && hasTranslation($module.'_'.$action) ) ? t($module.'_'.$action) : t($module);
+// 				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
+// 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
+// 				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';
+// 				$item->link		= u($module, $action, $queryStr);
+				$item->link		= u($module);
+// 				$item->label	= ( !empty($action) && hasTranslation($module.'_'.$action) ) ? t($module.'_'.$action) : t($module);
+				$item->label	= $module;
 				$item->module	= $module;
-				if( $module==$actModule && ($actAction===NULL || $actAction==$action) ) {
+// 				if( $module==$currentModule && ($currentAction===NULL || $currentAction==$action) ) {
+				if( $module==$currentModule ) {
 					$item->current = 1;
 				}
 			}
+			$item->label	= t($item->label);
 			$env['items'][] = $item;
 		}
 		

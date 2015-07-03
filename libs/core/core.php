@@ -386,11 +386,11 @@ function parseFields(array $fields, $quote='"') {
 }
 
 /** Gets value from an Array Path
- * @param $array The array to get the value from.
- * @param $apath The path used to browse the array.
- * @param $default The default value returned if array is valid but key is not found.
- * @param $pathRequired True if the path is required. Default value is False.
- * @return The value from $apath in $array.
+ * @param array $array The array to get the value from.
+ * @param string $apath The path used to browse the array.
+ * @param mixed $default The default value returned if array is valid but key is not found.
+ * @param boolean $pathRequired True if the path is required. Default value is False.
+ * @return mixed The value from $apath in $array.
  * @sa build_apath()
  *
  * Gets value from an Array Path using / as separator.
