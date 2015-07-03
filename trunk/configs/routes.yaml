@@ -7,6 +7,9 @@ http:
     user_login:
         path: "/user_login.html"
         controller: "UserLoginController"
+    sample_twig:
+        path: "/sample_twig.html"
+        controller: "TwigSampleController"
         
 #    home:
 #        path: "/path/in/array/config"

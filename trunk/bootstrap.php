@@ -244,12 +244,6 @@ try {
 		require_once LIBSDIR.$lib.'/_loader.php';
 	}
 	
-// 	includePath(LIBSDIR.CORELIB.'/');// Load engine Core
-	
-// 	includePath(LIBSDIR.CONFIGLIB.'/');// Load configuration library (Must provide Config class).
-	
-// 	includePath(CONFDIR);// Require to be loaded before libraries to get hooks.
-	
 	Config::build('engine');// Some libs should require to get some configuration.
 	
 	$RENDERING	= Config::get('default_rendering');
@@ -314,101 +308,7 @@ try {
 	// Handle current request
 	$REQUEST_HANDLER::handleCurrentRequest();
 	
-	/*
-	// Checks and Gets global inputs.
-// 	debug('$_GET', $_GET);
-// 	debug('$_SERVER', $_SERVER);
-	$Action = ( !empty($_GET['action']) && is_name($_GET['action'], 50, 1) ) ? $_GET['action'] : null;
-	$Format = ( !empty($_GET['format']) && is_name($_GET['format'], 50, 2) ) ? strtolower($_GET['format']) : 'html';
-	
-	$Module	= GET('module');
-	
-	if( empty($Module) ) {
-// 		$Module = ($Format == 'json') ? 'remote' : DEFAULTMOD;
-		$Module = DEFAULTMOD;
-	}
-	$RequestedModule	= $Module;
-	
-	Hook::trigger(HOOK_CHECKMODULE);
-	
-	if( empty($Module) || !is_name($Module) ) {
-		header("HTTP/1.1 400 Bad Request");
-		$CODE	= 400; $Module = 'http_error'; $Format = 'html';
-	}
-	if( !existsPathOf(MODDIR.$Module.'.php') ) {
-		header("HTTP/1.1 404 Not Found");
-		$CODE	= 404; $Module = 'http_error'; $Format = 'html';
-	}
-	
-	$allowedFormats = Config::get('module_formats');
-	$allowedFormats = isset($allowedFormats[$Module]) ? $allowedFormats[$Module] : 'html';
-	if( $allowedFormats != '*' && $allowedFormats != $Format && (!is_array($allowedFormats) || !in_array($Format, $allowedFormats)) ) {
-// 		debug('$Format', $Format);
-// 		debug('$allowedFormats', $allowedFormats);
-// 		die('unavailableFormat');
-		throw new UserException('unavailableFormat');
-	}
-	unset($allowedFormats);
-	
-	// Future feature ?
-	//$Module = Hook::trigger('routeModule', $Module, $Format, $Action);
-	
-	$coreAction = 'running_'.$Module;
-	Hook::trigger(HOOK_RUNMODULE, false, $Module);
-	
-	define('OBLEVEL_INIT', ob_get_level());
-// 	text('Running module '.$Module.' / '.$GLOBALS['Module']);
-	ob_start();
-	
-	require_once pathOf(MODDIR.$Module.'.php');
-	
-	// Terminate all layout
-	while( $RENDERING::endCurrentLayout() );
-	
-	$Page = ob_get_contents();// Review usage
-	// Future feature ? Need to place it somewhere smartly
-// 	$Page = Hook::trigger('endModule', false, $Page, $Module);
-	ob_end_clean();
-	*/
-	
-// } catch( UserException $e ) {
-// 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
-// 		ob_end_clean();
-// 	}
-// 	reportError($e);
-// 	$Page = getReportsHTML();
 	
 } catch( Exception $e ) {
-// 	debug('Bootstrap Exception line '.__LINE__);
-// 	if( defined('OBLEVEL_INIT') && ob_get_level() > OBLEVEL_INIT ) {
-// 		$Page = ob_get_contents();
-// 		ob_end_clean();
-// 	}
-// 	debug('Bootstrap Exception line '.__LINE__);
-// 	$report	= get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>';
-// 	if( !function_exists('log_error') ) {
-// 		die($report);
-// 	}
-// 	var_dump($e);echo '<br />';
-// 	echo '$coreAction => '.$coreAction.'<br />';
 	log_error($e, $coreAction, true);
-// 	unset($report);
 }
-
-// try {
-// 	$coreAction = 'displaying_'.$Module;
-// 	if( class_exists('Hook') ) {
-// 		Hook::trigger('showRendering', true);
-// 	}
-// 	if( class_exists($RENDERING) ) {
-// 		$RENDERING::doShow();//Generic final display.
-// // 	if( class_exists('Rendering') ) {
-// // 		Rendering::doShow();//Generic final display.
-// 	} else {
-// 		echo $Page;
-// 	}
-	
-// } catch(Exception $e) {
-// 	@log_error(get_class($e).' ('.$e->getCode().') : '.$e->getMessage()."<br />\n<pre>".$e->getTraceAsString().'</pre>', $coreAction);
-// // 	die('A fatal display error occured.');
-// }
