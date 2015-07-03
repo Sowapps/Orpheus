@@ -25,9 +25,14 @@ function u($routeName, $values=array()) {
 	if( !isset($routes[$routeName]) ) {
 		throw new Exception('Unable to find route '.$routeName);
 	}
-	$routes[$routeName]
+	if( !isset($routes[$routeName][HTTPRoute::METHOD_GET]) ) {
+		throw new Exception('Unable to find route '.$routeName.' for GET method');
+	}
+	/* @var $route HTTPRoute */
+	$route	= $routes[$routeName][HTTPRoute::METHOD_GET];
+	return $route->formatURL($values);
 }
 
 function _u($route, $values=array()) {
-	echo u($route, $values=array());
+	echo u($route, $values);
 }
