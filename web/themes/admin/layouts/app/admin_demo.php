@@ -1,4 +1,6 @@
-
+<?php
+HTMLRendering::useLayout('page_skeleton');
+?>
         <div class="row">
           <div class="col-lg-12">
             <h1>Dashboard <small>Statistics Overview</small></h1>

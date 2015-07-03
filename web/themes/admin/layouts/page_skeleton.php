@@ -197,7 +197,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 	</div>
 </div>
 
-<?php echo $Page; ?>
+<?php echo $Content; ?>
 	
 	</div>
 
