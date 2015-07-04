@@ -468,10 +468,11 @@ function build_apath($array, $prefix='') {
  * Class files should be named classname_class.php
 */
 function using($pkgPath) {
-	$pkgPath = LIBSDIR.str_replace('.', '/',strtolower($pkgPath));
+	$pkgPath	= LIBSDIR.str_replace('.', '/', $pkgPath);
+	$lowerPath	= strtolower($pkgPath);
 	// Including all contents of a package
-	if( substr($pkgPath, -2) == '.*' ) {
-		$dir = pathOf(substr($pkgPath, 0, -2));
+	if( substr($lowerPath, -2) == '.*' ) {
+		$dir = pathOf(substr($lowerPath, 0, -2));
 		$files = scandir($dir);
 		foreach($files as $file) {
 			if( preg_match("#^[^\.].*_class.php$#", $file) ) {
@@ -481,16 +482,16 @@ function using($pkgPath) {
 		return;
 	}
 	// Including loader of a package
-	if( existsPathOf($pkgPath, $path) && is_dir($path) ) {
+	if( existsPathOf($lowerPath, $path) && is_dir($path) ) {
 		if( file_exists($path.'/_loader.php') ) {
 			require_once $path.'/_loader.php';
-		} else {
-			require_once $path.'/loader.php';
+// 		} else {
+// 			require_once $path.'/loader.php';
 		}
 		return;
 	}
 	// Including a class
-	require_once existsPathOf($pkgPath.'_class.php', $path) ? $path : pathOf($pkgPath.'.php');
+	require_once existsPathOf($lowerPath.'_class.php', $path) ? $path : pathOf($pkgPath.'.php');
 }
 
 /** Adds a class to the autoload.
