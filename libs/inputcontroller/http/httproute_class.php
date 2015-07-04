@@ -31,10 +31,10 @@ class HTTPRoute extends ControllerRoute {
 	 */
 	public function formatURL($values=array()) {
 		return preg_replace_callback(
-			'#\{[^\}]+\}#sm',
+			'#\{([^\}]+)\}#sm',
 			function($matches) use($values) {
 				$var = $regex = null;
-				static::extractVariable($matches[0], $var, $regex);
+				static::extractVariable($matches[1], $var, $regex);
 				if( !isset($values[$var]) ) {
 					throw new Exception('The variable `'.$var.'` is missing to generate URL for route '.$this->name);
 				}
@@ -76,7 +76,7 @@ class HTTPRoute extends ControllerRoute {
 		$this->pathRegex	= preg_replace_callback(
 			'#\{([^\}]+)\}#sm',
 			function($matches) use(&$variables) {
-				debug('$matches', $matches);
+// 				debug('$matches', $matches);
 				static::extractVariable(str_replace('\.', '.', $matches[1]), $var, $regex);
 				$variables[]	= $var;
 				return '('.$regex.')';
