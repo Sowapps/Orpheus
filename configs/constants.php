@@ -25,11 +25,6 @@ defifn('DEV_TOOLS',			DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PH
 
 defifn('USER_CLASS',		'SiteUser');
 
-// Useful paths.
-defifn('CONFDIR',			'configs/');
-defifn('MODDIR',			'modules/');
-defifn('LIBSDIR',			'libs/');
-defifn('THEMESDIR',			'themes/');
 // defifn('WEBPATH',			pathOf('web/'));
 
 defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
