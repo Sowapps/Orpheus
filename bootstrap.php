@@ -291,10 +291,10 @@ try {
 	}
 	
 	foreach( $Libraries as $lib ) {
-		debug('Try to load library '.$lib.' with path '.LIBSDIR.$lib.'/_loader.php');
+// 		debug('Try to load library '.$lib.' with path '.LIBSDIR.$lib.'/_loader.php');
 		if( !existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
 		require_once $path;
-		debug('...Loaded !');
+// 		debug('...Loaded !');
 	}
 	
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
