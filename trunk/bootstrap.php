@@ -173,6 +173,7 @@ spl_autoload_register(
 */
 function($className) {
 	try {
+		debug('spl_autoload called with class '.$className);
 		global $AUTOLOADS;
 // 		, $AUTOLOADSFROMCONF;
 		// In the first __autoload() call, we try to load the autoload config from file.
