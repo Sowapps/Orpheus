@@ -68,6 +68,11 @@ defifn('MODDIR',			'modules/');
 defifn('LIBSDIR',			'libs/');
 defifn('THEMESDIR',			'themes/');
 
+defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
+defifn('LOGSPATH',			pathOf('logs/'));
+defifn('STOREPATH',			pathOf('store/'));
+defifn('CACHEPATH',			STOREPATH.'cache/');
+
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 // Errors Actions

@@ -27,11 +27,6 @@ defifn('USER_CLASS',		'SiteUser');
 
 // defifn('WEBPATH',			pathOf('web/'));
 
-defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
-defifn('LOGSPATH',			pathOf('logs/'));
-defifn('STOREPATH',			pathOf('store/'));
-defifn('CACHEPATH',			STOREPATH.'cache/');
-
 // defifn('CONFIGLIB',			'config');
 // defifn('CORELIB',			'core');
 
