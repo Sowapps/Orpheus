@@ -219,9 +219,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Display already sent headers and contents
 	// Clean all buffers
 	$buffer	= '';
-	while( ob_get_level() ) {
-		$buffer = ob_get_clean().$buffer;
-	}
+// 	while( ob_get_level() ) {
+// 		$buffer = ob_get_clean().$buffer;
+// 	}
 // 	debug('ob_get_level() => '.ob_get_level());
 // 		debug_print_backtrace();
 	ob_start();
