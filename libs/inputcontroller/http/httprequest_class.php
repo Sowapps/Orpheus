@@ -1,6 +1,5 @@
 <?php
 
-
 class HTTPRequest extends InputRequest {
 
 	protected $method;
@@ -10,6 +9,13 @@ class HTTPRequest extends InputRequest {
 	protected $cookies;
 	protected $files;
 	protected $inputType;
+	
+	/**
+	 * The values in path
+	 * 
+	 * @var strClass
+	 */
+	protected $pathValues;
 // 	protected $query;// Parameters
 // 	protected $input;// Input
 
@@ -37,7 +43,8 @@ class HTTPRequest extends InputRequest {
 			if( !isset($methodRoutes[$this->method]) ) { continue; }
 			/* @var $route HTTPRoute */
 			$route	= $methodRoutes[$this->method];
-			if( $route->isMatchingRequest($this) ) {
+			if( $route->isMatchingRequest($this, $values) ) {
+				$this->pathValues	= (object) $values;
 				return $route;
 			}
 		}
@@ -201,5 +208,10 @@ class HTTPRequest extends InputRequest {
 		return true;
 	}
 	
-	
+	/**
+	 * @return stdClass
+	 */
+	public function getPathValues() {
+		return $this->pathValues;
+	}
 }

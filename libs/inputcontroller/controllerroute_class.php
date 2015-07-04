@@ -46,6 +46,17 @@ abstract class ControllerRoute {
 		
 		$conf	= YAML::build('routes', true, true);
 		$routes	= $conf->asArray();
+		if( DEV_VERSION ) {
+			// If there is not file routes_dev, we get an empty array
+			$conf	= YAML::build('routes_dev', true, true);
+			foreach( $conf->asArray() as $type => $typeRoutes ) {
+				if( isset($routes[$type]) ) {
+					$routes[$type]	= array_merge($routes[$type], $routes[$type]);
+				} else {
+					$routes[$type]	= $typeRoutes;
+				}
+			}
+		}
 		foreach( $routes as $type => $typeRoutes ) {
 			$routeClass	= $type.'Route';
 // 			debug('$type => '.$type);
