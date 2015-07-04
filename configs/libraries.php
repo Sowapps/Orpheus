@@ -8,7 +8,7 @@
 
 // Libs to call loaders, you could use not included libs but you will have to call using()
 // Order is important
-$Librairies	= array(
+$Libraries	= array(
 	// Core
 	'core',
 	'config',

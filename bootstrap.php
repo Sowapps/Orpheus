@@ -256,13 +256,15 @@ try {
 // 	require_once CONSTANTSPATH;
 	require_once pathOf('configs/libraries.php');
 	
-	if( empty($Librairies) ) {
-		throw new Exception('Unable to load libraries, the config variable $Librairies is empty, please edit your configs/libraries.php file.');
+	if( empty($Libraries) ) {
+		throw new Exception('Unable to load libraries, the config variable $Libraries is empty, please edit your configs/libraries.php file.');
 	}
 	
-	foreach( $Librairies as $lib ) {
+	foreach( $Libraries as $lib ) {
+		debug('Try to load library '.$lib);
 		if( !file_exists(LIBSDIR.$lib.'/_loader.php') ) { continue; }
 		require_once LIBSDIR.$lib.'/_loader.php';
+		debug('...Loaded !');
 	}
 	
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
