@@ -46,17 +46,6 @@ defifn('DEFAULTMOD',		'home');
 defifn('DEFAULTHOST',		'domain.com');
 defifn('DEFAULTPATH',		'');
 
-defifn('HTTPS',				!empty($_SERVER['HTTPS']));
-defifn('SCHEME',			HTTPS ? 'https' : 'http' );
-defifn('HOST',				!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
-defifn('PATH',				!defined("TERMINAL") ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
-defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
-defifn('DEFAULTLINK',		SITEROOT);
-
-// Static medias
-defifn('JSURL',				SITEROOT.'js/');
-defifn('THEMESURL',			SITEROOT.THEMESDIR);
-
 defifn('AUTHORNAME',		'Florent HAZARD');
 defifn('SITENAME',			'Orpheus');
 defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
@@ -64,10 +53,4 @@ defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
 define('CRAC_CONTEXT_APPLICATION',	1);
 define('CRAC_CONTEXT_AGENCY',		2);
 define('CRAC_CONTEXT_RESOURCE',		3);
-
-defifn('PDOLOGFILENAME',	'.pdo_error');
-defifn('SYSLOGFILENAME',	'.system');
-defifn('DEBUGFILENAME',		'.debug');
-defifn('HACKLOGFILENAME',	'.hack');
-defifn('SERVLOGFILENAME',	'.server');
 
