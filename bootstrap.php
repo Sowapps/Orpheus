@@ -193,13 +193,13 @@ function($exception) {
 });
 
 spl_autoload_register(
-// Class autoload function
-/*
-	\param $className The classname not loaded yet.
-	\sa The \ref libraries documentation
-	
-	Includes the file according to the classname in lowercase and suffixed by '_class.php'.\n
-	The script stops if the class file is not found.\n
+/**
+ * Class autoload function
+ * 
+ * @param $className The classname not loaded yet.
+ * @see The \ref libraries documentation
+ * 
+ * Include the file according to the classname in lowercase and suffixed by '_class.php'.
 */
 function($className) {
 	try {
@@ -292,7 +292,7 @@ try {
 	
 	foreach( $Libraries as $lib ) {
 		debug('Try to load library '.$lib.' with path '.LIBSDIR.$lib.'/_loader.php');
-		if( existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
+		if( !existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
 		require_once $path;
 		debug('...Loaded !');
 	}
