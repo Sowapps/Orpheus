@@ -77,7 +77,7 @@ defifn('CACHEPATH',			STOREPATH.'cache/');
 defifn('HTTPS',				!empty($_SERVER['HTTPS']));
 defifn('SCHEME',			HTTPS ? 'https' : 'http' );
 defifn('HOST',				!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
-defifn('PATH',				!defined("TERMINAL") ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
+defifn('PATH',				!defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
 defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
 
@@ -222,23 +222,25 @@ function($className) {
 		// If the class file path is known in the AUTOLOADS array
 		if( !empty($AUTOLOADS[$bFile]) ) {
 			$path	= null;
-			$relativePath	= $AUTOLOADS[$bFile];
-			if( existsPathOf(LIBSDIR.$relativePath, $path) ) {
+// 			$relativePath	= $AUTOLOADS[$bFile];
+			$path	= $AUTOLOADS[$bFile];
+			require_once $path;
+// 			if( existsPathOf(LIBSDIR.$relativePath, $path) ) {
 				
-				// if the path is a directory, we search the class file into this directory.
-				if( is_dir($path) ) {
-					$relativePath	= 1;
-					if( existsPathOf($path.$bFile.'_class.php', $path) ) {
-						require_once $path;
-					}
+// 				// if the path is a directory, we search the class file into this directory.
+// 				if( is_dir($path) ) {
+// 					$relativePath	= 1;
+// 					if( existsPathOf($path.$bFile.'_class.php', $path) ) {
+// 						require_once $path;
+// 					}
 
-				// if the path is a file, we include the class file.
-				} else {
-					require_once $path;
-				}
-			}
+// 				// if the path is a file, we include the class file.
+// 				} else {
+// 					require_once $path;
+// 				}
+// 			}
 			if( !class_exists($className, false) ) {
-				throw new Exception('Wrong use of Autoloads. Please use addAutoload().');
+				throw new Exception('Wrong use of Autoloads, the class "'.$className.'" should be declared in the given file "'.$path.'". Please use addAutoload() correctly.');
 			}
 			// We want to do it by another way
 // 			if( method_exists($className, 'onClassLoaded') ) {
@@ -250,17 +252,18 @@ function($className) {
 // 					'library_path'		=> pathOf(LIBSDIR.$library),
 // 				));
 // 			}
-			
+		
+		// NO MORE USED
 		// If the class name is like Package_ClassName, we search the class file "classname" in the "package" directory in libs/.
-		} else {
-			$classExp = explode('_', $bFile, 2);
-			if( count($classExp) > 1 && existsPathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php') ) {
-				require_once pathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php');
-				return;
-			}
-			// NOT FOUND
-			//Some libs could add their own autoload function.
-			//throw new Exception("Unable to load lib \"{$className}\"");
+// 		} else {
+// 			$classExp = explode('_', $bFile, 2);
+// 			if( count($classExp) > 1 && existsPathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php') ) {
+// 				require_once pathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php');
+// 				return;
+// 			}
+// 			// NOT FOUND
+// 			//Some libs could add their own autoload function.
+// 			//throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
 		log_error("$e", 'loading_class_'.$className);

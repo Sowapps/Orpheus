@@ -1,9 +1,9 @@
 
 
 http:
-    sessionpage:
-        path: "/sessionpage/{slug:page}.html"
-        controller: "SessionPageController"
+    delayedpage:
+        path: "/delayedpage/{slug:page}.html"
+        controller: "DelayedPageController"
         
 #    home:
 #        path: "/path/in/array/config"
