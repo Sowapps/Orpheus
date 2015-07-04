@@ -62,6 +62,12 @@ defifn('DEV_VERSION',			false);
 
 defifn('CHECK_MODULE_ACCESS',	true);
 
+// Useful paths
+defifn('CONFDIR',			'configs/');
+defifn('MODDIR',			'modules/');
+defifn('LIBSDIR',			'libs/');
+defifn('THEMESDIR',			'themes/');
+
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 // Errors Actions
@@ -261,9 +267,9 @@ try {
 	}
 	
 	foreach( $Libraries as $lib ) {
-		debug('Try to load library '.$lib);
-		if( !file_exists(LIBSDIR.$lib.'/_loader.php') ) { continue; }
-		require_once LIBSDIR.$lib.'/_loader.php';
+		debug('Try to load library '.$lib.' with path '.LIBSDIR.$lib.'/_loader.php');
+		if( existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
+		require_once $path;
 		debug('...Loaded !');
 	}
 	
