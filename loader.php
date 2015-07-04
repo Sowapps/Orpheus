@@ -218,9 +218,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
 	// Clean all buffers
-	while( ob_get_level() ) {
-		ob_end_clean();
-	}
+// 	while( ob_get_level() ) {
+// 		ob_end_clean();
+// 	}
 // 	debug('ob_get_level() => '.ob_get_level());
 // 		debug_print_backtrace();
 	ob_start();
@@ -330,19 +330,6 @@ code {
 	white-space: nowrap;
 	overflow-x: scroll;
 }
-/* Hide php tag */
-/*
-code > span > span:first-child {
-	margin: -19px 0 0 -6px;
-	display: inline-block;
-}
-*/
-/*
-code > span > span:first-child,
-code > span > span:nth-child(2) {
-	display: none;
-}
-*/
 </style>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>
