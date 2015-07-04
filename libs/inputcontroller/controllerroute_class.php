@@ -46,7 +46,9 @@ abstract class ControllerRoute {
 		
 		$conf	= YAML::build('routes', true, true);
 		$routes	= $conf->asArray();
+		debug('Routes', $routes);
 		if( DEV_VERSION ) {
+			debug('Loading dev routes');
 			// If there is not file routes_dev, we get an empty array
 			$conf	= YAML::build('routes_dev', true, true);
 			foreach( $conf->asArray() as $type => $typeRoutes ) {
@@ -56,6 +58,7 @@ abstract class ControllerRoute {
 					$routes[$type]	= $typeRoutes;
 				}
 			}
+			debug('Routes', $routes);
 		}
 		foreach( $routes as $type => $typeRoutes ) {
 			$routeClass	= $type.'Route';
