@@ -85,7 +85,7 @@ class NotFoundException extends UserException {
  * This exception is thrown when something requested require an authentication or more permissions.
  */
 class ForbiddenException extends UserException {
-	public function __construct($domain=null, $message=null, $previous=null) {
+	public function __construct($message=null, $domain=null, $previous=null) {
 		parent::__construct($message ? $message : 'forbidden', $domain, defined('HTTP_FORBIDDEN') ? HTTP_FORBIDDEN : null, $previous);
 	}
 }

@@ -75,9 +75,12 @@ abstract class ConfigCore {
 		$this->config = array_merge($this->config, $conf);
 	}
 	
-	/**	Load new configuration from source
-	 * @param $source An identifier to get the source.
-	 * @param $cached True if this configuration should be cached.
+	/**
+	 * Load new configuration from source
+	 * 
+	 * @param $source An identifier to get the source
+	 * @param $cached True if this configuration should be cached
+	 * @return boolean True if this configuration was loaded successfully
 	 * 
 	 * Load a configuration from a source identified by $source.
 	 */
@@ -100,26 +103,24 @@ abstract class ConfigCore {
 // 		$parsed = yaml_parse_file($confPath);
 // 		if( class_exists('APCache', true) ) {
 // 			$cache	= new APCache('config', $source);
-		if( class_exists('FSCache', true) ) {
-			$cache	= new FSCache('config', $source, filemtime(static::getFilePath($source)));
-			if( !$cache->get($parsed) ) {
+		try {
+			if( class_exists('FSCache', true) ) {
+				$cache	= new FSCache('config', $source, filemtime(static::getFilePath($source)));
+				if( !$cache->get($parsed) ) {
+					$parsed	= static::parse($source);
+					$cache->set($parsed);
+				}
+			} else {
 				$parsed	= static::parse($source);
-				$cache->set($parsed);
 			}
-		} else {
-			$parsed	= static::parse($source);
+			$this->add($parsed);
+			return true;
+		} catch( Exception $e ) {
+			// If not found, we do nothing
+			return false;
 		}
-		$this->add($parsed);
 // 		return true;
 	}
-	
-	/**	Loads new configuration source
-	 * @param $source An identifier to get the source.
-	 * @param $cached True if this configuration should be cached.
-	 * 
-	 * Loads a configuration from a source identified with $source.
-	 */
-// 	public abstract function load($source, $cached=true);
 
 
 	/**	Parse configuration from given source.
@@ -127,13 +128,6 @@ abstract class ConfigCore {
 	 * @return The loaded configuration array.
 	 */
 	public abstract static function parse($source);
-	
-	/**	Checks if configuration source exists
-	 * @param $source An identifier to check the source.
-	 * 
-	 * Checks the configuration from the source is available.
-	 */
-// 	public abstract function checkSource($source);
 
 	/**	Check if source is available
 	 * @param string $source An identifier to get the source.
