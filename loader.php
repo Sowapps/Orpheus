@@ -217,6 +217,7 @@ function typeOf($var) {
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
+	// TODO: Externalize this and allow developers to ovverride it
 	// Clean all buffers
 	$buffer	= '';
 	while( ob_get_level() ) {
@@ -289,7 +290,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		if( trim($buffer) && class_exists('DelayedPageController', true) ) {
 			?>
 		<div class="panel panel-danger">
-			<div class="panel-heading">The buffer is not empty, maybe this could help you...</div>
+			<div class="panel-heading">The buffer is not empty, maybe this could helps you...</div>
 			<div class="panel-body buffer">
 				<div class="embed-responsive embed-responsive-16by9">
 					<iframe class="embed-responsive-item" src="<?php echo DelayedPageController::store(uniqid('error'), $buffer); ?>"></iframe>
