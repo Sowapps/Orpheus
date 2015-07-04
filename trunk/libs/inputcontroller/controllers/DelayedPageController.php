@@ -17,6 +17,7 @@ class DelayedPageController extends HTTPController {
 		$pathValues	=	$request->getPathValues();
 		$cache		= new APCache('delayedpage', $pathValues->page);
 		if( !$cache->get($content) ) {
+			$cache->reset();
 			throw new NotFoundException('The delayed page "'.$pathValues->page.'" was not found');
 		}
 // 		if( empty($_SESSION[self::SESSION_STOREDPAGES][$pathValues->page]) ) {
