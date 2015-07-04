@@ -25,7 +25,7 @@ addAutoload('Session',							'sessionhandler/dbsession');
 /** Hook 'runModule'
  * 
  */
-Hook::register('runModule', function($module) {
+Hook::register(HOOK_RUNMODULE, function($module) {
 	if( getModuleAccess($module) > 0 ) {
 		HTMLRendering::$theme = 'admin';
 	}
@@ -41,7 +41,7 @@ Hook::register('runModule', function($module) {
 // });
 
 function getModuleAccess($module=null) {
-	if( is_null($module) ) {
+	if( $module === NULL ) {
 		$module = &$GLOBALS['Module'];
 	}
 	global $ACCESS;
@@ -52,13 +52,15 @@ function getModuleAccess($module=null) {
  * @param SiteUser $user
  */
 function sendAdminRegistrationEmail($user) {
+	$SITENAME	= SITENAME;
+	$SITEURL	= DEFAULTLINK;
 	$e	= new Email('Orpheus - Registration of '.$user->fullname);
 	$e->setText(<<<BODY
 Hi master !
 
-A new dude just registered on <a href="http://orpheus-framework.com/">orpheus-framework.com</a>, he is named {$user} ({$user->name}) with email {$user->email}.
+A new dude just registered on <a href="{$SITEURL}">{$SITENAME}</a>, he is named {$user} ({$user->name}) with email {$user->email}.
 
-Your humble servant, orpheus-framework.com
+Your humble servant, {$SITENAME}.
 BODY
 );
 	return $e->send(ADMINEMAIL);
@@ -69,6 +71,7 @@ BODY
  */
 function sendNewThreadMessageEmail($tm) {
 // 	$user	= $tm->getUser();
+	$SITENAME	= SITENAME;
 	$e	= new Email('Orpheus - New message of '.$tm->user_name);
 	$e->setText(<<<BODY
 Hi master !
@@ -76,7 +79,7 @@ Hi master !
 {$tm->getUser()} posted a new thread message:
 {$tm}
 
-Your humble servant, orpheus-framework.com
+Your humble servant, {$SITENAME}.
 BODY
 );
 	return $e->send(ADMINEMAIL);

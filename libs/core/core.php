@@ -508,11 +508,26 @@ function addAutoload($className, $classPath) {
 	if( !empty($AUTOLOADS[$className]) ) {
 		return false;
 	}
-	if( existsPathOf(LIBSDIR.$classPath.'_class.php') ) {
-		$AUTOLOADS[$className] = $classPath.'_class.php';
+	if(
+		// Pure object naming
+		existsPathOf(LIBSDIR.$classPath.'.php', $path) ||
+		// Old Orpheus naming
+		existsPathOf(LIBSDIR.$classPath.'_class.php', $path) ||
+		// Full path
+		existsPathOf(LIBSDIR.$classPath, $path)
+	) {
+		$AUTOLOADS[$className] = $path;
+// 		$AUTOLOADS[$className] = $classPath.'.php';
 		
-	} else if( existsPathOf(LIBSDIR.$classPath) ) {
-		$AUTOLOADS[$className] = $classPath;
+// 	} else
+// 	if(  ) {
+// 		// Old Orpheus naming
+// 		$AUTOLOADS[$className] = $classPath.'_class.php';
+		
+// 	} else
+// 	if( existsPathOf(LIBSDIR.$classPath) ) {
+// 		// Full naming
+// 		$AUTOLOADS[$className] = $classPath;
 		
 	} else {
 		throw new Exception("Class file of \"{$className}\" not found.");

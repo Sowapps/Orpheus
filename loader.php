@@ -218,9 +218,10 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
 	// Clean all buffers
-// 	while( ob_get_level() ) {
-// 		ob_end_clean();
-// 	}
+	$buffer	= '';
+	while( ob_get_level() ) {
+		$buffer = ob_get_clean().$buffer;
+	}
 // 	debug('ob_get_level() => '.ob_get_level());
 // 		debug_print_backtrace();
 	ob_start();
@@ -260,8 +261,6 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			<div class="panel-body exception">
 				<ol>
 	<?php
-	/*
-	*/
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
@@ -285,6 +284,21 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 				</ol>
 			</div>
 		</div>
+		
+		<?php
+		if( $buffer && class_exists('DelayedPageController', true) ) {
+			?>
+		<div class="panel panel-danger">
+			<div class="panel-heading">The buffer is not empty, maybe this could help you...</div>
+			<div class="panel-body buffer">
+				<div class="embed-responsive embed-responsive-16by9">
+					<iframe class="embed-responsive-item" src="<?php echo DelayedPageController::store(uniqid('error'), $buffer); ?>"></iframe>
+				</div>
+			</div>
+		</div>
+		<?php
+		}
+		?>
 	</div>
 <style>
 .header {
