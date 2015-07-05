@@ -30,6 +30,7 @@ if( file_exists(INSTANCEFILEPATH) ) {
 	require_once INSTANCEFILEPATH;
 }
 
+echo ini_get('date.timezone')."\n";
 if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 	// Set to avoid some PHP warnings
 	date_default_timezone_set('UTC');
