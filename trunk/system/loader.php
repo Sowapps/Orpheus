@@ -393,6 +393,7 @@ function convertExceptionAsText(Exception $Exception, $code, $action) {
 // 		debug_print_backtrace();
 	ob_start();
 	?>
+
 *****************************************
 ************* ~  Orpheus ~ **************
 *****************************************
