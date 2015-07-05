@@ -1352,7 +1352,15 @@ function sqlDatetime($time=TIME) {
  * @return The ip of the client
 */
 function clientIP() {
-	return $_SERVER['REMOTE_ADDR'];
+	if( isset($_SERVER['REMOTE_ADDR']) ) {
+		return $_SERVER['REMOTE_ADDR'];
+	}
+	if( isset($_SERVER['SSH_CLIENT']) ) {
+		// [SSH_CLIENT] => REMOTE_IP REMOTE_PORT LOCAL_PORT
+		return explode(' ', $_SERVER['SSH_CLIENT'], 2)[0];
+		// else [SSH_CONNECTION] => REMOTE_IP REMOTE_PORT LOCAL_IP LOCAL_PORT
+	}
+	return 'undefined';
 }
 
 /** Gets the id of the current user
