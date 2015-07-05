@@ -7,6 +7,11 @@
  * 
  * Website core.
  */
+ 
+define('PHP_SAPI_NAME',	php_sapi_name());
+die(PHP_SAPI_NAME);
+define('IS_WEB', php_sapi_name());
+define('IS_CONSOLE', PHP_SAPI_NAME==='cli');
 
 // echo 'Bootstrap<br />';
 if( isset($SRCPATHS) ) {
@@ -30,7 +35,6 @@ if( file_exists(INSTANCEFILEPATH) ) {
 	require_once INSTANCEFILEPATH;
 }
 
-echo 'date.timezone => '.ini_get('date.timezone')."\n";
 if( !ini_get('date.timezone') ) {
 // if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 	// Set to avoid some PHP warnings
@@ -42,7 +46,7 @@ if( !ini_get('date.timezone') ) {
 defifn('ORPHEUSPATH',		dirpath(dirname(ACCESSPATH)));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);		// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);	// The instance sources
-echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
+// echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
 // die('Stopping script process');
 
 addSrcPath(ORPHEUSPATH);
