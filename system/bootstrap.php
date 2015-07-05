@@ -287,8 +287,8 @@ try {
 	ob_start();
 // 	defifn('CORELIB',		'core');
 // 	defifn('CONFIGLIB',		'config');
-	$_SERVER['PHP_AUTH_PW']	= '******';
-	debug('$_SERVER', $_SERVER);die();
+// 	$_SERVER['PHP_AUTH_PW']	= '******';
+// 	debug('$_SERVER', $_SERVER);die();
 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
 
 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
