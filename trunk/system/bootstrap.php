@@ -37,7 +37,7 @@ if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 
 // These constants take care about paths through symbolic links.
 // defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
-defifn('ORPHEUSPATH',		dirpath(ACCESSPATH));	// The Orpheus sources
+defifn('ORPHEUSPATH',		dirpath(dirname(ACCESSPATH)));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);		// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);	// The instance sources
 echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
