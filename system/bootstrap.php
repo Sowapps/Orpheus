@@ -287,11 +287,11 @@ try {
 	ob_start();
 // 	defifn('CORELIB',		'core');
 // 	defifn('CONFIGLIB',		'config');
+	$_SERVER['PHP_AUTH_PW']	= '******';
+	debug('$_SERVER', $_SERVER);
 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
 
 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
-// 		$_SERVER['PHP_AUTH_PW']	= '******';
-// 		debug('$_SERVER', $_SERVER);
 // 		die();
 	}
 	
@@ -333,7 +333,8 @@ try {
 	// Here starts Hooks and Session too.
 	Hook::trigger(HOOK_STARTSESSION);
 
-	if( !defined('TERMINAL') ) {
+// 	if( !defined('TERMINAL') ) {
+	if( IS_WEB ) {
 
 		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
 		// Set session cookie parameters, HTTPS session is only HTTPS
