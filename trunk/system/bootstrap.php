@@ -35,7 +35,7 @@ if( file_exists(INSTANCEFILEPATH) ) {
 	require_once INSTANCEFILEPATH;
 }
 
-defifn('DEV_VERSION',			false);
+defifn('DEV_VERSION',		!IS_WEB);// True in all cases but web access
 
 if( !ini_get('date.timezone') ) {
 // if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
