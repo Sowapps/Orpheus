@@ -366,6 +366,52 @@ $(function() {
 // 	return $content;
 }
 
+function convertExceptionAsText(Exception $Exception, $code, $action) {
+	// Clean all buffers
+// 	$buffer	= '';
+	while( ob_get_level() ) {
+		ob_end_clean();
+// 		$buffer = ob_get_clean().$buffer;
+	}
+// 	debug('ob_get_level() => '.ob_get_level());
+// 		debug_print_backtrace();
+	ob_start();
+	?>
+***** Orpheus *****
+
+We caught an error from <?php echo get_class($Exception); ?>:
+
+<?php echo $Exception->getMessage(); ?>
+In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?>
+
+Sources:
+<?php echo formatSourceAsText($Exception->getFile(), $Exception->getLine(), 4, 2); ?>
+
+Stacktrace:
+<?php
+	foreach( $Exception->getTrace() as $trace ) {
+		// file, line, function, args
+		if( !isset($trace['class']) ) {
+			$trace['class']	= null;
+		}
+		if( !isset($trace['type']) ) {
+			$trace['type']	= null;
+		}
+		$args	= '';
+		foreach( $trace['args'] as $i => $arg ) {
+			$args .= ($i ? ', ' : '').typeOf($arg).(is_array($arg) ? '['.count($arg).']' : ' '.$arg);
+		}
+		echo "
+ - Call {$trace['class']}{$trace['type']}{$trace['function']}({$args})
+   In ".(isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file');
+	}
+	return ob_get_clean();
+// 	$content	= ob_get_contents();
+// 	ob_end_clean();
+// 	debug('End of error report');
+// 	return $content;
+}
+
 function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 	$from	= max($lineNumber-$linesBefore, 0);
 	$to		= $lineNumber+$linesAfter;
@@ -382,6 +428,31 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
  	{$string}
 </div>
 EOF;
+}
+
+function formatSourceAsText($file, $lineNumber, $linesBefore, $linesAfter) {
+	$from	= max($lineNumber-$linesBefore, 0);
+	$to		= $lineNumber+$linesAfter;
+	$count	= 0;
+	$lines	= getFileLines($file, $from, $to, $count, true);
+	$lineLen= strlen($to);
+	$result	= '';
+	foreach( $lines as $lineNumber => $line ) {
+		$result	.= '
+* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$line ? ' >' : '  ').' | '.$line;
+	}
+	return $result;
+// 	$lines	= '';
+// 	for( $line=$from; $line<$from+$count; $line++ ) {
+// 		$lines	.= '<li>'.$line.($lineNumber==$line ? '&nbsp;&nbsp;>' : '').'</li>';
+// 	}
+// 	$string	= highlight_source($string, true);
+// 	return <<<EOF
+// <div class="sourcecode">
+// 	<ul class="sourcecode_lines">{$lines}</ul>
+//  	{$string}
+// </div>
+// EOF;
 }
 
 function highlight_source($string, $return=false) {
@@ -423,24 +494,29 @@ function highlight_source($string, $return=false) {
 // 	return getFileLines($file, $lineNumber-$linesBefore, $lineNumber+$linesAfter);
 // }
 
-function getFileLines($file, $from, $to, &$count=0) {
+function getFileLines($file, $from, $to, &$count=0, $asArray=false) {
 	if( is_string($file) ) {
 		$file	= fopen($file, 'r');
 	}
 // 	$from	= max($from, 0);
-	$lines	= '';
+// 	$lines	= '';
+	$lines	= array();
 	$c		= 0;
+	$lineNb	= $from-1;
 	while( ($line=fgets($file)) !== false ) {
-		$c++;
+		$c++; $lineNb++;
 		if( $c >= $from ) {
 			if( $c > $to ) {
 				break;
 			}
-			$lines	.= $line;
-			$count++;
+// 			$lines	.= $line;
+			$lines[$lineNb]	= $line;
+			$to;
+// 			$count++;
 		}
 	}
-	return $lines;
+	$count	= count($lines);
+	return $asArray ? $lines : implode('', $lines);
 }
 
 /** Displays a variable as HTML
