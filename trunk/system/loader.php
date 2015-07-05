@@ -450,9 +450,11 @@ EOF;
 }
 
 function formatSourceAsText($file, $lineNumber, $linesBefore, $linesAfter) {
+	echo "formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter)\n";
 	$from	= max($lineNumber-$linesBefore, 0);
 	$to		= $lineNumber+$linesAfter;
 	$count	= 0;
+	echo "getFileLines($file, $from, $to, $count, true)\n";
 	$lines	= getFileLines($file, $from, $to, $count, true);
 	$lineLen= strlen($to);
 	$result	= '';
