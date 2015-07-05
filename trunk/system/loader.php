@@ -449,18 +449,18 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 EOF;
 }
 
-function formatSourceAsText($file, $lineNumber, $linesBefore, $linesAfter) {
-	echo "formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter)\n";
-	$from	= max($lineNumber-$linesBefore, 0);
-	$to		= $lineNumber+$linesAfter;
+function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter) {
+// 	echo "formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter)\n";
+	$from	= max($activeLineNumber-$linesBefore, 0);
+	$to		= $activeLineNumber+$linesAfter;
 	$count	= 0;
-	echo "getFileLines($file, $from, $to, $count, true)\n";
+// 	echo "getFileLines($file, $from, $to, $count, true)\n";
 	$lines	= getFileLines($file, $from, $to, $count, true);
 	$lineLen= strlen($to);
 	$result	= '';
 	foreach( $lines as $lineNumber => $line ) {
 		$result	.=
-'* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$line ? ' >' : '  ').' | '.$line;
+'* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$activeLineNumber ? ' >' : '  ').' | '.$line;
 	}
 	return $result;
 // 	$lines	= '';
