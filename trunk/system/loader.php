@@ -403,8 +403,6 @@ We caught an exception of type <?php echo get_class($Exception); ?>:
 
 <?php echo $Exception->getMessage(); ?> 
 In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?>
-
-Sources:
 <?php echo formatSourceAsText($Exception->getFile(), $Exception->getLine(), 4, 2); ?>
 
 Stacktrace:
