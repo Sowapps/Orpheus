@@ -421,6 +421,7 @@ Stacktrace:
  - Call {$trace['class']}{$trace['type']}{$trace['function']}({$args})
    In ".(isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file');
 	}
+	echo "\n";
 	return ob_get_clean();
 // 	$content	= ob_get_contents();
 // 	ob_end_clean();
@@ -454,8 +455,8 @@ function formatSourceAsText($file, $lineNumber, $linesBefore, $linesAfter) {
 	$lineLen= strlen($to);
 	$result	= '';
 	foreach( $lines as $lineNumber => $line ) {
-		$result	.= '
-* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$line ? ' >' : '  ').' | '.$line;
+		$result	.=
+'* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$line ? ' >' : '  ').' | '.$line;
 	}
 	return $result;
 // 	$lines	= '';
