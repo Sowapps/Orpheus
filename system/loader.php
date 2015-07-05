@@ -394,7 +394,7 @@ function convertExceptionAsText(Exception $Exception, $code, $action) {
 	ob_start();
 	?>
 *****************************************
-************* ~  Orpheus ~ **************
+************* ~  Orpheus  ~ *************
 *****************************************
 *********  Error Report System  *********
 *****************************************
@@ -420,7 +420,7 @@ Stacktrace:<?php
 		}
 		echo "
  - Call {$trace['class']}{$trace['type']}{$trace['function']}({$args})
-   In ".(isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file');
+   In ".(isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file')."\n";
 	}
 	echo "\n";
 	return ob_get_clean();
