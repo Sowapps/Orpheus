@@ -393,7 +393,11 @@ function convertExceptionAsText(Exception $Exception, $code, $action) {
 // 		debug_print_backtrace();
 	ob_start();
 	?>
-***** Orpheus *****
+*****************************************
+************* ~  Orpheus ~ **************
+*****************************************
+*********  Error Report System  *********
+*****************************************
 
 We caught an error from <?php echo get_class($Exception); ?>:
 
