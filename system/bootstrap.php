@@ -280,6 +280,13 @@ try {
 	ob_start();
 // 	defifn('CORELIB',		'core');
 // 	defifn('CONFIGLIB',		'config');
+	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
+
+		$_SERVER['PHP_AUTH_PW']	= '******';
+		debug('$_SERVER', $_SERVER);
+		die();
+	}
+	
 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
 	$REQUEST_HANDLER	= REQUEST_HANDLER;
 // 	unset($REQUEST_HANDLER);
