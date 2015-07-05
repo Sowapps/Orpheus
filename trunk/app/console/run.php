@@ -5,5 +5,6 @@
 // define('ACCESSPATH',	dirname(__FILE__));
 // $REQUEST_TYPE	= 'Console';
 echo getcwd();
+flush();
 
 require_once '../../system/bootstrap.php';
