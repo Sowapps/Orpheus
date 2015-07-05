@@ -405,8 +405,7 @@ We caught an exception of type <?php echo get_class($Exception); ?>:
 In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?> 
 <?php echo formatSourceAsText($Exception->getFile(), $Exception->getLine(), 4, 2); ?>
 
-Stacktrace:
-<?php
+Stacktrace:<?php
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
@@ -460,7 +459,7 @@ function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter)
 	$result	= '';
 	foreach( $lines as $lineNumber => $line ) {
 		$result	.=
-'* '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$activeLineNumber ? ' >' : '  ').' | '.$line;
+'| '.str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT).($lineNumber==$activeLineNumber ? ' >' : '  ').' | '.$line;
 	}
 	return $result;
 // 	$lines	= '';
