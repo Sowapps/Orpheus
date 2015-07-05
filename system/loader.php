@@ -401,8 +401,7 @@ function convertExceptionAsText(Exception $Exception, $code, $action) {
 
 We caught an exception of type <?php echo get_class($Exception); ?>:
 
-<?php echo $Exception->getMessage(); ?>
-
+<?php echo $Exception->getMessage(); ?> 
 In <?php echo $Exception->getFile(); ?> at line <?php echo $Exception->getLine(); ?>
 
 Sources:
