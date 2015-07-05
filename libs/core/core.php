@@ -231,7 +231,7 @@ function log_report($report, $file, $action='', $message='') {
 		$Error['report'] .= "<br />\n<b>And we met an error logging this report:</b><br />\n".stringify($e);
 	}
 	if( DEV_VERSION && isset($exception) ) {
-		displayExceptionAsHTML($exception, $action);
+		displayException($exception, $action);
 	}
 	if( $message !== NULL ) {// Yeh != NULL, not !empty, null cause no report to user
 		if( DEV_VERSION ) {

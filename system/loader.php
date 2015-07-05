@@ -197,6 +197,14 @@ function http_response_codetext($code=null) {
 	return isset($codeTexts[$code]) ? $codeTexts[$code] : 'Unknown';
 }
 
+function displayException(Exception $Exception, $action) {
+	if( IS_CONSOLE ) {
+		displayExceptionAsText($Exception, $action);
+	} else {
+		displayExceptionAsHTML($Exception, $action);
+	}
+}
+
 function displayExceptionAsHTML(Exception $Exception, $action) {
 	$code	= $Exception->getCode();
 	if( !$code ) {
@@ -204,6 +212,14 @@ function displayExceptionAsHTML(Exception $Exception, $action) {
 	}
 	http_response_code($code);
 	die(convertExceptionAsHTMLPage($Exception, $code, $action));
+}
+
+function displayExceptionAsText(Exception $Exception, $action) {
+	$code	= $Exception->getCode();
+	if( !$code ) {
+		$code	= 500;
+	}
+	die(convertExceptionAsText($Exception, $code, $action));
 }
 
 function typeOf($var) {
