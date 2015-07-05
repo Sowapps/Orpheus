@@ -523,15 +523,15 @@ function getFileLines($file, $from, $to, &$count=0, $asArray=false) {
 // 	$lines	= '';
 	$lines	= array();
 	$c		= 0;
-	$lineNb	= $from-1;
+	$lineNb	= $from;
 	while( ($line=fgets($file)) !== false ) {
-		$c++; $lineNb++;
+		$c++;
 		if( $c >= $from ) {
 			if( $c > $to ) {
 				break;
 			}
 // 			$lines	.= $line;
-			$lines[$lineNb]	= $line;
+			$lines[$lineNb++]	= $line;
 			$to;
 // 			$count++;
 		}
