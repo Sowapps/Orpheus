@@ -26,11 +26,9 @@ defifn('ACCESSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));
  */
 defifn('INSTANCEFILEPATH',	dirpath(dirname(dirname(ACCESSPATH))).'instance.php');
 
-$f	= ;
-if( file_exists($f) ) {
-	require_once $f;
+if( file_exists(INSTANCEFILEPATH) ) {
+	require_once INSTANCEFILEPATH;
 }
-unset($f);
 
 if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 	// Set to avoid some PHP warnings
