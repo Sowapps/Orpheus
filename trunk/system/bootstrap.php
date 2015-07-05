@@ -35,6 +35,8 @@ if( file_exists(INSTANCEFILEPATH) ) {
 	require_once INSTANCEFILEPATH;
 }
 
+defifn('DEV_VERSION',			false);
+
 if( !ini_get('date.timezone') ) {
 // if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 	// Set to avoid some PHP warnings
@@ -64,8 +66,6 @@ defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 require_once CONSTANTSPATH;
-
-defifn('DEV_VERSION',			false);
 
 defifn('CHECK_MODULE_ACCESS',	true);
 
