@@ -25,7 +25,7 @@ defifn('DEV_TOOLS',			DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PH
 
 defifn('USER_CLASS',		'SiteUser');
 
-// defifn('WEBPATH',			pathOf('web/'));
+// defifn('ACCESSPATH',			pathOf('web/'));
 
 // defifn('CONFIGLIB',			'config');
 // defifn('CORELIB',			'core');

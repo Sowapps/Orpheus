@@ -1,7 +1,4 @@
 <?php
-
-// echo '<pre>'.print_r($_SERVER, 1).'</pre>';
-// die('Bootstrap ok');
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
@@ -17,13 +14,19 @@ if( isset($SRCPATHS) ) {
 }
 require_once 'loader.php';
 
-defifn('WEBPATH',			dirname($_SERVER['SCRIPT_FILENAME']).'/');	// The Orpheus sources
+/**
+ * The access path, this is independant from the type of access (http, console...)
+ * It defines from which folder you access to your application
+ */
+defifn('ACCESSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));
 
-// $f	= dirname(dirname($_SERVER['SCRIPT_FILENAME'])).'/instance.php';
-// echo '__FILE__ : '.__FILE__.'<br />';
-// echo '$_SERVER[SCRIPT_FILENAME] : '.$_SERVER['SCRIPT_FILENAME'].'<br />';
-$f	= dirname(dirname(WEBPATH)).'/instance.php';
-// echo $f.'<br />';
+/**
+ * The path to the instance file, this file is optional.
+ * This file allows you configure an instance of this application, you could use it to define the DEV_VERSION
+ */
+defifn('INSTANCEFILEPATH',	dirpath(dirname(dirname(ACCESSPATH))).'instance.php');
+
+$f	= ;
 if( file_exists($f) ) {
 	require_once $f;
 }
@@ -36,10 +39,10 @@ if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 
 // These constants take care about paths through symbolic links.
 // defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
-defifn('ORPHEUSPATH',		dirpath(WEBPATH));	// The Orpheus sources
+defifn('ORPHEUSPATH',		dirpath(ACCESSPATH));	// The Orpheus sources
 defifn('APPLICATIONPATH',	ORPHEUSPATH);		// The application sources
 defifn('INSTANCEPATH',		APPLICATIONPATH);	// The instance sources
-// echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
+echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
 // die('Stopping script process');
 
 addSrcPath(ORPHEUSPATH);
