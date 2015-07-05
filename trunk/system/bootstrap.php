@@ -136,7 +136,7 @@ function($errno, $errstr, $errfile, $errline) {
 // 		}
 		if( !function_exists('log_error') ) {
 			if( DEV_VERSION ) {
-				displayExceptionAsHTML($exception, null);
+				displayException($exception, null);
 			} else {
 				die('A fatal error occurred.');
 			}
@@ -168,7 +168,7 @@ function() {
 		$exception	= new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']);
 		if( !function_exists('log_error') ) {
 			if( DEV_VERSION ) {
-				displayExceptionAsHTML($exception, 'Shutdown script');
+				displayException($exception, 'Shutdown script');
 			} else {
 				die('A fatal error occurred.');
 			}
@@ -188,7 +188,7 @@ function($exception) {
 	global $coreAction;
 	if( !function_exists('log_error') ) {
 		if( DEV_VERSION ) {
-			displayExceptionAsHTML($exception, 'Shutdown script');
+			displayException($exception, 'Shutdown script');
 		} else {
 			die('A fatal error occurred.');
 		}
