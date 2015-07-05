@@ -8,10 +8,10 @@
  * Website core.
  */
  
-define('PHP_SAPI_NAME',	php_sapi_name());
-die(PHP_SAPI_NAME);
-define('IS_WEB', php_sapi_name());
-define('IS_CONSOLE', PHP_SAPI_NAME==='cli');
+// define('PHP_SAPI_NAME',	php_sapi_name());
+// die(PHP_SAPI_NAME);
+define('IS_WEB',		array_key_exists('REQUEST_METHOD', $_SERVER));
+define('IS_CONSOLE',	!IS_WEB);
 
 // echo 'Bootstrap<br />';
 if( isset($SRCPATHS) ) {
@@ -289,9 +289,10 @@ try {
 // 	defifn('CONFIGLIB',		'config');
 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
 
-		$_SERVER['PHP_AUTH_PW']	= '******';
-		debug('$_SERVER', $_SERVER);
-		die();
+		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
+// 		$_SERVER['PHP_AUTH_PW']	= '******';
+// 		debug('$_SERVER', $_SERVER);
+// 		die();
 	}
 	
 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
