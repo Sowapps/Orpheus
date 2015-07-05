@@ -7,4 +7,4 @@
 echo getcwd()."\n";
 echo __DIR__."\n";
 
-require_once '../../system/bootstrap.php';
+require_once __DIR__.'/../../system/bootstrap.php';

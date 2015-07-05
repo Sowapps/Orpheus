@@ -4,4 +4,4 @@
 // defifn('ORPHEUSPATH',		dirpath(__FILE__));
 // define('ACCESSPATH',	dirname(__FILE__));
 // $REQUEST_TYPE	= 'HTTP';
-require_once '../../system/bootstrap.php';
+require_once __DIR__.'/../../system/bootstrap.php';
