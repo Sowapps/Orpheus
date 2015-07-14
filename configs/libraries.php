@@ -20,6 +20,7 @@ $Libraries	= array(
 	// App specific
 	'inputcontroller',
 	'publisher',
+	'entitydescriptor',
 	'rendering',
 	// Additional
 	'twigrenderer',
