@@ -83,6 +83,6 @@ class FSCache implements Cache {
 	 * @return The path of this cache file.
 	 */
 	public static function getFilePath($class, $name) {
-		return static::getFolderPath($class).$name.static::$ext;
+		return static::getFolderPath($class).strtr($name, '/', '_').static::$ext;
 	}
 }
