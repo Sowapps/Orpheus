@@ -101,6 +101,7 @@ abstract class ConfigCore {
 // 			return array();
 // 		}
 // 		$parsed = yaml_parse_file($confPath);
+		debug('Yaml loading, $source => '.$source);
 // 		if( class_exists('APCache', true) ) {
 // 			$cache	= new APCache('config', $source);
 		try {
@@ -113,6 +114,7 @@ abstract class ConfigCore {
 			} else {
 				$parsed	= static::parse($source);
 			}
+			debug('$parsed', $parsed);
 			$this->add($parsed);
 			return true;
 		} catch( Exception $e ) {
