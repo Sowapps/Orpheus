@@ -126,7 +126,7 @@ class HTTPRoute extends ControllerRoute {
 		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null, $options);
 	}
 	
-	public static function register($name, $path, $controller, $methods=null) {
+	public static function register($name, $path, $controller, $methods=null, $options=array()) {
 		if( $methods && !is_array($methods) ) {
 			$methods	= array($methods);
 		}
@@ -134,7 +134,7 @@ class HTTPRoute extends ControllerRoute {
 			if( (!$methods && !empty(static::$routes[$name][$method])) || ($methods && !in_array($method, $methods)) ) {
 				continue;
 			}
-			static::$routes[$name][$method]	= new static($name, $path, $controller, $method);
+			static::$routes[$name][$method]	= new static($name, $path, $controller, $method, $options);
 		}
 	}
 	
