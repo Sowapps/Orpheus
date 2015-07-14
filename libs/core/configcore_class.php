@@ -101,24 +101,24 @@ abstract class ConfigCore {
 // 			return array();
 // 		}
 // 		$parsed = yaml_parse_file($confPath);
-		debug('Config loading, $source => '.$source.' : '.static::getFilePath($source));
+// 		debug('Config loading, $source => '.$source.' : '.static::getFilePath($source));
 // 		if( class_exists('APCache', true) ) {
 // 			$cache	= new APCache('config', $source);
 		try {
 			if( class_exists('FSCache', true) ) {
-				debug('Cache class exists');
+// 				debug('Cache class exists');
 				$cache	= new FSCache('config', $source, filemtime(static::getFilePath($source)));
 				if( !$cache->get($parsed) ) {
-					debug('No cache, parsing config');
+// 					debug('No cache, parsing config');
 					$parsed	= static::parse($source);
-					debug('Config parsed');
+// 					debug('Config parsed');
 					$cache->set($parsed);
-					debug('Cache set');
+// 					debug('Cache set');
 				}
 			} else {
 				$parsed	= static::parse($source);
 			}
-			debug('$parsed', $parsed);
+// 			debug('$parsed', $parsed);
 			$this->add($parsed);
 			return true;
 		} catch( Exception $e ) {

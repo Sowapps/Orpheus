@@ -62,8 +62,8 @@ class FSCache implements Cache {
 	 * The type is saved too.
 	 */
 	public function set($data) {
-		debug('FSCache set', $data);
-		debug('FSCache path '.$this->path, $this->editTime.static::$delim.serialize($data));
+// 		debug('FSCache set', $data);
+// 		debug('FSCache path '.$this->path, $this->editTime.static::$delim.serialize($data));
 		return file_put_contents($this->path, $this->editTime.static::$delim.serialize($data));
 	}
 	
