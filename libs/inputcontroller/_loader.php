@@ -17,6 +17,7 @@ addAutoload('HTTPResponse',					'inputcontroller/http/httpresponse');
 addAutoload('HTMLHTTPResponse',				'inputcontroller/http/htmlhttpresponse');
 
 addAutoload('DelayedPageController',		'inputcontroller/controllers/DelayedPageController');
+addAutoload('StaticPageController',			'inputcontroller/controllers/StaticPageController');
 
 // define('HOOK_ROUTEMODULE', 'routeModule');
 // Hook::create(HOOK_ROUTEMODULE);
