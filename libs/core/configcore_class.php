@@ -128,13 +128,6 @@ abstract class ConfigCore {
 // 		return true;
 	}
 
-
-	/**	Parse configuration from given source.
-	 * @param $source An identifier or a path to get the source.
-	 * @return The loaded configuration array.
-	 */
-	public abstract static function parse($source);
-
 	/**	Check if source is available
 	 * @param string $source An identifier to get the source.
 	 * @return boolean True if source is available
@@ -240,4 +233,11 @@ abstract class ConfigCore {
 // 			}
 		return pathOf(CONFDIR.$configFile, true);
 	}
+
+
+	/**	Parse configuration from given source.
+	 * @param $source An identifier or a path to get the source.
+	 * @return The loaded configuration array.
+	 */
+	public static function parse($source);
 }
