@@ -101,7 +101,7 @@ abstract class ConfigCore {
 // 			return array();
 // 		}
 // 		$parsed = yaml_parse_file($confPath);
-		debug('Config loading, $source => '.$source);
+		debug('Config loading, $source => '.$source.' : '.static::getFilePath($source));
 // 		if( class_exists('APCache', true) ) {
 // 			$cache	= new APCache('config', $source);
 		try {
@@ -111,6 +111,7 @@ abstract class ConfigCore {
 				if( !$cache->get($parsed) ) {
 					debug('No cache, parsing config');
 					$parsed	= static::parse($source);
+					debug('Config parsed');
 					$cache->set($parsed);
 				}
 			} else {
