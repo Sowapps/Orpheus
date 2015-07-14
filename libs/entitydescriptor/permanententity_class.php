@@ -60,7 +60,7 @@ abstract class PermanentEntity extends PermanentObject {
 	 * You must call this method after the class declaration
 	 */
 	public static function init($isFinal=true) {
-		debug(static::getClass().'::init() ', debug_backtrace());
+// 		debug(static::getClass().'::init() ', debug_backtrace());
 		if( static::$validator ) {
 //			debug('static::$validator', static::$validator);
 			throw new Exception('Class '.static::getClass().' with table '.static::$table.' is already initialized.');
@@ -69,7 +69,7 @@ abstract class PermanentEntity extends PermanentObject {
 			static::$domain = static::$table;
 		}
 		if( $isFinal ) {
-			debug('Entity descritor loading');
+// 			debug('Entity descritor loading');
 			$ed					= EntityDescriptor::load(static::$table, static::getClass());
 			static::$fields		= $ed->getFieldsName();
 			static::$validator	= $ed;
