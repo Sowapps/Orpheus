@@ -101,13 +101,15 @@ abstract class ConfigCore {
 // 			return array();
 // 		}
 // 		$parsed = yaml_parse_file($confPath);
-		debug('Yaml loading, $source => '.$source);
+		debug('Config loading, $source => '.$source);
 // 		if( class_exists('APCache', true) ) {
 // 			$cache	= new APCache('config', $source);
 		try {
 			if( class_exists('FSCache', true) ) {
+				debug('Cache class exists');
 				$cache	= new FSCache('config', $source, filemtime(static::getFilePath($source)));
 				if( !$cache->get($parsed) ) {
+					debug('No cache, parsing config');
 					$parsed	= static::parse($source);
 					$cache->set($parsed);
 				}
