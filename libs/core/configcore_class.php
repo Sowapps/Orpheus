@@ -113,6 +113,7 @@ abstract class ConfigCore {
 					$parsed	= static::parse($source);
 					debug('Config parsed');
 					$cache->set($parsed);
+					debug('Cache set');
 				}
 			} else {
 				$parsed	= static::parse($source);
