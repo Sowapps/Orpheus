@@ -273,7 +273,7 @@ function($className) {
 // 			//throw new Exception("Unable to load lib \"{$className}\"");
 		}
 	} catch( Exception $e ) {
-		log_error("$e", 'loading_class_'.$className);
+		log_error($e, 'loading_class_'.$className);
 // 		die('A fatal error occured loading libraries.');
 	}
 }, true, true );// End of spl_autoload_register()
