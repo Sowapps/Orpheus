@@ -43,8 +43,9 @@ DirectoryIndex index.php
     RewriteRule ^index\.php(/(.*)|$) %{ENV:BASE}/$2 [R=301,L]
 
     # If the requested filename exists, simply serve it.
-    # We only want to let Apache serve files and not directories.
+    ## We only want to let Apache serve files and not directories.
     RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule .? - [L]
 
     # Rewrite all other queries to the front controller.
