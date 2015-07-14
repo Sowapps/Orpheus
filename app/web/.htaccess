@@ -1,9 +1,12 @@
-# Use the front controller as index file. It serves as a fallback solution when
-# every other rewrite/redirect fails (e.g. in an aliased environment without
-# mod_rewrite). Additionally, this reduces the matching process for the
-# start page (path "/") because otherwise Apache will indexly the rewriting rules
-# to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
-DirectoryIndex index.php
+## Use the front controller as index file. It serves as a fallback solution when
+## every other rewrite/redirect fails (e.g. in an aliased environment without
+## mod_rewrite). Additionally, this reduces the matching process for the
+## start page (path "/") because otherwise Apache will indexly the rewriting rules
+## to each configured DirectoryIndex file (e.g. index.php, index.html, index.pl).
+#DirectoryIndex index.php
+
+# Use PHP in priority to optimize application but allow nested applications (as manual)
+DirectoryIndex index.php index.html
 
 # Disabling MultiViews prevents unwanted negotiation, e.g. "/index" should not resolve
 # to the front controller "/index.php" but be rewritten to "/index.php/index".
