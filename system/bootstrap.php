@@ -246,7 +246,7 @@ function($className) {
 // 					require_once $path;
 // 				}
 // 			}
-			if( !class_exists($className, false) ) {
+			if( !class_exists($className, false) && !interface_exists($className, false) ) {
 				throw new Exception('Wrong use of Autoloads, the class "'.$className.'" should be declared in the given file "'.$path.'". Please use addAutoload() correctly.');
 			}
 			// We want to do it by another way
