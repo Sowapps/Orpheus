@@ -239,5 +239,7 @@ abstract class ConfigCore {
 	 * @param $source An identifier or a path to get the source.
 	 * @return The loaded configuration array.
 	 */
-	public static function parse($source);
+	public static function parse($source) {
+		throw new Exception('The class "'.get_called_class().'" should override the `parse()` static method from "'.get_class().'"');
+	}
 }
