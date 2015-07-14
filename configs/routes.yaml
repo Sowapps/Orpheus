@@ -16,6 +16,9 @@ http:
     thread:
         path: "/thread.html"
         controller: "ThreadController"
+    faq:
+        path: "/faq.html"
+        render: "app/faq"
         
 #    home:
 #        path: "/path/in/array/config"

@@ -6,6 +6,7 @@ abstract class InputRequest {
 	protected $path;
 	protected $parameters;
 	protected $input;
+	protected $route;
 	
 	public function __construct($path, $parameters, $input) {
 		$this->path			= $path;
@@ -84,6 +85,15 @@ abstract class InputRequest {
 	public static function getMainRequest() {
 		return static::$mainRequest;
 	}
+	
+	public function getRoute() {
+		return $this->route;
+	}
+	public function setRoute($route) {
+		$this->route = $route;
+		return $this;
+	}
+	
 	
 	
 	

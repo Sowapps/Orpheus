@@ -17,8 +17,8 @@ class HTTPRoute extends ControllerRoute {
 	protected static $routes		= array();
 	protected static $knownMethods	= array('GET', 'POST', 'PUT', 'DELETE');
 	
-	protected function __construct($name, $path, $controller, $method) {
-		parent::__construct($name, $path, $controller);
+	protected function __construct($name, $path, $controller, $method, $options) {
+		parent::__construct($name, $path, $controller, $options);
 		$this->method	= $method;
 		$this->generatePathRegex();
 	}
@@ -115,9 +115,14 @@ class HTTPRoute extends ControllerRoute {
 			throw new Exception('Missing a valid `path` in configuration of route "'.$name.'"');
 		}
 		if( empty($config['controller']) ) {
-			throw new Exception('Missing a valid `controller` in configuration of route "'.$name.'"');
+			if( !empty($config['render']) ) {
+				$config['controller']	= 'StaticPageController';
+			} else {
+				throw new Exception('Missing a valid `controller` in configuration of route "'.$name.'"');
+			}
 		}
-		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null);
+		unset($config['path'], $config['controller'], $config['method']);
+		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null, $config);
 	}
 	
 	public static function register($name, $path, $controller, $methods=null) {

@@ -6,13 +6,15 @@ abstract class ControllerRoute {
 	protected $name;
 	protected $path;
 	protected $controller;
+	protected $options;
 	
 	protected static $routes = array();
 	
-	protected function __construct($name, $path, $controller) {
+	protected function __construct($name, $path, $controller, $options) {
 		$this->name			= $name;
 		$this->path			= $path;
 		$this->controller	= $controller;
+		$this->options		= $options;
 	}
 	
 	public abstract function isMatchingRequest(InputRequest $request, &$values=array());
@@ -36,6 +38,7 @@ abstract class ControllerRoute {
 		if( !($controller instanceof Controller) ) {
 			throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
 		}
+		$request->setRoute($this);
 		return $controller->run($request);
 	}
 	
@@ -74,5 +77,18 @@ abstract class ControllerRoute {
 			}
 		}
 	}
+	public function getName() {
+		return $this->name;
+	}
+	public function getPath() {
+		return $this->path;
+	}
+	public function getController() {
+		return $this->controller;
+	}
+	public function getOptions() {
+		return $this->options;
+	}
+	
 	
 }
