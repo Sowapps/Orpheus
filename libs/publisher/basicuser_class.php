@@ -6,12 +6,14 @@
  * 
  * Require core plugin.
  * 
+ * THIS CLASS IS DEPRECATED !!
+ * 
  */
-class User extends AbstractStatus {
+class BasicUser extends AbstractStatus {
 	
 	//Attributes
-	protected static $table = 'users';
-	protected static $domain = 'users';
+	protected static $table		= 'users';
+	protected static $domain	= 'users';
 	//protected static $status = array('approved'=>array('rejected'), 'rejected'=>array('approved'));
 	protected static $fields = array(
 		'id', 'name', 'password', 'accesslevel', 'status', 'email', 'email_public',
