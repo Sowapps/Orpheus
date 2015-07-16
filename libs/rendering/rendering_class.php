@@ -81,7 +81,9 @@ abstract class Rendering {
 // 				$itemConf	= explode('-', $itemConf);
 // 				$route		= $itemConf[0];
 				$route		= $itemConf;
-				if( (!DEV_VERSION && !exists_route($route)) || ($HAS_USER_CLASS && !$USER_CLASS::canAccess($route))
+// 				if( !DEV_VERSION && !exists_route($route) ) { continue; }
+				if( !exists_route($route) ) { continue; }
+				if( ($HAS_USER_CLASS && !$USER_CLASS::canAccess($route))
 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
 // 				if( !existsPathOf(MODDIR.$route.'.php') || !$USER_CLASS::canAccess($route)
 // 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
