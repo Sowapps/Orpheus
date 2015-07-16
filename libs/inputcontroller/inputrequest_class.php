@@ -89,6 +89,10 @@ abstract class InputRequest {
 		return static::$mainRequest;
 	}
 	
+	public function getRouteName() {
+		return $this->route->getName();
+	}
+	
 	public function getRoute() {
 		return $this->route;
 	}
