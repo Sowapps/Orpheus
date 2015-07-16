@@ -9,5 +9,10 @@ abstract class HTTPController extends Controller {
 	 * @return HTTPResponse
 	 */
 	public abstract function run(HTTPRequest $request);
+
+	public function preRun(HTTPRequest $request) {
+	}
 	
+	public function postRun(HTTPRequest $request, HTTPResponse $response) {
+	}
 }

@@ -14,8 +14,10 @@ addAutoload('ThreadMessage',					'src/threadmessage');
 addAutoload('HomeController',					'src/controllers/homecontroller');
 addAutoload('UserLoginController',				'src/controllers/userlogincontroller');
 addAutoload('TwigSampleController',				'src/controllers/twigsamplecontroller');
-addAutoload('AdminDemoController',				'src/controllers/admindemocontroller');
 addAutoload('ThreadController',					'src/controllers/threadcontroller');
+
+addAutoload('AdminDemoController',				'src/controllers/admin/admindemocontroller');
+addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
 
 addAutoload('Session',							'sessionhandler/dbsession');
 

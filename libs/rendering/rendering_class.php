@@ -52,15 +52,17 @@ abstract class Rendering {
 	public function showMenu($menu, $layout=null, $active=null) {
 // 		self::checkRendering();
 		global $USER_CLASS;
-		if( !class_exists($USER_CLASS) ) { return false; }
+		$HAS_USER_CLASS	= isset($USER_CLASS) && class_exists($USER_CLASS);
+// 		if( !class_exists($USER_CLASS) ) { return false; }
 		
-		if( $active!==NULL ) {
-// 			list($currentModule, $currentAction) = explodeList('-', $active, 2);
-			$currentModule	= $active;
-		} else {
-			$currentModule	= !empty($GLOBALS['MenuModule']) ? $GLOBALS['MenuModule'] : $GLOBALS['Module'];
-// 			$currentAction	= &$GLOBALS['Action'];
-		}
+		$currentRoute	= $active ? $active : get_current_route();
+// 		if( $active!==NULL ) {
+// // 			list($currentRoute, $currentAction) = explodeList('-', $active, 2);
+// 			$currentRoute	= $active;
+// 		} else {
+// 			$currentRoute	= !empty($GLOBALS['MenuModule']) ? $GLOBALS['MenuModule'] : $GLOBALS['Module'];
+// // 			$currentAction	= &$GLOBALS['Action'];
+// 		}
 		
 		if( $layout===NULL ) {
 			$layout	= defined('LAYOUT_MENU') ? LAYOUT_MENU : 'menu-default';
@@ -72,25 +74,28 @@ abstract class Rendering {
 		foreach( $items as $itemConf ) {
 			if( empty($itemConf) ) { continue; }
 			$item = new stdClass;
-			if( $itemConf[0] == '#' ) {
+			if( $itemConf[0] === '#' ) {
 				list($item->link, $item->label) = explode('|', substr($itemConf, 1));
 			} else {
 				// TODO: Allow {var:value} for values, or use a YAML config ?
 // 				$itemConf	= explode('-', $itemConf);
-// 				$module		= $itemConf[0];
-				$module		= $itemConf;
-				if( !existsPathOf(MODDIR.$module.'.php') || !$USER_CLASS::canAccess($module)
-					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $module) ) { continue; }
+// 				$route		= $itemConf[0];
+				$route		= $itemConf;
+				if( (!DEV_VERSION && !exists_route($route)) || ($HAS_USER_CLASS && !$USER_CLASS::canAccess($route))
+					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
+// 				if( !existsPathOf(MODDIR.$route.'.php') || !$USER_CLASS::canAccess($route)
+// 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
 // 				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
 // 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
 // 				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';
-// 				$item->link		= u($module, $action, $queryStr);
-				$item->link		= u($module);
-// 				$item->label	= ( !empty($action) && hasTranslation($module.'_'.$action) ) ? t($module.'_'.$action) : t($module);
-				$item->label	= $module;
-				$item->module	= $module;
-// 				if( $module==$currentModule && ($currentAction===NULL || $currentAction==$action) ) {
-				if( $module==$currentModule ) {
+// 				$item->link		= u($route, $action, $queryStr);
+				$item->link		= u($route);
+// 				$item->label	= ( !empty($action) && hasTranslation($route.'_'.$action) ) ? t($route.'_'.$action) : t($route);
+				$item->label	= $route;
+				$item->route	= $route;
+				$item->module	= $route;
+// 				if( $route==$currentRoute && ($currentAction===NULL || $currentAction==$action) ) {
+				if( $route===$currentRoute ) {
 					$item->current = 1;
 				}
 			}

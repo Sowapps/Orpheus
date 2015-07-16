@@ -82,6 +82,9 @@ abstract class InputRequest {
 	
 	protected static $mainRequest;
 
+	/**
+	 * @return InputRequest
+	 */
 	public static function getMainRequest() {
 		return static::$mainRequest;
 	}

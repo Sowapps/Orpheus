@@ -197,6 +197,10 @@ class HTTPRequest extends InputRequest {
 		return $this->getInputValue($key, $default);
 	}
 	
+	public function getArrayData($key) {
+		return $this->getInputValue($key, array());
+	}
+	
 	public function hasData($key) {
 		return $this->hasInputValue($key);
 	}

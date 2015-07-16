@@ -24,16 +24,34 @@ addAutoload('StaticPageController',			'inputcontroller/controllers/StaticPageCon
 
 
 function u($routeName, $values=array()) {
-	$routes	= HTTPRoute::getRoutes();
-	if( !isset($routes[$routeName]) ) {
+// 	$routes	= HTTPRoute::getRoutes();
+// 	$routes	= HTTPRoute::getRoutes();
+	$route	= HTTPRoute::getRoute($routeName);
+	if( !$route ) {
 		throw new Exception('Unable to find route '.$routeName);
 	}
-	if( !isset($routes[$routeName][HTTPRoute::METHOD_GET]) ) {
-		throw new Exception('Unable to find route '.$routeName.' for GET method');
-	}
+// 	if( !isset($routes[$routeName]) ) {
+// 		throw new Exception('Unable to find route '.$routeName);
+// 	}
+// 	if( !isset($routes[$routeName][HTTPRoute::METHOD_GET]) ) {
+// 		throw new Exception('Unable to find route '.$routeName.' for GET method');
+// 	}
 	/* @var $route HTTPRoute */
-	$route	= $routes[$routeName][HTTPRoute::METHOD_GET];
+// 	$route	= $routes[$routeName][HTTPRoute::METHOD_GET];
 	return $route->formatURL($values);
+}
+
+function exists_route($routeName) {
+	return !!HTTPRoute::getRoute($routeName);
+}
+
+function is_current_route($route) {
+	return get_current_route() === $route;
+}
+
+function get_current_route() {
+	$request	= HTTPRequest::getMainRequest();
+	return $request->getRoute()->getName();
 }
 
 function _u($route, $values=array()) {
