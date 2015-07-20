@@ -16,7 +16,7 @@ addAutoload('UserLoginController',				'src/controllers/userlogincontroller');
 addAutoload('TwigSampleController',				'src/controllers/twigsamplecontroller');
 addAutoload('ThreadController',					'src/controllers/threadcontroller');
 
-addAutoload('AdminHTTPController',				'src/controllers/admin/AdminHTTPController');
+addAutoload('AdminController',					'src/controllers/admin/AdminController');
 addAutoload('AdminDemoController',				'src/controllers/admin/AdminDemoController');
 addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
 

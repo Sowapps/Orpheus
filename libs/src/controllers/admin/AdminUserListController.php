@@ -1,6 +1,6 @@
 <?php
 
-class AdminUserListController extends AdminHTTPController {
+class AdminUserListController extends AdminController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request

@@ -1,6 +1,6 @@
 <?php
 
-class AdminDemoController extends AdminHTTPController {
+class AdminDemoController extends HTTPController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request
@@ -8,6 +8,7 @@ class AdminDemoController extends AdminHTTPController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
+		HTMLRendering::setDefaultTheme('admin');
 		
 		return HTMLHTTPResponse::render('app/admin_demo');
 	}

@@ -1,6 +1,6 @@
 <?php
 
-abstract class AdminHTTPController extends HTTPController {
+abstract class AdminController extends HTTPController {
 
 	public function preRun(HTTPRequest $request) {
 		HTMLRendering::setDefaultTheme('admin');
