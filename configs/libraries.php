@@ -18,6 +18,7 @@ $Libraries	= array(
 	'initernationalization',
 	'yaml',
 	// App specific
+	'sqladapter',
 	'inputcontroller',
 	'publisher',
 	'entitydescriptor',
