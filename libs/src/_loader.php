@@ -19,6 +19,7 @@ addAutoload('ThreadController',					'src/controllers/threadcontroller');
 addAutoload('AdminController',					'src/controllers/admin/AdminController');
 addAutoload('AdminDemoController',				'src/controllers/admin/AdminDemoController');
 addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
+addAutoload('DevEntitiesController',			'src/controllers/admin/DevEntitiesController');
 
 addAutoload('Session',							'sessionhandler/dbsession');
 
