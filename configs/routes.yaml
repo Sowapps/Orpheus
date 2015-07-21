@@ -25,6 +25,10 @@ http:
         path: "/adm_users.html"
         controller: "AdminUserListController"
         
+    dev_entities:
+        path: "/dev_entities.html"
+        controller: "DevEntitiesController"
+        
 #    home:
 #        path: "/path/in/array/config"
 #        method: "POST|GET"
