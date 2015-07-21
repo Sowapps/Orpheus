@@ -1,4 +1,5 @@
 <?php
+use Orpheus\Core\ClassLoader;
 /**
  * @brief The core functions
  * 
@@ -494,15 +495,19 @@ function using($pkgPath) {
 	require_once existsPathOf($lowerPath.'_class.php', $path) ? $path : pathOf($pkgPath.'.php');
 }
 
-/** Adds a class to the autoload.
- * @param $className The class name.
- * @param $classPath The class path.
+/** Add a class to the autoload.
+ * @param $className The class name
+ * @param $classPath The class path
  * 
- * Adds the class to the autoload list, associated with its file.
+ * Add the class to the autoload list, associated with its file.
  * The semi relative path syntax has priority over the full relative path syntax.
  * e.g: ("MyClass", "mylib/myClass") => libs/mylib/myClass_class.php
  * or ("MyClass2", "mylib/myClass2.php") => libs/mylib/myClass.php
 */
+function addAutoload($className, $classPath) {
+	ClassLoader::get()->setClass($className, $classPath);
+}
+/*
 function addAutoload($className, $classPath) {
 	global $AUTOLOADS;
 	$className = strtolower($className);
@@ -535,6 +540,7 @@ function addAutoload($className, $classPath) {
 	}
 	return true;
 }
+*/
 
 /** Starts a new report stream
  * @param $stream The new report stream name
