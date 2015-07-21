@@ -9,7 +9,7 @@ HTMLRendering::useLayout('page_skeleton');
 </div>
 */
 if( !empty($resultingSQL) ) {
-	echo '<div>'.$resultingSQL.'</div>';
+// 	echo '<div>'.$resultingSQL.'</div>';
 	if( !empty($requireEntityValidation) ) {
 		?>
 <div><?php echo $resultingSQL; ?></div>
