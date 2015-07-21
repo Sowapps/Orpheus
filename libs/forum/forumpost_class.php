@@ -21,10 +21,10 @@ class ForumPost extends PermanentEntity {
 	}
 	
 	/**
-	 * @return SiteUser
+	 * @return User
 	 */
 	public function getAuthor() {
-		return SiteUser::load($this->user_id);
+		return User::load($this->user_id);
 	}
 	
 	public function getAuthorName() {

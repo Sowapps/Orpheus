@@ -10,7 +10,7 @@
  * 
  */
 
-class SiteUser extends User {
+class User extends User {
 	
 	//Attributes
 	protected static $fields = array(
@@ -67,7 +67,7 @@ class SiteUser extends User {
 	}
 	/**
 	 * @param int $context
-	 * @param SiteUser $contextResource
+	 * @param User $contextResource
 	 * @return boolean
 	 */
 	public function canUserCreate($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
@@ -76,7 +76,7 @@ class SiteUser extends User {
 	
 	/**
 	 * @param int $context
-	 * @param SiteUser $contextResource
+	 * @param User $contextResource
 	 * @return boolean
 	 */
 	public function canUserEdit($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
@@ -160,4 +160,4 @@ class SiteUser extends User {
 		return CRAC_CONTEXT_RESOURCE && $this->id == $contextResource->user_id && (!$PostDelay || (TIME-$contextResource->getCreateTime())/60 < $PostDelay);
 	}
 }
-SiteUser::init();
+User::init();

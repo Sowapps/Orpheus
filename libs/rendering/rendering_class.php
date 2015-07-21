@@ -51,8 +51,9 @@ abstract class Rendering {
 	 */
 	public function showMenu($menu, $layout=null, $active=null) {
 // 		self::checkRendering();
-		global $USER_CLASS;
-		$HAS_USER_CLASS	= isset($USER_CLASS) && class_exists($USER_CLASS);
+// 		global $USER_CLASS;
+// 		$HAS_USER_CLASS	= isset($USER_CLASS) && class_exists($USER_CLASS);
+		$HAS_USER_CLASS	= class_exists('User');
 // 		if( !class_exists($USER_CLASS) ) { return false; }
 		
 		$currentRoute	= $active ? $active : get_current_route();
@@ -83,9 +84,9 @@ abstract class Rendering {
 				$route		= $itemConf;
 // 				if( !DEV_VERSION && !exists_route($route) ) { continue; }
 				if( !exists_route($route) ) { continue; }
-				if( ($HAS_USER_CLASS && !$USER_CLASS::canAccess($route))
+				if( ($HAS_USER_CLASS && !User::canAccess($route))
 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
-// 				if( !existsPathOf(MODDIR.$route.'.php') || !$USER_CLASS::canAccess($route)
+// 				if( !existsPathOf(MODDIR.$route.'.php') || !User::canAccess($route)
 // 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
 // 				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
 // 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }

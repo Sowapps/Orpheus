@@ -17,8 +17,6 @@ abstract class AbstractUser extends PermanentEntity {
 	protected static $validator	= null;
 	protected static $domain	= null;
 	
-	//Attributes
-
 	const NOT_LOGGED	= 0;
 	const IS_LOGGED		= 1;
 	const LOGGED_FORCED	= 3;
@@ -50,7 +48,7 @@ abstract class AbstractUser extends PermanentEntity {
 	 * @param string $f
 	 * @return boolean True
 	 */
-	public function isLogin($f=IS_LOGGED) {
+	public function isLogin($f=self::IS_LOGGED) {
 		return bintest($this->login, $f);
 	}
 	
@@ -150,8 +148,8 @@ abstract class AbstractUser extends PermanentEntity {
 	 * Check if this user can affect $object.
 	 */
 	public function canDo($action, $object=null) {
-		global $USER_CLASS;
-		return $this->equals($object) || ( $this->checkPerm($action) && ( !($object instanceof $USER_CLASS) || $this->canAlter($object) ) );
+// 		global $USER_CLASS;
+		return $this->equals($object) || ( $this->checkPerm($action) && ( !($object instanceof User) || $this->canAlter($object) ) );
 	}
 	
 	// *** METHODES STATIQUES ***
@@ -331,14 +329,15 @@ abstract class AbstractUser extends PermanentEntity {
 	 */
 	public static function canAccess($module) {
 		/* @var $USER AbstractUser */
-		global $USER, $USER_CLASS;
+// 		global $USER, $USER_CLASS;
+		global $USER;
 		if( !CHECK_MODULE_ACCESS ) { return true; }
 		$access	= static::getAccessOf($module);
 		if( $access===NULL ) { return true; }
 		$access	= (int) $access;
 		return ( empty($USER) && $access < 0 ) ||
 			( !empty($USER) && $access >= 0 &&
-				$USER instanceof $USER_CLASS && $USER->checkPerm($access));
+				$USER instanceof User && $USER->checkPerm($access));
 	}
 	
 	/** Checks if this user can do a restricted action

@@ -285,7 +285,7 @@ class BasicUser extends AbstractStatus {
 	 * Checks if this user can access to $module.
 	 */
 	public static function canAccess($module) {
-		/* @var $USER SiteUser */
+		/* @var $USER User */
 		global $USER;
 // 		text("canAccess($module)");
 		$access	= static::getAccessOf($module);

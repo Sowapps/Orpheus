@@ -1,7 +1,7 @@
 <?php
-/* @var $USER SiteUser */
+/* @var $USER User */
 
-$ALLOW_EDITOR	= SiteUser::loggedCanDo('forum_manage');
+$ALLOW_EDITOR	= User::loggedCanDo('forum_manage');
 
 HTMLRendering::addJSFile('external/jquery.hotkeys.js');
 
@@ -21,7 +21,7 @@ $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
 	'.( $ALLOW_EDITOR ? '
 	<button type="button" class="editmode-btn btn btn-default">Edit Mode <span class="fa fa-edit"></span></button>' : '').'
-	'.( !SiteUser::is_login() ? '
+	'.( !User::is_login() ? '
 	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="fa fa-power-off"></span></button>' : '').'
 	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
@@ -30,7 +30,7 @@ $TOPBAR_CONTENTS	= '
 // debug('POST', POST());
 try {
 	if( isPOST('submitCreatePost') ) {
-		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
+		if( !User::is_login() ) { User::throwException('userRequired'); }
 		$post	= POST('newpost');
 // 		$post['user_id']	= $USER->id();
 // 		$post['user_name']	= $USER->fullname;
@@ -71,7 +71,7 @@ foreach( $AllForums as $forum ) {
 }
 unset($AllForums);
 
-$userPostViews	= SiteUser::is_login() ? $USER->getAllPostViews() : array();
+$userPostViews	= User::is_login() ? $USER->getAllPostViews() : array();
 
 function displayForumList($forumID=0) {
 	global $Forums, $userPostViews;
@@ -104,7 +104,7 @@ function displayForumList($forumID=0) {
 							<i class="fa fa-eye'.($viewed ? '' : '-slash').'"></i> 
 							<a href="'.$post->getLink().'">'.$post.'</a>
 							<span class="thread_infos"><a href="'.$lastAnswer->getLink().'">Last message</a> by 
-							<a href="'.SiteUser::genLink($lastAnswer->user_id).'">'.$lastAnswer->getAuthorName().'</a>, at '.$lastAnswer->getCreationDate().'</span>
+							<a href="'.User::genLink($lastAnswer->user_id).'">'.$lastAnswer->getAuthorName().'</a>, at '.$lastAnswer->getCreationDate().'</span>
 						</li>';
 		}
 		echo '

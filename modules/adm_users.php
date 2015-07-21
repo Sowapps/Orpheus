@@ -1,12 +1,12 @@
 <?php
-/* @var $USER SiteUser */
+/* @var $USER User */
 
 $formData = array();
 if( isPOST('submitCreate') ) {
 	
 	try {
 		$formData = POST('createData');
-		$newUser = SiteUser::create($formData);
+		$newUser = User::create($formData);
 		reportSuccess('successCreate', 'users');
 		$formData = array();
 	
@@ -17,7 +17,7 @@ if( isPOST('submitCreate') ) {
 
 $USER_CAN_USER_EDIT	= $USER->canUserEdit();
 
-$UsersArr = SiteUser::get(array(
+$UsersArr = User::get(array(
 	'where'		=> $USER->canSeeDevelopers() ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
 	'orderby'	=> 'fullname ASC',
 	'output'	=> SQLAdapter::ARR_OBJECTS

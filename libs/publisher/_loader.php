@@ -10,13 +10,13 @@ addAutoload('PermanentObject',					'publisher/permanentobject_class.php');
 addAutoload('FieldNotFoundException',			'publisher/fieldnotfoundexception_class.php');
 addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
 addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');
-addAutoload('User',								'publisher/user_class.php');
+// addAutoload('User',								'publisher/user_class.php');
 addAutoload('AbstractUser',						'publisher/abstractuser_class.php');
 
 defifn('CHECK_MODULE_ACCESS',	true);
-defifn('USER_CLASS',			'User');
-global $USER_CLASS;
-$USER_CLASS = USER_CLASS;
+// defifn('USER_CLASS',			'User');
+// global $USER_CLASS;
+// $USER_CLASS = USER_CLASS;
 
 // Hooks
 define('HOOK_ACCESSDENIED', 	'accessDenied');
@@ -26,11 +26,11 @@ Hook::create(HOOK_ACCESSDENIED);
  */
 Hook::register(HOOK_APPREADY, function () {
 // 	debug('Publisher HOOK_APPREADY => '.HOOK_APPREADY);
-	global $USER_CLASS;
+// 	global $USER_CLASS;
 	$GLOBALS['ACCESS'] = Config::build('access', true);
 	$GLOBALS['RIGHTS'] = Config::build('rights', true);
 	
-	if( $USER_CLASS::isLogged() ) {
+	if( User::isLogged() ) {
 		//global $USER;// Do not work in this context.
 		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
 		if( !$USER->reload() ) {
@@ -39,26 +39,27 @@ Hook::register(HOOK_APPREADY, function () {
 		}
 		
 		// If login ip is different from current one, protect against cookie stealing
-		if( Config::get('deny_multiple_connections', false) && !$USER->isLogin(User::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
+		if( Config::get('deny_multiple_connections', false) && !$USER->isLogin(AbstractUser::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {
 			$USER->logout('loggedFromAnotherComputer');
 			return;
 		}
 	} else
 	if( isset($_SERVER['PHP_AUTH_USER']) && Config::get('httpauth_enabled') ) {
-		$USER_CLASS::httpAuthenticate();
+		User::httpAuthenticate();
 	}
 });
 
 /** Hook 'runModule'
  */
 Hook::register(HOOK_RUNMODULE, function () {
-	global $USER_CLASS, $Module;
+// 	global $USER_CLASS, $Module;
+	global $Module;
 	
-// 	debug('Publisher HOOK_RUNMODULE $USER', $USER_CLASS::getLoggedUser());
+// 	debug('Publisher HOOK_RUNMODULE $USER', User::getLoggedUser());
 // 	debug('$Module', $Module);
 	// If user can not access to this module, we redirect him to default but if default is forbidden, we can not redirect indefinitely.
 	// User should always access to default, even if it redirects him to another module.
-	if( !$USER_CLASS::canAccess($Module) && DEFAULTMOD != $Module ) {
+	if( !User::canAccess($Module) && DEFAULTMOD != $Module ) {
 		$module	= $Module;
 		// If the trigger returns null, 0, '' or false (false equality), it redirects the user if the module has not changed during trigger process
 		// If the trigger returns true, 1 or a value, it cancels the redirects

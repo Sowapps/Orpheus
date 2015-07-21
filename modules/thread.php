@@ -1,14 +1,14 @@
 <?php
-/* @var $USER SiteUser */
+/* @var $USER User */
 
 $FORM_TOKEN	= new FormToken();
 
-$USER_CAN_THREADMESSAGE_MANAGE	= SiteUser::isLogged() && $USER->canThreadMessageManage();
+$USER_CAN_THREADMESSAGE_MANAGE	= User::isLogged() && $USER->canThreadMessageManage();
 try {
 	isPOST() && $FORM_TOKEN->validateForm();
 	if( isPOST('submitAdd') ) {
-		if( !SiteUser::isLogged() ) {
-			SiteUser::throwException('forbiddenOperation');
+		if( !User::isLogged() ) {
+			User::throwException('forbiddenOperation');
 		}
 		$input	= POST('tm');
 		$input['user_id']	= $USER->id();
@@ -19,7 +19,7 @@ try {
 	} else
 		if( hasPOSTKey('submitDelete', $tmID) ) {
 			if( !$USER_CAN_THREADMESSAGE_MANAGE ) {
-				SiteUser::throwException('forbiddenOperation');
+				User::throwException('forbiddenOperation');
 			}
 			$tm	= ThreadMessage::load($tmID);
 			$tm->remove(); unset($tm);
@@ -37,7 +37,7 @@ try {
 
 <div class="row">
 <?php
-if( SiteUser::isLogged() ) {
+if( User::isLogged() ) {
 	displayReportsHTML();
 	?>
 	<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>

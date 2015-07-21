@@ -12,7 +12,7 @@ displayReportsHTML();
 
 <div class="row">
 <?php
-if( SiteUser::isLogged() ) {
+if( User::isLogged() ) {
 	displayReportsHTML();
 	?>
 	<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>

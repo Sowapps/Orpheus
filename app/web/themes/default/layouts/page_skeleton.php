@@ -58,7 +58,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 		</div>
 		<div class="collapse navbar-collapse">
 <?php
-$USER_CLASS::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
+User::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
 if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 ?>
 

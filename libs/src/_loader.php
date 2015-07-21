@@ -5,7 +5,7 @@
  * Author: Your name.
  */
 
-addAutoload('SiteUser',							'src/siteuser');
+addAutoload('User',								'src/user');
 addAutoload('DemoTest',							'src/demotest');
 addAutoload('DemoTest_MSSQL',					'src/demotest_mssql');
 addAutoload('DemoEntity',						'src/demoentity');
@@ -52,7 +52,7 @@ function getModuleAccess($module=null) {
 }
 
 /**
- * @param SiteUser $user
+ * @param User $user
  */
 function sendAdminRegistrationEmail($user) {
 	$SITENAME	= SITENAME;

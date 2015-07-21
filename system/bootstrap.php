@@ -1,4 +1,5 @@
 <?php
+use Orpheus\Core\ClassLoader;
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
@@ -18,6 +19,7 @@ if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
 require_once 'loader.php';
+require_once 'ClassLoader.php';
 
 /**
  * The access path, this is independant from the type of access (http, console...)
@@ -199,6 +201,10 @@ function($exception) {
 // 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
 
+
+// Autoload and register when used, you could set your own as first
+// ClassLoader::get();
+/*
 spl_autoload_register(
 /**
  * Class autoload function
@@ -207,7 +213,7 @@ spl_autoload_register(
  * @see The \ref libraries documentation
  * 
  * Include the file according to the classname in lowercase and suffixed by '_class.php'.
-*/
+* /
 function($className) {
 	try {
 // 		debug('spl_autoload called with class '.$className);
@@ -277,6 +283,7 @@ function($className) {
 // 		die('A fatal error occured loading libraries.');
 	}
 }, true, true );// End of spl_autoload_register()
+*/
 
 $AUTOLOADS = array();
 $Module = $Page = '';// Useful for initializing errors.

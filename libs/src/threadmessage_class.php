@@ -18,7 +18,7 @@ class ThreadMessage extends PermanentEntity {
 	}
 	
 	public function getUser() {
-		return SiteUser::load($this->user_id);
+		return User::load($this->user_id);
 	}
 	
 // 	public function getISOCreateDate() {

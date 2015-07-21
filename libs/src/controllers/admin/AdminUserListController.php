@@ -9,17 +9,17 @@ class AdminUserListController extends AdminController {
 	 */
 	public function run(HTTPRequest $request) {
 
-		/* @var $USER SiteUser */
+		/* @var $USER User */
 		global $USER;
 // 		global $USER_CLASS;
-		$userDomain	= SiteUser::getDomain();
+		$userDomain	= User::getDomain();
 		
 // 		$formData = array();
 		if( $request->hasData('createUser') ) {
 		
 			try {
 // 				$formData = POST('createData');
-				$newUser = SiteUser::create($request->getArrayData('createUser'));
+				$newUser = User::create($request->getArrayData('createUser'));
 				reportSuccess('createUser', $userDomain);
 // 				$formData = array();
 		
@@ -30,7 +30,7 @@ class AdminUserListController extends AdminController {
 		
 		$USER_CAN_USER_EDIT	= $USER->canUserEdit();
 		
-		$users = SiteUser::get(array(
+		$users = User::get(array(
 				'where'		=> $USER->canSeeDevelopers() ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
 				'orderby'	=> 'fullname ASC',
 				'output'	=> SQLAdapter::ARR_OBJECTS

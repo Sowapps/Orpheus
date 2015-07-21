@@ -11,12 +11,12 @@ class ThreadController extends HTTPController {
 		global $USER;
 		$FORM_TOKEN	= new FormToken();
 
-		$USER_CAN_THREADMESSAGE_MANAGE	= SiteUser::isLogged() && $USER->canThreadMessageManage();
+		$USER_CAN_THREADMESSAGE_MANAGE	= User::isLogged() && $USER->canThreadMessageManage();
 		try {
 			$request->isPOST() && $FORM_TOKEN->validateForm();
 			if( $request->hasData('submitAdd') ) {
-				if( !SiteUser::isLogged() ) {
-					SiteUser::throwException('forbiddenOperation');
+				if( !User::isLogged() ) {
+					User::throwException('forbiddenOperation');
 				}
 				$input	= $request->getData('tm');
 				$input['user_id']	= $USER->id();
@@ -27,7 +27,7 @@ class ThreadController extends HTTPController {
 			} else
 				if( $request->hasDataKey('submitDelete', $tmID) ) {
 					if( !$USER_CAN_THREADMESSAGE_MANAGE ) {
-						SiteUser::throwException('forbiddenOperation');
+						User::throwException('forbiddenOperation');
 					}
 					$tm	= ThreadMessage::load($tmID);
 					$tm->remove();

@@ -7,11 +7,11 @@ $FORM_TOKEN	= new FormToken();
 try {
 	isPOST() && $FORM_TOKEN->validateForm();
 	if( isPOST('submitLogin') ) {
-		SiteUser::userLogin($_POST['login']);
+		User::userLogin($_POST['login']);
 		reportSuccess('You\'re successfully logged in.');
 	} else if( isPOST('submitRegister') ) {
 // 		$formregister = POST('register');
-		$user	= SiteUser::createAndGet(POST('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
+		$user	= User::createAndGet(POST('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
 		sendAdminRegistrationEmail($user);
 		unset($user);
 		reportSuccess('You\'re successfully registered.');

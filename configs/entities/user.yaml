@@ -1,0 +1,31 @@
+
+# User descriptor
+
+fields:
+    
+    # Header
+    create_date:        datetime=sqlDatetime()
+    create_ip:          ip=clientIP()
+    create_user_id:     ref=userID()
+    login_date:         datetime[nullable]
+    login_ip:           ip[nullable]
+    activity_date:      datetime[nullable]
+    activity_ip:        ip[nullable]
+    
+    # Account
+    password:           password[nullable]
+    email:              email[nullable]
+    phone:              phone[nullable]
+    
+    published:          boolean=true                # Is published ?
+    
+    # System infos
+    accesslevel:        natural(999)=0              # Access level for admin panel
+    recovery_code:      string(30)[nullable]        # Password recovery code
+    language_id:        ref(language)=0
+
+    
+    
+indexes:
+     - UNIQUE(email)
+     

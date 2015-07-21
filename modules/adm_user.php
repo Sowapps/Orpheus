@@ -1,7 +1,7 @@
 <?php
 	
 try {
-	$user	= SiteUser::load($Action);
+	$user	= User::load($Action);
 } catch(UserException $e) {
 	reportError($e);
 // 	displayReportsHTML();
@@ -12,10 +12,10 @@ if( isPOST('submitUpdate') ) {
 	try {
 		$result = $user->update(POST('user'), array('fullname', 'email', 'password', 'accesslevel'));
 		if( $result ) {
-			reportSuccess('successEdit', SiteUser::getDomain());
+			reportSuccess('successEdit', User::getDomain());
 		}
 	} catch(UserException $e) {
-		reportError($e, SiteUser::getDomain());
+		reportError($e, User::getDomain());
 	}
 }
 $formData = array('user' => $user->getValue());
@@ -47,7 +47,7 @@ require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 		<div class="form-group">
 			<label>Accréditations</label>
 			<select name="user[accesslevel]" class="form-control">
-				<?php echo htmlOptions('user/accesslevel', SiteUser::getAppRoles(), null, OPT_LABEL2VALUE, 'role_', SiteUser::getDomain()); ?>
+				<?php echo htmlOptions('user/accesslevel', User::getAppRoles(), null, OPT_LABEL2VALUE, 'role_', User::getDomain()); ?>
 			</select>
 		</div>
 		<button class="btn btn-default" type="submit" name="submitUpdate">Enregistrer</button>

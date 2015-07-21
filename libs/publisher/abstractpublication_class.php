@@ -182,10 +182,10 @@ abstract class AbstractPublication extends AbstractStatus {
 			'output' => SQLAdapter::ARR_FIRST
 		));
 		if( empty($publication) ) { return; }
-		global $USER_CLASS;
+// 		global $USER_CLASS;
 		if( $publication['name'] == $data['name'] ) {
 			static::throwException("entryExisting");
-		} else if( static::$floodDelay && !$USER_CLASS::loggedCanDo(static::$table.'_safeUse') ) {
+		} else if( static::$floodDelay && !User::loggedCanDo(static::$table.'_safeUse') ) {
 			static::throwException("floodDelay");
 		}
 	}

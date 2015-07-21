@@ -13,11 +13,11 @@ class UserLoginController extends HTTPController {
 		try {
 			isPOST() && $FORM_TOKEN->validateForm();
 			if( $request->hasData('submitLogin') ) {
-				SiteUser::userLogin($request->getData('login'));
+				User::userLogin($request->getData('login'));
 				reportSuccess('You\'re successfully logged in.');
 			} else if( $request->hasData('submitRegister') ) {
 		// 		$formregister = POST('register');
-				$user	= SiteUser::createAndGet($request->getData('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
+				$user	= User::createAndGet($request->getData('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
 				sendAdminRegistrationEmail($user);
 				unset($user);
 				reportSuccess('You\'re successfully registered.');

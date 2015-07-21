@@ -23,7 +23,8 @@ defifn('ERROR_LEVEL',		DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PRO
 
 defifn('DEV_TOOLS',			DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
 
-defifn('USER_CLASS',		'SiteUser');
+defifn('CHECK_MODULE_ACCESS',	false);
+// defifn('USER_CLASS',		'User');
 
 // defifn('ACCESSPATH',			pathOf('web/'));
 

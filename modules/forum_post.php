@@ -1,5 +1,5 @@
 <?php
-/* @var $USER SiteUser */
+/* @var $USER User */
 
 HTMLRendering::addJSFile('external/jquery.hotkeys.js');
 
@@ -13,7 +13,7 @@ HTMLRendering::addJSFile('forum-forums.js');
 
 $TOPBAR_CONTENTS	= '
 <form class="navbar-form navbar-right">
-	'.( !SiteUser::is_login() ? '
+	'.( !User::is_login() ? '
 	<button type="button" class="login-btn btn btn-default" data-toggle="modal" data-target="#connectForm">Log in<span class="fa fa-power-off"></span></button>' : '').'
 	<input type="text" placeholder="What are you lookin\' for ?" autofocus="autofocus" class="form-control search-query">
 	<button type="submit" class="btn btn-default" name="submitSearch">Search</button>
@@ -30,14 +30,14 @@ try {
 // debug('POST', POST());
 try {
 	if( isPOST('submitAnswer') ) {
-		if( !SiteUser::is_login() ) { SiteUser::throwException('userRequired'); }
+		if( !User::is_login() ) { User::throwException('userRequired'); }
 		$sPost	= POST('postid') ? ForumPost::load(POST('postid')) : $Post;
 		$sPost->addAnswer(POST('answer'));
 		reportSuccess('successAddAnswer');
 	} else
 	if( isPOST('submitDelete') ) {
 		$sPost	= ForumPost::load(POST('submitDelete'));
-		if( empty($USER) || !$USER->canForumPostDelete(CRAC_CONTEXT_RESOURCE, $post) ) { SiteUser::throwException('forbiddenOperation'); }
+		if( empty($USER) || !$USER->canForumPostDelete(CRAC_CONTEXT_RESOURCE, $post) ) { User::throwException('forbiddenOperation'); }
 		$sPost->remove();
 	}
 } catch( UserException $e ) {
