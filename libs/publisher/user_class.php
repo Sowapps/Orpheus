@@ -7,4 +7,4 @@
 class User extends AbstractUser {
 	
 }
-AbstractUser::init(true);
+User::init();

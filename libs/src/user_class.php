@@ -10,7 +10,7 @@
  * 
  */
 
-class User extends User {
+class User extends AbstractUser {
 	
 	//Attributes
 	protected static $fields = array(
@@ -108,20 +108,20 @@ class User extends User {
 
 	// 		** CHECK METHODS **
 
-	public static function checkFullName($inputData) {
-		if( empty($inputData['fullname']) ) {
-			static::throwException('invalidFullName');
-		}
-		return strip_tags($inputData['fullname']);
-	}
+// 	public static function checkFullName($inputData) {
+// 		if( empty($inputData['fullname']) ) {
+// 			static::throwException('invalidFullName');
+// 		}
+// 		return strip_tags($inputData['fullname']);
+// 	}
 	
-	public static function checkUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
-		$data = parent::checkUserInput($uInputData, $fields, $ref, $errCount);
-		if( !empty($uInputData['password']) ) {
-			$data['real_password'] = $uInputData['password'];
-		}
-		return $data;
-	}
+// 	public static function checkUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
+// 		$data = parent::checkUserInput($uInputData, $fields, $ref, $errCount);
+// 		if( !empty($uInputData['password']) ) {
+// 			$data['real_password'] = $uInputData['password'];
+// 		}
+// 		return $data;
+// 	}
 	
 	// *** FORUM LIB ***
 	protected $postViews	= NULL;
