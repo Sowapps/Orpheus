@@ -15,7 +15,6 @@ fields:
     # Account
     password:           password[nullable]
     email:              email[nullable]
-    phone:              phone[nullable]
     
     published:          boolean=true                # Is published ?
     
@@ -24,7 +23,6 @@ fields:
     recovery_code:      string(30)[nullable]        # Password recovery code
     language_id:        ref(language)=0
 
-    
     
 indexes:
      - UNIQUE(email)
