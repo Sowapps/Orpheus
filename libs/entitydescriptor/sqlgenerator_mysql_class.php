@@ -22,13 +22,15 @@ class SQLGenerator_MySQL {
 		} else
 		if( $TYPE instanceof TypeNumber ) {
 			if( !isset($field->args->max) ) {
-				text('Issue with '.$field->name);
+				text('Issue with '.$field->name.', missing max argument');
 				text($field->args);
 			}
 			$dc			= strlen((int) $field->args->max);
 			$unsigned	= $field->args->min >= 0 ? 1 : 0;
 			if( !$field->args->decimals ) {
-				$max		= (int) $field->args->max;
+// 				$max	= (int) $field->args->max;// Int max on 32 bits systems is incompatible with SQL
+				$max	= $field->args->max;// Treat it as in
+// 				debug('$field - '.$field->name.', type='.$field->type.' => '.$max);
 				$f			= 1+1*$unsigned;
 				if( $max < 128*$f ) {
 					$cType	= "TINYINT";
