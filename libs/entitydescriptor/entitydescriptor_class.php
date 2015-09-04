@@ -610,7 +610,7 @@ class TypeURL extends TypeString {
 	protected $name	= 'url';
 
 	public function parseArgs($fArgs) {
-		return (object) array('min'=>10, 'max'=>200);
+		return (object) array('min'=>10, 'max'=>400);
 	}
 
 	public function validate($Field, &$value, $inputData, &$ref) {
