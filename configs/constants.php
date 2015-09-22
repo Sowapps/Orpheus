@@ -15,7 +15,6 @@
  * ERROR_LEVEL is set depending on DEV_VERSION value (if set).
  */
 defifn('TIME',				$_SERVER['REQUEST_TIME']);
-define('INSIDE',			true);
 
 defifn('ERROR_LEVEL',		DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD_LEVEL);
 // defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);

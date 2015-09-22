@@ -15,7 +15,7 @@
  * bintest() (Core lib)
 */
 
-if( !defined("INSIDE") ) { return; }
+// if( !defined("INSIDE") ) { return; }
 
 defifn('DBCONF'				, 'database');
 
