@@ -330,8 +330,8 @@ function sql_error($report, $action='') {
 
  * Escape the text $str from special characters.
 */
-function escapeText($str) {
-	return htmlentities(str_replace("\'", "'", $str), ENT_NOQUOTES, 'UTF-8', false); 	
+function escapeText($str, $flags=ENT_NOQUOTES) {
+	return htmlentities(str_replace("\'", "'", $str), $flags, 'UTF-8', false); 	
 }
 
 /** Formats a string to be a html attribute value
@@ -1467,6 +1467,16 @@ function array_insert(&$array, $position, $value) {
 
 function array_add(&$array, $other) {
 	$array	= array_merge($array, $other);
+}
+
+function array_filterbykeys($array, $keys) {
+	$r	= array();
+	foreach( $keys as $key ) {
+		if( isset($array[$key]) ) {
+			$r[$key]	= $array[$key];
+		}
+	}
+	return $r;
 }
 
 function array_index($array, $key) {
