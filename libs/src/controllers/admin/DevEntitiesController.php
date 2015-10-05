@@ -92,7 +92,7 @@ class DevEntitiesController extends AdminController {
 		} catch( UserException $e ) {
 			reportError($e);
 		}
-		return HTMLHTTPResponse::render('app/dev_entities', $Values);
+		return $this->renderHTML('app/dev_entities', $Values);
 	}
 
 }

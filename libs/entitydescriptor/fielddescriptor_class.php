@@ -87,7 +87,7 @@ class FieldDescriptor {
 			$typeDesc				= $desc;
 			$desc					= array();
 		}
-		$parse					= EntityDescriptor::parseType($typeDesc);
+		$parse					= EntityDescriptor::parseType($field, $typeDesc);
 		/* Field : String name, TypeDescriptor type, Array args, default, writable, nullable */
 		$Field					= new static($field, $parse->type);
 		$TYPE					= $Field->getType();

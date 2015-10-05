@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php 
+/* @var $Controller HTTPController */
+$routeName = $Controller->getRouteName();
+?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
 	<title><?php echo ( !empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).'ADM '.SITENAME ?></title>
@@ -25,7 +28,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
 	
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>sb-admin.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo SITEROOT.'style/base.css'; ?>" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo SITEROOT.'static/style/base.css'; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 /*
@@ -47,7 +50,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.2/jquery-1.11.2.min.js"></script>
 </head>
-<body class="<?php echo $Module; ?>">
+<body class="<?php echo $routeName; ?>">
 
 <div id="wrapper">
 
@@ -151,8 +154,8 @@ foreach(HTMLRendering::$cssURLs as $url) {
 						<li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
 						<li class="divider"></li>
 					*/ ?>
-						<li><a href="settings.html"><i class="fa fa-gear"></i> Settings</a></li>
-						<li><a href="logout.html"><i class="fa fa-power-off"></i> Log Out</a></li>
+						<li><a href="<?php _u('adm_mysettings'); ?>"><i class="fa fa-gear"></i> Paramètres</a></li>
+						<li><a href="<?php _u('logout'); ?>"><i class="fa fa-power-off"></i> Déconnexion</a></li>
 					</ul>
 				</li>
 			<?php
@@ -169,7 +172,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 		<?php
 		if( empty($NO_MODULE_TITLE) ) {
 			?>
-		<h1><?php echo isset($ModuleTitle) ? $ModuleTitle : t($Module); ?> <small><?php _t($Module.'_legend'); ?></small></h1>
+		<h1><?php echo isset($ModuleTitle) ? $ModuleTitle : t($routeName); ?> <small><?php _t($routeName.'_legend'); ?></small></h1>
 		<?php
 		}
 		/*
@@ -216,7 +219,9 @@ foreach(HTMLRendering::$cssURLs as $url) {
 	
 	<script src="<?php echo JSURL; ?>orpheus.js"></script>
 	<script src="<?php echo JSURL; ?>script.js"></script>
+	<?php /*
 	<script src="<?php echo JSURL; ?>form.js"></script>
+	*/ ?>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/orpheus.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/script.js"></script>
 	

@@ -1,33 +1,54 @@
 
+# Roles: visitor, member, moderator, administrator, developer
 
 http:
     home:
         path: "/"
         controller: "HomeController"
+        
     user_login:
         path: "/user_login.html"
         controller: "UserLoginController"
+        
     sample_twig:
         path: "/sample_twig.html"
         controller: "TwigSampleController"
+        
     thread:
         path: "/thread.html"
         controller: "ThreadController"
+        
     faq:
         path: "/faq.html"
         render: "app/faq"
         
-    admin_demo:
-        path: "/admin_demo.html"
-        controller: "AdminDemoController"
+    adm_mysettings:
+        path: "/admin/mes_parametres.html"
+        controller: "AdminMySettingsController"
+        restrictTo:
+          role: administrator
         
     adm_users:
-        path: "/adm_users.html"
+        path: "/admin/users.html"
         controller: "AdminUserListController"
+        restrictTo:
+          role: administrator
+        
+    adm_user:
+        path: "/admin/user/{id:userID}.html"
+        controller: "AdminUserEditController"
+        restrictTo:
+          role: administrator
         
     dev_entities:
-        path: "/dev_entities.html"
+        path: "/admin/dev_entities.html"
         controller: "DevEntitiesController"
+        restrictTo:
+          role: developer
+        
+    file_download:
+        path: "/download/{id:fileID}"
+        controller: "FileDownloadController"
         
 #    home:
 #        path: "/path/in/array/config"

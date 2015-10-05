@@ -5,16 +5,17 @@
  * 
  */
  
-addAutoload('Controller',					'inputcontroller/controller');
-addAutoload('ControllerRoute',				'inputcontroller/controllerroute');
-addAutoload('InputRequest',					'inputcontroller/inputrequest');
-addAutoload('OutputResponse',				'inputcontroller/outputresponse');
+addAutoload('Controller',					'inputcontroller/Controller');
+addAutoload('ControllerRoute',				'inputcontroller/ControllerRoute');
+addAutoload('InputRequest',					'inputcontroller/InputRequest');
+addAutoload('OutputResponse',				'inputcontroller/OutputResponse');
 
-addAutoload('HTTPRoute',					'inputcontroller/http/httproute');
-addAutoload('HTTPRequest',					'inputcontroller/http/httprequest');
-addAutoload('HTTPController',				'inputcontroller/http/httpcontroller');
-addAutoload('HTTPResponse',					'inputcontroller/http/httpresponse');
-addAutoload('HTMLHTTPResponse',				'inputcontroller/http/htmlhttpresponse');
+addAutoload('HTTPRoute',					'inputcontroller/http/HTTPRoute');
+addAutoload('HTTPRequest',					'inputcontroller/http/HTTPRequest');
+addAutoload('HTTPController',				'inputcontroller/http/HTTPController');
+addAutoload('HTTPResponse',					'inputcontroller/http/HTTPResponse');
+addAutoload('HTMLHTTPResponse',				'inputcontroller/http/HTMLHTTPResponse');
+addAutoload('RedirectHTTPResponse',			'inputcontroller/http/RedirectHTTPResponse');
 
 addAutoload('DelayedPageController',		'inputcontroller/controllers/DelayedPageController');
 addAutoload('StaticPageController',			'inputcontroller/controllers/StaticPageController');

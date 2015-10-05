@@ -14,21 +14,10 @@
  * Official ERROR_LEVEL values are DEV_LEVEL (all errors) and PROD_LEVEL (no errors) and
  * ERROR_LEVEL is set depending on DEV_VERSION value (if set).
  */
-defifn('TIME',				$_SERVER['REQUEST_TIME']);
 
 defifn('ERROR_LEVEL',		DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD_LEVEL);
-// defifn('ERROR_LEVEL',		defined('DEV_VERSION') && DEV_VERSION ? DEV_LEVEL : PROD_LEVEL);
-// defifn('ERROR_LEVEL',		(basename(dirname($_SERVER['SCRIPT_FILENAME']).'/') == 'dev' || strpos($_SERVER['SCRIPT_FILENAME'], 'debug') !== false) ? DEV_LEVEL : PROD_LEVEL);
 
 defifn('DEV_TOOLS',			DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
-
-defifn('CHECK_MODULE_ACCESS',	false);
-// defifn('USER_CLASS',		'User');
-
-// defifn('ACCESSPATH',			pathOf('web/'));
-
-// defifn('CONFIGLIB',			'config');
-// defifn('CORELIB',			'core');
 
 // Theme
 defifn('LAYOUT_MENU',		'menu-bootstrap3');
@@ -40,9 +29,14 @@ defifn('LANGBASE',			'en');
 // defifn('LANGBASE',			array_shift(explode('_', LANG, 2)));
 defifn('LOCALE',			LANG.'.utf8');
 
+// defifn('LOGSPATH',			pathOf('logs/'));
+// defifn('STOREPATH',			pathOf('store/'));
+defifn('CACHEPATH',			STOREPATH.'cache/');
+defifn('TEMPPATH',			STOREPATH.'temp/');
+defifn('FILESTOREPATH',		STOREPATH.'files/');
 
 // Route
-defifn('DEFAULTMOD',		'home');
+// defifn('DEFAULTMOD',		'home');
 defifn('DEFAULTHOST',		'domain.com');
 defifn('DEFAULTPATH',		'');
 

@@ -144,7 +144,13 @@ function ob_end_to($min) {
 	}
 }
 
+/**
+ * http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+ */
 define('HTTP_OK',						200);
+define('HTTP_MOVED_PERMANENTLY',		301);
+define('HTTP_FOUND',					302);
+define('HTTP_MOVED_TEMPORARILY',		HTTP_FOUND);
 define('HTTP_BAD_REQUEST',				400);
 define('HTTP_UNAUTHORIZED',				401);
 define('HTTP_FORBIDDEN',				403);
@@ -230,6 +236,39 @@ function typeOf($var) {
 	return $type;
 }
 
+function displayRawException(Exception $Exception) {
+	?>
+	<ol>
+	<?php
+	foreach( $Exception->getTrace() as $trace ) {
+		// file, line, function, args
+		if( !isset($trace['class']) ) {
+			$trace['class']	= null;
+		}
+		if( !isset($trace['type']) ) {
+			$trace['type']	= null;
+		}
+		$args	= '';
+		if( isset($trace['args']) ) {
+			foreach( $trace['args'] as $i => $arg ) {
+				// 			debug('$arg', $arg);
+				$args .= ($i ? ', ' : '').'
+		<span class="arg"><span class="arg_type">'.typeOf($arg).'</span>'.
+			(is_array($arg) ? '['.count($arg).']' : ' "<span class="arg_value">'.$arg.'</span>"').'</span>';
+			}
+		}
+		?>
+		<li class="trace">
+			Call <?php echo $trace['class'].$trace['type'].$trace['function'].'('.$args.')' ?><br />
+			<address>In <?php echo isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file'; ?></address>
+		</li>
+			<?php
+		}
+		?>
+	</ol>
+	<?php
+}
+
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
@@ -260,6 +299,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="header clearfix">
 			<h3 class="text-muted">Orpheus</h3>
 		</div>
+		<div class="linkmenu clearfix">
+			<a class="pull-right" href="<?php echo DEFAULTLINK; ?>">Home</a>
+		</div>
 		<div class="panel panel-danger">
 			<div class="panel-heading">An error occurred !</div>
 			<div class="panel-body exception">
@@ -276,35 +318,14 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="panel panel-danger">
 			<div class="panel-heading">Here is the stacktrace...</div>
 			<div class="panel-body exception">
-				<ol>
-	<?php
-	foreach( $Exception->getTrace() as $trace ) {
-		// file, line, function, args
-		if( !isset($trace['class']) ) {
-			$trace['class']	= null;
-		}
-		if( !isset($trace['type']) ) {
-			$trace['type']	= null;
-		}
-		$args	= '';
-		foreach( $trace['args'] as $i => $arg ) {
-			$args .= ($i ? ', ' : '').'<span class="arg"><span class="arg_type">'.typeOf($arg).'</span>'.(is_array($arg) ? '['.count($arg).']' : ' "<span class="arg_value">'.$arg.'</span>"').'</span>';
-		}
-		?>
-					<li class="trace">
-						Call <?php echo $trace['class'].$trace['type'].$trace['function'].'('.$args.')' ?><br />
-						<address>In <?php echo isset($trace['file']) ? $trace['file'].' at line '.$trace['line'] : 'an unknown file'; ?></address>
-					</li>
-		<?php
-	}
-	?>
-				</ol>
+				<?php displayRawException($Exception); ?>
 			</div>
 		</div>
 		
 		<?php
 		if( trim($buffer) && class_exists('DelayedPageController', true) ) {
-			?>
+			try {
+				?>
 		<div class="panel panel-danger">
 			<div class="panel-heading">The buffer is not empty, maybe this could helps you...</div>
 			<div class="panel-body buffer">
@@ -314,6 +335,17 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 			</div>
 		</div>
 		<?php
+			} catch( Exception $e ) {
+				?>
+		<div class="panel panel-danger">
+			<div class="panel-heading">An exception occurred storing the delayed page...</div>
+			<div class="panel-body buffer">
+				<?php displayRawException($Exception); ?>
+			</div>
+		</div>
+		<?php
+				
+			}
 		}
 		?>
 	</div>
@@ -322,6 +354,9 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	padding-bottom: 20px;
 	margin-bottom: 30px;
 	border-bottom: 1px solid #e5e5e5;
+}
+.linkmenu {
+	padding-right: 10px;
 }
 .arg_type {
 	font-weight: bold;

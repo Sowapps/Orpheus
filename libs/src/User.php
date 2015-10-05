@@ -12,14 +12,6 @@
 
 class User extends AbstractUser {
 	
-	//Attributes
-	protected static $fields = array(
-		'fullname'
-	);
-	protected static $editableFields = array(
-		'fullname'
-	);
-	
 	// *** OVERLOADED METHODS ***
 	
 	public function __toString() {
@@ -34,11 +26,9 @@ class User extends AbstractUser {
 		$perms = array_flip(static::getAvailRoles());
 		return isset($perms[$this->accesslevel]) ? $perms[$this->accesslevel] : 'unknown_rank';
 	}
-	public static function getAppRoles() {
-		return Config::get('user_roles');
-	}
+	
 	public function getAvailRoles() {
-		 $roles = static::getAppRoles();
+		 $roles = static::getUserRoles();
 		 foreach( $roles as $status => $accesslevel ) {
 		 	if( !$this->checkPerm($accesslevel) ) {
 		 		unset($roles[$status]);
@@ -52,7 +42,7 @@ class User extends AbstractUser {
 	}
 	
 	public function getAdminLink($ref=0) {
-		return u('adm_user', $this->id(), empty($ref) ? '': 'ref='.getRefOfPage());
+		return u('adm_user', array('userID'=>$this->id()));
 	}
 	
 	public function getLink() {
@@ -101,10 +91,6 @@ class User extends AbstractUser {
 		return $this->canDo('entity_delete');// Only App admins can do it.
 	}
 	
-	public function canThreadMessageManage($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
-		return $this->canDo('threadmessage_manage');// Only App admins can do it.
-	}
-	
 
 	// 		** CHECK METHODS **
 
@@ -123,41 +109,5 @@ class User extends AbstractUser {
 // 		return $data;
 // 	}
 	
-	// *** FORUM LIB ***
-	protected $postViews	= NULL;
-	
-	public function getAllPostViews() {
-		if( $this->postViews === NULL ) {
-			$postViews	= ForumPostView::get('user_id='.$this->id());
-			$this->postViews	= array();
-			foreach( $postViews as $pv ) {
-				$this->postViews[$pv->id()]	= $pv;
-			}
-		}
-		return $this->postViews;
-	}
-	
-	public function setPostView($post) {
-		$postView	= ForumPostView::get(array('where' => 'user_id='.$this->id().' AND post_id='.id($post), 'output'=>SQLAdapter::OBJECT));
-		if( $postView ) {
-			$postView->last_date	= sqlDatetime();
-		} else {
-			ForumPostView::create(array('user_id' => $this->id(), 'post_id' => id($post), 'last_date'=>sqlDatetime()));
-		}
-		$this->postViews	= null;// Should be rarely effective
-	}
-	
-	public function canForumPostUpdate($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
-		if( $this->canDo('forumpost_update') ) { return true; }
-		if( $context == CRAC_CONTEXT_APPLICATION ) { return false; }
-		$PostDelay	= Forum::config('post_update_delay', 0);
-		return CRAC_CONTEXT_RESOURCE && $this->id == $contextResource->user_id && (!$PostDelay || (TIME-$contextResource->getCreateTime())/60 < $PostDelay);
-	}
-	public function canForumPostDelete($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
-		if( $this->canDo('forumpost_delete') ) { return true; }
-		if( $context == CRAC_CONTEXT_APPLICATION ) { return false; }
-		$PostDelay	= Forum::config('post_delete_delay');
-		return CRAC_CONTEXT_RESOURCE && $this->id == $contextResource->user_id && (!$PostDelay || (TIME-$contextResource->getCreateTime())/60 < $PostDelay);
-	}
 }
 User::init();

@@ -48,7 +48,9 @@ class EntityDescriptor {
 		
 		// Comment when editing class and entity field types
 		$descriptor	= null;
-		if( !defined('ENTITY_ALWAYS_RELOAD') && $cache->get($descriptor) && isset($descriptor->version) && $descriptor->version==self::VERSION ) { return $descriptor; }
+		if( !defined('ENTITY_ALWAYS_RELOAD') && $cache->get($descriptor) && isset($descriptor->version) && $descriptor->version==self::VERSION ) {
+			return $descriptor;
+		}
 
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
@@ -79,7 +81,7 @@ class EntityDescriptor {
 		$indexes	= array();
 		if( !empty($conf->indexes) ) {
 			foreach( $conf->indexes as $index ) {
-				$iType		= static::parseType($index);
+				$iType		= static::parseType(null, $index);
 				$indexes[]	= (object) array('name'=>$iType->default, 'type'=>strtoupper($iType->type), 'fields'=>$iType->args);
 			}
 		}
@@ -246,14 +248,17 @@ class EntityDescriptor {
 		return $type;
 	}
 
-	public static function parseType($string) {
+	public static function parseType($field, $desc) {
 		$result = array('type'=>null, 'args'=>array(), 'default'=>null, 'flags'=>array());
-		if( !preg_match('#([^\(\[=]+)(?:\(([^\)]*)\))?(?:\[([^\]]*)\])?(?:=([^\[]*))?#', $string, $matches) ) {
+		if( !preg_match('#([^\(\[=]+)(?:\(([^\)]*)\))?(?:\[([^\]]*)\])?(?:=([^\[]*))?#', $desc, $matches) ) {
 			throw new Exception('failToParseType');
 		}
 		$result['type']			= trim($matches[1]);
 		$result['args']			= !empty($matches[2]) ? preg_split('#\s*,\s*#', $matches[2]) : array();
 		$result['flags']		= !empty($matches[3]) ? preg_split('#\s#', $matches[3], -1, PREG_SPLIT_NO_EMPTY) : array();
+// 		if( $field === 'user_like' ) {
+// 			debug('$matches('.$desc.')', $matches);
+// 		}
 		if( isset($matches[4]) ) {
 			$result['default']	= $matches[4];
 			if( $result['default']==='true' ) {
@@ -264,10 +269,13 @@ class EntityDescriptor {
 			} else {
 				$len = strlen($result['default']);
 				if( $len && $result['default'][$len-1]==')' ) {
-					$result['default'] = static::parseType($result['default']);
+					$result['default'] = static::parseType($field, $result['default']);
 				}
 			}
 		}
+// 		if( $field === 'user_like' ) {
+// 			debug('parseType('.$desc.')', $result);
+// 		}
 		return (object) $result;
 	}
 }

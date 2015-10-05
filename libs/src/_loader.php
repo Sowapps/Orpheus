@@ -5,23 +5,40 @@
  * Author: Your name.
  */
 
-addAutoload('User',								'src/user');
-addAutoload('DemoTest',							'src/demotest');
-addAutoload('DemoTest_MSSQL',					'src/demotest_mssql');
-addAutoload('DemoEntity',						'src/demoentity');
-addAutoload('ThreadMessage',					'src/threadmessage');
+addAutoload('File',								'src/File');
+addAutoload('UploadedFile',						'src/UploadedFile');
 
-addAutoload('HomeController',					'src/controllers/homecontroller');
-addAutoload('UserLoginController',				'src/controllers/userlogincontroller');
-addAutoload('TwigSampleController',				'src/controllers/twigsamplecontroller');
-addAutoload('ThreadController',					'src/controllers/threadcontroller');
+addAutoload('User',								'src/User');
+
+addAutoload('DemoTest',							'src/DemoTest');
+addAutoload('DemoTest_MSSQL',					'src/DemoTest_MSSQL');
+addAutoload('DemoEntity',						'src/DemoEntity');
+addAutoload('ThreadMessage',					'src/ThreadMessage');
+
+addAutoload('HomeController',					'src/controllers/HomeController');
+addAutoload('LoginController',					'src/controllers/LoginController');
+addAutoload('LogoutController',					'src/controllers/LogoutController');
+
+addAutoload('FileDownloadController',			'src/controllers/FileDownloadController');
+
+addAutoload('AdminController',					'src/controllers/admin/AdminController');
+addAutoload('AdminMySettingsController',		'src/controllers/admin/AdminMySettingsController');
+addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
+addAutoload('AdminUserEditController',			'src/controllers/admin/AdminUserEditController');
+
+addAutoload('UserLoginController',				'src/controllers/UserLoginController');
+
+addAutoload('FileDownloadController',			'src/controllers/FileDownloadController');
+addAutoload('HomeController',					'src/controllers/HomeController');
+addAutoload('TwigSampleController',				'src/controllers/TwigSampleController');
+addAutoload('ThreadController',					'src/controllers/ThreadController');
 
 addAutoload('AdminController',					'src/controllers/admin/AdminController');
 addAutoload('AdminDemoController',				'src/controllers/admin/AdminDemoController');
 addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
 addAutoload('DevEntitiesController',			'src/controllers/admin/DevEntitiesController');
 
-addAutoload('Session',							'sessionhandler/dbsession');
+// addAutoload('Session',							'sessionhandler/dbsession');
 
 
 // Hooks

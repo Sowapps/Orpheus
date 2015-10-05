@@ -98,7 +98,7 @@ abstract class SQLAdapter {
 	 * Formats the given string as an SQL string.
 	 */
 	public function formatString($str) {
-		return "'".str_replace(array("'", '\\'), array("''", '\\\\'), "$str")."'";
+		return "'".str_replace("'", "''", "$str")."'";
 // 		return is_null($String) ? 'NULL' : "'".str_replace(array("\\", "'"), array("\\\\", "\'"), "$String")."'";
 	}
 
@@ -114,7 +114,7 @@ abstract class SQLAdapter {
 		if( is_float($value) ) {
 			return strtr($value, ',', '.');
 		}
-		return $value===null ? 'NULL' : $this->formatString($value);
+		return is_null($value) ? 'NULL' : $this->formatString($value);
 	}
 	
 	/** The function to get the last inserted ID

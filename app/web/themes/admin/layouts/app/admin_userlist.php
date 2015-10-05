@@ -19,16 +19,21 @@ HTMLRendering::useLayout('page_skeleton');
 				</thead>
 				<tbody>
 <?php
+/* @ar $user User */
 foreach( $users as $user ) {
-	echo "
+	echo '
 <tr>
-	<td>{$user->id}</td>
-	<td>{$user}</td>
-	<td>{$user->email}</td>
-	<td>{$user->getRoleText()}</td>".
-	( $USER_CAN_USER_EDIT ? '<td><a class="fa fa-edit" href="'.$user->getAdminLink().'" title="'.t('edit').'"></a></td>' : '').
-	"
-</tr>";
+	<td>'.$user->id.'</td>
+	<td>'.$user.'</td>
+	<td>'.$user->email.'</td>
+	<td>'.$user->getRoleText().'</td>
+	<td>'.
+	( $USER_CAN_USER_EDIT ? '
+		<div class="btn-group" role="group" aria-label="Actions">
+			<a href="'.$user->getAdminLink().'" class="btn btn-default editbtn"><i class="fa fa-edit"></i></a>
+		</div>' : '').
+	'</td>
+</tr>';
 }
 ?>
 				</tbody>

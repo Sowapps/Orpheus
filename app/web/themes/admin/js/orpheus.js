@@ -25,8 +25,10 @@ $(function() {
 	$('.modal').on('shown.bs.modal', function(e) {
 //		document.activeElement.blur();
 //		console.log(e);
-		if( e.relatedTarget && e.relatedTarget.data("focus") ) {
-			$(this).find(e.relatedTarget.data("focus")).focus();
+//		console.log(e.relatedTarget);
+		var target = $(e.relatedTarget);
+		if( target.length && target.data("focus") ) {
+			$(this).find(target.data("focus")).focus();
 		} else {
 			$(this).find(".modal-body :input:visible").first().focus();
 		}

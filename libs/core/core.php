@@ -1569,6 +1569,8 @@ function reverse_values(&$val1, &$val2) {
 define('SESSION_WITH_COOKIE',		1<<0);
 define('SESSION_WITH_HTTPTOKEN',	1<<1);
 function startSession($type=SESSION_WITH_COOKIE) {
+	global $ERROR_ACTION;
+	
 // 	debug('Start session');
 	Hook::trigger(HOOK_STARTSESSION, $type);
 	if( bintest($type, SESSION_WITH_COOKIE) ) {
@@ -1585,9 +1587,11 @@ function startSession($type=SESSION_WITH_COOKIE) {
 // 	}
 
 	// PHP is unable to manage exception thrown during session_start()
-	$GLOBALS['NO_EXCEPTION']	= 1;
+// 	$GLOBALS['NO_EXCEPTION']	= 1;
+	$ERROR_ACTION	= ERROR_DISPLAY_RAW;
 	session_start();
-	$GLOBALS['NO_EXCEPTION']	= 0;
+	$ERROR_ACTION	= ERROR_THROW_EXCEPTION;
+// 	$GLOBALS['NO_EXCEPTION']	= 0;
 	
 // 	debug('Session started');
 // 	if( isset($_SESSION) ) {
@@ -1616,7 +1620,8 @@ function startSession($type=SESSION_WITH_COOKIE) {
 	if( !isset($_SESSION['ORPHEUS']['CLIENT_IP']) ) {
 		$_SESSION['ORPHEUS']['CLIENT_IP']	= clientIP();
 	} else // Hack Attemp' - Session stolen
-	if( $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
+	if( Config::get('session_moved_allow', false) && $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
+			// it will return hack attemp' even if user is using a VPN
 		$initSession();
 		throw new UserException('movedSession');
 	}

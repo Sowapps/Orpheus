@@ -161,24 +161,38 @@ abstract class AbstractUser extends PermanentEntity {
 // 	 * Log in a user from the given data.
 // 	 * It tries to validate given data, in case of errors, UserException are thrown.
 // 	 */
-	public static function userLogin($data) {
-		$name = self::checkName($data);
-		$password = self::checkPassword($data);
+	public static function userLogin($data, $loginField='name') {
+// 		$name = self::checkName($data);
+// 		debug('$data', $data);
+		if( empty($data['name']) )  {
+			static::throwException("invalidLoginID");
+		}
+		$name		= $data[$loginField];
+		if( empty($data['password']) )  {
+			static::throwException("invalidPassword");
+		}
+		$password	= hashString($data['password']);
 		//self::checkForEntry() does not return password and id now.
 		
 		$user = static::get(array(
-			'where' => 'name LIKE '.static::formatValue($name),
-			'number' => 1,
-			'output' => SQLAdapter::OBJECT
+// 			'where' => 'name LIKE '.static::formatValue($name),
+			'where'		=> static::formatValue($name).' IN ('.implode(',', static::listLoginFields()).')',
+			'number'	=> 1,
+			'output'	=> SQLAdapter::OBJECT
 		));
 		if( empty($user) )  {
-			static::throwException("unknownName");
+			static::throwException("invalidLoginID");
 		}
 		if( $user->password != $password )  {
 			static::throwException("wrongPassword");
 		}
 		$user->logout();
 		$user->login();
+		return $user;
+	}
+	
+	public static function listLoginFields() {
+		return array('email');
 	}
 	
 	public static function userLogout() {
@@ -310,8 +324,9 @@ abstract class AbstractUser extends PermanentEntity {
 		return ( !empty($USER) && $USER->accesslevel > 0 );
 	}
 	
+	/*
 	public static function getAccessOf($module) {
-		/* @var $ACCESS Config */
+		/* @var $ACCESS Config * /
 		global $ACCESS;
 		if( empty($ACCESS) || !isset($ACCESS->$module) ) { return null; }
 		$v	= $ACCESS->$module;
@@ -320,6 +335,7 @@ abstract class AbstractUser extends PermanentEntity {
 		if( isset($RIGHTS->$v) ) { return $RIGHTS->$v; }
 		return static::getAccessOf($v);
 	}
+	*/
 	
 	/** Checks if this user can access to a module
 	 * @param $module The module to look for.
@@ -327,8 +343,9 @@ abstract class AbstractUser extends PermanentEntity {
 	 * 
 	 * Checks if this user can access to $module.
 	 */
+	/*
 	public static function canAccess($module) {
-		/* @var $USER AbstractUser */
+		/* @var $USER AbstractUser * /
 // 		global $USER, $USER_CLASS;
 		global $USER;
 		if( !CHECK_MODULE_ACCESS ) { return true; }
@@ -339,6 +356,33 @@ abstract class AbstractUser extends PermanentEntity {
 			( !empty($USER) && $access >= 0 &&
 				$USER instanceof User && $USER->checkPerm($access));
 	}
+	*/
+	public static function loggedCanAccessToRoute($route, $accesslevel) {
+		global $USER;
+		if( !ctype_digit($accesslevel) ) {
+			$accesslevel = static::getRoleAccesslevel($accesslevel);
+		}
+// 		$access	= static::getAccessOf($module);
+// 		if( $access===NULL ) { return true; }
+		$accesslevel	= (int) $accesslevel;
+		return ( empty($USER) && $accesslevel < 0 ) ||
+			( !empty($USER) && $accesslevel >= 0 &&
+				$USER instanceof User && $USER->checkPerm($accesslevel));
+	}
+	
+	public static function getAppRoles() {
+		return static::getUserRoles();
+	}
+
+	public static function getUserRoles() {
+		return Config::get('user_roles');
+	}
+	
+	public static function getRoleAccesslevel($role) {
+		$roles = static::getAppRoles();
+		return $roles[$role];
+	}
+	
 	
 	/** Checks if this user can do a restricted action
 	 * @param $action The action to look for.
@@ -353,8 +397,9 @@ abstract class AbstractUser extends PermanentEntity {
 		return !empty($USER) && $USER->canDo($action, $object);
 	}
 	
-	/** Checks for object
-	 * @sa PermanentObject::checkForObject()
+	/**
+	 * Check for object
+	 * @see PermanentObject::checkForObject()
 	 */
 	public static function checkForObject($data, $ref=null) {
 		if( empty($data['email']) ) {

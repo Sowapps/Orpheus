@@ -14,13 +14,19 @@ class AdminUserListController extends AdminController {
 // 		global $USER_CLASS;
 		$userDomain	= User::getDomain();
 		
+		$USER_CAN_USER_EDIT	= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
+		$USER_CAN_DEV_SEE	= !CHECK_MODULE_ACCESS || $USER->canSeeDevelopers();
+		
 // 		$formData = array();
-		if( $request->hasData('createUser') ) {
+		if( $data = $request->hasData('createUser') ) {
 		
 			try {
+				if( !$USER_CAN_USER_EDIT ) {
+					throw new UserException('forbiddenOperation');
+				}
 // 				$formData = POST('createData');
 				$newUser = User::create($request->getArrayData('createUser'));
-				reportSuccess('createUser', $userDomain);
+				reportSuccess(User::text('successCreate', $newUser));
 // 				$formData = array();
 		
 			} catch(UserException $e) {
@@ -28,15 +34,13 @@ class AdminUserListController extends AdminController {
 			}
 		}
 		
-		$USER_CAN_USER_EDIT	= $USER->canUserEdit();
-		
 		$users = User::get(array(
-				'where'		=> $USER->canSeeDevelopers() ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
+				'where'		=> $USER_CAN_DEV_SEE ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
 				'orderby'	=> 'fullname ASC',
 				'output'	=> SQLAdapter::ARR_OBJECTS
 		));
 		
-		return HTMLHTTPResponse::render('app/admin_userlist', array(
+		return $this->renderHTML('app/admin_userlist', array(
 			'USER_CAN_USER_EDIT'	=> $USER_CAN_USER_EDIT,
 			'users'	=> $users
 		));

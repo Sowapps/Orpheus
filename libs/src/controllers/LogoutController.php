@@ -1,6 +1,7 @@
 <?php
 
-class AdminDemoController extends AdminController {
+
+class LogoutController extends HTTPController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request
@@ -8,9 +9,14 @@ class AdminDemoController extends AdminController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-// 		HTMLRendering::setDefaultTheme('admin');
 		
-		return $this->renderHTML('app/admin_demo');
+		global $USER;
+		if( isset($USER) ) {
+			$USER->logout();
+		}
+		
+		return new RedirectHTTPResponse('home');
 	}
 
+	
 }

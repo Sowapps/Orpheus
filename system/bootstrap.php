@@ -64,12 +64,16 @@ if( isset($t) ) {
 }
 
 defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
+defifn('DEFAULTSPATH', pathOf('configs/defaults.php', true));
 // echo 'DEV_VERSION : '.intval(DEV_VERSION).'<br />';
 
 // Edit the constant file according to the system context (OS, directory tree ...).
-require_once CONSTANTSPATH;
+if( DEFAULTSPATH !== null ) {
+	require_once DEFAULTSPATH;
+}
 
 defifn('CHECK_MODULE_ACCESS',	true);
+defifn('TIME',				$_SERVER['REQUEST_TIME']);
 
 // Useful paths
 defifn('CONFDIR',			'configs/');
@@ -100,6 +104,9 @@ defifn('SERVLOGFILENAME',	'.server');
 // Static medias
 defifn('JSURL',				SITEROOT.'js/');
 defifn('THEMESURL',			SITEROOT.THEMESDIR);
+
+// Edit the global constants
+require_once CONSTANTSPATH;
 
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
@@ -343,6 +350,8 @@ try {
 // 	if( !defined('TERMINAL') ) {
 	if( IS_WEB ) {
 
+		startSession();
+		/*
 		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
 		// Set session cookie parameters, HTTPS session is only HTTPS
 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
@@ -375,6 +384,7 @@ try {
 			$_SESSION['ORPHEUS']['CLIENT_IP']	= clientIP();
 		} else // Hack Attemp' - Session stolen
 		if( $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
+			// it will return hack attemp' even if user is using a VPN
 			$initSession();
 			throw new UserException('movedSession');
 		}
@@ -387,9 +397,13 @@ try {
 // 			}
 // 		}
 		unset($initSession);
+		*/
 	
 	}
 	ob_end_clean();
+	
+	// App is now ready to run
+	Hook::trigger(HOOK_APPREADY);
 	
 	// Handle current request
 	$REQUEST_HANDLER::handleCurrentRequest();

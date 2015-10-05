@@ -51,6 +51,7 @@ Hook::register(HOOK_APPREADY, function () {
 
 /** Hook 'runModule'
  */
+ /*
 Hook::register(HOOK_RUNMODULE, function () {
 // 	global $USER_CLASS, $Module;
 	global $Module;
@@ -68,6 +69,14 @@ Hook::register(HOOK_RUNMODULE, function () {
 			redirectTo(u(defined('ACCESSDENIEDMOD') ? ACCESSDENIEDMOD : DEFAULTMOD));
 		}
 	}
+});
+*/
+
+HTTPRoute::registerAccessRestriction('role', function($route, $options) {
+	if( !is_string($options) ) {
+		throw new Exception('Invalid route access restriction option in routes config, allow string only');
+	}
+	return User::loggedCanAccessToRoute($route, $options);
 });
 
 function id(&$id) {

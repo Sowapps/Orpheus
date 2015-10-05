@@ -81,24 +81,26 @@ abstract class Rendering {
 				// TODO: Allow {var:value} for values, or use a YAML config ?
 // 				$itemConf	= explode('-', $itemConf);
 // 				$route		= $itemConf[0];
-				$route		= $itemConf;
+				$routeName		= $itemConf;
 // 				if( !DEV_VERSION && !exists_route($route) ) { continue; }
-				if( !exists_route($route) ) { continue; }
-				if( ($HAS_USER_CLASS && !User::canAccess($route))
-					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
-// 				if( !existsPathOf(MODDIR.$route.'.php') || !User::canAccess($route)
-// 					|| !Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
-// 				$action			= count($itemConf) > 1 ? $itemConf[1] : '';
-// 				if( $action == 'ACTION' ) { $action = $GLOBALS['Action']; }
-// 				$queryStr		= count($itemConf) > 2 ? $itemConf[2] : '';
-// 				$item->link		= u($route, $action, $queryStr);
-				$item->link		= u($route);
-// 				$item->label	= ( !empty($action) && hasTranslation($route.'_'.$action) ) ? t($route.'_'.$action) : t($route);
-				$item->label	= $route;
-				$item->route	= $route;
-				$item->module	= $route;
-// 				if( $route==$currentRoute && ($currentAction===NULL || $currentAction==$action) ) {
-				if( $route===$currentRoute ) {
+				
+				/* @var $route HTTPRoute */
+				$route	= HTTPRoute::getRoute($routeName);
+				
+				// Does not exist
+				if( !$route ) { continue; }
+				
+				// Is not accessible
+				if( !$route->isAccessible() ) { continue; }
+				
+				// A hook deny access to this route
+// 				if( Hook::trigger(HOOK_MENUITEMACCESS, true, true, $route) ) { continue; }
+
+				$item->link		= u($routeName);
+				$item->label	= $routeName;
+				$item->route	= $routeName;
+				$item->module	= $routeName;
+				if( $routeName===$currentRoute ) {
 					$item->current = 1;
 				}
 			}
@@ -205,13 +207,13 @@ abstract class Rendering {
 		ob_start();
 	}
 	
-	public static function endCurrentLayout() {
+	public static function endCurrentLayout($env=array()) {
 // 		text(__FILE__.':'.__LINE__);
 		if( !ob_get_level() || empty(static::$layoutStack) ) { return false; }
 // 		if( ob_get_level() < OBLEVEL_INIT+1 || empty(static::$layoutStack) ) { return false; }
 // 		text(__FILE__.':'.__LINE__);
-		$env	= $GLOBALS;
-		$env['Content']	= ob_get_clean();
+// 		$env	= $GLOBALS;
+		$env['Content']	= ob_get_clean();// Ends and returns
 // 		$env['Content'] = ob_get_flush();// Returns and displays
 // 		text(__FILE__.':'.__LINE__);
 		static::doDisplay(array_pop(static::$layoutStack), $env);

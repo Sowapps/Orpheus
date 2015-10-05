@@ -175,7 +175,8 @@ abstract class ConfigCore {
 			return $default;
 			//throw new Exception('No Main Config');
 		}
-		return static::$main->$key;
+// 		debug('static::$main', static::$main);
+		return isset(static::$main->$key) ? static::$main->$key : $default;
 	}
 	
 	/** Set configuration to the main configuration object
