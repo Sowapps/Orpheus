@@ -58,7 +58,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 				</div>
 				<div class="form-group">
 					<label for="inputRowValue">Value</label>
-					<input name="row[key]" type="text" class="form-control row_key" id="inputRowValue" required>
+					<input name="row[key]" type="text" class="form-control row_value" id="inputRowValue" required>
 				</div>
 				
 			</div>
@@ -75,6 +75,17 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 var DIALOG_EDITCONFIG;
 $(function() {
 	DIALOG_EDITCONFIG	= $("#editConfigDialog").modal({show:false});
+
+	$(".createbtn").click(function() {
+		DIALOG_EDITCONFIG.find("form").get(0).reset();
+		DIALOG_EDITCONFIG.modal("show");
+	});
+
+	$(".editbtn").click(function() {
+		DIALOG_EDITCONFIG.find("form").get(0).reset();
+		DIALOG_EDITCONFIG.fill("row_", $(this).closest("tr").data());
+		DIALOG_EDITCONFIG.modal("show");
+	});
 });
 </script>
 

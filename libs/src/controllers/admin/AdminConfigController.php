@@ -17,10 +17,10 @@ class AdminUserListController extends AdminController {
 		
 			try {
 				$GlobalConfig	= GlobalConfig::instance();
-				$GlobalConfig->set();
+				$GlobalConfig->set($data['key'], $data['value']);
 		
 			} catch(UserException $e) {
-				reportError($e, $userDomain);
+				reportError($e);
 			}
 		}
 		
