@@ -19,6 +19,7 @@ addAutoload('ThreadMessage',					'src/ThreadMessage');
 addAutoload('HomeController',					'src/controllers/HomeController');
 addAutoload('LoginController',					'src/controllers/LoginController');
 addAutoload('LogoutController',					'src/controllers/LogoutController');
+addAutoload('DownloadController',				'src/controllers/DownloadController');
 
 addAutoload('FileDownloadController',			'src/controllers/FileDownloadController');
 
