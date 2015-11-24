@@ -26,7 +26,6 @@ class GlobalConfig {
 		return isset($this->data[$key]);
 	}
 	public function get($key, $default=null) {
-		debug('$this->data', $this->data);
 		return $this->has($key) ? $this->data[$key] : $default;
 	}
 
