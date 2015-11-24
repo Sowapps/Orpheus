@@ -1,7 +1,7 @@
 <?php
 
 
-class LogoutController extends HTTPController {
+class DownloadController extends HTTPController {
 	
 	/**
 	 * @param HTTPRequest $request The input HTTP request
