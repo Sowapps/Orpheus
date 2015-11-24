@@ -269,7 +269,7 @@ abstract class AbstractUser extends PermanentEntity {
 	 * It verifies if a valid session exist.
 	 */
 	public static function is_login() {
-		throw new Exception('Method is_login() is obsolete');
+		throw new Exception('Method is_login() is obsolete, use isLogged()');
 // 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
 	}
@@ -306,11 +306,11 @@ abstract class AbstractUser extends PermanentEntity {
 	 * 
 	 * It tries to optimize by getting directly the logged user if he has the same ID.
 	 */
-	public static function load($id) {
-		if( static::getLoggedUserID() == $id) {
+	public static function load($id, $nullable=true) {
+		if( static::getLoggedUserID() == $id ) {
 			return $GLOBALS['USER'];
 		}
-		return parent::load($id);
+		return parent::load($id, $nullable);
 	}
 
 	/** Checks if this user has admin right
