@@ -252,9 +252,16 @@ function displayRawException(Exception $Exception) {
 		if( isset($trace['args']) ) {
 			foreach( $trace['args'] as $i => $arg ) {
 				// 			debug('$arg', $arg);
+				if( is_array($arg) ) {
+					$argTxt	= '['.count($arg).']';
+				} else
+				if( is_closure($arg) ) {
+					$argTxt	= '{closure}';
+				} else {
+					$argTxt	= ' "<span class="arg_value">'.$arg.'</span>"';
+				}
 				$args .= ($i ? ', ' : '').'
-		<span class="arg"><span class="arg_type">'.typeOf($arg).'</span>'.
-			(is_array($arg) ? '['.count($arg).']' : ' "<span class="arg_value">'.$arg.'</span>"').'</span>';
+		<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> '.$argTxt.'</span>';
 			}
 		}
 		?>
