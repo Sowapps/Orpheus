@@ -16,6 +16,8 @@ fields:
     password:           password[nullable]
     email:              email[nullable]
     
+    fullname:           string(4,30)
+    
     published:          boolean=true                # Is published ?
     
     # System infos
