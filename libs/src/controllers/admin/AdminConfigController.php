@@ -18,6 +18,7 @@ class AdminConfigController extends AdminController {
 			try {
 				$GlobalConfig	= GlobalConfig::instance();
 				$GlobalConfig->set($data['key'], $data['value']);
+				$GlobalConfig->save();
 		
 			} catch(UserException $e) {
 				reportError($e);

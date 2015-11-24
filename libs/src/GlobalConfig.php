@@ -9,6 +9,7 @@ class GlobalConfig {
 		$this->data	= array();
 		if( is_readable($this->path) ) {
 			$this->data	= json_decode(file_get_contents($this->path), true);
+			debug();
 		}
 	}
 
