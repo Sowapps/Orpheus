@@ -26,7 +26,7 @@ class GlobalConfig {
 		return isset($this->data[$key]);
 	}
 	public function get($key, $default=null) {
-		return !$this->has($key) ? $this->data[$key] : $default;
+		return $this->has($key) ? $this->data[$key] : $default;
 	}
 
 	public function set($key, $value) {
