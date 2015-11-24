@@ -8,6 +8,7 @@
 addAutoload('File',								'src/File');
 addAutoload('UploadedFile',						'src/UploadedFile');
 
+addAutoload('GlobalConfig',						'src/GlobalConfig');
 addAutoload('User',								'src/User');
 
 addAutoload('DemoTest',							'src/DemoTest');

@@ -44,7 +44,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 <div id="editConfigDialog" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-		<form method="POST"">
+		<form method="POST">
 			
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -74,7 +74,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 <script type="text/javascript">
 var DIALOG_EDITCONFIG;
 $(function() {
-	DIALOG_EDITCONFIG	= $("#translateDialog").modal({show:false});
+	DIALOG_EDITCONFIG	= $("#editConfigDialog").modal({show:false});
 });
 </script>
 

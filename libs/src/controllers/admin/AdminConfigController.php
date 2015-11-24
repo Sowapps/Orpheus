@@ -16,7 +16,8 @@ class AdminUserListController extends AdminController {
 		if( $data = $request->getArrayData('row') ) {
 		
 			try {
-				
+				$GlobalConfig	= GlobalConfig::instance();
+				$GlobalConfig->set();
 		
 			} catch(UserException $e) {
 				reportError($e, $userDomain);
