@@ -268,11 +268,11 @@ abstract class AbstractUser extends PermanentEntity {
 	 * Check if the client is logged in.
 	 * It verifies if a valid session exist.
 	 */
-	public static function is_login() {
-		throw new Exception('Method is_login() is obsolete, use isLogged()');
+// 	public static function is_login() {
+// 		throw new Exception('Method is_login() is obsolete, use isLogged()');
 // 		return ( !empty($_SESSION['USER']) && is_object($_SESSION['USER']) && $_SESSION['USER'] instanceof User && $_SESSION['USER']->login);
 // 		return !empty($_SESSION['USER']) && $_SESSION['USER']->login;
-	}
+// 	}
 
 	/** Checks if the client is logged in
 	 * @return True if the current client is logged in.

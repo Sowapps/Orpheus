@@ -4,7 +4,7 @@ HTMLRendering::useLayout('page_skeleton');
 
 displayReportsHTML();
 
-if( User::is_login() ) {
+if( User::isLogged() ) {
 	echo "<p>Welcome {$USER->fullname} </p>";
 }
 ?>
