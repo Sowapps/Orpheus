@@ -58,7 +58,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 				</div>
 				<div class="form-group">
 					<label for="inputRowValue">Value</label>
-					<input name="row[key]" type="text" class="form-control row_value" id="inputRowValue" required>
+					<input name="row[value]" type="text" class="form-control row_value" id="inputRowValue" required>
 				</div>
 				
 			</div>
