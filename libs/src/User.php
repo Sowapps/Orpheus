@@ -15,7 +15,11 @@ class User extends AbstractUser {
 	// *** OVERLOADED METHODS ***
 	
 	public function __toString() {
-		return escapeText($this->fullname);
+		try {
+			return escapeText($this->fullname);
+		} catch( Exception $e ) {
+			return '';
+		}
 	}
 	
 	public function getNicename() {
