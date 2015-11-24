@@ -10,8 +10,20 @@ class SQLSelectRequest extends SQLRequest {
 		return $this->sget('what', $fields);
 	}
 
+	public function addField($field=null) {
+		return $this->sget('what', $this->get('what', '*').','.$field);
+	}
+
+	public function having($condition=null) {
+		$having		= $this->get('having', array());
+		$having[]	= $condition;
+		return $this->sget('having', $having);
+	}
+
 	public function where($condition=null) {
-		return $this->sget('where', $condition);
+		$where		= $this->get('where', array());
+		$where[]	= $condition;
+		return $this->sget('where', $where);
 	}
 
 	public function orderby($fields=null) {
@@ -22,8 +34,12 @@ class SQLSelectRequest extends SQLRequest {
 		return $this->sget('groupby', $field);
 	}
 
-	public function limit($limit) {
-		return $this->sget('number', $limit);
+	public function number($number) {
+		return $this->sget('number', $number);
+	}
+
+	public function fromOffset($offset) {
+		return $this->sget('offset', $offset);
 	}
 
 	public function join($join) {
@@ -40,13 +56,41 @@ class SQLSelectRequest extends SQLRequest {
 	public function asObjectList() {
 		return $this->output(SQLAdapter::ARR_OBJECTS);
 	}
-// 			'what'			=> '',//table.* => All fields
-// 			'join'			=> '',//* => All fields
-// 			'where'			=> '',//Additionnal Whereclause
-// 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
-// 			'number'		=> -1,//-1 => All
-// 			'offset'		=> 0,//0 => The start
-// 			'output'		=> SQLAdapter::ARR_ASSOC,//Associative Array
+
+	public function asArrayList() {
+		return $this->output(SQLAdapter::ARR_ASSOC);
+	}
+
+	public function count() {
+		$countKey	= '0rpHeus_Count';
+		$what	= $this->get('what');
+		$output	= $this->get('output');
+		$number	= $this->get('number');
+		$offset	= $this->get('offset');
+		
+		try  {
+			$this->set('what', ($what ? $what.', ' : '').'SUM(1) '.$countKey);
+			$this->set('number', '');
+			$this->set('offset', '');
+// 			$this->set('output', SQLAdapter::SQLQUERY);
+// 			debug('Query : '.$this->run());
+			$this->set('output', SQLAdapter::ARR_FIRST);
+			$result = $this->run();
+		} catch( Excetion $e ) {
+			
+		}
+		
+		$this->set('what', $what);
+		$this->set('output', $output);
+		$this->set('number', $number);
+		$this->set('offset', $offset);
+		
+		if( isset($e) ) {
+			throw $e;
+		}
+		
+		return isset($result[$countKey]) ? $result[$countKey] : 0;
+	}
 	
 	public function run() {
 // 		if( !$this->instance ) {

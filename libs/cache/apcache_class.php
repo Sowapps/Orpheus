@@ -15,7 +15,7 @@ class APCache implements Cache {
 	/** Constructor
 	 * @param string $class The class of the cache
 	 * @param string $name The name of this cache
-	 * @param integer $ttl The time to live in seconds, the delay the cache expires for. Default value is 0 (undefined).
+	 * @param integer $ttl The time to live in seconds, the delay the cache expires for. Default value is 0 (manual delete only).
 	 */
 	public function __construct($class, $name, $ttl=0) {
 		$this->ttl = $ttl;

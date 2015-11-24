@@ -41,8 +41,9 @@ class YAML extends ConfigCore {
 	 * If an identifier, load a configuration from a .yaml file in CONFDIR.
 	 * Else $source is a full path to the YAML configuration file.
 	 */
-	public static function parse($source) {	
-		return yaml_parse_file(static::getFilePath($source));
+	public static function parse($source) {
+		$path	= static::getFilePath($source);
+		return $path ? yaml_parse_file(static::getFilePath($source)) : array();
 	}
 
 	/**	Checks if configuration source exists

@@ -37,7 +37,7 @@ abstract class SQLRequest {
 	}
 	
 	protected function get($parameter, $default=null) {
-		return isset($this->parameters[$parameter]) ? $this->parameters[$parameter] : null;
+		return isset($this->parameters[$parameter]) ? $this->parameters[$parameter] : $default;
 	}
 	
 	protected function sget($parameter, $value=null) {
@@ -50,6 +50,25 @@ abstract class SQLRequest {
 	
 	public function output($output=null) {
 		return $this->sget('output', $output);
+	}
+
+	public function getQuery() {
+		$output	= $this->get('output');
+		
+		try  {
+			$this->set('output', SQLAdapter::SQLQUERY);
+			$result = $this->run();
+		} catch( Excetion $e ) {
+			
+		}
+		
+		$this->set('output', $output);
+		
+		if( isset($e) ) {
+			throw $e;
+		}
+		
+		return $result;
 	}
 	
 	protected abstract function run();

@@ -36,8 +36,9 @@ class Config extends ConfigCore {
 	 * If an identifier, loads a configuration from a .ini file in CONFDIR.
 	 * Else $source is a full path to the ini configuration file.
 	 */
-	public static function parse($source) {	
-		return parse_ini_file(static::getFilePath($source), true);
+	public static function parse($source) {
+		$path	= static::getFilePath($source);
+		return $path ? parse_ini_file($path, true) : array();
 	}
 
 	/**	Checks if configuration source exists

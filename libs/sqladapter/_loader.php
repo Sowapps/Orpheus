@@ -9,8 +9,7 @@ addAutoload('SQLAdapter_MySQL',				'sqladapter/SQLAdapter_MySQL');
 addAutoload('SQLAdapter_MSSQL',				'sqladapter/SQLAdapter_MSSQL');
 addAutoload('SQLAdapter_PgSQL',				'sqladapter/SQLAdapter_PgSQL');
 
-addAutoload('SQLRequest',				'sqladapter/sqlrequest');
-addAutoload('SQLSelectRequest',			'sqladapter/sqlselectrequest');
+addAutoload('SQLRequest',					'sqladapter/sqlrequest');
+addAutoload('SQLSelectRequest',				'sqladapter/sqlselectrequest');
 
 require_once '_pdo.php';
-// require_once __DIR__.'/_pdo.php';

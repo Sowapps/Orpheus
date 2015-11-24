@@ -35,7 +35,6 @@ class HTMLRendering extends Rendering {
 	 * @copydoc Rendering::display()
 	 */
 	public function display($model=null, $env=array()) {
-// 		debug('Display model '.$model, $env);
 		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
 		}

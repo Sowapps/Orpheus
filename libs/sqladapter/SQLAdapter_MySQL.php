@@ -70,14 +70,15 @@ class SQLAdapter_MySQL extends SQLAdapter {
 			$options['what'] = $TABLE.'.*';
 		}
 		$WHAT		= is_array($options['what']) ? implode(', ', $options['what']) : $options['what'];
-		$WC			= !empty($options['where']) ? 'WHERE '.$options['where'] : '';
+		$WC			= $options['where'] ? 'WHERE '.(is_array($options['where']) ? implode(' AND ', $options['where']) : $options['where']) : '';
 		$GROUPBY	= !empty($options['groupby']) ? 'GROUP BY '.$options['groupby'] : '';
 		$ORDERBY	= !empty($options['orderby']) ? 'ORDER BY '.$options['orderby'] : '';
+		$HAVING		= !empty($options['having']) ? 'HAVING '.(is_array($options['having']) ? implode(' AND ', $options['having']) : $options['where']) : '';
 		$LIMIT		= $options['number'] > 0 ? 'LIMIT '.
 				( $options['offset'] > 0 ? $options['offset'].', ' : '' ).$options['number'] : '';
-		$JOIN		= $options['join'];
+		$JOIN		= is_array($options['join']) ? implode(' ', $options['join']) : $options['join'];
 		
-		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$GROUPBY} {$ORDERBY} {$LIMIT};";
+		$QUERY		= "SELECT {$WHAT} FROM {$TABLE} {$JOIN} {$WC} {$HAVING} {$GROUPBY} {$ORDERBY} {$LIMIT};";
 		if( $options['output'] == static::SQLQUERY ) {
 			return $QUERY;
 		}

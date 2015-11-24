@@ -54,7 +54,7 @@ class EntityDescriptor {
 
 		$conf	= YAML::build($descriptorPath, true);
 		if( empty($conf->fields) ) {
-			throw new Exception('Descriptor file for '.$name.' is corrupted, empty or not found');
+			throw new Exception('Descriptor file for "'.$name.'" is corrupted, empty or not found');
 		}
 		// Build descriptor
 		//    Parse Config file

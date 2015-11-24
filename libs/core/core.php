@@ -73,6 +73,9 @@ function bintest($value, $reference) {
  * This function stops the running script.
 */
 function sendResponse($code, $other='', $domain='global', $desc=null) {
+	if( !$domain ) {
+		$domain	= 'global';
+	}
 	sendJSON(array(
 		'code'			=> $code,
 		'description'	=> t($desc ? $desc : $code, $domain),
@@ -332,6 +335,24 @@ function sql_error($report, $action='') {
 */
 function escapeText($str, $flags=ENT_NOQUOTES) {
 	return htmlentities(str_replace("\'", "'", $str), $flags, 'UTF-8', false); 	
+}
+
+/**
+ * Display text as HTML
+ * 
+ * @param $text The string to display
+*/
+function displayText($text) {
+	echo text2HTML($text);
+}
+
+/**
+ * Convert Text to HTML
+ *
+ * @param $text The string to convert
+ */
+function text2HTML($text) {
+	return nl2br(escapeText($text));
 }
 
 /** Formats a string to be a html attribute value
@@ -597,6 +618,7 @@ function transferReportStream($from=null, $to='global') {
  * The type of the message is commonly 'success' or 'error'.
 */
 function addReport($report, $type, $domain='global', $code=null, $severity=0) {
+// 	debug("Add report($report, $type, $domain, $code, $severity)");
 	global $REPORTS, $REPORT_STREAM, $REJREPORTS, $DISABLE_REPORT;
 	if( !empty($DISABLE_REPORT) ) { return false; }
 	$report = "$report";
@@ -627,6 +649,17 @@ function addReport($report, $type, $domain='global', $code=null, $severity=0) {
 */
 function reportSuccess($report, $domain='global') {
 	return addReport($report, 'success', $domain);
+}
+
+/** Reports an information to the user
+ * @param $report string The message to report.
+ * @param $domain string The domain fo the message. Not used for translation. Default value is global.
+ * @see addReport()
+
+ * Adds the report $message to the list of reports for this type 'info'.
+*/
+function reportInfo($report, $domain='global') {
+	return addReport($report, 'info', $domain);
 }
 
 /** Reports a warning
@@ -662,7 +695,6 @@ function reportError($report, $domain=null, $severity=1) {
 			$domain = $report->getDomain();
 		}
 	}
-// 	$message = ($message instanceof Exception) ? $message->getMessage() : "$message";
 	return addReport($report, 'error', $domain === NULL ? 'global' : $domain, $code, $severity);
 }
 
@@ -1232,11 +1264,16 @@ function toSlug($string, $case=null) {
  * Converts string to lower case and converts all special characters. 
 */
 function slug($string, $case=null) {
-	$string = preg_replace('#[^a-z0-9\-_]#i', '', ucwords(str_replace('&', 'and',strtolower($string))));
+// 	$string = preg_replace('#[^a-z0-9\-_]#i', '', ucwords(str_replace('&', 'and',strtolower($string))));
+	$string	= strtr(ucwords(str_replace('&', 'and', strtolower($string)))
+		," .'\"", '----');
 	if( isset($case) ) {
 		if( bintest($case, CAMELCASE) ) {
 			if( $case == LOWERCAMELCASE ) {
 				$string = lcfirst($string);
+			// } else
+			// if( $case == UPPERCAMELCASE ) {
+				// $string = ucfirst($string);
 			}
 		}
 	}
@@ -1566,12 +1603,20 @@ function reverse_values(&$val1, &$val2) {
 	$val2	= $tmp;
 }
 
+function deleteCookie($name) {
+	if( !isset($_COOKIE[$name]) ) {
+		return false;
+	}
+	unset($_COOKIE[$key]);
+	setcookie($name, '', 1, '/');
+	return true;
+}
+
 define('SESSION_WITH_COOKIE',		1<<0);
 define('SESSION_WITH_HTTPTOKEN',	1<<1);
 function startSession($type=SESSION_WITH_COOKIE) {
 	global $ERROR_ACTION;
 	
-// 	debug('Start session');
 	Hook::trigger(HOOK_STARTSESSION, $type);
 	if( bintest($type, SESSION_WITH_COOKIE) ) {
 		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
@@ -1587,24 +1632,11 @@ function startSession($type=SESSION_WITH_COOKIE) {
 // 	}
 
 	// PHP is unable to manage exception thrown during session_start()
-// 	$GLOBALS['NO_EXCEPTION']	= 1;
 	$ERROR_ACTION	= ERROR_DISPLAY_RAW;
 	session_start();
 	$ERROR_ACTION	= ERROR_THROW_EXCEPTION;
-// 	$GLOBALS['NO_EXCEPTION']	= 0;
 	
-// 	debug('Session started');
-// 	if( isset($_SESSION) ) {
-// 		debug('Session started - session', $_SESSION);
-// 	} else {
-// 		debug('Session started - Session really not started');
-// 	}
-	
-// 		text('clientIP() => '.clientIP());
-		
-// 		debug('$_SESSION start', $_SESSION);
 	$initSession	= function() {
-// 			die('Init session');
 		$_SESSION	= array('ORPHEUS' => array('LAST_REGENERATEID'=>TIME, 'CLIENT_IP'=>clientIP()));
 		if( defined('SESSION_VERSION') ) {
 			$_SESSION['ORPHEUS']['SESSION_VERSION']	= SESSION_VERSION;
@@ -1621,26 +1653,28 @@ function startSession($type=SESSION_WITH_COOKIE) {
 		$_SESSION['ORPHEUS']['CLIENT_IP']	= clientIP();
 	} else // Hack Attemp' - Session stolen
 	if( Config::get('session_moved_allow', false) && $_SESSION['ORPHEUS']['CLIENT_IP'] != clientIP() ) {
-			// it will return hack attemp' even if user is using a VPN
+		// It will return hack attemp' even if user is using a VPN
+		// Allow 'reset', 'home', 'exception' / Default is 'reset'
+		$movedAction = Config::get('moved_session_action', 'home');
+		// reset in all cases
 		$initSession();
-		throw new UserException('movedSession');
+		if( $movedAction === 'home' ) {
+			redirectTo(DEFAULTLINK);
+		} else
+		if( $movedSession === 'exception' ) {
+			throw new UserException('movedSession');
+		}
 	}
-// 		if( version_compare(PHP_VERSION, '4.3.3', '>=') ) {
-// 			// Only version >= 4.3.3 can regenerate session id without losing data
-// 			// http://php.net/manual/fr/function.session-regenerate-id.php
-// 			if( TIME-$_SESSION['ORPHEUS']['LAST_REGENERATEID'] > 600 ) {
-// 				$_SESSION['ORPHEUS']['LAST_REGENERATEID']	= TIME;
-// 				session_regenerate_id();
-// 			}
-// 		}
-	unset($initSession);
-// 	if( isset($_SESSION) ) {
-// 		debug('Session Initialized - session', $_SESSION);
-// 	} else {
-// 		debug('Session Initialized - Session really not started');
-// 	}
 }
 
 function calculateAge($birthday, $relativeTo='today') {
 	return date_diff(date_create($birthday), date_create($relativeTo))->y;
+}
+
+function is_closure($v) {
+	return is_object($v) && ($v instanceof Closure);
+}
+
+function is_exception($t) {
+	return is_object($t) && ($t instanceof Exception);
 }

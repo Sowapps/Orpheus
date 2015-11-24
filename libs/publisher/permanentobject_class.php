@@ -61,17 +61,18 @@ abstract class PermanentObject {
 		foreach( static::$fields as $fieldname ) {
 			// We condiser null as a valid value.
 			if( !array_key_exists($fieldname, $data) ) {
-				if( !in_array($fieldname, static::$fields) ) {
-					throw new FieldNotFoundException($fieldname, static::getClass());
-				}
 				// Data not found but should be, this object is out of date
-				$this->reload();
+// 				$this->reload();// Dont reload here
 				// Data not in DB, this class is invalid
-				if( !array_key_exists($fieldname, $data) ) {
+// 				if( ENTITY_CLASS_CHECK && !array_key_exists($fieldname, $data) ) {
+				if( ENTITY_CLASS_CHECK ) {
 					throw new Exception('The class '.static::getClass().' is out of date, the field "'.$fieldname.'" is unknown in database.');
+				} else {
+					$this->data[$fieldname]	= null;
 				}
+			} else {
+				$this->data[$fieldname] = $data[$fieldname];
 			}
-			$this->data[$fieldname] = $data[$fieldname];
 		}
 		$this->modFields = array();
 		if( DEV_VERSION ) {
@@ -159,7 +160,7 @@ abstract class PermanentObject {
 	
 	/** 
 	 * Update this permanent object from input data array
-	 * @param	array $uInputData The input data we will check and extract, used by children.
+	 * @param	array $input The input data we will check and extract, used by children.
 	 * @param	string[] $fields The array of fields to check. It never should be null using a validator class, it will be a security breach.
 	 * @param	boolean $noEmptyWarning True to do not report warning for empty data (instead return 0). Default value is true.
 	 * @param	&int $errCount Output parameter for the number of occurred errors validating fields.
@@ -176,17 +177,20 @@ abstract class PermanentObject {
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
 	public function update($input, $fields, $noEmptyWarning=true, &$errCount=0, &$successCount=0) {
+		static::onValidateInput($input, $fields, $this);
 		$data	= static::checkUserInput($input, $fields, $this, $errCount);
 		// Don't care about some errors, other fields should be updated.
 		$found	= 0;
 		foreach( $data as $fieldname => $fieldvalue ) {
 			if( in_array($fieldname, static::$fields) ) {
-				$found	= 1;
-				continue;
+				$found++;
+// 				$found	= 1;
+// 				continue;
 			}
 		}
 // 		debug('$data', $data);
 		try {
+			// No data to update
 			if( !$found ) {
 // 			if( empty($data) ) {
 				if( !$noEmptyWarning ) {
@@ -201,7 +205,9 @@ abstract class PermanentObject {
 		static::onEdit($data, $this);
 		$oldData	= $this->all;
 		foreach($data as $fieldname => $fieldvalue) {
-			if( in_array($fieldname, static::$fields) && in_array($fieldname, $fields) ) {
+			// onEdit could add some fields to data
+			if( in_array($fieldname, static::$fields) ) {
+// 			if( in_array($fieldname, static::$fields) && in_array($fieldname, $fields) ) {
 // 			if( static::isFieldEditable($fieldname) ) {
 // 				text('Set value of '.$fieldname.' to '.($fieldvalue === NULL ? 'NULL' : (is_bool($fieldvalue) ? b($fieldvalue) : $fieldvalue)));
 				$this->setValue($fieldname, $fieldvalue);
@@ -241,6 +247,8 @@ abstract class PermanentObject {
 	 * In the base class, this method does nothing.
 	 */
 	public static function onEdit(array &$data, $object) { }
+	
+	public static function onValidateInput(array &$input, &$fields, $object) { }
 	
 	public static function onSaved(array $data, $object) { }
 	
@@ -465,7 +473,7 @@ abstract class PermanentObject {
 	*/
 	/**
 	 * @param array $options
-	 * @return static|static[]
+	 * @return SQLSelectRequest|static|static[]
 	 */
 	public static function get($options=NULL) {
 // 		debug('PERM OBJECT - GET');
@@ -565,10 +573,12 @@ abstract class PermanentObject {
 	 * Loads the object with the ID $id or the array data.
 	 * The return value is always a static object (no null, no array, no other object).
 	 */
-	public static function load($in) {
+	public static function load($in, $nullable=true) {
 		if( empty($in) ) {
 // 			static::throwException('invalidParameter_load_'.static::getClass());
-			throw new Exception('invalidParameter_load');
+			if( $nullable ) { return null; }
+// 			throw new Exception('invalidParameter_load');
+			static::throwNotFound('invalidParameter_load');
 		}
 		if( is_object($in) && $in instanceof static ) {
 			return $in;
@@ -597,9 +607,9 @@ abstract class PermanentObject {
 			));
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($obj) ) {
-				throw new NotFoundException(static::getDomain());// Use notFound message
-// 				throw new NotFoundException(static::getDomain(), 'inexistantObject');
-// 				static::throwException('inexistantObject');
+				if( $nullable ) { return null; }
+				throw new NotFoundException('notFound', static::getDomain());
+// 				static::throwException('notFound');
 			}
 		} else {
 			$obj = new static($data);
@@ -754,10 +764,11 @@ abstract class PermanentObject {
 	*/
 	public static function create($input=array(), $fields=null, &$errCount=0) {
 		$newErrors	= 0;
+		static::onValidateInput($input, $fields, null);
 		$data	= static::checkUserInput($input, $fields, null, $newErrors);
 		$errCount	+= $newErrors;
 		if( $newErrors ) {
-			throw new UserReportsException('errorCreateChecking', static::getDomain());
+			static::throwException('errorCreateChecking');
 		}
 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
 		

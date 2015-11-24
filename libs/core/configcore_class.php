@@ -107,7 +107,8 @@ abstract class ConfigCore {
 		try {
 			if( class_exists('FSCache', true) ) {
 // 				debug('Cache class exists');
-				$cache	= new FSCache('config', $source, filemtime(static::getFilePath($source)));
+				// strtr fix an issue with FSCache, FSCache does not allow path, so no / and \ 
+				$cache	= new FSCache('config', strtr($source, '/\\', '--'), filemtime(static::getFilePath($source)));
 				if( !$cache->get($parsed) ) {
 // 					debug('No cache, parsing config');
 					$parsed	= static::parse($source);
