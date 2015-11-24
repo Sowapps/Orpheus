@@ -8,5 +8,5 @@
  */
 
 
-// defifn('CHECK_MODULE_ACCESS',	!DEV_VERSION);
+defifn('CHECK_MODULE_ACCESS',	!DEV_VERSION);
 
