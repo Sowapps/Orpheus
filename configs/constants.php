@@ -34,6 +34,7 @@ defifn('LOCALE',			LANG.'.utf8');
 defifn('CACHEPATH',			STOREPATH.'cache/');
 defifn('TEMPPATH',			STOREPATH.'temp/');
 defifn('FILESTOREPATH',		STOREPATH.'files/');
+defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
 
 // Route
 // defifn('DEFAULTMOD',		'home');
