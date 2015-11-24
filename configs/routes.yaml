@@ -18,6 +18,10 @@ http:
         path: "/thread.html"
         controller: "ThreadController"
         
+    download:
+        path: "/download.html"
+        controller: "DownloadController"
+        
     faq:
         path: "/faq.html"
         render: "app/faq"
