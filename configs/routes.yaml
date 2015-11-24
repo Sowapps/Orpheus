@@ -45,6 +45,12 @@ http:
         controller: "DevEntitiesController"
         restrictTo:
           role: developer
+          
+    logout:
+        path: "/logout.html"
+        controller: "LogoutController"
+        restrictTo:
+          role: member
         
     file_download:
         path: "/download/{id:fileID}"
