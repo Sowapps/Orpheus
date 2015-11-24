@@ -40,6 +40,12 @@ http:
         restrictTo:
           role: administrator
         
+    adm_config:
+        path: "/admin/config.html"
+        controller: "AdminConfigController"
+        restrictTo:
+          role: administrator
+        
     dev_entities:
         path: "/admin/dev_entities.html"
         controller: "DevEntitiesController"
