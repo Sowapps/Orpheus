@@ -27,10 +27,16 @@ http:
         render: "app/faq"
         
     adm_mysettings:
+        path: "/admin/home.html"
+        controller: "AdminDemoController"
+        restrictTo:
+          role: member
+        
+    adm_mysettings:
         path: "/admin/mes_parametres.html"
         controller: "AdminMySettingsController"
         restrictTo:
-          role: administrator
+          role: member
         
     adm_users:
         path: "/admin/users.html"
