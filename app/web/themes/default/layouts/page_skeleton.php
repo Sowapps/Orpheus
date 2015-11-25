@@ -26,7 +26,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen" />
 	
-	<link rel="stylesheet" href="<?php echo SITEROOT; ?>'static/style/base.css'" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo SITEROOT; ?>static/style/base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
 foreach(HTMLRendering::$cssURLs as $url) {
