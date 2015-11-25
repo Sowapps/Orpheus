@@ -26,7 +26,7 @@ http:
         path: "/faq.html"
         render: "app/faq"
         
-    adm_mysettings:
+    admin_demo:
         path: "/admin/home.html"
         controller: "AdminDemoController"
         restrictTo:
