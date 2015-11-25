@@ -138,7 +138,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 				<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Statistics: October 1, 2013 - October 31, 2013</h3>
 			</div>
 			<div class="panel-body">
-				<div id="morris-chart-area"></div>
+				<div id="morris-area-chart"></div>
 			</div>
 		</div>
 	</div>
@@ -151,7 +151,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 				<h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Traffic Sources: October 1, 2013 - October 31, 2013</h3>
 			</div>
 			<div class="panel-body">
-				<div id="morris-chart-donut"></div>
+				<div id="morris-donut-chart"></div>
 				<div class="text-right">
 					<a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
 				</div>
