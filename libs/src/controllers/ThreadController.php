@@ -15,6 +15,7 @@ class ThreadController extends HTTPController {
 		try {
 			$request->isPOST() && $FORM_TOKEN->validateForm();
 			if( $request->hasData('submitAdd') ) {
+				// Create new message
 				if( !User::isLogged() ) {
 					User::throwException('forbiddenOperation');
 				}
@@ -24,16 +25,17 @@ class ThreadController extends HTTPController {
 				$tm	= ThreadMessage::createAndGet($input, array('content', 'user_id', 'user_name'));
 				sendNewThreadMessageEmail($tm);
 				reportSuccess('successCreate', ThreadMessage::getDomain());
-			} else
-				if( $request->hasDataKey('submitDelete', $tmID) ) {
-					if( !$USER_CAN_THREADMESSAGE_MANAGE ) {
-						User::throwException('forbiddenOperation');
-					}
-					$tm	= ThreadMessage::load($tmID);
-					$tm->remove();
-					unset($tm);
-					reportSuccess('successDelete', ThreadMessage::getDomain());
+				
+			} else if( $request->hasDataKey('submitDelete', $tmID) ) {
+				// Delete existing message
+				if( !$USER_CAN_THREADMESSAGE_MANAGE ) {
+					User::throwException('forbiddenOperation');
 				}
+				$tm	= ThreadMessage::load($tmID);
+				$tm->remove();
+				unset($tm);
+				reportSuccess('successDelete', ThreadMessage::getDomain());
+			}
 		} catch(UserException $e) {
 			reportError($e);
 		}

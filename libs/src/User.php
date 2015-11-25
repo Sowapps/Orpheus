@@ -91,6 +91,10 @@ class User extends AbstractUser {
 		return $this->canDo('user_grant');// Only App admins can do it.
 	}
 	
+	public function canThreadMessageManage($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
+		return $this->canDo('threadmessage_manage');// Only App admins can do it.
+	}
+	
 	public function canEntityDelete($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
 		return $this->canDo('entity_delete');// Only App admins can do it.
 	}
