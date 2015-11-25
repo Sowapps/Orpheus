@@ -19,12 +19,12 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 }
 ?>
 
-	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/css/bootstrap.min.css" type="text/css" media="screen" />
-<!-- 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>bootstrap-responsive.css" type="text/css" media="screen" /> -->
-	<link rel="stylesheet" href="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/css/bootstrap-theme.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="//shared.sowapps.com/font-awesome/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2-bootstrap.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen" />
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen" />
 	
 	<link rel="stylesheet" href="<?php echo SITEROOT; ?>'style/base.css'" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
@@ -36,7 +36,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 ?>
 	
 	<!-- External JS libraries -->
-	<script type="text/javascript" src="//shared.sowapps.com/jquery/jquery-1.11.2/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <?php
 /*
@@ -73,11 +73,11 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 
 </div>
 	<!-- JS libraries -->
-	<script type="text/javascript" src="//shared.sowapps.com/jquery-ui/jquery-ui-1.11.2/jquery-ui.js"></script>
-	<script type="text/javascript" src="//shared.sowapps.com/bootstrap/bootstrap-3.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- 	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2.min.js"></script> -->
-	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2.js"></script>
-	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2_locale_fr.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2_locale_fr.min.js"></script>
 	
 	<!-- Our JS scripts -->
 	<script type="text/javascript" src="/js/orpheus.js"></script>

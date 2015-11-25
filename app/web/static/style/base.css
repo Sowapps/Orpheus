@@ -2,6 +2,8 @@
 body {
 	margin:		0;
 	padding:	0;
+	/* Fix all element to default "default" */
+	cursor:		default;
 }
 
 /*
@@ -12,7 +14,6 @@ h1, h2, h3, h4 {
 */
 
 a,.link {
-/* 	color: #88ba14; */
 	cursor: pointer;
 	border: 0;
 	background: none;
@@ -22,9 +23,6 @@ a,.link {
 }
 button {
 	font-family: inherit;
-}
-a:hover, a:focus, .link:hover, .link:focus {
-/* 	color: #558710; */
 }
 
 input {
@@ -111,6 +109,8 @@ script, style {
 
 .mb0  { margin-bottom: 0 !important; }
 .mb5  { margin-bottom: 5px !important; }
+.mb6  { margin-bottom: 6px !important; }
+.mb8  { margin-bottom: 8px !important; }
 .mb10 { margin-bottom: 10px !important; }
 .mb15 { margin-bottom: 15px !important; }
 .mb20 { margin-bottom: 20px !important; }
@@ -159,6 +159,8 @@ script, style {
 .pb20 { padding-bottom: 20px !important; }
 .pb30 { padding-bottom: 30px !important; }
 .pb40 { padding-bottom: 40px !important; }
+.pb60 { padding-bottom: 60px !important; }
+.pb80 { padding-bottom: 80px !important; }
 
 .pl0  { padding-left: 0 !important; }
 .pl5  { padding-left: 5px !important; }
