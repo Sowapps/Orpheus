@@ -27,8 +27,28 @@
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen" />
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen" />
+	
+	<link rel="stylesheet" href="{{ constant('SITEROOT') }}static/style/base.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ TWIG_CSSFOLDERURL }}style.css" type="text/css" media="screen" />
+{% if METAPROP %}
+	{% for property,content in METAPROP %}
+	<meta property="{{ property }}" content="{{ content }}"/>
+	{% endfor %}
+{% endif %}
+foreach(HTMLRendering::$cssURLs as $url) {
+	echo '
+	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
+}
+?>
 </head>
-<body class="{{ Module }}">
+<body>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">

@@ -10,9 +10,9 @@ http:
         path: "/user_login.html"
         controller: "UserLoginController"
         
-    sample_twig:
-        path: "/sample_twig.html"
-        controller: "TwigSampleController"
+#    sample_twig:
+#        path: "/sample_twig.html"
+#        controller: "TwigSampleController"
         
     thread:
         path: "/thread.html"

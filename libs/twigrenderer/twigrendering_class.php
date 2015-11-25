@@ -18,6 +18,10 @@ class TwigRendering extends Rendering {
 	public static $modelsPath	= '';
 	public static $cachePath	= 'cache/';
 	
+	public static $cssURLs		= array();// CSS files
+	public static $jsURLs		= array();// Javascript files
+	public static $metaprop		= array();// Meta-properties
+	
 	protected static $twigenv;
 	
 	/** Renders the model.
