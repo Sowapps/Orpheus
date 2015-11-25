@@ -1,4 +1,5 @@
 <?php
+HTMLRendering::addThemeJSFile('admin_demo.js');
 HTMLRendering::useLayout('page_skeleton');
 ?>
 <div class="row">
