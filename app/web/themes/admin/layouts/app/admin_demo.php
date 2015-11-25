@@ -171,7 +171,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 					</a>
 					<a href="#" class="list-group-item">
 						<span class="badge">4 minutes ago</span>
-						<i class="fa fa-comment"></i> Code the best PHP framework ever
+						<i class="fa fa-star"></i> Code the best PHP framework ever
 					</a>
 					<a href="#" class="list-group-item">
 						<span class="badge">23 minutes ago</span>
