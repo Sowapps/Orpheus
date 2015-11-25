@@ -9,8 +9,8 @@ HTMLRendering::useLayout('page_skeleton');
 		secured and standardized with the simplest way to do it and the maximum customizing capabilities.
 	</p>
 	<p>
-		<a href="/downloads/latest/orpheus-fullpack-v2.0.1-rc2.zip" class="btn btn-primary btn-large">&darr; Download Full pack &darr;</a>
-		<a href="/downloads/latest/" class="link fs14 ml5">Choose your pack</a>
+		<a href="<?php echo u('download'); ?>" class="btn btn-primary btn-large">&darr; Download latest &darr;</a>
+		<a href="<?php echo u('download').'?releases'; ?>" class="link fs14 ml5">All releases</a>
 	</p>
 </div>
 <?php
