@@ -10,7 +10,7 @@ HTMLRendering::useLayout('page_skeleton');
 	</p>
 	<p>
 		<a href="<?php echo u('download'); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
-		<a href="<?php echo u('download').'?releases'; ?>" class="link fs14 ml10">All releases</a>
+		<a href="<?php echo u('download').'?releases'; ?>" class="link fs16 ml10">All releases</a>
 	</p>
 </div>
 <?php
