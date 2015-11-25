@@ -45,7 +45,7 @@ http:
           role: member
         
     adm_mysettings:
-        path: "/admin/mes_parametres.html"
+        path: "/admin/my_settings.html"
         controller: "AdminMySettingsController"
         restrictTo:
           role: member
