@@ -37,8 +37,29 @@ define('PDOERROR_MINOR'		, 1<<10);
 // define('PDOERROR_SILENT'	, PDOERROR_MINOR);
 // define('PDOERROR_SILENT'	, PDOERROR_MINOR | PDOERROR_EXCEP);
 
+
+function pdo_getDefaultInstance() {
+	if( defined('PDODEFINSTNAME') ) {
+		// Default is constant PDODEFINSTNAME
+		$instance = PDODEFINSTNAME;
+		
+	} else if( !empty($DBS) && is_array($DBS) ) {
+		if( is_array(current($DBS)) ) {
+			// Default is the first value of the multidimensional array DB Settings
+			$instance = key($DBS);
+		} else {
+			// Default is 'default' and value is all the contents of DB Settings
+			$instance = 'default';
+			$DBS[$instance] = $DBS;
+		}
+	} else {
+		pdo_error('No instance given in parameter and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
+	}
+	return $instance;
+}
+
 /** Ensures to be connected to the database.
- * @param $Instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
+ * @param $instance If supplied, this is the ID of the instance to use to execute the query. Optional, PDODEFINSTNAME constant by default.
  * @return	Instance ID used.
  * 
  * Ensures to provide a valid and connected instance of PDO, here are the steps:
@@ -46,131 +67,120 @@ define('PDOERROR_MINOR'		, 1<<10);
  * If not supplied as a parameter, this function attempts to determine an existing instance name.
  * If the instance is not connected, this function attempts to connect.
 */
-function ensure_pdoinstance($Instance=null) {
+function ensure_pdoinstance($instance=null) {
 	global $pdoInstances, $DBS;
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
-		$config	= Config::build(DBCONF, true);
-		$DBS	= $config->all;
+		$DBS	= Config::build(DBCONF, true);
+		$DBS	= $DBS->all;
 	}
-// 	debug('$DBS', $DBS);
+	
 	// Using default instance
-	if( empty($Instance) ) {
-// 		text('Empty $Instance');
-		// Default is constant PDODEFINSTNAME
-		if( defined('PDODEFINSTNAME') ) {
-			$Instance = PDODEFINSTNAME;
-		} else if( !empty($DBS) && is_array($DBS) ) {
-			// Default is the first value of the multidimensional array DB Settings
-			if( is_array(current($DBS)) ) {
-				$Instance = key($DBS);
-			} else {
-				// Default is 'default' and value is all the contents of DB Settings
-				$Instance = 'default';
-				$DBS[$Instance] = $DBS;
-			}
-		} else {
-			pdo_error('No instance given in parameter and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
-		}
-	} else if( empty($DBS[$Instance]) ) {
-// 		text('Empty $DBS[$Instance]');
-		pdo_error('Parameter Instance " '.$Instance.' " is unknown.', 'Instance Setting Definition');
+	if( empty($instance) ) {
+		// Get from default
+		$instance	= pdo_getDefaultInstance();
+		
+	} else if( empty($DBS[$instance]) ) {
+		pdo_error('Parameter Instance " '.$instance.' " is unknown.', 'Instance Setting Definition');
+	}
+	
+	if( !empty($pdoInstances[$instance]) ) {
+		// Instance is already checked and loaded
+		return $instance;
 	}
 	
 	// Loading instance
-	$InstSettings = $DBS[$Instance];
+	$instanceSettings = $DBS[$instance];
 
 	try {
 		//If There is no driver given, it is an error.
-		if( empty($InstSettings['driver']) ) {
+		if( empty($instanceSettings['driver']) ) {
 			pdo_error('Database setting "driver" should have the driver name (not empty)', 'Driver Definition');
 			
 		//If driver is mysql
-		} else if( $InstSettings['driver'] == 'mysql' ) {
+		} else if( $instanceSettings['driver'] == 'mysql' ) {
 			//If Instance does not exist yet, it is not connected, we create it & link it.
-			if( empty($pdoInstances[$Instance]) ) {
-				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-				if( empty($InstSettings["dbname"]) ) {
-					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-				}
-				$pdoInstances[$Instance] = new PDO(
-					"mysql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
-					$InstSettings["user"], $InstSettings["passwd"],
-					array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", PDO::MYSQL_ATTR_DIRECT_QUERY=>true)
-				);
-				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$instanceSettings["host"]	= ( empty($instanceSettings["host"])	) ? '127.0.0.1'	: $instanceSettings["host"];
+			$instanceSettings["user"]	= ( empty($instanceSettings["user"])	) ? 'root'		: $instanceSettings["user"];
+			$instanceSettings["passwd"]	= ( empty($instanceSettings["passwd"])	) ? ''			: $instanceSettings["passwd"];
+			if( empty($instanceSettings["dbname"]) ) {
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
+			$pdoInstances[$instance] = new PDO(
+				"mysql:dbname={$instanceSettings["dbname"]};host={$instanceSettings["host"]}",
+				$instanceSettings["user"], $instanceSettings["passwd"],
+				array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8", PDO::MYSQL_ATTR_DIRECT_QUERY=>true)
+			);
+			$pdoInstances[$instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			
 		//If driver is mssql
-		} else if( $InstSettings['driver'] == 'mssql' ) {
+		} else if( $instanceSettings['driver'] == 'mssql' ) {
 			//If Instance does not exist yet, it is not connected, we create it & link it.
-			if( empty($pdoInstances[$Instance]) ) {
-				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-				if( empty($InstSettings["dbname"]) ) {
-					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-				}
-				$pdoInstances[$Instance] = new PDO(
-					"dblib:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]}",
-					$InstSettings["user"], $InstSettings["passwd"]
-				);
-				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$instanceSettings["host"]	= ( empty($instanceSettings["host"])	) ? '127.0.0.1'	: $instanceSettings["host"];
+			$instanceSettings["user"]	= ( empty($instanceSettings["user"])	) ? 'root'		: $instanceSettings["user"];
+			$instanceSettings["passwd"]	= ( empty($instanceSettings["passwd"])	) ? ''			: $instanceSettings["passwd"];
+			if( empty($instanceSettings["dbname"]) ) {
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
+			$pdoInstances[$instance] = new PDO(
+				"dblib:dbname={$instanceSettings["dbname"]};host={$instanceSettings["host"]}",
+				$instanceSettings["user"], $instanceSettings["passwd"]
+			);
+			$pdoInstances[$instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			
-		} else if( $InstSettings['driver'] == 'pgsql' ) {
+		} else if( $instanceSettings['driver'] == 'pgsql' ) {
 			//If Instance does not exist yet, it is not connected, we create it & link it.
-			if( empty($pdoInstances[$Instance]) ) {
-				$InstSettings["host"]	= ( empty($InstSettings["host"])	) ? '127.0.0.1'	: $InstSettings["host"];
-				$InstSettings["user"]	= ( empty($InstSettings["user"])	) ? 'root'		: $InstSettings["user"];
-				$InstSettings["passwd"]	= ( empty($InstSettings["passwd"])	) ? ''			: $InstSettings["passwd"];
-				if( empty($InstSettings["dbname"]) ) {
-					pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
-				}
-				$pdoInstances[$Instance] = new PDO(
-					"pgsql:dbname={$InstSettings["dbname"]};host={$InstSettings["host"]};user={$InstSettings["user"]};password={$InstSettings["passwd"]}"
-				);
-				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+			$instanceSettings["host"]	= ( empty($instanceSettings["host"])	) ? '127.0.0.1'	: $instanceSettings["host"];
+			$instanceSettings["user"]	= ( empty($instanceSettings["user"])	) ? 'root'		: $instanceSettings["user"];
+			$instanceSettings["passwd"]	= ( empty($instanceSettings["passwd"])	) ? ''			: $instanceSettings["passwd"];
+			if( empty($instanceSettings["dbname"]) ) {
+				pdo_error('Database setting "dbname" should have the database\'s name (not empty)', 'DB Name Definition');
 			}
+			$pdoInstances[$instance] = new PDO(
+				"pgsql:dbname={$instanceSettings["dbname"]};host={$instanceSettings["host"]};user={$instanceSettings["user"]};password={$instanceSettings["passwd"]}"
+			);
+			$pdoInstances[$instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 			
-		} else if( $InstSettings['driver'] == 'sqlite' ) {
+		} else if( $instanceSettings['driver'] == 'sqlite' ) {
 			//If Instance does not exist yet, it is not connected, we create it & link it.
-			if( empty($pdoInstances[$Instance]) ) {
-				$InstSettings["path"]	= ( empty($InstSettings["path"])	) ? ':memory:'	: $InstSettings["path"];
-				$pdoInstances[$Instance] = new PDO(
-					"sqlite:{$InstSettings["path"]}"
-				);
-				$pdoInstances[$Instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
-			}
+			$instanceSettings["path"]	= ( empty($instanceSettings["path"])	) ? ':memory:'	: $instanceSettings["path"];
+			$pdoInstances[$instance] = new PDO(
+				"sqlite:{$instanceSettings["path"]}"
+			);
+			$pdoInstances[$instance]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		}
 	} catch( PDOException $e ) {
 		pdo_error('PDO Exception: '.$e->getMessage(), 'DB Connection', 0, $e);
 // 		throw $e;
 	}
-	return $Instance;
+	return $instance;
+}
+
+function pdo_instance($instance) {
+	global $pdoInstances;
+	$instance	= ensure_pdoinstance($instance);
+	return $pdoInstances[$instance];
 }
 
 /** Execute $Query
  * @param $Query The query to execute.
  * @param $Fetch See PDO constants above. Optional, default is PDOQUERY.
- * @param $Instance The instance to use to execute the query. Optional, default is defined by ensure_pdoinstance().
+ * @param $instance The instance to use to execute the query. Optional, default is defined by ensure_pdoinstance().
  * @return The result of the query, of type defined by $Fetch.
  * 
  * Execute $Query on the instanciated database.
 */
-function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
+function pdo_query($Query, $Fetch=PDOQUERY, $instance=null) {
 	global $pdoInstances, $DBS;
 	// Checks connection
-	$Instance		= ensure_pdoinstance($Instance);
-	if( empty($pdoInstances[$Instance]) ) { return; }
-	$InstSettings	= $DBS[$Instance];
-	$pdoInstance	= $pdoInstances[$Instance];
+	$instance		= ensure_pdoinstance($instance);
+	if( empty($pdoInstances[$instance]) ) { return; }
+	$instanceSettings	= $DBS[$instance];
+	$pdoInstance	= $pdoInstances[$instance];
 		
 		
-	if( in_array($InstSettings['driver'], array('mysql', 'mssql', 'pgsql', 'sqlite')) ) {
+	if( in_array($instanceSettings['driver'], array('mysql', 'mssql', 'pgsql', 'sqlite')) ) {
 
 		try {
 			$ERR_ACTION	= 'BINTEST';
@@ -211,19 +221,19 @@ function pdo_query($Query, $Fetch=PDOQUERY, $Instance=null) {
 		}
 	}
 	//Unknown Driver
-	pdo_error('Driver "'.$InstSettings['driver'].'" does not exist or is not implemented yet.', 'Driver Definition');
+	pdo_error('Driver "'.$instanceSettings['driver'].'" does not exist or is not implemented yet.', 'Driver Definition');
 }
 
 /** Gets the last inserted ID
- * @param $Instance The instance to use to get the last inserted id. Optional, default is defined by ensure_pdoinstance().
+ * @param $instance The instance to use to get the last inserted id. Optional, default is defined by ensure_pdoinstance().
  * @return The last inserted id.
  * 
  * Gets the last inserted ID for this instance
  */
-function pdo_lastInsertId($Instance=null) {
+function pdo_lastInsertId($instance=null) {
 	global $pdoInstances;
-	$Instance		= ensure_pdoinstance($Instance);
-	$pdoInstance	= $pdoInstances[$Instance];
+	$instance		= ensure_pdoinstance($instance);
+	$pdoInstance	= $pdoInstances[$instance];
 	$r = $pdoInstance->lastInsertId();
 	return $r;
 }
@@ -251,6 +261,6 @@ function pdo_error($report, $Action='', $Fetch=0, $Original=null) {
 function pdo_quote($String) {
 	//Old version, does not protect against SQL Injection.
 	global $pdoInstances;
-	$Instance = ensure_pdoinstance();
-	return $pdoInstances[$Instance]->quote($String);
+	$instance = ensure_pdoinstance();
+	return $pdoInstances[$instance]->quote($String);
 }

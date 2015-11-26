@@ -6,7 +6,7 @@
 addAutoload('AbstractPublication',				'publisher/abstractpublication_class.php');
 addAutoload('AbstractStatus',					'publisher/abstractstatus_class.php');
 addAutoload('Email',							'publisher/Email');
-addAutoload('PermanentObject',					'publisher/permanentobject_class.php');
+addAutoload('PermanentObject',					'publisher/PermanentObject');
 addAutoload('FieldNotFoundException',			'publisher/fieldnotfoundexception_class.php');
 addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
 addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');

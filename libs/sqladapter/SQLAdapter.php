@@ -33,10 +33,10 @@ abstract class SQLAdapter {
 	const NUMBER		= 7;//!< Number
 
 	/** Constructor
-	 * @param $Instance The instance to use to execute the future queries.
+	 * @param $instance The instance to use to execute the future queries.
 	 */
-	public function __construct($Instance) {
-		$this->instance = $Instance;
+	public function __construct($instance) {
+		$this->instance = $instance;
 	}
 
 	/** The function to use to query the DB server using db instance of this object
@@ -114,7 +114,7 @@ abstract class SQLAdapter {
 		if( is_float($value) ) {
 			return strtr($value, ',', '.');
 		}
-		return is_null($value) ? 'NULL' : $this->formatString($value);
+		return $value === null ? 'NULL' : $this->formatString($value);
 	}
 	
 	/** The function to get the last inserted ID
@@ -133,90 +133,107 @@ abstract class SQLAdapter {
 	 * Sets the IDFIELD value to $field
 	 */
 	public function setIDField($field) {
-		if( !is_null($field) ) {
+		if( $field !== null ) {
 			$this->IDFIELD = $field;
 		}
 	}
 	
+	/**
+	 * Start a transaction with DB (require InnoDB)
+	 * 
+	 * @param string $transactionID The ID of the transaction
+	 * @param string $instance The db instance used to send the query
+	 * @param string $IDField The ID field of the table
+	*/
+// 	public static function startTransaction($transactionID, $instance=null, $IDField=null) {
+// 		self::prepareQuery($options, $instance, $IDField);
+// 		if( !$transactionID ) {
+// 			$transactionID	= 'default';
+// 		}
+//		// Store active $transactionID
+// 		$pdoInstance	= pdo_instance($instance);
+// 		self::$Adapters[$instance]->
+// 	}
+	
 	/** The static function to use for SELECT queries in global context
 
-	 * @param $options The options used to build the query.
-	 * @param $Instance The db instance used to send the query.
-	 * @param $IDField The ID field of the table.
+	 * @param array $options The options used to build the query.
+	 * @param string $instance The db instance used to send the query.
+	 * @param string $IDField The ID field of the table.
 	 * @sa select()
 	*/
-	public static function doSelect(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->select($options);
+	public static function doSelect(array $options=array(), $instance=null, $IDField=null) {
+		self::prepareQuery($options, $instance, $IDField);
+		return self::$Adapters[$instance]->select($options);
 	}
 	
 	/** The static function to use for UPDATE queries in global context
 
 	 * @param $options The options used to build the query.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
 	 * @sa update()
 	*/
-	public static function doUpdate(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->update($options);
+	public static function doUpdate(array $options=array(), $instance=null, $IDField=null) {
+		self::prepareQuery($options, $instance, $IDField);
+		return self::$Adapters[$instance]->update($options);
 	}
 	
 	/** The static function to use for DELETE queries in global context
 
 	 * @param $options The options used to build the query.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
 	 * @sa SQLAdapter::delete()
 	*/
-	public static function doDelete(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->delete($options);
+	public static function doDelete(array $options=array(), $instance=null, $IDField=null) {
+		self::prepareQuery($options, $instance, $IDField);
+		return self::$Adapters[$instance]->delete($options);
 	}
 	
 	/** The static function to use for INSERT queries in global context
 
 	 * @param $options The options used to build the query.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
 	 * @sa SQLAdapter::insert()
 	*/
-	public static function doInsert(array $options=array(), $Instance=null, $IDField=null) {
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->insert($options);
+	public static function doInsert(array $options=array(), $instance=null, $IDField=null) {
+		self::prepareQuery($options, $instance, $IDField);
+		return self::$Adapters[$instance]->insert($options);
 	}
 	
 	/** The static function to use to get last isnert id in global context
 
 	 * @param $table The table to get the last ID. Some DBMS ignore it.
 	 * @param $IDField The field id name.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @sa SQLAdapter::lastID()
 	*/
-	public static function doLastID($table, $IDField='id', $Instance=null) {
+	public static function doLastID($table, $IDField='id', $instance=null) {
 		$options=array();
-		self::prepareQuery($options, $Instance, $IDField);
-		return self::$Adapters[$Instance]->lastID($table);
+		self::prepareQuery($options, $instance, $IDField);
+		return self::$Adapters[$instance]->lastID($table);
 	}
 
 	/** Escapes SQL identifiers
 
 	 * @param $Identifier The identifier to escape.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @return The escaped identifier.
 	 * @sa SQLAdapter::escapeIdentifier()
 	 * 
 	 * Escapes the given string as an SQL identifier.
 	*/
-	public static function doEscapeIdentifier($Identifier, $Instance=null) {
-		self::prepareInstance($Instance);
-		return self::$Adapters[$Instance]->escapeIdentifier($Identifier);
+	public static function doEscapeIdentifier($Identifier, $instance=null) {
+		self::prepareInstance($instance);
+		return self::$Adapters[$instance]->escapeIdentifier($Identifier);
 	}
 
 	/** Escapes SQL identifiers
 
 	 * @param $String The value to format.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @return The formatted value.
 	 * @sa SQLAdapter::formatString()
 	 * 
@@ -224,24 +241,24 @@ abstract class SQLAdapter {
 	 * If the value is a float, we make french decimal compatible with SQL.
 	 * If null, we use the NULL value, else we consider it as a string value.
 	*/
-	public static function doFormatString($String, $Instance=null) {
-		self::prepareInstance($Instance);
-		return self::$Adapters[$Instance]->formatString($String);
+	public static function doFormatString($String, $instance=null) {
+		self::prepareInstance($instance);
+		return self::$Adapters[$instance]->formatString($String);
 	}
 
 	/** The static function to quote
 
 	 * @param string $value The string to quote.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @return The quoted string.
 	 * @sa SQLAdapter::formatValue()
 	 * 
 	 * Add slashes before simple quotes in $String and surrounds it with simple quotes and .
 	 * Keep in mind this function does not really protect your DB server, especially against SQL injections.
 	*/
-	public static function doFormatValue($value, $Instance=null) {
-		self::prepareInstance($Instance);
-		return self::$Adapters[$Instance]->formatValue($value);
+	public static function doFormatValue($value, $instance=null) {
+		self::prepareInstance($instance);
+		return self::$Adapters[$instance]->formatValue($value);
 // 		if( is_float($value) ) {
 // 			return strtr($value, ',', '.');
 // 		}
@@ -251,12 +268,12 @@ abstract class SQLAdapter {
 	/** The static function to prepare the query for the given instance
 
 	 * @param $options The options used to build the query.
-	 * @param $Instance The db instance used to send the query.
+	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
 	*/
-	public static function prepareQuery(array &$options=array(), &$Instance=null, $IDField=null) {
-		self::prepareInstance($Instance);
-		self::$Adapters[$Instance]->setIDField($IDField);
+	public static function prepareQuery(array &$options=array(), &$instance=null, $IDField=null) {
+		self::prepareInstance($instance);
+		self::$Adapters[$instance]->setIDField($IDField);
 		if( !empty($options) && !empty($options['output']) && $options['output'] == SQLAdapter::ARR_FIRST ) {
 			$options['number'] = 1;
 		}
@@ -269,16 +286,16 @@ abstract class SQLAdapter {
 	public static function prepareInstance(&$instance=null) {
 		if( isset(self::$Adapters[$instance]) ) { return; }
 		global $DBS;
-		$Instance = ensure_pdoinstance($instance);
-		if( empty($DBS[$Instance]) ) {
+		$instance = ensure_pdoinstance($instance);
+		if( empty($DBS[$instance]) ) {
 			throw new Exception("Adapter unable to connect to the database.");
 		}
-		$adapterClass = 'SQLAdapter_'.$DBS[$Instance]['driver'];
-		// $instance is prepareInstance() name of instance and $Instance is the real one
-		self::$Adapters[$instance] = new $adapterClass($Instance);
+		$adapterClass = 'SQLAdapter_'.$DBS[$instance]['driver'];
+		// $instance is prepareInstance() name of instance and $instance is the real one
+		self::$Adapters[$instance] = new $adapterClass($instance);
 		if( empty(self::$Adapters[$instance]) ) {
 			// null means default but default is not always 'default'
-			self::$Adapters[$Instance] = &self::$Adapters[$instance];
+			self::$Adapters[$instance] = &self::$Adapters[$instance];
 		}
 	}
 }
