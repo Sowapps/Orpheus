@@ -908,10 +908,10 @@ abstract class PermanentObject {
 	// 		** VALIDATION METHODS **
 	
 	/** Check user input
-	 * @param $uInputData The user input data to check.
-	 * @param $fields The array of fields to check. Default value is null.
-	 * @param $ref The referenced object (update only). Default value is null.
-	 * @param $errCount The resulting error count, as pointer. Output parameter.
+	 * @param array $uInputData The user input data to check.
+	 * @param string[] $fields The array of fields to check. Default value is null.
+	 * @param PermanentObject $ref The referenced object (update only). Default value is null.
+	 * @param int $errCount The resulting error count, as pointer. Output parameter.
 	 * @return The valid data.
 	 * 
 	 * Check if the class could generate a valid object from $uInputData.

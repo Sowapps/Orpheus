@@ -46,10 +46,17 @@ function exists_route($routeName) {
 	return !!HTTPRoute::getRoute($routeName);
 }
 
+/**
+ * @param string
+ * @return boolean
+ */
 function is_current_route($route) {
 	return get_current_route() === $route;
 }
 
+/**
+ * @return string
+ */
 function get_current_route() {
 	$request	= HTTPRequest::getMainRequest();
 	return $request->getRoute()->getName();

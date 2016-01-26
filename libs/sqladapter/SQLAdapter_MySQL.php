@@ -8,9 +8,10 @@ class SQLAdapter_MySQL extends SQLAdapter {
 	//! Defaults for selecting
 	protected static $selectDefaults = array(
 			'what'			=> '',//table.* => All fields
-			'join'			=> '',//* => All fields
+			'join'			=> '',// No join
 			'where'			=> '',//Additionnal Whereclause
 			'orderby'		=> '',//Ex: Field1 ASC, Field2 DESC
+			'groupby'		=> '',//Ex: Field
 			'number'		=> -1,//-1 => All
 			'offset'		=> 0,//0 => The start
 			'output'		=> SQLAdapter::ARR_ASSOC,//Associative Array

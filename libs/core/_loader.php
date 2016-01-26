@@ -16,4 +16,5 @@ addAutoload('NotFoundException',				'core/userexception_class.php');
 addAutoload('ForbiddenException',				'core/userexception_class.php');
 addAutoload('OperationCancelledException',		'core/userexception_class.php');
 addAutoload('SQLException',						'core/sqlexception_class.php');
-addAutoload('FormToken',						'core/formtoken_class.php');
+addAutoload('FormToken',						'core/FormToken');
+addAutoload('SlugGenerator',					'core/SlugGenerator');

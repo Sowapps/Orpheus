@@ -77,11 +77,13 @@ abstract class AbstractUser extends PermanentEntity {
 	public function logout($reason=null) {
 		global $USER;
 		if( !$this->login ) {
+// 			debug('user is not logged in');
 			return false;
 		}
 		$this->login = self::NOT_LOGGED;
 		$_SESSION['USER'] = $USER = null;
 		$_SESSION['LOGOUT_REASON'] = $reason;
+		//debug('Session updated');
 		return true;
 	}
 
@@ -164,12 +166,12 @@ abstract class AbstractUser extends PermanentEntity {
 	public static function userLogin($data, $loginField='name') {
 // 		$name = self::checkName($data);
 // 		debug('$data', $data);
-		if( empty($data['name']) )  {
-			static::throwException("invalidLoginID");
+		if( empty($data[$loginField]) )  {
+			static::throwException('invalidLoginID');
 		}
 		$name		= $data[$loginField];
 		if( empty($data['password']) )  {
-			static::throwException("invalidPassword");
+			static::throwException('invalidPassword');
 		}
 		$password	= hashString($data['password']);
 		//self::checkForEntry() does not return password and id now.
@@ -183,8 +185,11 @@ abstract class AbstractUser extends PermanentEntity {
 		if( empty($user) )  {
 			static::throwException("invalidLoginID");
 		}
+		if( isset($user->published) && !$user->published )  {
+			static::throwException('forbiddenLogin');
+		}
 		if( $user->password != $password )  {
-			static::throwException("wrongPassword");
+			static::throwException('wrongPassword');
 		}
 		$user->logout();
 		$user->login();
@@ -358,16 +363,18 @@ abstract class AbstractUser extends PermanentEntity {
 	}
 	*/
 	public static function loggedCanAccessToRoute($route, $accesslevel) {
-		global $USER;
+// 		global $USER;
+// 		debug('loggedCanAccessToRoute($route, '.$accesslevel.')', $route);
+		$user	= static::getLoggedUser();
 		if( !ctype_digit($accesslevel) ) {
 			$accesslevel = static::getRoleAccesslevel($accesslevel);
 		}
 // 		$access	= static::getAccessOf($module);
 // 		if( $access===NULL ) { return true; }
 		$accesslevel	= (int) $accesslevel;
-		return ( empty($USER) && $accesslevel < 0 ) ||
-			( !empty($USER) && $accesslevel >= 0 &&
-				$USER instanceof User && $USER->checkPerm($accesslevel));
+		return ( empty($user) && $accesslevel < 0 ) ||
+			( !empty($user) && $accesslevel >= 0 &&
+				$user instanceof User && $user->checkPerm($accesslevel));
 	}
 	
 	public static function getAppRoles() {

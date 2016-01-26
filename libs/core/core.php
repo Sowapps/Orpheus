@@ -337,6 +337,30 @@ function escapeText($str, $flags=ENT_NOQUOTES) {
 	return htmlentities(str_replace("\'", "'", $str), $flags, 'UTF-8', false); 	
 }
 
+define('ESCAPE_SIMPLEQUOTES', 1<<1);
+define('ESCAPE_DOUBLEQUOTES', 1<<2);
+define('ESCAPE_ALLQUOTES', ESCAPE_SIMPLEQUOTES|ESCAPE_DOUBLEQUOTES);
+define('ESCAPE_TOHTML', 1<<3);
+define('ESCAPE_ALLQUOTES_TOHTML', ESCAPE_ALLQUOTES|ESCAPE_TOHTML);
+define('ESCAPE_DOUBLEQUOTES_TOHTML', ESCAPE_DOUBLEQUOTES|ESCAPE_TOHTML);
+function escapeQuotes($str, $flags=ESCAPE_ALLQUOTES) {
+	if( !$flags ) {
+		$flags	= ESCAPE_ALLQUOTES;
+	}
+	$in		= array();
+	$out	= array();
+	$toHTML	= bintest($flags, ESCAPE_TOHTML);
+	if( bintest($flags, ESCAPE_SIMPLEQUOTES) ) {
+		$in[]	= "'";
+		$out[]	= "\\'";
+	}
+	if( bintest($flags, ESCAPE_DOUBLEQUOTES) ) {
+		$in[]	= '"';
+		$out[]	= $toHTML ? '&quot;' : '\\"';
+	}
+	return str_replace($in, $out, $str);
+}
+
 /**
  * Display text as HTML
  * 
@@ -564,7 +588,7 @@ function addAutoload($className, $classPath) {
 */
 
 /** Starts a new report stream
- * @param $stream The new report stream name
+ * @param string $stream The new report stream name
  * @see endReportStream()
 
  * A new report stream starts, all new reports will be added to this stream.
@@ -737,9 +761,9 @@ function rejectReport($report, $type=null) {
 }
 
 /** Gets some/all reports
- * @param $stream The stream to get the reports. Default value is "global".
- * @param $type Filter results by report type. Default value is null.
- * @param $delete True to delete entries from the list. Default value is true.
+ * @param string $stream The stream to get the reports. Default value is "global".
+ * @param string $type Filter results by report type. Default value is null.
+ * @param boolean $delete True to delete entries from the list. Default value is true.
  * @see getReportsHTML()
 
  * Gets all reports from the list of $domain optionnally filtered by type.
@@ -765,9 +789,9 @@ function getReports($stream='global', $type=null, $delete=1) {
 }
 
 /** Gets some/all reports as flatten array
- * @param $stream The stream to get the reports. Default value is "global".
- * @param $type Filter results by report type. Default value is null.
- * @param $delete True to delete entries from the list. Default value is true.
+ * @param string $stream The stream to get the reports. Default value is "global".
+ * @param string $type Filter results by report type. Default value is null.
+ * @param boolean $delete True to delete entries from the list. Default value is true.
  * @return array[].
  * @see getReports()
 
@@ -1257,9 +1281,9 @@ function toSlug($string, $case=null) {
 }
 
 /** Converts the string into a slug
- * @param $string The string to convert.
- * @param $case The case style to use, values: null (default), LOWERCAMELCASE or UPPERCAMELCASE.
- * @return The slug version.
+ * @param string $string The string to convert.
+ * @param int $case The case style flag to use, values: null (default), LOWERCAMELCASE or UPPERCAMELCASE.
+ * @return string The slug version.
  *
  * Converts string to lower case and converts all special characters. 
 */
@@ -1318,24 +1342,64 @@ function hashString($str) {
 	return hash('sha512', $salt.$str.'7');
 }
 
-/** Gets the date as string
- * @param $time The UNIX timestamp.
- * @return The date using 'dateFormat' translation key
+
+/**
+ * Format the date as string
+ * @param mixed $time The UNIX timestamp
+ * @return string The date using 'dateFormat' translation key
  * 
  * Date format is storing a date, not a specific moment, we don't care about timezone
 */
 function d($time=TIME) {
-	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
+// 	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
+	return df('dateFormat', $time);
 }
 
-/** Gets the date time as string
- * @param $time The UNIX timestamp.
- * @return The date using 'datetimeFormat' translation key
+/**
+ * Format the date time as string
+ * @param mixed $time The UNIX timestamp
+ * @return string The date using 'datetimeFormat' translation key
  * 
  * Datetime format is storing a specific moment, we care about timezone
 */
 function dt($time=TIME) {
-	return !empty($time) ? strftime(t('datetimeFormat'), is_numeric($time) ? $time : strtotime($time.' GMT')) : null;
+	return df('datetimeFormat', $time);
+}
+
+/**
+ * Format the date time as string
+ * @param $format The format to use
+ * @param mixed $time The UNIX timestamp
+ * @return string The date formatted using $format
+ * 
+ * Datetime format is storing a specific moment, we care about timezone
+*/
+function df($format, $time=TIME, $tz=null) {
+	if( $tz === false ) {
+		$tz	= 'UTC';
+	}
+	if( $tz !== null ) {
+		$ctz	= date_default_timezone_get();
+		date_default_timezone_set($tz);
+	}
+// 	$r	= !empty($time) ? strftime(t($format), dateToTime($time)) : null;
+	// Calculating some delay, we want 00:00 and not null
+	$r	= strftime(t($format), dateToTime($time));
+	if( $tz !== null ) {
+		date_default_timezone_set($ctz);
+	}
+	return $r;
+}
+
+/**
+ * Convert date to time
+ * @param mixed $date The date or UNIX timestamp
+ * @return int The UNIX timestamp
+ *
+ * Allow any strtotime format to be converted to time, if time passed, it just returns it.
+ */
+function dateToTime($date) {
+	return is_numeric($date) ? $date : strtotime($date.' GMT');
 }
 
 /** Gets the date time as string
@@ -1371,8 +1435,8 @@ function parseTime($time, $format=SYSTEM_TIME_FORMAT) {
 }
 
 /** Gets the date as string in SQL format
- * @param $time The UNIX timestamp.
- * @return The date using sql format
+ * @param int $time The UNIX timestamp.
+ * @return string The date using sql format
  * 
  * Date format is storing a date, not a specific moment, we don't care about timezone
 */
@@ -1382,8 +1446,8 @@ function sqlDate($time=TIME) {
 }
 
 /** Gets the date time as string in SQL format
- * @param $time The UNIX timestamp.
- * @return The date using sql format
+ * @param int $time The UNIX timestamp.
+ * @return string The date using sql format
  * 
  * Datetime format is storing a specific moment, we care about timezone
 */
@@ -1431,10 +1495,12 @@ function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz01234567
 	return $r;
 }
 
-/** Returns the day timestamp using the given integer
- * @param $time The time to get the day time. Default value is current timestamp.
+/**
+ * Calculate the day timestamp using the given integer
+ * @param int $time The time to get the day time. Default value is current timestamp.
+ * @return int
  * 
- * Returns the timestamp of the current day of $time according to the midnight hour.
+ * Return the timestamp of the current day of $time according to the midnight hour.
 */
 function dayTime($time=null) {
 	if( $time === NULL ) { $time = time(); }
@@ -1457,7 +1523,6 @@ function monthTime($day=1, $time=null) {
  * @param $number The input phone number.
  * @param $delimiter The delimiter for series of digits. Default value is current timestamp. Default value is '.'.
  * @param $limit The number of digit in a serie separated by delimiter. Optional, the default value is 2.
- * @see dayTime()
  *
  * Returns a standard phone number for FR country format.
  */

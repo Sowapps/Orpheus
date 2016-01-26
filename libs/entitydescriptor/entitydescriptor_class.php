@@ -189,29 +189,29 @@ class EntityDescriptor {
 		// Field Formatter - Could be undefined
 	}
 	
-	public function validate(array &$uInputData, $fields=null, $ref=null, &$errCount=0) {
+	public function validate(array &$inputData, $fields=null, $ref=null, &$errCount=0) {
 		$data	= array();
 // 		$class = $this->class;
 		foreach( $this->fields as $field => &$fData ) {
 			try {
 				if( $fields!==NULL && !in_array($field, $fields) ) {
-					unset($uInputData[$field]);
+					unset($inputData[$field]);
 					// If updating, we do not modify a field not in $fields
 					// If creating, we set to default a field not in $fields
 					if( $ref ) { continue; }
 				}
 				if( !$fData->writable ) { continue; }
-				if( !isset($uInputData[$field]) ) {
-					$uInputData[$field] = null;
+				if( !isset($inputData[$field]) ) {
+					$inputData[$field] = null;
 				}
-				$this->validateFieldValue($field, $uInputData[$field], $uInputData, $ref);
+				$this->validateFieldValue($field, $inputData[$field], $inputData, $ref);
 				// PHP does not make difference between 0 and NULL, so every non-null value is different from null.
 // 				if( isset($ref) ) {
 // 					debug("Ref -> $field => ", $ref->getValue($field));
 // 					debug("New value", $uInputData[$field]);
 // 				}
-				if( !isset($ref) || ($ref->getValue($field)===NULL XOR $uInputData[$field]===NULL) || $uInputData[$field]!=$ref->getValue($field) ) {
-					$data[$field]	= $uInputData[$field];
+				if( !isset($ref) || ($ref->getValue($field)===NULL XOR $inputData[$field]===NULL) || $inputData[$field]!=$ref->getValue($field) ) {
+					$data[$field]	= $inputData[$field];
 				}
 
 			} catch( UserException $e ) {

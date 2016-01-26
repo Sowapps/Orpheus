@@ -21,4 +21,12 @@ abstract class HTTPController extends Controller {
 // 		$rendering	= new HTMLRendering();
 		return $this->render(new HTMLHTTPResponse(), $layout, $values);
 	}
+	
+	public function processUserException(UserException $e) {
+		reportError($e);
+		return $this->render(new HTMLHTTPResponse(), 'page_skeleton', array(
+			'titleRoute'	=> 'usererror',
+			'Content'		=> ''
+		));
+	}
 }

@@ -2,13 +2,6 @@
 
 
 abstract class Controller {
-	
-	/**
-	 * 
-	 * @param InputRequest $request
-	 * @return OutputRequest
-	 */
-// 	public function run(InputRequest $request);
 
 	/* @var $request InputRequest */
 	protected $request;
@@ -16,15 +9,34 @@ abstract class Controller {
 	public function __toString() {
 		return get_called_class();
 	}
-	
+
+	/**
+	 *
+	 * @param InputRequest $request
+	 * @return OutputResponse
+	 */
 	public function process(InputRequest $request) {
+		// run, preRun and postRun take parameter depending on Controller, request may be of a child class of InputRequest
 		$this->request	= $request;
 		
+		ob_start();
 		$this->preRun($request);
-		$result	= $this->run($request);
-		$this->preRun($request, $result);
+		try {
+			$result	= $this->run($request);
+		} catch( UserException $e ) {
+			$result	= $this->processUserException($e);
+		}
+		$this->postRun($request, $result);
+// 		$output = ob_get_clean();
+// 		debug('Got controller output => '.strlen($output));
+// 		$result->setControllerOutput($output);
+		$result->setControllerOutput(ob_get_clean());
 		
 		return $result;
+	}
+	
+	public function processUserException(UserException $e) {
+		throw $e;// Throw to request
 	}
 	
 	public function getRequest() {

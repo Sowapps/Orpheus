@@ -3,6 +3,7 @@
 abstract class AdminController extends HTTPController {
 
 	public function preRun(HTTPRequest $request) {
+		parent::preRun($request);
 		HTMLRendering::setDefaultTheme('admin');
 		
 		/* @var $USER User */

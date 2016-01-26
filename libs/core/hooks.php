@@ -33,7 +33,7 @@ Hook::register(HOOK_RUNMODULE, function ($Module) {
 	}
 	// If the module is the default but with wrong link.
 	// REDIRECT_rewritten is essential to allow rewritten url to default mod
-	if( $Module === DEFAULTMOD && empty($GLOBALS['Action']) && empty($_SERVER['REDIRECT_rewritten']) && $isNotRoot ) {
+	if( $Module === DEFAULTROUTE && empty($GLOBALS['Action']) && empty($_SERVER['REDIRECT_rewritten']) && $isNotRoot ) {
 // 		debug('Default MOD but wrong link !');
 		permanentRedirectTo(DEFAULTLINK);
 	}

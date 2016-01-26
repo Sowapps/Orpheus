@@ -108,11 +108,12 @@ abstract class ConfigCore {
 			if( class_exists('FSCache', true) ) {
 // 				debug('Cache class exists');
 				// strtr fix an issue with FSCache, FSCache does not allow path, so no / and \ 
+// 				debug('Config time for '.$source.' is '.sqlDatetime(filemtime(static::getFilePath($source))));
 				$cache	= new FSCache('config', strtr($source, '/\\', '--'), filemtime(static::getFilePath($source)));
 				if( !$cache->get($parsed) ) {
 // 					debug('No cache, parsing config');
 					$parsed	= static::parse($source);
-// 					debug('Config parsed');
+// 					debug('Config parsed', $parsed);
 					$cache->set($parsed);
 // 					debug('Cache set');
 				}
@@ -122,6 +123,10 @@ abstract class ConfigCore {
 // 			debug('$parsed', $parsed);
 			$this->add($parsed);
 			return true;
+			
+		} catch( CacheException $e ) {
+			log_error($e, 'Caching parsed source '.$source, false);
+			
 		} catch( Exception $e ) {
 			// If not found, we do nothing
 			return false;

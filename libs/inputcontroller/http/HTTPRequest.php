@@ -220,7 +220,7 @@ class HTTPRequest extends InputRequest {
 		return $this->pathValues;
 	}
 	
-	public function getPathValue($key) {
-		return isset($this->pathValues->$key) ? $this->pathValues->$key : null;
+	public function getPathValue($key, $default=null) {
+		return isset($this->pathValues->$key) ? $this->pathValues->$key : $default;
 	}
 }

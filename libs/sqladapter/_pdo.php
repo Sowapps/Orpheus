@@ -39,6 +39,7 @@ define('PDOERROR_MINOR'		, 1<<10);
 
 
 function pdo_getDefaultInstance() {
+	global $DBS;
 	if( defined('PDODEFINSTNAME') ) {
 		// Default is constant PDODEFINSTNAME
 		$instance = PDODEFINSTNAME;
@@ -53,7 +54,7 @@ function pdo_getDefaultInstance() {
 			$DBS[$instance] = $DBS;
 		}
 	} else {
-		pdo_error('No instance given in parameter and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
+		pdo_error('Database configuration NOT FOUND and no Instance defined by default with constant "PDODEFINSTNAME".', 'Instance Definition');
 	}
 	return $instance;
 }
@@ -72,7 +73,9 @@ function ensure_pdoinstance($instance=null) {
 	
 	//Check DB Settings File and Get DB Settings
 	if( empty($DBS) ) {
+// 		debug('Build '.DBCONF.' config ');
 		$DBS	= Config::build(DBCONF, true);
+// 		debug('$DBS on build', $DBS);
 		$DBS	= $DBS->all;
 	}
 	

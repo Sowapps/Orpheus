@@ -64,7 +64,11 @@ class FSCache implements Cache {
 	public function set($data) {
 // 		debug('FSCache set', $data);
 // 		debug('FSCache path '.$this->path, $this->editTime.static::$delim.serialize($data));
-		return file_put_contents($this->path, $this->editTime.static::$delim.serialize($data));
+		try {
+			return file_put_contents($this->path, $this->editTime.static::$delim.serialize($data));
+		} catch( Exception $e ) {
+			throw new CacheException($e->getMessage(), $e->getCode(), $e);
+		}
 	}
 	
 	/** Gets the folder path for the cache

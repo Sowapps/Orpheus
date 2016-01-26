@@ -47,9 +47,6 @@ abstract class ControllerRoute {
 			throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
 		}
 		$result	= $controller->process($request);
-// 		$controller->preRun($request);
-// 		$result	= $controller->run($request);
-// 		$controller->preRun($request, $result);
 		return $result;
 	}
 	

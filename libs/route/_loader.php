@@ -23,7 +23,7 @@ function u($module=null, $action='', $options=null) {
 		$module	= $GLOBALS['Module'];
 	}
 	$isDefault	= 0;
-	if( $module === DEFAULTMOD && !$action ) {
+	if( $module === DEFAULTROUTE && !$action ) {
 		$url		= DEFAULTLINK;
 		$isDefault	= 1;
 	}
