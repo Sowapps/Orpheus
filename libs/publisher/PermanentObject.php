@@ -252,6 +252,8 @@ abstract class PermanentObject {
 	
 	public static function onSaved(array $data, $object) { }
 	
+	protected $onSavedInProgress = false;
+	
 	/** Saves this permanent object
 	 * @return 1 in case of success, else 0
 	 * 
@@ -275,8 +277,14 @@ abstract class PermanentObject {
 			'number'	=> 1,
 		);
 		$r	= SQLAdapter::doUpdate($options, static::$DBInstance, static::$IDFIELD);
-		static::onSaved(array_filterbykeys($this->all, $this->modFields), $this);
+		$modFields	= $this->modFields;
 		$this->modFields	= array();
+		if( !$this->onSavedInProgress ) {
+			// Protect script against saving loops
+			$this->onSavedInProgress	= true;
+			static::onSaved(array_filterbykeys($this->all, $modFields), $this);
+			$this->onSavedInProgress	= false;
+		}
 		return $r;
 	}
 	
