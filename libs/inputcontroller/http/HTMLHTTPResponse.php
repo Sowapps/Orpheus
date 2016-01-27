@@ -6,7 +6,7 @@ class HTMLHTTPResponse extends HTTPResponse {
 	/**
 	 * @var string
 	 */
-// 	protected $body;
+	protected $body;
 
 	/**
 	 * @var string
@@ -19,13 +19,12 @@ class HTMLHTTPResponse extends HTTPResponse {
 	 */
 	protected $values;
 	
-// 	/**
-// 	 * @param string $body
-// 	 */
-// 	public function __construct() {
-// 	public function __construct($body=null) {
-// 		$this->setBody($body);
-// 	}
+	/**
+	 * @param string $body
+	 */
+	public function __construct($body=null) {
+		$this->setBody($body);
+	}
 	
 	
 // 	/**
@@ -40,6 +39,10 @@ class HTMLHTTPResponse extends HTTPResponse {
 	 */
 	public function run() {
 		header('Content-Type: text/html; charset="UTF-8"');
+		if( $this->body ) {
+			// if already generated we display the body
+			die($this->getBody());
+		}
 		$rendering	= new HTMLRendering();
 		$env	= $this->values;
 		$env['CONTROLLER_OUTPUT']	= $this->getControllerOutput();

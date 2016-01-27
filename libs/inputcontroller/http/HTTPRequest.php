@@ -106,20 +106,15 @@ class HTTPRequest extends InputRequest {
 			static::$mainRequest	= static::generateFromEnvironment();
 	//		debug('$request', static::$mainRequest);
 	//		die();
-// 			$route	= static::$mainRequest->findFirstMatchingRoute();
-// 			if( !$route ) {
-// 				throw new NotFoundException('No route matches the current request '.static::$mainRequest);
-// 			}
-// 			$response	= $route->run(static::$mainRequest);
 			$response	= static::$mainRequest->process();
 		} catch( Exception $e ) {
+// 			debug('handleCurrentRequest() - Exception');
 			$response	= HTMLHTTPResponse::generateFromException($e);
+// 			die();
 		}
 		$response->process();
 		die();
 	}
-	
-	
 	
 	/**
 	 * Get the method
