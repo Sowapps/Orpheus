@@ -20,7 +20,7 @@ class AdminMySettingsController extends AdminController {
 			try {
 				$userInput	= POST('user');
 				$userFields	= array('fullname', 'email', 'accesslevel');
-				if( isset($userInput['password']) ) {
+				if( !empty($userInput['password']) ) {
 					$userInput['password_conf']	= $userInput['password'];
 					$userFields[]	= 'password';
 				}
