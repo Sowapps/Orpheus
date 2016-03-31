@@ -4,9 +4,9 @@ HTMLRendering::useLayout('page_skeleton');
 <div class="jumbotron">
 	<h1>Hello PHP developer !</h1>
 	<p>
-		This is the home page of my new PHP Framework, named Orpheus.
-		This one is made for you because you want to develop your website quickly with something easy-to-use, optimized,
-		secured and standardized with the simplest way to do it and the maximum customizing capabilities.
+Get the power with the new Orpheus, all features fit your needs !
+This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
+secured and standardized by easiest way to use it and the maximum customizing capabilities.
 	</p>
 	<p>
 		<a href="<?php echo u('download'); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
