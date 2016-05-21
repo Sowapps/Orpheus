@@ -11,10 +11,12 @@ fields:
     login_ip:           ip[nullable]
     activity_date:      datetime[nullable]
     activity_ip:        ip[nullable]
+    activation_date:    datetime[nullable]
+    activation_ip:      ip[nullable]
     
     # Account
-    password:           password[nullable]
     email:              email[nullable]
+    password:           password[nullable]
     
     fullname:           string(4,30)
     
@@ -23,7 +25,9 @@ fields:
     # System infos
     accesslevel:        natural(999)=0              # Access level for admin panel
     recovery_code:      string(30)[nullable]        # Password recovery code
-    language_id:        ref(language)=0
+    activation_code:    string(30)[nullable]        # Activation code
+    timezone:           enum(listTimezones)[nullable]=DEFAULT_TIMEZONE  # Timezone
+#    language_id:        ref(language)=0
 
     
 indexes:

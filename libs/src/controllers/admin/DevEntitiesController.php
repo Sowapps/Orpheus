@@ -8,17 +8,19 @@ class DevEntitiesController extends AdminController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-		using('entitydescriptor.entitydescriptor');
-		using('entitydescriptor.sqlgenerator_mysql');
-		using('entitydescriptor.langgenerator');
+		using('entitydescriptor.EntityDescriptor');
+		using('entitydescriptor.SQLGenerator_MySQL');
+		using('entitydescriptor.LangGenerator');
+		
+		$this->addThisToBreadcrumb();
 		
 		$FORM_TOKEN	= new FormToken();
-		$Values		= array(
+		$env		= array(
 			'FORM_TOKEN'	=> $FORM_TOKEN
 		);
+		// TODO: Check and suggest to delete unknown tables in DB
 		try {
 			if( is_array($request->getData('entities')) ) {
-// 			if( $request->getArrayData('entities')Data('entities') && is_array(POST('entities')) ) {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
 					$output		= $output==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
@@ -26,15 +28,35 @@ class DevEntitiesController extends AdminController {
 					}
 					$generator	= new SQLGenerator_MySQL();
 					$result		= '';
-					foreach( $request->getArrayData('entities') as $entityName => $on ) {
-						$result	.= $generator->matchEntity(EntityDescriptor::load($entityName));
+					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
+// 						$query	= $generator->matchEntity(EntityDescriptor::load($entityName));
+						$query	= $generator->matchEntity($entityClass::getValidator());
+						if( $query ) {
+							$result[$entityClass]	= $query;
+						}
 					}
+					
+					$env['unknownTables'] = array();
+					/* @var PDOStatement $statement */
+					$statement	= pdo_query('SHOW TABLES', PDOSTMT);
+					$knownTables	= array();
+					foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
+						$knownTables[$entityClass::getTable()]	= 1;
+					}
+					while( $tableFetch = $statement->fetch(PDO::FETCH_NUM) ) {
+						$table	= $tableFetch[0];
+						if( isset($knownTables[$table]) ) {
+							continue;
+						}
+						$env['unknownTables'][$table] = 1;
+					}
+					
 					if( empty($result) ) {
 						throw new UserException('No changes');
 					}
-					$Values['resultingSQL']	= $result;
+					$env['resultingSQL']	= implode('', $result);
 					if( $output==OUTPUT_DISPLAY ) {
-						$Values['requireEntityValidation']	= 1;
+						$env['requireEntityValidation']	= 1;
 // 						echo '
 // 			<form method="POST">'.$FORM_TOKEN;
 // 						foreach( POST('entities') as $entityName => $on ) {
@@ -44,7 +66,22 @@ class DevEntitiesController extends AdminController {
 // 			<button type="submit" class="btn btn-primary" name="submitGenerateSQL['.OUTPUT_APPLY.']">Apply</button></form>';
 					} else
 					if( $output==OUTPUT_APPLY ) {
-						pdo_query(strip_tags($result), PDOEXEC);
+						foreach( $result as $entity => $query ) {
+							pdo_query(strip_tags($query), PDOEXEC);
+						}
+						$tablesToRemove = $request->getData('removeTable');
+						foreach( $env['unknownTables'] as $table => $on ) {
+							if( empty($tablesToRemove[$table]) ) {
+								// Not selected
+								continue;
+							}
+							try {
+// 								debug('DROP TABLE '.SQLAdapter::doEscapeIdentifier($table));
+								pdo_query('DROP TABLE '.SQLAdapter::doEscapeIdentifier($table), PDOEXEC);
+							} catch( SQLException $e ) {
+								reportError('Unable to drop table '.$table.', cause: '.$e->getMessage());
+							}
+						}
 						reportSuccess('successSQLApply');
 					}
 // 					echo '<div>'.$result.'</div>';
@@ -90,13 +127,17 @@ class DevEntitiesController extends AdminController {
 // 			HTMLRendering::doDisplay('error', array('date' => date('c'), 'report' => $e->getMessage(), 'action' => $e->getAction()));
 		
 		} catch( UserException $e ) {
-			reportError($e);
+			if( $e->getMessage() === 'errorNoChanges' ) {
+				reportWarning($e);
+			} else {
+				reportError($e);
+			}
 		}
-		return $this->renderHTML('app/dev_entities', $Values);
+		return $this->renderHTML('app/dev_entities', $env);
 	}
 
 }
-		
+
 define('OUTPUT_APPLY',		1);
 define('OUTPUT_DISPLAY',	2);
 define('OUTPUT_DLRAW',		3);

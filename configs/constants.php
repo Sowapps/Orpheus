@@ -36,13 +36,26 @@ defifn('TEMPPATH',			STOREPATH.'temp/');
 defifn('FILESTOREPATH',		STOREPATH.'files/');
 defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
 
+defifn('STATIC_URL',		SITEROOT.'static/');
+
+// Routes' contants
+define('ROUTE_HOME',			'home');
+define('ROUTE_LOGIN',			'login');
+define('ROUTE_LOGOUT',			'logout');
+define('ROUTE_DASHBOARD',		'user_dashboard');
+
+define('ROUTE_ADM_USERS',		'adm_users');
+define('ROUTE_ADM_USER',		'adm_user');
+define('ROUTE_ADM_MYSETTINGS',	'adm_mysettings');
+
 // Route
+defifn('DEFAULTROUTE',		ROUTE_HOME);
 // defifn('DEFAULTMOD',		'home');
-defifn('DEFAULTHOST',		'domain.com');
+defifn('DEFAULTHOST',		'yourdomain.com');
 defifn('DEFAULTPATH',		'');
 
-defifn('AUTHORNAME',		'Florent HAZARD');
-defifn('SITENAME',			'Orpheus');
+defifn('AUTHORNAME',		'Your name');
+defifn('SITENAME',			'Your App Name');// See also translation app_name
 defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
 
 define('CRAC_CONTEXT_APPLICATION',	1);

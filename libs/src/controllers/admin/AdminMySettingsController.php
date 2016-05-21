@@ -15,22 +15,25 @@ class AdminMySettingsController extends AdminController {
 		$userDomain	= User::getDomain();
 
 		$user	= User::getLoggedUser();
+		
+		$this->addThisToBreadcrumb();
 
 		if( isPOST('submitUpdate') ) {
 			try {
 				$userInput	= POST('user');
-				$userFields	= array('fullname', 'email', 'accesslevel');
+				$userFields	= array('fullname', 'email', 'timezone');
 				if( !empty($userInput['password']) ) {
 					$userInput['password_conf']	= $userInput['password'];
 					$userFields[]	= 'password';
 				}
 				$result = $user->update($userInput, $userFields);
 				if( $result ) {
-					reportSuccess('successEdit', $userDomain);
+					reportSuccess('succesSelfEdit', $userDomain);
 				}
 			} catch(UserException $e) {
 				reportError($e, $userDomain);
 			}
+			unset($userInput);
 		}
 		
 		$formData	= array('user'=>$user->all);
@@ -42,6 +45,7 @@ class AdminMySettingsController extends AdminController {
 		return $this->renderHTML('app/admin_useredit', array(
 			'USER_CAN_USER_EDIT'	=> $USER_CAN_USER_EDIT,
 			'USER_CAN_USER_GRANT'	=> false,
+			'USER_CAN_USER_DELETE'	=> false,
 			'user'	=> $user
 		));
 	}

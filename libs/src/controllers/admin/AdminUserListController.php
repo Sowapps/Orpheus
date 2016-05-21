@@ -14,6 +14,8 @@ class AdminUserListController extends AdminController {
 // 		global $USER_CLASS;
 		$userDomain	= User::getDomain();
 		
+		$this->addThisToBreadcrumb();
+		
 		$USER_CAN_USER_EDIT	= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
 		$USER_CAN_DEV_SEE	= !CHECK_MODULE_ACCESS || $USER->canSeeDevelopers();
 		

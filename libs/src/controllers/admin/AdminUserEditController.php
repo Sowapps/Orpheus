@@ -15,9 +15,23 @@ class AdminUserEditController extends AdminController {
 		$userDomain	= User::getDomain();
 
 		$user	= User::load($request->getPathValue('userID'));
+		
+		if( !$user ) {
+			User::throwNotFound();
+		}
+		
+		$this->addRouteToBreadcrumb(ROUTE_ADM_USERS);
+		$this->addThisToBreadcrumb();
+// 		$this->addThisToBreadcrumb(array('userID'=>$user->id()));
 
-		if( isPOST('submitUpdate') ) {
-			try {
+		$USER_CAN_USER_EDIT		= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
+		$USER_CAN_USER_DELETE	= $USER->canUserDelete();
+
+		try {
+			if( isPOST('submitUpdate') ) {
+				if( !$USER_CAN_USER_EDIT ) {
+					throw new ForbiddenException();
+				}
 				$userInput	= POST('user');
 				$userFields	= array('fullname', 'email', 'accesslevel');
 				if( !empty($userInput['password']) ) {
@@ -28,19 +42,27 @@ class AdminUserEditController extends AdminController {
 				if( $result ) {
 					reportSuccess('successEdit', $userDomain);
 				}
-			} catch(UserException $e) {
-				reportError($e, $userDomain);
+				
+			} else
+			if( isPOST('submitDelete') ) {
+				if( !$USER_CAN_USER_DELETE ) {
+					throw new ForbiddenException();
+				}
+				if( $user->remove() ) {
+					reportSuccess('successDelete', $userDomain);
+				}
 			}
+		} catch(UserException $e) {
+			reportError($e, $userDomain);
 		}
 		
 		$formData	= array('user'=>$user->all);
-
-		$USER_CAN_USER_EDIT	= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
 		
 		require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 		
 		return $this->renderHTML('app/admin_useredit', array(
 			'USER_CAN_USER_EDIT'	=> $USER_CAN_USER_EDIT,
+			'USER_CAN_USER_DELETE'	=> $USER_CAN_USER_DELETE,
 			'USER_CAN_USER_GRANT'	=> true,
 			'user'	=> $user
 		));

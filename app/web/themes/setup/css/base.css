@@ -1,0 +1,289 @@
+
+body {
+	margin:		0;
+	padding:	0;
+}
+
+/*
+Issue with Boostrap and modal close button, it comes under the title (h3, h4...)
+h1, h2, h3, h4 {
+	position: relative;
+}
+*/
+
+a,.link {
+/* 	color: #88ba14; */
+	cursor: pointer;
+	border: 0;
+	background: none;
+}
+.link {
+	text-decoration: underline;
+}
+button {
+	font-family: inherit;
+}
+a:hover, a:focus, .link:hover, .link:focus {
+/* 	color: #558710; */
+}
+
+input {
+    cursor: text;
+}
+label, select, button, input[type="button"], input[type="reset"], input[type="submit"], input[type="radio"], input[type="checkbox"] {
+    cursor: pointer;
+}
+
+ul {
+	list-style: none;
+}
+ul, p {
+	padding: 0;
+	margin: 0;
+}
+
+/* br, .br { clear: both; } */
+
+script, style {
+	display: none !important;
+}
+
+/* Standards */
+.w20  { width: 20px  !important; }
+.w40  { width: 40px  !important; }
+.w60  { width: 60px  !important; }
+.w80  { width: 80px  !important; }
+.w100 {	width: 100px !important; }
+.w120 {	width: 120px !important; }
+.w140 {	width: 140px !important; }
+.w160 {	width: 160px !important; }
+.w180 {	width: 180px !important; }
+.w200 {	width: 200px !important; }
+.w220 {	width: 220px !important; }
+.w240 {	width: 240px !important; }
+.w260 {	width: 260px !important; }
+.w280 {	width: 280px !important; }
+.w300 {	width: 300px !important; }
+.w320 {	width: 320px !important; }
+.w340 {	width: 340px !important; }
+.w360 {	width: 360px !important; }
+.w380 {	width: 380px !important; }
+.w400 {	width: 400px !important; }
+.w420 {	width: 420px !important; }
+.w440 {	width: 440px !important; }
+.w460 {	width: 460px !important; }
+.w480 {	width: 480px !important; }
+.w500 {	width: 500px !important; }
+.w520 {	width: 520px !important; }
+.w540 {	width: 540px !important; }
+.w560 {	width: 560px !important; }
+.w580 {	width: 580px !important; }
+.w600 {	width: 600px !important; }
+.w700 {	width: 700px !important; }
+.w800 {	width: 800px !important; }
+
+.w25p,  .wq {	width: 25% !important; }
+.w33p		{	width: 33% !important; }
+.w50p,  .wh {	width: 50% !important; }
+.w75p		{	width: 75% !important; }
+.w100p, .wf {	width: 100% !important; }
+
+.wauto	{ width: auto !important; }
+
+.h20  {	height: 20px !important; }
+.h25  {	height: 25px !important; }
+.h35  {	height: 35px !important; }
+.h45  {	height: 45px !important; }
+.h50  {	height: 50px !important; }
+
+.mt0  { margin-top: 0 !important; }
+.mt5  { margin-top: 5px !important; }
+.mt10 { margin-top: 10px !important; }
+.mt20 { margin-top: 20px !important; }
+.mt25 { margin-top: 25px !important; }
+.mt30 { margin-top: 30px !important; }
+.mt40 { margin-top: 40px !important; }
+
+.mr0  { margin-right: 0 !important; }
+.mr5  { margin-right: 5px !important; }
+.mr10 { margin-right: 10px !important; }
+.mr20 { margin-right: 20px !important; }
+
+.mb0  { margin-bottom: 0 !important; }
+.mb5  { margin-bottom: 5px !important; }
+.mb10 { margin-bottom: 10px !important; }
+.mb15 { margin-bottom: 15px !important; }
+.mb20 { margin-bottom: 20px !important; }
+.mb40 { margin-bottom: 40px !important; }
+.mb60 { margin-bottom: 60px !important; }
+
+.ml0   { margin-left: 0 !important; }
+.ml5   { margin-left: 5px !important; }
+.ml10  { margin-left: 10px !important; }
+.ml15  { margin-left: 15px !important; }
+.ml20  { margin-left: 20px !important; }
+.ml30  { margin-left: 30px !important; }
+.ml40  { margin-left: 40px !important; }
+.ml60  { margin-left: 60px !important; }
+.ml80  { margin-left: 80px !important; }
+.ml100 { margin-left: 100px !important; }
+.ml120 { margin-left: 120px !important; }
+.ml140 { margin-left: 140px !important; }
+
+.tal { text-align: left !important; }
+.tar { text-align: right !important; }
+.tac { text-align: center !important; }
+.toe { text-overflow: ellipsis !important; overflow: hidden; white-space: nowrap; }
+
+.p0   { padding: 0 !important; }
+.p5   { padding: 5px !important; }
+.p10  { padding: 10px !important; }
+.p15  { padding: 15px !important; }
+.p20  { padding: 20px !important; }
+
+.pt0  { padding-top: 0 !important; }
+.pt5  { padding-top: 5px !important; }
+.pt10 { padding-top: 10px !important; }
+.pt20 { padding-top: 20px !important; }
+.pt25 { padding-top: 25px !important; }
+.pt30 { padding-top: 30px !important; }
+
+.pr0  { padding-right: 0 !important; }
+.pr5  { padding-right: 5px !important; }
+.pr10 { padding-right: 10px !important; }
+.pr20 { padding-right: 20px !important; }
+.pr30 { padding-right: 30px !important; }
+
+.pb0  { padding-bottom: 0 !important; }
+.pb10 { padding-bottom: 10px !important; }
+.pb20 { padding-bottom: 20px !important; }
+.pb30 { padding-bottom: 30px !important; }
+.pb40 { padding-bottom: 40px !important; }
+
+.pl0  { padding-left: 0 !important; }
+.pl5  { padding-left: 5px !important; }
+.pl10 { padding-left: 10px !important; }
+.pl15 { padding-left: 15px !important; }
+.pl20 { padding-left: 20px !important; }
+.pl30 { padding-left: 30px !important; }
+.pl40 { padding-left: 40px !important; }
+
+.bl	{ display: block !important; }
+.il	{ display: inline !important; }
+.ib	{ display: inline-block !important; }
+
+.fl	{ float: left !important; }
+.fr	{ float: right !important; }
+.pull-left	{ float: left !important; }
+.pull-right	{ float: right !important; }
+
+.cb { clear: both !important; }
+.cl { clear: left !important; }
+.cr { clear: right !important; }
+.cn { clear: none !important; }
+
+.center { margin: auto; }
+
+.b, .bold	{ font-weight: bold; }
+.i, .italic	{ font-style: italic; }
+
+.fs11 { font-size: 11px; }
+.fs12 { font-size: 12px; }
+.fs13 { font-size: 13px; }
+.fs14 { font-size: 14px; }
+.fs15 { font-size: 15px; }
+.fs16 { font-size: 16px; }
+.fs17 { font-size: 17px; }
+.fs18 { font-size: 18px; }
+.fs19 { font-size: 19px; }
+.fs20 { font-size: 20px; }
+
+.bsbb { -webkit-box-sizing: border-box;  -moz-box-sizing: border-box;  box-sizing: border-box; }
+.bscb { -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; }
+
+.force-hide { display: none !important; }
+
+.pa	{ position: absolute !important; }
+.pr	{ position: relative !important; }
+
+.oa		{ overflow: auto !important; }
+.oh		{ overflow: hidden !important; }
+.ov		{ overflow: visible !important; }
+.os		{ overflow: scroll !important; }
+
+.ohx	{ overflow: hidden !important; }
+.ohy	{ overflow: hidden !important; }
+
+.whnw, .nowrap { white-space: nowrap !important; }
+
+/* Layouts */
+
+.vlayout {
+	float: left;
+}
+
+.hlayout {
+/* 	width:			100%; incompatible with overflow: auto; (scrollbar appearing) */
+	min-height:		25px;
+	line-height:	25px;
+/* 	height:			35px; */
+/* 	line-height:	35px; */
+	padding:		5px;/* Protect box shadow */
+	display:		block;
+/* 	display:		inline-block;Fit the content size */
+	overflow:		auto;/* Fit the content size */
+	clear:			both;
+/* 	float:			left;Experimental, if display: inline-block, the height is not respected without it => animations do not support floating content */
+/* 	overflow:	hidden; */
+}
+/*
+.vlayout .hlayout {
+	padding-left:	0;
+	padding-right:	0;
+}
+*/
+/*
+.hlayout .hlayout {
+	width: auto;
+	padding: 0;
+}
+*/
+.hlayout > * {
+	display: block;
+	float: left;
+}
+.hlayout label {
+	/* base should not define a size */
+/* 	width:	180px; */
+/* 	width:	200px; */
+	height:	25px;/* .hlayout width - paddings */
+	line-height:	25px;
+/* 	padding:		0 10px 0 20px; */
+/* 	font-size:		13px; */
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	
+	font-size: 13px;
+}
+.hlayout.h35, h1.h35 {
+	line-height:	35px;
+}
+.hlayout label {
+	height:			inherit;
+	line-height:	inherit;
+}
+/* .hlayout.h35 label { */
+/* 	height: 35px; */
+/* 	line-height: 35px; */
+/* } */
+
+/** Inherit Color **/
+.ic { color: inherit !important; }
+
+
+p .icon21 {
+	display: inline-block;
+	vertical-align: middle;
+}

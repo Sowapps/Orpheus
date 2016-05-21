@@ -29,8 +29,18 @@ class DelayedPageController extends HTTPController {
 	}
 
 	public static function store($page, $content) {
+		// Do it and in some case, routes will not be loaded
+		// Case this is not loaded will lead to infinite loop
+// 		HTTPRoute::initialize();
+		if( !ControllerRoute::isInitialized() ) {
+			throw new Exception('Routes not initialized, application is not able to show content, it will fail again & again...');
+		}
+		
+// 		debug('DelayedPageController::store()');
 		$cache	= new APCache('delayedpage', $page, 60);
 		$cache->set($content);
+// 		debug('DelayedPageController::store() - Content saved');
+// 		debug('DelayedPageController::store() - URL => '.u('delayedpage', array('page'=>$page)));
 		return u('delayedpage', array('page'=>$page));
 // 		if( !isset($_SESSION[self::SESSION_STOREDPAGES]) ) {
 // 			$_SESSION[self::SESSION_STOREDPAGES]	= array();

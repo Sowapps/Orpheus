@@ -10,9 +10,9 @@ class AdminConfigController extends AdminController {
 	public function run(HTTPRequest $request) {
 
 		/* @var $USER User */
-// 		GlobalConfig
 		
-// 		$formData = array();
+		$this->addThisToBreadcrumb();
+		
 		if( $data = $request->getArrayData('row') ) {
 		
 			try {

@@ -1,0 +1,21 @@
+
+# File descriptor
+
+fields:
+    # Header
+    create_date:            datetime=sqlDatetime()
+    
+    # Identification
+    name:                   string(200)                 # Nom visuel du fichier
+    extension:              string(5)                   # Extension locale
+    mimetype:               string(100)                 # Type MIME
+    usage:                  enum(getFileUsages)         # Usage
+    parent_id:              ref=0                       # Document
+    position:               natural=0                   # Position dans son référentiel
+    
+    # Source
+    source_type:            enum(getFileSourceTypes)    # Type de source
+    source_name:            string(200)=                # Nom du fichier utilisé par la source
+    
+indexes:
+    - INDEX(usage)

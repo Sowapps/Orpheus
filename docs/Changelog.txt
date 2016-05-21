@@ -1,5 +1,8 @@
 Change Log
 
+* 3.0.0 - 21/05/2016
+- Major update of all Orpheus
+
 * 2.0.1 - 17/08/2014 - R1074
 - Fixing some bugs
 - Generating new documentation

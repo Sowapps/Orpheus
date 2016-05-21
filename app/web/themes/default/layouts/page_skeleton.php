@@ -1,5 +1,6 @@
 <?php
-/* @var $this HTMLRendering */
+/* @var HTMLRendering $this */
+/* @var HTTPController $Controller */
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>

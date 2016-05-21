@@ -8,11 +8,35 @@
  * is_email()
  * pdo_query()
  * 
+ * @property string $create_date
+ * @property string $create_ip
+ * @property integer $create_user_id
+ * @property string $login_date
+ * @property string $login_ip
+ * @property string $activity_date
+ * @property string $activity_ip
+ * @property string $activation_date
+ * @property string $activation_ip
+ * 
+ * @property string $email
+ * @property string $password
+ * @property string $fullname
+ * @property boolean $published
+ * 
+ * @property integer $accesslevel
+ * @property string $recovery_code
+ * @property string $activation_code
+ * 
  */
 
 class User extends AbstractUser {
 	
 	// *** OVERLOADED METHODS ***
+	
+	
+	public function onConnected() {
+		date_default_timezone_set($this->timezone);
+	}
 	
 	public function __toString() {
 		try {
@@ -43,6 +67,17 @@ class User extends AbstractUser {
 	public function getRoleText() {
 		$status = array_flip(static::getAvailRoles());
 		return isset($status[$this->accesslevel]) ? t('role_'.$status[$this->accesslevel], static::getDomain()) : t('role_unknown', static::getDomain(), $this->accesslevel);
+	}
+	
+	public function activate() {
+		$this->published	= 1;
+		$this->logEvent('activation');
+		$this->activation_code	= null;
+	}
+	
+	
+	public function getActivationLink() {
+		return u(ROUTE_LOGIN).'?ac='.$this->activation_code.'&u='.$this->id();
 	}
 	
 	public function getAdminLink($ref=0) {
@@ -100,22 +135,17 @@ class User extends AbstractUser {
 	}
 	
 
-	// 		** CHECK METHODS **
-
-// 	public static function checkFullName($inputData) {
-// 		if( empty($inputData['fullname']) ) {
-// 			static::throwException('invalidFullName');
-// 		}
-// 		return strip_tags($inputData['fullname']);
-// 	}
-	
-// 	public static function checkUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
-// 		$data = parent::checkUserInput($uInputData, $fields, $ref, $errCount);
-// 		if( !empty($uInputData['password']) ) {
-// 			$data['real_password'] = $uInputData['password'];
-// 		}
-// 		return $data;
-// 	}
+	public static function loadFixtures() {
+		static::create(array(
+			'email'			=> 'contact@sowapps.com',
+			'fullname'		=> 'Administrateur',
+			'password'		=> 'admin',
+			'password_conf'	=> 'admin',
+			'accesslevel'	=> 300,
+			'published'		=> 1,
+			'timezone'		=> 'Europe/Paris',
+		));
+	}
 	
 }
 User::init();

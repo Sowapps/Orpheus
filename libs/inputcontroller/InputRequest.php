@@ -19,21 +19,39 @@ abstract class InputRequest {
 	 * 
 	 * @return Route
 	 */
-	public function findFirstMatchingRoute() {
+	public function findFirstMatchingRoute($alternative=false) {
 		foreach( $this->getRoutes() as $route ) {
 			/* @var $route HTTPRoute */
-			if( $route->isMatchingRequest($this) ) {
+			if( $route->isMatchingRequest($this, $alternative) ) {
 				return $route;
 			}
 		}
 		return null;
 	}
 	
+	public function redirect(ControllerRoute $route) {
+		return null;
+	}
+	
 	public function process() {
-		return $this->processRoute($this->findFirstMatchingRoute());
+		$route	= $this->findFirstMatchingRoute();
+		if( !$route ) {
+			// Not found, look for an alternative (with /)
+			$route	= $this->findFirstMatchingRoute(true);
+			if( $route ) {
+				// Alternative found, try to redirect to this one
+				$r		= $this->redirect($route);
+				if( $r ) {
+					// Redirect
+					return $r;
+				}
+				// Unable to redirect, throw not found
+				$route = null;
+			}
+		}
+		return $this->processRoute($route);
 	}
 	public function processRoute($route) {
-// 		$route	= static::$mainRequest->findFirstMatchingRoute();
 		if( !$route ) {
 			throw new NotFoundException('No route matches the current request '.$this);
 		}
@@ -79,6 +97,10 @@ abstract class InputRequest {
 	protected function setParameters($parameters) {
 		$this->parameters = $parameters;
 		return $this;
+	}
+	
+	public function hasInput() {
+		return !!$this->input;
 	}
 	
 	public function getInput() {

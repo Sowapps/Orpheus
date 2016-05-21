@@ -6,7 +6,7 @@
 require_once pathOf(LIBSDIR.'core/core.php');
 
 // Important
-addAutoload('ConfigCore',						'core/configcore_class.php');
+addAutoload('ConfigCore',						'core/ConfigCore.php');
 
 require_once pathOf(LIBSDIR.'core/hooks.php');
 require_once pathOf(LIBSDIR.'core/validators.php');

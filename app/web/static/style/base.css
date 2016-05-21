@@ -103,7 +103,11 @@ script, style {
 .mt40 { margin-top: 40px !important; }
 
 .mr0  { margin-right: 0 !important; }
+.mr2  { margin-right: 2px !important; }
+.mr4  { margin-right: 4px !important; }
 .mr5  { margin-right: 5px !important; }
+.mr6  { margin-right: 6px !important; }
+.mr8  { margin-right: 8px !important; }
 .mr10 { margin-right: 10px !important; }
 .mr20 { margin-right: 20px !important; }
 
@@ -118,7 +122,10 @@ script, style {
 .mb60 { margin-bottom: 60px !important; }
 
 .ml0   { margin-left: 0 !important; }
+.ml2   { margin-left: 2px !important; }
 .ml5   { margin-left: 5px !important; }
+.ml6   { margin-left: 6px !important; }
+.ml8   { margin-left: 8px !important; }
 .ml10  { margin-left: 10px !important; }
 .ml15  { margin-left: 15px !important; }
 .ml20  { margin-left: 20px !important; }

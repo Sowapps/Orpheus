@@ -92,7 +92,7 @@ class HTTPRoute extends ControllerRoute {
 	 * @param array $values
 	 * @see ControllerRoute::isMatchingRequest()
 	 */
-	public function isMatchingRequest(InputRequest $request, &$values=array()) {
+	public function isMatchingRequest(InputRequest $request, &$values=array(), $alternative=false) {
 		// Method match && Path match (variables included)
 // 		debug('Route '.$this.' is matching request '.$request);
 		if( $this->method !== $request->getMethod() ) {
@@ -100,7 +100,13 @@ class HTTPRoute extends ControllerRoute {
 		}
 // 		debug('Method ok');
 // 		debug('Path regex '.'#^'.$this->pathRegex.'$#i');
-		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
+		$regex = $this->pathRegex;
+		if( $alternative ) {
+			// If last char is / or not, it will end with /? (optional /)
+			$regex	.= str_last($regex)==='/' ? '?' : '/?';
+		}
+		if( preg_match('#^'.$regex.'$#i', $request->getPath(), $matches) ) {
+// 		if( preg_match('#^'.$this->pathRegex.'$#i', $request->getPath(), $matches) ) {
 			unset($matches[0]);
 			$values	= array_combine($this->pathVariables, $matches);
 // 			debug('Path ok');
@@ -116,6 +122,9 @@ class HTTPRoute extends ControllerRoute {
 			throw new Exception('Missing a valid `path` in configuration of route "'.$name.'"');
 		}
 		if( empty($config['controller']) ) {
+			if( !empty($config['redirect']) ) {
+				$config['controller']	= 'RedirectController';
+			} else
 			if( !empty($config['render']) ) {
 				$config['controller']	= 'StaticPageController';
 			} else {
@@ -151,9 +160,17 @@ class HTTPRoute extends ControllerRoute {
 		return static::$routes;
 	}
 	
-	public static function getRoute($route, $method=self::METHOD_GET) {
+	public static function getRoute($route, $method=null) {
 // 		$routes	= static::getRoutes();
-		return isset(static::$routes[$route][$method]) ? static::$routes[$route][$method] : null;
+		if( $method ) {
+			return isset(static::$routes[$route][$method]) ? static::$routes[$route][$method] : null;
+		}
+		foreach( static::getKnownMethods() as $method ) {
+			if( isset(static::$routes[$route][$method]) ) {
+				return static::$routes[$route][$method];
+			}
+		}
+		return null;
 	}
 	
 	public static function getKnownMethods() {

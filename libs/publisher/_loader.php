@@ -3,15 +3,18 @@
  * Loader File for the publisher sources
  */
 
-addAutoload('AbstractPublication',				'publisher/abstractpublication_class.php');
-addAutoload('AbstractStatus',					'publisher/abstractstatus_class.php');
+addAutoload('AbstractPublication',				'publisher/AbstractPublication');
+addAutoload('AbstractStatus',					'publisher/AbstractStatus');
 addAutoload('Email',							'publisher/Email');
 addAutoload('PermanentObject',					'publisher/PermanentObject');
-addAutoload('FieldNotFoundException',			'publisher/fieldnotfoundexception_class.php');
-addAutoload('UnknownKeyException',				'publisher/unknownkeyexception_class.php');
-addAutoload('InvalidFieldException',			'publisher/invalidfieldexception');
+addAutoload('FieldNotFoundException',			'publisher/FieldNotFoundException');
+addAutoload('UnknownKeyException',				'publisher/UnknownKeyException');
+addAutoload('InvalidFieldException',			'publisher/InvalidFieldException');
 // addAutoload('User',								'publisher/user_class.php');
-addAutoload('AbstractUser',						'publisher/abstractuser_class.php');
+addAutoload('AbstractUser',						'publisher/AbstractUser');
+addAutoload('FixtureInterface',					'publisher/Fixture');
+addAutoload('FixtureRepository',				'publisher/Fixture');
+addAutoload('PasswordGenerator',				'publisher/PasswordGenerator');
 
 defifn('CHECK_MODULE_ACCESS',	true);
 // defifn('USER_CLASS',			'User');
@@ -32,11 +35,13 @@ Hook::register(HOOK_APPREADY, function () {
 	
 	if( User::isLogged() ) {
 		//global $USER;// Do not work in this context.
+		/* @var User $USER */
 		$USER = $GLOBALS['USER'] = &$_SESSION['USER'];
 		if( !$USER->reload() ) {
 			// User does not exist anymore
 			$USER->logout();
 		}
+		$USER->onConnected();
 		
 		// If login ip is different from current one, protect against cookie stealing
 		if( Config::get('deny_multiple_connections', false) && !$USER->isLogin(AbstractUser::LOGGED_FORCED) && $USER->login_ip != $_SERVER['REMOTE_ADDR'] ) {

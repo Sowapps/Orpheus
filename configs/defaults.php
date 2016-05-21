@@ -9,4 +9,6 @@
 
 
 // defifn('CHECK_MODULE_ACCESS',	!DEV_VERSION);
+defifn('ENTITY_CLASS_CHECK',	false);
+// defifn('ENTITY_ALWAYS_RELOAD',	true);
 

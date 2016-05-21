@@ -18,41 +18,17 @@ class File extends PermanentEntity {
 
 	const MODE_COPY	= 1;
 	const MODE_MOVE	= 2;
-
-// 	const USAGE_RESTAURANT		= 'RT';
-// 	const USAGE_PERSONAVATAR	= 'PA';
-// 	const USAGE_GALERYAVATAR	= 'GA';
 	/**
 	 * @var {string:array}[]
 	 */
 	protected static $usages	= null;
-// 		self::USAGE_RESTAURANT					=> array('type' => 'image'),
-// 		self::USAGE_PERSONAVATAR	=> array('type' => 'image'),
-// 		self::USAGE_GALERYAVATAR	=> array('type' => 'image', 'standalone' => 1),
-// 	);
 
-	const SOURCETYPE_UPLOAD				= 'UP';
-// 	const SOURCETYPE_UPLOADCONVERTED	= 'UPC';
-// 	const SOURCETYPE_PHPQRCODE			= 'PQRC';
-// 	const SOURCETYPE_PDFGENERATOR		= 'UPC';
+	const SOURCETYPE_UPLOAD				= 'upload';
 	/**
 	 * @var string[]
 	 */
 	protected static $sourceTypes		= array(self::SOURCETYPE_UPLOAD);
 	
-	/*
-	create_date:            datetime=sqlDatetime()
-	
-	# Identification
-	name:                   string(200)                 # Nom visuel du fichier
-	extension:              string(5)                   # Extension locale
-	mimetype:               string(100)                 # Type MIME
-	usage:                  enum(File::getUsages)       # Usage
-	
-	# Source
-	source_name:            string(200)                 # Nom du fichier utilisé par la source
-	source_type:            enum(File::getSourceTypes)  # Type de source
-	*/
 	/**
 	 * @see PermanentObject::__toString()
 	 */
@@ -193,7 +169,8 @@ class File extends PermanentEntity {
 	 * @return	boolean|File The File object or false if there is no valid upload
 	 */
 	public static function uploadOne($inputName, $label, $usage, $parent=0) {
-		if( !in_array($usage, static::getUsageNames()) ) {
+// 		if( !in_array($usage, static::getUsageNames()) ) {
+		if( !in_array($usage, getFileUsages()) ) {
 			static::throwException('invalidUsage');
 		}
 		if( is_string($inputName) ) {
@@ -230,7 +207,8 @@ class File extends PermanentEntity {
 		return $file;
 	}
 
-	/** Import file from path
+	/**
+	 * Import file from path
 	 * 
 	 * @param array $input The input data to create the file object
 	 * @param string $path The path to import from.
@@ -253,6 +231,58 @@ class File extends PermanentEntity {
 			static::throwException('unableToImport');
 		}
 		return $file;
+	}
+	
+	public static function importFromURL(array $input, $url) {
+		if( empty($input['source_type']) ) {
+			$input['source_type'] = FILE_SOURCETYPE_USERURL;
+		}
+		return static::import($input, $url, self::MODE_COPY);
+	}
+
+	/**
+	 * Import file from data-url
+	 *
+	 * @param array $input The input data to create the file object
+	 * @param string $dataURL The data URL to import from, data:// or data: (PHP 5.2.0+)
+	 * @return File
+	 *
+	 * $input could contains data: name, extension (deducted), mimetype (deducted), usage, parent_id (0), position (0), source_name, source_type
+	 */
+	public static function importFromDataURL(array $input, $dataURL) {
+		checkDir(static::getFolderPath());
+		if( !isset($input['mimetype']) ) {
+			$str	= strstr($dataURL, ';', true);
+			$str	= explode(':', $str);
+			$input['mimetype']	= $str[1];
+			unset($str);
+		}
+		if( !isset($input['extension']) && isset($input['mimetype']) ) {
+			$input['extension']	= static::getMimeTypeExtension($input['mimetype']);
+		}
+		if( !isset($input['source_type']) ) {
+			$input['source_type']	= FILE_SOURCETYPE_DATAURI;
+			// Empty name by default
+		}
+		debug("input file ", $input);
+// 		return null;
+		$content	= file_get_contents($dataURL);
+		$file		= static::createAndGet($input);
+// 		$file	= static::load(static::create($input));
+		file_put_contents($file->getPath(), $content);
+// 		if( !($mode==self::MODE_MOVE ? rename($path, $file->getPath()) : copy($path, $file->getPath())) ) {
+// 			static::throwException('unableToImport');
+// 		}
+		return $file;
+	}
+	
+	public static function getMimeTypeExtension($mimetype) {
+		$types	= array(
+			'image/gif'		=> 'gif',
+			'image/jpeg'	=> 'jpg',
+			'image/png'		=> 'png'
+		);
+		return $types[$mimetype];
 	}
 	
 	/**

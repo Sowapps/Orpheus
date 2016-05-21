@@ -21,7 +21,7 @@ abstract class ControllerRoute {
 		$this->options		= $options;
 	}
 	
-	public abstract function isMatchingRequest(InputRequest $request, &$values=array());
+	public abstract function isMatchingRequest(InputRequest $request, &$values=array(), $alternative=false);
 	
 	public static function getRoutes() {
 		static::initialize();
@@ -52,7 +52,8 @@ abstract class ControllerRoute {
 	
 	protected static $initialized = false;
 	public static function initialize() {
-		if( static::$initialized ) { return; }
+// 		debug('ControllerRoute::initialize()');
+		if( static::isInitialized() ) { return; }
 		static::$initialized = true;
 		
 		$conf	= YAML::build('routes', true, true);
@@ -71,8 +72,9 @@ abstract class ControllerRoute {
 					$routes[$type]	= $typeRoutes;
 				}
 			}
-// 			debug('Routes', $routes);
 		}
+// 		debug('Routes', $routes);
+// 		die();
 		foreach( $routes as $type => $typeRoutes ) {
 			$routeClass	= $type.'Route';
 // 			debug('$type => '.$type);
@@ -84,6 +86,9 @@ abstract class ControllerRoute {
 				$routeClass::registerConfig($routeName, $routeConfig);
 			}
 		}
+	}
+	public static function isInitialized() {
+		return static::$initialized;
 	}
 	public function getName() {
 		return $this->name;

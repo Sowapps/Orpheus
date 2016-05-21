@@ -2,11 +2,10 @@
 global $USER;
 HTMLRendering::useLayout('page_skeleton');
 
-displayReportsHTML();
-
 if( User::isLogged() ) {
 	echo "<p>Welcome {$USER->fullname} </p>";
 }
+
 ?>
 <div class="row">
 	
@@ -14,9 +13,10 @@ if( User::isLogged() ) {
 		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Sign in</legend>
+			<?php displayReportsHTML('global'); ?>
 			<div class="form-group">
-				<label for="loginUsername">Nickname</label>
-				<input type="text" class="form-control" id="loginUsername" name="login[name]" placeholder="Enter your username"/>
+				<label for="loginEmail">Email</label>
+				<input type="text" class="form-control" id="loginEmail" name="login[email]" placeholder="Enter your email"/>
 			</div>
 			<div class="form-group">
 				<label for="loginPassword">Password</label>
@@ -31,31 +31,28 @@ if( User::isLogged() ) {
 		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Register</legend>
+			<?php displayReportsHTML('register'); ?>
 			
 			<div class="form-group">
-				<label for="registerUsername">Your nickname</label>
-				<input type="text" class="form-control" id="registerUsername" name="register[name]" required placeholder="My ID to sign in, e.g. cartman"/>
-			</div>
-			<div class="form-group">
-				<label for="registerFullname">Your public name</label>
-				<input type="text" class="form-control" id="registerFullname" name="register[fullname]" required placeholder="My displayed name, e.g. Eric Cartman" />
+				<label for="registerFullname">Your name</label>
+				<input type="text" class="form-control" id="registerFullname" name="user[fullname]" required placeholder="My displayed name, e.g. Cartman34" />
 			</div>
 			<div class="form-group">
 				<label for="registerEmail">Email</label>
-				<input type="email" class="form-control" id="registerEmail" name="register[email]" required placeholder="My email, e.g. cartman@domain.com"/>
+				<input type="email" class="form-control" id="registerEmail" name="user[email]" required placeholder="My email, e.g. cartman@domain.com"/>
 			</div>
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="register[email_public]"> I allow other members to see my email address.
-				</label>
-			</div>
+<!-- 			<div class="checkbox"> -->
+<!-- 				<label> -->
+<!-- 					<input type="checkbox" name="user[email_public]"> I allow other members to see my email address. -->
+<!-- 				</label> -->
+<!-- 			</div> -->
 			<div class="form-group">
 				<label for="registerPassword">Your password</label>
-				<input type="password" class="form-control" id="registerPassword" name="register[password]" required />
+				<input type="password" class="form-control" id="registerPassword" name="user[password]" required />
 			</div>
 			<div class="form-group">
 				<label for="registerConfirmPassword">Confirm password</label>
-				<input type="password" class="form-control" id="registerConfirmPassword" name="register[password_conf]" required />
+				<input type="password" class="form-control" id="registerConfirmPassword" name="user[password_conf]" required />
 			</div>
 			<button name="submitRegister" type="submit" class="btn btn-primary">Register</button>
 		</fieldset>

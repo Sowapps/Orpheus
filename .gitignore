@@ -1,2 +1,5 @@
 /vendor/
 /composer.phar
+/store/*
+/logs/*
+/configs/database.ini

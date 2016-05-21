@@ -2,7 +2,7 @@
 /* Loader File for the hooks sources
  */
 
-addAutoload('Hook',	'hooks/hook');
+addAutoload('Hook',	'hooks/Hook');
 
 /*
 * Some predefined hooks are specified in this file, it serves for the orpheus' core.

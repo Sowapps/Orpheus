@@ -13,6 +13,11 @@ class ClassLoader {
 	public function __construct() {
 		$this->classes	= array();
 	}
+	
+	public function __toString() {
+		return 'orpheus-ClassLoader';
+	}
+	
 
 	/**
 	 * Unregister object from the SPL

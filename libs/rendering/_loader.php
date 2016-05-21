@@ -2,9 +2,9 @@
 /* Loader File for the rendering sources
  */
 
-addAutoload('Rendering',		'rendering/rendering_class.php');
-addAutoload('HTMLRendering',	'rendering/htmlrendering_class.php');
-addAutoload('RawRendering',		'rendering/rawrendering_class.php');
+addAutoload('Rendering',		'rendering/Rendering');
+addAutoload('HTMLRendering',	'rendering/HTMLRendering');
+addAutoload('RawRendering',		'rendering/RawRendering');
 
 define('HOOK_MENUITEMACCESS', 'menuItemAccess');
 /* Hook HOOK_MENUITEMACCESS

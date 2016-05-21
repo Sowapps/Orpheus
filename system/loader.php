@@ -238,6 +238,17 @@ function typeOf($var) {
 
 function displayRawException(Exception $Exception) {
 	?>
+	<h3><?php echo get_class($Exception); ?></h3>
+	<blockquote class="exception_message">
+		<?php echo $Exception->getMessage(); ?>
+		<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
+	</blockquote>
+	<?php
+	displayExceptionStackTrace($Exception);
+}
+
+function displayExceptionStackTrace(Exception $Exception) {
+	?>
 	<ol>
 	<?php
 	foreach( $Exception->getTrace() as $trace ) {
@@ -325,19 +336,20 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="panel panel-danger">
 			<div class="panel-heading">Here is the stacktrace...</div>
 			<div class="panel-body exception">
-				<?php displayRawException($Exception); ?>
+				<?php displayExceptionStackTrace($Exception); ?>
 			</div>
 		</div>
 		
 		<?php
 		if( trim($buffer) && class_exists('DelayedPageController', true) ) {
 			try {
+				$bufferSrc	= DelayedPageController::store(uniqid('error'), $buffer);
 				?>
-		<div class="panel panel-danger">
+		<div class="panel panel-danger" >
 			<div class="panel-heading">The buffer is not empty, maybe this could helps you...</div>
 			<div class="panel-body buffer">
 				<div class="embed-responsive embed-responsive-16by9">
-					<iframe class="embed-responsive-item" src="<?php echo DelayedPageController::store(uniqid('error'), $buffer); ?>"></iframe>
+					<iframe class="embed-responsive-item" src="<?php echo $bufferSrc; ?>"></iframe>
 				</div>
 			</div>
 		</div>
@@ -347,7 +359,7 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 		<div class="panel panel-danger">
 			<div class="panel-heading">An exception occurred storing the delayed page...</div>
 			<div class="panel-body buffer">
-				<?php displayRawException($Exception); ?>
+				<?php displayRawException($e); ?>
 			</div>
 		</div>
 		<?php

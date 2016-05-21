@@ -60,6 +60,7 @@ abstract class PermanentObject {
 	public function __construct(array $data) {
 		foreach( static::$fields as $fieldname ) {
 			// We condiser null as a valid value.
+			$fieldValue = null;
 			if( !array_key_exists($fieldname, $data) ) {
 				// Data not found but should be, this object is out of date
 // 				$this->reload();// Dont reload here
@@ -67,14 +68,17 @@ abstract class PermanentObject {
 // 				if( ENTITY_CLASS_CHECK && !array_key_exists($fieldname, $data) ) {
 				if( ENTITY_CLASS_CHECK ) {
 					throw new Exception('The class '.static::getClass().' is out of date, the field "'.$fieldname.'" is unknown in database.');
-				} else {
-					$this->data[$fieldname]	= null;
+// 				} else {
+// 					$this->data[$fieldname]	= null;
 				}
 			} else {
-				$this->data[$fieldname] = $data[$fieldname];
+				$fieldValue	= $data[$fieldname];
+// 				$this->data[$fieldname] = $data[$fieldname];
 			}
+			$this->data[$fieldname] = $this->parseFieldValue($fieldname, $fieldValue);
 		}
-		$this->modFields = array();
+// 		$this->modFields = array();
+		$this->clearModifiedFields();
 		if( DEV_VERSION ) {
 			$this->checkIntegrity();
 		}
@@ -177,6 +181,12 @@ abstract class PermanentObject {
 	 * Parameter $fields is really useful to allow partial modification only (against form hack).
 	 */
 	public function update($input, $fields, $noEmptyWarning=true, &$errCount=0, &$successCount=0) {
+		
+		$operation = $this->getUpdateOperation($input, $fields);
+		$operation->validate($errors);
+		return $operation->runIfValid();
+		
+		/*
 		static::onValidateInput($input, $fields, $this);
 		$data	= static::checkUserInput($input, $fields, $this, $errCount);
 		// Don't care about some errors, other fields should be updated.
@@ -214,12 +224,129 @@ abstract class PermanentObject {
 				$successCount++;
 			}
 		}
-		static::logEvent('edit');
-		static::logEvent('update');
+		$this->logEvent('edit');
+		$this->logEvent('update');
 		if( $r = $this->save() ) {
 			$this->runForUpdate($data, $oldData);
 		}
 		return $r;
+		*/
+	}
+	
+	public function getUpdateOperation($input, $fields) {
+		$operation = new UpdateTransactionOperation(static::getClass(), $input, $fields, $this);
+		$operation->setSQLAdapter(static::getSQLAdapter());
+		return $operation;
+	}
+	
+	public static function onValidUpdate(&$input, $newErrors) {
+		// Don't care about some errors, other fields should be updated.
+		$found	= 0;
+		foreach( $input as $fieldname => $fieldvalue ) {
+			if( in_array($fieldname, static::$fields) ) {
+				$found++;
+			}
+		}
+		if( $found ) {
+			static::fillLogEvent($input, 'edit');
+			static::fillLogEvent($input, 'update');
+		}
+// 		debug('onValidUpdate() - $input', $input);
+		return $found ? true : false;
+// // 		debug('$data', $data);
+// 		try {
+// 			// No data to update
+// 			if( !$found ) {
+// // 			if( empty($data) ) {
+// 				if( !$noEmptyWarning ) {
+// 					reportWarning('updateEmptyData', static::getDomain());
+// 				}
+// 				return 0;
+// // 				static::throwException('updateEmptyData');
+// 			}
+// // 			static::checkForObject(static::completeFields($data), $this);
+// 		} catch( UserException $e ) { reportError($e, static::getDomain()); return 0; }
+	}
+	
+	public static function extractUpdateQuery(&$input, PermanentObject $object) {
+		// To do on Edit
+		static::onEdit($input, $object);
+// 		$oldData	= $this->all;
+// 		foreach($data as $fieldname => $fieldvalue) {
+// 			// onEdit could add some fields to data
+// 			if( in_array($fieldname, static::$fields) ) {
+// // 			if( in_array($fieldname, static::$fields) && in_array($fieldname, $fields) ) {
+// // 			if( static::isFieldEditable($fieldname) ) {
+// // 				text('Set value of '.$fieldname.' to '.($fieldvalue === NULL ? 'NULL' : (is_bool($fieldvalue) ? b($fieldvalue) : $fieldvalue)));
+// 				$this->setValue($fieldname, $fieldvalue);
+// 				$successCount++;
+// 			}
+// 		}
+// 		$this->logEvent('edit');
+// 		$this->logEvent('update');
+		
+// 		$data	= array();
+// 		foreach($object->modFields as $fieldname) {
+// 			if( $fieldname != static::$IDFIELD ) {
+// 				$data[$fieldname] = static::parseFieldValue($fieldname, $this->getValue($fieldname));
+// // 				$data[$fieldname] = static::parseFieldValue($fieldname, $this->getValue($fieldname));
+// // 				$updQ .= ((!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.static::formatFieldValue($fieldname, $this->getValue($fieldname));
+// 			}
+// 		}
+
+// 		$what	= array();
+		foreach( $input as $fieldname => $fieldvalue ) {
+			// If saving object, value is the same, validator should check if value is new
+// 			if( !in_array($fieldname, static::$fields) || $fieldvalue == $object->getValue($fieldname) ) {
+			if( !in_array($fieldname, static::$fields) ) {
+				unset($input[$fieldname]);
+			}
+// 			if( in_array($fieldname, static::$fields) ) {
+// 				$what[$fieldname] = static::formatFieldValue($fieldname, $fieldvalue);
+// 			}
+		}
+		
+// 		$IDFIELD	= static::$IDFIELD;
+		$options	= array(
+			'what'		=> $input,
+			'table'		=> static::$table,
+			'where'		=> static::getIDField().'='.$object->id(),
+			'number'	=> 1,
+		);
+// 		debug('extractUpdateQuery() - Update operation options', $options);
+// 		die();
+		
+		return $options;
+// 		$r	= SQLAdapter::doUpdate($options, static::$DBInstance, static::$IDFIELD);
+// 		$modFields	= $object->modFields;
+// 		$object->clearModifiedFields();
+		
+		
+		
+// 		$what	= array();
+// 		foreach($data as $fieldname => $fieldvalue) {
+// 			if( in_array($fieldname, static::$fields) ) {
+// 				$what[$fieldname]	= static::formatFieldValue($fieldname, $fieldvalue);
+// 			}
+// 		}
+// 		$options	= array(
+// 			'table'	=> static::$table,
+// 			'what'	=> $what,
+// 		);
+// 		return $options;
+// 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
+// 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
+// 		// To do after insertion
+// 		static::applyToObject($data, $LastInsert);
+// 		static::onSaved($data, $LastInsert);
+// 		return $LastInsert;
+	}
+	
+	public function getDeleteOperation() {
+// 		return new DeleteTransactionOperation(static::getClass(), $this);
+		$operation = new DeleteTransactionOperation(static::getClass(), $this);
+		$operation->setSQLAdapter(static::getSQLAdapter());
+		return $operation;
 	}
 	
 	/** Runs for Update
@@ -263,26 +390,20 @@ abstract class PermanentObject {
 		if( empty($this->modFields) || $this->isDeleted() ) {
 			return 0;
 		}
-		$updQ = '';
-		foreach($this->modFields as $fieldname) {
-			if( $fieldname != static::$IDFIELD ) {
-				$updQ .= ( (!empty($updQ)) ? ', ' : '').static::escapeIdentifier($fieldname).'='.static::formatValue($this->$fieldname);
-			}
+
+		$data = array_filterbykeys($this->all, $this->modFields);
+		if( !$data ) {
+			throw new Exception('No updated data found but there is modified fields, unable to update');
 		}
-		$IDFIELD	= static::$IDFIELD;
-		$options	= array(
-			'what'		=> $updQ,
-			'table'		=> static::$table,
-			'where'		=> "{$IDFIELD}={$this->{$IDFIELD}}",
-			'number'	=> 1,
-		);
-		$r	= SQLAdapter::doUpdate($options, static::$DBInstance, static::$IDFIELD);
-		$modFields	= $this->modFields;
+		$operation = $this->getUpdateOperation($data, $this->modFields);
+		// Do not validate, new data are invalid due to the fact the new data are already in object
+// 		$operation->validate();
+		$r = $operation->run();
 		$this->modFields	= array();
 		if( !$this->onSavedInProgress ) {
 			// Protect script against saving loops
 			$this->onSavedInProgress	= true;
-			static::onSaved(array_filterbykeys($this->all, $modFields), $this);
+			static::onSaved($data, $this);
 			$this->onSavedInProgress	= false;
 		}
 		return $r;
@@ -292,7 +413,10 @@ abstract class PermanentObject {
 	
 	public function remove() {
 		if( $this->isDeleted() ) { return; }
-		return static::delete($this->id());
+		$operation = $this->getDeleteOperation();
+		$operation->validate($errors);
+		return $operation->runIfValid();
+// 		return static::delete($this->id());
 	}
 	public function free() {
 		if( $this->remove() ) {
@@ -303,18 +427,20 @@ abstract class PermanentObject {
 		return false;
 	}
 	
-	/** Reloads fields from database
-	 * @param $field The field to reload, default is null (all fields).
+	/**
+	 * Reload fields from database
 	 * 
-	 * Updates the current object's fields from database.
+	 * @param string $field The field to reload, default is null (all fields).
+	 * 
+	 * Update the current object's fields from database.
 	 * If $field is not set, it reloads only one field else all fields.
 	 * Also it removes the reloaded fields from the modified ones list.
 	*/
 	public function reload($field=null) {
-		$IDFIELD = static::$IDFIELD;
+		$IDFIELD = static::getIDField();
 		$options = array('where' => $IDFIELD.'='.$this->$IDFIELD, 'output' => SQLAdapter::ARR_FIRST);
-		if( !is_null($field) ) {
-			if( !in_array($field, $fields) ) {
+		if( $field ) {
+			if( !in_array($field, static::$fields) ) {
 				throw new FieldNotFoundException($field, static::getClass());
 			}
 			$i = array_search($this->modFields);
@@ -325,7 +451,11 @@ abstract class PermanentObject {
 		} else {
 			$this->modFields = array();
 		}
-		$data = static::get($options);
+		try {
+			$data = static::get($options);
+		} catch( SQLException $e ) {
+			$data = null;
+		}
 		if( empty($data) ) {
 			$this->markAsDeleted();
 			return false;
@@ -338,15 +468,33 @@ abstract class PermanentObject {
 		return true;
 	}
 	
-	/** Marks the field as modified
+	/**
+	 * Mark the field as modified
+	 * 
 	 * @param $field The field to mark as modified.
 	 * 
 	 * Adds the $field to the modified fields array.
 	*/
-	private function addModFields($field) {
+	protected function addModFields($field) {
 		if( !in_array($field, $this->modFields) ) {
 			$this->modFields[] = $field;
 		}
+	}
+	
+	/**
+	 * List all modified fields
+	 * 
+	 * @return string[]
+	 */
+	protected function listModifiedFields() {
+		return $this->modFields;
+	}
+	
+	/**
+	 * Clear modified fields
+	 */
+	protected function clearModifiedFields() {
+		$this->modFields = array();
 	}
 	
 	/** Checks if this object is deleted
@@ -457,6 +605,45 @@ abstract class PermanentObject {
 		} catch(FieldNotFoundException $e) {}
 	}
 	
+	public static function fillLogEvent(&$array, $event) {
+		// All event fields will be filled, if value is not available, we set to null
+		if( in_array($event.'_time', static::$fields) ) {
+			$array[$event.'_time'] = time();
+		} else
+		if( in_array($event.'_date', static::$fields) ) {
+			$array[$event.'_date'] = sqlDatetime();
+		} else {
+			// Date or time is mandatory
+			return;
+		}
+		if( in_array($event.'_ip', static::$fields) ) {
+			$array[$event.'_ip'] = !empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : null;
+		}
+		if( in_array($event.'_agent', static::$fields) ) {
+			$array[$event.'_agent'] = !empty($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : null;
+		}
+		if( in_array($event.'_referer', static::$fields) ) {
+			$array[$event.'_referer'] = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+		}
+	}
+	
+	/** Gets the log of an event
+	 * @param $event The event to log in this object.
+	 * @param $time A specified time to use for logging event.
+	 * @param $ipAdd A specified IP Adress to use for logging event.
+	 * @deprecated
+	 * @see logEvent()
+	 * 
+	 * Builds a new log event for $event for this time and the user IP address.
+	*/
+	public static function getLogEvent($event, $time=null, $ipAdd=null) {
+		return array(
+			$event.'_time'	=> isset($time) ? $time : time(),
+			$event.'_date'	=> isset($time) ? sqlDatetime($time) : sqlDatetime(),
+			$event.'_ip'	=> isset($ipAdd) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
+		);
+	}
+	
 	// *** STATIC METHODS ***
 
 	public static function object(&$obj) {
@@ -488,10 +675,12 @@ abstract class PermanentObject {
 		if( $options === NULL ) {
 // 			debug('SQLRequest from '.static::getClass().', table = '.static::$table);
 // 			debug('DB Instance', static::$DBInstance);
-			return SQLRequest::select(static::$DBInstance, static::$IDFIELD, static::getClass())->from(static::$table)->asObjectList();
+			return SQLRequest::select(static::getSQLAdapter(), static::$IDFIELD, static::getClass())->from(static::$table)->asObjectList();
+// 			return SQLRequest::select(static::$DBInstance, static::$IDFIELD, static::getClass())->from(static::$table)->asObjectList();
 		}
 		if( $options instanceof SQLSelectRequest ) {
-			$options->setInstance(static::$DBInstance);
+			$options->setSQLAdapter(static::getSQLAdapter());
+// 			$options->setInstance(static::$DBInstance);
 			$options->setIDField(static::$IDFIELD);
 			$options->from(static::$table);
 			return $options->run();
@@ -573,21 +762,26 @@ abstract class PermanentObject {
 // 		return $r;
 // 	}
 	
-	/** Load a permanent object
+	/**
+	 * Load a permanent object
+	 * 
 	 * @param	$in mixed|mixed[] The object ID to load or a valid array of the object's data
+	 * @param	boolean $nullable True to silent errors row and return null
+	 * @param	boolean $usingCache True to cache load and set cache, false to not cache
 	 * @return	PermanentObject The object
 	 * @see static::get()
 	 * 
 	 * Loads the object with the ID $id or the array data.
 	 * The return value is always a static object (no null, no array, no other object).
 	 */
-	public static function load($in, $nullable=true) {
+	public static function load($in, $nullable=true, $usingCache=true) {
 		if( empty($in) ) {
 // 			static::throwException('invalidParameter_load_'.static::getClass());
 			if( $nullable ) { return null; }
 // 			throw new Exception('invalidParameter_load');
 			static::throwNotFound('invalidParameter_load');
 		}
+		// Try to load an object from this class
 		if( is_object($in) && $in instanceof static ) {
 			return $in;
 		}
@@ -603,7 +797,7 @@ abstract class PermanentObject {
 			static::throwException('invalidID');
 		}
 		// Loading cached
-		if( isset(static::$instances[static::getClass()][$id]) ) {
+		if( $usingCache && isset(static::$instances[static::getClass()][$id]) ) {
 			return static::$instances[static::getClass()][$id];
 		}
 		// If we don't get the data, we request them.
@@ -616,15 +810,14 @@ abstract class PermanentObject {
 			// Ho no, we don't have the data, we can't load the object !
 			if( empty($obj) ) {
 				if( $nullable ) { return null; }
-				throw new NotFoundException('notFound', static::getDomain());
-// 				static::throwException('notFound');
+				static::throwNotFound();
 			}
 		} else {
 			$obj = new static($data);
 		}
 		// Caching object
 // 		return static::$instances[static::getClass()][$id] = $obj;
-		return $obj->checkCache();
+		return $usingCache ? $obj->checkCache() : $obj;
 	}
 	
 	public static function cacheObjects(array &$objects) {
@@ -651,6 +844,8 @@ abstract class PermanentObject {
 	 * We advise you to use only one class of one item row or to use it read-only.
 	*/
 	public static function delete($in) {
+		throw new Exception("Deprecated, please use remove()");
+		/*
 		if( is_array($in) ) {
 			$in['table'] = static::$table;
 			return SQLAdapter::doDelete($in, static::$DBInstance, static::$IDFIELD);
@@ -659,7 +854,7 @@ abstract class PermanentObject {
 			static::throwException('invalidID');
 		}
 		if( isset(static::$instances[static::getClass()][$in]) ) {
-			/* @var $obj static */
+			/* @var $obj static * /
 			$obj = &static::$instances[static::getClass()][$in];
 			if( $obj->isDeleted() ) { return 1; }
 		}
@@ -677,6 +872,7 @@ abstract class PermanentObject {
 			static::runForDeletion($in);
 		}
 		return $r;
+		*/
 	}
 	
 	/**
@@ -713,7 +909,9 @@ abstract class PermanentObject {
 	 * @see static::ei()
 	*/
 	public static function escapeIdentifier($identifier=null) {
-		return SQLAdapter::doEscapeIdentifier($identifier ? $identifier : static::$table, static::$DBInstance);
+		$sqlAdapter = static::getSQLAdapter();
+		return $sqlAdapter->escapeIdentifier($identifier ? $identifier : static::$table);
+// 		return SQLAdapter::doEscapeIdentifier($identifier ? $identifier : static::$table, static::$DBInstance);
 	}
 	/** Escape identifier through instance
 	 * @param	string $Identifier The identifier to escape. Default is table name.
@@ -723,23 +921,63 @@ abstract class PermanentObject {
 	public static function ei($identifier=null) {
 		return static::escapeIdentifier($identifier);
 	}
+
+	/**
+	 * Parse the value from SQL scalar to PHP type
+	 *
+	 * @param string $name The field name to parse
+	 * @param string $value The field value to parse
+	 * @return string The parse $value
+	 * @see PermanentObject::formatFieldValue()
+	 */
+	protected static function parseFieldValue($name, $value) {
+		return $value;
+	}
 	
-	/** Escape value through instance
-	 * @param $Value The value to format
+	/**
+	 * Format the value
+	 * 
+	 * @param string $name The field name to format
+	 * @param mixed $value The field value to format
+	 * @return string The formatted $Value
+	 * @deprecated Prefer to use parseFieldValue(), Adapter should format the data
+	 * @see PermanentObject::formatValue()
+	*/
+	protected static function formatFieldValue($name, $value) {
+		return $value;
+	}
+	
+	/**
+	 * Escape value through instance
+	 * 
+	 * @param scalar $value The value to format
 	 * @return string The formatted $Value
 	 * @see SQLAdapter::formatValue()
 	*/
 	public static function formatValue($value) {
-		return SQLAdapter::doFormatValue($value, static::$DBInstance);
+		$sqlAdapter = static::getSQLAdapter();
+		return $sqlAdapter->formatValue($value);
+// 		return SQLAdapter::doFormatValue($value, static::$DBInstance);
 	}
+	/**
+	 * Escape value through instance
+	 * 
+	 * @param scalar $value The value to format
+	 * @return string The formatted $Value
+	 * @see PermanentObject::formatValue()
+	*/
 	public static function fv($value) {
 		return static::formatValue($value);
 	}
 	
-	/** Escape values through instance and return as list string
+	/**
+	 * Escape values through instance and return as list string
+	 * 
 	 * @param array $list The list of values
-	 * @return The formatted list string
+	 * @return string The formatted list string
 	 * @see PermanentObject::formatValue()
+	 * 
+	 * @todo Change to use formatFieldValue($name, $value) ?
 	*/
 	public static function formatValueList(array $list) {
 		$str	= '';
@@ -759,7 +997,9 @@ abstract class PermanentObject {
 	*/
 	public static function runForDeletion($id) { }
 	
-	/** Create a new permanent object
+	/**
+	 * Create a new permanent object
+	 * 
 	 * @param	array $input The input data we will check, extract and create the new object.
 	 * @param	array $fields The array of fields to check. Default value is null.
 	 * @param	integer $errCount Output parameter to get the number of found errors. Default value is 0
@@ -771,39 +1011,91 @@ abstract class PermanentObject {
 	 * To create an object, we expect that it is valid, else we throw an exception.
 	*/
 	public static function create($input=array(), $fields=null, &$errCount=0) {
-		$newErrors	= 0;
-		static::onValidateInput($input, $fields, null);
-		$data	= static::checkUserInput($input, $fields, null, $newErrors);
-		$errCount	+= $newErrors;
+		$operation = static::getCreateOperation($input, $fields);
+		$operation->validate($errors);
+		return $operation->runIfValid();
+		
+// 		$newErrors	= 0;
+// 		static::onValidateInput($input, $fields, null);
+// 		$data	= static::checkUserInput($input, $fields, null, $newErrors);
+// 		$errCount	+= $newErrors;
+// 		if( $newErrors ) {
+// 			static::throwException('errorCreateChecking');
+// 		}
+// 		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
+		
+// 		// Check if entry already exist
+// 		static::checkForObject($data);
+// 		// To do before insertion
+// 		static::runForObject($data);
+// 		// To do on Edit
+// 		static::onEdit($data, null);
+		
+// 		$what	= array();
+// 		foreach($data as $fieldname => $fieldvalue) {
+// 			if( in_array($fieldname, static::$fields) ) {
+// 				$what[$fieldname]	= static::formatFieldValue($fieldname, $fieldvalue);
+// 			}
+// 		}
+// 		$options	= array(
+// 			'table'	=> static::$table,
+// 			'what'	=> $what,
+// 		);
+// 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
+// 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
+// 		// To do after insertion
+// 		static::applyToObject($data, $LastInsert);
+// 		static::onSaved($data, $LastInsert);
+// 		return $LastInsert;
+	}
+	
+	public static function getCreateOperation($input, $fields) {
+// 		return new CreateTransactionOperation(static::getClass(), $input, $fields);
+		$operation = new CreateTransactionOperation(static::getClass(), $input, $fields);
+		$operation->setSQLAdapter(static::getSQLAdapter());
+		return $operation;
+	}
+
+	public static function onValidCreate(&$input, $newErrors) {
 		if( $newErrors ) {
 			static::throwException('errorCreateChecking');
 		}
-		$data	= static::getLogEvent('create') + static::getLogEvent('edit') + $data;
-		
-		// Check if entry already exist
-		static::checkForObject($data);
-		// To do before insertion
-		static::runForObject($data);
+		static::fillLogEvent($input, 'create');
+		static::fillLogEvent($input, 'edit');
+// 		$input = static::getLogEvent('create') + static::getLogEvent('edit') + $input;
+		return true;
+	}
+	
+	public static function extractCreateQuery(&$input) {
 		// To do on Edit
-		static::onEdit($data, null);
+		static::onEdit($input, null);
 		
-		$what	= array();
-		foreach($data as $fieldname => $fieldvalue) {
-			if( in_array($fieldname, static::$fields) ) {
-				$what[$fieldname]	= static::formatValue($fieldvalue);
+// 		$what	= array();
+// 		foreach($data as $fieldname => $fieldvalue) {
+// 			if( in_array($fieldname, static::$fields) ) {
+// 				$what[$fieldname] = static::formatFieldValue($fieldname, $fieldvalue);
+// 			}
+// 		}
+		foreach( $input as $fieldname => $fieldvalue ) {
+			if( !in_array($fieldname, static::$fields) ) {
+				unset($input[$fieldname]);
 			}
 		}
+		
 		$options	= array(
 			'table'	=> static::$table,
-			'what'	=> $what,
+			'what'	=> $input,
 		);
-		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
-		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
-		// To do after insertion
-		static::applyToObject($data, $LastInsert);
-		static::onSaved($data, $LastInsert);
-		return $LastInsert;
+		return $options;
+// 		SQLAdapter::doInsert($options, static::$DBInstance, static::$IDFIELD);
+// 		$LastInsert	= SQLAdapter::doLastID(static::$table, static::$IDFIELD, static::$DBInstance);
+// 		// To do after insertion
+// 		static::applyToObject($data, $LastInsert);
+// 		static::onSaved($data, $LastInsert);
+// 		return $LastInsert;
 	}
+	
+	
 
 	/** Create a new permanent object
 	 * @param	array $input The input data we will check, extract and create the new object.
@@ -837,22 +1129,6 @@ abstract class PermanentObject {
 	
 	public static function getFields() {
 		return static::$fields;
-	}
-	
-	/** Gets the log of an event
-	 * @param $event The event to log in this object.
-	 * @param $time A specified time to use for logging event.
-	 * @param $ipAdd A specified IP Adress to use for logging event.
-	 * @see logEvent()
-	 * 
-	 * Builds a new log event for $event for this time and the user IP address.
-	*/
-	public static function getLogEvent($event, $time=null, $ipAdd=null) {
-		return array(
-			$event.'_time'	=> isset($time) ? $time : time(),
-			$event.'_date'	=> isset($time) ? sqlDatetime($time) : sqlDatetime(),
-			$event.'_ip'	=> isset($ipAdd) ? $ipAdd : (!empty($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'NONE' ),
-		);
 	}
 	
 	/** Gets the name of this class
@@ -903,7 +1179,9 @@ abstract class PermanentObject {
 	*/
 	public static function runForObject(&$data) { }
 	
-	/** Apply for new object
+	/**
+	 * Apply for new object
+	 * 
 	 * @param $data The new data to process.
 	 * @param $id The ID of the new object.
 	 * @see create()
@@ -915,7 +1193,9 @@ abstract class PermanentObject {
 	
 	// 		** VALIDATION METHODS **
 	
-	/** Check user input
+	/**
+	 * Check user input
+	 * 
 	 * @param array $uInputData The user input data to check.
 	 * @param string[] $fields The array of fields to check. Default value is null.
 	 * @param PermanentObject $ref The referenced object (update only). Default value is null.
@@ -987,13 +1267,18 @@ abstract class PermanentObject {
 		
 		} else if( is_object(static::$validator) ) {
 			if( method_exists(static::$validator, 'validate') ) {
+// 				debug('Pass validator with input', $uInputData);
+// 				debug('Pass validator with fields', $fields);
+// 				debug('Pass validator with result', static::$validator->validate($uInputData, $fields, $ref, $errCount));
 				return static::$validator->validate($uInputData, $fields, $ref, $errCount);
 			}
 		}
 		return array();
 	}
 	
-	/** Checks for object
+	/**
+	 * Check for object
+	 * 
 	 * @param $data The new data to process.
 	 * @param $ref The referenced object (update only). Default value is null.
 	 * @see create()
@@ -1001,10 +1286,12 @@ abstract class PermanentObject {
 	 * 
 	 * This function is called by create() after checking user input data and before running for them.
 	 * In the base class, this method does nothing.
-	*/
+	 */
 	public static function checkForObject($data, $ref=null) { }
 	
-	/** Tests user input
+	/**
+	 * Test user input
+	 * 
 	 * @param $uInputData The new data to process.
 	 * @param $fields The array of fields to check. Default value is null.
 	 * @param $ref The referenced object (update only). Default value is null.
@@ -1013,7 +1300,7 @@ abstract class PermanentObject {
 	 * @see checkUserInput()
 	 * 
 	 * Does a checkUserInput() and a checkForObject()
-	*/
+	 */
 	public static function testUserInput($uInputData, $fields=null, $ref=null, &$errCount=0) {
 		$data = static::checkUserInput($uInputData, $fields, $ref, $errCount);
 		if( $errCount ) { return false; }
@@ -1027,19 +1314,59 @@ abstract class PermanentObject {
 		return true;
 	}
 	
+	protected static $knownClassData	= array();
+// 	public static function getClassData($classData) {
+	public static function getClassData(&$classData=null) {
+		$class	= static::getClass();
+		if( !isset(static::$knownClassData[$class]) ) {
+// 			debug('Not current class data for class '.$class);
+			static::$knownClassData[$class]	= (object) array(
+				'sqlAdapter'	=> null,
+			);
+		}
+// 		debug('getClassData() - static::$knownClassData[$class]', static::$knownClassData[$class]);
+// 		return static::$knownClassData[$class];
+		$classData = static::$knownClassData[$class];
+// 		debug('getClassData() - $classData', $classData);
+		return $classData;
+	}
+	
+	/**
+	 * @return SQLAdapter
+	 */
+	public static function getSQLAdapter() {
+// 		$classData = static::getClassData();
+		static::getClassData($classData);
+// 		debug('$classData 1', $classData);
+// 		die();
+		if( !$classData->sqlAdapter ) {
+			$classData->sqlAdapter = SQLAdapter::getInstance(static::$DBInstance);
+		}
+		// This after $knownClassData classData
+		
+// 		static::getClassData($classData);
+// 		debug('$classData 2', $classData);
+// 		die();
+		
+		return $classData->sqlAdapter;
+	}
+	
 	//! Initializes class
 	public static function init($isFinal=true) {
+		
 		$parent = get_parent_class(get_called_class());
 		if( empty($parent) ) { return; }
 		
 		static::$fields = array_unique(array_merge(static::$fields, $parent::$fields));
-		if( !is_null($parent::$editableFields) ) {
-			static::$editableFields = is_null(static::$editableFields) ? $parent::$editableFields : array_unique(array_merge(static::$editableFields, $parent::$editableFields));
+		// Deprecated, no more defining editable fields, rely on form and EntityDescriptor
+		if( !$parent::$editableFields ) {
+			static::$editableFields = !static::$editableFields ? $parent::$editableFields : array_unique(array_merge(static::$editableFields, $parent::$editableFields));
 		}
+		// Deprecated, should use EntityDescriptor as validator
 		if( is_array(static::$validator) && is_array($parent::$validator) ) {
 			static::$validator = array_unique(array_merge(static::$validator, $parent::$validator));
 		}
-		if( is_null(static::$domain) ) {
+		if( !static::$domain ) {
 			static::$domain = static::$table;
 		}
 	}
@@ -1055,7 +1382,7 @@ abstract class PermanentObject {
 	}
 	
 	public static function throwNotFound($message=null) {
-		throw new NotFoundException(static::getDomain(), $message);
+		throw new NotFoundException($message, static::getDomain());
 	}
 	
 	/** Translate text according to the object domain

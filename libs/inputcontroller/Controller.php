@@ -20,13 +20,31 @@ abstract class Controller {
 		$this->request	= $request;
 		
 		ob_start();
-		$this->preRun($request);
+		$result	= null;
 		try {
-			$result	= $this->run($request);
+			// Could prevent Run & PostRun
+			// We recommend that PreRun only return Redirections and Exceptions
+			$result	= $this->preRun($request);
+// 			print_r($result);
+// 			die();
 		} catch( UserException $e ) {
+// 			print_r($e);
+// 			die();
 			$result	= $this->processUserException($e);
+// 		} catch( Exception $e ) {
+// 			print_r($e);
+// 			die();
 		}
-		$this->postRun($request, $result);
+// 		die('$result '.print_r($result, 1));
+		if( !$result ) {
+			// PreRun could prevent Run & PostRun
+			try {
+				$result	= $this->run($request);
+			} catch( UserException $e ) {
+				$result	= $this->processUserException($e);
+			}
+			$this->postRun($request, $result);
+		}
 // 		$output = ob_get_clean();
 // 		debug('Got controller output => '.strlen($output));
 // 		$result->setControllerOutput($output);

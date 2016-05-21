@@ -1,4 +1,7 @@
 <?php
+/* @var User $USER */
+
+global $USER;
 
 // http://fortawesome.github.io/Font-Awesome/icons/
 // $modIcons = array(
@@ -11,14 +14,16 @@
 // // 	'dev_entities'	=> 'fa-gears',
 // );
 
-if( empty($items) ) { return; }
+// if( empty($items) ) { return; }
+
 echo '
 <ul class="nav navbar-nav side-nav menu '.$menu.'">';
+
 foreach( $items as $item ) {
 // 	$icon = isset($modIcons[$item->module]) ? '<i class="fa '.$modIcons[$item->module].'"></i>' : '';
 //'.$icon.' 
 	echo '
-	<li class="item'.(isset($item->module) ? ' '.$item->module : '').(!empty($item->current) ? ' active' : '').'"><a href="'.$item->link.'">'.$item->label.'</a></li>';
+	<li class="item'.(isset($item->route) ? ' '.$item->route : '').(!empty($item->current) ? ' active' : '').'"><a href="'.$item->link.'">'.$item->label.'</a></li>';
 }
 echo '
 </ul>';

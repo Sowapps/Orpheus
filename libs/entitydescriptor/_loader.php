@@ -2,11 +2,11 @@
 /* Loader File for the Entity Descriptor sources
  */
 
-addAutoload('EntityDescriptor',					'entitydescriptor/entitydescriptor');
-addAutoload('TypeDescriptor',					'entitydescriptor/typedescriptor');
-addAutoload('FieldDescriptor',					'entitydescriptor/fielddescriptor');
+addAutoload('EntityDescriptor',					'entitydescriptor/EntityDescriptor');
+addAutoload('TypeDescriptor',					'entitydescriptor/TypeDescriptor');
+addAutoload('FieldDescriptor',					'entitydescriptor/FieldDescriptor');
 
-addAutoload('PermanentEntity',					'entitydescriptor/permanententity');
+addAutoload('PermanentEntity',					'entitydescriptor/PermanentEntity');
 
 // Form Things
 
@@ -26,3 +26,5 @@ function getField($fieldPath, $class=null) {
 	}
 	return $class::getField($fieldPathArr[count($fieldPathArr)-1]);
 }
+
+using('entitydescriptor.EntityDescriptor');

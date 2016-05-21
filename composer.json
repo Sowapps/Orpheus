@@ -1,3 +1,17 @@
 {
-	"description" : "An Orpheus Project"
+	"description" : "Orpheus PHP Framework",
+	"authors" : [{
+			"name" : "Florent HAZARD",
+			"email" : "f.hazard@sowapps.com",
+			"homepage" : "http://sowapps.com",
+			"role" : "Developer"
+		}
+	],
+	"name" : "orpheus/orpheus-framework",
+	"type" : "project",
+	"license" : "MIT",
+	"keywords" : [
+		"framework",
+		"php"
+	]
 }

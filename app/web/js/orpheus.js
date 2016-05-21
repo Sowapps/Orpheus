@@ -1,6 +1,65 @@
 
-var Dialog	= {
-	"dialog" :	'<div class="modal fade"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>',
+var _Translations = {};
+
+//console.log("Declare", _Translations);
+
+function t(key) {
+	return _Translations && _Translations[key] ? _Translations[key] : key;
+}
+
+function provideTranslations(translations) {
+//	console.log("provideTranslations() - provide", translations);
+	$.extend(_Translations, translations);
+//	console.log("provideTranslations() - provided", _Translations);
+}
+
+provideTranslations({
+	'ok' : "OK",
+	'cancel' : "Cancel",
+});
+
+	//	<div class="modal fade">
+//		<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>'';
+function ConfirmDialog(title, message, submitName, submitValue) {
+	
+	// Initialize class dialog
+	if( !ConfirmDialog.dialog ) {
+		ConfirmDialog.dialog	= $(ConfirmDialog.dialogTemplate);
+		$("body").append(ConfirmDialog.dialog);
+		ConfirmDialog.dialog.modal({"show": false});
+	}
+	if( submitValue === undefined ) {
+		submitValue	= 1;
+	}
+	this.dialog = ConfirmDialog.dialog;
+	this.title = title;
+	this.message = message;
+	this.submitName = submitName;
+	this.submitValue = submitValue;
+	var widget = this;
+	
+	this.open = function() {
+		this.dialog.find(".confirm_title").text(this.title);
+		this.dialog.find(".confirm_message").text(this.message);
+		var validateSubmit = this.dialog.find(".confirm_validate")
+			.attr("name", this.submitName).val(this.submitValue);
+//		this.dialog.find(".confirm_cancel").unbind("click").click(function() {
+//			this.close();
+//		});
+		
+		this.dialog.modal('show');
+	}
+	
+	this.validate = function() {
+		this.dialog.modal('hide');
+	}
+	
+	this.close = function() {
+		this.dialog.modal('hide');
+	}
+	
+	/*
+	"dialog" :	'',
 	"confirm" : function(callback, title, message) {
 		debug("Dialog.confirm");
 		if( typeof this.dialog == "string" ) {
@@ -10,7 +69,7 @@ var Dialog	= {
 		}
 		var dialog	= this.dialog;
 		dialog.find(".modal-title").text(title);
-		dialog.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-primary okbtn">OK !</button>');
+		dialog.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">'+t('cancel')+'</button><button type="button" class="btn btn-primary okbtn">'+t('ok')+'</button>');
 		dialog.find(".modal-footer .okbtn").click(function() {
 			dialog.callback	= callback;
 			dialog.callback();
@@ -25,12 +84,50 @@ var Dialog	= {
 		}
 		dialog.modal('show');
 	}
+	*/
 };
+ConfirmDialog.dialogTemplate	= '\
+	<div id="AddUserDialog" class="modal fade">\
+	<div class="modal-dialog">\
+		<div class="modal-content">\
+		<form method="POST">\
+			<div class="modal-header">\
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+				<h4 class="modal-title confirm_title"></h4>\
+			</div>\
+			<div class="modal-body">\
+				<p class="confirm_message"></p>\
+			</div>\
+			<div class="modal-footer">\
+				<button type="button" class="btn btn-default confirm_cancel" data-dismiss="modal">'+t('cancel')+'</button>\
+				<button type="submit" class="btn btn-primary confirm_validate" value="1">'+t('ok')+'</button>\
+			</div>\
+		</form>\
+		</div>\
+	</div>\
+</div>';
 
 //$(function() {
 //	debug("Doc ready");
 //	Dialog.confirm(function() { console.log("Confirmed") }, "Do you confirm what you are doing ?", "This require your attention and you should take care about what we are asking for.");
 //});
+
+$(function() {
+	
+	$("[data-confirm_message]").each(function() {
+		var _ = $(this);
+		if( _.data("confirmdialog") ) {
+			return;
+		}
+		var confirmDialog = new ConfirmDialog(_.data("confirm_title"), _.data("confirm_message"), _.data("confirm_submit_name"), _.data("confirm_submit_value"));
+		_.data("confirmdialog", confirmDialog);
+		_.click(function() {
+			confirmDialog.open();
+		});
+	});
+//	Dialog.confirm(function() {
+//	}, "Do you confirm what you are doing ?", "This require your attention and you should take care about what we are asking for.");
+});
 
 function debug(t) {
 	for( var i in arguments ) {
@@ -66,6 +163,22 @@ function getAllProp(Object, dispFunc) {
 		}
 	}
 	return allProp;
+}
+
+function isDefined(v) {
+	return v !== undefined;
+}
+
+function isSet(v) {
+	return isDefined(v) && v !== null;
+}
+
+function isScalar(obj) {
+	return (/string|number|boolean/).test(typeof obj);
+}
+
+function isString(v) {
+	return typeof(v) === 'string';
 }
 
 function isObject(v) {
@@ -105,6 +218,14 @@ function str2date(val) {
 
 function leadZero(val) {
 	return val < 10 ? '0'+val : val;
+}
+
+function bintest(value, reference) {
+	return checkFlag(value, reference);
+}
+function checkFlag(value, reference) {
+	//console.log(value+" & "+reference+" => "+(value & reference));
+	return ( (value & reference) == reference);
 }
 
 function number_format(number, decimals, dec_point, thousands_sep) {
@@ -224,7 +345,6 @@ if( $ ) {
 		form.submit(listener);
 	});
 	
-
 	$("input[data-preview]").change(function() {
 		var input	= $(this);
 //	 	console.log('change', this.files[0]);
@@ -514,7 +634,7 @@ var escapeHTML;
 			if( e.which==KeyEvent.DOM_VK_RETURN ) {
 				e.preventDefault();
 				this.callback	= cb;
-				this.callback(e);
+				return this.callback(e);
 			}
 		});
 	};
@@ -523,7 +643,7 @@ var escapeHTML;
 		$("input.autocomplete.auto").shown(function() {
 			if( $(this).data("autocomplete-auto") ) { return; }
 			$(this).data("autocomplete-auto", 1);
-			var _	= $(this);
+			var _ = $(this);
 			_.autocomplete({
 				minLength:	2,
 				source:		function(request, response) {
@@ -532,6 +652,15 @@ var escapeHTML;
 					requestAutocomplete(_.data('what'), request.term+query, response, _.data("label"));
 				}
 			});
+		});
+		
+		$('input[type=url]').watch(function() {
+			var value = $(this).val();
+			if( value.length && value.indexOf("://") < 0 ) {
+				$(this).val(value="http://"+value);
+			}
+//			console.log("Changed url", $(this).data("linkbtn") || $(this).next("a"));
+			$($(this).data("linkbtn") || $(this).next("a")).attr("href", value);
 		});
 	});
 })(jQuery);

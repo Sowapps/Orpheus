@@ -141,4 +141,5 @@ class UploadedFile {
 		return new static($_FILES[$name]['name'], $_FILES[$name]['size'], $_FILES[$name]['tmp_name'], $_FILES[$name]['error']);
 // 		return !empty($_FILES[$name]['name']) ? new static($_FILES[$name]['name'], $_FILES[$name]['size'], $_FILES[$name]['tmp_name'], $_FILES[$name]['error']) : null;
 	}
+	
 }

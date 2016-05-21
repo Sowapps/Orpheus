@@ -28,6 +28,10 @@ class HTTPRequest extends InputRequest {
 	public function __toString() {
 		return $this->method.'("'.$this->path.'")';
 	}
+	
+	public function getURL() {
+		return $this->scheme.'://'.$this->domain.$this->path.($this->parameters ? '?'.http_build_query($this->parameters) : '');
+	}
 
 	
 	/**
@@ -35,18 +39,23 @@ class HTTPRequest extends InputRequest {
 	 * 
 	 * @return Route
 	 */
-	public function findFirstMatchingRoute() {
+	public function findFirstMatchingRoute($alternative=false) {
+// 		debug('$this', $this);
 // 		debug('Routes', $this->getRoutes());
 		foreach( $this->getRoutes() as $methodRoutes ) {
 			if( !isset($methodRoutes[$this->method]) ) { continue; }
 			/* @var $route HTTPRoute */
 			$route	= $methodRoutes[$this->method];
-			if( $route->isMatchingRequest($this, $values) ) {
+			if( $route->isMatchingRequest($this, $values, $alternative) ) {
 				$this->pathValues	= (object) $values;
 				return $route;
 			}
 		}
 		return null;
+	}
+	
+	public function redirect(ControllerRoute $route) {
+		return new RedirectHTTPResponse(u($route->getName()));
 	}
 	
 	/**
@@ -102,6 +111,8 @@ class HTTPRequest extends InputRequest {
 
 	public static function handleCurrentRequest() {
 		try {
+// 			debug('HTTPRequest::handleCurrentRequest()');
+// 			die();
 			HTTPRoute::initialize();
 			static::$mainRequest	= static::generateFromEnvironment();
 	//		debug('$request', static::$mainRequest);
@@ -197,8 +208,8 @@ class HTTPRequest extends InputRequest {
 		return $this->getInputValue($key, array());
 	}
 	
-	public function hasData($key) {
-		return $this->hasInputValue($key);
+	public function hasData($key=null) {
+		return $key ? $this->hasInputValue($key) : $this->hasInput();
 	}
 	
 	public function hasDataKey($path=null, &$value=null) {

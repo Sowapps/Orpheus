@@ -26,7 +26,7 @@ class FormToken {
 	 * @param number $maxUsage Number of max usage, default value is 1.
 	 */
 	public function __construct($name=NULL, $maxToken=null, $maxUsage=1) {
-		$this->name		= $name===NULL ? $GLOBALS['Module'] : $name;
+		$this->name		= $name===NULL ? InputRequest::getMainRequest()->getRouteName() : $name;
 		$this->maxToken	= $maxToken===NULL ? static::$DEFAULT_MAXTOKEN : $maxToken;
 		$this->maxUsage	= $maxUsage;
 	}

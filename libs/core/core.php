@@ -117,8 +117,11 @@ function sendRESTfulJSON($data, $code=null) {
 			/* @var $data UserReportsException */
 			sendResponse($data->getMessage(), $data->getReports(), $data->getDomain());
 		} else
-		if( $data instanceof Exception ) {
+		if( $data instanceof UserException ) {
 			sendResponse($data->getMessage(), '', $data->getDomain());
+		} else
+		if( $data instanceof Exception ) {
+			sendResponse($data->getMessage());
 		} else {
 // 			if( is_string($data) ) {
 // 			}
@@ -380,20 +383,20 @@ function text2HTML($text) {
 }
 
 /** Formats a string to be a html attribute value
- * @param $str The string to format.
+ * @param mixed $var The variable to format.
  * @return The escaped string.
 
 * Escape the text $str from special characters for HTML Attribute usage.
 */
-function htmlFormATtr($str) {
-	if( !is_scalar($str) ) {
-		$str	= json_encode($str);
+function htmlFormATtr($var) {
+	if( !is_scalar($var) ) {
+		$var	= json_encode($var);
 	}
 	$flags	= ENT_QUOTES | ENT_IGNORE;
 	if( defined('ENT_HTML5') ) {
 		$flags |= ENT_HTML5;
 	}
-	return htmlentities($str, $flags, 'UTF-8', false); 	
+	return htmlentities($var, $flags, 'UTF-8', false); 	
 }
 
 /** Encodes to an internal URL
@@ -676,8 +679,8 @@ function reportSuccess($report, $domain='global') {
 }
 
 /** Reports an information to the user
- * @param $report string The message to report.
- * @param $domain string The domain fo the message. Not used for translation. Default value is global.
+ * @param string $report The message to report.
+ * @param string $domain The domain fo the message. Not used for translation. Default value is global.
  * @see addReport()
 
  * Adds the report $message to the list of reports for this type 'info'.
@@ -687,21 +690,21 @@ function reportInfo($report, $domain='global') {
 }
 
 /** Reports a warning
- * @param $report string The message to report.
- * @param $domain string The domain fo the message. Not used for translation. Default value is global.
+ * @param string $report The message to report.
+ * @param string $domain The domain fo the message. Not used for translation. Default value is the domain of Exception in case of UserException else 'global'.
  * @see addReport()
 
  * Adds the report $message to the list of reports for this type 'warning'.
  * Warning come in some special cases, we meet it when we do automatic checks before loading contents and there is something to report to the user.
 */
-function reportWarning($report, $domain='global') {
+function reportWarning($report, $domain=null) {
 	return reportError($report, $domain, 0);
 // 	return addReport($report, 'warning', $domain);
 }
 
 /** Reports an error
  * @param string $report The report.
- * @param string $domain The domain fo the message. Default value is the domain of Exception in cas of UserException else 'global'.
+ * @param string $domain The domain fo the message. Default value is the domain of Exception in case of UserException else 'global'.
  * @param integer $severity The severity of the error, commonly 1 for standard user error and 0 for warning. Default value is 1.
  * @see addReport()
 
@@ -722,7 +725,9 @@ function reportError($report, $domain=null, $severity=1) {
 	return addReport($report, 'error', $domain === NULL ? 'global' : $domain, $code, $severity);
 }
 
-/** Checks if there is error reports
+/**
+ * Check if there is error reports
+ * 
  * @return boolean True if there is any error report.
 */
 function hasErrorReports() {
@@ -736,9 +741,11 @@ function hasErrorReports() {
 	return false;
 }
 
-/** Rejects reports
- * @param $report The report message to reject, could be an array.
- * @param $type Filter reject by type, could be an array. Default value is null, not filtering.
+/**
+ * Reject reports
+ * 
+ * @param mixed $report The report message to reject, could be an array.
+ * @param string $type Filter reject by type, could be an array. Default value is null, not filtering.
  * @see addReport()
  * 
  * Register this report to be rejected in the future, addReport() will check it.
@@ -760,7 +767,9 @@ function rejectReport($report, $type=null) {
 	}
 }
 
-/** Gets some/all reports
+/**
+ * Get some/all reports
+ * 
  * @param string $stream The stream to get the reports. Default value is "global".
  * @param string $type Filter results by report type. Default value is null.
  * @param boolean $delete True to delete entries from the list. Default value is true.
@@ -1091,8 +1100,25 @@ function htmlDisabledAttr() {
 	global $FORM_EDITABLE;
 	return $FORM_EDITABLE ? '' : ' disabled';
 }
+function formInput($fieldPath, $default=null) {
+	return ' name="'.apath_html($fieldPath).'"'.inputValue($fieldPath, $default);
+}
+function _formInput($fieldPath, $default=null) {
+	echo formInput($fieldPath, $default);
+}
+function valueOf($fieldPath, $default=null) {
+	fillInputValue($value, $fieldPath, $default);
+	return $value!=null ? $value : '';
+}
+function inputValue($fieldPath, $default=null) {
+	fillInputValue($value, $fieldPath, $default);
+	return $value!=null ? valueField($value) : '';
+}
+function _inputValue($fieldPath, $default=null) {
+	echo inputValue($fieldPath, $default);
+}
 function valueField($v) {
-	return 'value="'.addcslashes($v, '"').'"';
+	return ' value="'.addcslashes($v, '"').'"';
 }
 function htmlFileUpload($fieldPath, $addAttr='') {
 	return '<input type="file" name="'.apath_html($fieldPath).'" '.$addAttr.htmlDisabledAttr().'/>';
@@ -1352,7 +1378,9 @@ function hashString($str) {
 */
 function d($time=TIME) {
 // 	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
-	return df('dateFormat', $time);
+	// Dont care about timezone, this is UTC
+	// Date is converted to midnight timestamp of this day, if we specify a tz < 0, the display date will be the previous one
+	return df('dateFormat', $time, false);
 }
 
 /**
@@ -1370,6 +1398,7 @@ function dt($time=TIME) {
  * Format the date time as string
  * @param $format The format to use
  * @param mixed $time The UNIX timestamp
+ * @param mixed $tz Timezone to use. False for UTC, Null for default or a string to specify the one to use
  * @return string The date formatted using $format
  * 
  * Datetime format is storing a specific moment, we care about timezone
@@ -1378,14 +1407,15 @@ function df($format, $time=TIME, $tz=null) {
 	if( $tz === false ) {
 		$tz	= 'UTC';
 	}
-	if( $tz !== null ) {
+	if( $tz ) {
 		$ctz	= date_default_timezone_get();
 		date_default_timezone_set($tz);
 	}
 // 	$r	= !empty($time) ? strftime(t($format), dateToTime($time)) : null;
 	// Calculating some delay, we want 00:00 and not null
 	$r	= strftime(t($format), dateToTime($time));
-	if( $tz !== null ) {
+// 	debug("strftime(".t($format).", ".dateToTime($time)."[".$time."], $tz) => ".$r);
+	if( isset($ctz) ) {
 		date_default_timezone_set($ctz);
 	}
 	return $r;
@@ -1502,9 +1532,9 @@ function generatePassword($length=10, $chars='abcdefghijklmnopqrstuvwxyz01234567
  * 
  * Return the timestamp of the current day of $time according to the midnight hour.
 */
-function dayTime($time=null) {
+function dayTime($time=null, $gmt=true) {
 	if( $time === NULL ) { $time = time(); }
-	return $time - $time%86400 - date('Z');
+	return $time - $time%86400 - ($gmt ? date('Z') : 0);
 }
 
 /** Returns the timestamp of the $day of the month using the given integer
@@ -1574,8 +1604,8 @@ function array_add(&$array, $other) {
 function array_filterbykeys($array, $keys) {
 	$r	= array();
 	foreach( $keys as $key ) {
-		if( isset($array[$key]) ) {
-			$r[$key]	= $array[$key];
+		if( array_key_exists($key, $array) ) {
+			$r[$key] = $array[$key];
 		}
 	}
 	return $r;
@@ -1742,4 +1772,8 @@ function is_closure($v) {
 
 function is_exception($t) {
 	return is_object($t) && ($t instanceof Exception);
+}
+
+function ms() {
+	return round(microtime(true)*1000);
 }

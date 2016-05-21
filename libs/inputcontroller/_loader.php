@@ -1,6 +1,7 @@
 <?php
-/** InputController Library
-
+/**
+ * InputController Library
+ * 
  * InputController library to bring MVC features
  * 
  */
@@ -27,8 +28,11 @@ addAutoload('StaticPageController',			'inputcontroller/controllers/StaticPageCon
 function u($routeName, $values=array()) {
 // 	$routes	= HTTPRoute::getRoutes();
 // 	$routes	= HTTPRoute::getRoutes();
+// 	debug("u($routeName)");
 	$route	= HTTPRoute::getRoute($routeName);
+// 	debug("u($routeName) - Got route");
 	if( !$route ) {
+// 		debug("u($routeName) - Route not found");
 		throw new Exception('Unable to find route '.$routeName);
 	}
 // 	if( !isset($routes[$routeName]) ) {
