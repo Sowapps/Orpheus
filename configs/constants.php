@@ -29,6 +29,7 @@ defifn('LANGBASE',			'en');
 // defifn('LANGBASE',			array_shift(explode('_', LANG, 2)));
 defifn('LOCALE',			LANG.'.utf8');
 
+
 // defifn('LOGSPATH',			pathOf('logs/'));
 // defifn('STOREPATH',			pathOf('store/'));
 defifn('CACHEPATH',			STOREPATH.'cache/');
