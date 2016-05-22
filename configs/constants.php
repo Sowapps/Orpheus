@@ -39,7 +39,7 @@ defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
 defifn('STATIC_URL',		SITEROOT.'static/');
 
 // Routes' contants
-define('ROUTE_HOME',			'home');
+defifn('ROUTE_HOME',			'home');
 define('ROUTE_LOGIN',			'login');
 define('ROUTE_LOGOUT',			'logout');
 define('ROUTE_DASHBOARD',		'user_dashboard');
