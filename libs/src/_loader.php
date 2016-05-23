@@ -41,7 +41,19 @@ addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListCon
 addAutoload('AdminConfigController',			'src/controllers/admin/AdminConfigController');
 addAutoload('DevEntitiesController',			'src/controllers/admin/DevEntitiesController');
 
-// addAutoload('Session',							'sessionhandler/dbsession');
+addAutoload('SetupController',					'src/controllers/setup/SetupController');
+addAutoload('StartSetupController',				'src/controllers/setup/StartSetupController');
+addAutoload('CheckFileSystemSetupController',	'src/controllers/setup/CheckFileSystemSetupController');
+addAutoload('CheckDatabaseSetupController',		'src/controllers/setup/CheckDatabaseSetupController');
+addAutoload('InstallDatabaseSetupController',	'src/controllers/setup/InstallDatabaseSetupController');
+addAutoload('InstallFixturesSetupController',	'src/controllers/setup/InstallFixturesSetupController');
+addAutoload('EndSetupController',				'src/controllers/setup/EndSetupController');
+
+defifn('DOMAIN_SETUP',		'setup');
+
+// Entities
+PermanentEntity::registerEntity('File');
+PermanentEntity::registerEntity('User');
 
 
 // Hooks

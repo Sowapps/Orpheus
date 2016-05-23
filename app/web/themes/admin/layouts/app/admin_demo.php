@@ -8,9 +8,9 @@ HTMLRendering::useLayout('page_skeleton');
 <div class="row">
 	<div class="col-lg-12">
 <!-- 		<h1>Dashboard <small>Statistics Overview</small></h1> -->
-		<ol class="breadcrumb">
-			<li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
-		</ol>
+<!-- 		<ol class="breadcrumb"> -->
+<!-- 			<li class="active"><i class="fa fa-dashboard"></i> Dashboard</li> -->
+<!-- 		</ol> -->
 		<div class="alert alert-success alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 Welcome to Orpheus Admin Panel Demo, this SB Admin Theme is designed by <a class="alert-link" href="http://startbootstrap.com">Start Bootstrap</a> and integrated by Florent HAZARD !
@@ -20,6 +20,97 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 	</div>
 </div><!-- /.row -->
 
+<div class="row">
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-comments fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">26</div>
+						<div>New Comments!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#">
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-green">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-tasks fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">12</div>
+						<div>New Tasks!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#">
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-yellow">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-shopping-cart fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">124</div>
+						<div>New Orders!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#">
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="col-lg-3 col-md-6">
+		<div class="panel panel-red">
+			<div class="panel-heading">
+				<div class="row">
+					<div class="col-xs-3">
+						<i class="fa fa-support fa-5x"></i>
+					</div>
+					<div class="col-xs-9 text-right">
+						<div class="huge">13</div>
+						<div>Support Tickets!</div>
+					</div>
+				</div>
+			</div>
+			<a href="#">
+				<div class="panel-footer">
+					<span class="pull-left">View Details</span>
+					<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+					<div class="clearfix"></div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+<?php /*
 <div class="row">
 	<div class="col-lg-3">
 		<div class="panel panel-info">
@@ -130,10 +221,11 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 		</div>
 	</div>
 </div><!-- /.row -->
+*/ ?>
 
 <div class="row">
 	<div class="col-lg-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Traffic Statistics: October 1, 2013 - October 31, 2013</h3>
 			</div>
@@ -146,7 +238,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 
 <div class="row">
 	<div class="col-lg-4">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Traffic Sources: October 1, 2013 - October 31, 2013</h3>
 			</div>
@@ -159,7 +251,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 		</div>
 	</div>
 	<div class="col-lg-4">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-clock-o"></i> Recent Activity</h3>
 			</div>
@@ -205,7 +297,7 @@ All accesses to the admin's pages are restricted by permissions, this is why you
 		</div>
 	</div>
 	<div class="col-lg-4">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-money"></i> Recent Transactions</h3>
 			</div>

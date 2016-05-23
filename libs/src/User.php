@@ -35,7 +35,7 @@ class User extends AbstractUser {
 	
 	
 	public function onConnected() {
-		date_default_timezone_set($this->timezone);
+// 		date_default_timezone_set($this->timezone);
 	}
 	
 	public function __toString() {
@@ -66,7 +66,7 @@ class User extends AbstractUser {
 	}
 	public function getRoleText() {
 		$status = array_flip(static::getAvailRoles());
-		return isset($status[$this->accesslevel]) ? t('role_'.$status[$this->accesslevel], static::getDomain()) : t('role_unknown', static::getDomain(), $this->accesslevel);
+		return isset($status[$this->accesslevel]) ? static::text('role_'.$status[$this->accesslevel]) : static::text('role_unknown', $this->accesslevel);
 	}
 	
 	public function activate() {

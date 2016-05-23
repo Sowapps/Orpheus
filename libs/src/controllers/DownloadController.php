@@ -11,10 +11,10 @@ class DownloadController extends HTTPController {
 	public function run(HTTPRequest $request) {
 		
 		$downloadURL	= GlobalConfig::instance()->get($request->hasParameter('releases') ? 'releases_url' : 'download_url');
-// 		debug('$downloadURL => '.$downloadURL);
+		debug('$downloadURL => '.$downloadURL);
 
-// 		return HTMLHTTPResponse::render('app/home');
-		return new RedirectHTTPResponse($downloadURL ? $downloadURL : 'home');
+		return HTMLHTTPResponse::render('app/home');
+// 		return new RedirectHTTPResponse($downloadURL ? $downloadURL : 'home');
 	}
 
 	

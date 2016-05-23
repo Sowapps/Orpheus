@@ -84,6 +84,30 @@ http:
         path: "/download/{id:fileID}"
         controller: "FileDownloadController"
         
+    setup_start:
+        path: "/setup/"
+        controller: "StartSetupController"
+        
+    setup_checkfs:
+        path: "/setup/check-filesystem.html"
+        controller: "CheckFileSystemSetupController"
+        
+    setup_checkdb:
+        path: "/setup/check-database.html"
+        controller: "CheckDatabaseSetupController"
+        
+    setup_installdb:
+        path: "/setup/install-database.html"
+        controller: "InstallDatabaseSetupController"
+        
+    setup_installfixtures:
+        path: "/setup/install-fixtures.html"
+        controller: "InstallFixturesSetupController"
+        
+    setup_end:
+        path: "/setup/finish.html"
+        controller: "EndSetupController"
+        
 #    home:
 #        path: "/path/in/array/config"
 #        method: "POST|GET"
