@@ -21,7 +21,7 @@ class AdminUserEditController extends AdminController {
 		}
 		
 		$this->addRouteToBreadcrumb(ROUTE_ADM_USERS);
-		$this->addThisToBreadcrumb();
+		$this->addThisToBreadcrumb($user);
 // 		$this->addThisToBreadcrumb(array('userID'=>$user->id()));
 
 		$USER_CAN_USER_EDIT		= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
@@ -64,6 +64,7 @@ class AdminUserEditController extends AdminController {
 			'USER_CAN_USER_EDIT'	=> $USER_CAN_USER_EDIT,
 			'USER_CAN_USER_DELETE'	=> $USER_CAN_USER_DELETE,
 			'USER_CAN_USER_GRANT'	=> true,
+			'ContentTitle'	=> $user,
 			'user'	=> $user
 		));
 	}

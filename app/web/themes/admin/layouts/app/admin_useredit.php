@@ -3,36 +3,45 @@ HTMLRendering::useLayout('page_skeleton');
 ?>
 <form method="POST">
 
+<div style="display: none;">
+	<input type="text" autocomplete="new-password" />
+	<input type="password" autocomplete="new-password" />
+</div>
+
 <div class="row">
 	<div class="col-lg-6">
-		<div class="adduserform">
-		<h2>Éditer un utilisateur</h2>
+		<?php HTMLRendering::useLayout('panel-default'); ?>
 		<div class="form-group">
-			<label>Nom</label>
+			<label><?php User::_text('name'); ?></label>
 			<?php _adm_htmlTextInput('user/fullname'); ?>
 		</div>
 		<div class="form-group">
-			<label>Email</label>
-			<?php _adm_htmlTextInput('user/email', '', 'autocomplete="off"'); ?>
+			<label><?php User::_text('email'); ?></label>
+			<?php _adm_htmlTextInput('user/email', '', 'autocomplete="new-password"'); ?>
 		</div>
 		<div class="form-group">
-			<label>Mot de passe</label>
-			<?php _adm_htmlPassword('user/password'); ?>
+			<label><?php User::_text('password'); ?></label>
+			<?php _adm_htmlPassword('user/password', '', 'autocomplete="new-password" placeholder="'.User::text('fillToUpdate').'"'); ?>
 		</div>
 		<?php
 		if( $USER_CAN_USER_GRANT ) {
 			?>
 		<div class="form-group">
-			<label>Accréditations</label>
+			<label><?php User::_text('role'); ?></label>
 			<select name="user[accesslevel]" class="form-control">
-				<?php echo htmlOptions('user/accesslevel', User::getUserRoles(), null, OPT_LABEL2VALUE, 'role_', User::getDomain()); ?>
+				<?php echo htmlOptions('user/accesslevel', array_filter(User::getUserRoles(), function($value) { return $value >= 0; }), null, OPT_LABEL2VALUE, 'role_', User::getDomain()); ?>
 			</select>
 		</div>
 			<?php
 		}
 		?>
-		<button class="btn btn-default" type="submit" name="submitUpdate">Enregistrer</button>
-		</div>
+		
+		<?php HTMLRendering::endCurrentLayout(array(
+			'title' => User::text('editUser'),
+			'footer' => '
+<div class="panel-footer text-right">
+	<button class="btn btn-primary" type="submit" name="submitUpdate">'.t('save').'</button>
+</div>')); ?>
 	</div>
 </div>
 

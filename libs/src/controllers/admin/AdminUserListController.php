@@ -20,14 +20,15 @@ class AdminUserListController extends AdminController {
 		$USER_CAN_DEV_SEE	= !CHECK_MODULE_ACCESS || $USER->canSeeDevelopers();
 		
 // 		$formData = array();
-		if( $data = $request->hasData('createUser') ) {
+		if( $request->hasData('submitCreate') ) {
 		
 			try {
+				$data = $request->getArrayData('user');
 				if( !$USER_CAN_USER_EDIT ) {
 					throw new UserException('forbiddenOperation');
 				}
 // 				$formData = POST('createData');
-				$newUser = User::create($request->getArrayData('createUser'));
+				$newUser = User::create($request->getArrayData('user'));
 				reportSuccess(User::text('successCreate', $newUser));
 // 				$formData = array();
 		
