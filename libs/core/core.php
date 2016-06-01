@@ -1716,7 +1716,10 @@ function startSession($type=SESSION_WITH_COOKIE) {
 	if( bintest($type, SESSION_WITH_COOKIE) ) {
 		defifn('SESSION_COOKIE_LIFETIME',	86400*7);
 		// Set session cookie parameters, HTTPS session is only HTTPS
-		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
+		// Never set the domain, it will apply to subdomains
+		// domain.com shares cookies with all subdomains... HTTP made me cry
+		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, '', HTTPS, true);
+// 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
 	}
 // 	if( bintest($type, SESSION_WITH_HTTPTOKEN) ) {
 // 		$_SERVER['HTTP_ACCEPT_AUTHORIZATION']
