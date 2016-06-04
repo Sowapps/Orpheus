@@ -6,6 +6,8 @@ abstract class Controller {
 	/* @var $request InputRequest */
 	protected $request;
 	
+	protected $options;
+	
 	public function __toString() {
 		return get_called_class();
 	}
@@ -76,6 +78,17 @@ abstract class Controller {
 		$response->collectFrom($layout, $values);
 		return $response;
 	}
+	
+	public function getOption($key, $default=null) {
+		return array_key_exists($key, $this->options) ? $this->options[$key] : $default;
+	}
+	
+	public function setOption($key, $value) {
+		$this->options[$key] = $value;
+		return $this;
+	}
+	
+	
 	
 	
 }

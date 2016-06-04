@@ -13,6 +13,7 @@
  * $ContentTitle
  */
 
+
 $routeName = $Controller->getRouteName();
 /*
 	<title><?php echo ( !empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).'ADM '.SITENAME ?></title>
@@ -87,7 +88,7 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<?php
-			$this->showMenu('adminmenu', 'menu-sidebar');
+			$this->showMenu($Controller->getOption('mainmenu', 'adminmenu'), 'menu-sidebar');
 			?>
 			<ul class="nav navbar-nav navbar-right navbar-user">
 			<?php
