@@ -25,7 +25,10 @@ defifn('CHECK_MODULE_ACCESS',	true);
 define('HOOK_ACCESSDENIED', 	'accessDenied');
 Hook::create(HOOK_ACCESSDENIED);
 
-/** Hook HOOK_APPREADY
+/**
+ * Hook HOOK_APPREADY
+ * Previously HOOK_CHECKMODULE but we need session was initialized before checking app things
+ * HOOK_CHECKMODULE is called before session is initialized
  */
 Hook::register(HOOK_APPREADY, function () {
 // 	debug('Publisher HOOK_APPREADY => '.HOOK_APPREADY);

@@ -202,6 +202,36 @@ function toHtml($s) {
 	return $s;
 }
 
+function toString($s) {
+	if( $s===NULL ) {
+		$s = 'NULL';
+	} else if( $s === false ) {
+		$s = 'FALSE';
+	} else if( $s === true ) {
+		$s = 'TRUE';
+	} else if( is_array($s) || is_object($s) ) {
+		$s	= json_encode($s);
+// 		if( is_object($s) ) {
+// 			$s	= (array) $s;
+// 			$assoc = true;
+// 		} else {
+// 			$assoc = !isset($s[0]);
+// 		}
+// 		if( $assoc ) {
+// 			$t	= '';
+// 			foreach( $s as $key => $value ) {
+// 				$t	.= ($t ? ', ' : '').
+// 			}
+// 			$s	= '{'.$s.'}';
+// 		} else {
+// 			$s	= '['.implode(', ', $s).']';
+// 		}
+	} else if( !is_scalar($s) ) {
+		$s = print_r($s, 1);
+	}
+	return $s;
+}
+
 function formatException($e) {
 	return 'Exception \''.get_class($e).'\' with '.( $e->getMessage() ? " message '{$e->getMessage()}'" : 'no message')
 		.' in '.$e->getFile().':'.$e->getLine()."\n<pre>".$e->getTraceAsString().'</pre>';
@@ -311,7 +341,8 @@ function sys_error($report, $action='', $silent=false) {
 */
 function log_error($report, $action='', $fatal=true) {
 	log_report($report, defined("SYSLOGFILENAME") ? SYSLOGFILENAME : '.log_error', $action,
-		empty($fatal) && !DEV_VERSION ? null :
+// 		!$fatal && !DEV_VERSION ? null :
+		!$fatal ? null :
 			(is_string($fatal) ? $fatal : "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.").
 			(DEV_VERSION ? '<br /><pre>'.print_r(debug_backtrace(), 1).'</pre>' : ''));
 }
@@ -1368,6 +1399,15 @@ function hashString($str) {
 	return hash('sha512', $salt.$str.'7');
 }
 
+/** Gets the date as string
+ * @param $time The UNIX timestamp.
+ * @return The date using 'dateFormat' translation key
+ * 
+ * Date format is storing a date, not a specific moment, we don't care about timezone
+*/
+function sql2Time($datetime) {
+	return strtotime($datetime.' GMT');
+}
 
 /**
  * Format the date as string
@@ -1376,11 +1416,12 @@ function hashString($str) {
  * 
  * Date format is storing a date, not a specific moment, we don't care about timezone
 */
-function d($time=TIME) {
+function d($time=TIME, $utc=false) {
 // 	return !empty($time) ? strftime(t('dateFormat'), is_numeric($time) ? $time : strtotime($time)) : null;
+	return df('dateFormat', $time, $utc ? false : null);
 	// Dont care about timezone, this is UTC
 	// Date is converted to midnight timestamp of this day, if we specify a tz < 0, the display date will be the previous one
-	return df('dateFormat', $time, false);
+	// return df('dateFormat', $time, false);
 }
 
 /**
@@ -1390,8 +1431,8 @@ function d($time=TIME) {
  * 
  * Datetime format is storing a specific moment, we care about timezone
 */
-function dt($time=TIME) {
-	return df('datetimeFormat', $time);
+function dt($time=TIME, $utc=false) {
+	return df('datetimeFormat', $time, $utc ? false : null);
 }
 
 /**
@@ -1568,6 +1609,10 @@ function standardizePhoneNumber_FR($number, $delimiter='.', $limit=2) {
 	return substr($number, 0, $i+2).$n;
 }
 
+function leadZero($number, $length=2) {
+	return sprintf('%0'.$length.'d', $number);
+}
+
 function formatDuration_Shortest($duration) {
 	$formats	= array('days'=>86400, 'hours'=>3600, 'minutes'=>60);
 	foreach( $formats as $unit => $time ) {
@@ -1696,6 +1741,16 @@ function reverse_values(&$val1, &$val2) {
 	$tmp	= $val1;
 	$val1	= $val2;
 	$val2	= $tmp;
+}
+
+/**
+ * Check value in between min and max
+ * @param integer $value
+ * @param integer $min
+ * @param integer $max
+ */
+function between($value, $min, $max) {
+	return $min <= $value && $value <= $max;
 }
 
 function deleteCookie($name) {
