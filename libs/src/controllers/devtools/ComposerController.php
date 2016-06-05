@@ -9,6 +9,8 @@ class ComposerController extends DevToolsController {
 	 */
 	public function run(HTTPRequest $request) {
 		
+// 		debug('Composer json path => '.APPLICATIONPATH.'composer.json');
+		
 		if( !file_exists(APPLICATIONPATH.'composer.json') ) {
 			throw new UserException('Unable to find composer.json file');
 		}

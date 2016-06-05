@@ -108,6 +108,10 @@ http:
         path: "/setup/finish.html"
         controller: "EndSetupController"
         
+    dev_composer:
+        path: "/developer/composer.html"
+        controller: "ComposerController"
+        
 #    home:
 #        path: "/path/in/array/config"
 #        method: "POST|GET"

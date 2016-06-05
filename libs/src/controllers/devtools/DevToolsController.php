@@ -10,4 +10,12 @@
 abstract class DevToolsController extends HTTPController {
 	
 
+	public function preRun(HTTPRequest $request) {
+		parent::preRun($request);
+		HTMLRendering::setDefaultTheme('admin');
+		
+		$this->setOption('mainmenu', 'devmenu');
+	
+	}
+
 }

@@ -491,7 +491,7 @@ function apath_get($array, $apath, $default=null, $pathRequired=false) {
 	return $suffix !== NULL ? apath_get($array[$key], $suffix) : $array[$key];
 }
 
-function apath_setp(&$array, $apath, $value) {
+function apath_setp(&$array, $apath, $value, $overwrite=true) {
 	if( $array === NULL ) {
 		$array	= array();
 	}
@@ -501,16 +501,19 @@ function apath_setp(&$array, $apath, $value) {
 // 	}
 	
 	list($key, $suffix)	= explodeList('/', $apath, 2);//('/', $apath, 2);
-	// The path is ends here
+	// The path ends here
 	if( $suffix === NULL ) {
-		$array[$key]	= $value;
+		// NULL value will always be overwritten
+		if( $overwrite===true || !isset($array[$key]) ) {
+			$array[$key] = $value;
+		}
 		return;
 	}
 	// The path continues
 	if( !isset($array[$key]) ) {
 		$array[$key]	= array();
 	}
-	apath_setp($array[$key], $suffix, $value);
+	apath_setp($array[$key], $suffix, $value, $overwrite);
 }
 
 /** Build all path to browse array

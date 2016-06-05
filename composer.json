@@ -13,5 +13,6 @@
 	"keywords" : [
 		"framework",
 		"php"
-	]
+	],
+	"minimum-stability" : "stable"
 }

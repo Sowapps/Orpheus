@@ -41,6 +41,9 @@ addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListCon
 addAutoload('AdminConfigController',			'src/controllers/admin/AdminConfigController');
 addAutoload('DevEntitiesController',			'src/controllers/admin/DevEntitiesController');
 
+addAutoload('DevToolsController',				'src/controllers/devtools/DevToolsController');
+addAutoload('ComposerController',				'src/controllers/devtools/ComposerController');
+
 addAutoload('SetupController',					'src/controllers/setup/SetupController');
 addAutoload('StartSetupController',				'src/controllers/setup/StartSetupController');
 addAutoload('CheckFileSystemSetupController',	'src/controllers/setup/CheckFileSystemSetupController');
@@ -119,4 +122,8 @@ Your humble servant, {$SITENAME}.
 BODY
 );
 	return $e->send(ADMINEMAIL);
+}
+
+function includeHTMLAdminFeatures() {
+	require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 }
