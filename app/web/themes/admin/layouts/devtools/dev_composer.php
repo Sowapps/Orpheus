@@ -12,6 +12,7 @@ if( isset($formData['composer']['keywords']) ) {
 	$formData['composer']['keywords'] = implode(',', $formData['composer']['keywords']);
 	apath_setp($formData, 'composer/minimum-stability', 'stable', false);
 	apath_setp($formData, 'composer/authors', array(), false);
+	apath_setp($formData, 'composer/require', array(), false);
 }
 
 includeHTMLAdminFeatures();
@@ -88,6 +89,42 @@ includeHTMLAdminFeatures();
 		
 		<?php HTMLRendering::endCurrentLayout(array(
 			'title' => t('authors', DOMAIN_COMPOSER),
+			'footer' => '
+<div class="panel-footer text-right">
+	<button class="btn btn-primary" type="submit" name="submitUpdate">'.t('save').'</button>
+</div>')); ?>
+	</div>
+	
+</div>
+
+<div class="row">
+
+	<div class="col-lg-6">
+		<?php HTMLRendering::useLayout('panel-default'); ?>
+		<?php
+		
+// 		"require" : {
+// 		"orpheus/orpheus-ssh2" : "dev-master@stable"
+// 	}
+		if( !empty($formData['composer']['require']) ) {
+			?>
+		<ul class="list-group">
+		<?php
+		foreach( $formData['composer']['require'] as $dependency => $version ) {
+			echo '
+			<li class="list-group-item dependency"><i class="fa fa-folder fa-fw text-success"></i> '.
+				$dependency.' ('.$version.')'.
+			'</li>';
+			
+		}
+		?>
+		</ul>
+		<?php
+		}
+		?>
+		
+		<?php HTMLRendering::endCurrentLayout(array(
+			'title' => t('dependencies', DOMAIN_COMPOSER),
 			'footer' => '
 <div class="panel-footer text-right">
 	<button class="btn btn-primary" type="submit" name="submitUpdate">'.t('save').'</button>
