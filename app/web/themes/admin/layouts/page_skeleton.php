@@ -25,8 +25,10 @@ $routeName = $Controller->getRouteName();
 <html lang="<?php echo LANGBASE; ?>">
 <!--<![endif]-->
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo !empty($PageTitle) ? $PageTitle : SITENAME; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
 	<meta name="application-name" content="<?php echo SITENAME;?>" />
