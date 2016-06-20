@@ -13,6 +13,7 @@ class SlugGenerator {
 	 */
 	protected $removeSpaces		= false;
 	
+	const LOWERCASE	= 0;
 	const CAMELCASE	= 1<<0;
 	const LOWERCAMELCASE	= self::CAMELCASE;
 	const UPPERCAMELCASE	= self::CAMELCASE | 1<<1;
@@ -26,12 +27,14 @@ class SlugGenerator {
 	
 	public function format($string) {
 		
+		$string = ucwords(str_replace('&', 'and', strtolower($string)));
+		
 		if( $this->isRemovingSpaces() ) {
 			$string	= str_replace(' ', '', $string);
 		}
 		
-		$string	= strtr(ucwords(str_replace('&', 'and', strtolower($string))), " .'\"", '----');
-		if( isset($this->caseProcessing) ) {
+		$string	= strtr($string, ' .\'"', '----');
+		if( $this->caseProcessing ) {
 			if( $this->isCamelCaseProcessing() ) {
 				if( $this->caseProcessing == self::LOWERCAMELCASE ) {
 					$string = lcfirst($string);

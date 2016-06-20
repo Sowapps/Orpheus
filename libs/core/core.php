@@ -421,9 +421,9 @@ function text2HTML($text) {
 */
 function htmlFormATtr($var) {
 	if( !is_scalar($var) ) {
-		$var	= json_encode($var);
+		$var = json_encode($var);
 	}
-	$flags	= ENT_QUOTES | ENT_IGNORE;
+	$flags = ENT_QUOTES | ENT_IGNORE;
 	if( defined('ENT_HTML5') ) {
 		$flags |= ENT_HTML5;
 	}
@@ -479,7 +479,9 @@ function parseFields(array $fields, $quote='"') {
 */
 function apath_get($array, $apath, $default=null, $pathRequired=false) {
 	if( empty($array) || !is_array($array) || $apath === NULL ) {
-		return null;
+		return $default;
+		// Was not returning default value if array was empty
+// 		return null;
 	}
 	list($key, $suffix)	= explodeList('/', $apath, 2);
 	// If element does not exist in array
@@ -504,7 +506,7 @@ function apath_setp(&$array, $apath, $value, $overwrite=true) {
 	// The path ends here
 	if( $suffix === NULL ) {
 		// NULL value will always be overwritten
-		if( $overwrite===true || !isset($array[$key]) ) {
+		if( $overwrite === true || !isset($array[$key]) ) {
 			$array[$key] = $value;
 		}
 		return;

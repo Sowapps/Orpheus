@@ -15,10 +15,12 @@ class HTTPRoute extends ControllerRoute {
 	
 	protected static $typesRegex	= array();
 	protected static $routes		= array();
-	protected static $knownMethods	= array('GET', 'POST', 'PUT', 'DELETE');
+	protected static $knownMethods	= array(
+		self::METHOD_GET, self::METHOD_POST, self::METHOD_PUT, self::METHOD_DELETE
+	);
 	
-	protected function __construct($name, $path, $controller, $method, $restrictTo, $options) {
-		parent::__construct($name, $path, $controller, $restrictTo, $options);
+	protected function __construct($name, $path, $controller, $method, $restrictTo, $defaultResponse, $options) {
+		parent::__construct($name, $path, $controller, $restrictTo, $defaultResponse, $options);
 		$this->method	= $method;
 		$this->generatePathRegex();
 	}
@@ -121,6 +123,9 @@ class HTTPRoute extends ControllerRoute {
 		if( empty($config['path']) ) {
 			throw new Exception('Missing a valid `path` in configuration of route "'.$name.'"');
 		}
+		if( empty($config['response']) ) {
+			$config['response'] = !empty($config['output']) ? $config['output'].'HTTPResponse' : 'HTMLHTTPResponse';
+		}
 		if( empty($config['controller']) ) {
 			if( !empty($config['redirect']) ) {
 				$config['controller']	= 'RedirectController';
@@ -136,10 +141,10 @@ class HTTPRoute extends ControllerRoute {
 		}
 		$options	= $config;
 		unset($options['path'], $options['controller'], $options['method'], $options['restrictTo']);
-		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null, $config['restrictTo'], $options);
+		static::register($name, $config['path'], $config['controller'], isset($config['method']) ? $config['method'] : null, $config['restrictTo'], $config['response'], $options);
 	}
 	
-	public static function register($name, $path, $controller, $methods=null, $restrictTo=null, $options=array()) {
+	public static function register($name, $path, $controller, $methods=null, $restrictTo=null, $defaultResponse, $options=array()) {
 		if( $methods && !is_array($methods) ) {
 			$methods	= array($methods);
 		}
@@ -147,7 +152,7 @@ class HTTPRoute extends ControllerRoute {
 			if( (!$methods && !empty(static::$routes[$name][$method])) || ($methods && !in_array($method, $methods)) ) {
 				continue;
 			}
-			static::$routes[$name][$method]	= new static($name, $path, $controller, $method, $restrictTo, $options);
+			static::$routes[$name][$method]	= new static($name, $path, $controller, $method, $restrictTo, $defaultResponse, $options);
 		}
 	}
 	

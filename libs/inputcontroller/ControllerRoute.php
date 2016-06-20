@@ -8,17 +8,19 @@ abstract class ControllerRoute {
 	protected $controller;
 	protected $options;
 	protected $restrictTo;
+	protected $defaultResponse;
 	
 	protected static $routes = array();
 	
 	protected static $routesRestrictions	= array();
 	
-	protected function __construct($name, $path, $controller, $restrictTo, $options) {
+	protected function __construct($name, $path, $controller, $restrictTo, $defaultResponse, $options) {
 		$this->name			= $name;
 		$this->path			= $path;
 		$this->controller	= $controller;
 		$this->restrictTo	= $restrictTo;
 		$this->options		= $options;
+		$this->defaultResponse	= $defaultResponse;
 	}
 	
 	public abstract function isMatchingRequest(InputRequest $request, &$values=array(), $alternative=false);
@@ -34,20 +36,36 @@ abstract class ControllerRoute {
 	}
 	
 	public function run(InputRequest $request) {
-		if( !$this->controller || !class_exists($this->controller, true) ) {
-			throw new NotFoundException('The controller "'.$this->controller.'" was not found');
+		try {
+			if( !$this->controller || !class_exists($this->controller, true) ) {
+				throw new NotFoundException('The controller "'.$this->controller.'" was not found');
+			}
+			$request->setRoute($this);
+			if( !$this->isAccessible() ) {
+				throw new ForbiddenException('This route is not accessible in this context');
+			}
+			$class	= $this->controller;
+			$controller = new $class();
+			if( !($controller instanceof Controller) ) {
+				throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
+			}
+			$result	= $controller->process($request);
+			return $result;
+		} catch( Exception $exception ) {
+			return $this->processException($exception);
 		}
-		$request->setRoute($this);
-		if( !$this->isAccessible() ) {
-			throw new ForbiddenException('This route is not accessible in this context');
-		}
-		$class	= $this->controller;
-		$controller = new $class();
-		if( !($controller instanceof Controller) ) {
-			throw new NotFoundException('The controller "'.$this->controller.'" is not a valid controller, the class must inherit from "'.get_class().'"');
-		}
-		$result	= $controller->process($request);
-		return $result;
+	}
+	
+	public function processUserException(UserException $exception, $values=array()) {
+		// This exception is a user one, we use an app page
+		$response = $this->defaultResponse;
+		return $response::generateFromUserException($exception, $values);
+	}
+	
+	public function processException(Exception $exception) {
+		// This exception is fatal, this is an Orpheus page
+		$response = $this->defaultResponse;
+		return $response::generateFromException($exception);
 	}
 	
 	protected static $initialized = false;

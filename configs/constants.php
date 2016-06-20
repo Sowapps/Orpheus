@@ -29,9 +29,6 @@ defifn('LANGBASE',			'en');
 // defifn('LANGBASE',			array_shift(explode('_', LANG, 2)));
 defifn('LOCALE',			LANG.'.utf8');
 
-
-// defifn('LOGSPATH',			pathOf('logs/'));
-// defifn('STOREPATH',			pathOf('store/'));
 defifn('CACHEPATH',			STOREPATH.'cache/');
 defifn('TEMPPATH',			STOREPATH.'temp/');
 defifn('FILESTOREPATH',		STOREPATH.'files/');
@@ -39,10 +36,14 @@ defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
 
 defifn('STATIC_URL',		SITEROOT.'static/');
 
+// defifn('JSURL',				SITEROOT.'js/');
+defifn('IMAGESURL',			STATIC_URL.'images/');
+
 // Routes' contants
 defifn('ROUTE_HOME',			'home');
 define('ROUTE_LOGIN',			'login');
 define('ROUTE_LOGOUT',			'logout');
+define('ROUTE_FILE_DOWNLOAD',	'file_download');
 // define('ROUTE_DASHBOARD',		'user_dashboard');
 
 define('ROUTE_ADM_DEMO',		'admin_demo');
@@ -64,4 +65,25 @@ defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
 define('CRAC_CONTEXT_APPLICATION',	1);
 define('CRAC_CONTEXT_AGENCY',		2);
 define('CRAC_CONTEXT_RESOURCE',		3);
+define('FILE_USAGE_USER_PICTURE',		'user_picture');
+define('FILE_USAGE_INVOICE',			'invoice');
+
+function listFileUsages() {
+	return array(
+		FILE_USAGE_USER_PICTURE		=> array('type' => 'image'),
+// 		FILE_USAGE_INVOICE						=> array(),
+	);
+}
+
+define('FILE_SOURCETYPE_UPLOAD',			'upload');
+define('FILE_SOURCETYPE_UPLOAD_CONVERTED',	'upload_converted');
+// define('FILE_SOURCETYPE_DATAURI',			'datauri');
+define('FILE_SOURCETYPE_PHPQRCODE',			'qrcode');
+define('FILE_SOURCETYPE_LOCALDEMO',			'demo');
+define('FILE_SOURCETYPE_WKPDF',				'wkpdf');
+define('FILE_SOURCETYPE_FACEBOOK',			'fb');
+
+function listFileSourceTypes() {
+	return array(FILE_SOURCETYPE_UPLOAD, FILE_SOURCETYPE_UPLOAD_CONVERTED, FILE_SOURCETYPE_PHPQRCODE, FILE_SOURCETYPE_WKPDF, FILE_SOURCETYPE_LOCALDEMO, FILE_SOURCETYPE_FACEBOOK);
+}
 

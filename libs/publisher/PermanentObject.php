@@ -822,7 +822,7 @@ abstract class PermanentObject {
 	
 	public static function cacheObjects(array &$objects) {
 		foreach( $objects as &$obj ) {
-			$obj	= $obj->checkCache();
+			$obj = $obj->checkCache();
 		}
 		return $objects;
 	}
@@ -980,11 +980,8 @@ abstract class PermanentObject {
 	 * @todo Change to use formatFieldValue($name, $value) ?
 	*/
 	public static function formatValueList(array $list) {
-		$str	= '';
-		foreach( $list as $i => $v ) {
-			$str	.= ($i ? ',' : '').static::formatValue($v);
-		}
-		return $str;
+		$sqlAdapter = static::getSQLAdapter();
+		return $sqlAdapter->formatValueList($list);
 	}
 	
 	/** Runs for Deletion

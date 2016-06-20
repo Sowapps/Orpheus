@@ -269,7 +269,7 @@ function displayExceptionStackTrace(Exception $Exception) {
 				if( is_closure($arg) ) {
 					$argTxt	= '{closure}';
 				} else {
-					$argTxt	= ' "<span class="arg_value">'.$arg.'</span>"';
+					$argTxt	= ' "<span class="arg_value">'.( (is_object($arg) && !method_exists($arg, '__toString')) ? get_class($arg) : $arg).'</span>"';
 				}
 				$args .= ($i ? ', ' : '').'
 		<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> '.$argTxt.'</span>';

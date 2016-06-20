@@ -5,19 +5,19 @@ $GlobalConfig	= GlobalConfig::instance();
 ?>
 <div class="row">
 	<div class="col-lg-12">
-		<div class="btn-group" role="group" aria-label="Actions">
-			<button type="button" class="btn btn-default createbtn"><i class="fa fa-plus"></i> New</button>
-		</div>
-		<div class="table-responsive">
-			<table class="table table-bordered table-hover tablesorter">
-				<thead>
-					<tr>
-						<th><?php _t('key'); ?> <i class="fa fa-sort" title="Trier par Clé"></i></th>
-						<th class="sorter-false"><?php _t('value'); ?></th>
-						<th class="sorter-false"><?php _t('actionsColumn'); ?></th>
-					</tr>
-				</thead>
-				<tbody>
+		<?php HTMLRendering::useLayout('panel-default'); ?>
+<div class="btn-group" role="group" aria-label="Actions">
+	<button type="button" class="btn btn btn-primary mb10 createbtn"><i class="fa fa-plus"></i> <?php _t('new'); ?></button>
+</div>
+<table class="table table-bordered table-hover tablesorter">
+	<thead>
+		<tr>
+			<th><?php _t('key'); ?> <i class="fa fa-sort" title="Trier par Clé"></i></th>
+			<th class="sorter-false"><?php _t('value'); ?></th>
+			<th class="sorter-false"><?php _t('actionsColumn'); ?></th>
+		</tr>
+	</thead>
+	<tbody>
 <?php
 /* @ar $user User */
 foreach( $GlobalConfig->asArray() as $key => $value ) {
@@ -36,7 +36,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 ?>
 				</tbody>
 			</table>
-		</div>
+		<?php HTMLRendering::endCurrentLayout(); ?>
 	</div>
 </div>
 

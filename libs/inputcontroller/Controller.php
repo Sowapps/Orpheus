@@ -6,7 +6,7 @@ abstract class Controller {
 	/* @var $request InputRequest */
 	protected $request;
 	
-	protected $options;
+	protected $options = array();
 	
 	public function __toString() {
 		return get_called_class();
@@ -32,7 +32,8 @@ abstract class Controller {
 		} catch( UserException $e ) {
 // 			print_r($e);
 // 			die();
-			$result	= $this->processUserException($e);
+			$this->fillValues($values);
+			$result	= $this->processUserException($e, $values);
 // 		} catch( Exception $e ) {
 // 			print_r($e);
 // 			die();
@@ -43,7 +44,8 @@ abstract class Controller {
 			try {
 				$result	= $this->run($request);
 			} catch( UserException $e ) {
-				$result	= $this->processUserException($e);
+				$this->fillValues($values);
+				$result	= $this->processUserException($e, $values);
 			}
 			$this->postRun($request, $result);
 		}
@@ -63,6 +65,9 @@ abstract class Controller {
 		return $this->request;
 	}
 	
+	/**
+	 * @return ControllerRoute
+	 */
 	public function getRoute() {
 		return $this->request->getRoute();
 	}
@@ -71,10 +76,14 @@ abstract class Controller {
 		return $this->request->getRouteName();
 	}
 	
-	public function render($response, $layout, $values=array()) {
+	public function fillValues(&$values=array()) {
 		$values['Controller']	= $this;
 		$values['Request']		= $this->getRequest();
 		$values['Route']		= $this->getRoute();
+	}
+	
+	public function render($response, $layout, $values=array()) {
+		$this->fillValues($values);
 		$response->collectFrom($layout, $values);
 		return $response;
 	}

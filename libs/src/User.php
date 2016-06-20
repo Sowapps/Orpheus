@@ -10,7 +10,7 @@
  * 
  * @property string $create_date
  * @property string $create_ip
- * @property integer $create_user_id
+ * @property int $create_user_id
  * @property string $login_date
  * @property string $login_ip
  * @property string $activity_date
@@ -21,15 +21,16 @@
  * @property string $email
  * @property string $password
  * @property string $fullname
+ * @property int $avatar_id
  * @property boolean $published
  * 
- * @property integer $accesslevel
+ * @property int $accesslevel
  * @property string $recovery_code
  * @property string $activation_code
  * 
  */
 
-class User extends AbstractUser {
+class User extends AbstractUser implements FixtureInterface {
 	
 	// *** OVERLOADED METHODS ***
 	
@@ -133,7 +134,14 @@ class User extends AbstractUser {
 	public function canEntityDelete($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
 		return $this->canDo('entity_delete');// Only App admins can do it.
 	}
-	
+
+	/**
+	 * @param string $email
+	 * @return User
+	 */
+	public static function getByEmail($email) {
+		return static::get()->where('email', $email)->asObject()->run();
+	}
 
 	public static function loadFixtures() {
 		static::create(array(

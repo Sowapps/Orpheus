@@ -35,10 +35,12 @@ label, select, button, input[type="button"], input[type="reset"], input[type="su
 ul {
 	list-style: none;
 }
+/*
 ul, p {
 	padding: 0;
 	margin: 0;
 }
+*/
 
 /* br, .br { clear: both; } */
 

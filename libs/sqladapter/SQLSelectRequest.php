@@ -13,6 +13,10 @@ class SQLSelectRequest extends SQLRequest {
 		return $this;
 	}
 
+	public function disableCache() {
+		return $this->setUsingCache(false);
+	}
+
 	public function fields($fields=null) {
 		return $this->sget('what', $fields);
 	}
@@ -28,12 +32,15 @@ class SQLSelectRequest extends SQLRequest {
 	}
 
 	public function where($condition, $equality=null, $value=null) {
+// 		debug('SQLSelectRequest::where('.$condition.', '.$equality.', '.$value.')');
 		if( $equality ) {
 			if( !$value ) {
 				$value		= $equality;
-				$equality	= '=';
+				$equality	= is_array($value) ? 'IN' : '=';
 			}
-			$condition = $this->escapeIdentifier($condition).' '.$equality.' '.$this->escapeValue(is_object($value) ? id($value) : $value);
+			$condition = $this->escapeIdentifier($condition).' '.$equality.' '.(is_array($value) ?
+				'('.$this->sqlAdapter->formatValueList($value).')' :
+				$this->escapeValue(is_object($value) ? id($value) : $value));
 		}
 		$where		= $this->get('where', array());
 		$where[]	= $condition;

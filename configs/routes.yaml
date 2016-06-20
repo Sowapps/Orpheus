@@ -21,6 +21,14 @@ http:
     user_login:
         path: "/user_login.html"
         controller: "UserLoginController"
+        restrictTo:
+          role: visitor
+          
+    logout:
+        path: "/logout.html"
+        controller: "LogoutController"
+        restrictTo:
+          role: member
         
 #    sample_twig:
 #        path: "/sample_twig.html"
@@ -66,19 +74,13 @@ http:
         path: "/admin/config.html"
         controller: "AdminConfigController"
         restrictTo:
-          role: administrator
+          role: developer
         
     dev_entities:
         path: "/admin/dev_entities.html"
         controller: "DevEntitiesController"
         restrictTo:
           role: developer
-          
-    logout:
-        path: "/logout.html"
-        controller: "LogoutController"
-        restrictTo:
-          role: member
         
     file_download:
         path: "/download/{id:fileID}"

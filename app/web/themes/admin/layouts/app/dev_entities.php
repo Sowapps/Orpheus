@@ -1,4 +1,8 @@
 <?php
+/* @var HTMLRendering $this */
+/* @var HTTPController $Controller */
+/* @var HTTPRequest $Request */
+/* @var HTTPRoute $Route */
 /* @var $resultingSQL string */
 /* @var $FORM_TOKEN FormToken */
 

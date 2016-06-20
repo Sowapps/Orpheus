@@ -1,10 +1,24 @@
 <?php
 
 /**
- * The file class to save file's informations in database
+ * The File class to save file's informations in database
  *
  * This class is really useful to save file's information in database.
  * It abstracts uploads and downloads.
+ * 
+ * @property string $create_date
+ * @property string $create_ip
+ * @property integer $create_user_id
+ * @property string $name
+ * @property string $extension
+ * @property string $mimetype
+ * @property string $usage
+ * @property integer $parent_id
+ * @property integer $position
+ * @property string $passkey
+ * @property string $source_type
+ * @property string $source_name
+ * @property string $source_url
  */
 class File extends PermanentEntity {
 	
@@ -18,17 +32,12 @@ class File extends PermanentEntity {
 
 	const MODE_COPY	= 1;
 	const MODE_MOVE	= 2;
+	
 	/**
 	 * @var {string:array}[]
 	 */
 	protected static $usages	= null;
 
-	const SOURCETYPE_UPLOAD				= 'upload';
-	/**
-	 * @var string[]
-	 */
-	protected static $sourceTypes		= array(self::SOURCETYPE_UPLOAD);
-	
 	/**
 	 * @see PermanentObject::__toString()
 	 */
@@ -69,7 +78,7 @@ class File extends PermanentEntity {
 	 * @return string
 	 */
 	public function getLink() {
-		return static::genLink($this->id());
+		return static::genLink($this->id(), $this->passkey);
 	}
 	
 	/**
@@ -127,7 +136,11 @@ class File extends PermanentEntity {
 	 * @return string
 	 * Send the file to the client
 	 */
-	public function download($forceDownload=false) {
+	public function download($passKey, $forceDownload=false) {
+		// Allow File to have no passkey, then the file is public
+		if( $this->passkey && $passKey !== $this->passkey ) {
+			static::throwException('invalidPasskey');
+		}
 		$filePath	= $this->getPath();
 		if( !is_readable($filePath) ) {
 			static::throwException('unreadableFile');
@@ -169,30 +182,34 @@ class File extends PermanentEntity {
 	 * @return	boolean|File The File object or false if there is no valid upload
 	 */
 	public static function uploadOne($inputName, $label, $usage, $parent=0) {
-// 		if( !in_array($usage, static::getUsageNames()) ) {
-		if( !in_array($usage, getFileUsages()) ) {
+		if( !in_array($usage, static::getUsageNames()) ) {
 			static::throwException('invalidUsage');
+		}
+		if( !$parent && is_object($label) ) {
+			$parent = $label;
 		}
 		if( is_string($inputName) ) {
 			$upFile = UploadedFile::load($inputName);
 // 			debug('$upFile', $upFile);
 			// No valid upload
 			if( empty($upFile) ) { return false; }
-			if( isset(static::$usages[$usage]['type']) ) {
-				$upFile->type	= static::$usages[$usage]['type'];
+			$usages = listFileUsages();
+// 			if( isset(static::$usages[$usage]['type']) ) {
+			if( isset($usages[$usage]['type']) ) {
+				$upFile->type = $usages[$usage]['type'];
 			}
 			$upFile->validate('Uploading file'.$label.' ('.$usage.')');
 		} else {
 			$upFile	= &$inputName;
 		}
 		$file	= static::createAndGet(array(
-			'name'			=> $label, 
+			'name'			=> $label.'', 
 			'parent_id'		=> id($parent), 
 			'usage'			=> $usage,
 			'extension'		=> strtolower($upFile->getExtension()),
 			'mimetype'		=> $upFile->getMIMEType(),
 			'source_name'	=> $upFile->getFileName(),
-			'source_type'	=> self::SOURCETYPE_UPLOAD,
+			'source_type'	=> FILE_SOURCETYPE_UPLOAD,
 		));
 		try {
 			checkDir(static::getFolderPath());
@@ -234,10 +251,23 @@ class File extends PermanentEntity {
 	}
 	
 	public static function importFromURL(array $input, $url) {
-		if( empty($input['source_type']) ) {
-			$input['source_type'] = FILE_SOURCETYPE_USERURL;
+		if( !is_dir(TEMPPATH) ) {
+			mkdir(TEMPPATH, 0777, true);
 		}
-		return static::import($input, $url, self::MODE_COPY);
+		if( !isset($input['extension']) ) {
+			$input['extension']	= pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+		}
+		do {
+			$tmpFile = TEMPPATH.generatePassword().'.tmp';
+		} while( file_exists($tmpFile) );
+		try {
+			copy($url, $tmpFile);
+			$input['source_url'] = $url;
+			return static::import($input, $tmpFile, self::MODE_MOVE);
+		} catch( Exception $e ) {
+			unlink($tmpFile);
+			throw $e;
+		}
 	}
 
 	/**
@@ -264,17 +294,20 @@ class File extends PermanentEntity {
 			$input['source_type']	= FILE_SOURCETYPE_DATAURI;
 			// Empty name by default
 		}
-		debug("input file ", $input);
-// 		return null;
 		$content	= file_get_contents($dataURL);
 		$file		= static::createAndGet($input);
-// 		$file	= static::load(static::create($input));
 		file_put_contents($file->getPath(), $content);
-// 		if( !($mode==self::MODE_MOVE ? rename($path, $file->getPath()) : copy($path, $file->getPath())) ) {
-// 			static::throwException('unableToImport');
-// 		}
 		return $file;
 	}
+		
+	public static function createAndGet($input=array(), $fields=null, &$errCount=0) {
+		$input['passkey'] = (new PasswordGenerator())->generate(30);
+		return parent::createAndGet($input, $fields, $errCount);
+	}
+
+// 	public static function genKey() {
+// 		return
+// 	}
 	
 	public static function getMimeTypeExtension($mimetype) {
 		$types	= array(
@@ -287,13 +320,14 @@ class File extends PermanentEntity {
 	
 	/**
 	 * Generate link from file id
-	 * @param id $id The file id
-	 * @param string $download True to download explicitly the file
+	 * @param int $id The file id
+	 * @param string $passkey The file passkey
+	 * @param boolean $download True to download explicitly the file
 	 * @return string The generated link
 	 */
-	public static function genLink($id, $download=false) {
-		return u('file_download', array('fileID'=>$id));
-// 		return u('download_file', $id).($download ? '?download' : '');
+	public static function genLink($id, $passkey, $download=false) {
+// 		return u('file_download', array('fileID'=>$id));
+		return u(ROUTE_FILE_DOWNLOAD, array('fileID'=>$id)).'?k='.urlencode($passkey).($download ? '&download' : '');
 	}
 	
 	/**
@@ -339,7 +373,8 @@ class File extends PermanentEntity {
 	 * @return	array
 	 */
 	public static function getUsageNames() {
-		return array_keys(static::getUsages());
+// 		return array_keys(static::getUsages());
+		return array_keys(listFileUsages());
 	}
 	
 	/**

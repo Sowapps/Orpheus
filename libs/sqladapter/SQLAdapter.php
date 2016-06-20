@@ -267,6 +267,14 @@ abstract class SQLAdapter {
 		return $value === null ? 'NULL' : $this->formatString($value);
 	}
 	
+	public function formatValueList(array $list) {
+		$str = '';
+		foreach( $list as $i => $v ) {
+			$str .= ($i ? ',' : '').$this->formatValue($v);
+		}
+		return $str;
+	}
+	
 	/**
 	 * Get the last inserted ID
 	 * 

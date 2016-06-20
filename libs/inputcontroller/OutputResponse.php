@@ -32,4 +32,11 @@ abstract class OutputResponse {
 		return get_called_class();
 	}
 	
+	public static function generateFromException(Exception $exception, $action=null) {
+		return new static();
+	}
+	public static function generateFromUserException(UserException $exception, $values=array()) {
+		return new static();
+	}
+	
 }

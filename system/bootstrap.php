@@ -338,12 +338,12 @@ try {
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
 	
 	if( file_exists(VENDORPATH.'autoload.php') ) {
-		$PackageLoader	= require VENDORPATH.'autoload.php';
+		$PackageLoader = require VENDORPATH.'autoload.php';
 	}
 	
 	Config::build('engine');// Some libs should require to get some configuration.
 	
-	$RENDERING	= Config::get('default_rendering');
+	$RENDERING = Config::get('default_rendering');
 	
 	// Here starts Hooks and Session too.
 	Hook::trigger(HOOK_STARTSESSION);

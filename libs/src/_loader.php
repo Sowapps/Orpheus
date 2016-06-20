@@ -30,7 +30,6 @@ addAutoload('AdminUserEditController',			'src/controllers/admin/AdminUserEditCon
 
 addAutoload('UserLoginController',				'src/controllers/UserLoginController');
 
-addAutoload('FileDownloadController',			'src/controllers/FileDownloadController');
 addAutoload('HomeController',					'src/controllers/HomeController');
 addAutoload('TwigSampleController',				'src/controllers/TwigSampleController');
 addAutoload('ThreadController',					'src/controllers/ThreadController');

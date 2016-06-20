@@ -17,16 +17,10 @@ abstract class HTTPController extends Controller {
 	}
 	
 	public function renderHTML($layout, $values=array()) {
-		// 		$rendering	= static::getRenderer();
-// 		$rendering	= new HTMLRendering();
 		return $this->render(new HTMLHTTPResponse(), $layout, $values);
 	}
 	
-	public function processUserException(UserException $e) {
-		reportError($e);
-		return $this->render(new HTMLHTTPResponse(), 'page_skeleton', array(
-			'titleRoute'	=> 'usererror',
-			'Content'		=> ''
-		));
+	public function processUserException(UserException $exception, $values=array()) {
+		return $this->getRoute()->processUserException($exception, $values);
 	}
 }

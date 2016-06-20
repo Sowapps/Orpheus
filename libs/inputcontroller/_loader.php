@@ -16,6 +16,7 @@ addAutoload('HTTPRequest',					'inputcontroller/http/HTTPRequest');
 addAutoload('HTTPController',				'inputcontroller/http/HTTPController');
 addAutoload('HTTPResponse',					'inputcontroller/http/HTTPResponse');
 addAutoload('HTMLHTTPResponse',				'inputcontroller/http/HTMLHTTPResponse');
+addAutoload('JSONHTTPResponse',				'inputcontroller/http/JSONHTTPResponse');
 addAutoload('RedirectHTTPResponse',			'inputcontroller/http/RedirectHTTPResponse');
 
 addAutoload('DelayedPageController',		'inputcontroller/controllers/DelayedPageController');

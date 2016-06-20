@@ -2,7 +2,7 @@
 
 $(function() {
 	// http://ivaynberg.github.io/select2/
-	$("select").each(function() {
+	$("select.select2").each(function() {
 		var _	= $(this);
 		var options	= {};
 		if( !_.hasClass("searchable") ) {

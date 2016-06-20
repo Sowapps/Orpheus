@@ -56,7 +56,7 @@ function adm_htmlMoneyInput($fieldPath, $money='€', $class='', $addAttr='', $d
 }
 
 function _adm_htmlPassword($fieldPath, $class='', $addAttr='') {
-	echo htmlPassword($fieldPath, $addAttr.' class="'.$class.' form-control"');
+	echo htmlPassword($fieldPath, $addAttr.' class="'.$class.' form-control" autocomplete="off"');
 }
 
 function _adm_htmlTextInput($fieldPath, $class='', $addAttr='', $default='', $type='text') {

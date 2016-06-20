@@ -46,8 +46,10 @@ class HTMLHTTPResponse extends HTTPResponse {
 			die($this->getBody());
 		}
 		$rendering	= new HTMLRendering();
+		
 		$env	= $this->values;
 		$env['CONTROLLER_OUTPUT']	= $this->getControllerOutput();
+		
 		$rendering->display($this->layout, $env);
 	}
 	
@@ -71,9 +73,9 @@ class HTMLHTTPResponse extends HTTPResponse {
 	public static function generateFromException(Exception $exception, $action='Handling the request') {
 		$code	= $exception->getCode();
 		if( !$code ) {
-			$code	= HTTP_INTERNAL_SERVER_ERROR;
+			$code = HTTP_INTERNAL_SERVER_ERROR;
 		}
-		$response	= new static(convertExceptionAsHTMLPage($exception, $code, $action));
+		$response = new static(convertExceptionAsHTMLPage($exception, $code, $action));
 		$response->setCode($code);
 // 		http_response_code($code);
 		return $response;
@@ -85,6 +87,19 @@ class HTMLHTTPResponse extends HTTPResponse {
 // 			'date'		=> dt(),
 // 			'report'	=> $exception->getMessage()."<br />\n<pre>".$exception->getTraceAsString()."</pre>",
 // 		)));
+	}
+	
+	public static function generateFromUserException(UserException $exception, $values=array()) {
+		$code	= $exception->getCode();
+		if( !$code ) {
+			$code = HTTP_BAD_REQUEST;
+		}
+		reportError($exception);
+		$values['titleRoute']	= 'usererror';
+		$values['Content']		= '';
+		$response = static::render('page_skeleton', $values);
+		$response->setCode($code);
+		return $response;
 	}
 	
 	public function getBody() {

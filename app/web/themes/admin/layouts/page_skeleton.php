@@ -4,7 +4,7 @@
 /* @var HTTPController $Controller */
 /* @var HTTPRequest $Request */
 /* @var HTTPRoute $Route */
-/* @var User $USER */
+/* @var User $user */
 
 /* Parameters
  * 
@@ -13,8 +13,10 @@
  * $ContentTitle
  */
 
+//global $NO_MODULE_TITLE, $ModuleTitle;
 
 $routeName = $Controller->getRouteName();
+$user = User::getLoggedUser();
 /*
 	<title><?php echo ( !empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).'ADM '.SITENAME ?></title>
 */
@@ -46,11 +48,17 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" />
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.6/select2-bootstrap.min.css" type="text/css" media="screen" />
+<?php
+/*
 	<link rel="stylesheet" href="//shared.sowapps.com/select2/select2-3.5.2/select2.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="//shared.sowapps.com/select2-bootstrap-css/select2-3.5.2/select2-bootstrap.css" type="text/css" media="screen" />
 	
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
-<?php
+*/
+
 foreach(HTMLRendering::listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	echo '
 	<link rel="stylesheet" href="'.$url.'" type="text/css" media="screen" />';
@@ -92,15 +100,16 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 			<?php
 			$this->showMenu($Controller->getOption('mainmenu', 'adminmenu'), 'menu-sidebar');
 			?>
+			
 			<ul class="nav navbar-nav navbar-right navbar-user">
 			<?php
-			if( User::isLogged() ) {
+			if( $user ) {
 				?>
 				<li class="dropdown user-dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $USER; ?> <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $user; ?> <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="<?php _u(ROUTE_ADM_MYSETTINGS); ?>"><i class="fa fa-gear"></i> Paramètres</a></li>
-						<li><a href="<?php _u(ROUTE_LOGOUT); ?>"><i class="fa fa-power-off"></i> Déconnexion</a></li>
+						<li><a href="<?php _u(ROUTE_ADM_MYSETTINGS); ?>"><i class="fa fa-gear"></i> <?php _t(ROUTE_ADM_MYSETTINGS); ?></a></li>
+						<li><a href="<?php _u(ROUTE_LOGOUT); ?>"><i class="fa fa-power-off"></i> <?php _t(ROUTE_LOGOUT); ?></a></li>
 					</ul>
 				</li>
 			<?php
@@ -159,17 +168,19 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>
 	<?php /*
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
 	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/morris/chart-data-morris.js"></script>
 	<script src="//shared.sowapps.com/morris.js/morris.js-0.5.1/morris.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone.min.js"></script>
-	*/?>
-	<script src="//shared.sowapps.com/tablesorter/tablesorter-2.0.5/jquery.tablesorter.min.js"></script>
 	<script src="//shared.sowapps.com/select2/select2-3.5.2/select2.min.js"></script>
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script> -->
 <!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data.min.js"></script> -->
+	*/?>
+	<script src="//shared.sowapps.com/tablesorter/tablesorter-2.0.5/jquery.tablesorter.min.js"></script>
 	
 <?php
 foreach(HTMLRendering::listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {

@@ -24,7 +24,7 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 	
 	// Initialize class dialog
 	if( !ConfirmDialog.dialog ) {
-		ConfirmDialog.dialog	= $(ConfirmDialog.dialogTemplate);
+		ConfirmDialog.dialog = $(ConfirmDialog.dialogTemplate);
 		$("body").append(ConfirmDialog.dialog);
 		ConfirmDialog.dialog.modal({"show": false});
 	}
@@ -119,9 +119,15 @@ $(function() {
 		if( _.data("confirmdialog") ) {
 			return;
 		}
-		var confirmDialog = new ConfirmDialog(_.data("confirm_title"), _.data("confirm_message"), _.data("confirm_submit_name"), _.data("confirm_submit_value"));
+//		var confirmDialog = new ConfirmDialog(_.data("confirm_title"), _.data("confirm_message"), _.data("confirm_submit_name"), _.data("confirm_submit_value"));
+		var confirmDialog = new ConfirmDialog();
 		_.data("confirmdialog", confirmDialog);
 		_.click(function() {
+			// Dynamically set it
+			confirmDialog.title = _.data("confirm_title");
+			confirmDialog.message = _.data("confirm_message");
+			confirmDialog.submitName = _.data("confirm_submit_name");
+			confirmDialog.submitValue = _.data("confirm_submit_value");
 			confirmDialog.open();
 		});
 	});
@@ -521,6 +527,12 @@ if( typeof KeyEvent == "undefined" ) {
         DOM_VK_META: 224
     };
 }
+var Modifier = {
+	CONTROL : 1,
+	SHIFT : 2,
+	ALT : 4,
+	META : 8,
+}
 
 /* Orpheus Widget & JS Plugins */
 
@@ -629,9 +641,41 @@ var escapeHTML;
 		});
 	};
 	
-	$.fn.pressEnter	= function(cb) {
-		$(this).keydown(function(e) {
+	$.fn.pressEnter = function(cb) {
+		return $(this).keydown(function(e) {
 			if( e.which==KeyEvent.DOM_VK_RETURN ) {
+				e.preventDefault();
+				this.callback	= cb;
+				return this.callback(e);
+			}
+		});
+	};
+	
+	$.fn.pressKey = function(key, modifiers, cb) {
+		if( !cb ) {
+			cb = modifiers;
+			modifiers = 0;
+		}
+//		console.log("Create pressKey bind with modifiers "+modifiers);
+		return $(this).keydown(function(e) {
+//			console.log("press key => "+e.key+", "+e.which+" against "+key, e);
+			if( e.which === key ) {
+//				console.log("Matching key");
+				if( modifiers ) {
+//					console.log("bintest(modifiers, Modifier.CONTROL) ", bintest(modifiers, Modifier.CONTROL));
+					if( bintest(modifiers, Modifier.CONTROL) && !e.ctrlKey ) {
+						return;
+					}
+					if( bintest(modifiers, Modifier.ALT) && !e.altKey ) {
+						return;
+					}
+					if( bintest(modifiers, Modifier.SHIFT) && !e.shiftKey ) {
+						return;
+					}
+					if( bintest(modifiers, Modifier.META) && !e.metaKey ) {
+						return;
+					}
+				}
 				e.preventDefault();
 				this.callback	= cb;
 				return this.callback(e);
@@ -659,7 +703,6 @@ var escapeHTML;
 			if( value.length && value.indexOf("://") < 0 ) {
 				$(this).val(value="http://"+value);
 			}
-//			console.log("Changed url", $(this).data("linkbtn") || $(this).next("a"));
 			$($(this).data("linkbtn") || $(this).next("a")).attr("href", value);
 		});
 	});

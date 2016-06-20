@@ -40,8 +40,7 @@ class HTTPRequest extends InputRequest {
 	 * @return Route
 	 */
 	public function findFirstMatchingRoute($alternative=false) {
-// 		debug('$this', $this);
-// 		debug('Routes', $this->getRoutes());
+		/* @var ControllerRoute $route */
 		foreach( $this->getRoutes() as $methodRoutes ) {
 			if( !isset($methodRoutes[$this->method]) ) { continue; }
 			/* @var $route HTTPRoute */
@@ -206,6 +205,10 @@ class HTTPRequest extends InputRequest {
 	
 	public function getArrayData($key) {
 		return $this->getInputValue($key, array());
+	}
+	
+	public function hasArrayData($key=null) {
+		return is_array($this->getData($key));
 	}
 	
 	public function hasData($key=null) {

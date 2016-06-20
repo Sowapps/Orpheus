@@ -6,6 +6,9 @@ abstract class InputRequest {
 	protected $path;
 	protected $parameters;
 	protected $input;
+	/**
+	 * @var ControllerRoute $route
+	 */
 	protected $route;
 	
 	public function __construct($path, $parameters, $input) {
@@ -20,6 +23,7 @@ abstract class InputRequest {
 	 * @return Route
 	 */
 	public function findFirstMatchingRoute($alternative=false) {
+		/* @var ControllerRoute $route */
 		foreach( $this->getRoutes() as $route ) {
 			/* @var $route HTTPRoute */
 			if( $route->isMatchingRequest($this, $alternative) ) {
@@ -51,6 +55,7 @@ abstract class InputRequest {
 		}
 		return $this->processRoute($route);
 	}
+	
 	public function processRoute($route) {
 		if( !$route ) {
 			throw new NotFoundException('No route matches the current request '.$this);
@@ -132,6 +137,9 @@ abstract class InputRequest {
 		return $this->route->getName();
 	}
 	
+	/**
+	 * @return ControllerRoute
+	 */
 	public function getRoute() {
 		return $this->route;
 	}

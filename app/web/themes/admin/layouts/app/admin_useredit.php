@@ -1,16 +1,21 @@
 <?php
+/* @var HTMLRendering $this */
+/* @var User $user */
+
 HTMLRendering::useLayout('page_skeleton');
 ?>
-<form method="POST">
-
-<div style="display: none;">
-	<input type="text" autocomplete="new-password" />
-	<input type="password" autocomplete="new-password" />
-</div>
 
 <div class="row">
 	<div class="col-lg-6">
+	
+		<form method="POST" id="UserEditForm">
+		
+		<div style="display: none;">
+			<input type="text" autocomplete="new-password" />
+			<input type="password" autocomplete="new-password" />
+		</div>
 		<?php HTMLRendering::useLayout('panel-default'); ?>
+		
 		<div class="form-group">
 			<label><?php User::_text('name'); ?></label>
 			<?php _adm_htmlTextInput('user/fullname'); ?>
@@ -36,13 +41,14 @@ HTMLRendering::useLayout('page_skeleton');
 		}
 		?>
 		
-		<?php HTMLRendering::endCurrentLayout(array(
-			'title' => User::text('editUser'),
-			'footer' => '
+		<?php
+		HTMLRendering::endCurrentLayout(array(
+			'title'		=> User::text('editUser'),
+			'footer'	=> '
 <div class="panel-footer text-right">
 	<button class="btn btn-primary" type="submit" name="submitUpdate">'.t('save').'</button>
 </div>')); ?>
+
+		</form>
 	</div>
 </div>
-
-</form>
