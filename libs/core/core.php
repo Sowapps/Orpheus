@@ -1767,10 +1767,16 @@ function deleteCookie($name) {
 	return true;
 }
 
+defifn('SESSION_SHARE_ACROSS_SUBDOMAIN',	false);
 define('SESSION_WITH_COOKIE',		1<<0);
 define('SESSION_WITH_HTTPTOKEN',	1<<1);
 function startSession($type=SESSION_WITH_COOKIE) {
 	global $ERROR_ACTION;
+	/**
+	 * By default, browsers share cookies across subdomains
+	 * So, we change the session name (also the cookie name) according to host
+	 * and specify host as .domain.com (prefixed by a dot).
+	 */
 	
 	Hook::trigger(HOOK_STARTSESSION, $type);
 	if( bintest($type, SESSION_WITH_COOKIE) ) {
@@ -1778,7 +1784,8 @@ function startSession($type=SESSION_WITH_COOKIE) {
 		// Set session cookie parameters, HTTPS session is only HTTPS
 		// Never set the domain, it will apply to subdomains
 		// domain.com shares cookies with all subdomains... HTTP made me cry
-		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, '', HTTPS, true);
+		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, SESSION_SHARE_ACROSS_SUBDOMAIN ? '' : '.'.HOST, HTTPS, true);
+// 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, '', HTTPS, true);
 // 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
 	}
 // 	if( bintest($type, SESSION_WITH_HTTPTOKEN) ) {
@@ -1788,6 +1795,9 @@ function startSession($type=SESSION_WITH_COOKIE) {
 // 		// Set session cookie parameters, HTTPS session is only HTTPS
 // 		session_set_cookie_params(SESSION_COOKIE_LIFETIME, PATH, HOST, HTTPS, true);
 // 	}
+
+	// Make cookie domain-dependant
+	session_name('PHPSESSID'.(SESSION_SHARE_ACROSS_SUBDOMAIN ? '' : sprintf("%u", crc32(HOST))));
 
 	// PHP is unable to manage exception thrown during session_start()
 	$ERROR_ACTION	= ERROR_DISPLAY_RAW;

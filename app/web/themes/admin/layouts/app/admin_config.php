@@ -41,7 +41,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 </div>
 
 
-<div id="editConfigDialog" class="modal fade">
+<div id="EditConfigDialog" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 		<form method="POST">
@@ -74,7 +74,7 @@ foreach( $GlobalConfig->asArray() as $key => $value ) {
 <script type="text/javascript">
 var DIALOG_EDITCONFIG;
 $(function() {
-	DIALOG_EDITCONFIG	= $("#editConfigDialog").modal({show:false});
+	DIALOG_EDITCONFIG	= $("#EditConfigDialog").modal({show:false});
 
 	$(".createbtn").click(function() {
 		DIALOG_EDITCONFIG.find("form").get(0).reset();
