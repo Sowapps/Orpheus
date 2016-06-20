@@ -167,7 +167,20 @@ includeHTMLAdminFeatures();
 				</div>
 				<div class="form-group">
 					<label for="InputAuthorName">Email</label>
-					<input type="text" class="form-control author_email" id="InputAuthorName">
+					<input type="email" class="form-control author_email" id="InputAuthorName">
+				</div>
+				<div class="form-group">
+					<label for="InputAuthorRole">Role</label>
+					<input type="text" class="form-control author_role" id="InputAuthorRole">
+				</div>
+				<div class="form-group">
+					<label for="InputAuthorHomepage">Website</label>
+					<div class="input-group">
+						<input type="url" class="form-control author_homepage" data-linkbtn="#BtnAuthorHomepage" id="InputAuthorHomepage">
+						<span class="input-group-btn">
+							 <a class="btn btn-default" target="_blank" id="BtnAuthorHomepage"><i class="fa fa-fw fa-external-link"></i></a>
+						</span>
+					</div>
 				</div>
 				
 			</div>
