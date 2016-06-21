@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Config\Config;
+use Orpheus\Config\IniConfig;
+
 /**
  * @file _pdo.php
  * @brief Library to easily use PDO
@@ -65,7 +68,7 @@ function pdo_loadConfig() {
 	if( empty($DBS) ) {
 		// 		debug('Build '.DBCONF.' config ');
 // 		Config::setCaching(false);
-		$DBS	= Config::build(DBCONF, true, false);
+		$DBS	= IniConfig::build(DBCONF, true, false);
 		// 		debug('$DBS on build', $DBS);
 		$DBS	= $DBS->all;
 	}

@@ -1,5 +1,7 @@
 <?php
 use Orpheus\Core\ClassLoader;
+use Orpheus\Config\Config;
+use Orpheus\Config\IniConfig;
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
@@ -214,90 +216,6 @@ function($exception) {
 // 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
 });
 
-
-// Autoload and register when used, you could set your own as first
-// ClassLoader::get();
-/*
-spl_autoload_register(
-/**
- * Class autoload function
- * 
- * @param $className The classname not loaded yet.
- * @see The \ref libraries documentation
- * 
- * Include the file according to the classname in lowercase and suffixed by '_class.php'.
-* /
-function($className) {
-	try {
-// 		debug('spl_autoload called with class '.$className);
-		global $AUTOLOADS;
-// 		, $AUTOLOADSFROMCONF;
-		// In the first __autoload() call, we try to load the autoload config from file.
-// 		if( !isset($AUTOLOADSFROMCONF) && class_exists('Config') ) {
-// 			try {
-// 				$AUTOLOADSFROMCONF = true;
-// 				$alConf = Config::build('autoloads', true);
-// 				$AUTOLOADS = array_merge($AUTOLOADS, $alConf->all);
-// 			} catch( Exception $e ) {
-// 				// Might be not found (default)
-// 			}
-// 		}
-		// PHP's class' names are not case sensitive.
-		$bFile = strtolower($className);
-		
-		// If the class file path is known in the AUTOLOADS array
-		if( !empty($AUTOLOADS[$bFile]) ) {
-			$path	= null;
-// 			$relativePath	= $AUTOLOADS[$bFile];
-			$path	= $AUTOLOADS[$bFile];
-			require_once $path;
-// 			if( existsPathOf(LIBSDIR.$relativePath, $path) ) {
-				
-// 				// if the path is a directory, we search the class file into this directory.
-// 				if( is_dir($path) ) {
-// 					$relativePath	= 1;
-// 					if( existsPathOf($path.$bFile.'_class.php', $path) ) {
-// 						require_once $path;
-// 					}
-
-// 				// if the path is a file, we include the class file.
-// 				} else {
-// 					require_once $path;
-// 				}
-// 			}
-			if( !class_exists($className, false) && !interface_exists($className, false) ) {
-				throw new Exception('Wrong use of Autoloads, the class "'.$className.'" should be declared in the given file "'.$path.'". Please use addAutoload() correctly.');
-			}
-			// We want to do it by another way
-// 			if( method_exists($className, 'onClassLoaded') ) {
-// 				list($library)	= explode('/', $relativePath);
-// 				$className::onClassLoaded((object) array(
-// 					'class_fullpath'	=> $path,
-// 					'class_relpath'		=> $relativePath,
-// 					'library'			=> $library,
-// 					'library_path'		=> pathOf(LIBSDIR.$library),
-// 				));
-// 			}
-		
-		// NO MORE USED
-		// If the class name is like Package_ClassName, we search the class file "classname" in the "package" directory in libs/.
-// 		} else {
-// 			$classExp = explode('_', $bFile, 2);
-// 			if( count($classExp) > 1 && existsPathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php') ) {
-// 				require_once pathOf(LIBSDIR.$classExp[0].'/'.$classExp[1].'_class.php');
-// 				return;
-// 			}
-// 			// NOT FOUND
-// 			//Some libs could add their own autoload function.
-// 			//throw new Exception("Unable to load lib \"{$className}\"");
-		}
-	} catch( Exception $e ) {
-		log_error($e, 'loading_class_'.$className);
-// 		die('A fatal error occured loading libraries.');
-	}
-}, true, true );// End of spl_autoload_register()
-*/
-
 $AUTOLOADS = array();
 $Module = $Page = '';// Useful for initializing errors.
 
@@ -305,19 +223,26 @@ $coreAction = 'initializing_core';
 
 try {
 	ob_start();
-// 	defifn('CORELIB',		'core');
-// 	defifn('CONFIGLIB',		'config');
-// 	$_SERVER['PHP_AUTH_PW']	= '******';
-// 	debug('$_SERVER', $_SERVER);die();
+	
 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
-
 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
-// 		die();
 	}
 	
 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
 	$REQUEST_HANDLER	= REQUEST_HANDLER;
 // 	unset($REQUEST_HANDLER);
+
+	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
+	
+	// Before lib loading, they can not define it
+	// This class MUST extends Orpheus\Config\ConfigCore
+	defifn('DEFAULT_CONFIG_CLASS', 'Orpheus\Config\IniConfig');
+	
+	if( file_exists(VENDORPATH.'autoload.php') ) {
+		/* @var Composer\Autoload\ClassLoader $PackageLoader */
+		$PackageLoader = require VENDORPATH.'autoload.php';
+// 		$PackageLoader->
+	}
 	
 // 	defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
 // 	// Edit the constant file according to the system context (OS, directory tree ...).
@@ -329,19 +254,22 @@ try {
 	}
 	
 	foreach( $Libraries as $lib ) {
-// 		debug('Try to load library '.$lib.' with path '.LIBSDIR.$lib.'/_loader.php');
 		if( !existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
 		require_once $path;
-// 		debug('...Loaded !');
 	}
 	
+	// After Lib loading
+// 	class_alias(DEFAULT_CONFIG_CLASS, 'Orpheus\Config\Config', true);
+	
+	/*
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
 	
 	if( file_exists(VENDORPATH.'autoload.php') ) {
 		$PackageLoader = require VENDORPATH.'autoload.php';
 	}
+	*/
 	
-	Config::build('engine');// Some libs should require to get some configuration.
+	IniConfig::build('engine', false);// Some libs should require to get some configuration.
 	
 	$RENDERING = Config::get('default_rendering');
 	
@@ -349,10 +277,9 @@ try {
 	Hook::trigger(HOOK_STARTSESSION);
 
 	if( IS_WEB ) {
-
 		startSession();
-	
 	}
+	
 	ob_end_clean();
 	
 	// App is now ready to run

@@ -1,7 +1,8 @@
 <?php
-/** The Form Token class
-
-	This class is limit the use of form data to only one shot.
+/**
+ * The Form Token class
+ * 
+ * This class is limit the use of form data to only one shot.
 */
 class FormToken {
 

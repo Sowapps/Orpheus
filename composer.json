@@ -14,5 +14,8 @@
 		"framework",
 		"php"
 	],
+	"require" : {
+		"orpheus/orpheus-core" : "dev-master"
+	},
 	"minimum-stability" : "stable"
 }

@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Config\IniConfig;
+use Orpheus\Config\Config;
+
 /**
  * Loader File for the publisher sources
  */
@@ -15,6 +18,8 @@ addAutoload('AbstractUser',						'publisher/AbstractUser');
 addAutoload('FixtureInterface',					'publisher/Fixture');
 addAutoload('FixtureRepository',				'publisher/Fixture');
 addAutoload('PasswordGenerator',				'publisher/PasswordGenerator');
+addAutoload('FormToken',						'publisher/FormToken');
+addAutoload('SlugGenerator',					'publisher/SlugGenerator');
 
 defifn('CHECK_MODULE_ACCESS',	true);
 // defifn('USER_CLASS',			'User');
@@ -33,8 +38,8 @@ Hook::create(HOOK_ACCESSDENIED);
 Hook::register(HOOK_APPREADY, function () {
 // 	debug('Publisher HOOK_APPREADY => '.HOOK_APPREADY);
 // 	global $USER_CLASS;
-	$GLOBALS['ACCESS'] = Config::build('access', true);
-	$GLOBALS['RIGHTS'] = Config::build('rights', true);
+	$GLOBALS['ACCESS'] = IniConfig::build('access', true);
+	$GLOBALS['RIGHTS'] = IniConfig::build('rights', true);
 	
 	if( User::isLogged() ) {
 		//global $USER;// Do not work in this context.

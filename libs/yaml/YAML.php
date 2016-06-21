@@ -1,10 +1,12 @@
 <?php
+use Orpheus\Config\Config;
+
 /**
  * The yaml class
  * 
  * This class is made to get YAML configuration.
  */
-class YAML extends ConfigCore {
+class YAML extends Config {
 
 	protected static $extension = 'yaml';
 

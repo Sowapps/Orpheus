@@ -328,8 +328,25 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 					<?php echo $Exception->getMessage(); ?>
 					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
 				</blockquote>
+				
+				<div class="sourcecode">
+					<ul class="sourcecode_lines"><?php
+						$excLine = $Exception->getLine();
+						$fileContent = file_get_contents($Exception->getFile());
+// 						$lines = substr_count($fileContent, "\n");
+						$lines = substr_count($fileContent, PHP_EOL);
+						for( $i=0; $i<=$lines; $i++ ) {
+							echo '<li'.($excLine == $i+1 ? ' class="active"' : '').'>'.($i+1).'</li>';
+						}
+						// Make some css issues, easier without
+// 						<div class="sourcecode_content"></div>
+					?></ul>
+					<div class="sourcecode_content">
+						<?php echo highlight_string($fileContent, true); unset($fileContent); ?>
+					</div>
+				</div>
 				<?php
-				echo formatSourceAsHTML($Exception->getFile(), $Exception->getLine(), 4, 2);
+// 				echo formatSourceAsHTML($Exception->getFile(), $Exception->getLine(), 4, 2);
 				?>
 			</div>
 		</div>
@@ -397,17 +414,54 @@ function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {
 	max-width: none;
 }
 .sourcecode {
-	overflow: hidden;
+	height: 176px;/* 10+1 lines * line-height */
+	line-height: 16px;
+	overflow-y: scroll;
+/* 	overflow-x: hidden; */
+/* 	overflow-x: auto; */
 	display: flex;
 }
 .sourcecode_lines {
 	float: left;
-	padding: 2px 10px 2px 6px;
+	padding: 2px 2px 2px 6px;
 	list-style: none;
 	font-size: 12px;
 	margin: 0;
 	border-right: 1px solid #CCC;
+	text-align: right;
 }
+/* 	padding: 2px 10px 2px 6px; */
+.sourcecode_lines li:after {
+	content: "\00a0";
+	margin-left: 6px;
+}
+.sourcecode_lines li.active {
+	background: #F2DEDE;
+/* 	background: #ebccd1; */
+	color: #a94442;
+}
+.sourcecode_lines li.active:after {
+	content: ">";
+	margin-left: 2px;
+}
+/*
+.sourcecode_content {
+}
+*/
+.sourcecode_content {
+/* .sourcecode code { */
+	width: 100%;
+	height: 100%;
+	white-space: nowrap;
+}
+.sourcecode_content code {
+	line-height: inherit;
+	display: block;
+}
+/* 	overflow-x: scroll; */
+/* 	white-space: normal; */
+/* 	word-wrap: break-word; */
+/*
 code {
 	width: 100%;
 	display: block;
@@ -415,6 +469,7 @@ code {
 	white-space: nowrap;
 	overflow-x: scroll;
 }
+*/
 </style>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
@@ -424,6 +479,19 @@ $(function() {
 	$(".arg_value").click(function() {
 		$(this).toggleClass("nolimit");
 	});
+// 	$(".sourcecode_content code").animate({
+	$(".sourcecode").scrollTop(<?php
+	        // Line height * (exception line - (1 + Lines before)
+	        echo 16*($excLine-6);
+	        ?>);
+    /*
+	$(".sourcecode").animate({
+        scrollTop: <?php
+        // Line height * (exception line - (1 + Lines before)
+        echo 16*($excLine-6);
+        ?>
+    }, 1200);
+    */
 });
 </script>
 </body>
@@ -485,14 +553,16 @@ Stacktrace:<?php
 }
 
 function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
-	$from	= max($lineNumber-$linesBefore, 0);
-	$to		= $lineNumber+$linesAfter;
-	$count	= 0;
-	$string	= getFileLines($file, $from, $to, $count);
-	$lines	= '';
-	for( $line=$from; $line<$from+$count; $line++ ) {
-		$lines	.= '<li>'.$line.($lineNumber==$line ? '&nbsp;&nbsp;>' : '').'</li>';
-	}
+	// Partial highlight not working, send all file
+// 	$from	= max($lineNumber-$linesBefore, 0);
+// 	$to		= $lineNumber+$linesAfter;
+// 	$count	= 0;
+// 	$string	= getFileLines($file, $from, $to, $count);
+// 	$lines	= '';
+// 	for( $line=$from; $line<$from+$count; $line++ ) {
+// 		$lines	.= '<li>'.$line.($lineNumber==$line ? '&nbsp;&nbsp;>' : '').'</li>';
+// 	}
+	
 	$string	= highlight_source($string, true);
 	return <<<EOF
 <div class="sourcecode">
@@ -532,6 +602,7 @@ function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter)
 function highlight_source($string, $return=false) {
 // 	$string	= preg_replace();
 // 	$result	= "<?php\n".$string;
+	/*
 	$length	= strlen($string);
 	$spaces	= 0;
 	$tabSpaces	= 4;
@@ -561,7 +632,10 @@ function highlight_source($string, $return=false) {
 // 	debug('Replaced => '.$count);
 // 	echo escapeText($str);
 // 	return $str;
-	return preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, $return), 1, $count);
+ */
+	return highlight_string("<?php\n".$string, true);
+// 	return preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, true), 1, $count);
+// 	return preg_replace("#&lt;\?php<br \/>#", '', highlight_string("<?php\n".$result, $return), 1, $count);
 }
 
 // function getFileLineContext($file, $lineNumber, &$linesBefore, $linesAfter) {
