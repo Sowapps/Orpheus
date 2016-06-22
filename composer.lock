@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41f8b1c0faeffce395bb47f0c691758a",
-    "content-hash": "ba5e8f86c46ec20083ac69d8b2cf5e10",
+    "hash": "02b481b9484308052544be6d0eba5078",
+    "content-hash": "244454923a4df99c1cbc7a7ea0e604a1",
     "packages": [
         {
             "name": "orpheus/orpheus-core",
@@ -48,13 +48,54 @@
                 "orpheus"
             ],
             "time": "2016-06-22 07:57:43"
+        },
+        {
+            "name": "orpheus/orpheus-initernationalization",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sowapps/orpheus-initernationalization.git",
+                "reference": "708edaec50ffa147e90288e0d2a12783e525318a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sowapps/orpheus-initernationalization/zipball/708edaec50ffa147e90288e0d2a12783e525318a",
+                "reference": "708edaec50ffa147e90288e0d2a12783e525318a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/_loader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florent HAZARD",
+                    "email": "contact@sowapps.com",
+                    "homepage": "http://sowapps.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Orpheus Initernationalization",
+            "keywords": [
+                "ini",
+                "internationalization",
+                "orpheus"
+            ],
+            "time": "2016-06-22 12:06:35"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "orpheus/orpheus-core": 20
+        "orpheus/orpheus-core": 20,
+        "orpheus/orpheus-initernationalization": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

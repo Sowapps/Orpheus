@@ -15,7 +15,7 @@ $Libraries	= array(
 	'hooks',
 	'cache',
 	// Config
-	'initernationalization',
+// 	'initernationalization',
 	'yaml',
 	// App specific
 	'sqladapter',

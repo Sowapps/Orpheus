@@ -15,9 +15,10 @@
 		"php"
 	],
 	"require" : {
-		"orpheus/orpheus-core" : "dev-master",
-		"orpheus/orpheus-initernationalization" : "dev-master"
+		"orpheus/orpheus-core" : "dev-master"
 	},
-	"minimum-stability" : "stable",
-	"test" : "Test property"
+	"minimum-stability" : "stable"
+	
+	
+	
 }
