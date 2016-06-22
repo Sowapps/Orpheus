@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Config\Config;
+
 /** The user class
  * The user class represents an user known by the current website as a permanent entity.
  * This class is commonly inherited by a user class for registered users.

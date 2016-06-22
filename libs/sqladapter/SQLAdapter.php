@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Config\Config;
+use Orpheus\Config\IniConfig;
+
 /** The main SQL Adapter class
 
 	This class is the mother sql adapter inherited for specific DBMS.
@@ -141,7 +144,7 @@ abstract class SQLAdapter {
 		}
 		$cache	= new APCache('sqladapter', 'db_configs', 2*3600);
 		if( !$cache->get($configs) ) {
-			$fileCconfig = Config::build(DBCONF, true, false)->all;
+			$fileCconfig = IniConfig::build(DBCONF, true, false)->all;
 			$configs	= array();
 			foreach( $fileCconfig as $key => $value ) {
 				if( is_array($value) ) {

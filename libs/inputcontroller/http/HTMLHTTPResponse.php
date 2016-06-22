@@ -71,8 +71,8 @@ class HTMLHTTPResponse extends HTTPResponse {
 	 * @param string $action
 	 */
 	public static function generateFromException(Exception $exception, $action='Handling the request') {
-		$code	= $exception->getCode();
-		if( !$code ) {
+		$code = $exception->getCode();
+		if( $code < 100 ) {
 			$code = HTTP_INTERNAL_SERVER_ERROR;
 		}
 		$response = new static(convertExceptionAsHTMLPage($exception, $code, $action));

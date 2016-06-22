@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Config\Config;
+
 /**
  * The File class to save file's informations in database
  *

@@ -55,9 +55,9 @@ class JSONHTTPResponse extends HTTPResponse {
 	 * @param string $action
 	 */
 	public static function generateFromException(Exception $exception, $action='Handling the request') {
-		$code	= $exception->getCode();
-		if( !$code ) {
-			$code	= HTTP_INTERNAL_SERVER_ERROR;
+		$code = $exception->getCode();
+		if( $code < 100 ) {
+			$code = HTTP_INTERNAL_SERVER_ERROR;
 		}
 // 		debug('$exception', $exception);
 // 		debug('$exception', (array) $exception);

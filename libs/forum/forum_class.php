@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Config\Config;
+
 class Forum extends PermanentEntity {
 
 	//Attributes
@@ -39,7 +41,7 @@ class Forum extends PermanentEntity {
 	protected static $config;
 	protected static function config($key, $default=null) {
 		if( static::$config === NULL ) {
-			static::$config	= Config::build('forum', true);
+			static::$config	= IniConfig::build('forum', true);
 		}
 		return static::$config->get($key, $default);
 	}

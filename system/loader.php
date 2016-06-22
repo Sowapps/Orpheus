@@ -212,18 +212,18 @@ function displayException(Exception $Exception, $action) {
 }
 
 function displayExceptionAsHTML(Exception $Exception, $action) {
-	$code	= $Exception->getCode();
-	if( !$code ) {
-		$code	= 500;
+	$code = $Exception->getCode();
+	if( $code < 100 ) {
+		$code = HTTP_INTERNAL_SERVER_ERROR;
 	}
 	http_response_code($code);
 	die(convertExceptionAsHTMLPage($Exception, $code, $action));
 }
 
 function displayExceptionAsText(Exception $Exception, $action) {
-	$code	= $Exception->getCode();
-	if( !$code ) {
-		$code	= 500;
+	$code = $Exception->getCode();
+	if( $code < 100 ) {
+		$code = HTTP_INTERNAL_SERVER_ERROR;
 	}
 	die(convertExceptionAsText($Exception, $code, $action));
 }
@@ -251,7 +251,11 @@ function displayExceptionStackTrace(Exception $Exception) {
 	?>
 	<ol>
 	<?php
-	foreach( $Exception->getTrace() as $trace ) {
+	$backtrace = $Exception->getTrace();
+	if( $Exception->getCode() == 1 && is_array($GLOBALS['DEBUG_BACKTRACE']) ) {
+		$backtrace = $GLOBALS['DEBUG_BACKTRACE'];
+	}
+	foreach( $backtrace as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
 			$trace['class']	= null;

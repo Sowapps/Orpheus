@@ -14,8 +14,19 @@ html, body,
 }
 
 /* Select2 */
-.select2-results {
-	max-height:	300px;
+/* .select2-results { */
+/* 	max-height:	300px; */
+/* } */
+
+/* Fix Select2 in modal with BS */
+.form-group .select2-container {
+	position: relative;
+	z-index: 2;
+/* 	float: left; */
+	width: 100% !important;
+	margin-bottom: 0;
+	display: table;
+	table-layout: fixed;
 }
 
 /* Table sorter 2.0 */

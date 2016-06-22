@@ -119,87 +119,74 @@ define('ERROR_THROW_EXCEPTION', 0);
 define('ERROR_DISPLAY_RAW', 1);
 define('ERROR_IGNORE', 2);
 $ERROR_ACTION = ERROR_THROW_EXCEPTION;
-set_error_handler(
-/** Error Handler
 
-	System function to handle PHP errors and convert it into exceptions.
+set_error_handler(
+/**
+ * Error Handler
+ * 
+ * System function to handle PHP errors and convert it into exceptions.
 */
 function($errno, $errstr, $errfile, $errline) {
-// 	echo 'error_handler<br />';
-// 	die(__FILE__.' : '.__LINE__);
-// 	debug('(set_error_handler) Error occurred, ob level : '.ob_get_level());
-// 	ob_end_to(1);
-// 	debug('(set_error_handler) Decreased ob level : '.ob_get_level());
-// 	debug("$errstr in $errfile : $errline");
+// 	debug_print_backtrace();
+// 	die('<br>'.$errno);
+	
 	$exception	= new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
-// 		debug('(set_error_handler) Error To Exception');
 		throw $exception;
-// 		throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
 	} else if( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
 		return;
 	} else {//ERROR_DISPLAY_RAW
-// 		$backtrace = '';
-// 		foreach( debug_backtrace() as $trace ) {
-// 			if( !isset($trace['file']) ) {
-// 				$trace['file'] = $trace['line'] = 'N/A';
-// 			}
-// 			$backtrace .= '
-// '.$trace['file'].' ('.$trace['line'].'): '.$trace['function'].'('.print_r($trace['args'], 1).')<br />';
-// 		}
 		if( !function_exists('log_error') ) {
 			if( DEV_VERSION ) {
 				displayException($exception, null);
 			} else {
 				die('A fatal error occurred.');
 			}
-// 			die($errstr."<br />\n{$backtrace}");
 		}
 		log_error($exception);
-// 		die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.'.(DEV_VERSION ? '<br />Reported in '.__FILE__.' : '.__LINE : ''));
 	}
 });
 
-register_shutdown_function(
-/** Shutdown Handler
+$DEBUG_BACKTRACE = null;
+function storeBackTrace() {
+	global $DEBUG_BACKTRACE;
+// 	debug_print_backtrace();
+	// Get backtrace & remove first line (this call)
+	$DEBUG_BACKTRACE = array_slice(debug_backtrace(), 1);
+// 	unset($backtrace[0]);
+// 	debug('Backtrace', debug_backtrace());
+// 	die();
+}
 
-	System function to handle PHP shutdown and catch uncaught errors.
+register_shutdown_function(
+/**
+ * Shutdown Handler
+ * 
+ * System function to handle PHP shutdown and catch uncaught errors.
 */
 function() {
 	// If there is an error
 	$error = error_get_last();
 	
-// 	echo '(register_shutdown_function) Shutdown script<br />';
-// 	die(__FILE__.' : '.__LINE__);
 	if( $error ) {
-// 		debug('$error', $error);
-// 		debug('back trace', debug_backtrace());
-// 		die();
-// 		debug('(register_shutdown_function) There is an error');
-		// Should be ended by error reporter
-// 		if( DEV_VERSION ) {
-// 			ob_end_flush();
-// 		} else {
-// 			ob_end_clean();
-// 		}
-		$exception	= new ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line']);
+		$exception	= new ErrorException($error['message'], 1, $error['type'], $error['file'], $error['line']);
+		
 		if( !function_exists('log_error') ) {
 			if( DEV_VERSION ) {
 				displayException($exception, 'Shutdown script');
 			} else {
 				die('A fatal error occurred.');
 			}
-// 			die( ERROR_LEVEL == DEV_LEVEL ? $error['message'].' in '.$error['file'].' ('.$error['line'].')<br />PAGE:<br /><div style="clear: both;">'.$Page.'</div><br />Reported in '.__FILE__.' : '.__LINE
-// 				: "A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez re-essayer plus tard.");
 		}
 		log_error($exception, 'Shutdown script');
 	}
 });
 
 set_exception_handler(
-/** Exception Handler
-
-	System function to handle all exceptions and stop script execution.
+/**
+ * Exception Handler
+ * 
+ * System function to handle all exceptions and stop script execution.
  */
 function($exception) {
 	global $coreAction;

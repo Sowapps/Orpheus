@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Sowapps/orpheus-core.git",
-                "reference": "89499b1894de102dc2b5c30f05ad428cf0e44a60"
+                "reference": "8d6636c9771c6731ef7f8e9666602df6ce566705"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Sowapps/orpheus-core/zipball/89499b1894de102dc2b5c30f05ad428cf0e44a60",
-                "reference": "89499b1894de102dc2b5c30f05ad428cf0e44a60",
+                "url": "https://api.github.com/repos/Sowapps/orpheus-core/zipball/8d6636c9771c6731ef7f8e9666602df6ce566705",
+                "reference": "8d6636c9771c6731ef7f8e9666602df6ce566705",
                 "shasum": ""
             },
             "type": "library",
@@ -47,7 +47,7 @@
                 "core",
                 "orpheus"
             ],
-            "time": "2016-06-21 16:23:11"
+            "time": "2016-06-22 07:57:43"
         }
     ],
     "packages-dev": [],

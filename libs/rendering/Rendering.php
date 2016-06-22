@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Config\Config;
+use Orpheus\Config\IniConfig;
+
 /** The rendering class
 	This class is the core for custom rendering use.
 */
@@ -48,7 +51,7 @@ abstract class Rendering {
 	 */
 	public function getMenuItems($menu) {
 		if( !isset(self::$menusConf) ) {
-			self::$menusConf = Config::build('menus', true);
+			self::$menusConf = IniConfig::build('menus', true);
 		}
 		if( empty(self::$menusConf) || empty(self::$menusConf->$menu) ) {
 			return array();

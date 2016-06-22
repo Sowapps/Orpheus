@@ -17,5 +17,6 @@
 	"require" : {
 		"orpheus/orpheus-core" : "dev-master"
 	},
-	"minimum-stability" : "stable"
+	"minimum-stability" : "stable",
+	"test" : "Test property"
 }

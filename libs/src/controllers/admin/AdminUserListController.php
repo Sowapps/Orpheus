@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Config\Config;
+
 class AdminUserListController extends AdminController {
 	
 	/**
