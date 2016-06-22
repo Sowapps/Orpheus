@@ -10,10 +10,10 @@
 // Order is important
 $Libraries	= array(
 	// Core
-	'core',
-	'config',
+// 	'core',
+// 	'config',
 	'hooks',
-	'cache',
+// 	'cache',
 	// Config
 // 	'initernationalization',
 	'yaml',

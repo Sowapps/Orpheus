@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Cache\FSCache;
+
 /*
  * Vérifier écriture sur le FS
  * Vérifier BDD

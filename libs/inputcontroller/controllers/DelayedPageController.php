@@ -1,5 +1,9 @@
 <?php
 
+use Orpheus\Exception\ForbiddenException;
+use Orpheus\Cache\APCache;
+use Orpheus\Exception\NotFoundException;
+
 class DelayedPageController extends HTTPController {
 	
 // 	const SESSION_STOREDPAGES = '__STOREDPAGES';

@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Exception\UserException;
+use Orpheus\Exception\NotFoundException;
+
 using('sqladapter.SQLAdapter');
 
 /** The permanent object class
@@ -183,7 +186,7 @@ abstract class PermanentObject {
 	public function update($input, $fields, $noEmptyWarning=true, &$errCount=0, &$successCount=0) {
 		
 		$operation = $this->getUpdateOperation($input, $fields);
-		$operation->validate($errors);
+		$operation->validate($errCount);
 		return $operation->runIfValid();
 		
 		/*
@@ -414,7 +417,7 @@ abstract class PermanentObject {
 	public function remove() {
 		if( $this->isDeleted() ) { return; }
 		$operation = $this->getDeleteOperation();
-		$operation->validate($errors);
+		$operation->validate();
 		return $operation->runIfValid();
 // 		return static::delete($this->id());
 	}
@@ -1009,7 +1012,7 @@ abstract class PermanentObject {
 	*/
 	public static function create($input=array(), $fields=null, &$errCount=0) {
 		$operation = static::getCreateOperation($input, $fields);
-		$operation->validate($errors);
+		$operation->validate($errCount);
 		return $operation->runIfValid();
 		
 // 		$newErrors	= 0;

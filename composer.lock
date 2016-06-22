@@ -4,9 +4,50 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "02b481b9484308052544be6d0eba5078",
-    "content-hash": "244454923a4df99c1cbc7a7ea0e604a1",
+    "hash": "67777ede0632f571dd2cf0623bc29473",
+    "content-hash": "7fe453ae9574906ba1c3539d79d2008b",
     "packages": [
+        {
+            "name": "orpheus/orpheus-cache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Sowapps/orpheus-cache.git",
+                "reference": "ef479da91cbfc516a60a56051fc5387e7590c980"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Sowapps/orpheus-cache/zipball/ef479da91cbfc516a60a56051fc5387e7590c980",
+                "reference": "ef479da91cbfc516a60a56051fc5387e7590c980",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Orpheus\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Florent HAZARD",
+                    "email": "contact@sowapps.com",
+                    "homepage": "http://sowapps.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Orpheus Cache",
+            "keywords": [
+                "apc",
+                "cache",
+                "filesystem",
+                "orpheus"
+            ],
+            "time": "2016-06-22 12:34:40"
+        },
         {
             "name": "orpheus/orpheus-core",
             "version": "dev-master",
@@ -95,6 +136,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "orpheus/orpheus-core": 20,
+        "orpheus/orpheus-cache": 20,
         "orpheus/orpheus-initernationalization": 20
     },
     "prefer-stable": false,

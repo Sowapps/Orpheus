@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Cache\FSCache;
+
 /** A class to describe an entity
  * 
  * @author Florent HAZARD

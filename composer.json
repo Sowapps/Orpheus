@@ -16,6 +16,7 @@
 	],
 	"require" : {
 		"orpheus/orpheus-core" : "dev-master",
+		"orpheus/orpheus-cache" : "dev-master",
 		"orpheus/orpheus-initernationalization" : "dev-master"
 	},
 	"minimum-stability" : "stable",

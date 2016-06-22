@@ -1,6 +1,7 @@
 <?php
 use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
+use Orpheus\Cache\APCache;
 
 /** The main SQL Adapter class
 
@@ -324,7 +325,7 @@ abstract class SQLAdapter {
 	 * @param array $options The options used to build the query.
 	 * @param string $instance The db instance used to send the query.
 	 * @param string $IDField The ID field of the table.
-	 * @sa select()
+	 * @see select()
 	*/
 	public static function doSelect(array $options=array(), $instance=null, $IDField=null) {
 		self::prepareQuery($options, $instance, $IDField);
@@ -336,11 +337,11 @@ abstract class SQLAdapter {
 	 * @param $options The options used to build the query.
 	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
-	 * @sa update()
+	 * @see update()
 	*/
 	public static function doUpdate(array $options=array(), $instance=null, $IDField=null) {
 		self::prepareQuery($options, $instance, $IDField);
-$instancesself::$instances[$instance]->update($options);
+		$instancesself::$instances[$instance]->update($options);
 	}
 	
 	/** The static function to use for DELETE queries in global context
@@ -348,7 +349,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param $options The options used to build the query.
 	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
-	 * @sa SQLAdapter::delete()
+	 * @see SQLAdapter::delete()
 	*/
 	public static function doDelete(array $options=array(), $instance=null, $IDField=null) {
 		self::prepareQuery($options, $instance, $IDField);
@@ -360,7 +361,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param $options The options used to build the query.
 	 * @param $instance The db instance used to send the query.
 	 * @param $IDField The ID field of the table.
-	 * @sa SQLAdapter::insert()
+	 * @see SQLAdapter::insert()
 	*/
 	public static function doInsert(array $options=array(), $instance=null, $IDField=null) {
 		self::prepareQuery($options, $instance, $IDField);
@@ -372,7 +373,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param $table The table to get the last ID. Some DBMS ignore it.
 	 * @param $IDField The field id name.
 	 * @param $instance The db instance used to send the query.
-	 * @sa SQLAdapter::lastID()
+	 * @see SQLAdapter::lastID()
 	*/
 	public static function doLastID($table, $IDField='id', $instance=null) {
 		$options=array();
@@ -385,7 +386,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param $Identifier The identifier to escape.
 	 * @param $instance The db instance used to send the query.
 	 * @return The escaped identifier.
-	 * @sa SQLAdapter::escapeIdentifier()
+	 * @see SQLAdapter::escapeIdentifier()
 	 * 
 	 * Escapes the given string as an SQL identifier.
 	*/
@@ -399,7 +400,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param $String The value to format.
 	 * @param $instance The db instance used to send the query.
 	 * @return The formatted value.
-	 * @sa SQLAdapter::formatString()
+	 * @see SQLAdapter::formatString()
 	 * 
 	 * Formats the given value to the matching SQL type.
 	 * If the value is a float, we make french decimal compatible with SQL.
@@ -415,7 +416,7 @@ $instancesself::$instances[$instance]->update($options);
 	 * @param string $value The string to quote.
 	 * @param $instance The db instance used to send the query.
 	 * @return The quoted string.
-	 * @sa SQLAdapter::formatValue()
+	 * @see SQLAdapter::formatValue()
 	 * 
 	 * Add slashes before simple quotes in $String and surrounds it with simple quotes and .
 	 * Keep in mind this function does not really protect your DB server, especially against SQL injections.

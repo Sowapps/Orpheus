@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Exception\UserException;
+
 /** The invalid field exception class
  * This exception is thrown when we try to validate a form field and it's invalid.
  */
