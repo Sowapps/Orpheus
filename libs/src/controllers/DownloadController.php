@@ -4,6 +4,7 @@
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
+use Orpheus\InputController\HTTPController\RedirectHTTPResponse;
 
 class DownloadController extends HTTPController {
 	
@@ -15,8 +16,11 @@ class DownloadController extends HTTPController {
 	public function run(HTTPRequest $request) {
 		
 		$downloadURL = GlobalConfig::instance()->get($request->hasParameter('releases') ? 'releases_url' : 'download_url');
-		debug('$downloadURL => '.$downloadURL);
-		die();
+		if( $downloadURL ) {
+			return new RedirectHTTPResponse($downloadURL);
+		}
+// 		debug('$downloadURL => '.$downloadURL);
+// 		die();
 
 		return HTMLHTTPResponse::render('app/home');
 // 		return new RedirectHTTPResponse($downloadURL ? $downloadURL : 'home');
