@@ -1,13 +1,6 @@
 {
-	"description" : "Orpheus PHP Framework",
-	"authors" : [{
-			"name" : "Florent HAZARD",
-			"email" : "contact@sowapps.com",
-			"homepage" : "http://sowapps.com",
-			"role" : "Developer"
-		}
-	],
 	"name" : "orpheus/orpheus-framework",
+	"description" : "Orpheus PHP Framework",
 	"type" : "project",
 	"license" : "MIT",
 	"keywords" : [
@@ -16,9 +9,21 @@
 	],
 	"require" : {
 		"orpheus/orpheus-core" : "dev-master",
+		"orpheus/orpheus-hook" : "dev-master",
 		"orpheus/orpheus-cache" : "dev-master",
-		"orpheus/orpheus-initernationalization" : "dev-master"
+		"orpheus/orpheus-yaml" : "dev-master",
+		"orpheus/orpheus-initernationalization" : "dev-master",
+		"orpheus/orpheus-rendering" : "dev-master",
+		"orpheus/orpheus-inputcontroller" : "dev-master",
+		"orpheus/orpheus-sqladapter" : "dev-master",
+		"orpheus/orpheus-publisher" : "dev-master",
+		"orpheus/orpheus-entitydescriptor" : "dev-master"
 	},
-	"minimum-stability" : "stable",
-	"test" : "Test property"
+	"authors" : [{
+			"name" : "Florent HAZARD",
+			"email" : "contact@sowapps.com",
+			"homepage" : "http://sowapps.com",
+			"role" : "Developer"
+		}
+	]
 }

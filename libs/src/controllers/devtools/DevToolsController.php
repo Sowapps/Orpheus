@@ -1,4 +1,8 @@
 <?php
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Rendering\HTMLRendering;
+
 /*
  * Vérifier écriture sur le FS
  * Vérifier BDD

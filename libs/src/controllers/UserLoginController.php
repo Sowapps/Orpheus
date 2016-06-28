@@ -1,5 +1,11 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
+use Orpheus\Publisher\Form\FormToken;
+use Orpheus\Exception\UserException;
+
 class UserLoginController extends HTTPController {
 	
 	/**
@@ -11,19 +17,32 @@ class UserLoginController extends HTTPController {
 		$FORM_TOKEN	= new FormToken();
 		
 		try {
-			isPOST() && $FORM_TOKEN->validateForm();
+			$request->hasData() && $FORM_TOKEN->validateForm($request);
+// 			debug('Data', $request->getAllData());
+// 			die();
+			
 			if( $request->hasData('submitLogin') ) {
+// 				die('LINE : '.__LINE__);
+// 				startReportStream('login');
 				User::userLogin($request->getData('login'));
-				reportSuccess('You\'re successfully logged in.');
-			} else if( $request->hasData('submitRegister') ) {
-		// 		$formregister = POST('register');
-				$user	= User::createAndGet($request->getData('register'), array('name', 'fullname', 'email', 'email_public', 'password'));
+				reportSuccess(User::text('successLogin'));
+				
+			} else
+			if( $request->hasData('submitRegister') ) {
+				startReportStream('register');
+				$user = User::createAndGet($request->getData('user'), array('name', 'fullname', 'email', 'email_public', 'password'));
 				sendAdminRegistrationEmail($user);
 				unset($user);
-				reportSuccess('You\'re successfully registered.');
+				reportSuccess(User::text('successRegister'));
 			}
-		} catch(UserException $e) {
+			endReportStream();
+		} catch( UserException $e ) {
+// 			debug('UserException', $e);
+// 			die('Exception');
 			reportError($e);
+// 		} catch(Exception $e) {
+// 			debug('Exception', $e);
+// 			die('Exception');
 		}
 		return HTMLHTTPResponse::render('app/user_login', array('FORM_TOKEN'=>$FORM_TOKEN));
 	}

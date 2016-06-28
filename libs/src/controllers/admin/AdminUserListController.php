@@ -1,6 +1,9 @@
 <?php
 
 use Orpheus\Config\Config;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Exception\UserException;
+use Orpheus\SQLAdapter\SQLAdapter;
 
 class AdminUserListController extends AdminController {
 	
@@ -25,7 +28,7 @@ class AdminUserListController extends AdminController {
 		if( $request->hasData('submitCreate') ) {
 		
 			try {
-				$data = $request->getArrayData('user');
+// 				$data = $request->getArrayData('user');
 				if( !$USER_CAN_USER_EDIT ) {
 					throw new UserException('forbiddenOperation');
 				}
@@ -46,8 +49,8 @@ class AdminUserListController extends AdminController {
 		));
 		
 		return $this->renderHTML('app/admin_userlist', array(
-			'USER_CAN_USER_EDIT'	=> $USER_CAN_USER_EDIT,
-			'users'	=> $users
+			'USER_CAN_USER_EDIT' => $USER_CAN_USER_EDIT,
+			'users' => $users
 		));
 	}
 

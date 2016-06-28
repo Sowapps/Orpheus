@@ -1,5 +1,8 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Exception\ForbiddenException;
+
 class AdminUserEditController extends AdminController {
 	
 	/**
@@ -56,7 +59,7 @@ class AdminUserEditController extends AdminController {
 			reportError($e, $userDomain);
 		}
 		
-		$formData	= array('user'=>$user->all);
+		$formData = array('user'=>$user->all);
 		
 		require_once ORPHEUSPATH.LIBSDIR.'src/admin-form.php';
 		

@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 /* @var string $CONTROLLER_OUTPUT */
 /* @var HTMLRendering $this */
 /* @var HTTPController $Controller */

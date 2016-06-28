@@ -1,5 +1,9 @@
 <?php
 use Orpheus\Cache\FSCache;
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\RedirectHTTPResponse;
+use Orpheus\Rendering\HTMLRendering;
+use Orpheus\InputController\HTTPController\HTTPRequest;
 
 /*
  * Vérifier écriture sur le FS

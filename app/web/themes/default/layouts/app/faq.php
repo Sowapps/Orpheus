@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 HTMLRendering::addJSFile('base64');
 HTMLRendering::useLayout('page_skeleton');
 ?>

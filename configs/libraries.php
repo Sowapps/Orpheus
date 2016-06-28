@@ -12,17 +12,17 @@ $Libraries	= array(
 	// Core
 // 	'core',
 // 	'config',
-	'hooks',
+// 	'hooks',
 // 	'cache',
 	// Config
 // 	'initernationalization',
-	'yaml',
+// 	'yaml',
 	// App specific
-	'sqladapter',
-	'inputcontroller',
-	'publisher',
-	'entitydescriptor',
-	'rendering',
+// 	'sqladapter',
+// 	'inputcontroller',
+// 	'publisher',
+// 	'entitydescriptor',
+// 	'rendering',
 	// Additional
 	'twigrenderer',
 	// Your sources

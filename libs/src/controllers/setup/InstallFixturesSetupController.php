@@ -1,5 +1,9 @@
 <?php
 
+use Orpheus\Publisher\Fixture\FixtureRepository;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Publisher\Form\FormToken;
+
 /*
  * Check writing on FS
  * Check DB

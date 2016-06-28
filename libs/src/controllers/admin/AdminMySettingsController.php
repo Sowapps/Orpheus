@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPRequest;
+
 class AdminMySettingsController extends AdminController {
 	
 	/**

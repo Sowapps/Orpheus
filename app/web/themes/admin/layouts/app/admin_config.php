@@ -1,7 +1,9 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 HTMLRendering::useLayout('page_skeleton');
 
-$GlobalConfig	= GlobalConfig::instance();
+$GlobalConfig = GlobalConfig::instance();
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -19,7 +21,6 @@ $GlobalConfig	= GlobalConfig::instance();
 	</thead>
 	<tbody>
 <?php
-/* @ar $user User */
 foreach( $GlobalConfig->asArray() as $key => $value ) {
 	echo '
 <tr data-key="'.$key.'" data-value="'.$value.'">

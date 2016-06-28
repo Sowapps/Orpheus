@@ -1,5 +1,9 @@
 <?php
-/** PHP File for the website sources
+use Orpheus\Hook\Hook;
+use Orpheus\EntityDescriptor\PermanentEntity;
+
+/**
+ * PHP File for the website sources
  * It's your app's library.
  *
  * Author: Your name.

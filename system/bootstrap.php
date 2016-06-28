@@ -2,6 +2,8 @@
 use Orpheus\Core\ClassLoader;
 use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
+use Orpheus\Hook\Hook;
+use Orpheus\Core\RequestHandler;
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
@@ -16,12 +18,12 @@ use Orpheus\Config\IniConfig;
 define('IS_WEB',		array_key_exists('REQUEST_METHOD', $_SERVER));
 define('IS_CONSOLE',	!IS_WEB);
 
-// echo 'Bootstrap<br />';
 if( isset($SRCPATHS) ) {
 	$t	= $SRCPATHS; unset($SRCPATHS);
 }
 require_once 'loader.php';
-require_once 'ClassLoader.php';
+// Now on packagist (orpheus-core)
+// require_once 'ClassLoader.php';
 
 /**
  * The access path, this is independant from the type of access (http, console...)
@@ -211,12 +213,13 @@ $coreAction = 'initializing_core';
 try {
 	ob_start();
 	
-	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
-		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
-	}
+// 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
+// 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
+// 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
+// 	}
 	
-	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
-	$REQUEST_HANDLER	= REQUEST_HANDLER;
+// 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
+// 	$REQUEST_HANDLER	= REQUEST_HANDLER;
 // 	unset($REQUEST_HANDLER);
 
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
@@ -273,7 +276,8 @@ try {
 	Hook::trigger(HOOK_APPREADY);
 	
 	// Handle current request
-	$REQUEST_HANDLER::handleCurrentRequest();
+	RequestHandler::handleCurrentRequest(IS_CONSOLE ? RequestHandler::TYPE_CONSOLE : RequestHandler::TYPE_HTTP);
+// 	$REQUEST_HANDLER::handleCurrentRequest();
 	
 	
 } catch( Exception $e ) {

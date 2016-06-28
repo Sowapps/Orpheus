@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 /* @var HTMLRendering $this */
 /* @var User $user */
 

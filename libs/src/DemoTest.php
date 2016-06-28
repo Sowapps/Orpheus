@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Publisher\PermanentObject\PermanentObject;
+
 /** A sample demo test class
  * Example of how to use the permanent object.
 */

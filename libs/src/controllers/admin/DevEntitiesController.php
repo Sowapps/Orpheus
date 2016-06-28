@@ -1,5 +1,14 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Publisher\Form\FormToken;
+use Orpheus\EntityDescriptor\PermanentEntity;
+use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
+use Orpheus\Exception\UserException;
+use Orpheus\SQLAdapter\SQLAdapter;
+use Orpheus\EntityDescriptor\LangGenerator;
+use Orpheus\EntityDescriptor\EntityDescriptor;
+
 class DevEntitiesController extends AdminController {
 	
 	/**
@@ -8,43 +17,43 @@ class DevEntitiesController extends AdminController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-		using('entitydescriptor.EntityDescriptor');
-		using('entitydescriptor.SQLGenerator_MySQL');
-		using('entitydescriptor.LangGenerator');
+// 		using('entitydescriptor.EntityDescriptor');
+// 		using('entitydescriptor.SQLGenerator_MySQL');
+// 		using('entitydescriptor.LangGenerator');
 		
 		$this->addThisToBreadcrumb();
 		
-		$FORM_TOKEN	= new FormToken();
-		$env		= array(
-			'FORM_TOKEN'	=> $FORM_TOKEN
+		$FORM_TOKEN = new FormToken();
+		$env = array(
+			'FORM_TOKEN' => $FORM_TOKEN
 		);
 		// TODO: Check and suggest to delete unknown tables in DB
 		try {
 			if( is_array($request->getData('entities')) ) {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
-					$output		= $output==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+					$output = $output==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
-						$FORM_TOKEN->validateForm();
+						$FORM_TOKEN->validateForm($request);
 					}
-					$generator	= new SQLGenerator_MySQL();
+					$generator	= new SQLGeneratorMySQL();
 					$result		= '';
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
 // 						$query	= $generator->matchEntity(EntityDescriptor::load($entityName));
 						$query	= $generator->matchEntity($entityClass::getValidator());
 						if( $query ) {
-							$result[$entityClass]	= $query;
+							$result[$entityClass] = $query;
 						}
 					}
 					
 					$env['unknownTables'] = array();
 					/* @var PDOStatement $statement */
-					$statement	= pdo_query('SHOW TABLES', PDOSTMT);
-					$knownTables	= array();
+					$statement = pdo_query('SHOW TABLES', PDOSTMT);
+					$knownTables = array();
 					foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
 						$knownTables[$entityClass::getTable()]	= 1;
 					}
 					while( $tableFetch = $statement->fetch(PDO::FETCH_NUM) ) {
-						$table	= $tableFetch[0];
+						$table = $tableFetch[0];
 						if( isset($knownTables[$table]) ) {
 							continue;
 						}
@@ -54,8 +63,8 @@ class DevEntitiesController extends AdminController {
 					if( empty($result) ) {
 						throw new UserException('No changes');
 					}
-					$env['resultingSQL']	= implode('', $result);
-					if( $output==OUTPUT_DISPLAY ) {
+					$env['resultingSQL'] = implode('', $result);
+					if( $output == OUTPUT_DISPLAY ) {
 						$env['requireEntityValidation']	= 1;
 // 						echo '
 // 			<form method="POST">'.$FORM_TOKEN;
@@ -66,7 +75,8 @@ class DevEntitiesController extends AdminController {
 // 			<button type="submit" class="btn btn-primary" name="submitGenerateSQL['.OUTPUT_APPLY.']">Apply</button></form>';
 					} else
 					if( $output==OUTPUT_APPLY ) {
-						foreach( $result as $entity => $query ) {
+// 						foreach( $result as $entity => $query ) {
+						foreach( $result as $query ) {
 							pdo_query(strip_tags($query), PDOEXEC);
 						}
 						$tablesToRemove = $request->getData('removeTable');
@@ -103,7 +113,10 @@ class DevEntitiesController extends AdminController {
 					$output		= $request->getData('ve_output')==OUTPUT_DLRAW ? OUTPUT_DLRAW : OUTPUT_DISPLAY;
 					$generator	= new LangGenerator();
 					$result		= '';
-					foreach( POST('entities') as $entityName => $on ) {
+					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
+// 						$query	= $generator->matchEntity(EntityDescriptor::load($entityName));
+						$entityName	= $entityClass::getTable();
+// 					foreach( POST('entities') as $entityName => $on ) {
 						$result	.= "\n\n\t$entityName.ini\n";
 						foreach( $generator->getRows(EntityDescriptor::load($entityName)) as $k => $exc ) {
 							/* @var $exc InvalidFieldException */

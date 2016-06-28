@@ -26,7 +26,7 @@ fields:
     accesslevel:        natural(999)=0              # Access level for admin panel
     recovery_code:      string(30)[nullable]        # Password recovery code
     activation_code:    string(30)[nullable]        # Activation code
-    timezone:           enum(listTimezones)[nullable]=DEFAULT_TIMEZONE  # Timezone
+#    timezone:           enum(listTimezones)[nullable]=DEFAULT_TIMEZONE  # Timezone
 #    language_id:        ref(language)=0
 
     

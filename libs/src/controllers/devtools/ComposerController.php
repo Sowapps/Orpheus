@@ -1,5 +1,8 @@
 <?php
 
+use Orpheus\Exception\UserException;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+
 class ComposerController extends DevToolsController {
 	
 	/**

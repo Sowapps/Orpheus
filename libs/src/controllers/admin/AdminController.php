@@ -1,5 +1,9 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Rendering\HTMLRendering;
+
 abstract class AdminController extends HTTPController {
 	
 	protected $breadcrumb	= array();

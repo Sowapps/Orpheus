@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 /* @var string $resultingSQL */
 /* @var FormToken $FORM_TOKEN */
 /* @var array $composerConfig */

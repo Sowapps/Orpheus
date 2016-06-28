@@ -1,4 +1,7 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+use Orpheus\EntityDescriptor\PermanentEntity;
+
 /* @var HTMLRendering $this */
 /* @var HTTPController $Controller */
 /* @var HTTPRequest $Request */

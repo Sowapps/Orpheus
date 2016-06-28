@@ -1,4 +1,6 @@
 <?php
+use Orpheus\EntityDescriptor\PermanentEntity;
+
 /** A sample Demo Entity class
 
 	Example of how to use the permanent entity.

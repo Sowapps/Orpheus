@@ -1,5 +1,8 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
+use Orpheus\InputController\HTTPController\HTTPRequest;
 
 class HomeController extends HTTPController {
 	
@@ -28,6 +31,5 @@ class HomeController extends HTTPController {
 		}
 		return HTMLHTTPResponse::render('app/home');
 	}
-
 	
 }

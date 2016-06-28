@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 global $USER;
 HTMLRendering::useLayout('page_skeleton');
 
@@ -13,13 +15,16 @@ if( User::isLogged() ) {
 		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Sign in</legend>
-			<?php displayReportsHTML('global'); ?>
+			<?php
+			$this->display('reports-bootstrap3');
+// 			displayReportsHTML('global');
+			?>
 			<div class="form-group">
-				<label for="loginEmail">Email</label>
+				<label for="loginEmail"><?php User::_text('email'); ?></label>
 				<input type="text" class="form-control" id="loginEmail" name="login[email]" placeholder="Enter your email"/>
 			</div>
 			<div class="form-group">
-				<label for="loginPassword">Password</label>
+				<label for="loginPassword"><?php User::_text('password'); ?></label>
 				<input type="password" class="form-control" id="loginPassword" name="login[password]" placeholder="Enter your password"/>
 			</div>
 			<button name="submitLogin" type="submit" class="btn btn-primary">Sign in</button>
@@ -31,15 +36,18 @@ if( User::isLogged() ) {
 		<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
 		<fieldset>
 			<legend>Register</legend>
-			<?php displayReportsHTML('register'); ?>
+			<?php
+			$this->display('reports-bootstrap3', array('reportStream'=>'register'));
+// 			displayReportsHTML('register');
+			?>
 			
 			<div class="form-group">
-				<label for="registerFullname">Your name</label>
-				<input type="text" class="form-control" id="registerFullname" name="user[fullname]" required placeholder="My displayed name, e.g. Cartman34" />
+				<label for="registerFullname"><?php User::_text('yourName'); ?></label>
+				<input type="text" class="form-control" id="registerFullname" name="user[fullname]" required placeholder="My displayed name, e.g. John Smith" />
 			</div>
 			<div class="form-group">
-				<label for="registerEmail">Email</label>
-				<input type="email" class="form-control" id="registerEmail" name="user[email]" required placeholder="My email, e.g. cartman@domain.com"/>
+				<label for="registerEmail"><?php User::_text('email'); ?></label>
+				<input type="email" class="form-control" id="registerEmail" name="user[email]" required placeholder="My email, e.g. john.smith@domain.com"/>
 			</div>
 <!-- 			<div class="checkbox"> -->
 <!-- 				<label> -->
@@ -47,11 +55,11 @@ if( User::isLogged() ) {
 <!-- 				</label> -->
 <!-- 			</div> -->
 			<div class="form-group">
-				<label for="registerPassword">Your password</label>
+				<label for="registerPassword"><?php User::_text('password'); ?></label>
 				<input type="password" class="form-control" id="registerPassword" name="user[password]" required />
 			</div>
 			<div class="form-group">
-				<label for="registerConfirmPassword">Confirm password</label>
+				<label for="registerConfirmPassword"><?php User::_text('confirmPassword'); ?></label>
 				<input type="password" class="form-control" id="registerConfirmPassword" name="user[password_conf]" required />
 			</div>
 			<button name="submitRegister" type="submit" class="btn btn-primary">Register</button>

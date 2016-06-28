@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\Rendering;
+
 /** The Twig rendering class
 
 	A class to render templates with the Twig engine.
@@ -32,7 +34,7 @@ class TwigRendering extends Rendering {
 		if( $model === NULL ) {
 			throw new Exception("Invalid Rendering Model");
 		}
-		$env['RENDERER']	= $this;
+		$env['RENDERER'] = $this;
 		return static::$twigenv->render($model.'.twig', $env);
 	}
 	
@@ -44,7 +46,7 @@ class TwigRendering extends Rendering {
 		if( isset(static::$twigenv) ) {
 			return;// Already done ?
 		}
-		static::$twigenv	= new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
+		static::$twigenv = new Twig_Environment(new Twig_Loader_Filesystem(static::getModelsPath()), array(
 			'cache' => false,
 // 			'cache' => static::getCachePath(),
 		));

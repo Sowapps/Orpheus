@@ -1,5 +1,10 @@
 <?php
 
+use Orpheus\Publisher\Form\FormToken;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
+use Orpheus\Exception\UserException;
+
 /*
  * Check writing on FS
  * Check DB
@@ -35,7 +40,7 @@ class InstallDatabaseSetupController extends SetupController {
 					if( $output == OUTPUT_APPLY ) {
 						$FORM_TOKEN->validateForm();
 					}
-					$generator	= new SQLGenerator_MySQL();
+					$generator	= new SQLGeneratorMySQL();
 					$result		= '';
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
 // 						$query	= $generator->matchEntity(EntityDescriptor::load($entityName));

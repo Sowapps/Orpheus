@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path=""/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Publisher"/>
+	<buildpathentry kind="src" path="libs"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Core"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Entity Descriptor"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Cache"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Initernationalization"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Hook"/>
+	<buildpathentry kind="src" path="system"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Rendering"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus SQL Adapter"/>
+	<buildpathentry kind="src" path="configs"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus YAML"/>
+	<buildpathentry combineaccessrules="false" kind="prj" path="/Orpheus Input Controller"/>
 </buildpath>

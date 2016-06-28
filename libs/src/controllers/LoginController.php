@@ -1,6 +1,10 @@
 <?php
 
 
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Publisher\Form\FormToken;
+
 class LoginController extends HTTPController {
 	
 	/**

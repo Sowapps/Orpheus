@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 global $USER;
 HTMLRendering::useLayout('page_skeleton');
 

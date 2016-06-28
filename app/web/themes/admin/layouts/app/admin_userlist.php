@@ -1,4 +1,6 @@
 <?php
+use Orpheus\Rendering\HTMLRendering;
+
 HTMLRendering::useLayout('page_skeleton');
 ?>
 <form method="POST">

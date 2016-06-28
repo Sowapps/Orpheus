@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\InputController\HTTPController\HTTPRequest;
+
 /*
  * Check writing on FS
  * Check DB

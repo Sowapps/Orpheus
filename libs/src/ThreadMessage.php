@@ -1,4 +1,7 @@
 <?php
+
+use Orpheus\EntityDescriptor\PermanentEntity;
+
 /** The Thread Message class
 
 	This class represent a Thread message object

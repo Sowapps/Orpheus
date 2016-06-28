@@ -1,6 +1,11 @@
 <?php
 
 
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
+use Orpheus\InputController\HTTPController\RedirectHTTPResponse;
+
 class RedirectController extends HTTPController {
 	
 	/**
