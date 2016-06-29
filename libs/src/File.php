@@ -2,6 +2,7 @@
 
 use Orpheus\EntityDescriptor\PermanentEntity;
 use Orpheus\Config\Config;
+use Orpheus\Publisher\Util\PasswordGenerator;
 
 /**
  * The File class to save file's informations in database
