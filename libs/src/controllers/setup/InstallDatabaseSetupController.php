@@ -38,7 +38,7 @@ class InstallDatabaseSetupController extends SetupController {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
 					$output		= $output==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
-						$FORM_TOKEN->validateForm();
+						$FORM_TOKEN->validateForm($request);
 					}
 					$generator	= new SQLGeneratorMySQL();
 					$result		= '';
