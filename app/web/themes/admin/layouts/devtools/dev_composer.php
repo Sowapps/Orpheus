@@ -19,11 +19,16 @@ if( isset($formData['composer']['keywords']) ) {
 
 includeHTMLAdminFeatures();
 
+// foreach( $formData['composer']['authors'] as &$author ) {
+// 	$author['homepage_host'] = $author['homepage'];
+// }
+
 ?>
 <form method="POST" role="form">
 <?php
 // echo $FORM_TOKEN;
 ?>
+<input type="hidden" name="items" value="<?php echo htmlFormATtr(array_filterbykeys($formData['composer'], array('authors', 'dependencies'))); ?>" />
 
 <ul class="nav nav-tabs mb15" role="tablist">
 	<li role="presentation" class="active"><a href="#ComposerGeneral"
@@ -134,7 +139,18 @@ includeHTMLAdminFeatures();
 			<?php HTMLRendering::useLayout('panel-default'); ?>
 			
 			<ul class="list-group">
+				<li class="list-group-item item item-authors item_model" style="padding: 6px 15px">
+					<i class="fa fa-user fa-fw text-success"></i> {{name}}
+					<a href="mailto:{{email}}" data-model_require="email" target="_blank">&lt;{{email}}&gt;</a>
+					<span data-model_require="role"> ({{role}})</span>
+					<span data-model_require="homepage"> - <a href="{{homepage}}" target="_blank">{{homepage|url_host}}</a></span>
+					<div class="pull-right">
+						<button class="btn btn-default btn-sm action-update" type="button"><i class="fa fa-fw fa-edit"></i></button>
+						<button class="btn btn-default btn-sm action-delete" type="button"><i class="fa fa-fw fa-times"></i></button>
+					</div>
+				</li>
 			<?php
+			/*
 			foreach( $formData['composer']['authors'] as $author ) {
 				if( empty($author->name) ) {
 					continue;
@@ -152,6 +168,7 @@ includeHTMLAdminFeatures();
 				</li>';
 				
 			}
+			*/
 			?>
 			</ul>
 			
@@ -210,51 +227,49 @@ includeHTMLAdminFeatures();
 <div id="EditAuthorDialog" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form method="POST">
 
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title visible-create"><?php _t('addNewAuthor', DOMAIN_COMPOSER); ?></h4>
-					<h4 class="modal-title visible-update author_name"></h4>
-				</div>
-				<div class="modal-body">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title visible-create"><?php _t('addNewAuthor', DOMAIN_COMPOSER); ?></h4>
+				<h4 class="modal-title visible-update author_name"></h4>
+			</div>
+			<div class="modal-body">
 
-					<div class="form-group">
-						<label for="InputAuthorName"><?php _t('author_name', DOMAIN_COMPOSER); ?></label>
-						<input type="text" class="form-control author_name"
-							id="InputAuthorName" required>
+				<div class="form-group">
+					<label for="InputAuthorName"><?php _t('author_name', DOMAIN_COMPOSER); ?></label>
+					<input type="text" class="form-control author_name"
+						id="InputAuthorName" required>
+				</div>
+				<div class="form-group">
+					<label for="InputAuthorName"><?php _t('author_email', DOMAIN_COMPOSER); ?></label>
+					<input type="email" class="form-control author_email"
+						id="InputAuthorName">
+				</div>
+				<div class="form-group">
+					<label for="InputAuthorRole"><?php _t('author_role', DOMAIN_COMPOSER); ?></label>
+					<input type="text" class="form-control author_role"
+						id="InputAuthorRole">
+				</div>
+				<div class="form-group">
+					<label for="InputAuthorHomepage"><?php _t('author_homepage', DOMAIN_COMPOSER); ?></label>
+					<div class="input-group">
+						<input type="url" class="form-control author_homepage"
+							data-linkbtn="#BtnAuthorHomepage" id="InputAuthorHomepage"> <span
+							class="input-group-btn"> <a class="btn btn-default"
+							target="_blank" id="BtnAuthorHomepage"><i
+								class="fa fa-fw fa-external-link"></i></a>
+						</span>
 					</div>
-					<div class="form-group">
-						<label for="InputAuthorName"><?php _t('author_email', DOMAIN_COMPOSER); ?></label>
-						<input type="email" class="form-control author_email"
-							id="InputAuthorName">
-					</div>
-					<div class="form-group">
-						<label for="InputAuthorRole"><?php _t('author_role', DOMAIN_COMPOSER); ?></label>
-						<input type="text" class="form-control author_role"
-							id="InputAuthorRole">
-					</div>
-					<div class="form-group">
-						<label for="InputAuthorHomepage"><?php _t('author_homepage', DOMAIN_COMPOSER); ?></label>
-						<div class="input-group">
-							<input type="url" class="form-control author_homepage"
-								data-linkbtn="#BtnAuthorHomepage" id="InputAuthorHomepage"> <span
-								class="input-group-btn"> <a class="btn btn-default"
-								target="_blank" id="BtnAuthorHomepage"><i
-									class="fa fa-fw fa-external-link"></i></a>
-							</span>
-						</div>
-					</div>
+				</div>
 
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><?php _t('cancel'); ?></button>
-					<button type="button" class="btn btn-primary"><?php _t('save'); ?></button>
-				</div>
-			</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal"><?php _t('cancel'); ?></button>
+				<button type="button" class="btn btn-primary save_author"><?php _t('save'); ?></button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -298,6 +313,13 @@ includeHTMLAdminFeatures();
 <script type="text/javascript">
 var EditAuthorDialog;
 var EditDependencyDialog;
+
+function url_host(url) {
+// 	console.log("Location of "+url, getLocation(url));
+	var location = getLocation(url);
+	return location.host;
+}
+
 $(function() {
 	$("#InputComposerKeywords").select2({
 		tags: true,
@@ -327,6 +349,10 @@ $(function() {
 		EditAuthorDialog.fill("author_", $(this).closest("li.author").data("author"));
 		EditAuthorDialog.modal("show");
 	});
+
+	$(".save_author").click(function() {
+		EditAuthorDialog.modal("hide");
+	});
 	
 	EditDependencyDialog = $("#EditDependencyDialog").modal({show:false});
 
@@ -335,6 +361,68 @@ $(function() {
 		EditDependencyDialog.find("form").get(0).reset();
 		EditDependencyDialog.modal("show");
 	});
+
+	function modelAdd(itemName, itemData) {
+// 		console.log("Model of "+itemName, $(".item_model.item-"+itemName), itemData);
+		var model = $(".item_model.item-"+itemName);
+		var cloneHTML = model.outerHTML();
+// 		console.log("Model html", cloneHTML);
+		// Fill
+		// Replace all fields
+		cloneHTML = cloneHTML.replace(new RegExp("\\{\\{([^\\}\\|]+)(?:\\|([^\\}\\|]+))?\\}\\}", 'g'), function myFunction(string, field, formatter, offset){
+// 			console.log("Replace", string, field, formatter, offset);
+			if( !isSet(itemData[field]) ) {
+				return string;
+			}
+			var value = itemData[field];
+			if( isDefined(formatter) ) {
+				console.log("formatter is defined");
+				var fn = window[formatter];
+				console.log("formatter function", fn);
+				if( isFunction(fn) ) {
+					console.log("formatter is a function");
+					value = fn(value);
+				}
+			}
+			return value;
+		});
+		/*
+		// Search fields
+		for( var key in itemData ) {
+			var value = data[itemName];
+			if( !isString(value) ) {
+				continue;
+			}
+			cloneHTML = cloneHTML.replace(new RegExp("\{\{"++"\}\}", 'g'), function myFunction(x){return x.toUpperCase();});
+		}
+		*/
+		console.log("replaced cloneHTML", cloneHTML);
+		var clone = $(cloneHTML).removeClass("item_model").data("itemdata", itemData).data("itemtype", itemName).uniqueId();
+		// Hide invalid requires
+		
+		// Show clone
+		model.parent().find(".item.item-"+itemName).last().after(clone);
+	}
+
+	(function() {
+// 		console.log("config data", $(":input[name=items]").val());
+		var data = $.parseJSON($(":input[name=items]").val());
+		console.log("json data", data);
+		for( var itemName in data ) {
+			var items = data[itemName];
+			if( !isArray(items) ) {
+				continue;
+			}
+			for( var i in items ) {
+				var itemData = items[i];
+// 				console.log("itemData", itemData);
+				if( !isObject(itemData) ) {
+					continue;
+				}
+				modelAdd(itemName, itemData);
+			}
+		}
+	})();
 
 // 	$(".author .action-update").click(function() {
 // 		EditAuthorDialog.removeClass('mode-create').addClass('mode-update');
@@ -402,11 +490,15 @@ $(function() {
 </script>
 
 <style>
-.list-group-item.author {
+.list-group-item.item_model {
+	display: none;
+}
+
+.list-group-item.item-authors {
 	line-height: 28px;
 }
 
-.list-group-item.author .btn {
+.list-group-item.item-authors .btn {
 	padding: 4px 6px;
 }
 

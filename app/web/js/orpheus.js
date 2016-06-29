@@ -226,6 +226,12 @@ function leadZero(val) {
 	return val < 10 ? '0'+val : val;
 }
 
+var getLocation = function(uri) {
+	var l = document.createElement("a");
+	l.href = uri;
+	return l;
+};
+
 function bintest(value, reference) {
 	return checkFlag(value, reference);
 }
@@ -684,6 +690,11 @@ var escapeHTML;
 				return this.callback(e);
 			}
 		});
+	};
+	
+	$.fn.outerHTML = function() {
+//		console.log("outerHTML - this", this);
+		return $('<div />').append(this.eq(0).clone()).html();
 	};
 
 	$(function() {
