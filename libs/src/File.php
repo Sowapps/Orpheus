@@ -1,7 +1,7 @@
 <?php
 
-use Orpheus\Config\Config;
 use Orpheus\EntityDescriptor\PermanentEntity;
+use Orpheus\Config\Config;
 
 /**
  * The File class to save file's informations in database
