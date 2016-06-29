@@ -1,6 +1,5 @@
 <?php
 
-
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTMLHTTPResponse;

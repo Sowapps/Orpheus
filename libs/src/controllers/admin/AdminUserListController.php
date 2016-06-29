@@ -28,7 +28,6 @@ class AdminUserListController extends AdminController {
 		if( $request->hasData('submitCreate') ) {
 		
 			try {
-// 				$data = $request->getArrayData('user');
 				if( !$USER_CAN_USER_EDIT ) {
 					throw new UserException('forbiddenOperation');
 				}
@@ -43,9 +42,9 @@ class AdminUserListController extends AdminController {
 		}
 		
 		$users = User::get(array(
-				'where'		=> $USER_CAN_DEV_SEE ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
-				'orderby'	=> 'fullname ASC',
-				'output'	=> SQLAdapter::ARR_OBJECTS
+			'where'		=> $USER_CAN_DEV_SEE ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
+			'orderby'	=> 'fullname ASC',
+			'output'	=> SQLAdapter::ARR_OBJECTS
 		));
 		
 		return $this->renderHTML('app/admin_userlist', array(

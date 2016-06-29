@@ -11,7 +11,7 @@ if( !isset($footer) ) {
 }
 
 if( !isset($bodyClass) ) {
-	$bodyClass	= '';
+	$bodyClass = '';
 }
 
 // if( !isset($actions) ) {

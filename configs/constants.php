@@ -67,6 +67,7 @@ defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
 define('CRAC_CONTEXT_APPLICATION',	1);
 define('CRAC_CONTEXT_AGENCY',		2);
 define('CRAC_CONTEXT_RESOURCE',		3);
+
 define('FILE_USAGE_USER_PICTURE',		'user_picture');
 define('FILE_USAGE_INVOICE',			'invoice');
 

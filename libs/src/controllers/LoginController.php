@@ -51,7 +51,7 @@ class LoginController extends HTTPController {
 		}
 		
 		return $this->renderHTML('app/user_login', array(
-			'FORM_TOKEN'	=> $FORM_TOKEN
+			'FORM_TOKEN' => $FORM_TOKEN
 		));
 	}
 

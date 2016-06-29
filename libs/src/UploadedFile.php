@@ -1,5 +1,7 @@
 <?php
 
+use Orpheus\Exception\UserException;
+
 class UploadedFile {
 	
 	protected $fileName;
