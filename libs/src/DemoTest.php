@@ -1,5 +1,6 @@
 <?php
 use Orpheus\Publisher\PermanentObject\PermanentObject;
+use Orpheus\Exception\UserException;
 
 /** A sample demo test class
  * Example of how to use the permanent object.

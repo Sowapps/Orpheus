@@ -21,16 +21,16 @@ class CheckDatabaseSetupController extends SetupController {
 	 */
 	public function run(HTTPRequest $request) {
 
-		$env	= array(
+		$env = array(
 			'folders'	=> array(),
 			'allowContinue'	=> false
 		);
 		
 		pdo_loadConfig();
-		$DB_SETTINGS	= (object) pdo_getSettings(pdo_getDefaultInstance());
-		$env['DB_SETTINGS']	= &$DB_SETTINGS;
+		$DB_SETTINGS = (object) pdo_getSettings(pdo_getDefaultInstance());
+		$env['DB_SETTINGS'] = &$DB_SETTINGS;
 		
-		startReportStream('checkdb');
+// 		startReportStream('checkdb');
 // 		$allowContinue = false;
 		try {
 			ensure_pdoinstance();
@@ -39,7 +39,7 @@ class CheckDatabaseSetupController extends SetupController {
 		} catch( SQLException $e ) {
 			reportError($e->getMessage(), DOMAIN_SETUP);
 		}
-		endReportStream();
+// 		endReportStream();
 
 		if( $env['allowContinue'] ) {
 			$this->validateStep();

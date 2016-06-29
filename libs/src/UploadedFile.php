@@ -43,7 +43,8 @@ class UploadedFile {
 	}
 	
 	public function getType() {
-		list($type, $other)	= explodeList('/', $this->getMIMEType(), 2);
+// 		list($type, $other)	= explodeList('/', $this->getMIMEType(), 2);
+		list($type,) = explodeList('/', $this->getMIMEType(), 2);
 		return $type;
 	}
 	

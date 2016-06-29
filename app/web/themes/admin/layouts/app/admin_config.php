@@ -1,9 +1,10 @@
 <?php
 use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Config\AppConfig;
 
 HTMLRendering::useLayout('page_skeleton');
 
-$GlobalConfig = GlobalConfig::instance();
+$AppConfig = AppConfig::instance();
 ?>
 <div class="row">
 	<div class="col-lg-12">
@@ -21,7 +22,7 @@ $GlobalConfig = GlobalConfig::instance();
 	</thead>
 	<tbody>
 <?php
-foreach( $GlobalConfig->asArray() as $key => $value ) {
+foreach( $AppConfig->asArray() as $key => $value ) {
 	echo '
 <tr data-key="'.$key.'" data-value="'.$value.'">
 	<td>'.escapeText($key).'</td>

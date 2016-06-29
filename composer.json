@@ -17,7 +17,9 @@
 		"orpheus/orpheus-inputcontroller" : "dev-master",
 		"orpheus/orpheus-sqladapter" : "dev-master",
 		"orpheus/orpheus-publisher" : "dev-master",
-		"orpheus/orpheus-entitydescriptor" : "dev-master"
+		"orpheus/orpheus-entitydescriptor" : "dev-master",
+		"orpheus/orpheus-form" : "dev-master",
+		"orpheus/orpheus-webtools" : "dev-master"
 	},
 	"authors" : [{
 			"name" : "Florent HAZARD",

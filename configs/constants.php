@@ -32,7 +32,7 @@ defifn('LOCALE',			LANG.'.utf8');
 defifn('CACHEPATH',			STOREPATH.'cache/');
 defifn('TEMPPATH',			STOREPATH.'temp/');
 defifn('FILESTOREPATH',		STOREPATH.'files/');
-defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
+// defifn('DYNCONFIGPATH',		STOREPATH.'config.json');
 
 defifn('STATIC_URL',		SITEROOT.'static/');
 
@@ -44,6 +44,8 @@ defifn('ROUTE_HOME',			'home');
 define('ROUTE_LOGIN',			'login');
 define('ROUTE_LOGOUT',			'logout');
 define('ROUTE_FILE_DOWNLOAD',	'file_download');
+define('ROUTE_DOWNLOAD_LATEST',		'download_latest');
+define('ROUTE_DOWNLOAD_RELEASES',	'download_releases');
 // define('ROUTE_DASHBOARD',		'user_dashboard');
 
 define('ROUTE_ADM_DEMO',		'admin_demo');

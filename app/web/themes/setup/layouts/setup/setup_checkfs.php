@@ -1,4 +1,7 @@
 <?php
+/* @var Orpheus\Rendering\HTMLRendering $this */
+use Orpheus\Rendering\HTMLRendering;
+
 HTMLRendering::useLayout('page_skeleton');
 
 function collapsiblePanelHTML($id, $title, $description, $panelClass, $open=0) {

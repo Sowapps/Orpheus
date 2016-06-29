@@ -1,6 +1,7 @@
 <?php
 use Orpheus\Hook\Hook;
 use Orpheus\EntityDescriptor\PermanentEntity;
+use Orpheus\Publisher\Email\Email;
 
 /**
  * PHP File for the website sources
@@ -12,7 +13,7 @@ use Orpheus\EntityDescriptor\PermanentEntity;
 addAutoload('File',								'src/File');
 addAutoload('UploadedFile',						'src/UploadedFile');
 
-addAutoload('GlobalConfig',						'src/GlobalConfig');
+// addAutoload('GlobalConfig',						'src/GlobalConfig');
 addAutoload('User',								'src/User');
 
 addAutoload('DemoTest',							'src/DemoTest');
@@ -60,6 +61,7 @@ defifn('DOMAIN_SETUP',		'setup');
 // Entities
 PermanentEntity::registerEntity('File');
 PermanentEntity::registerEntity('User');
+PermanentEntity::registerEntity('DemoEntity');
 
 
 // Hooks

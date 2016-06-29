@@ -38,13 +38,27 @@ http:
         path: "/thread.html"
         controller: "ThreadController"
         
-    download:
-        path: "/download.html"
-        controller: "DownloadController"
+    download_latest:
+        path: "/download-latest.html"
+        controller: "Orpheus\\Controller\\RedirectController"
+        url_config: "download_url"
+        
+    download_releases:
+        path: "/download-releases.html"
+        controller: "Orpheus\\Controller\\RedirectController"
+        url_config: "releases_url"
+        
+#    download:
+#        path: "/download.html"
+#        controller: "DownloadController"
         
     faq:
         path: "/faq.html"
         render: "app/faq"
+        
+    gettingstarted:
+        path: "/getting-started.html"
+        render: "app/gettingstarted"
         
     admin_demo:
         path: "/admin/home.html"

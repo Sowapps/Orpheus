@@ -2,7 +2,8 @@
 
 use Orpheus\Publisher\Fixture\FixtureRepository;
 use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\Publisher\Form\FormToken;
+use Orpheus\Form\FormToken;
+use Orpheus\Exception\UserException;
 
 /*
  * Check writing on FS
@@ -24,7 +25,7 @@ class InstallFixturesSetupController extends SetupController {
 	public function run(HTTPRequest $request) {
 		
 		$FORM_TOKEN	= new FormToken();
-		$env		= array(
+		$env = array(
 			'FORM_TOKEN'	=> $FORM_TOKEN,
 			'allowContinue'	=> false,
 		);
@@ -38,14 +39,14 @@ class InstallFixturesSetupController extends SetupController {
 					try {
 						$class::loadFixtures();
 						$c++;
-					} catch( UserException $e ) {
-						throw $e;
-					} catch( Exception $e ) {
+// 					} catch( UserException $e ) {
+// 						throw $e;
+					} catch( \Exception $e ) {
 						throw $e;
 // 						throw new UserException(t('errorLoadingFixture', DOMAIN_SETUP, $class), DOMAIN_SETUP, 0, $e);
 					}
 				}
-				$env['allowContinue']	= true;
+				$env['allowContinue'] = true;
 				$this->validateStep();
 				if( $c ) {
 					reportSuccess(t('successInstallFixtures', DOMAIN_SETUP, array('PROCESSED'=>$c, 'TOTAL'=>$t)));
@@ -57,10 +58,10 @@ class InstallFixturesSetupController extends SetupController {
 		}
 		
 		// At end
-		$env['wasAlreadyDone']	= $this->isStepValidated();
+		$env['wasAlreadyDone'] = $this->isStepValidated();
 		if( $env['wasAlreadyDone'] ) {
 			reportWarning('fixturesAlreadyLoaded', DOMAIN_SETUP);
-			$env['allowContinue']	= true;
+			$env['allowContinue'] = true;
 		}
 	
 		return $this->renderHTML('setup/setup_installfixtures', $env);

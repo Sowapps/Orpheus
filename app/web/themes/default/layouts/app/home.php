@@ -11,12 +11,18 @@ This framework is made for you, you want to develop your website quickly with so
 secured and standardized by easiest way to use it and the maximum customizing capabilities.
 	</p>
 	<p>
+		<a href="<?php _u('gettingstarted'); ?>" class="btn btn-primary btn-large"><i class="fa fa-star-o"></i> Getting Started</a>
+		<?php /*
+		<a href="<?php _u(ROUTE_DOWNLOAD_LATEST); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
+		<a href="<?php _u(ROUTE_DOWNLOAD_RELEASES); ?>" target="_blank" class="btn btn-link fs16">All releases</a>
 		<a href="<?php echo u('download'); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
 		<a href="<?php echo u('download').'?releases'; ?>" class="link fs16 ml10">All releases</a>
+		*/ ?>
 	</p>
 </div>
 <?php
-displayReportsHTML();
+$this->display('reports-bootstrap3');
+// displayReportsHTML();
 ?>
 
 <div class="row">

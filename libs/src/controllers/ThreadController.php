@@ -1,10 +1,9 @@
 <?php
 
-
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
-use Orpheus\Publisher\Form\FormToken;
+use Orpheus\Form\FormToken;
 
 class ThreadController extends HTTPController {
 	

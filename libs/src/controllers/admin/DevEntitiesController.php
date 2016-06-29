@@ -1,7 +1,7 @@
 <?php
 
 use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\Publisher\Form\FormToken;
+use Orpheus\Form\FormToken;
 use Orpheus\EntityDescriptor\PermanentEntity;
 use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
 use Orpheus\Exception\UserException;

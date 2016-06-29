@@ -34,7 +34,7 @@ class ComposerController extends DevToolsController {
 			
 			if( $request->hasData('submitUpdate') ) {
 				$composerConfig = json_decode(file_get_contents($composerFile));
-				$composerConfig->test = 'Test property'; 
+// 				$composerConfig->test = 'Test property'; 
 				file_put_contents($composerFile, json_encode($composerConfig));
 				
 			} else
@@ -54,6 +54,7 @@ class ComposerController extends DevToolsController {
 // 				debug('Command => '.$cmd);
 				
 				ob_start();
+				$return = null;
 				system($cmd, $return);
 	// 			system('php '.APPLICATIONPATH.'composer.phar '.$command.' '.$devOpt.' '.$optiOpt.' --no-progress');
 				$output = ob_get_clean();

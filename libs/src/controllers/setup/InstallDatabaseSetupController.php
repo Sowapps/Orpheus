@@ -1,9 +1,9 @@
 <?php
 
-use Orpheus\Publisher\Form\FormToken;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
 use Orpheus\Exception\UserException;
+use Orpheus\Form\FormToken;
 
 /*
  * Check writing on FS
@@ -23,12 +23,12 @@ class InstallDatabaseSetupController extends SetupController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-		using('entitydescriptor.EntityDescriptor');
-		using('entitydescriptor.SQLGenerator_MySQL');
-		using('entitydescriptor.LangGenerator');
+// 		using('entitydescriptor.EntityDescriptor');
+// 		using('entitydescriptor.SQLGenerator_MySQL');
+// 		using('entitydescriptor.LangGenerator');
 		
 		$FORM_TOKEN	= new FormToken();
-		$env		= array(
+		$env = array(
 			'FORM_TOKEN'	=> $FORM_TOKEN,
 			'allowContinue'	=> false,
 		);
@@ -51,11 +51,11 @@ class InstallDatabaseSetupController extends SetupController {
 					}
 					
 					if( empty($result) ) {
-						$env['allowContinue']	= true;
+						$env['allowContinue'] = true;
 						throw new UserException('errorNoChanges', DOMAIN_SETUP);
 					}
-					$env['resultingSQL']	= implode('', $result);
-					if( $output==OUTPUT_DISPLAY ) {
+					$env['resultingSQL'] = implode('', $result);
+					if( $output == OUTPUT_DISPLAY ) {
 						$env['requireEntityValidation']	= 1;
 // 						$env['resultingSQL']	= str_replace("\t", "<div class=\"tabulation\">\t</div>", $env['resultingSQL']);
 // 						echo '
@@ -67,7 +67,8 @@ class InstallDatabaseSetupController extends SetupController {
 // 			<button type="submit" class="btn btn-primary" name="submitGenerateSQL['.OUTPUT_APPLY.']">Apply</button></form>';
 					} else
 					if( $output==OUTPUT_APPLY ) {
-						foreach( $result as $entity => $query ) {
+// 						foreach( $result as $entity => $query ) {
+						foreach( $result as $query ) {
 							pdo_query(strip_tags($query), PDOEXEC);
 						}
 						$env['allowContinue']	= true;
@@ -117,7 +118,8 @@ class InstallDatabaseSetupController extends SetupController {
 		
 		} catch( UserException $e ) {
 			if( $e->getMessage() === 'errorNoChanges' ) {
-				reportWarning($e);
+				reportSuccess($e, $e->getDomain());
+// 				reportWarning($e);
 			} else {
 				reportError($e);
 			}

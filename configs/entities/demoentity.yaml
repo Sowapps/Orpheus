@@ -1,13 +1,14 @@
 
 # Entity Test Entities descriptor (FAKE)
 
-parent: publications
-
 fields:
-    slug: string(4, 20)
+    # Header
+    create_date:            datetime=sqlDatetime()
+    create_ip:              ip=clientIP()
+    create_user_id:         ref=userID()
+    
+    name: string(4, 20)
 
 indexes:
-     - INDEX(user_id)
      - UNIQUE(name)
-     - FULLTEXT(slug, cache)=mySlugIndex
      

@@ -1,6 +1,7 @@
 <?php
 
 use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\Config\AppConfig;
 
 class AdminConfigController extends AdminController {
 	
@@ -18,9 +19,9 @@ class AdminConfigController extends AdminController {
 		if( $data = $request->getArrayData('row') ) {
 		
 			try {
-				$GlobalConfig	= GlobalConfig::instance();
-				$GlobalConfig->set($data['key'], $data['value']);
-				$GlobalConfig->save();
+				$AppConfig = AppConfig::instance();
+				$AppConfig->set($data['key'], $data['value']);
+				$AppConfig->save();
 		
 			} catch(UserException $e) {
 				reportError($e);

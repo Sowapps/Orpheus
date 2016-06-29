@@ -1,4 +1,8 @@
 <?php
+/* @var Orpheus\Rendering\HTMLRendering $this */
+use Orpheus\Rendering\HTMLRendering;
+use Orpheus\EntityDescriptor\PermanentEntity;
+
 /* @var $resultingSQL string */
 /* @var $FORM_TOKEN FormToken */
 
@@ -27,10 +31,10 @@ HTMLRendering::useLayout('page_skeleton');
 		<div class="sql_query"><?php echo $resultingSQL; ?></div>
 		<form method="POST"><?php echo $FORM_TOKEN; ?>
 		<?php
-				foreach( POST('entities') as $entityClass => $on ) {
-					echo htmlHidden('entities/'.$entityClass);
-				}
-				?>
+			foreach( POST('entities') as $entityClass => $on ) {
+				echo htmlHidden('entities/'.$entityClass);
+			}
+			?>
 			<button type="submit" class="btn btn-primary" name="submitGenerateSQL[<?php echo OUTPUT_APPLY; ?>]"><?php _t('apply'); ?></button>
 		</form>
 		<?php

@@ -1,4 +1,7 @@
 <?php
+/* @var Orpheus\Rendering\HTMLRendering $this */
+use Orpheus\Rendering\HTMLRendering;
+
 HTMLRendering::useLayout('page_skeleton');
 
 /*
@@ -69,7 +72,9 @@ function collapsiblePanelHTML($id, $title, $description, $panelClass='panel-defa
 		<?php
 		unset($DB_SETTINGS);
 		
-		displayReportsHTML('checkdb');
+		$this->display('reports-bootstrap3');
+// 		$this->display('reports-bootstrap3', array('reportStream'=>'checkdb'));
+// 		displayReportsHTML('checkdb');
 		
 		if( $allowContinue ) {
 			?>

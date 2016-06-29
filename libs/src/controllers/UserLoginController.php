@@ -3,8 +3,8 @@
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
-use Orpheus\Publisher\Form\FormToken;
 use Orpheus\Exception\UserException;
+use Orpheus\Form\FormToken;
 
 class UserLoginController extends HTTPController {
 	
