@@ -1,16 +1,20 @@
-
+# 
 # Usage:
 # Route Access Type > Route > Route Config
-#
+# 
+# This YAML configuration file is made to work with package orpheus/orpheus-inputcontroller
+# 
 # HTTP Route allows the following config:
 # - path : The relative path to this route. Mandatory config.
 # - method : Restrict path access to the given HTTP method.
 # - controller : The controller to use to process this route
 # - restrictTo : Restriction configuration for this route, you can customize accessibility, the common field is "role".
+# - redirect : Redirect to the given URL, using RedirectController.
+# - url_config : Redirect to the URL provided by the configurable url_config, using RedirectController & AppConfig. Require orpheus/orpheus-webtools.
 # - render : The template to render this route, using StaticPageController. Processed as option.
 # Other fields will be send as options to the controller, controller can access to all this configuration.
 #
-# Roles: visitor, member, moderator, administrator, developer
+# Known roles: visitor, member, moderator, administrator, developer
 # Unspecified role does not restrict access, "visitor" restricts to not-logged user only.
 
 http:
