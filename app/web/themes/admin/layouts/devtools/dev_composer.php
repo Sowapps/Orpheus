@@ -27,8 +27,9 @@ includeHTMLAdminFeatures();
 <form method="POST" role="form">
 <?php
 // echo $FORM_TOKEN;
+// debug('$formData[composer]', $formData['composer']);
 ?>
-<input type="hidden" name="items" value="<?php echo htmlFormATtr(array_filterbykeys($formData['composer'], array('authors', 'dependencies'))); ?>" />
+<input type="hidden" name="items" value="<?php echo htmlFormATtr(array_filterbykeys($formData['composer'], array('authors', 'require'))); ?>" />
 
 <ul class="nav nav-tabs mb15" role="tablist">
 	<li role="presentation" class="active"><a href="#ComposerGeneral"
@@ -42,24 +43,24 @@ includeHTMLAdminFeatures();
 
 		<div class="row">
 			<div class="col-lg-6">
-			<?php HTMLRendering::useLayout('panel-default'); ?>
-			<?php
-// 			debug('$composerConfig', $composerConfig);
-	// 		debug('$formData', $formData);
-			?>
-			
-			<div class="form-group">
+				<?php HTMLRendering::useLayout('panel-default'); ?>
+				<?php
+	// 			debug('$composerConfig', $composerConfig);
+		// 		debug('$formData', $formData);
+				?>
+				
+				<div class="form-group">
 					<label><?php _t('name', DOMAIN_COMPOSER); ?></label>
-				<?php _adm_htmlTextInput('composer/name'); ?>
-			</div>
+					<?php _adm_htmlTextInput('composer/name'); ?>
+				</div>
 				<div class="form-group">
 					<label><?php _t('description', DOMAIN_COMPOSER); ?></label>
-				<?php _adm_htmlTextInput('composer/description'); ?>
-			</div>
+					<?php _adm_htmlTextInput('composer/description'); ?>
+				</div>
 				<div class="form-group">
 					<label><?php _t('type', DOMAIN_COMPOSER); ?></label>
-				<?php _adm_htmlTextInput('composer/type'); ?>
-			</div>
+					<?php _adm_htmlTextInput('composer/type'); ?>
+				</div>
 				<div class="form-group">
 					<label><?php _t('keywords', DOMAIN_COMPOSER); ?></label> <select
 						name="composer[keywords]" multiple id="InputComposerKeywords">
@@ -139,7 +140,7 @@ includeHTMLAdminFeatures();
 			<?php HTMLRendering::useLayout('panel-default'); ?>
 			
 			<ul class="list-group list-authors">
-				<li class="list-group-item item item-authors item_model" style="">
+				<li class="list-group-item item item-authors item_model">
 					<i class="fa fa-user fa-fw text-success"></i> {{name}}
 					<a href="mailto:{{email}}" data-model_require="email" target="_blank">&lt;{{email}}&gt;</a>
 					<span data-model_require="role"> ({{role}})</span>
@@ -195,6 +196,23 @@ includeHTMLAdminFeatures();
 	// 		"require" : {
 	// 		"orpheus/orpheus-ssh2" : "dev-master@stable"
 	// 	}
+			?>
+			
+			<ul class="list-group list-require">
+				<li class="list-group-item item item-require item_model">
+					<i class="fa fa-folder fa-fw text-success"></i> {{_key_}}
+					({{_value_}})
+					<div class="pull-right">
+						<button class="btn btn-default btn-sm action-update" type="button"><i class="fa fa-fw fa-edit"></i></button>
+						<button class="btn btn-default btn-sm action-delete" type="button"><i class="fa fa-fw fa-times"></i></button>
+					</div>
+				</li>
+				<li class="list-group-item item item-require item_placeholder">
+					<p>There is currently no dependency, <a class="action-create create_require" href="#">click here</a> to add one.</p>
+				</li>
+			</ul>
+			<?php
+			/*
 			if( !empty($formData['composer']['require']) ) {
 				?>
 			<ul class="list-group">
@@ -206,16 +224,17 @@ includeHTMLAdminFeatures();
 				'</li>';
 				
 			}
+			}
+			*/
 			?>
 			</ul>
 			<?php
-			}
 			
 			HTMLRendering::endCurrentLayout(array(
 				'title' => t('dependencies', DOMAIN_COMPOSER),
 				'footer' => '
 	<div class="panel-footer text-right">
-		<button class="btn btn-default" type="button" id="BtnAddDependency">'.t('add').'</button>
+		<button class="btn btn-default action-create create_require" type="button">'.t('add').'</button>
 		<button class="btn btn-primary" type="submit" name="submitUpdate">'.t('save').'</button>
 	</div>')); ?>
 	
@@ -297,19 +316,19 @@ includeHTMLAdminFeatures();
 
 					<div class="form-group">
 						<label for="InputDependencyName"><?php _t('dependency_name', DOMAIN_COMPOSER); ?></label>
-						<select type="text" class="form-control dependency_name"
-							id="InputDependencyName"></select>
+						<select type="text" class="form-control dependency_name" data-field="_key_"
+							id="InputDependencyName" required="required"></select>
 					</div>
 					<div class="form-group">
 						<label for="InputDependencyVersion"><?php _t('dependency_version', DOMAIN_COMPOSER); ?></label>
-						<input type="text" class="form-control dependency_version"
-							id="InputDependencyVersion">
+						<input type="text" class="form-control dependency_version" data-field="_value_"
+							id="InputDependencyVersion" required="required">
 					</div>
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal"><?php _t('cancel'); ?></button>
-					<button type="button" class="btn btn-primary"><?php _t('save'); ?></button>
+					<button type="button" class="btn btn-primary save_dependency"><?php _t('save'); ?></button>
 				</div>
 			</form>
 		</div>
@@ -329,8 +348,20 @@ function url_host(url) {
 	return location.host;
 }
 
+var models = {};
 function getModel(itemName) {
-	return $(".item_model.item-"+itemName);
+	if( !isDefined(models[itemName]) ) {
+		var model = $(".item_model.item-"+itemName);
+		models[itemName] = {
+			"list": model.parent(),
+			"model": model.removeClass("item_model").addClass("model_item").detach(),
+			"placeholder": $(".item_placeholder.item-"+itemName+"").detach()
+		};
+	}
+	return models[itemName].model;
+}
+function getPlaceholder(itemName) {
+	return models[itemName].placeholder;
 }
 
 function modelClone(itemName, itemData) {
@@ -368,7 +399,8 @@ function modelClone(itemName, itemData) {
 		cloneHTML = cloneHTML.replace(new RegExp("\{\{"++"\}\}", 'g'), function myFunction(x){return x.toUpperCase();});
 	}
 	*/
-	var clone = $(cloneHTML).removeClass("item_model").addClass("model_item").data("itemdata", itemData).data("itemtype", itemName).uniqueId();
+	var clone = $(cloneHTML).data("itemdata", itemData).data("itemtype", itemName).uniqueId();
+// 	var clone = $(cloneHTML).removeClass("item_model").addClass("model_item").data("itemdata", itemData).data("itemtype", itemName).uniqueId();
 	
 	// Hide invalid requires
 	clone.find("[data-model_require]").each(function() {
@@ -383,12 +415,14 @@ function modelClone(itemName, itemData) {
 }
 
 function modelItemAdd(itemName, itemData) {
-//		console.log("Model of "+itemName, $(".item_model.item-"+itemName), itemData);
+// 	console.log("Model of "+itemName, $(".item_model.item-"+itemName), itemData);
 	// Add clone to the end
 // 	console.log("model", getModel(itemName));
 // 	console.log("model", getModel(itemName));
 	// Add after last item or model
-	getModel(itemName).parent().find(".item.item-"+itemName).last().after(modelClone(itemName, itemData));
+	var clone = modelClone(itemName, itemData);// do it before, init model
+	models[itemName].list.append(clone);
+// 	getModel(itemName).parent().find(".item.item-"+itemName).last().after(modelClone(itemName, itemData));
 }
 
 function modelItemUpdate(itemRow, itemData) {
@@ -401,21 +435,42 @@ function modelItemUpdate(itemRow, itemData) {
 var Config;
 function saveItems() {
 	for( var itemName in Config ) {
-		if( !isArray(Config[itemName]) ) {
+		if( !isObject(Config[itemName]) ) {
 			continue;
 		}
-		Config[itemName] = [];
-		$(".item.model_item.item-"+itemName).each(function() {
-			Config[itemName].push($(this).data("itemdata"));
+		Config[itemName] = isArray(Config[itemName]) ? [] : {};
+		console.log("Scan existing "+itemName);
+		var count = 0;
+		$(".item.model_item.item-"+itemName).each(function(index) {
+			var data = jQuery.extend({}, $(this).data("itemdata"));
+			console.log(data);
+			if( isDefined(data._key_) ) {
+				index = data._key_;
+				delete data._key_;
+			}
+			if( isDefined(data._value_) ) {
+				data = data._value_;
+			}
+			console.log(index+" => ", data);
+			Config[itemName][index] = data;
+			count++;
 		});
-// 		console.log("Config["+itemName+"]", Config[itemName]);
-		if( Config[itemName].length ) {
-// 			console.log("Not Empty");
-			$(".item-"+itemName+".item_placeholder:visible").hide();
-		} else {
-// 			console.log("Empty");
-			$(".item-"+itemName+".item_placeholder:hidden").show();
+		console.log("Config["+itemName+"]", Config[itemName]);
+		if( isDefined(models[itemName]) ) {
+// 			if( Config[itemName].length ) {
+			if( count ) {
+				models[itemName].placeholder.hide().detach();
+			} else {
+				models[itemName].list.append(models[itemName].placeholder.show());
+			}
 		}
+// 		if( Config[itemName].length ) {
+// // 			console.log("Not Empty");
+// 			$(".item-"+itemName+".item_placeholder:visible").hide();
+// 		} else {
+// // 			console.log("Empty");
+// 			$(".item-"+itemName+".item_placeholder:hidden").show();
+// 		}
 	}
 	$(":input[name=items]").val(JSON.stringify(Config));
 }
@@ -423,15 +478,6 @@ function saveItems() {
 $(function() {
 	$("#InputComposerKeywords").select2({
 		tags: true,
-		/*
-		createTag: function (params) {
-			return {
-				id: params.term,
-				text: params.term,
-				newOption: true
-			};
-		},
-		*/
 		tokenSeparators: [',']
 	});
 	
@@ -448,14 +494,9 @@ $(function() {
 	$(".list-authors").on("click", ".item-authors .action-update", function() {
 		EditAuthorDialog.removeClass('mode-create').addClass('mode-update');
 		EditAuthorDialog.find("form").get(0).reset();
-// 		EditAuthorDialog.find(":input").reset();
-// 		EditAuthorDialog.fill("author_", $(this).closest("li.author").data("author"));
 		var itemRow = $(this).closest(".model_item.item-authors");
-// 		console.log("Open row at index => "+itemRow.index(".model_item.item-authors"));
 		EditAuthorDialog.fill("author_", itemRow.data("itemdata"));
-// 		EditAuthorDialog.find(".save_author").data("index", itemRow.index(".model_item.item-authors"));
 		EditAuthorDialog.find(".save_author").data("itemid", itemRow.attr("id"));
-// 		EditAuthorDialog.fill("author_", $(this).closest(".item-authors").data("itemdata"));
 		EditAuthorDialog.modal("show");
 	});
 
@@ -492,12 +533,66 @@ $(function() {
 	
 	EditDependencyDialog = $("#EditDependencyDialog").modal({show:false});
 
+	$(".action-create.create_require").click(function() {
+		EditDependencyDialog.removeClass('mode-update').addClass('mode-create');
+		EditDependencyDialog.find("form").get(0).reset();
+		EditDependencyDialog.find(".save_dependency").data("itemtype", "require");
+		EditDependencyDialog.modal("show");
+		return false;
+	});
+
+	$(".list-require").on("click", ".item-require .action-update", function() {
+		EditDependencyDialog.removeClass('mode-create').addClass('mode-update');
+		EditDependencyDialog.find("form").get(0).reset();
+		var itemRow = $(this).closest(".model_item.item-require");
+		var data = itemRow.data("itemdata");
+		data.name = data._key_;
+		EditDependencyDialog.fill("author_", data);
+		EditDependencyDialog.find(".save_dependency").data("itemid", itemRow.attr("id"));
+		EditDependencyDialog.modal("show");
+	});
+
+	$(".list-require").on("click", ".item-require .action-delete", function() {
+		var itemRow = $(this).closest(".model_item.item-require");
+		itemRow.remove();
+		saveItems();
+	});
+
+	// TODO: Remove/Disable already registered dependencies
+	EditDependencyDialog.find(".save_dependency").click(function() {
+		// Update - Require data "itemid" - Preserve old object
+		// Create - Require data "itemtype" - Create new object
+		var update = EditDependencyDialog.hasClass("mode-update");
+		console.log("Save dependency with mode, update ? "+update);
+		var itemRow = null;
+		var itemData = {};
+		if( update ) {
+			itemRow = $("#"+$(this).data("itemid"));
+			itemData = itemRow.data("itemdata");
+		}
+		EditDependencyDialog.find(":input[data-field]").each(function() {
+			itemData[$(this).data("field")] = $(this).val();
+		});
+		if( !itemData._key_ || !itemData._value_ ) {
+			return;
+		}
+		if( update ) {
+			modelItemUpdate(itemRow, itemData);
+		} else {
+			modelItemAdd($(this).data("itemtype"), itemData);
+		}
+		EditDependencyDialog.modal("hide");
+		saveItems();
+	});
+
+	/*
 	$("#BtnAddDependency").click(function() {
 		EditDependencyDialog.removeClass('mode-update').addClass('mode-create');
 		EditDependencyDialog.find("form").get(0).reset();
 // 		EditDependencyDialog.find(":input").reset();
 		EditDependencyDialog.modal("show");
 	});
+	*/
 
 	
 	(function() {
@@ -507,14 +602,32 @@ $(function() {
 // 		console.log("json Config", Config);
 		for( var itemName in Config ) {
 			var items = Config[itemName];
-			if( !isArray(items) ) {
+// 			console.log("Config-"+itemName+" => ", items);
+// 			if( !isArray(items) && !isObject(items) ) {
+			if( !isObject(items) ) {
 				continue;
 			}
+// 			console.log("Array ? "+isArray(items));
+// 			console.log("Object ? "+isObject(items));
+			var c = 0;
+			// Associative takes care of key
+			// key will be saved in _key_
+			var assoc = isPureObject(items);
 			for( var i in items ) {
+// 				if( !c ) {
+// 					assoc = (i != 0);
+// 				}
 				var itemData = items[i];
+				c++;
 // 				console.log("itemData", itemData);
+				if( isScalar(itemData) ) {
+					itemData = {"_value_": itemData};
+				} else
 				if( !isObject(itemData) ) {
 					continue;
+				}
+				if( assoc ) {
+					itemData._key_ = i;
 				}
 				modelItemAdd(itemName, itemData);
 			}
@@ -592,15 +705,15 @@ $(function() {
 	display: none;
 }
 
-.list-group-item.item-authors {
+.list-group-item {
 	padding: 6px 15px;
 	line-height: 28px;
 }
-.list-group-item.item-authors p {
+.list-group-item p {
 	margin-bottom: 0;
 }
 
-.list-group-item.item-authors .btn {
+.list-group-item .btn {
 	padding: 4px 6px;
 }
 
