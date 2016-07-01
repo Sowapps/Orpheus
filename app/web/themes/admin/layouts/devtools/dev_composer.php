@@ -340,7 +340,6 @@ var EditAuthorDialog;
 var EditDependencyDialog;
 
 function url_host(url) {
-// 	console.log("Location of "+url, getLocation(url));
 	if( !url ) {
 		return "";
 	}
@@ -439,11 +438,11 @@ function saveItems() {
 			continue;
 		}
 		Config[itemName] = isArray(Config[itemName]) ? [] : {};
-		console.log("Scan existing "+itemName);
+// 		console.log("Scan existing "+itemName);
 		var count = 0;
 		$(".item.model_item.item-"+itemName).each(function(index) {
 			var data = jQuery.extend({}, $(this).data("itemdata"));
-			console.log(data);
+// 			console.log(data);
 			if( isDefined(data._key_) ) {
 				index = data._key_;
 				delete data._key_;
@@ -451,26 +450,18 @@ function saveItems() {
 			if( isDefined(data._value_) ) {
 				data = data._value_;
 			}
-			console.log(index+" => ", data);
+// 			console.log(index+" => ", data);
 			Config[itemName][index] = data;
 			count++;
 		});
-		console.log("Config["+itemName+"]", Config[itemName]);
+// 		console.log("Config["+itemName+"]", Config[itemName]);
 		if( isDefined(models[itemName]) ) {
-// 			if( Config[itemName].length ) {
 			if( count ) {
 				models[itemName].placeholder.hide().detach();
 			} else {
 				models[itemName].list.append(models[itemName].placeholder.show());
 			}
 		}
-// 		if( Config[itemName].length ) {
-// // 			console.log("Not Empty");
-// 			$(".item-"+itemName+".item_placeholder:visible").hide();
-// 		} else {
-// // 			console.log("Empty");
-// 			$(".item-"+itemName+".item_placeholder:hidden").show();
-// 		}
 	}
 	$(":input[name=items]").val(JSON.stringify(Config));
 }
@@ -585,41 +576,22 @@ $(function() {
 		saveItems();
 	});
 
-	/*
-	$("#BtnAddDependency").click(function() {
-		EditDependencyDialog.removeClass('mode-update').addClass('mode-create');
-		EditDependencyDialog.find("form").get(0).reset();
-// 		EditDependencyDialog.find(":input").reset();
-		EditDependencyDialog.modal("show");
-	});
-	*/
-
-	
+	// TODO: Use one input per model
+	// TODO: Model specify if assoc or indexed
 	(function() {
-// 		console.log("config data", $(":input[name=items]").val());
-// 		var data = $.parseJSON($(":input[name=items]").val());
 		Config = $.parseJSON($(":input[name=items]").val());
-// 		console.log("json Config", Config);
 		for( var itemName in Config ) {
 			var items = Config[itemName];
-// 			console.log("Config-"+itemName+" => ", items);
-// 			if( !isArray(items) && !isObject(items) ) {
 			if( !isObject(items) ) {
 				continue;
 			}
-// 			console.log("Array ? "+isArray(items));
-// 			console.log("Object ? "+isObject(items));
 			var c = 0;
 			// Associative takes care of key
 			// key will be saved in _key_
 			var assoc = isPureObject(items);
 			for( var i in items ) {
-// 				if( !c ) {
-// 					assoc = (i != 0);
-// 				}
 				var itemData = items[i];
 				c++;
-// 				console.log("itemData", itemData);
 				if( isScalar(itemData) ) {
 					itemData = {"_value_": itemData};
 				} else
@@ -633,14 +605,6 @@ $(function() {
 			}
 		}
 	})();
-
-// 	$(".author .action-update").click(function() {
-// 		EditAuthorDialog.removeClass('mode-create').addClass('mode-update');
-// 		EditAuthorDialog.find("form").get(0).reset();
-// 		EditAuthorDialog.fill("author_", $(this).closest("li.author").data("author"));
-// 		EditAuthorDialog.modal("show");
-// 	});
-
 
 	$("#InputDependencyName").select2({
 		ajax: {
