@@ -16,6 +16,15 @@
 #
 # Known roles: visitor, member, moderator, administrator, developer
 # Unspecified role does not restrict access, "visitor" restricts to not-logged user only.
+#
+# Examples :
+#    home:
+#        path: "/path/in/array/config"
+#        method: "POST|GET"
+#        method: "GET"
+#        controller: "HomeController"
+#    home2: "/path/with/all/methods->HomeController"
+#    home3: "POST(/path/for/POST/method)->HomeController"
 
 http:
     home:
@@ -33,36 +42,6 @@ http:
         controller: "LogoutController"
         restrictTo:
           role: member
-        
-#    sample_twig:
-#        path: "/sample_twig.html"
-#        controller: "TwigSampleController"
-        
-    thread:
-        path: "/thread.html"
-        controller: "ThreadController"
-        
-    download_latest:
-        path: "/download-latest.html"
-        controller: "Orpheus\\Controller\\RedirectController"
-        url_config: "download_url"
-        
-    download_releases:
-        path: "/download-releases.html"
-        controller: "Orpheus\\Controller\\RedirectController"
-        url_config: "releases_url"
-        
-#    download:
-#        path: "/download.html"
-#        controller: "DownloadController"
-        
-    faq:
-        path: "/faq.html"
-        render: "app/faq"
-        
-    gettingstarted:
-        path: "/getting-started.html"
-        render: "app/gettingstarted"
         
     admin_demo:
         path: "/admin/home.html"
@@ -100,6 +79,10 @@ http:
         restrictTo:
           role: developer
         
+    dev_composer:
+        path: "/developer/composer.html"
+        controller: "ComposerController"
+        
     file_download:
         path: "/download/{id:fileID}"
         controller: "FileDownloadController"
@@ -127,16 +110,3 @@ http:
     setup_end:
         path: "/setup/finish.html"
         controller: "EndSetupController"
-        
-    dev_composer:
-        path: "/developer/composer.html"
-        controller: "ComposerController"
-        
-#    home:
-#        path: "/path/in/array/config"
-#        method: "POST|GET"
-#        method: "GET"
-#        controller: "HomeController"
-#    home2: "/path/with/all/methods->HomeController"
-#    home3: "POST(/path/for/POST/method)->HomeController"
-    
