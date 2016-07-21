@@ -74,7 +74,11 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 
 <div class="container">
 
-<?php echo $Content; ?>
+<?php
+echo $Content;
+// If report was not be reported
+$this->display('reports-bootstrap3');
+?>
 
 </div>
 	<!-- JS libraries -->
