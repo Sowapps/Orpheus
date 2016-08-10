@@ -232,7 +232,6 @@ try {
 	if( file_exists(VENDORPATH.'autoload.php') ) {
 		/* @var Composer\Autoload\ClassLoader $PackageLoader */
 		$PackageLoader = require VENDORPATH.'autoload.php';
-// 		$PackageLoader->
 	}
 // 	die();
 	
@@ -259,13 +258,6 @@ try {
 	// After Lib loading
 // 	class_alias(DEFAULT_CONFIG_CLASS, 'Orpheus\Config\Config', true);
 	
-	/*
-	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
-	
-	if( file_exists(VENDORPATH.'autoload.php') ) {
-		$PackageLoader = require VENDORPATH.'autoload.php';
-	}
-	*/
 	
 	IniConfig::build('engine', false);// Some libs should require to get some configuration.
 	
