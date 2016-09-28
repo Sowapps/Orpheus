@@ -114,6 +114,11 @@ defifn('THEMESURL',			SITEROOT.THEMESDIR);
 // Edit the global constants
 require_once CONSTANTSPATH;
 
+if( !defined('INSTANCE_ID') && defined('HOST') ) {
+	// INSTANCE ID to differentiate instances (used by cache)
+	defifn('INSTANCE_ID', HOST);
+}
+
 error_reporting(ERROR_LEVEL);//Edit ERROR_LEVEL in previous file.
 
 // Errors Actions
