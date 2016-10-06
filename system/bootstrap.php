@@ -4,6 +4,7 @@ use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
 use Orpheus\Hook\Hook;
 use Orpheus\Core\RequestHandler;
+
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
@@ -157,12 +158,8 @@ function($errno, $errstr, $errfile, $errline) {
 $DEBUG_BACKTRACE = null;
 function storeBackTrace() {
 	global $DEBUG_BACKTRACE;
-// 	debug_print_backtrace();
 	// Get backtrace & remove first line (this call)
 	$DEBUG_BACKTRACE = array_slice(debug_backtrace(), 1);
-// 	unset($backtrace[0]);
-// 	debug('Backtrace', debug_backtrace());
-// 	die();
 }
 
 register_shutdown_function(
@@ -218,15 +215,6 @@ $coreAction = 'initializing_core';
 try {
 	ob_start();
 	
-// 	if( !isset($REQUEST_HANDLER) && !isset($REQUEST_TYPE) ) {
-// 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
-// 		$REQUEST_TYPE	= IS_CONSOLE ? 'Console' : 'HTTP';
-// 	}
-	
-// 	defifn('REQUEST_HANDLER',	isset($REQUEST_HANDLER) ? $REQUEST_HANDLER : $REQUEST_TYPE.'Request');
-// 	$REQUEST_HANDLER	= REQUEST_HANDLER;
-// 	unset($REQUEST_HANDLER);
-
 	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
 	
 	// Before lib loading, they can not define it
@@ -238,12 +226,12 @@ try {
 		/* @var Composer\Autoload\ClassLoader $PackageLoader */
 		$PackageLoader = require VENDORPATH.'autoload.php';
 	}
-// 	die();
 	
-// 	defifn('CONSTANTSPATH', pathOf('configs/constants.php'));
-// 	// Edit the constant file according to the system context (OS, directory tree ...).
-// 	require_once CONSTANTSPATH;
-	require_once pathOf('configs/libraries.php');
+	try {
+		require_once pathOf('configs/libraries.php');
+	} catch( Exception $e ) {
+		// Ignore
+	}
 	
 	if( !empty($Libraries) ) {
 		foreach( $Libraries as $lib ) {
@@ -251,18 +239,8 @@ try {
 			require_once $path;
 		}
 	}
-// 	if( empty($Libraries) ) {
-// 		throw new Exception('Unable to load libraries, the config variable $Libraries is empty, please edit your configs/libraries.php file.');
-// 	}
-	
-// 	foreach( $Libraries as $lib ) {
-// 		if( !existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
-// 		require_once $path;
-// 	}
 	
 	// After Lib loading
-// 	class_alias(DEFAULT_CONFIG_CLASS, 'Orpheus\Config\Config', true);
-	
 	
 	IniConfig::build('engine', false);// Some libs should require to get some configuration.
 	
@@ -282,9 +260,7 @@ try {
 	
 	// Handle current request
 	RequestHandler::handleCurrentRequest(IS_CONSOLE ? RequestHandler::TYPE_CONSOLE : RequestHandler::TYPE_HTTP);
-// 	$REQUEST_HANDLER::handleCurrentRequest();
-	
-	
+		
 } catch( Exception $e ) {
 	log_error($e, $coreAction, true);
 }
