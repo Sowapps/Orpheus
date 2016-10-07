@@ -208,7 +208,7 @@ function($exception) {
 });
 
 $AUTOLOADS = array();
-$Module = $Page = '';// Useful for initializing errors.
+// $Module = $Page = '';// Useful for initializing errors.
 
 $coreAction = 'initializing_core';
 
@@ -240,23 +240,27 @@ try {
 		}
 	}
 	
+	// App is now ready to run
+	Hook::trigger(HOOK_LIBSLOADED);
+	
 	// After Lib loading
 	
 	IniConfig::build('engine', false);// Some libs should require to get some configuration.
 	
 	$RENDERING = Config::get('default_rendering');
-	
-	// Here starts Hooks and Session too.
-	Hook::trigger(HOOK_STARTSESSION);
 
-	if( IS_WEB ) {
-		startSession();
-	}
+// 	defifn('SESSION_AUTO', IS_WEB);
+// 	if( IS_WEB ) {
+// 		if( Hook::trigger(HOOK_STARTSESSION_AUTO, false, SESSION_AUTO) ) {
+// 			startSession();
+// 		}
+// // 		startSession();
+// 	}
 	
 	ob_end_clean();
 	
-	// App is now ready to run
-	Hook::trigger(HOOK_APPREADY);
+// 	// App is now ready to run
+// 	Hook::trigger(HOOK_APPREADY);
 	
 	// Handle current request
 	RequestHandler::handleCurrentRequest(IS_CONSOLE ? RequestHandler::TYPE_CONSOLE : RequestHandler::TYPE_HTTP);
