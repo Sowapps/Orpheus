@@ -1,6 +1,0 @@
-Les forums contiennent des posts, ces posts ont pour parent les forums et ils peuvent avoir un autre post comme message initial (réponse à).
-Un post sans message initial est un message direct du forum parent, il est affiché dans la liste des posts de ce forum.
-Un forum peut avoir un autre forum comme parent, faute de quoi il appartient à la racine du site.
-
-Un post a ainsi un post_id et un forum_id (en plus de ses autres champs).
-Un forum a ainsi un forum_id.
