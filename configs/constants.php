@@ -62,7 +62,7 @@ defifn('DEFAULTPATH',		'');
 
 defifn('AUTHORNAME',		'Your name');
 defifn('SITENAME',			'Your App Name');// See also translation app_name
-defifn('ADMINEMAIL',		'contact@orpheus-framework.com');
+defifn('ADMINEMAIL',		'contact@yourdomain.com');
 
 define('CRAC_CONTEXT_APPLICATION',	1);
 define('CRAC_CONTEXT_AGENCY',		2);
