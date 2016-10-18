@@ -12,7 +12,7 @@ use Orpheus\InputController\HTTPController\HTTPRequest;
 
 class CheckDatabaseSetupController extends SetupController {
 	
-	protected static $route = 'setup_checkdb';
+	protected static $routeName = 'setup_checkdb';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

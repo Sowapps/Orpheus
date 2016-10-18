@@ -17,6 +17,11 @@ class UserLoginController extends HTTPController {
 		$FORM_TOKEN	= new FormToken();
 		
 		try {
+// 			if( $request->hasData() ) {
+// 				debug('$FORM_TOKEN', $FORM_TOKEN);
+// 				debug('$_SESSION', $_SESSION);
+// 				die(__LINE__);
+// 			}
 			$request->hasData() && $FORM_TOKEN->validateForm($request);
 // 			debug('Data', $request->getAllData());
 // 			die();

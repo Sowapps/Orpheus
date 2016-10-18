@@ -21,7 +21,7 @@ abstract class SetupController extends HTTPController {
 	 */
 	private static $setupCache;
 	
-	protected static $route;
+	protected static $routeName;
 	
 	private $step;
 	
@@ -35,10 +35,10 @@ abstract class SetupController extends HTTPController {
 	);
 	
 	public static function getDefaultRoute() {
-		if( !static::$route ) {
+		if( !static::$routeName ) {
 			throw new Exception('SetupController::getRoute() should be overridden in '.get_called_class());
 		}
-		return static::$route;
+		return static::$routeName;
 	}
 	
 	public static function getStepPosition($stepName) {

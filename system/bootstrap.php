@@ -102,11 +102,11 @@ defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
 defifn('DEFAULTLINK',		SITEROOT);
 
 // Logs
-defifn('PDOLOGFILENAME',	'.pdo_error');
-defifn('SYSLOGFILENAME',	'.system');
-defifn('DEBUGFILENAME',		'.debug');
-defifn('HACKLOGFILENAME',	'.hack');
-defifn('SERVLOGFILENAME',	'.server');
+// defifn('PDOLOGFILENAME',	'.pdo_error');
+// defifn('SYSLOGFILENAME',	'.system');
+// defifn('DEBUGFILENAME',		'.debug');
+// defifn('HACKLOGFILENAME',	'.hack');
+// defifn('SERVLOGFILENAME',	'.server');
 
 // Static medias
 defifn('JSURL',				SITEROOT.'js/');

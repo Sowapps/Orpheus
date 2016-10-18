@@ -9,24 +9,23 @@ use Orpheus\Rendering\HTMLRendering;
 /* @var User $user */
 
 /* Parameters
- * 
+ *
  * $PageTitle
  * $NoContentTitle
  * $ContentTitle
  */
 
-//global $NO_MODULE_TITLE, $ModuleTitle;
+global $APP_LANG;
 
 $routeName = $Controller->getRouteName();
 $user = User::getLoggedUser();
-/*
-	<title><?php echo ( !empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).'ADM '.SITENAME ?></title>
-*/
+
+$invertedStyle = $Controller->getOption('invertedStyle', 1);
 ?>
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="<?php echo LANGBASE; ?>" class="ie8"> <![endif]-->
+<!--[if IE 8]> <html lang="<?php echo $APP_LANG; ?>" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="<?php echo LANGBASE; ?>">
+<html lang="<?php echo $APP_LANG; ?>">
 <!--<![endif]-->
 <head>
     <meta charset="utf-8">
@@ -48,7 +47,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 }
 ?>
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" />
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" type="text/css" media="screen" />
@@ -80,12 +79,12 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
 </head>
-<body>
+<body class="<?php echo $invertedStyle ? 'body-inverse' : 'body-default'; ?>">
 
 <div id="wrapper">
 
 	<!-- Sidebar -->
-	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<nav class="navbar <?php echo $invertedStyle ? 'navbar-inverse' : 'navbar-default'; ?> navbar-fixed-top" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -94,13 +93,14 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php _u(DEFAULTROUTE); ?>"><?php _t('adminpanel_title'); ?></a>
+			<a class="navbar-brand" href="<?php _u(DEFAULTROUTE); ?>"><?php _t($Controller->getOption('main_title', 'adminpanel_title')); ?></a>
 		</div>
 	
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<?php
 			$this->showMenu($Controller->getOption('mainmenu', 'adminmenu'), 'menu-sidebar');
+// 			$this->showMenu($Controller->getOption('mainmenu', !empty($mainMenu) ? $mainMenu : 'adminmenu'), 'menu-sidebar');
 			?>
 			
 			<ul class="nav navbar-nav navbar-right navbar-user">
@@ -168,7 +168,7 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 </div>
 
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>

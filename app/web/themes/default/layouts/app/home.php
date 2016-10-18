@@ -6,7 +6,7 @@ HTMLRendering::useLayout('page_skeleton');
 <div class="jumbotron">
 	<h1>Hello PHP developer !</h1>
 	<p>
-Get the power with the new Orpheus, all features fit your needs !
+Get the power with the new Orpheus, the PHP framework from your dreams, coming with all features you need !
 This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
 secured and standardized by easiest way to use it and the maximum customizing capabilities.
 	</p>
@@ -70,7 +70,7 @@ label label-warning
 		<legend>Try to create you own DemoTest object</legend>
 		<div class="form-group">
 			<label for="inputValue">Create it from a new value</label>
-			<input class="form-control" type="text" name="data[name]" placeholder="Type new value, longer than 10 characters" id="inputValue">
+			<input class="form-control" type="text" name="data[name]" placeholder="Type new value, longer than 3 characters" id="inputValue">
 		</div>
 		<span class="help-block">Submit a new value to see this working test in action.</span>
 		<button id="submitDemoTest" type="submit" class="btn btn-primary">Insert it !</button>

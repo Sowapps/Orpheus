@@ -187,6 +187,8 @@ input::-webkit-datetime-edit-fields-wrapper {
 }
 
 /* FIX SB Admin */
+/*
+See sb-admin.css
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
@@ -197,7 +199,6 @@ input::-webkit-datetime-edit-fields-wrapper {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
@@ -214,6 +215,7 @@ input::-webkit-datetime-edit-fields-wrapper {
         background-color: #000 !important;
     }
 }
+*/
 
 .side-nav>li>ul {
     padding: 0;

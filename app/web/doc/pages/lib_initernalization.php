@@ -14,5 +14,5 @@
  * @section install_sec Installation
  * 
  * Copy all files from the archive into your website root directory.\n
- * You need to configure LANGDIR and LANG constants to use it.\n
+ * You need to configure LANGDIR and DEFAULT_LOCALE constants to use it.\n
  */

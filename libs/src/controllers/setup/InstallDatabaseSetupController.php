@@ -15,7 +15,7 @@ use Orpheus\Form\FormToken;
 
 class InstallDatabaseSetupController extends SetupController {
 	
-	protected static $route = 'setup_installdb';
+	protected static $routeName = 'setup_installdb';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

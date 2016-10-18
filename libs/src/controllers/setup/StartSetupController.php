@@ -13,7 +13,7 @@ use Orpheus\Exception\UserException;
 
 class StartSetupController extends SetupController {
 	
-	protected static $route = 'setup_start';
+	protected static $routeName = 'setup_start';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

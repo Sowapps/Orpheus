@@ -6,7 +6,8 @@ use Orpheus\Rendering\HTMLRendering;
 
 abstract class AdminController extends HTTPController {
 	
-	protected $breadcrumb	= array();
+	protected $mainMenu = 'adminmenu';
+	protected $breadcrumb = array();
 
 	public function addBreadcrumb($label, $link=null) {
 		$this->breadcrumb[]	= (object)array('label' => $label, 'link' => $link);
@@ -25,7 +26,9 @@ abstract class AdminController extends HTTPController {
 		parent::preRun($request);
 		HTMLRendering::setDefaultTheme('admin');
 		
-		$this->addBreadcrumb(t('home'), u(DEFAULTMEMBERROUTE));
+		$this->addRouteToBreadcrumb(DEFAULTROUTE);
+// 		$this->addBreadcrumb(t('home'), u(DEFAULTMEMBERROUTE));
+		$this->addRouteToBreadcrumb(ROUTE_ADM_HOME);
 // 		if( DEFAULTMEMBERROUTE !== $this->getRouteName() ) {
 // 			$this->addRouteToBreadcrumb(DEFAULTMEMBERROUTE);
 // 		}
@@ -43,7 +46,8 @@ abstract class AdminController extends HTTPController {
 		if( isset($GLOBALS['USER']) ) {
 			$values['USER']	= $GLOBALS['USER'];
 		}
-		$values['Breadcrumb']	= $this->breadcrumb;
+		$values['Breadcrumb'] = $this->breadcrumb;
+		$values['mainMenu'] = $this->mainMenu;
 		return parent::render($response, $layout, $values);
 	}
 

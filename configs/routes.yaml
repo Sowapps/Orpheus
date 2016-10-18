@@ -32,7 +32,7 @@ http:
         controller: "HomeController"
         
     user_login:
-        path: "/user_login.html"
+        path: "/user/signin.html"
         controller: "UserLoginController"
         restrictTo:
           role: visitor
@@ -73,20 +73,56 @@ http:
         restrictTo:
           role: developer
         
-    dev_entities:
-        path: "/admin/dev_entities.html"
-        controller: "DevEntitiesController"
+    file_download:
+        path: "/download/{id:fileID}"
+        controller: "FileDownloadController"
+    
+    
+    # Dev Area
+    
+    dev_home:
+        path: "/developer/home.html"
+        controller: "DevHomeController"
+        restrictTo:
+          role: developer
+    
+    dev_system:
+        path: "/developer/system.html"
+        controller: "DevSystemController"
         restrictTo:
           role: developer
         
     dev_composer:
         path: "/developer/composer.html"
-        controller: "ComposerController"
+        controller: "DevComposerController"
         
-    file_download:
-        path: "/download/{id:fileID}"
-        controller: "FileDownloadController"
+    dev_entities:
+        path: "/developer/entities.html"
+        controller: "DevEntitiesController"
+        restrictTo:
+          role: developer
         
+    dev_loglist:
+        path: "/developer/logs.html"
+        controller: "DevLogListController"
+        restrictTo:
+          role: developer
+        
+    dev_log_view:
+        path: "/developer/view_log.html"
+        controller: "DevLogViewController"
+        restrictTo:
+          role: developer
+        
+    dev_app_translate:
+        path: "/developer/translate_application.html"
+        controller: "DevAppTranslateController"
+        restrictTo:
+          role: developer
+    
+    
+    # Setup
+    
     setup_start:
         path: "/setup/"
         controller: "StartSetupController"

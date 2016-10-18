@@ -12,7 +12,7 @@ use Orpheus\InputController\HTTPController\HTTPRequest;
 
 class EndSetupController extends SetupController {
 	
-	protected static $route = 'setup_end';
+	protected static $routeName = 'setup_end';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

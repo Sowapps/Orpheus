@@ -15,7 +15,7 @@ use Orpheus\Exception\UserException;
 
 class InstallFixturesSetupController extends SetupController {
 	
-	protected static $route = 'setup_installfixtures';
+	protected static $routeName = 'setup_installfixtures';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

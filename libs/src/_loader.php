@@ -13,6 +13,10 @@ use Orpheus\Publisher\Email\Email;
 addAutoload('File',								'src/File');
 addAutoload('UploadedFile',						'src/UploadedFile');
 
+addAutoload('AbstractFile',						'src/AbstractFile');
+addAutoload('TextFile',							'src/TextFile');
+addAutoload('GZFile',							'src/GZFile');
+
 // addAutoload('GlobalConfig',						'src/GlobalConfig');
 addAutoload('User',								'src/User');
 
@@ -43,10 +47,16 @@ addAutoload('AdminController',					'src/controllers/admin/AdminController');
 addAutoload('AdminDemoController',				'src/controllers/admin/AdminDemoController');
 addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
 addAutoload('AdminConfigController',			'src/controllers/admin/AdminConfigController');
-addAutoload('DevEntitiesController',			'src/controllers/admin/DevEntitiesController');
 
-addAutoload('DevToolsController',				'src/controllers/devtools/DevToolsController');
-addAutoload('ComposerController',				'src/controllers/devtools/ComposerController');
+// addAutoload('DevToolsController',				'src/controllers/devtools/DevToolsController');
+addAutoload('DevController',					'src/controllers/devtools/DevController');
+addAutoload('DevHomeController',				'src/controllers/devtools/DevHomeController');
+addAutoload('DevSystemController',				'src/controllers/devtools/DevSystemController');
+addAutoload('DevEntitiesController',			'src/controllers/devtools/DevEntitiesController');
+addAutoload('DevLogListController',				'src/controllers/devtools/DevLogListController');
+addAutoload('DevLogViewController',				'src/controllers/devtools/DevLogViewController');
+addAutoload('DevComposerController',			'src/controllers/devtools/DevComposerController');
+addAutoload('DevAppTranslateController',		'src/controllers/devtools/DevAppTranslateController');
 
 addAutoload('SetupController',					'src/controllers/setup/SetupController');
 addAutoload('StartSetupController',				'src/controllers/setup/StartSetupController');

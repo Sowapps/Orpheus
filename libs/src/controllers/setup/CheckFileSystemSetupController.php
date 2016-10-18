@@ -12,7 +12,7 @@ use Orpheus\InputController\HTTPController\HTTPRequest;
 
 class CheckFileSystemSetupController extends SetupController {
 	
-	protected static $route = 'setup_checkfs';
+	protected static $routeName = 'setup_checkfs';
 
 	/**
 	 * @param HTTPRequest $request The input HTTP request

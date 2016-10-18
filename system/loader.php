@@ -92,14 +92,25 @@ function addSrcPath($path) {
 	return true;
 }
 
-/** Includes a directory
+/**
+ * List all source paths
+ * 
+ * @return string[]
+ */
+function listSrcPath() {
+	global $SRCPATHS;
+	return $SRCPATHS;
+}
 
-	\param $dir The directory to include.
-	\param $importants The files in that are importants to load first.
-	\return The number of files included.
-	
-	Includes all files with a name beginning by '_' in the directory $dir.
-	It browses recursively through sub-directories.
+/**
+ * Include a directory
+ * 
+ * @param $dir The directory to include.
+ * @param $importants The files in that are importants to load first.
+ * @return The number of files included.
+ * 
+ * Include all files with a name beginning by '_' in the directory $dir.
+ * It browses recursively through sub-directories.
 */
 function includeDir($dir, $importants=array()) {
 	//Require to be immediatly available.
@@ -122,15 +133,16 @@ function includeDir($dir, $importants=array()) {
 	return $i;
 }
 
-/** Includes a directory
-
-	\param $path The relative directory path to include.
-	\param $importants The files in that are importants to load first.
-	\return The number of files included.
-	\sa includeDir()
-	
-	Includes all files with a name beginning by '_' in the directory $dir.
-	It browses recursively through sub-directories.
+/**
+ * Include a directory by source path
+ * 
+ * @param $dir The directory to include.
+ * @param $importants The files in that are importants to load first.
+ * @return The number of files included.
+ * @see includeDir()
+ * 
+ * Include all files with a name beginning by '_' in the directory $dir.
+ * It browses recursively through sub-directories.
 */
 function includePath($path, $importants=array()) {
 	return includeDir(pathOf($path), $importants);
@@ -138,7 +150,7 @@ function includePath($path, $importants=array()) {
 
 // Experimental
 function ob_end_to($min) {
-	$min	= max($min, 0);
+	$min = max($min, 0);
 	while( ob_get_level() > $min ) {
 		ob_end_flush();
 	}
@@ -159,47 +171,50 @@ define('HTTP_INTERNAL_SERVER_ERROR',	500);
 
 function http_response_codetext($code=null) {
 	if( $code === null ) {
-		$code	= http_response_code();
+		$code = http_response_code();
 	}
-	$codeTexts	= array(
-		100	=> 'Continue',
-		101	=> 'Switching Protocols',
-		200	=> 'OK',
-		201	=> 'Created',
-		202	=> 'Accepted',
-		203	=> 'Non-Authoritative Information',
-		204	=> 'No Content',
-		205	=> 'Reset Content',
-		206	=> 'Partial Content',
-		300	=> 'Multiple Choices',
-		301	=> 'Moved Permanently',
-		302	=> 'Moved Temporarily',
-		303	=> 'See Other',
-		304	=> 'Not Modified',
-		305	=> 'Use Proxy',
-		400	=> 'Bad Request',
-		401	=> 'Unauthorized',
-		402	=> 'Payment Required',
-		403	=> 'Forbidden',
-		404	=> 'Not Found',
-		405	=> 'Method Not Allowed',
-		406	=> 'Not Acceptable',
-		407	=> 'Proxy Authentication Required',
-		408	=> 'Request Time-out',
-		409	=> 'Conflict',
-		410	=> 'Gone',
-		411	=> 'Length Required',
-		412	=> 'Precondition Failed',
-		413	=> 'Request Entity Too Large',
-		414	=> 'Request-URI Too Large',
-		415	=> 'Unsupported Media Type',
-		500	=> 'Internal Server Error',
-		501	=> 'Not Implemented',
-		502	=> 'Bad Gateway',
-		503	=> 'Service Unavailable',
-		504	=> 'Gateway Time-out',
-		505	=> 'HTTP Version not supported',
-	);
+	static $codeTexts;
+	if( !isset($codeTexts) ) {
+		$codeTexts = array(
+			100	=> 'Continue',
+			101	=> 'Switching Protocols',
+			200	=> 'OK',
+			201	=> 'Created',
+			202	=> 'Accepted',
+			203	=> 'Non-Authoritative Information',
+			204	=> 'No Content',
+			205	=> 'Reset Content',
+			206	=> 'Partial Content',
+			300	=> 'Multiple Choices',
+			301	=> 'Moved Permanently',
+			302	=> 'Moved Temporarily',
+			303	=> 'See Other',
+			304	=> 'Not Modified',
+			305	=> 'Use Proxy',
+			400	=> 'Bad Request',
+			401	=> 'Unauthorized',
+			402	=> 'Payment Required',
+			403	=> 'Forbidden',
+			404	=> 'Not Found',
+			405	=> 'Method Not Allowed',
+			406	=> 'Not Acceptable',
+			407	=> 'Proxy Authentication Required',
+			408	=> 'Request Time-out',
+			409	=> 'Conflict',
+			410	=> 'Gone',
+			411	=> 'Length Required',
+			412	=> 'Precondition Failed',
+			413	=> 'Request Entity Too Large',
+			414	=> 'Request-URI Too Large',
+			415	=> 'Unsupported Media Type',
+			500	=> 'Internal Server Error',
+			501	=> 'Not Implemented',
+			502	=> 'Bad Gateway',
+			503	=> 'Service Unavailable',
+			504	=> 'Gateway Time-out',
+			505	=> 'HTTP Version not supported',
+		);
+	}
 	return isset($codeTexts[$code]) ? $codeTexts[$code] : 'Unknown';
 }
 
@@ -247,14 +262,10 @@ function displayRawException(Exception $Exception) {
 	displayExceptionStackTrace($Exception);
 }
 
-function displayExceptionStackTrace(Exception $Exception) {
+function displayStackTrace($backtrace) {
 	?>
 	<ol>
 	<?php
-	$backtrace = $Exception->getTrace();
-	if( $Exception->getCode() == 1 && is_array($GLOBALS['DEBUG_BACKTRACE']) ) {
-		$backtrace = $GLOBALS['DEBUG_BACKTRACE'];
-	}
 	foreach( $backtrace as $trace ) {
 		// file, line, function, args
 		if( !isset($trace['class']) ) {
@@ -289,6 +300,14 @@ function displayExceptionStackTrace(Exception $Exception) {
 		?>
 	</ol>
 	<?php
+}
+
+function displayExceptionStackTrace(Exception $Exception) {
+	$backtrace = $Exception->getTrace();
+	if( $Exception->getCode() == 1 && is_array($GLOBALS['DEBUG_BACKTRACE']) ) {
+		$backtrace = $GLOBALS['DEBUG_BACKTRACE'];
+	}
+	displayStackTrace($backtrace);
 }
 
 function convertExceptionAsHTMLPage(Exception $Exception, $code, $action) {

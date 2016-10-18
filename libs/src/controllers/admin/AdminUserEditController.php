@@ -31,15 +31,15 @@ class AdminUserEditController extends AdminController {
 		$USER_CAN_USER_DELETE	= $USER->canUserDelete();
 
 		try {
-			if( isPOST('submitUpdate') ) {
+			if( $request->hasData('submitUpdate') ) {
 				if( !$USER_CAN_USER_EDIT ) {
 					throw new ForbiddenException();
 				}
-				$userInput	= POST('user');
-				$userFields	= array('fullname', 'email', 'accesslevel');
+				$userInput = $request->getArrayData('user');
+				$userFields = array('fullname', 'email', 'accesslevel');
 				if( !empty($userInput['password']) ) {
 					$userInput['password_conf']	= $userInput['password'];
-					$userFields[]	= 'password';
+					$userFields[] = 'password';
 				}
 				$result = $user->update($userInput, $userFields);
 				if( $result ) {
@@ -47,7 +47,7 @@ class AdminUserEditController extends AdminController {
 				}
 				
 			} else
-			if( isPOST('submitDelete') ) {
+			if( $request->hasData('submitDelete') ) {
 				if( !$USER_CAN_USER_DELETE ) {
 					throw new ForbiddenException();
 				}
