@@ -148,6 +148,19 @@ function includePath($path, $importants=array()) {
 	return includeDir(pathOf($path), $importants);
 }
 
+/**
+ * Escape a text
+ * 
+ * @param $str The string to escape
+ * @param $flags The flags of htmlentities()
+ * @return The escaped string
+
+ * Escape the text $str from special characters.
+ */
+function escapeText($str, $flags=ENT_NOQUOTES) {
+	return htmlentities(str_replace("\'", "'", $str), $flags, 'UTF-8', false); 	
+}
+
 // Experimental
 function ob_end_to($min) {
 	$min = max($min, 0);
@@ -284,7 +297,7 @@ function displayStackTrace($backtrace) {
 				if( is_closure($arg) ) {
 					$argTxt	= '{closure}';
 				} else {
-					$argTxt	= ' "<span class="arg_value">'.( (is_object($arg) && !method_exists($arg, '__toString')) ? get_class($arg) : $arg).'</span>"';
+					$argTxt	= ' "<span class="arg_value">'.escapeText( (is_object($arg) && !method_exists($arg, '__toString')) ? get_class($arg) : $arg.'' ).'</span>"';
 				}
 				$args .= ($i ? ', ' : '').'
 		<span class="arg"><span class="arg_type">'.typeOf($arg).'</span> '.$argTxt.'</span>';
