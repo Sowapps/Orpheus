@@ -8,12 +8,11 @@ use Orpheus\Rendering\HTMLRendering;
 /* @var HTTPRoute $Route */
 /* @var User $user */
 
-/* Parameters
- *
- * $PageTitle
- * $NoContentTitle
- * $ContentTitle
- */
+/* @var array $Breadcrumb */
+/* @var string $PageTitle */
+/* @var boolean $NoContentTitle */
+/* @var string $ContentTitle */
+/* @var string $titleRoute */
 
 global $APP_LANG;
 

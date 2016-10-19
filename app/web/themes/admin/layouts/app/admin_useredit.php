@@ -41,9 +41,15 @@ HTMLRendering::useLayout('page_skeleton');
 		</div>
 			<?php
 		}
-		?>
-		
+		if( $USER_CAN_USER_DELETE ) {
+			?>
+		<button class="btn btn-warning ml20" type="button"
+			data-confirm_title="Supprimer <?php echo $user; ?>"
+			data-confirm_message="Souhaitez-vous réellement supprimer l'utilisateur « <?php echo $user; ?> » ?"
+			data-confirm_submit_name="submitDelete"><?php _t('delete'); ?></button>
 		<?php
+		}
+		
 		HTMLRendering::endCurrentLayout(array(
 			'title'		=> User::text('editUser'),
 			'footer'	=> '

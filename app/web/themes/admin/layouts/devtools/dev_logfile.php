@@ -65,21 +65,10 @@ HTMLRendering::useLayout('page_skeleton');
 			
 			<div class="panel-group" id="LogList" role="tablist" aria-multiselectable="true">
 			<?php
-// 			$logHandle = gzopen($file, 'r');
-// 			if( $logHandle ) {
-// 				$lineCount = 0;
-// 				while( ($line = gzgets($logHandle)) !== false ) {
-// 					debug('Line #'.$lineCount, $line);
-// 					$lineCount++;
-// 				}
-// 			}
-// 			$logHandle = fopen($file, 'r');
 			if( $hideDuplicate ) {
 				$shownLogs = array();
 			}
-// 			if( $logHandle ) {
 			$lineCount = 0;
-// 			while( ($line = fgets($logHandle)) !== false ) {
 			while( ($line = $fileHandler->getNextLine()) !== false ) {
 				try {
 					$log = (object) json_decode($line, 1);
@@ -98,11 +87,6 @@ HTMLRendering::useLayout('page_skeleton');
 							$shownLogs[$log->crc32] = 1;
 						}
 					}
-// 						<li>
-// 							Date: '.$log->date.'<br />
-// 							Action: '.$log->action.'<br />
-// 							Rapport: '.$log->report.'
-// 						</li>
 					$panelID = 'log_'.str_replace('.', '_', $log->id);
 					?>
 				<div class="panel panel-default log">
@@ -166,11 +150,7 @@ HTMLRendering::useLayout('page_skeleton');
 				}
 			}
 			unset($line, $log, $panelID);
-// 			} else {
-// 				// error opening the file.
-// 			}
 			$fileHandler->ensureClosed();
-// 			fclose($logHandle);
 			?>
 			</div>
 			
@@ -194,18 +174,13 @@ HTMLRendering::useLayout('page_skeleton');
 						data-confirm_submit_name="submitRemoveAll"
 						>'.t('removeAllButton', DOMAIN_LOGS).'</button>
 				</div>'
-// 			'title' => t('file_logs', DOMAIN_LOGS).' <small class="pull-right"><a href="#lastLog">
-// 				<i class="fa fa-arrow-circle-o-down"></i> The last one
-// 			</a></small>'
 		)); ?>
 	</div>
 </div>
 
 <script>
 $(function() {
-// 	console.log('$(".panel.log")', $(".panel.log"));
 	var lastLog = $(".panel.log").last();
-// 	console.log("lastLog", lastLog.get(0));
 	if( lastLog.length ) {
 		lastLog.attr("id", "lastLog");
 	}
