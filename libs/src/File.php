@@ -2,7 +2,7 @@
 
 use Orpheus\EntityDescriptor\PermanentEntity;
 use Orpheus\Config\Config;
-use Orpheus\Publisher\Util\PasswordGenerator;
+use Orpheus\Publisher\PasswordGenerator;
 
 /**
  * The File class to save file's informations in database
@@ -105,11 +105,37 @@ class File extends PermanentEntity {
 // 	}
 	
 	/**
+	 * Duplicate this object to a new one
+	 * 
+	 * @param string|PermanentObject $label The label, if object & no $parent, use it as parent
+	 * @param PermanentObject|integer $parent
+	 * @return File
+	 */
+	public function duplicate($label=null, $parent=null) {
+		if( !$parent && is_object($label) ) {
+			$parent = $label;
+		}
+		$input = array();
+		$input['name'] = $label.'';
+		$input['extension'] = $this->extension;
+		$input['mimetype'] = $this->mimetype;
+		$input['usage'] = $this->usage;
+		$input['position'] = $this->position;
+		$input['source_type'] = $this->source_type;
+		$input['source_name'] = $this->source_name;
+		$input['source_url'] = $this->source_url;
+		if( $parent ) {
+			$input['parent_id'] = id($parent);
+		}
+		return static::import($input, $this->getPath(), self::MODE_COPY);
+	}
+	
+	/**
 	 * @see PermanentObject::remove()
 	 */
 	public function remove() {
 		if( !parent::remove() ) { return false; }
-		$path	= $this->getPath();
+		$path = $this->getPath();
 		if( file_exists($path) ) { unlink($this->getPath()); }
 		return true;
 	}
@@ -145,19 +171,13 @@ class File extends PermanentEntity {
 		if( $this->passkey && $passKey !== $this->passkey ) {
 			static::throwException('invalidPasskey');
 		}
-		$filePath	= $this->getPath();
+		$filePath = $this->getPath();
 		if( !is_readable($filePath) ) {
 			static::throwException('unreadableFile');
 		}
 		// Start download, close session and end buffer
 		session_write_close();
 		ob_clean();
-		// text('$file->getFileName : '.$file->getFileName());
-		// text('$file->mimetype : '.$file->mimetype);
-		// text('mod time : '.filemtime($filePath));
-		// die('Script interrupted');
-		
-		// header('Content-Type: application/x-download');
 		
 		header('Content-Type: '.$this->mimetype);
 		if( $forceDownload ) {
@@ -246,9 +266,9 @@ class File extends PermanentEntity {
 		if( !isset($input['mimetype']) ) {
 			$input['mimetype']	= getMimeType($path);
 		}
-		$file	= static::createAndGet($input);
-// 		$file	= static::load(static::create($input));
-		if( !($mode==self::MODE_MOVE ? rename($path, $file->getPath()) : copy($path, $file->getPath())) ) {
+		$file = static::createAndGet($input);
+		$result = $mode==self::MODE_MOVE ? rename($path, $file->getPath()) : copy($path, $file->getPath());
+		if( !$result ) {
 			static::throwException('unableToImport');
 		}
 		return $file;
@@ -306,6 +326,9 @@ class File extends PermanentEntity {
 		
 	public static function createAndGet($input=array(), $fields=null, &$errCount=0) {
 		$input['passkey'] = (new PasswordGenerator())->generate(30);
+		if( is_array($fields) ) {
+			$fields[] = 'passkey';
+		}
 		return parent::createAndGet($input, $fields, $errCount);
 	}
 

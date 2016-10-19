@@ -6,7 +6,6 @@ use Orpheus\Rendering\HTMLRendering;
 
 abstract class AdminController extends HTTPController {
 	
-	protected $mainMenu = 'adminmenu';
 	protected $breadcrumb = array();
 
 	public function addBreadcrumb($label, $link=null) {
@@ -14,7 +13,16 @@ abstract class AdminController extends HTTPController {
 	}
 
 	public function addRouteToBreadcrumb($route, $label=null, $link=true) {
-		$this->addBreadcrumb($label ? $label : t($route), $link ? u($route, is_array($link) ? $link : array()) : null);
+		if( $link ) {
+			if( typeOf($link) === 'string' ) {
+				$link = $link;
+			} else {
+				$link = u($route, is_array($link) ? $link : array());
+			}
+		} else {
+			$link = null;
+		}
+		$this->addBreadcrumb($label ? $label : t($route), $link);
 	}
 
 	public function addThisToBreadcrumb($label=null, $link=false) {
@@ -47,7 +55,6 @@ abstract class AdminController extends HTTPController {
 			$values['USER']	= $GLOBALS['USER'];
 		}
 		$values['Breadcrumb'] = $this->breadcrumb;
-		$values['mainMenu'] = $this->mainMenu;
 		return parent::render($response, $layout, $values);
 	}
 

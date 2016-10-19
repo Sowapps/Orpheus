@@ -13,7 +13,7 @@ use Orpheus\Publisher\Fixture\FixtureInterface;
  * 
  * @property string $create_date
  * @property string $create_ip
- * @property int $create_user_id
+ * @property integer $create_user_id
  * @property string $login_date
  * @property string $login_ip
  * @property string $activity_date
@@ -24,10 +24,10 @@ use Orpheus\Publisher\Fixture\FixtureInterface;
  * @property string $email
  * @property string $password
  * @property string $fullname
- * @property int $avatar_id
+ * @property integer $avatar_id
  * @property boolean $published
  * 
- * @property int $accesslevel
+ * @property integer $accesslevel
  * @property string $recovery_code
  * @property string $activation_code
  * 
@@ -143,7 +143,10 @@ class User extends AbstractUser implements FixtureInterface {
 	 * @return User
 	 */
 	public static function getByEmail($email) {
-		return static::get()->where('email', $email)->asObject()->run();
+		if( !is_email($email) ) {
+			static::throwException('invalidEmail');
+		}
+		return static::get()->where('email', 'LIKE', $email)->asObject()->run();
 	}
 
 	public static function loadFixtures() {
