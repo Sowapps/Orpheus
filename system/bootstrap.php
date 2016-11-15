@@ -13,11 +13,11 @@ use Orpheus\Core\RequestHandler;
  * 
  * Website core.
  */
- 
-// define('PHP_SAPI_NAME',	php_sapi_name());
-// die(PHP_SAPI_NAME);
-define('IS_WEB',		array_key_exists('REQUEST_METHOD', $_SERVER));
-define('IS_CONSOLE',	!IS_WEB);
+
+define('IS_CONSOLE',	PHP_SAPI === 'cli');
+define('IS_WEB',		!IS_CONSOLE);
+// define('IS_WEB',		array_key_exists('REQUEST_METHOD', $_SERVER));
+// define('IS_CONSOLE',	!IS_WEB);
 
 if( isset($SRCPATHS) ) {
 	$t = $SRCPATHS; unset($SRCPATHS);
