@@ -1,5 +1,4 @@
 <?php
-use Orpheus\Core\ClassLoader;
 use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
 use Orpheus\Hook\Hook;
