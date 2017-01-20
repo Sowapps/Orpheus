@@ -49,15 +49,32 @@ if( !ini_get('date.timezone') ) {
 	date_default_timezone_set('UTC');
 }
 
-// These constants take care about paths through symbolic links.
-// defifn('ORPHEUSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));	// The Orpheus sources
-defifn('ORPHEUSPATH',		dirpath(dirname(ACCESSPATH)));	// The Orpheus sources - The current file one
-defifn('APPLICATIONPATH',	ORPHEUSPATH);		// The application sources - default is Orpheus path,
-defifn('INSTANCEPATH',		APPLICATIONPATH);	// The instance sources - default is Application path
-// echo 'ORPHEUSPATH : '.ORPHEUSPATH.'<br />';
-// echo 'APPLICATIONPATH : '.APPLICATIONPATH.'<br />';
-// echo 'INSTANCEPATH : '.INSTANCEPATH.'<br />';
-// die('Stopping script process');
+/* 
+ * Orpheus is able to separate your application sources from its sources.
+ * This allows you to use a common Orpheus source folder for multiple applications, composer is associated to one application.
+ * For each application, you are also able to use multiple instances of this application with specific configuration, logs & store. 
+ * These constants take care about paths through symbolic links.
+ */
+/**
+ * The Orpheus sources
+ * The folder to find Orpheus sources
+ * Default is the current file one
+ */
+defifn('ORPHEUSPATH',		dirpath(dirname(ACCESSPATH)));
+
+/**
+ * The Application sources
+ * The folder to find your Application sources
+ * Default is Orpheus path
+ */
+defifn('APPLICATIONPATH',	ORPHEUSPATH);
+
+/**
+ * The Instance sources
+ * The folder containing the instances configuration (may not contain any source)
+ * Default is Application path
+ */
+defifn('INSTANCEPATH',		APPLICATIONPATH);
 
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);

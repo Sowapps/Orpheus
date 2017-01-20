@@ -1,12 +1,12 @@
 <?php
 /**
  * @file Orpheus/loader.php
-* @brief The Orpheus Loader
-* @author Florent Hazard
-* @copyright The MIT License, see LICENSE.txt
-*
-* PHP File for the website core.
-*/
+ * @brief The Orpheus Loader
+ * @author Florent Hazard
+ * @copyright The MIT License, see LICENSE.txt
+ * 
+ * PHP File for the website core.
+ */
 
 if( !isset($SRCPATHS) ) {
 	$SRCPATHS = array();
@@ -17,12 +17,12 @@ define('PROD_LEVEL',		0);//Production
 
 /** Defines an undefined constant.
 
-* @param string $name The name of the constant.
-* @param int|string $value The value of the constant.
-* @return True if the constant was defined successfully, else False.
-*
-*  Defines a constant if this one is not defined yet.
-*/
+ * @param string $name The name of the constant.
+ * @param int|string $value The value of the constant.
+ * @return True if the constant was defined successfully, else False.
+ * 
+ *  Defines a constant if this one is not defined yet.
+ */
 function defifn($name, $value) {
 	if( defined($name) ) {
 		return false;
@@ -33,12 +33,12 @@ function defifn($name, $value) {
 
 /** Gets the directory path
 
-* @param $path The path get parent directory
-* @return string The secured path
-* @sa dirname()
-*
-* Gets the parent directory path of $path
-*/
+ * @param $path The path get parent directory
+ * @return string The secured path
+ * @sa dirname()
+ * 
+ * Gets the parent directory path of $path
+ */
 function dirpath($path) {
 	$dirname = dirname($path);
 	return $dirname === '/' ? '/' : $dirname.'/';
@@ -46,14 +46,14 @@ function dirpath($path) {
 
 /** Gets the path of a file/directory.
 
-* @param string $commonPath The common path
-* @param boolean $silent Do not throw exception if path does not exist
-* @return string The first valid path or null if there is no valid one.
-* @sa addSrcPath()
-*
-* This function uses global variable $SRCPATHS to get the known paths.
-* It allows developers to get a dynamic path to a file.
-*/
+ * @param string $commonPath The common path
+ * @param boolean $silent Do not throw exception if path does not exist
+ * @return string The first valid path or null if there is no valid one.
+ * @sa addSrcPath()
+ * 
+ * This function uses global variable $SRCPATHS to get the known paths.
+ * It allows developers to get a dynamic path to a file.
+ */
 function pathOf($commonPath, $silent=false) {
 	global $SRCPATHS;
 	for( $i=count($SRCPATHS)-1; $i>=0; $i-- ) {
@@ -67,19 +67,19 @@ function pathOf($commonPath, $silent=false) {
 
 /** Checks if the path exists.
 
-* @param string $commonPath The common path.
-* @param string $path The output parameter to get the first valid path.
-* @sa pathOf()
-*
-* This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
-*/
+ * @param string $commonPath The common path.
+ * @param string $path The output parameter to get the first valid path.
+ * @sa pathOf()
+ * 
+ * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
+ */
 function existsPathOf($commonPath, &$path=null) {
 	return ($path=pathOf($commonPath, true))!==NULL;
 }
 
 /**
  * Add the path to the known paths
- *
+ * 
  * @param string $path The source path to add.
  * @return boolean True if the path was added.
  * @see pathOf()
@@ -95,7 +95,7 @@ function addSrcPath($path) {
 
 /**
  * List all source paths
- *
+ * 
  * @return string[]
  */
 function listSrcPath() {
@@ -105,18 +105,18 @@ function listSrcPath() {
 
 /**
  * Include a directory
- *
+ * 
  * @param string $dir The directory to include.
  * @param array $importants The files in that are importants to load first.
  * @return int The number of files included.
- *
+ * 
  * Include all files with a name beginning by '_' in the directory $dir.
  * It browses recursively through sub-directories.
- */
+*/
 function includeDir($dir, $importants=array()) {
 	//Require to be immediatly available.
 	$files = array_unique(array_merge($importants, scandir($dir)));
-
+	
 	$i=0;
 	foreach($files as $file) {
 		// If file is not readable or hidden, we pass.
@@ -136,22 +136,22 @@ function includeDir($dir, $importants=array()) {
 
 /**
  * Include a directory by source path
- *
+ * 
  * @param string $dir The directory to include.
  * @param array $importants The files in that are importants to load first.
  * @return int The number of files included.
  * @see includeDir()
- *
+ * 
  * Include all files with a name beginning by '_' in the directory $dir.
  * It browses recursively through sub-directories.
- */
+*/
 function includePath($path, $importants=array()) {
 	return includeDir(pathOf($path), $importants);
 }
 
 /**
  * Escape a text
- *
+ * 
  * @param string $str The string to escape
  * @param int $flags The flags of htmlentities()
  * @return string The escaped string
