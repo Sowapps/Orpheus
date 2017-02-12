@@ -23,7 +23,7 @@ HTMLRendering::useLayout('page_skeleton');
 					<i class="fa fa-chevron-right"></i>
 				</a>
 			</p>
-</div>
+		</div>
 
 	</div>
 	

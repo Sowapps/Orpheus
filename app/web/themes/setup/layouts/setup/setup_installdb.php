@@ -7,11 +7,6 @@ use Orpheus\EntityDescriptor\PermanentEntity;
 /* @var $FORM_TOKEN FormToken */
 
 HTMLRendering::useLayout('page_skeleton');
-/*
-<div class="mt10">
-	<a href="<?php _u('dev_entities_merge'); ?>">Merge tool</a>
-</div>
-*/
 ?>
 <div class="row">
 

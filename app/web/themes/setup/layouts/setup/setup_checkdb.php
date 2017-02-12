@@ -4,30 +4,6 @@ use Orpheus\Rendering\HTMLRendering;
 
 HTMLRendering::useLayout('page_skeleton');
 
-/*
-function collapsiblePanelHTML($id, $title, $description, $panelClass='panel-default', $open=0) {
-	?>
-	<div class="panel <?php echo $panelClass; ?>">
-		<div class="panel-heading" role="tab">
-			<h4 class="panel-title">
-				<a role="button" class="ib wf" data-toggle="collapse" data-parent="#CheckFSAccordion" href="#<?php echo $id; ?>" aria-expanded="true" aria-controls="<?php echo $id; ?>">
-					<?php echo $title; ?>
-				</a>
-			</h4>
-		</div>
-		<div id="<?php echo $id; ?>" class="panel-collapse collapse<?php echo $open ? ' in' : ''; ?>" role="tabpanel" aria-labelledby="headingOne">
-			<div class="panel-body">
-				<?php echo text2HTML($description); ?>
-			</div>
-		</div>
-	</div>
-	<?php
-}
-*/
-
-// $DB_SETTINGS = null;
-
-
 ?>
 <form method="POST">
 <div class="row">
@@ -73,8 +49,6 @@ function collapsiblePanelHTML($id, $title, $description, $panelClass='panel-defa
 		unset($DB_SETTINGS);
 		
 		$this->display('reports-bootstrap3');
-// 		$this->display('reports-bootstrap3', array('reportStream'=>'checkdb'));
-// 		displayReportsHTML('checkdb');
 		
 		if( $allowContinue ) {
 			?>

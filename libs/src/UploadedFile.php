@@ -45,7 +45,6 @@ class UploadedFile {
 	}
 	
 	public function getType() {
-// 		list($type, $other)	= explodeList('/', $this->getMIMEType(), 2);
 		list($type,) = explodeList('/', $this->getMIMEType(), 2);
 		return $type;
 	}
@@ -99,7 +98,7 @@ class UploadedFile {
 		if( $this->allowedMimeTypes !== NULL) {
 			$mt		= $this->getMIMEType();
 			if( $mt === $this->allowedMimeTypes || (is_array($this->allowedMimeTypes) && !in_array($mt, $this->allowedMimeTypes)) ) {
-				throw new UserException('invalidMimeType');	
+				throw new UserException('invalidMimeType');
 			}
 		}
 	}

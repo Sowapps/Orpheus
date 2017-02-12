@@ -13,7 +13,7 @@ use Orpheus\Publisher\Fixture\FixtureInterface;
  * 
  * @property string $create_date
  * @property string $create_ip
- * @property integer $create_user_id
+ * @property int $create_user_id
  * @property string $login_date
  * @property string $login_ip
  * @property string $activity_date
@@ -24,10 +24,10 @@ use Orpheus\Publisher\Fixture\FixtureInterface;
  * @property string $email
  * @property string $password
  * @property string $fullname
- * @property integer $avatar_id
+ * @property int $avatar_id
  * @property boolean $published
  * 
- * @property integer $accesslevel
+ * @property int $accesslevel
  * @property string $recovery_code
  * @property string $activation_code
  * 

@@ -22,7 +22,7 @@ class AdminConfigController extends AdminController {
 				$AppConfig = AppConfig::instance();
 				$AppConfig->set($data['key'], $data['value']);
 				$AppConfig->save();
-		
+				
 			} catch(UserException $e) {
 				reportError($e);
 			}

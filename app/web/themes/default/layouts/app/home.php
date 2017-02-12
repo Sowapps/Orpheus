@@ -22,7 +22,6 @@ secured and standardized by easiest way to use it and the maximum customizing ca
 </div>
 <?php
 $this->display('reports-bootstrap3');
-// displayReportsHTML();
 ?>
 
 <div class="row">

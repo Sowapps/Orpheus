@@ -17,7 +17,6 @@ if( User::isLogged() ) {
 			<legend>Sign in</legend>
 			<?php
 			$this->display('reports-bootstrap3');
-// 			displayReportsHTML('global');
 			?>
 			<div class="form-group">
 				<label for="loginEmail"><?php User::_text('email'); ?></label>

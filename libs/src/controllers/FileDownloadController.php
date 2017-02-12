@@ -13,13 +13,13 @@ class FileDownloadController extends HTTPController {
 	 * @see HTTPController::run()
 	 */
 	public function run(HTTPRequest $request) {
-
+		
 		/* @var File $file */
 		$file = File::load($request->getPathValue('fileID'), false);
 		
 		$file->download($request->getParameter('k'), $request->hasParameter('download'));
 		
-		// Stop the script, the download feature take response in 
+		// Stop the script, the download feature take response in
 	}
 	
 }

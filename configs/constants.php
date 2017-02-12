@@ -25,7 +25,6 @@ defifn('LAYOUT_MENU',		'menu-bootstrap3');
 // LIB Initernationalization
 defifn('LANGDIR',			'languages/');
 defifn('DEFAULT_LOCALE',	'en_US');
-//defifn('SYSTEM_LOCALE',			LANG.'.utf8');
 
 defifn('CACHEPATH',			STOREPATH.'cache/');
 defifn('TEMPPATH',			STOREPATH.'temp/');

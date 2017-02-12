@@ -55,28 +55,9 @@ function collapsiblePanelHTML($id, $title, $description, $panelClass, $open=0) {
 
 		<div class="panel-group" id="CheckFSAccordion" role="tablist" aria-multiselectable="true">
 			<?php
-// 			$allowContinue = true;
-			
 			foreach( $folders as $folder => $fi ) {
 				collapsiblePanelHTML($folder, $fi->title, $fi->description,  $fi->panel,  $fi->open);
 			}
-// 			if( is_writable(ACCESSPATH) ) {
-// 				collapsiblePanelHTML('accesspath', t('folderWritable_error_title', DOMAIN_SETUP, t('folder_webaccess', DOMAIN_SETUP)), t('folderWritable_error_description', DOMAIN_SETUP, ACCESSPATH), PANEL_WARNING, 1);
-// 			} else {
-// 				collapsiblePanelHTML('accesspath', t('folderNotWritable_success_title', DOMAIN_SETUP, t('folder_webaccess', DOMAIN_SETUP)), t('folderNotWritable_success_description', DOMAIN_SETUP, ACCESSPATH), PANEL_SUCCESS, 0);
-// 			}
-// 			if( is_writable(STOREPATH) ) {
-// 				collapsiblePanelHTML('storepath', t('folderWritable_success_title', DOMAIN_SETUP, t('folder_store', DOMAIN_SETUP)), t('folderWritable_success_description', DOMAIN_SETUP, STOREPATH), PANEL_SUCCESS, 0);
-// 			} else {
-// 				$allowContinue	= false;
-// 				collapsiblePanelHTML('storepath', t('folderNotWritable_error_title', DOMAIN_SETUP, t('folder_store', DOMAIN_SETUP)), t('folderNotWritable_error_description', DOMAIN_SETUP, STOREPATH), PANEL_DANGER, 1);
-// 			}
-// 			if( is_writable(LOGSPATH) ) {
-// 				collapsiblePanelHTML('logspath', t('folderWritable_success_title', DOMAIN_SETUP, t('folder_logs', DOMAIN_SETUP)), t('folderWritable_success_description', DOMAIN_SETUP, LOGSPATH), PANEL_SUCCESS, 0);
-// 			} else {
-// 				$allowContinue	= false;
-// 				collapsiblePanelHTML('logspath', t('folderNotWritable_error_title', DOMAIN_SETUP, t('folder_logs', DOMAIN_SETUP)), t('folderNotWritable_error_description', DOMAIN_SETUP, LOGSPATH), PANEL_DANGER, 1);
-// 			}
 			?>
 		</div>
 		

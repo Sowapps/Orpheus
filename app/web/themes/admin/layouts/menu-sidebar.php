@@ -6,15 +6,7 @@ global $USER;
 // http://fortawesome.github.io/Font-Awesome/icons/
 // $modIcons = array(
 // 	'adm_projects'	=> 'fa-briefcase',
-// 	'adm_users'		=> 'fa-users',
-// 	'adm_partners'	=> 'fa-hand-o-right',
-// 	'adm_logs'		=> 'fa-bolt',
-// // 	'adm_logs'		=> 'fa-archive',
-// 	'dev_entities'	=> 'fa-magic',
-// // 	'dev_entities'	=> 'fa-gears',
 // );
-
-// if( empty($items) ) { return; }
 
 echo '
 <ul class="nav navbar-nav side-nav menu '.$menu.'">';
