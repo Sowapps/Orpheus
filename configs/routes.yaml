@@ -67,12 +67,6 @@ http:
         restrictTo:
           role: administrator
         
-    adm_config:
-        path: "/admin/config.html"
-        controller: "AdminConfigController"
-        restrictTo:
-          role: developer
-        
     file_download:
         path: "/download/{id:fileID}"
         controller: "FileDownloadController"
@@ -117,6 +111,12 @@ http:
     dev_app_translate:
         path: "/developer/translate_application.html"
         controller: "DevAppTranslateController"
+        restrictTo:
+          role: developer
+        
+    dev_config:
+        path: "/admin/config.html"
+        controller: "AdminConfigController"
         restrictTo:
           role: developer
     

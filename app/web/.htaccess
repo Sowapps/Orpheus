@@ -66,4 +66,3 @@ DirectoryIndex index.php index.html
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-

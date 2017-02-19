@@ -3,7 +3,7 @@ use Orpheus\EntityDescriptor\User\AbstractUser;
 use Orpheus\Publisher\Fixture\FixtureInterface;
 
 /** The site user class
-
+ * 
  * A site user is a registered user.
  * 
  * Require:

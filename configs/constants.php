@@ -36,6 +36,9 @@ defifn('STATIC_URL',		SITEROOT.'static/');
 // defifn('JSURL',				SITEROOT.'js/');
 defifn('IMAGESURL',			STATIC_URL.'images/');
 
+
+// Routes' contants
+
 defifn('AUTHORNAME',		'Your name');
 defifn('SITENAME',			'Your App Name');// See also translation app_name
 defifn('ADMINEMAIL',		'contact@yourdomain.com');

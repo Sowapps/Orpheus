@@ -1,16 +1,12 @@
 
 var _Translations = {};
 
-//console.log("Declare", _Translations);
-
 function t(key) {
 	return _Translations && _Translations[key] ? _Translations[key] : key;
 }
 
 function provideTranslations(translations) {
-//	console.log("provideTranslations() - provide", translations);
 	$.extend(_Translations, translations);
-//	console.log("provideTranslations() - provided", _Translations);
 }
 
 provideTranslations({
@@ -18,8 +14,6 @@ provideTranslations({
 	'cancel' : "Cancel",
 });
 
-	//	<div class="modal fade">
-//		<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title"></h4></div><div class="modal-body"></div><div class="modal-footer"></div></div></div></div>'';
 function ConfirmDialog(title, message, submitName, submitValue) {
 	
 	// Initialize class dialog
@@ -34,13 +28,26 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 	this.dialog = ConfirmDialog.dialog;
 	this.title = title;
 	this.message = message;
-	this.submitName = submitName;
-	this.submitValue = submitValue;
+	this.submitName = submitName || "submitValidate";
+	this.submitValue = submitValue || 1;
 	var widget = this;
+
+	this.previous = null;
+	this.imageLink = null;
 	
 	this.open = function() {
+		widget.previous && widget.previous.hide();
+//		if( widget.previous ) {
+//			widget.previous.hide();
+//		}
 		this.dialog.find(".confirm_title").text(this.title);
 		this.dialog.find(".confirm_message").text(this.message);
+//		console.log("widget.imageLink", widget.imageLink);
+		if( this.imageLink ) {
+			this.dialog.find(".image_wrapper").show().find("img").attr("src", this.imageLink);
+		} else {
+			this.dialog.find(".image_wrapper").hide();
+		}
 		var validateSubmit = this.dialog.find(".confirm_validate")
 			.attr("name", this.submitName).val(this.submitValue);
 //		this.dialog.find(".confirm_cancel").unbind("click").click(function() {
@@ -48,6 +55,15 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 //		});
 		
 		this.dialog.modal('show');
+	}
+	
+	this.dialog.on("hidden.bs.modal", function() {
+//		console.log("Hidden confirm modal", widget.previous);
+		widget.previous && widget.previous.show();
+	});
+	
+	this.getForm = function() {
+		return this.dialog.find("form");
 	}
 	
 	this.validate = function() {
@@ -58,36 +74,10 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 		this.dialog.modal('hide');
 	}
 	
-	/*
-	"dialog" :	'',
-	"confirm" : function(callback, title, message) {
-		debug("Dialog.confirm");
-		if( typeof this.dialog == "string" ) {
-			this.dialog	= $(this.dialog);
-			this.dialog.appendTo("body");
-			this.dialog.modal({"show": false});
-		}
-		var dialog	= this.dialog;
-		dialog.find(".modal-title").text(title);
-		dialog.find(".modal-footer").html('<button type="button" class="btn btn-default" data-dismiss="modal">'+t('cancel')+'</button><button type="button" class="btn btn-primary okbtn">'+t('ok')+'</button>');
-		dialog.find(".modal-footer .okbtn").click(function() {
-			dialog.callback	= callback;
-			dialog.callback();
-			dialog.modal('hide');
-		});
-		if( message ) {
-			dialog.find(".modal-footer").css({"border-top": "", "margin-top": ""});
-			dialog.find(".modal-body").show().html(message);
-		} else {
-			dialog.find(".modal-footer").css({"border-top": "none", "margin-top": "0"});
-			dialog.find(".modal-body").hide();
-		}
-		dialog.modal('show');
-	}
-	*/
 };
-ConfirmDialog.dialogTemplate	= '\
-	<div id="AddUserDialog" class="modal fade">\
+$(function() {
+	ConfirmDialog.dialogTemplate = '\
+	<div id="OrpheusConfirmDialog" class="modal fade">\
 	<div class="modal-dialog">\
 		<div class="modal-content">\
 		<form method="POST">\
@@ -96,7 +86,8 @@ ConfirmDialog.dialogTemplate	= '\
 				<h4 class="modal-title confirm_title"></h4>\
 			</div>\
 			<div class="modal-body">\
-				<p class="confirm_message"></p>\
+				<p class="confirm_message mb10"></p>\
+				<div class="row image_wrapper"><div class="col-lg-8 col-lg-offset-2"><img class="img-responsive img-thumbnail"/></div></div>\
 			</div>\
 			<div class="modal-footer">\
 				<button type="button" class="btn btn-default confirm_cancel" data-dismiss="modal">'+t('cancel')+'</button>\
@@ -106,6 +97,7 @@ ConfirmDialog.dialogTemplate	= '\
 		</div>\
 	</div>\
 </div>';
+});
 
 //$(function() {
 //	debug("Doc ready");
@@ -119,15 +111,9 @@ $(function() {
 		if( _.data("confirmdialog") ) {
 			return;
 		}
-//		var confirmDialog = new ConfirmDialog(_.data("confirm_title"), _.data("confirm_message"), _.data("confirm_submit_name"), _.data("confirm_submit_value"));
-		var confirmDialog = new ConfirmDialog();
+		var confirmDialog = new ConfirmDialog(_.data("confirm_title"), _.data("confirm_message"), _.data("confirm_submit_name"), _.data("confirm_submit_value"));
 		_.data("confirmdialog", confirmDialog);
 		_.click(function() {
-			// Dynamically set it
-			confirmDialog.title = _.data("confirm_title");
-			confirmDialog.message = _.data("confirm_message");
-			confirmDialog.submitName = _.data("confirm_submit_name");
-			confirmDialog.submitValue = _.data("confirm_submit_value");
 			confirmDialog.open();
 		});
 	});
@@ -223,6 +209,7 @@ function str2date(val) {
 }
 
 function leadZero(val) {
+	val = val*1;
 	return val < 10 ? '0'+val : val;
 }
 
@@ -292,6 +279,7 @@ String.prototype.capitalize = function () {
 Date.prototype.getFullDay = function() {
 	return ""+this.getFullYear()+leadZero(this.getMonth())+leadZero(this.getDate());
 };
+
 var pageScrolled;
 function PageScrollTo(sel, paddingTop) {
 //	console.log("PageScrollTo()", sel);
@@ -311,8 +299,89 @@ function PageScrollTo(sel, paddingTop) {
 	}
 }
 
+// Cookie Object
+function Cookie(name) {
+	
+	this.name = name;
+	this.value = "";
+	this.path = "/";
+	this.expires = null;
+	
+	this.getValue = function() {
+		return this.value;
+	};
+	
+	this.setValue = function(value) {
+		this.value = value+"";
+		return this;
+	};
+	
+	this.setPath = function(path) {
+		this.path = path;
+		return this;
+	};
+	
+	this.setExpires = function(date) {
+		this.expires = isObject(date) ? date.toUTCString() : date;
+		return this;
+	};
+	
+	this.expireInDays = function(days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		this.setExpires(date);
+		return this;
+	};
+	
+	this.remove = function(date) {
+		this.setValue("").expireInDays(-1);
+		return this;
+	};
+	
+	this.save = function() {
+		document.cookie = this.name+"="+this.value+(this.expires ? "; expires="+this.expires : "")+"; path="+this.path;
+	};
+	
+	//http://ppk.developpez.com/tutoriels/javascript/gestion-cookies-javascript/
+	this.get = function() {
+		var n = this.name + "=";
+		var ca = document.cookie.split(';');
+		for( var i=0; i < ca.length; i++ ) {
+			var c = ca[i];
+			while( c.charAt(0) == ' ' ) {
+				c = c.substring(1, c.length);
+			}
+			if( c.indexOf(n) == 0 ) {
+				return c.substring(n.length, c.length);
+			}
+		}
+		return "";
+	};
+	
+	this.load = function() {
+		this.value = this.get();
+	};
+	this.load();
+	
+}
+Cookie.prototype.toString = function chienToString() {
+	return this.getValue();
+};
+
+// Set TimeZone Cookie
+(function() {
+	var offset = new Date().getTimezoneOffset();
+//	console.log("TimeZone offset => "+offset);
+	new Cookie("orpheus_timezone").setValue((offset > 0 ? "-" : "+")+leadZero(Math.abs(parseInt(offset/60)))+':'+leadZero(Math.abs(offset%60))).expireInDays(7).save();
+//	document.cookie = '='++'; expires=Mon, 1 Mar 2010 00:00:00 UTC; path=/'
+//	document.cookie = 'orpheus_timezone='+leadZero(parseInt(-offset/60))+leadZero(Math.abs(offset%60))+'; expires=Mon, 1 Mar 2010 00:00:00 UTC; path=/'
+})();
+
 if( $ ) {
 	
+	/**
+	 * Fill all children of the current element with this data using the key and prefix to set the value
+	 */
 	$.fn.fill = function(prefix, data) {
 		$(this).each(function(key, value) {
 			var container = $(this);
@@ -326,15 +395,40 @@ if( $ ) {
 						element.attr("href", value);
 					} else
 					if( element.is(":input") ) {
-						// Fix issue in some dynamic forms
-						// input was filled but the change event not called
-						element.val(value).change();
-//						element.val(value);
+						element.val(value);
 					} else {
 						element.text(value);
 					}
 				});
 			});
+		});
+	};
+	
+	/**
+	 * Extract data from all children input using the data-field
+	 */
+	$.fn.extract = function() {
+		var data = {};
+		$(this).find(":input[data-field]").each(function() {
+			data[$(this).data("field")] = $(this).val();
+		});
+		return data;
+	};
+
+	/**
+	 * Reset a form
+	 */
+	$.fn.resetForm = function() {
+		$(this).each(function() {
+			var form = $(this).is("form") ? $(this) : $(this).closest("form");
+			if( !form.length ) {
+				form = $(this).find("form").first();
+			}
+			if( !form.length ) {
+				throw "Unable to reset form, form not found";
+			}
+			form.get(0).reset();
+			form.find(":input[type='hidden']").removeAttr("value");
 		});
 	};
 	
@@ -345,25 +439,34 @@ if( $ ) {
 		var form	= $(this).closest("form");
 //		console.log("Button", button);
 //		console.log("Form", form);
-		var listener	= function() {
+		var listener = function() {
 //			console.log("submit form");
 			if( !button.data("submitted") ) {
 				button.data("submitted", 1);
+				button.data("submitold", button.html());
 				button.text(button.data("submittext"));
 			}
 			if( !form.data("inputsdisabled") ) {
 				form.data("inputsdisabled", 1);
 				form.disableInputs();
 			}
+			$(form).one("cancelsubmit", function() {
+				if( !button.data("submitted") ) {
+					return;
+				}
+				button.html(button.data("submitold"));
+				form.data("inputsdisabled", 0);
+				form.enableInputs();
+			});
 		};
 		button.click(listener);
 		form.submit(listener);
 	});
 	
 	$("input[data-preview]").change(function() {
-		var input	= $(this);
+		var input = $(this);
 //	 	console.log('change', this.files[0]);
-		var oFReader	= new FileReader();
+		var oFReader = new FileReader();
 		oFReader.readAsDataURL(this.files[0]);
 		oFReader.onload	= function(oFREvent) {
 //	 		console.log('oFReader.onload', oFREvent.target.result);
@@ -650,8 +753,8 @@ var escapeHTML;
 		});
 	};
 	
-	$.fn.pressEnter = function(cb) {
-		return $(this).keydown(function(e) {
+	$.fn.pressEnter	= function(cb) {
+		$(this).keydown(function(e) {
 			if( e.which==KeyEvent.DOM_VK_RETURN ) {
 				e.preventDefault();
 				this.callback	= cb;

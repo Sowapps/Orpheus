@@ -10,8 +10,8 @@ Get the power with the new Orpheus, the PHP framework from your dreams, coming w
 This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
 secured and standardized by easiest way to use it and the maximum customizing capabilities.
 	</p>
-	<p>
-		<a href="<?php _u('gettingstarted'); ?>" class="btn btn-primary btn-large"><i class="fa fa-star-o"></i> Getting Started</a>
+	<p class="cb tac mt30">
+		<a href="<?php _u('gettingstarted'); ?>" class="btn btn-primary btn-lg"><i class="fa fa-star-o"></i> Getting Started</a>
 		<?php /*
 		<a href="<?php _u(ROUTE_DOWNLOAD_LATEST); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
 		<a href="<?php _u(ROUTE_DOWNLOAD_RELEASES); ?>" target="_blank" class="btn btn-link fs16">All releases</a>
