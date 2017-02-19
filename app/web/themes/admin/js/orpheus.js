@@ -1,15 +1,7 @@
+
 (function ($) {// Preserve our jQuery
 
 $(function() {
-	// http://ivaynberg.github.io/select2/
-	$("select.select2").each(function() {
-		var _	= $(this);
-		var options	= {};
-		if( !_.hasClass("searchable") ) {
-			options.minimumResultsForSearch	= -1;
-		}
-		_.select2(options);
-	});
 	
 	(function() {
 		var hash = window.location.hash;
@@ -21,6 +13,8 @@ $(function() {
 			$('html,body').scrollTop(scrollmem);
 		});
 	})();
+	
+	$('table.tablesorter').tablesorter();
 	
 	$('.modal').on('shown.bs.modal', function(e) {
 //		document.activeElement.blur();
@@ -34,8 +28,18 @@ $(function() {
 		}
 	});
 	
-	$("input.select2.autocomplete").shown(function() {
+	// http://ivaynberg.github.io/select2/
+	$("select.select2").each(function() {
 		var _	= $(this);
+		var options	= {};
+		if( !_.hasClass("searchable") ) {
+			options.minimumResultsForSearch	= -1;
+		}
+		_.select2(options);
+	});
+	
+	$("input.select2.autocomplete").shown(function() {
+		var _ = $(this);
 		if( _.data("autocomplete-auto") ) { return; }
 		_.data("autocomplete-auto", 1);
 		_.select2({
@@ -62,23 +66,16 @@ $(function() {
 	});
 	
 	$(".confirmable").click(function(e) {
-//		debug("Click button");
 		var _	= $(this);
-//		console.log(_);
 		if( _.data("confirm") ) {
 			_.after('<input type="hidden" name="'+_.attr("name")+'_confirm" value="1"/>');
 			return;
 		}
 		e.preventDefault();
 		// Not mouse click
-//		console.log(e.pageX);
-//		console.log(_.data("confirm_timer"));
 		if( !e.pageX || _.data("confirm_timer") ) { debug("Return"); return; }
-//		console.log(e);
 		// Delay the confirm to reject double click
-//		debug("Confirm timer launch");
 		_.data("confirm_timer", setTimeout(function() {
-//			debug("Confirm ended");
 			_.data("confirm_timer", 0);
 			_.data("confirm", _.html());
 			_.text("Confirmer ?");
@@ -89,14 +86,11 @@ $(function() {
 		// Cancel events
 		_.one("mouseout.confirmable click.confirmable", function() {
 			_.unbind(".confirmable");// Apply to each event, so we remove all others
-//			debug("Cancel");
 			if( _.data("confirm") ) {
-//				debug("Cancel confirm");
 				_.html(_.data("confirm"));
 				_.data("confirm", 0);
 				_.removeClass("btn-danger");
 			} else {
-//				debug("Abort timer");
 				clearTimeout(_.data("confirm_timer"));
 				_.data("confirm_timer", 0);
 				_.removeClass("btn-warning");
@@ -106,25 +100,15 @@ $(function() {
 });
 
 function refresh() {
-//	console.log($('.uploadlayer'));
 	$('.uploadlayer').each(function() {
-//		console.log(".uploadlayer shown");
 		var _	= $(this);
 		if( _.data('uploadlayer') ) { return; }
 		_.data('uploadlayer', 1);
 		var l	= _.prev();
 		var w	= l.outerWidth();
 		var h	= l.outerHeight();
-//		debug(l.css("display"));
 		var pos	= l.position();
-//		debug(l);
-//		debug(l.position());
-//		debug(parseInt(l.css('margin-top')));
-//		debug(l.css('margin-left'));
 		_.css({"opacity":0, "position":"absolute", "top":(pos.top+parseInt(l.css('margin-top')))+"px", "left":(pos.left+parseInt(l.css('margin-left')))+"px", "width":w+"px", "height":h+"px", "display":"block", "cursor":"pointer"});
-//		_.css({"opacity":0, "margin-left": (-w-4)+"px", "width": w+"px", "height": h+"px", "display":l.css("display"), "cursor":"pointer"});
-//		debug(_);
-//		debug(_.position());
 		_.hover(function() { l.addClass("active"); }, function() { l.removeClass("active"); });
 		if( _.data('submit') ) {
 			_.change(function() { $(_.data('submit')).click(); });
@@ -133,9 +117,7 @@ function refresh() {
 }
 
 $.fn.confirmAction	= function(text) {
-// 	if( !text ) { text = ""; }
 	if( !$("#confirmModal").length ) {
-// 		<div class="modal-body"><p class="confirm-text"></p></div>\
 		$("body").append('\
 <div class="modal fade modal-center modal-compact" id="confirmModal">\
 	<div class="modal-dialog">\

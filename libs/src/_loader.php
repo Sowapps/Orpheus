@@ -46,9 +46,7 @@ addAutoload('ThreadController',					'src/controllers/ThreadController');
 addAutoload('AdminController',					'src/controllers/admin/AdminController');
 addAutoload('AdminDemoController',				'src/controllers/admin/AdminDemoController');
 addAutoload('AdminUserListController',			'src/controllers/admin/AdminUserListController');
-addAutoload('AdminConfigController',			'src/controllers/admin/AdminConfigController');
 
-// addAutoload('DevToolsController',				'src/controllers/devtools/DevToolsController');
 addAutoload('DevController',					'src/controllers/devtools/DevController');
 addAutoload('DevHomeController',				'src/controllers/devtools/DevHomeController');
 addAutoload('DevSystemController',				'src/controllers/devtools/DevSystemController');

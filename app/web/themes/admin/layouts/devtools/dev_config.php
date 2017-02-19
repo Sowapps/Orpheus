@@ -15,7 +15,7 @@ $AppConfig = AppConfig::instance();
 <table class="table table-bordered table-hover tablesorter">
 	<thead>
 		<tr>
-			<th><?php _t('key'); ?> <i class="fa fa-sort" title="Trier par Clé"></i></th>
+			<th><?php _t('key'); ?> <i class="fa fa-sort" title="<?php _t('sortByKey'); ?>"></i></th>
 			<th class="sorter-false"><?php _t('value'); ?></th>
 			<th class="sorter-false"><?php _t('actionsColumn'); ?></th>
 		</tr>

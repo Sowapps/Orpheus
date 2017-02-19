@@ -115,8 +115,8 @@ http:
           role: developer
         
     dev_config:
-        path: "/admin/config.html"
-        controller: "AdminConfigController"
+        path: "/developer/config.html"
+        controller: "DevConfigController"
         restrictTo:
           role: developer
     

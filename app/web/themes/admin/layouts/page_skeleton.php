@@ -40,7 +40,7 @@ $invertedStyle = $Controller->getOption('invertedStyle', 1);
 	<meta name="revisit-after" content="16 days"/>
 	<link rel="icon" type="image/png" href="<?php echo STATIC_URL.'images/icon.png'; ?>" />
 <?php
-foreach(HTMLRendering::$metaprop as $property => $content) {
+foreach($this->listMetaProperties() as $property => $content) {
 	echo '
 	<meta property="'.$property.'" content="'.$content.'"/>';
 }
@@ -59,7 +59,7 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 <!--	 <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"> -->
 */
 
-foreach(HTMLRendering::listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
+foreach($this->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	echo '
 	<link rel="stylesheet" href="'.$url.'" type="text/css" media="screen" />';
 }
@@ -69,9 +69,9 @@ foreach(HTMLRendering::listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	<link rel="stylesheet" href="<?php echo STATIC_URL.'style/base.css'; ?>" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
-foreach(HTMLRendering::listCSSURLs() as $url) {
+foreach($this->listCSSURLs() as $url) {
 	echo '
-	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
+	<link rel="stylesheet" href="'.$url.'" type="text/css" media="screen" />';
 }
 ?>
 	
@@ -171,20 +171,10 @@ foreach(HTMLRendering::listCSSURLs() as $url) {
 	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>
-	<?php /*
-	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-	<script src="<?php echo HTMLRendering::getThemeURL(); ?>js/morris/chart-data-morris.js"></script>
-	<script src="//shared.sowapps.com/morris.js/morris.js-0.5.1/morris.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone.min.js"></script>
-	<script src="//shared.sowapps.com/select2/select2-3.5.2/select2.min.js"></script>
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script> -->
-<!-- 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.0/moment-timezone-with-data.min.js"></script> -->
-	*/?>
-	<script src="//shared.sowapps.com/tablesorter/tablesorter-2.0.5/jquery.tablesorter.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.js"></script>
 	
 <?php
-foreach(HTMLRendering::listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
+foreach($this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	echo '
 	<script type="text/javascript" src="'.$url.'"></script>';
 }
@@ -199,7 +189,7 @@ foreach(HTMLRendering::listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	<script src="<?php echo HTMLRendering::getJSURL(); ?>script.js"></script>
 	
 <?php
-foreach(HTMLRendering::listJSURLs() as $url) {
+foreach($this->listJSURLs() as $url) {
 	echo '
 	<script type="text/javascript" src="'.$url.'"></script>';
 }

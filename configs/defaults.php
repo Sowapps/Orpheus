@@ -26,6 +26,7 @@ define('ROUTE_ADM_USER',		'adm_user');
 define('ROUTE_ADM_MYSETTINGS',	'adm_mysettings');
 
 define('ROUTE_DEV_HOME',		'dev_home');
+define('ROUTE_DEV_CONFIG',		'dev_config');
 define('ROUTE_DEV_SYSTEM',		'dev_system');
 define('ROUTE_DEV_COMPOSER',	'dev_composer');
 define('ROUTE_DEV_ENTITIES',	'dev_entities');
@@ -33,11 +34,9 @@ define('ROUTE_DEV_LOGS',		'dev_loglist');
 define('ROUTE_DEV_LOG_VIEW',	'dev_log_view');
 define('ROUTE_DEV_APPTRANSLATE',	'dev_app_translate');
 
-
 // Route's defaults
 defifn('DEFAULTROUTE',			ROUTE_HOME);
 defifn('DEFAULTMEMBERROUTE',	ROUTE_ADM_DEMO);
-// defifn('DEFAULTMOD',		'home');
-defifn('DEFAULTHOST',		'yourdomain.com');
-defifn('DEFAULTPATH',		'');
+defifn('DEFAULTHOST',			'yourdomain.com');
+defifn('DEFAULTPATH',			'');
 
