@@ -9,17 +9,17 @@ use Orpheus\Rendering\HTMLRendering;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo (!empty($MODTITLE) ? $MODTITLE.' :: ' : '' ).SITENAME ?></title>
+	<title><?php echo !empty($PageTitle) ? $PageTitle : t('app_name'); ?></title>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
-	<meta name="application-name" content="<?php echo SITENAME;?>" />
+	<meta name="application-name" content="<?php _t('app_name'); ?>" />
 	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>" />
 	<meta name="Keywords" content="carnet"/>
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
 	<link rel="icon" type="image/png" href="<?php echo STATIC_URL.'images/icon.png'; ?>" />
 <?php
-foreach(HTMLRendering::$metaprop as $property => $content) {
+foreach($this->listMetaProperties() as $property => $content) {
 	echo '
 	<meta property="'.$property.'" content="'.$content.'"/>';
 }
@@ -31,11 +31,17 @@ foreach(HTMLRendering::$metaprop as $property => $content) {
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen" />
+<?php
+foreach($this->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
+	echo '
+	<link rel="stylesheet" href="'.$url.'" type="text/css" media="screen" />';
+}
+?>
 	
 	<link rel="stylesheet" href="<?php echo SITEROOT; ?>static/style/base.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
 <?php
-foreach(HTMLRendering::$cssURLs as $url) {
+foreach($this->listCSSURLs() as $url) {
 	echo '
 	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
 }
@@ -60,7 +66,7 @@ foreach(HTMLRendering::$cssURLs as $url) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo SITENAME ?></a>
+			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php _t('app_name'); ?></a>
 		</div>
 		<div class="collapse navbar-collapse">
 <?php
@@ -89,7 +95,7 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 	<script type="text/javascript" src="/js/orpheus.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php
-foreach(HTMLRendering::$jsURLs as $url) {
+foreach($this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
 	echo '
 	<script type="text/javascript" src="'.$url.'"></script>';
 }

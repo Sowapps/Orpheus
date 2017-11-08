@@ -30,10 +30,10 @@ $invertedStyle = $Controller->getOption('invertedStyle', 1);
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo !empty($PageTitle) ? $PageTitle : SITENAME; ?></title>
+	<title><?php echo !empty($PageTitle) ? $PageTitle : t('app_name'); ?></title>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
-	<meta name="application-name" content="<?php echo SITENAME;?>" />
+	<meta name="application-name" content="<?php _t('app_name'); ?>" />
 	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>" />
 	<meta name="Keywords" content="projet"/>
 	<meta name="Robots" content="Index, Follow"/>

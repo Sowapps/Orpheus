@@ -104,7 +104,7 @@ function getModuleAccess($module=null) {
  * @param User $user
  */
 function sendAdminRegistrationEmail($user) {
-	$SITENAME	= SITENAME;
+	$SITENAME	= t('app_name');
 	$SITEURL	= DEFAULTLINK;
 	$e	= new Email('Orpheus - Registration of '.$user->fullname);
 	$e->setText(<<<BODY
@@ -123,7 +123,7 @@ BODY
  */
 function sendNewThreadMessageEmail($tm) {
 // 	$user	= $tm->getUser();
-	$SITENAME	= SITENAME;
+	$SITENAME	= t('app_name');
 	$e	= new Email('Orpheus - New message of '.$tm->user_name);
 	$e->setText(<<<BODY
 Hi master !
