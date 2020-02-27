@@ -34,22 +34,28 @@ defifn('FILESTOREPATH',		STOREPATH.'files/');
 defifn('STATIC_URL',		SITEROOT.'static/');
 
 // defifn('JSURL',				SITEROOT.'js/');
-defifn('IMAGESURL',			STATIC_URL.'images/');
+defifn('IMAGESURL', STATIC_URL . 'images/');
 
 
-// Routes' contants
+// Contact
 
-defifn('AUTHORNAME',		'Your name');
-defifn('SITENAME',			'Your App Name');// See also translation app_name
-defifn('ADMINEMAIL',		'contact@yourdomain.com');
-defifn('DEVEMAIL',			'contact@devdomain.com');
+defifn('AUTHORNAME', 'Your name');
+defifn('SITENAME', 'Your App Name');// See also translation app_name
+defifn('ADMINEMAIL', 'contact@yourdomain.com');
+defifn('DEVEMAIL', 'contact@devdomain.com');
 
-define('CRAC_CONTEXT_APPLICATION',	1);
-define('CRAC_CONTEXT_AGENCY',		2);
-define('CRAC_CONTEXT_RESOURCE',		3);
+// Users
+//define('USER_SALT',			'');
+defifn('DEFAULT_TIMEZONE', 'Europe/Paris');
+defifn('DATE_SQL_DATETIME', 'Y-m-d H:i:s');
+defifn('DATE_SQL_DATE', 'Y-m-d');
 
-define('FILE_USAGE_USER_PICTURE',		'user_picture');
-define('FILE_USAGE_INVOICE',			'invoice');
+define('CRAC_CONTEXT_APPLICATION', 1);
+define('CRAC_CONTEXT_AGENCY', 2);
+define('CRAC_CONTEXT_RESOURCE', 3);
+
+define('FILE_USAGE_USER_PICTURE', 'user_picture');
+define('FILE_USAGE_INVOICE', 'invoice');
 
 function listFileUsages() {
 	return array(

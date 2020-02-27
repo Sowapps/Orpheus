@@ -1,3 +1,3 @@
 Copyright
-	* Copyright (C) 2017 Florent HAZARD
+	* Copyright (C) 2020 Florent HAZARD
 	* The MIT License, see ORPHEUS-LICENSE.txt

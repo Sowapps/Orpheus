@@ -1,31 +1,34 @@
 {
-	"name" : "orpheus/orpheus-framework",
-	"description" : "Orpheus PHP Framework",
-	"type" : "project",
-	"license" : "MIT",
-	"keywords" : [
-		"framework",
-		"php"
-	],
-	"require" : {
-		"orpheus/orpheus-core" : "dev-master",
-		"orpheus/orpheus-hook" : "dev-master",
-		"orpheus/orpheus-cache" : "dev-master",
-		"orpheus/orpheus-yaml" : "dev-master",
-		"orpheus/orpheus-initernationalization" : "dev-master",
-		"orpheus/orpheus-rendering" : "dev-master",
-		"orpheus/orpheus-inputcontroller" : "dev-master",
-		"orpheus/orpheus-sqladapter" : "dev-master",
-		"orpheus/orpheus-publisher" : "dev-master",
-		"orpheus/orpheus-entitydescriptor" : "dev-master",
-		"orpheus/orpheus-form" : "dev-master",
-		"orpheus/orpheus-webtools" : "dev-master"
-	},
-	"authors" : [{
-			"name" : "Florent HAZARD",
-			"email" : "contact@sowapps.com",
-			"homepage" : "http://sowapps.com",
-			"role" : "Developer"
-		}
-	]
+  "name": "orpheus/orpheus-framework",
+  "description": "Orpheus PHP Framework",
+  "type": "project",
+  "license": "MIT",
+  "keywords": [
+	"framework",
+	"php"
+  ],
+  "require": {
+	"orpheus/orpheus-core": "1.*",
+	"orpheus/orpheus-hook": "1.*",
+	"orpheus/orpheus-cache": "1.*",
+	"orpheus/orpheus-yaml": "1.*",
+	"orpheus/orpheus-initernationalization": "1.*",
+	"orpheus/orpheus-rendering": "1.*",
+	"orpheus/orpheus-inputcontroller": "1.*",
+	"orpheus/orpheus-sqladapter": "1.*",
+	"orpheus/orpheus-publisher": "1.*",
+	"orpheus/orpheus-entitydescriptor": "1.*",
+	"orpheus/orpheus-form": "1.*",
+	"orpheus/orpheus-webtools": "1.*",
+	"ext-pdo": "*",
+	"ext-json": "*"
+  },
+  "authors": [
+	{
+	  "name": "Florent HAZARD",
+	  "email": "contact@sowapps.com",
+	  "homepage": "http://sowapps.com",
+	  "role": "Developer"
+	}
+  ]
 }

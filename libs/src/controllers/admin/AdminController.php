@@ -30,24 +30,12 @@ abstract class AdminController extends HTTPController {
 		$this->addRouteToBreadcrumb($this->getRouteName(), $label, $link);
 	}
 	
-	public function preRun(HTTPRequest $request) {
+	public function preRun($request) {
 		parent::preRun($request);
 		HTMLRendering::setDefaultTheme('admin');
 		
-		$this->addRouteToBreadcrumb(DEFAULTROUTE);
-// 		$this->addBreadcrumb(t('home'), u(DEFAULTMEMBERROUTE));
+		$this->addRouteToBreadcrumb(DEFAULT_ROUTE);
 		$this->addRouteToBreadcrumb(ROUTE_ADM_HOME);
-// 		if( DEFAULTMEMBERROUTE !== $this->getRouteName() ) {
-// 			$this->addRouteToBreadcrumb(DEFAULTMEMBERROUTE);
-// 		}
-		
-		/* @var $USER User */
-// 		if( CHECK_MODULE_ACCESS ) {
-// 			global $USER;
-// 			if( !$USER || !$USER->canAccess($request->getRouteName()) ) {
-// 				throw new ForbiddenException('forbiddenAccessToRoute');
-// 			}
-// 		}
 	}
 	
 	public function render($response, $layout, $values=array()) {

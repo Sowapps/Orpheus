@@ -1,4 +1,5 @@
 <?php
+
 use Orpheus\EntityDescriptor\User\AbstractUser;
 use Orpheus\Publisher\Fixture\FixtureInterface;
 
@@ -114,7 +115,6 @@ class User extends AbstractUser implements FixtureInterface {
 	 */
 	public function canUserEdit($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {
 		if( $this->canDo('user_edit') ) { return true; }
-// 		if( $context == CRAC_CONTEXT_APPLICATION ) { return false; }
 		return false;
 	}
 	public function canSeeDevelopers($context=CRAC_CONTEXT_APPLICATION, $contextResource=null) {

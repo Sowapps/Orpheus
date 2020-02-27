@@ -395,7 +395,9 @@ if( $ ) {
 						element.attr("href", value);
 					} else
 					if( element.is(":input") ) {
-						element.val(value);
+						// Fix issue in some dynamic forms
+						// input was filled but the change event not called
+						element.val(value).change();
 					} else {
 						element.text(value);
 					}

@@ -1,10 +1,5 @@
 <?php
 
-// define('DEV_VERSION', 1);
-// defifn('ORPHEUSPATH',		dirpath(__FILE__));
-// define('ACCESSPATH',	dirname(__FILE__));
-// $REQUEST_TYPE	= 'Console';
-// echo getcwd()."\n";
-// echo __DIR__."\n";
+define('TERMINAL', 1);
 
-require_once __DIR__.'/../../system/bootstrap.php';
+require_once __DIR__ . '/../../system/bootstrap.php';
