@@ -1,10 +1,14 @@
-/.settings/
-/.buildpath
-/.project
-/composer.lock
-/vendor
-/.composer
-/composer.phar
-/store/*
-/logs/*
 /configs/database.ini
+/configs/environment.json
+/instance.php
+/.composer
+/logs/*
+node_modules/*
+/store/*
+/temp/*
+vendor/*
+composer.phar
+.DS_Store
+# But keep empty folder containing gitkeep & htaccess
+!.gitkeep
+!.htaccess

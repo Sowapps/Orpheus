@@ -1,86 +1,85 @@
 <?php
+
 use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
-use Orpheus\Hook\Hook;
 use Orpheus\Core\RequestHandler;
+use Orpheus\Hook\Hook;
 
 /**
  * @file Bootstrap.php
  * @brief The Orpheus Core
  * @author Florent Hazard
  * @copyright The MIT License, see LICENSE.txt
- * 
+ *
  * Website core.
  */
 
-define('IS_CONSOLE',	PHP_SAPI === 'cli');
-define('IS_WEB',		!IS_CONSOLE);
-// define('IS_WEB',		array_key_exists('REQUEST_METHOD', $_SERVER));
-// define('IS_CONSOLE',	!IS_WEB);
+define('IS_CONSOLE', PHP_SAPI === 'cli');
+define('IS_WEB', !IS_CONSOLE);
 
 if( isset($SRCPATHS) ) {
-	$t = $SRCPATHS; unset($SRCPATHS);
+	$t = $SRCPATHS;
+	unset($SRCPATHS);
 }
 require_once 'loader.php';
-// Now on packagist (orpheus-core)
-// require_once 'ClassLoader.php';
 
 /**
  * The access path, this is independant from the type of access (http, console...)
  * It defines from which folder you access to your application
  */
-defifn('ACCESSPATH',		dirpath($_SERVER['SCRIPT_FILENAME']));
+defifn('ACCESSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));
 
 /**
  * The path to the instance file, this file is optional.
  * This file allows you configure an instance of this application, you could use it to define the DEV_VERSION
  */
-defifn('INSTANCEFILEPATH',	dirpath(dirname(dirname(ACCESSPATH))).'instance.php');
+defifn('INSTANCEFILEPATH', findFileInTree('instance.php', ACCESSPATH));
 
 if( file_exists(INSTANCEFILEPATH) ) {
 	require_once INSTANCEFILEPATH;
 }
 
-defifn('DEV_VERSION',		!IS_WEB);// True in all cases but web access
-
 if( !ini_get('date.timezone') ) {
-// if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
+	// if( !date_default_timezone_get() || date_default_timezone_get() === 'UTC' ) {
 	// Set to avoid some PHP warnings
 	date_default_timezone_set('UTC');
 }
 
-/* 
- * Orpheus is able to separate your application sources from its sources.
+/*
+ * Orpheus is able to separate your application sources from its own sources.
  * This allows you to use a common Orpheus source folder for multiple applications, composer is associated to one application.
- * For each application, you are also able to use multiple instances of this application with specific configuration, logs & store. 
+ * For each application, you are also able to use multiple instances of this application with specific configuration, logs & store.
  * These constants take care about paths through symbolic links.
  */
 /**
  * The Orpheus sources
- * The folder to find Orpheus sources
+ *
+ * @const ORPHEUSPATH The folder to find Orpheus sources
  * Default is the current file one
  */
-defifn('ORPHEUSPATH',		dirpath(dirname(ACCESSPATH)));
+defifn('ORPHEUSPATH', dirpath(dirname(ACCESSPATH)));
 
 /**
  * The Application sources
- * The folder to find your Application sources
+ *
+ * @const ORPHEUSPATH The folder to find your Application sources
  * Default is Orpheus path
  */
-defifn('APPLICATIONPATH',	ORPHEUSPATH);
+defifn('APPLICATIONPATH', ORPHEUSPATH);
 
 /**
  * The Instance sources
- * The folder containing the instances configuration (may not contain any source)
+ *
+ * @const ORPHEUSPATH The folder containing the instances configuration (may not contain any source)
  * Default is Application path
  */
-defifn('INSTANCEPATH',		APPLICATIONPATH);
+defifn('INSTANCEPATH', APPLICATIONPATH);
 
 addSrcPath(ORPHEUSPATH);
 addSrcPath(APPLICATIONPATH);
 addSrcPath(INSTANCEPATH);
 if( isset($t) ) {
-	foreach($t as $path) {
+	foreach( $t as $path ) {
 		addSrcPath($path);
 	}
 	unset($t);
@@ -95,41 +94,45 @@ if( DEFAULTSPATH !== null ) {
 	require_once DEFAULTSPATH;
 }
 
-defifn('CHECK_MODULE_ACCESS',	true);
-defifn('TIME',				$_SERVER['REQUEST_TIME']);
+defifn('DEV_VERSION', !IS_WEB);// True in all cases but web access
+
+defifn('CHECK_MODULE_ACCESS', true);
+defifn('TIME', $_SERVER['REQUEST_TIME']);
 
 // Useful paths
-defifn('CONFDIR',			'configs/');
-defifn('MODDIR',			'modules/');
-defifn('LIBSDIR',			'libs/');
-defifn('THEMESDIR',			'themes/');
+defifn('CONFDIR', 'configs/');
+defifn('MODDIR', 'modules/');
+defifn('LIBSDIR', 'libs/');
+defifn('THEMESDIR', 'themes/');
 
-defifn('SRCPATH',			pathOf(LIBSDIR.'src/'));
-defifn('LOGSPATH',			pathOf('logs/'));
-defifn('STOREPATH',			pathOf('store/'));
-defifn('CACHEPATH',			STOREPATH.'cache/');
+defifn('SRCPATH', pathOf(LIBSDIR . 'src/'));
+defifn('LOGSPATH', pathOf('logs/'));
+defifn('STOREPATH', pathOf('store/'));
+defifn('CACHEPATH', STOREPATH . 'cache/');
 
 // Routing
-defifn('HTTPS',				!empty($_SERVER['HTTPS']));
-defifn('SCHEME',			HTTPS ? 'https' : 'http' );
-defifn('HOST',				!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
-defifn('PATH',				!defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
-defifn('SITEROOT',			SCHEME.'://'.HOST.PATH);
-defifn('DEFAULTLINK',		SITEROOT);
-
-// Logs
-// defifn('PDOLOGFILENAME',	'.pdo_error');
-// defifn('SYSLOGFILENAME',	'.system');
-// defifn('DEBUGFILENAME',		'.debug');
-// defifn('HACKLOGFILENAME',	'.hack');
-// defifn('SERVLOGFILENAME',	'.server');
-
-// Static medias
-defifn('JSURL',				SITEROOT.'js/');
-defifn('THEMESURL',			SITEROOT.THEMESDIR);
+defifn('HTTPS', !empty($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] === 'https' : (defined('DEFAULT_IS_SECURE') && DEFAULT_IS_SECURE));
+defifn('SCHEME', HTTPS ? 'https' : 'http');
+defifn('HOST', !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
+defifn('PATH', !defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
+defifn('SITEROOT', SCHEME . '://' . HOST . PATH);
+defifn('WEB_ROOT', SCHEME . '://' . HOST . (PATH !== '/' ? PATH : ''));
+defifn('DEFAULTLINK', SITEROOT);
 
 // Edit the global constants
-require_once CONSTANTSPATH;
+try {
+	require_once CONSTANTSPATH;
+} catch( Exception $e ) {
+	if( !defined('DEV_VERSION') || !DEV_VERSION ) {
+		displayException($e, 'Loading constants');
+	} else {
+		die('A fatal error occurred.');
+	}
+}
+
+// Static medias
+defifn('JSURL', SITEROOT . 'js/');
+defifn('THEMESURL', SITEROOT . THEMESDIR);
 
 if( !defined('INSTANCE_ID') && defined('HOST') ) {
 	// INSTANCE ID to differentiate instances (used by cache)
@@ -147,29 +150,26 @@ $ERROR_ACTION = ERROR_THROW_EXCEPTION;
 set_error_handler(
 /**
  * Error Handler
- * 
+ *
  * System function to handle PHP errors and convert it into exceptions.
-*/
-function($errno, $errstr, $errfile, $errline) {
-// 	debug_print_backtrace();
-// 	die('<br>'.$errno);
-	
-	$exception	= new ErrorException($errstr, 0, $errno, $errfile, $errline);
-	if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION']==ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
-		throw $exception;
-	} else if( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
-		return;
-	} else {//ERROR_DISPLAY_RAW
-		if( !function_exists('log_error') ) {
-			if( DEV_VERSION ) {
-				displayException($exception, null);
-			} else {
-				die('A fatal error occurred.');
+ */
+	function ($errno, $errstr, $errfile, $errline) {
+		$exception = new ErrorException($errstr, 0, $errno, $errfile, $errline);
+		if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION'] == ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
+			throw $exception;
+		} elseif( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] == ERROR_IGNORE ) {//ERROR_IGNORE
+			return;
+		} else {//ERROR_DISPLAY_RAW
+			if( !function_exists('log_error') ) {
+				if( DEV_VERSION ) {
+					displayException($exception, null);
+				} else {
+					die('A fatal error occurred.');
+				}
 			}
+			log_error($exception, 'Handling error', true);
 		}
-		log_error($exception);
-	}
-});
+	});
 
 $DEBUG_BACKTRACE = null;
 function storeBackTrace() {
@@ -181,16 +181,35 @@ function storeBackTrace() {
 register_shutdown_function(
 /**
  * Shutdown Handler
- * 
+ *
  * System function to handle PHP shutdown and catch uncaught errors.
-*/
-function() {
-	// If there is an error
-	$error = error_get_last();
-	
-	if( $error ) {
-		$exception	= new ErrorException($error['message'], 1, $error['type'], $error['file'], $error['line']);
+ */
+	function () {
+		// If there is an error
+		$error = error_get_last();
 		
+		if( $error ) {
+			$exception = new ErrorException($error['message'], 1, $error['type'], $error['file'], $error['line']);
+			
+			if( !function_exists('log_error') ) {
+				if( DEV_VERSION ) {
+					displayException($exception, 'Shutdown script');
+				} else {
+					die('A fatal error occurred.');
+				}
+			}
+			log_error($exception, 'Shutdown script', true);
+		}
+	});
+
+set_exception_handler(
+/**
+ * Exception Handler
+ *
+ * System function to handle all exceptions and stop script execution.
+ */
+	function ($exception) {
+		global $coreAction;
 		if( !function_exists('log_error') ) {
 			if( DEV_VERSION ) {
 				displayException($exception, 'Shutdown script');
@@ -198,49 +217,25 @@ function() {
 				die('A fatal error occurred.');
 			}
 		}
-		log_error($exception, 'Shutdown script');
-	}
-});
+		log_error($exception, $coreAction, true);
+	});
 
-set_exception_handler(
-/**
- * Exception Handler
- * 
- * System function to handle all exceptions and stop script execution.
- */
-function($exception) {
-	global $coreAction;
-	if( !function_exists('log_error') ) {
-		if( DEV_VERSION ) {
-			displayException($exception, 'Shutdown script');
-		} else {
-			die('A fatal error occurred.');
-		}
-// 		die($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()));
-	}
-	log_error($exception, $coreAction);
-// 	log_error($e->getMessage()."<br />\n".nl2br($e->getTraceAsString()), $coreAction);
-// 	die('A fatal error occurred, retry later.<br />\nUne erreur fatale est survenue, veuillez réessayer plus tard.');
-});
-
-$AUTOLOADS = array();
-// $Module = $Page = '';// Useful for initializing errors.
+$AUTOLOADS = [];
 
 $coreAction = 'initializing_core';
 
 try {
 	ob_start();
 	
-	defifn('VENDORPATH', APPLICATIONPATH.'vendor/');
+	defifn('VENDORPATH', APPLICATIONPATH . 'vendor/');
 	
 	// Before lib loading, they can not define it
 	// This class MUST extends Orpheus\Config\ConfigCore
 	defifn('DEFAULT_CONFIG_CLASS', 'Orpheus\Config\IniConfig');
 	
-// 	echo "Autoload path of vendors => ".VENDORPATH.'autoload.php<br>';
-	if( file_exists(VENDORPATH.'autoload.php') ) {
+	if( file_exists(VENDORPATH . 'autoload.php') ) {
 		/* @var Composer\Autoload\ClassLoader $PackageLoader */
-		$PackageLoader = require VENDORPATH.'autoload.php';
+		$PackageLoader = require VENDORPATH . 'autoload.php';
 	}
 	
 	try {
@@ -251,12 +246,14 @@ try {
 	
 	if( !empty($Libraries) ) {
 		foreach( $Libraries as $lib ) {
-			if( !existsPathOf(LIBSDIR.$lib.'/_loader.php', $path) ) { continue; }
+			if( !existsPathOf(LIBSDIR . $lib . '/_loader.php', $path) ) {
+				continue;
+			}
 			require_once $path;
 		}
 	}
 	
-	// App is now ready to run
+	// App has now loaded all libraries
 	Hook::trigger(HOOK_LIBSLOADED);
 	
 	// After Lib loading
@@ -264,23 +261,15 @@ try {
 	IniConfig::build('engine', false);// Some libs should require to get some configuration.
 	
 	$RENDERING = Config::get('default_rendering');
-
-// 	defifn('SESSION_AUTO', IS_WEB);
-// 	if( IS_WEB ) {
-// 		if( Hook::trigger(HOOK_STARTSESSION_AUTO, false, SESSION_AUTO) ) {
-// 			startSession();
-// 		}
-// // 		startSession();
-// 	}
 	
 	ob_end_clean();
 	
-// 	// App is now ready to run
-// 	Hook::trigger(HOOK_APPREADY);
+	// App is now ready to run
+	Hook::trigger(HOOK_APPREADY);
 	
 	// Handle current request
 	RequestHandler::handleCurrentRequest(IS_CONSOLE ? RequestHandler::TYPE_CONSOLE : RequestHandler::TYPE_HTTP);
-		
+	
 } catch( Exception $e ) {
 	log_error($e, $coreAction, true);
 }
