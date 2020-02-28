@@ -3,6 +3,7 @@
   "description": "Orpheus PHP Framework",
   "type": "project",
   "license": "MIT",
+  "minimum-stability": "stable",
   "keywords": [
 	"framework",
 	"php"
