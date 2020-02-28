@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-hook" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-cache" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-rendering" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-form" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-initernationalization" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-sqladapter" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-inputcontroller" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-yaml" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-publisher" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-entitydescriptor" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-webtools" />
+      <path value="$PROJECT_DIR$/vendor/orpheus/orpheus-core" />
+    </include_path>
+  </component>
+</project>

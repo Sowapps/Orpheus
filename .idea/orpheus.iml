@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-core" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-entitydescriptor" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-form" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-hook" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-initernationalization" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-inputcontroller" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-publisher" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-rendering" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-sqladapter" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-webtools" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/orpheus/orpheus-yaml" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="orpheus-core" />
+    <orderEntry type="module" module-name="orpheus-entitydescriptor" />
+    <orderEntry type="module" module-name="orpheus-form" />
+    <orderEntry type="module" module-name="orpheus-hook" />
+    <orderEntry type="module" module-name="orpheus-initernationalization" />
+    <orderEntry type="module" module-name="orpheus-inputcontroller" />
+    <orderEntry type="module" module-name="orpheus-publisher" />
+    <orderEntry type="module" module-name="orpheus-rendering" />
+    <orderEntry type="module" module-name="orpheus-setup" />
+    <orderEntry type="module" module-name="orpheus-sqladapter" />
+    <orderEntry type="module" module-name="orpheus-ssh2" />
+    <orderEntry type="module" module-name="orpheus-webtools" />
+    <orderEntry type="module" module-name="orpheus-yaml" />
+  </component>
+</module>
