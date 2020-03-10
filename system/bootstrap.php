@@ -105,7 +105,7 @@ defifn('MODDIR', 'modules/');
 defifn('LIBSDIR', 'libs/');
 defifn('THEMESDIR', 'themes/');
 
-defifn('SRCPATH', pathOf(LIBSDIR . 'src/'));
+defifn('SRCPATH', pathOf('src/'));
 defifn('LOGSPATH', pathOf('logs/'));
 defifn('STOREPATH', pathOf('store/'));
 defifn('CACHEPATH', STOREPATH . 'cache/');

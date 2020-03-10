@@ -1,6 +1,10 @@
 <?php
 
-use Orpheus\InputController\HTTPController\HTTPController;use Orpheus\InputController\HTTPController\HTTPRequest;use Orpheus\InputController\HTTPController\HTTPRoute;use Orpheus\Rendering\HTMLRendering;
+use Demo\User;
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\Rendering\HTMLRendering;
 
 /**
  * @var string $CONTROLLER_OUTPUT
@@ -14,7 +18,10 @@ use Orpheus\InputController\HTTPController\HTTPController;use Orpheus\InputContr
 
 global $APP_LANG;
 
-?><!DOCTYPE html>
+$libExtension = DEV_VERSION ? '' : '.min';
+
+?>
+<!DOCTYPE html>
 <html lang="<?php echo $APP_LANG; ?>">
 <head>
 	<meta charset="utf-8">
@@ -29,54 +36,47 @@ global $APP_LANG;
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
 	<?php
-	foreach( $this->listMetaProperties() as $property => $content ) {
+	foreach( $rendering->listMetaProperties() as $property => $content ) {
 		echo '
 	<meta property="' . $property . '" content="' . $content . '"/>';
 	}
 	?>
 	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen"/>
-	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen"/>
-	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap<?php echo $libExtension; ?>.css" media="screen"/>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all<?php echo $libExtension; ?>.css" media="screen"/>
 	<?php
-	foreach( $this->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
+	foreach( $rendering->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 		echo '
 	<link rel="stylesheet" href="' . $url . '" type="text/css" media="screen" />';
 	}
 	?>
 	
-	<link rel="stylesheet" href="<?php echo STATIC_URL; ?>style/base.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo $rendering->getThemeURL(); ?>libs/sb-admin/css/styles.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo STATIC_ASSETS_URL; ?>/style/base.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo $rendering->getCSSURL(); ?>style.css" type="text/css" media="screen"/>
 	<?php
-	foreach( $this->listCSSURLs() as $url ) {
+	foreach( $rendering->listCSSURLs() as $url ) {
 		echo '
 	<link rel="stylesheet" type="text/css" href="' . $url . '" media="screen" />';
 	}
 	?>
 	
 	<!-- External JS libraries -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery<?php echo $libExtension; ?>.js"></script>
 </head>
 <body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php echo t('app_name'); ?></a>
-		</div>
-		<div class="collapse navbar-collapse">
+		<a class="navbar-brand" href="<?php echo SITEROOT; ?>">
+			<?php echo t('app_name'); ?>
+		</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#MenuTop" aria-controls="MenuTop" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="MenuTop">
 			<?php
-			$this->showMenu('topmenu');
+			$rendering->showMenu('topmenu');
 			if( !empty($TOPBAR_CONTENTS) ) {
 				echo $TOPBAR_CONTENTS;
 			}
@@ -84,23 +84,20 @@ global $APP_LANG;
 		
 		</div>
 	</div>
-</div>
+</nav>
 
-<div class="container">
-	
+<main role="main">
 	<?php
 	echo $Content;
 	// If report was not be reported
-	$this->display('reports-bootstrap3');
+	$this->display('reports');
 	?>
+</main>
 
-</div>
 <!-- JS libraries -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2_locale_fr.min.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui<?php echo $libExtension; ?>.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper<?php echo $libExtension; ?>.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap<?php echo $libExtension; ?>.js"></script>
 <?php
 foreach( $this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 	echo '
@@ -109,14 +106,17 @@ foreach( $this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 ?>
 
 <!-- Our JS scripts -->
-<script type="text/javascript" src="/js/orpheus.js"></script>
-<script type="text/javascript" src="/js/script.js"></script>
+<script src="<?php echo $rendering->getThemeURL(); ?>libs/sb-admin/js/scripts.js"></script>
+<script src="<?php echo JS_URL; ?>orpheus.js"></script>
+<script src="<?php echo JS_URL; ?>orpheus-confirmdialog.js"></script>
+
 <?php
-foreach( $this->listJSURLs() as $url ) {
+foreach( $rendering->listJSURLs() as $url ) {
 	echo '
 	<script type="text/javascript" src="' . $url . '"></script>';
 }
 ?>
 
-</body>
+</
+>
 </html>

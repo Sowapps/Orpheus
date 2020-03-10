@@ -1,28 +1,27 @@
-<div class="panel panel-danger">
-	<div class="panel-heading">Fatal Error</div>
-	<div class="panel-body">
-<p>A fatal error occurred, here is more informations.</p>
-Action : <?php echo $action; ?><br />
-Date : <?php echo $date; ?><br />
-Report :<br />
-<div class="well"><?php echo $report; ?></div>
 <?php
-if( !empty($message) ) {
-	echo '
-Message :<br/>
-<div class="well">'.$message.'</div>';
-}
+
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\Rendering\HTMLRendering;
+
+/**
+ * @var string $CONTROLLER_OUTPUT
+ * @var HTMLRendering $rendering
+ * @var HTTPController $Controller
+ * @var HTTPRequest $Request
+ * @var HTTPRoute $Route
+ */
+
+$rendering->useLayout('page_skeleton');
 ?>
-<p>
-	Set the ERROR_LEVEL constant value to PROD_LEVEL in your constant file if you don't want to display errors.<br />
-	Error reports are saved in logs in both cases.
-</p>
-<?php
-if( !empty($page) ) {
-	?>
-Page: <button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === 'none' ? 'block' : 'none'; return 0;">Display</button><div style="display:none;"><?php echo $page; ?></div><br />
-<?php
-}
-?>
+
+<div class="card border border-warning">
+	<div class="card-header text-white bg-warning">Error</div>
+	<div class="card-body">
+		<p>An error occurred, preventing the application to continue normally.</p>
+		<?php
+		$this->display('reports-bootstrap3');
+		?>
 	</div>
 </div>

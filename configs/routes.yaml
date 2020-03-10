@@ -22,101 +22,101 @@
 #        path: "/path/in/array/config"
 #        method: "POST|GET"
 #        method: "GET"
-#        controller: "HomeController"
+#        controller: "Demo\\Controller\\HomeController"
 #    home2: "/path/with/all/methods->HomeController"
 #    home3: "POST(/path/for/POST/method)->HomeController"
 
 http:
     home:
         path: "/"
-        controller: "HomeController"
+        controller: "Demo\\Controller\\HomeController"
         
     user_login:
         path: "/user/signin.html"
-        controller: "UserLoginController"
+        controller: "Demo\\Controller\\UserLoginController"
         restrictTo:
           role: visitor
           
     logout:
         path: "/logout.html"
-        controller: "LogoutController"
+        controller: "Demo\\Controller\\LogoutController"
         restrictTo:
           role: member
         
     admin_demo:
         path: "/admin/home.html"
-        controller: "AdminDemoController"
+        controller: "Demo\\Controller\\Admin\\AdminDemoController"
         restrictTo:
           role: member
         
     adm_mysettings:
         path: "/admin/my_settings.html"
-        controller: "AdminMySettingsController"
+        controller: "Demo\\Controller\\Admin\\AdminMySettingsController"
         restrictTo:
           role: member
         
     adm_users:
         path: "/admin/users.html"
-        controller: "AdminUserListController"
+        controller: "Demo\\Controller\\Admin\\AdminUserListController"
         restrictTo:
           role: administrator
         
     adm_user:
         path: "/admin/user/{id:userID}.html"
-        controller: "AdminUserEditController"
+        controller: "Demo\\Controller\\Admin\\AdminUserEditController"
         restrictTo:
           role: administrator
         
     file_download:
         path: "/download/{id:fileID}"
-        controller: "FileDownloadController"
+        controller: "Demo\\Controller\\FileDownloadController"
     
     
     # Dev Area
     
     dev_home:
         path: "/developer/home.html"
-        controller: "DevHomeController"
+        controller: "Demo\\Controller\\Developer\\DevHomeController"
         restrictTo:
           role: developer
     
     dev_system:
         path: "/developer/system.html"
-        controller: "DevSystemController"
+        controller: "Demo\\Controller\\Developer\\DevSystemController"
         restrictTo:
           role: developer
         
     dev_composer:
         path: "/developer/composer.html"
-        controller: "DevComposerController"
+        controller: "Demo\\Controller\\Developer\\DevComposerController"
         
     dev_entities:
         path: "/developer/entities.html"
-        controller: "DevEntitiesController"
+        controller: "Demo\\Controller\\Developer\\DevEntitiesController"
         restrictTo:
           role: developer
         
     dev_loglist:
         path: "/developer/logs.html"
-        controller: "DevLogListController"
+        controller: "Demo\\Controller\\Developer\\DevLogListController"
         restrictTo:
           role: developer
         
     dev_log_view:
         path: "/developer/view_log.html"
-        controller: "DevLogViewController"
+        controller: "Demo\\Controller\\Developer\\DevLogViewController"
         restrictTo:
           role: developer
         
     dev_app_translate:
         path: "/developer/translate_application.html"
-        controller: "DevAppTranslateController"
+        controller: "Demo\\Controller\\Developer\\DevAppTranslateController"
         restrictTo:
           role: developer
         
     dev_config:
         path: "/developer/config.html"
-        controller: "DevConfigController"
+        controller: "Demo\\Controller\\Developer\\DevConfigController"
         restrictTo:
           role: developer
     
@@ -125,24 +125,24 @@ http:
     
     setup_start:
         path: "/setup/"
-        controller: "StartSetupController"
+        controller: "Demo\\Controller\\Setup\\StartSetupController"
         
     setup_checkfs:
         path: "/setup/check-filesystem.html"
-        controller: "CheckFileSystemSetupController"
+        controller: "Demo\\Controller\\Setup\\CheckFileSystemSetupController"
         
     setup_checkdb:
         path: "/setup/check-database.html"
-        controller: "CheckDatabaseSetupController"
+        controller: "Demo\\Controller\\Setup\\CheckDatabaseSetupController"
         
     setup_installdb:
         path: "/setup/install-database.html"
-        controller: "InstallDatabaseSetupController"
+        controller: "Demo\\Controller\\Setup\\InstallDatabaseSetupController"
         
     setup_installfixtures:
         path: "/setup/install-fixtures.html"
-        controller: "InstallFixturesSetupController"
+        controller: "Demo\\Controller\\Setup\\InstallFixturesSetupController"
         
     setup_end:
         path: "/setup/finish.html"
-        controller: "EndSetupController"
+        controller: "Demo\\Controller\\Setup\\EndSetupController"

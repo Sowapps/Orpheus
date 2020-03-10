@@ -8,6 +8,11 @@
 	"framework",
 	"php"
   ],
+  "autoload": {
+	"psr-4": {
+	  "": "src/"
+	}
+  },
   "require": {
 	"orpheus/orpheus-core": "1.*",
 	"orpheus/orpheus-hook": "1.*",
