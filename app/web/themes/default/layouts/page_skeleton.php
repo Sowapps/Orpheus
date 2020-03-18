@@ -45,17 +45,17 @@ $libExtension = DEV_VERSION ? '' : '.min';
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap<?php echo $libExtension; ?>.css" media="screen"/>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all<?php echo $libExtension; ?>.css" media="screen"/>
 	<?php
-	foreach( $rendering->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
+	foreach( $rendering->listCssUrls(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 		echo '
 	<link rel="stylesheet" href="' . $url . '" type="text/css" media="screen" />';
 	}
 	?>
 	
-	<link rel="stylesheet" href="<?php echo $rendering->getThemeURL(); ?>libs/sb-admin/css/styles.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo $rendering->getThemeUrl(); ?>libs/sb-admin/css/styles.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="<?php echo STATIC_ASSETS_URL; ?>/style/base.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="<?php echo $rendering->getCSSURL(); ?>style.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo $rendering->getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
-	foreach( $rendering->listCSSURLs() as $url ) {
+	foreach( $rendering->listCssUrls() as $url ) {
 		echo '
 	<link rel="stylesheet" type="text/css" href="' . $url . '" media="screen" />';
 	}
@@ -106,12 +106,12 @@ foreach( $this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 ?>
 
 <!-- Our JS scripts -->
-<script src="<?php echo $rendering->getThemeURL(); ?>libs/sb-admin/js/scripts.js"></script>
+<script src="<?php echo $rendering->getThemeUrl(); ?>libs/sb-admin/js/scripts.js"></script>
 <script src="<?php echo JS_URL; ?>orpheus.js"></script>
 <script src="<?php echo JS_URL; ?>orpheus-confirmdialog.js"></script>
 
 <?php
-foreach( $rendering->listJSURLs() as $url ) {
+foreach( $rendering->listJsUrls() as $url ) {
 	echo '
 	<script type="text/javascript" src="' . $url . '"></script>';
 }

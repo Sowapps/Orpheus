@@ -103,7 +103,7 @@ defifn('TIME', $_SERVER['REQUEST_TIME']);
 defifn('CONFDIR', 'configs/');
 defifn('MODDIR', 'modules/');
 defifn('LIBSDIR', 'libs/');
-defifn('THEMESDIR', 'themes/');
+defifn('THEMES_FOLDER', 'themes');
 
 defifn('SRCPATH', pathOf('src/'));
 defifn('LOGSPATH', pathOf('logs/'));
@@ -132,7 +132,7 @@ try {
 
 // Static medias
 defifn('JSURL', SITEROOT . 'js/');
-defifn('THEMESURL', SITEROOT . THEMESDIR);
+defifn('THEMES_URL', SITEROOT . THEMES_FOLDER);
 
 if( !defined('INSTANCE_ID') && defined('HOST') ) {
 	// INSTANCE ID to differentiate instances (used by cache)

@@ -649,6 +649,11 @@ function text($message = '', $html = true) {
 	}
 }
 
+/**
+ * @param $s
+ * @param int $d
+ * @deprecated No more used
+ */
 function debug($s, $d = -1) {
 	if( $d !== -1 ) {
 		$s .= ': ' . htmlSecret($d);
@@ -656,21 +661,20 @@ function debug($s, $d = -1) {
 	text($s);
 }
 
+/**
+ * @param $message
+ * @return string
+ * @deprecated No more used
+ */
 function htmlSecret($message) {
 	if( $message === null ) {
 		$message = '{NULL}';
-	} else {
-		if( $message === false ) {
-			$message = '{FALSE}';
-		} else {
-			if( $message === true ) {
-				$message = '{TRUE}';
-			} else {
-				if( !is_scalar($message) ) {
-					$message = '<pre>' . print_r($message, 1) . '</pre>';
-				}
-			}
-		}
+	} elseif( $message === false ) {
+		$message = '{FALSE}';
+	} elseif( $message === true ) {
+		$message = '{TRUE}';
+	} elseif( !is_scalar($message) ) {
+		$message = '<pre>' . print_r($message, 1) . '</pre>';
 	}
 	return '<button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">Show</button><div style="display: none;">' . $message . '</div>';
 }

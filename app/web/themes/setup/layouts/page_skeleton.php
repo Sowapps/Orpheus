@@ -29,23 +29,23 @@ foreach($this->listMetaProperties() as $property => $content) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen" />
 	
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen" />
-<?php
-foreach($this->listCSSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
-	echo '
-	<link rel="stylesheet" href="'.$url.'" type="text/css" media="screen" />';
-}
-?>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen"/>
+	<?php
+	foreach( $this->listCssUrls(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
+		echo '
+	<link rel="stylesheet" href="' . $url . '" type="text/css" media="screen" />';
+	}
+	?>
 	
-	<link rel="stylesheet" href="<?php echo SITEROOT; ?>static/style/base.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCSSURL(); ?>style.css" type="text/css" media="screen" />
-<?php
-foreach($this->listCSSURLs() as $url) {
-	echo '
-	<link rel="stylesheet" type="text/css" href="'.$url.'" media="screen" />';
-}
-?>
+	<link rel="stylesheet" href="<?php echo SITEROOT; ?>static/style/base.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo HTMLRendering::getCssUrl(); ?>style.css" type="text/css" media="screen"/>
+	<?php
+	foreach( $this->listCssUrls() as $url ) {
+		echo '
+	<link rel="stylesheet" type="text/css" href="' . $url . '" media="screen" />';
+	}
+	?>
 	
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -95,9 +95,9 @@ if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
 	<script type="text/javascript" src="/js/orpheus.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php
-foreach($this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url) {
+foreach( $this->listJsUrls(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 	echo '
-	<script type="text/javascript" src="'.$url.'"></script>';
+	<script type="text/javascript" src="' . $url . '"></script>';
 }
 if( !DEV_VERSION && HOST === 'orpheus-framework.com' ) {
 	// Replace by your own & remove HOST condition

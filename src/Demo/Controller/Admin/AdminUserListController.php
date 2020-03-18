@@ -10,7 +10,6 @@ use Orpheus\Config\Config;
 use Orpheus\Exception\UserException;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTTPResponse;
-use Orpheus\SQLAdapter\SQLAdapter;
 
 class AdminUserListController extends AdminController {
 	
@@ -38,21 +37,21 @@ class AdminUserListController extends AdminController {
 				$newUser = User::create($request->getArrayData('user'));
 				reportSuccess(User::text('successCreate', $newUser));
 				
-			} catch(UserException $e) {
+			} catch( UserException $e ) {
 				reportError($e, $userDomain);
 			}
 		}
 		
-		$users = User::get(array(
-			'where'   => $USER_CAN_DEV_SEE ? '' : 'accesslevel<='.Config::get('user_roles/administrator'),
-			'orderby' => 'fullname ASC',
-			'output'  => SQLAdapter::ARR_OBJECTS
-		));
+		$users = User::get()
+			->orderby('fullname ASC');
+		if( !$USER_CAN_DEV_SEE ) {
+			$users->where('accesslevel<=' . Config::get('user_roles/administrator'));
+		}
 		
-		return $this->renderHTML('app/admin_userlist', array(
+		return $this->renderHTML('app/admin_userlist', [
 			'USER_CAN_USER_EDIT' => $USER_CAN_USER_EDIT,
-			'users'              => $users
-		));
+			'users'              => $users,
+		]);
 	}
 	
 }

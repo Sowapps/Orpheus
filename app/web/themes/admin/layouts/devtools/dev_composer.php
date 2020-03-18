@@ -1,4 +1,5 @@
 <?php
+
 use Orpheus\Rendering\HTMLRendering;
 
 /* @var Orpheus\Rendering\HTMLRendering $this */
@@ -6,7 +7,7 @@ use Orpheus\Rendering\HTMLRendering;
 /* @var array $composerConfig */
 
 HTMLRendering::useLayout('page_skeleton');
-HTMLRendering::addJSFile('model.js', HTMLRendering::LINK_TYPE_CUSTOM);
+HTMLRendering::addJsFile('model.js', HTMLRendering::LINK_TYPE_CUSTOM);
 
 global $formData;
 $formData = array('composer' => (array) $composerConfig);
