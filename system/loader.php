@@ -8,6 +8,8 @@
  * PHP File for the website core.
  */
 
+use Orpheus\Controller\DelayedPageController;
+
 if( !isset($SRCPATHS) ) {
 	$SRCPATHS = [];
 }
@@ -67,13 +69,14 @@ function pathOf($commonPath, $silent = false) {
 	throw new Exception('Path not found: ' . $commonPath);
 }
 
-/** Checks if the path exists.
+/**
+ * Checks if the path exists.
+ * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
  *
  * @param string $commonPath The common path.
  * @param string $path The output parameter to get the first valid path.
+ * @return bool
  * @see pathOf()
- *
- * This function uses pathOf() to determine possible path of $commonPath and checks if there is any file with this path in file system.
  */
 function existsPathOf($commonPath, &$path = null) {
 	return ($path = pathOf($commonPath, true)) !== null;
@@ -306,7 +309,6 @@ function displayStackTrace($backtrace) {
 			$args = '';
 			if( isset($trace['args']) ) {
 				foreach( $trace['args'] as $i => $arg ) {
-					// 			debug('$arg', $arg);
 					if( is_array($arg) ) {
 						$argTxt = '[' . count($arg) . ']';
 					} elseif( is_callable($arg) ) {
@@ -338,7 +340,13 @@ function displayExceptionStackTrace(Throwable $Exception) {
 	displayStackTrace($backtrace);
 }
 
-function convertExceptionAsHTMLPage(Throwable $Exception, $code, $action) {
+function getClassName($var) {
+	$class = is_object($var) ? get_class($var) : $var;
+	$hierarchy = explode('\\', $class);
+	return array_pop($hierarchy);
+}
+
+function convertExceptionAsHTMLPage(Throwable $exception, $code, $action) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
 	// TODO: Externalize this and allow developers to ovverride it
@@ -357,88 +365,105 @@ function convertExceptionAsHTMLPage(Throwable $Exception, $code, $action) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
 	</head>
 	<body>
 	
 	<div class="container">
-		<div class="header clearfix">
-			<h3 class="text-muted">Orpheus</h3>
-		</div>
-		<div class="linkmenu clearfix">
-			<a class="pull-right" href="<?php echo DEFAULTLINK; ?>">Home</a>
-		</div>
-		<div class="panel panel-danger">
-			<div class="panel-heading">An error occurred !</div>
-			<div class="panel-body exception">
-				<h3><?php echo $code . ' ' . http_response_codetext($code) . '<small> - ' . get_class($Exception) . '</small>'; ?></h3>
-				<blockquote class="exception_message">
-					<?php echo $Exception->getMessage(); ?>
-					<footer>In <cite><?php echo $Exception->getFile(); ?></cite> at line <?php echo $Exception->getLine(); ?></footer>
-				</blockquote>
-				
-				<div class="sourcecode">
-					<ul class="sourcecode_lines"><?php
-						$excLine = $Exception->getLine();
-						$fileContent = file_get_contents($Exception->getFile());
-						$lines = substr_count($fileContent, PHP_EOL);
-						for( $i = 0; $i <= $lines; $i++ ) {
-							echo '<li' . ($excLine == $i + 1 ? ' class="active"' : '') . '>' . ($i + 1) . '</li>';
-						}
-						// Make some css issues, easier without
-						?></ul>
-					<div class="sourcecode_content">
-						<?php echo highlight_string($fileContent, true);
-						unset($fileContent); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="panel panel-danger">
-			<div class="panel-heading">Here is the stacktrace...</div>
-			<div class="panel-body exception">
-				<?php displayExceptionStackTrace($Exception); ?>
-			</div>
-		</div>
 		
-		<?php
-		if( trim($buffer) && class_exists('DelayedPageController', true) ) {
-			try {
-				$bufferSrc = DelayedPageController::store(uniqid('error'), $buffer);
-				?>
-				<div class="panel panel-danger">
-					<div class="panel-heading">The buffer is not empty, maybe this could help you...</div>
-					<div class="panel-body buffer">
-						<div class="embed-responsive embed-responsive-16by9">
-							<iframe class="embed-responsive-item" src="<?php echo $bufferSrc; ?>"></iframe>
+		<header class="align-items-center d-flex mt-2 py-2">
+			<h3 class="mr-auto text-muted">Orpheus</h3>
+			<nav class="my-2 my-md-0">
+				<a class="p-2 text-dark" href="<?php echo DEFAULTLINK; ?>">Home</a>
+			</nav>
+		</header>
+		
+		<main role="main" class="mt-3">
+			
+			<div class="card border border-danger">
+				<div class="card-header text-white bg-danger">An error occurred !</div>
+				<div class="card-body exception">
+					<h3 class="card-title" title="<?php echo get_class($exception); ?>">
+						<?php echo $code . ' ' . http_response_codetext($code); ?>
+						<small> - <?php echo getClassName($exception); ?></small>
+					</h3>
+					
+					<?php
+					if( method_exists($exception, 'getAction') ) {
+						?>
+						<div class="action border-bottom border-danger py-1 my-2">
+							<h6>Action</h6>
+							<div><?php echo $exception->getAction(); ?></div>
+						</div>
+						<?php
+					}
+					?>
+					
+					<blockquote class="blockquote exception_message">
+						<?php echo $exception->getMessage(); ?>
+						<footer class="blockquote-footer">In <cite><?php echo $exception->getFile(); ?></cite> at line <?php echo $exception->getLine(); ?></footer>
+					</blockquote>
+					
+					<div class="sourcecode">
+						<ul class="sourcecode_lines px-1">
+							<?php
+							$excLine = $exception->getLine();
+							$fileContent = file_get_contents($exception->getFile());
+							$lines = substr_count($fileContent, PHP_EOL);
+							for( $i = 0; $i <= $lines; $i++ ) {
+								echo '
+								<li' . ($excLine == $i + 1 ? ' class="active"' : '') . '>' . ($i + 1) . '</li>';
+							}
+							?>
+						</ul>
+						<div class="sourcecode_content">
+							<?php echo highlight_string($fileContent, true);
+							unset($fileContent); ?>
 						</div>
 					</div>
 				</div>
-				<?php
-			} catch( Exception $e ) {
-				?>
-				<div class="panel panel-danger">
-					<div class="panel-heading">An exception occurred storing the delayed page...</div>
-					<div class="panel-body buffer">
-						<?php displayRawException($e); ?>
-					</div>
+			</div>
+			
+			<div class="card border border-danger mt-2">
+				<div class="card-header text-white bg-danger">Here is the stacktrace...</div>
+				<div class="card-body exception">
+					<?php displayExceptionStackTrace($exception); ?>
 				</div>
-				<?php
-				
+			</div>
+			
+			<?php
+			if( trim($buffer) && class_exists('DelayedPageController', true) ) {
+				try {
+					$bufferSrc = DelayedPageController::store(uniqid('error'), $buffer);
+					?>
+					<div class="panel panel-danger">
+						<div class="panel-heading">The buffer is not empty, maybe this could help you...</div>
+						<div class="panel-body buffer">
+							<div class="embed-responsive embed-responsive-16by9">
+								<iframe class="embed-responsive-item" src="<?php echo $bufferSrc; ?>"></iframe>
+							</div>
+						</div>
+					</div>
+					<?php
+				} catch( Exception $e ) {
+					?>
+					<div class="panel panel-danger">
+						<div class="panel-heading">An exception occurred storing the delayed page...</div>
+						<div class="panel-body buffer">
+							<?php displayRawException($e); ?>
+						</div>
+					</div>
+					<?php
+					
+				}
 			}
-		}
-		?>
+			?>
+		</main>
 	</div>
 	<style>
-	.header {
-		padding-bottom: 20px;
-		margin-bottom: 30px;
+	header {
 		border-bottom: 1px solid #e5e5e5;
-	}
-	
-	.linkmenu {
-		padding-right: 10px;
 	}
 	
 	.arg_type {
@@ -471,7 +496,6 @@ function convertExceptionAsHTMLPage(Throwable $Exception, $code, $action) {
 	
 	.sourcecode_lines {
 		float: left;
-		padding: 2px 2px 2px 6px;
 		list-style: none;
 		font-size: 12px;
 		margin: 0;
@@ -582,7 +606,7 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter) {
 	return <<<EOF
 <div class="sourcecode">
 	<ul class="sourcecode_lines">{$lines}</ul>
- 	{$string}
+	{$string}
 </div>
 EOF;
 }

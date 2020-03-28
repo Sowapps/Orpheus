@@ -1,8 +1,8 @@
 <?php
 
+use Demo\User;
 use Orpheus\Email\Email;
 use Orpheus\EntityDescriptor\PermanentEntity;
-use Orpheus\Hook\Hook;
 
 /**
  * PHP File for the website sources
@@ -18,17 +18,9 @@ PermanentEntity::registerEntity('File');
 PermanentEntity::registerEntity('User');
 PermanentEntity::registerEntity('DemoEntity');
 
+User::setUserClass();
 
 // Hooks
-
-/** Hook 'runModule'
- *
- */
-Hook::register(HOOK_RUNMODULE, function ($module) {
-	if( getModuleAccess($module) > 0 ) {
-		HTMLRendering::$theme = 'admin';
-	}
-});
 
 function getModuleAccess($module = null) {
 	if( $module === null ) {
@@ -56,23 +48,6 @@ BODY
 	return $e->send(ADMINEMAIL);
 }
 
-/**
- * @param ThreadMessage $tm
- */
-function sendNewThreadMessageEmail($tm) {
-	$SITENAME = t('app_name');
-	$e = new Email('Orpheus - New message of ' . $tm->user_name);
-	$e->setText(<<<BODY
-Hi master !
-
-{$tm->getUser()} posted a new thread message:
-{$tm}
-
-Your humble servant, {$SITENAME}.
-BODY
-	);
-	return $e->send(ADMINEMAIL);
-}
 
 function includeHTMLAdminFeatures() {
 	require_once ORPHEUSPATH . 'src/admin-form.php';

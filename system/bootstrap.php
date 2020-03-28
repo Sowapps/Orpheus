@@ -105,7 +105,7 @@ defifn('MODDIR', 'modules/');
 defifn('LIBSDIR', 'libs/');
 defifn('THEMES_FOLDER', 'themes');
 
-defifn('SRCPATH', pathOf('src/'));
+defifn('SRC_PATH', 'src');
 defifn('LOGSPATH', pathOf('logs/'));
 defifn('STOREPATH', pathOf('store/'));
 defifn('CACHEPATH', STOREPATH . 'cache/');
@@ -233,9 +233,13 @@ try {
 	// This class MUST extends Orpheus\Config\ConfigCore
 	defifn('DEFAULT_CONFIG_CLASS', 'Orpheus\Config\IniConfig');
 	
-	if( file_exists(VENDORPATH . 'autoload.php') ) {
+	if( is_file(VENDORPATH . 'autoload.php') ) {
 		/* @var Composer\Autoload\ClassLoader $PackageLoader */
 		$PackageLoader = require VENDORPATH . 'autoload.php';
+	}
+	
+	if( existsPathOf(SRC_PATH . '/_loader.php', $path) ) {
+		require_once $path;
 	}
 	
 	try {
