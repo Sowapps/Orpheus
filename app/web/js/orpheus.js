@@ -37,28 +37,20 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 	
 	this.open = function() {
 		widget.previous && widget.previous.hide();
-//		if( widget.previous ) {
-//			widget.previous.hide();
-//		}
 		this.dialog.find(".confirm_title").text(this.title);
 		this.dialog.find(".confirm_message").text(this.message);
-//		console.log("widget.imageLink", widget.imageLink);
 		if( this.imageLink ) {
 			this.dialog.find(".image_wrapper").show().find("img").attr("src", this.imageLink);
 		} else {
 			this.dialog.find(".image_wrapper").hide();
 		}
-		var validateSubmit = this.dialog.find(".confirm_validate")
+		this.dialog.find(".confirm_validate")
 			.attr("name", this.submitName).val(this.submitValue);
-//		this.dialog.find(".confirm_cancel").unbind("click").click(function() {
-//			this.close();
-//		});
 		
 		this.dialog.modal('show');
 	}
 	
 	this.dialog.on("hidden.bs.modal", function() {
-//		console.log("Hidden confirm modal", widget.previous);
 		widget.previous && widget.previous.show();
 	});
 	
@@ -66,16 +58,17 @@ function ConfirmDialog(title, message, submitName, submitValue) {
 		return this.dialog.find("form");
 	}
 	
-	this.validate = function() {
+	this.validate = function () {
 		this.dialog.modal('hide');
 	}
 	
-	this.close = function() {
+	this.close = function () {
 		this.dialog.modal('hide');
 	}
 	
-};
-$(function() {
+}
+
+$(function () {
 	ConfirmDialog.dialogTemplate = '\
 	<div id="OrpheusConfirmDialog" class="modal fade">\
 	<div class="modal-dialog">\
@@ -115,17 +108,10 @@ $(function() {
 		_.data("confirmdialog", confirmDialog);
 		_.click(function() {
 			confirmDialog.open();
+			return false;
 		});
 	});
-//	Dialog.confirm(function() {
-//	}, "Do you confirm what you are doing ?", "This require your attention and you should take care about what we are asking for.");
 });
-
-function debug(t) {
-	for( var i in arguments ) {
-		console.log(arguments[i]);
-	}
-}
 
 function clone(obj) {
 	var target = {};
@@ -467,12 +453,9 @@ if( $ ) {
 	
 	$("input[data-preview]").change(function() {
 		var input = $(this);
-//	 	console.log('change', this.files[0]);
 		var oFReader = new FileReader();
 		oFReader.readAsDataURL(this.files[0]);
 		oFReader.onload	= function(oFREvent) {
-//	 		console.log('oFReader.onload', oFREvent.target.result);
-			//document.getElementById("uploadPreview")
 			$(input.data('preview')).attr('src', oFREvent.target.result);
 		};
 	});
@@ -697,23 +680,6 @@ var escapeHTML;
 	};
 	$.cond = $.fn.cond;
 	
-	/*
-	$.each([["show", "shown", function() { return $(this).is(":visible"); }], ["hide", "hidden", function() { return $(this).is(":hidden"); }]], function (i, ev) {
-		var fun	= $.fn[ev[0]];
-		$.fn[ev[0]]	= function () {
-			var r	= this.trigger(ev[0]);
-			if( r === false ) { return r; }
-			r		= fun.apply(this, arguments);
-			this.trigger(ev[1]);
-			var children	= this.find("*");
-			if( ev.length>2 ) {
-				children.filter(ev[2]);
-			}
-			children.trigger(ev[1]);
-			return r;
-		};
-	});
-	*/
 	$.fn.showIf = function(cond) {
 		cond ? $(this).show() : $(this).hide();
 	};
@@ -723,7 +689,6 @@ var escapeHTML;
 		if( $(this).is(":visible") ) {
 			this.callback	= callback;
 			this.callback();
-//			$(this).trigger("shown");
 		}
 	};
 	// Scroll to element
@@ -732,22 +697,22 @@ var escapeHTML;
 			option = "center";
 		}
 		var el = $(this).first();
-		if( !el.length ) { return; }
+		if( !el.length ) {
+			return;
+		}
 		var viewportWidth = $(window).width(), viewportHeight = $(window).height(),
 			elWidth = $(el).width(), elHeight = $(el).height(), elOffset = $(el).offset();
-		if( option == "top" ) {
-//			debug("Scroll top to: "+(elOffset.top + elHeight/2 - 100));
-			$(window).scrollTop(elOffset.top + elHeight/2 - 100);
+		if( option === "top" ) {
+			$(window).scrollTop(elOffset.top + elHeight / 2 - 100);
 		} else {
 			// Default is center
-			$(window).scrollTop(elOffset.top + elHeight/2 - viewportHeight/2);
+			$(window).scrollTop(elOffset.top + elHeight / 2 - viewportHeight / 2);
 		}
-		$(window).scrollLeft(elOffset.left + elWidth/2 - viewportWidth/2);
+		$(window).scrollLeft(elOffset.left + elWidth / 2 - viewportWidth / 2);
 	};
 	
 	// Apply on load and on change
 	$.fn.watch	= function(cb, sel) {
-//		console.log("Starting watch with selector: "+sel);
 		sel ? $(this).on("change", sel, cb) : $(this).change(cb);
 		$(this).each(function() {
 			this.cb	= cb;
@@ -756,10 +721,10 @@ var escapeHTML;
 	};
 	
 	$.fn.pressEnter	= function(cb) {
-		$(this).keydown(function(e) {
-			if( e.which==KeyEvent.DOM_VK_RETURN ) {
+		return $(this).keydown(function (e) {
+			if( e.which === KeyEvent.DOM_VK_RETURN ) {
 				e.preventDefault();
-				this.callback	= cb;
+				this.callback = cb;
 				return this.callback(e);
 			}
 		});
@@ -770,13 +735,9 @@ var escapeHTML;
 			cb = modifiers;
 			modifiers = 0;
 		}
-//		console.log("Create pressKey bind with modifiers "+modifiers);
 		return $(this).keydown(function(e) {
-//			console.log("press key => "+e.key+", "+e.which+" against "+key, e);
 			if( e.which === key ) {
-//				console.log("Matching key");
 				if( modifiers ) {
-//					console.log("bintest(modifiers, Modifier.CONTROL) ", bintest(modifiers, Modifier.CONTROL));
 					if( bintest(modifiers, Modifier.CONTROL) && !e.ctrlKey ) {
 						return;
 					}
@@ -798,7 +759,6 @@ var escapeHTML;
 	};
 	
 	$.fn.outerHTML = function() {
-//		console.log("outerHTML - this", this);
 		return $('<div />').append(this.eq(0).clone()).html();
 	};
 
@@ -826,4 +786,3 @@ var escapeHTML;
 		});
 	});
 })(jQuery);
-//};

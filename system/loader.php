@@ -283,7 +283,7 @@ function findFileInTree($filename, $from = null) {
 	return null;
 }
 
-function displayRawException(Exception $Exception) {
+function displayRawException(Throwable $Exception) {
 	?>
 	<h3><?php echo get_class($Exception); ?></h3>
 	<blockquote class="exception_message">
@@ -346,7 +346,7 @@ function getClassName($var) {
 	return array_pop($hierarchy);
 }
 
-function convertExceptionAsHTMLPage(Throwable $exception, $code, $action) {
+function convertExceptionAsHTMLPage(Throwable $exception, $code, $action = null) {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
 	// TODO: Externalize this and allow developers to ovverride it
@@ -390,11 +390,14 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code, $action) {
 					</h3>
 					
 					<?php
-					if( method_exists($exception, 'getAction') ) {
+					if( !$action && method_exists($exception, 'getAction') ) {
+						$action = $exception->getAction();
+					}
+					if( $action ) {
 						?>
 						<div class="action border-bottom border-danger py-1 my-2">
 							<h6>Action</h6>
-							<div><?php echo $exception->getAction(); ?></div>
+							<div><?php echo $action; ?></div>
 						</div>
 						<?php
 					}
@@ -580,7 +583,7 @@ function convertExceptionAsText(Throwable $Exception, $code, $action) {
 		$args = '';
 		if( !empty($trace['args']) ) {
 			foreach( $trace['args'] as $i => $arg ) {
-				$args .= ($i ? ', ' : '') . typeOf($arg) . (is_array($arg) ? '[' . count($arg) . ']' : ' ' . $arg);
+				$args .= ($i ? ', ' : '') . typeOf($arg) . (is_array($arg) ? '[' . count($arg) . ']' : (is_string_convertible($arg) ? ' ' . $arg : ''));
 			}
 		}
 		echo "
