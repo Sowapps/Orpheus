@@ -683,27 +683,9 @@ function text($message = '', $html = true) {
  */
 function debug($s, $d = -1) {
 	if( $d !== -1 ) {
-		$s .= ': ' . htmlSecret($d);
+		$s .= ': ' . toHtml($d);
 	}
 	text($s);
-}
-
-/**
- * @param $message
- * @return string
- * @deprecated No more used
- */
-function htmlSecret($message) {
-	if( $message === null ) {
-		$message = '{NULL}';
-	} elseif( $message === false ) {
-		$message = '{FALSE}';
-	} elseif( $message === true ) {
-		$message = '{TRUE}';
-	} elseif( !is_scalar($message) ) {
-		$message = '<pre>' . print_r($message, 1) . '</pre>';
-	}
-	return '<button type="button" onclick="this.nextSibling.style.display = this.nextSibling.style.display === \'none\' ? \'block\' : \'none\'; return 0;">Show</button><div style="display: none;">' . $message . '</div>';
 }
 
 /** Limits the length of a string
