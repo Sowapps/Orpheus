@@ -182,8 +182,8 @@ foreach( $this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 }
 ?>
 
-<script src="<?php echo JSURL; ?>orpheus.js"></script>
-<script src="<?php echo JSURL; ?>script.js"></script>
+<script src="<?php echo JS_URL; ?>orpheus.js"></script>
+<script src="<?php echo JS_URL; ?>script.js"></script>
 <script src="<?php echo $rendering->getJsUrl(); ?>orpheus.js"></script>
 <script src="<?php echo $rendering->getJsUrl(); ?>script.js"></script>
 

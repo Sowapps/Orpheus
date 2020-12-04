@@ -68,7 +68,7 @@ $libExtension = DEV_VERSION ? '' : '.min';
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<div class="container">
-		<a class="navbar-brand" href="<?php echo SITEROOT; ?>">
+		<a class="navbar-brand" href="<?php echo WEB_ROOT; ?>">
 			<?php echo t('app_name'); ?>
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#MenuTop" aria-controls="MenuTop" aria-expanded="false" aria-label="Toggle navigation">

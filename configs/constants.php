@@ -30,10 +30,10 @@ defifn('CACHEPATH', STOREPATH . 'cache/');
 defifn('TEMPPATH', STOREPATH . 'temp/');
 defifn('FILESTOREPATH', STOREPATH . 'files/');
 
-defifn('STATIC_URL', SITEROOT . 'static/');
-
-defifn('IMAGESURL', STATIC_URL . 'images/');
-
+// Static medias
+define('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
+define('STATIC_ASSETS_URL', WEB_ROOT . 'static/');
+define('JS_URL', STATIC_ASSETS_URL . 'js/');
 
 // Contact
 

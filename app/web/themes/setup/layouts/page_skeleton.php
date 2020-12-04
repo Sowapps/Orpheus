@@ -38,7 +38,7 @@ foreach($this->listMetaProperties() as $property => $content) {
 	}
 	?>
 	
-	<link rel="stylesheet" href="<?php echo SITEROOT; ?>static/style/base.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo WEB_ROOT; ?>static/style/base.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="<?php echo HTMLRendering::getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
 	foreach( $this->listCssUrls() as $url ) {
@@ -66,15 +66,17 @@ foreach($this->listMetaProperties() as $property => $content) {
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php echo SITEROOT; ?>"><?php _t('app_name'); ?></a>
+			<a class="navbar-brand" href="<?php echo WEB_ROOT; ?>"><?php _t('app_name'); ?></a>
 		</div>
 		<div class="collapse navbar-collapse">
-<?php
-// User::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
-$this->showMenu(User::isLogged() ? 'adminmenu' : 'topmenu');
-if( !empty($TOPBAR_CONTENTS) ) { echo $TOPBAR_CONTENTS; }
-?>
-
+			<?php
+			// User::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
+			$this->showMenu(AbstractUser::isLogged() ? 'adminmenu' : 'topmenu');
+			if( !empty($TOPBAR_CONTENTS) ) {
+				echo $TOPBAR_CONTENTS;
+			}
+			?>
+		
 		</div>
 	</div>
 </div>

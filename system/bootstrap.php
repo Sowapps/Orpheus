@@ -1,6 +1,5 @@
 <?php
 
-use Orpheus\Config\Config;
 use Orpheus\Config\IniConfig;
 use Orpheus\Core\RequestHandler;
 use Orpheus\Hook\Hook;
@@ -110,14 +109,34 @@ defifn('LOGSPATH', pathOf('logs/'));
 defifn('STOREPATH', pathOf('store/'));
 defifn('CACHEPATH', STOREPATH . 'cache/');
 
+// Defaults
+if( !defined('DEFAULT_HOST') && defined('DEFAULTHOST') ) {
+	define('DEFAULT_HOST', 'DEFAULTHOST');
+}
+defifn('DEFAULTHOST', DEFAULT_HOST);// BC
+
+if( !defined('DEFAULT_PATH') && defined('DEFAULTPATH') ) {
+	define('DEFAULT_PATH', 'DEFAULTPATH');
+}
+defifn('DEFAULTPATH', DEFAULT_PATH);// BC
+
 // Routing
 defifn('HTTPS', !empty($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] === 'https' : (defined('DEFAULT_IS_SECURE') && DEFAULT_IS_SECURE));
 defifn('SCHEME', HTTPS ? 'https' : 'http');
 defifn('HOST', !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULTHOST);
 defifn('PATH', !defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULTPATH);
-defifn('SITEROOT', SCHEME . '://' . HOST . PATH);
+
 defifn('WEB_ROOT', SCHEME . '://' . HOST . (PATH !== '/' ? PATH : ''));
-defifn('DEFAULTLINK', SITEROOT);
+
+// BC for old constants
+if( !defined('DEFAULTLINK') ) {
+	/** @deprecated Use route generator */
+	define('SITEROOT', WEB_ROOT);
+}
+if( !defined('DEFAULTLINK') ) {
+	/** @deprecated Use route generator */
+	define('DEFAULTLINK', WEB_ROOT . '/');
+}
 
 // Edit the global constants
 try {
@@ -131,8 +150,9 @@ try {
 }
 
 // Static medias
-defifn('JSURL', SITEROOT . 'js/');
-defifn('THEMES_URL', SITEROOT . THEMES_FOLDER);
+defifn('JS_URL', WEB_ROOT . 'js/');
+defifn('JSURL', JS_URL);// BC
+defifn('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
 
 if( !defined('INSTANCE_ID') && defined('HOST') ) {
 	// INSTANCE ID to differentiate instances (used by cache)
@@ -262,9 +282,7 @@ try {
 	
 	// After Lib loading
 	
-	IniConfig::build('engine', false);// Some libs should require to get some configuration.
-	
-	$RENDERING = Config::get('default_rendering');
+	IniConfig::build('engine', false);// Some libs should require to get some configuration
 	
 	ob_end_clean();
 	
