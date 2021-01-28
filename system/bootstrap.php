@@ -23,7 +23,7 @@ if( isset($SRCPATHS) ) {
 require_once 'loader.php';
 
 /**
- * The access path, this is independant from the type of access (http, console...)
+ * The access path, this is independent from the type of access (http, console...)
  * It defines from which folder you access to your application
  */
 defifn('ACCESSPATH', dirpath($_SERVER['SCRIPT_FILENAME']));

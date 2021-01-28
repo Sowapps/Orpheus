@@ -357,47 +357,109 @@ Cookie.prototype.toString = function chienToString() {
 // Set TimeZone Cookie
 (function() {
 	var offset = new Date().getTimezoneOffset();
-//	console.log("TimeZone offset => "+offset);
 	new Cookie("orpheus_timezone").setValue((offset > 0 ? "-" : "+")+leadZero(Math.abs(parseInt(offset/60)))+':'+leadZero(Math.abs(offset%60))).expireInDays(7).save();
-//	document.cookie = '='++'; expires=Mon, 1 Mar 2010 00:00:00 UTC; path=/'
-//	document.cookie = 'orpheus_timezone='+leadZero(parseInt(-offset/60))+leadZero(Math.abs(offset%60))+'; expires=Mon, 1 Mar 2010 00:00:00 UTC; path=/'
 })();
 
 if( $ ) {
 	
 	/**
-	 * Fill all children of the current element with this data using the key and prefix to set the value
+	 * Flat given data using pattern
+	 *
+	 * @param data
+	 * @param pattern
+	 * @param target The object to store data, or new one is created
+	 * @param childSuffix String to append to the key to generate children pattern
+	 * @returns {{}}
 	 */
-	$.fn.fill = function(prefix, data) {
-		$(this).each(function(key, value) {
+	function flatData(data, pattern, target, childSuffix) {
+		if( !target ) {
+			target = {};
+		}
+		if( !childSuffix ) {
+			childSuffix = '[%s]';
+		}
+		for( var key in data ) {
+			if( !data.hasOwnProperty(key) ) {
+				continue;
+			}
+			var newKey = pattern === undefined ? key : pattern.replace('%s', key);
+			
+			var value = data[key];
+			if( typeof value === 'object' ) {
+				flatData(value, newKey + childSuffix, target);
+			} else {
+				target[newKey] = value;
+			}
+		}
+		return target
+	}
+	
+	/**
+	 * Fill all children of the current element with this data using the key and prefix to set the value
+	 *
+	 * @param prefix
+	 * @param data
+	 */
+	$.fn.fill = function (prefix, data) {
+		$(this).each(function () {
 			var container = $(this);
-			$.each(data, function(key, value) {
-				container.find("."+prefix+key).each(function() {
-					var element = $(this);
-					if( element.is("img") ) {
-						element.attr("src", value);
-					} else
-					if( element.is("a") ) {
-						element.attr("href", value);
-					} else
-					if( element.is(":input") ) {
-						// Fix issue in some dynamic forms
-						// input was filled but the change event not called
-						element.val(value).change();
-					} else {
-						element.text(value);
-					}
+			$.each(flatData(data, prefix + '_%s', null, '_%s'), function (key, value) {
+				container.find("." + key).each(function () {
+					$(this).assignValue(value);
 				});
 			});
 		});
+		return $(this);
 	};
+	
+	/**
+	 * Fill input using name pattern
+	 *
+	 * @param data
+	 * @param pattern
+	 */
+	$.fn.fillByName = function (data, pattern = null) {
+		$(this).each(function () {
+			var container = $(this);
+			$.each(flatData(data, pattern), function (key, value) {
+				container.find(':input[name="' + key + '"]').each(function () {
+					$(this).assignValue(value);
+				});
+			});
+		});
+		return $(this);
+	};
+	
+	$.fn.assignValue = function (value) {
+		var $element = $(this);
+		if( $element.is('img') || $element.is('iframe') ) {
+			$element.attr('src', value);
+		} else if( $element.is('a') ) {
+			$element.attr('href', value);
+		} else if( $element.is(':checkbox') ) {
+			if( $element.val().toLowerCase() !== 'on' ) {
+				// Not default browser value
+				$element.prop('checked', $element.val() === value);
+			} else {
+				// + to convert to int, !! to convert to boolean
+				$element.prop('checked', !!+value);
+			}
+		} else if( $element.is(':input') ) {
+			// Fix issue in some dynamic forms
+			// input was filled but the change event not called
+			$element.val(value).change();
+		} else {
+			$element.text(value);
+		}
+		return $(this);
+	}
 	
 	/**
 	 * Extract data from all children input using the data-field
 	 */
-	$.fn.extract = function() {
+	$.fn.extract = function () {
 		var data = {};
-		$(this).find(":input[data-field]").each(function() {
+		$(this).find(":input[data-field]").each(function () {
 			data[$(this).data("field")] = $(this).val();
 		});
 		return data;
@@ -420,15 +482,10 @@ if( $ ) {
 		});
 	};
 	
-//	$(".submittext").click(function() {
-//	console.log("Declare click listener to "+$(":button[data-submittext]").length);
 	$(":button[data-submittext]").each(function() {
 		var button	= $(this);
 		var form	= $(this).closest("form");
-//		console.log("Button", button);
-//		console.log("Form", form);
 		var listener = function() {
-//			console.log("submit form");
 			if( !button.data("submitted") ) {
 				button.data("submitted", 1);
 				button.data("submitold", button.html());
