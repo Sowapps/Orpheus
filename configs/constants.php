@@ -31,9 +31,12 @@ defifn('TEMPPATH', STOREPATH . 'temp/');
 defifn('FILESTOREPATH', STOREPATH . 'files/');
 
 // Static medias
-define('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
-define('STATIC_ASSETS_URL', WEB_ROOT . 'static/');
-define('JS_URL', STATIC_ASSETS_URL . 'js/');
+defifn('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
+defifn('STATIC_ASSETS_URL', WEB_ROOT . '/static');
+defifn('STYLE_URL', STATIC_ASSETS_URL . '/style');
+defifn('VENDOR_URL', STATIC_ASSETS_URL . '/vendor');
+defifn('IMAGES_URL', STATIC_ASSETS_URL . '/images');
+defifn('JS_URL', STATIC_ASSETS_URL . '/js');
 
 // Contact
 

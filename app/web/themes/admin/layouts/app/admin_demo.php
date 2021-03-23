@@ -7,9 +7,9 @@ use Orpheus\Rendering\HTMLRendering;
 
 /**
  * @var HTMLRendering $rendering
- * @var HTTPRequest $Request
- * @var HTTPRoute $Route
- * @var HTTPController $Controller
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
  */
 
 $rendering->addJsUrl('https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js');

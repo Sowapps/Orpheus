@@ -1,20 +1,20 @@
 <?php
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPController $controller
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ *
+ * @var string $CONTROLLER_OUTPUT
+ * @var string $content
+ * @var User $user
+ */
 
 use Demo\User;
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
-
-/**
- * @var string $CONTROLLER_OUTPUT
- * @var HTMLRendering $rendering
- * @var HTTPController $Controller
- * @var HTTPRequest $Request
- * @var HTTPRoute $Route
- * @var User $user
- * @var string $Content
- */
 
 global $APP_LANG;
 
@@ -88,7 +88,7 @@ $libExtension = DEV_VERSION ? '' : '.min';
 
 <main role="main">
 	<?php
-	echo $Content;
+	echo $content;
 	// If report was not be reported
 	$this->display('reports');
 	?>

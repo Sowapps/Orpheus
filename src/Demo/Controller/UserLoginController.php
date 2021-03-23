@@ -20,10 +20,10 @@ class UserLoginController extends HTTPController {
 	 * @return HTTPResponse The output HTTP response
 	 */
 	public function run($request) {
-		$FORM_TOKEN = new FormToken();
+		$formToken = new FormToken();
 		
 		try {
-			$request->hasData() && $FORM_TOKEN->validateForm($request);
+			$request->hasData() && $formToken->validateForm($request);
 			
 			if( $request->hasData('submitLogin') ) {
 				User::userLogin($request->getData('login'));
@@ -42,7 +42,7 @@ class UserLoginController extends HTTPController {
 			endReportStream();
 		}
 		
-		return HTMLHTTPResponse::render('app/user_login', ['FORM_TOKEN' => $FORM_TOKEN]);
+		return HTMLHTTPResponse::render('app/user_login', ['formToken' => $formToken]);
 	}
 	
 }

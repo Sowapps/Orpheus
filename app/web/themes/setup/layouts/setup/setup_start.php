@@ -1,16 +1,25 @@
 <?php
-/* @var Orpheus\Rendering\HTMLRendering $this */
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ */
+
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 
 ?>
 <form method="POST">
-<div class="row">
-
-	<div class="col-lg-10 col-lg-offset-1">
-
-		<div class="jumbotron">
+	<div class="row">
+		
+		<div class="col-lg-10 col-lg-offset-1">
+			
+			<div class="jumbotron">
 			<h1><?php _t('start_title', DOMAIN_SETUP, t('app_name')); ?></h1>
 			<p class="lead"><?php echo text2HTML(t('start_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
 			

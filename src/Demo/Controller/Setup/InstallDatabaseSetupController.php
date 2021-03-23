@@ -21,18 +21,18 @@ class InstallDatabaseSetupController extends SetupController {
 	 */
 	public function run($request) {
 		
-		$FORM_TOKEN = new FormToken();
+		$formToken = new FormToken();
 		$env = [
-			'FORM_TOKEN'    => $FORM_TOKEN,
+			'formToken'     => $formToken,
 			'allowContinue' => false,
 		];
 		// TODO: Check and suggest to delete unknown tables in DB
 		try {
 			if( is_array($request->getData('entities')) ) {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
-					$output		= $output==OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
+					$output = $output == OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
-						$FORM_TOKEN->validateForm($request);
+						$formToken->validateForm($request);
 					}
 					$generator	= new SQLGeneratorMySQL();
 					$result		= '';

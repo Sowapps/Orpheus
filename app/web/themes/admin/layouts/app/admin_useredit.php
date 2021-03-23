@@ -1,19 +1,20 @@
 <?php
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ *
+ * @var User $user
+ * @var boolean $USER_CAN_USER_GRANT
+ * @var boolean $USER_CAN_USER_DELETE
+ */
 
 use Demo\User;
 use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
-
-/**
- * @var HTMLRendering $rendering
- * @var HTTPRequest $Request
- * @var HTTPRoute $Route
- * @var HTTPController $Controller
- *
- * @var User $user
- */
 
 $rendering->useLayout('page_skeleton');
 ?>

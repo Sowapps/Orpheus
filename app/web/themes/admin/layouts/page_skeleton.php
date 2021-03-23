@@ -1,4 +1,14 @@
 <?php
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPController $controller
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ *
+ * @var string $CONTROLLER_OUTPUT
+ * @var string $content
+ * @var User $user
+ */
 
 use Demo\User;
 use Orpheus\InputController\HTTPController\HTTPController;
@@ -6,15 +16,6 @@ use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-/**
- * @var string $CONTROLLER_OUTPUT
- * @var HTMLRendering $rendering
- * @var HTTPController $Controller
- * @var HTTPRequest $Request
- * @var HTTPRoute $Route
- * @var User $user
- * @var string $Content
- */
 
 /* @var array $Breadcrumb */
 /* @var string $PageTitle */
@@ -24,10 +25,10 @@ use Orpheus\Rendering\HTMLRendering;
 
 global $APP_LANG;
 
-$routeName = $Controller->getRouteName();
+$routeName = $controller->getRouteName();
 $user = User::getLoggedUser();
 
-$invertedStyle = $Controller->getOption('invertedStyle', 1);
+$invertedStyle = $controller->getOption('invertedStyle', 1);
 ?>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="<?php echo $APP_LANG; ?>" class="ie8"> <![endif]-->
@@ -67,7 +68,7 @@ $invertedStyle = $Controller->getOption('invertedStyle', 1);
 	}
 	?>
 	
-	<link rel="stylesheet" href="<?php echo $rendering->getCssUrl(); ?>sb-admin.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo VENDOR_URL; ?>/sb-admin/sb-admin-6.0.2/css/styles.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="<?php echo STATIC_URL . 'style/base.css'; ?>" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="<?php echo $rendering->getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
@@ -94,13 +95,13 @@ $invertedStyle = $Controller->getOption('invertedStyle', 1);
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="<?php _u(DEFAULT_ROUTE); ?>"><?php _t($Controller->getOption('main_title', 'adminpanel_title')); ?></a>
+			<a class="navbar-brand" href="<?php _u(DEFAULT_ROUTE); ?>"><?php _t($controller->getOption('main_title', 'adminpanel_title')); ?></a>
 		</div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse navbar-ex1-collapse">
 			<?php
-			$this->showMenu($Controller->getOption('mainmenu', 'adminmenu'), 'menu-sidebar');
+			$this->showMenu($controller->getOption('mainmenu', 'adminmenu'), 'menu-sidebar');
 			?>
 			
 			<ul class="nav navbar-nav navbar-right navbar-user">
@@ -159,8 +160,7 @@ $invertedStyle = $Controller->getOption('invertedStyle', 1);
 			</div>
 			
 			<?php
-			echo $CONTROLLER_OUTPUT;
-			echo $Content;
+			echo $content;
 			?>
 		
 		</div>
@@ -182,7 +182,9 @@ foreach( $this->listJSURLs(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
 }
 ?>
 
-<script src="<?php echo JS_URL; ?>orpheus.js"></script>
+<script type="text/javascript" src="<?php echo VENDOR_URL; ?>/sb-admin/sb-admin-6.0.2/js/scripts.js"></script>
+<script src="<?php echo VENDOR_URL; ?>/orpheus/js/orpheus.js"></script>
+<script src="<?php echo VENDOR_URL; ?>/orpheus/js/orpheus-confirmdialog.js"></script>
 <script src="<?php echo JS_URL; ?>script.js"></script>
 <script src="<?php echo $rendering->getJsUrl(); ?>orpheus.js"></script>
 <script src="<?php echo $rendering->getJsUrl(); ?>script.js"></script>

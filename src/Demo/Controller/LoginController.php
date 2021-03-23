@@ -20,9 +20,9 @@ class LoginController extends HTTPController {
 	public function run($request) {
 		
 		/* @var User $user */
-		$FORM_TOKEN = new FormToken();
+		$formToken = new FormToken();
 		try {
-			$request->hasData() && $FORM_TOKEN->validateForm($request);
+			$request->hasData() && $formToken->validateForm($request);
 			if( $request->hasParameter('ac') && is_id($userID = $request->getParameter('u')) ) {
 				$user = User::load($userID);
 				if( !$user || $user->activation_code != $request->getParameter('ac') ) {
@@ -51,9 +51,9 @@ class LoginController extends HTTPController {
 			endReportStream();
 		}
 		
-		return $this->renderHTML('app/user_login', array(
-			'FORM_TOKEN' => $FORM_TOKEN
-		));
+		return $this->renderHTML('app/user_login', [
+			'formToken' => $formToken
+		]);
 	}
 	
 	

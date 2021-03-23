@@ -1,4 +1,13 @@
 <?php
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPController $controller
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ *
+ * @var FormToken $formToken
+ */
+
 
 use Demo\User;
 use Orpheus\Form\FormToken;
@@ -6,15 +15,6 @@ use Orpheus\InputController\HTTPController\HTTPController;
 use Orpheus\InputController\HTTPController\HTTPRequest;
 use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
-
-/**
- * @var HTMLRendering $rendering
- * @var HTTPController $Controller
- * @var HTTPRequest $Request
- * @var HTTPRoute $Route
- *
- * @var FormToken $FORM_TOKEN
- */
 
 global $USER;
 $this->useLayout('page_skeleton');
@@ -28,7 +28,7 @@ if( User::isLogged() ) {
 	<div class="row">
 		
 		<div class="col-6">
-			<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
+			<form method="POST" role="form"><?php echo $formToken; ?>
 				<fieldset>
 					<legend>Sign in</legend>
 					<?php
@@ -48,7 +48,7 @@ if( User::isLogged() ) {
 		</div>
 		
 		<div class="col-6">
-			<form method="POST" role="form"><?php echo $FORM_TOKEN; ?>
+			<form method="POST" role="form"><?php echo $formToken; ?>
 				<fieldset>
 					<legend>Register</legend>
 					<?php

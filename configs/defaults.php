@@ -5,11 +5,7 @@
  * TODO: Write documentation :-P
  */
 
-
-// defifn('CHECK_MODULE_ACCESS',	!DEV_VERSION);
 defifn('ENTITY_CLASS_CHECK',	false);
-// defifn('ENTITY_ALWAYS_RELOAD',	true);
-
 
 // Routes
 defifn('ROUTE_HOME',			'home');
@@ -36,7 +32,7 @@ define('ROUTE_DEV_APPTRANSLATE', 'dev_app_translate');
 
 // Route's defaults
 defifn('DEFAULT_ROUTE', ROUTE_HOME);
-defifn('DEFAULTMEMBERROUTE', ROUTE_ADM_DEMO);
-defifn('DEFAULTHOST', 'yourdomain.com');
-defifn('DEFAULTPATH', '');
+defifn('DEFAULT_MEMBER_ROUTE', ROUTE_ADM_DEMO);
+defifn('DEFAULT_HOST', 'yourdomain.com');
+defifn('DEFAULT_PATH', '');
 

@@ -129,7 +129,7 @@ defifn('PATH', !defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULT
 defifn('WEB_ROOT', SCHEME . '://' . HOST . (PATH !== '/' ? PATH : ''));
 
 // BC for old constants
-if( !defined('DEFAULTLINK') ) {
+if( !defined('SITEROOT') ) {
 	/** @deprecated Use route generator */
 	define('SITEROOT', WEB_ROOT);
 }

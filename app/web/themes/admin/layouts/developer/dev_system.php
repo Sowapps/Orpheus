@@ -1,15 +1,20 @@
 <?php
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ */
+
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-/* @var HTMLRendering $this */
-/* @var HTTPController $Controller */
-/* @var HTTPRequest $Request */
-/* @var HTTPRoute $Route */
-
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 
 function displayByteRow($label, $value) {
-	displayRow($label, formatInt($value).' bytes');
+	displayRow($label, formatInt($value) . ' bytes');
 }
 
 function displayRow($label, $value) {

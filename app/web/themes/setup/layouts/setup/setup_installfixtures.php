@@ -1,16 +1,28 @@
 <?php
-/* @var Orpheus\Rendering\HTMLRendering $this */
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ *
+ * @var boolean $wasAlreadyDone
+ * @var boolean $allowContinue
+ */
+
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 
 ?>
 <form method="POST">
-<div class="row">
-
-	<div class="col-lg-8 col-lg-offset-2">
-
-		<h1><?php _t('installfixtures_title', DOMAIN_SETUP, t('app_name')); ?></h1>
+	<div class="row">
+		
+		<div class="col-lg-8 col-lg-offset-2">
+			
+			<h1><?php _t('installfixtures_title', DOMAIN_SETUP, t('app_name')); ?></h1>
 		<p class="lead"><?php echo text2HTML(t('installfixtures_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
 		
 		<?php

@@ -1,10 +1,22 @@
 <?php
-/* @var Orpheus\Rendering\HTMLRendering $this */
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ *
+ * @var array $folders
+ * @var boolean $allowContinue
+ */
+
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 
-function collapsiblePanelHTML($id, $title, $description, $panelClass, $open=0) {
+function collapsiblePanelHTML($id, $title, $description, $panelClass, $open = 0) {
 	?>
 	<div class="panel <?php echo $panelClass; ?>">
 		<div class="panel-heading" role="tab">
@@ -30,13 +42,6 @@ function collapsiblePanelHTML($id, $title, $description, $panelClass, $open=0) {
 
 		<h1><?php _t('checkfs_title', DOMAIN_SETUP, t('app_name')); ?></h1>
 		<p class="lead"><?php echo text2HTML(t('checkfs_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
-	
-<!-- 		<ul class="list-group"> -->
-<!-- 			<li class="list-group-item"> -->
-<!-- 				<span class="badge">14</span> -->
-<!-- 				Cras justo odio -->
-<!-- 			</li> -->
-<!-- 		</ul> -->
 
 		<div class="form-horizontal">
 			<div class="form-group">

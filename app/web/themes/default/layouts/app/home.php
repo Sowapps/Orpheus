@@ -1,14 +1,14 @@
 <?php
 use Orpheus\Rendering\HTMLRendering;
 
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 ?>
 <div class="jumbotron">
 	<h1>Hello PHP developer !</h1>
 	<p>
-Get the power with the new Orpheus, the PHP framework from your dreams, coming with all features you need !
-This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
-secured and standardized by easiest way to use it and the maximum customizing capabilities.
+		Get the power with the new Orpheus, the PHP framework from your dreams, coming with all features you need !
+		This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
+		secured and standardized by easiest way to use it and the maximum customizing capabilities.
 	</p>
 	<p class="cb tac mt30">
 		<a href="<?php _u('gettingstarted'); ?>" class="btn btn-primary btn-lg"><i class="fa fa-star-o"></i> Getting Started</a>

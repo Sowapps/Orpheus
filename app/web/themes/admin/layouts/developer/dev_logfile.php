@@ -1,34 +1,39 @@
 <?php
-use Orpheus\Rendering\HTMLRendering;
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ */
 
-/* @var HTMLRendering $this */
-/* @var HTTPController $Controller */
-/* @var HTTPRequest $Request */
-/* @var HTTPRoute $Route */
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\Rendering\HTMLRendering;
 
 /* @var string $file */
 /* @var string $filePathInfo */
 /* @var string $format */
 /* @var AbstractFile $fileHandler */
 
-HTMLRendering::useLayout('page_skeleton');
+$rendering->useLayout('page_skeleton');
 
 // $filePathInfo = (object) pathinfo($file);
 ?>
 
 <div class="row">
 	<div class="col-lg-8">
-		<?php HTMLRendering::useLayout('panel-default'); ?>
+		<?php $rendering->useLayout('panel-default'); ?>
 		
-			<div class="form-horizontal">
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php _t('file_name', DOMAIN_LOGS); ?></label>
-					<div class="col-sm-10">
-						<p class="form-control-static"><?php echo $filePathInfo->basename; ?></p>
-					</div>
+		<div class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><?php _t('file_name', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-10">
+					<p class="form-control-static"><?php echo $filePathInfo->basename; ?></p>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php _t('file_path', DOMAIN_LOGS); ?></label>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><?php _t('file_path', DOMAIN_LOGS); ?></label>
 					<div class="col-sm-10">
 						<p class="form-control-static"><?php echo $file; ?></p>
 					</div>
@@ -45,28 +50,28 @@ HTMLRendering::useLayout('page_skeleton');
 						<p class="form-control-static"><?php echo formatInt(filesize($file)); ?> bytes</p>
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php _t('file_mtime', DOMAIN_LOGS); ?></label>
-					<div class="col-sm-10">
-						<p class="form-control-static"><?php echo dt(filemtime($file)); ?></p>
-					</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label"><?php _t('file_mtime', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-10">
+					<p class="form-control-static"><?php echo dt(filemtime($file)); ?></p>
 				</div>
 			</div>
-			
-		<?php HTMLRendering::endCurrentLayout(array(
-			'title' => t('file_informations', DOMAIN_LOGS)
-		)); ?>
+		</div>
+		
+		<?php $rendering->endCurrentLayout([
+			'title' => t('file_informations', DOMAIN_LOGS),
+		]); ?>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-12">
-		<?php HTMLRendering::useLayout('panel-default'); ?>
-			
-			<div class="panel-group" id="LogList" role="tablist" aria-multiselectable="true">
+		<?php $rendering->useLayout('panel-default'); ?>
+		
+		<div class="panel-group" id="LogList" role="tablist" aria-multiselectable="true">
 			<?php
 			if( $hideDuplicate ) {
-				$shownLogs = array();
+				$shownLogs = [];
 			}
 			$lineCount = 0;
 			while( ($line = $fileHandler->getNextLine()) !== false ) {
@@ -145,26 +150,26 @@ HTMLRendering::useLayout('page_skeleton');
 				</div>
 					<?php
 					$lineCount++;
-				} catch ( Exception $e ) {
+				} catch( Exception $e ) {
 					echo $e;
 				}
 			}
 			unset($line, $log, $panelID);
 			$fileHandler->ensureClosed();
 			?>
-			</div>
-			
-		<?php HTMLRendering::endCurrentLayout(array(
-			'title' => t('file_logs', DOMAIN_LOGS).' <a href="#lastLog" class="pull-right">
-				<i class="fa fa-arrow-circle-o-down"></i> '.t('goToLastOneButton', DOMAIN_LOGS).'
+		</div>
+		
+		<?php $rendering->endCurrentLayout(array(
+			'title'  => t('file_logs', DOMAIN_LOGS) . ' <a href="#lastLog" class="pull-right">
+				<i class="fa fa-arrow-circle-o-down"></i> ' . t('goToLastOneButton', DOMAIN_LOGS) . '
 			</a>',
 			'footer' => '
-				<div class="panel-footer text-right">'.
-						($fileHandler->isCompressible() ?
+				<div class="panel-footer text-right">' .
+				($fileHandler->isCompressible() ?
 					'
 					<button class="btn btn-primary"
-						data-confirm_title="'.t('archiveFileConfirmTitle', DOMAIN_LOGS).'"
-						data-confirm_message="'.t('archiveFileConfirmMessage', DOMAIN_LOGS).'"
+						data-confirm_title="' . t('archiveFileConfirmTitle', DOMAIN_LOGS) . '"
+						data-confirm_message="' . t('archiveFileConfirmMessage', DOMAIN_LOGS) . '"
 						data-confirm_submit_name="submitArchive"
 						>'.t('archiveFileButton', DOMAIN_LOGS).'</button>' : '').
 					'

@@ -1,18 +1,25 @@
 <?php
-use Orpheus\Rendering\HTMLRendering;
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPController $controller
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ *
+ * @var string $CONTROLLER_OUTPUT
+ * @var string $content
+ */
 
-/* @var HTMLRendering $this */
-/* @var HTTPController $Controller */
+use Demo\User;use Orpheus\InputController\HTTPController\HTTPController;use Orpheus\InputController\HTTPController\HTTPRequest;use Orpheus\InputController\HTTPController\HTTPRoute;use Orpheus\Rendering\HTMLRendering;
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title><?php echo !empty($PageTitle) ? $PageTitle : t('app_name'); ?></title>
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
-	<meta name="application-name" content="<?php _t('app_name'); ?>" />
+	<meta name="application-name" content="<?php _t('app_name'); ?>"/>
 	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>" />
 	<meta name="Keywords" content="carnet"/>
 	<meta name="Robots" content="Index, Follow"/>
@@ -50,11 +57,6 @@ foreach($this->listMetaProperties() as $property => $content) {
 	<!-- External JS libraries -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
-<?php
-/*
-<body class="<?php echo $Module; ?>">
-*/
-?>
 <body>
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -71,7 +73,7 @@ foreach($this->listMetaProperties() as $property => $content) {
 		<div class="collapse navbar-collapse">
 			<?php
 			// User::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
-			$this->showMenu(AbstractUser::isLogged() ? 'adminmenu' : 'topmenu');
+			$this->showMenu(User::isLogged() ? 'adminmenu' : 'topmenu');
 			if( !empty($TOPBAR_CONTENTS) ) {
 				echo $TOPBAR_CONTENTS;
 			}
@@ -82,18 +84,18 @@ foreach($this->listMetaProperties() as $property => $content) {
 </div>
 
 <div class="container">
-
-<?php echo $Content; ?>
+	
+	<?php echo $content; ?>
 
 </div>
-	<!-- JS libraries -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!-- JS libraries -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <!-- 	<script type="text/javascript" src="//shared.sowapps.com/select2/select2-3.5.2/select2.min.js"></script> -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2_locale_fr.min.js"></script>
-	
-	<!-- Our JS scripts -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2_locale_fr.min.js"></script>
+
+<!-- Our JS scripts -->
 	<script type="text/javascript" src="/js/orpheus.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php

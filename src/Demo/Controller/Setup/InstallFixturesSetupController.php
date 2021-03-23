@@ -22,9 +22,9 @@ class InstallFixturesSetupController extends SetupController {
 	 */
 	public function run($request) {
 		
-		$FORM_TOKEN = new FormToken();
+		$formToken = new FormToken();
 		$env = [
-			'FORM_TOKEN'    => $FORM_TOKEN,
+			'formToken'     => $formToken,
 			'allowContinue' => false,
 		];
 		

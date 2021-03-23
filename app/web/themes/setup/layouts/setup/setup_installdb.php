@@ -1,53 +1,62 @@
 <?php
-/* @var Orpheus\Rendering\HTMLRendering $this */
-use Orpheus\Rendering\HTMLRendering;
+/**
+ * @var HTMLRendering $rendering
+ * @var HTTPRequest $request
+ * @var HTTPRoute $route
+ * @var HTTPController $controller
+ *
+ * @var FormToken $formToken
+ * @var ?string $resultingSQL
+ */
+
 use Orpheus\EntityDescriptor\PermanentEntity;
+use Orpheus\Form\FormToken;
+use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\Rendering\HTMLRendering;
 
-/* @var $resultingSQL string */
-/* @var $FORM_TOKEN FormToken */
+$rendering->useLayout('page_skeleton');
 
-HTMLRendering::useLayout('page_skeleton');
 ?>
 <div class="row">
-
+	
 	<div class="col-lg-8 col-lg-offset-2">
-
+		
 		<h1><?php _t('installdb_title', DOMAIN_SETUP, t('app_name')); ?></h1>
-		<p class="lead"><?php echo text2HTML(t('installdb_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
+		<p class="lead"><?php echo text2HTML(t('installdb_description', DOMAIN_SETUP, ['APP_NAME' => t('app_name')])); ?></p>
 		<?php
-// 		displayReportsHTML();
 		$this->display('reports-bootstrap3');
 		
 		if( !empty($resultingSQL) ) {
-		// 	echo '<div>'.$resultingSQL.'</div>';
 			if( !empty($requireEntityValidation) ) {
 				?>
-		<h3><?php _t('generated_sqlqueries', DOMAIN_SETUP); ?></h3>
-		<div class="sql_query"><?php echo $resultingSQL; ?></div>
-		<form method="POST"><?php echo $FORM_TOKEN; ?>
-		<?php
-			foreach( POST('entities') as $entityClass => $on ) {
-				echo htmlHidden('entities/'.$entityClass);
-			}
-			?>
-			<button type="submit" class="btn btn-primary" name="submitGenerateSQL[<?php echo OUTPUT_APPLY; ?>]"><?php _t('apply'); ?></button>
-		</form>
-		<?php
+				<h3><?php _t('generated_sqlqueries', DOMAIN_SETUP); ?></h3>
+				<div class="sql_query"><?php echo $resultingSQL; ?></div>
+				<form method="POST"><?php echo $formToken; ?>
+					<?php
+					foreach( POST('entities') as $entityClass => $on ) {
+						echo htmlHidden('entities/' . $entityClass);
+					}
+					?>
+					<button type="submit" class="btn btn-primary" name="submitGenerateSQL[<?php echo OUTPUT_APPLY; ?>]"><?php _t('apply'); ?></button>
+				</form>
+				<?php
 			}
 		}
 		?>
 		
 		<form method="POST" role="form" class="form-horizontal">
-		<?php echo $FORM_TOKEN; ?>
-
-		<h2><?php _t('foundentities', DOMAIN_SETUP); ?></h2>
-		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);"><i class="fa fa-fw fa-check-square-o"></i> <?php _t('checkall'); ?></button>
-		<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);"><i class="fa fa-fw fa-square-o"></i> <?php _t('uncheckall'); ?></button>
-		
-		<ul class="list-group">
-		<?php
-		foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
-			echo '
+			<?php echo $formToken; ?>
+			
+			<h2><?php _t('foundentities', DOMAIN_SETUP); ?></h2>
+			<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);"><i class="fa fa-fw fa-check-square-o"></i> <?php _t('checkall'); ?></button>
+			<button class="btn btn-default btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);"><i class="fa fa-fw fa-square-o"></i> <?php _t('uncheckall'); ?></button>
+			
+			<ul class="list-group">
+				<?php
+				foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
+					echo '
 		<li class="list-group-item">
 			<label class="wf">
 				<input class="entitycb" type="checkbox" name="entities['.$entityClass.']"'.(!isPOST() || isPOST('entities/'.$entityClass) ? ' checked' : '').'
