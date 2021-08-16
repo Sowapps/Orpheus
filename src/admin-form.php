@@ -1,21 +1,24 @@
 <?php
 
+use Orpheus\EntityDescriptor\FieldDescriptor;
+
 /**
- * @param AbstractProject $project
- * @param int $current
+ * Get the field descriptor from a field path
+ *
+ * @param string $fieldPath
+ * @param string $class
+ * @return FieldDescriptor
  */
-function _adm_htmlFormTimeline($project, $current) {
-	// 	if( $project->step <= PROJECT_STEP_DOCUMENTS ) { return; }
-	// 	text("_adm_htmlFormTimeline($project, $current)");
-	$steps	= $project->getSteps();
-	$menu	= array();
-	// 	text($steps);
-	foreach( $steps as $step ) {
-		$menu[$step]	= $step === PROJECT_STEP_PLAN ? t('step_plan_'.$project->type, Project::getDomain()) : t(Project::$stepsModules[$step]);
+function getField($fieldPath, $class = null) {
+	$fieldPathArr = explode('/', $fieldPath);
+	if( $class === null ) {
+		$class = $fieldPathArr[0];
 	}
-	// 	text($menu);
-	_htmlFormTimeline($menu, $current, $project->step);
-	// 	_htmlFormTimeline(array('Mes sociétés', 'Mon projet', 'Les associés', 'Les partenaires', t('step_plan_'.$project->type, Project::getDomain()), 'Mes documents'), $current-1, $project->step);
+	if( !class_exists($class, 1) || !in_array('Orpheus\EntityDescriptor\PermanentEntity', class_parents($class)) ) {
+		return null;
+	}
+	
+	return $class::getField($fieldPathArr[count($fieldPathArr) - 1]);
 }
 
 function _adm_htmlCheckbox($fieldPath, $default=false, $class='', $addAttr='') {

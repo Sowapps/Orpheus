@@ -44,7 +44,7 @@ class User extends AbstractUser implements FixtureInterface {
 		// 		date_default_timezone_set($this->timezone);
 	}
 	
-	public function getLabel() {
+	public function getLabel(): string {
 		return $this->fullname;
 	}
 	
@@ -52,23 +52,26 @@ class User extends AbstractUser implements FixtureInterface {
 		return strtolower($this->name);
 	}
 	
-	public function getRank() {
+	public function getRank(): string {
 		$perms = array_flip(static::getAvailRoles());
-		return isset($perms[$this->accesslevel]) ? $perms[$this->accesslevel] : 'unknown_rank';
+		
+		return $perms[$this->accesslevel] ?? 'unknown_rank';
 	}
 	
-	public function getAvailRoles() {
+	public function getAvailRoles(): array {
 		$roles = static::getUserRoles();
 		foreach( $roles as $status => $accesslevel ) {
 			if( !$this->checkPerm($accesslevel) ) {
 				unset($roles[$status]);
 			}
 		}
+		
 		return $roles;
 	}
 	
-	public function getRoleText() {
+	public function getRoleText(): string {
 		$status = array_flip(static::getAvailRoles());
+		
 		return isset($status[$this->accesslevel]) ? static::text('role_' . $status[$this->accesslevel]) : static::text('role_unknown', $this->accesslevel);
 	}
 	
@@ -78,24 +81,20 @@ class User extends AbstractUser implements FixtureInterface {
 		$this->activation_code = null;
 	}
 	
-	public function getActivationLink() {
+	public function getActivationLink(): string {
 		return u(ROUTE_LOGIN) . '?ac=' . $this->activation_code . '&u=' . $this->id();
 	}
 	
-	public function getAdminLink($ref = 0) {
+	public function getAdminLink($ref = 0): string {
 		return u('adm_user', ['userID' => $this->id()]);
 	}
 	
-	public function getLink() {
+	public function getLink(): string {
 		return static::genLink($this->id());
 	}
 	
-	public static function genLink($id) {
-		return u('profile', $id);
-	}
-	
-	public function canUserList($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
-		return $this->canUserUpdate();
+	public function canUserList($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
+		return $this->canUserEdit($context, $contextResource);
 	}
 	
 	/**
@@ -103,8 +102,8 @@ class User extends AbstractUser implements FixtureInterface {
 	 * @param User $contextResource
 	 * @return boolean
 	 */
-	public function canUserCreate($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
-		return $this->canDo('user_edit');// Only App admins can do it.
+	public function canUserCreate($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
+		return $this->canUserEdit($context, $contextResource);
 	}
 	
 	/**
@@ -112,50 +111,54 @@ class User extends AbstractUser implements FixtureInterface {
 	 * @param User $contextResource
 	 * @return boolean
 	 */
-	public function canUserEdit($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canUserEdit($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		if( $this->canDo('user_edit') ) {
 			return true;
 		}
+		
+		// Only App admins can do it
+		
 		return false;
 	}
 	
-	public function canSeeDevelopers($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canSeeDevelopers($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('user_seedev');// Only App admins can do it.
 	}
 	
-	public function canUserStatus($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canUserStatus($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('user_status');// Only App admins can do it.
 	}
 	
-	public function canUserDelete($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canUserDelete($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('user_delete');// Only App admins can do it.
 	}
 	
-	public function canUserGrant($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canUserGrant($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('user_grant');// Only App admins can do it.
 	}
 	
-	public function canThreadMessageManage($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canThreadMessageManage($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('threadmessage_manage');// Only App admins can do it.
 	}
 	
-	public function canEntityDelete($context = CRAC_CONTEXT_APPLICATION, $contextResource = null) {
+	public function canEntityDelete($context = CRAC_CONTEXT_APPLICATION, $contextResource = null): bool {
 		return $this->canDo('entity_delete');// Only App admins can do it.
+	}
+	
+	public static function genLink($id): string {
+		return u('profile', $id);
 	}
 	
 	/**
 	 * @param string $email
 	 * @return User
 	 */
-	public static function getByEmail($email) {
+	public static function getByEmail($email): User {
 		if( !is_email($email) ) {
 			static::throwException('invalidEmail');
 		}
+		
 		return static::get()->where('email', 'LIKE', $email)->asObject()->run();
-	}
-	
-	protected static function instantiate($data) {
-		return parent::instantiate($data); // TODO: Change the autogenerated stub
 	}
 	
 	public static function loadFixtures() {

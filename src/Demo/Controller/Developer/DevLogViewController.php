@@ -4,8 +4,8 @@ namespace Demo\Controller\Developer;
 
 use Orpheus\Exception\NotFoundException;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 use Sowapps\File\AbstractFile;
 use Sowapps\File\GZFile;
 use Sowapps\File\TextFile;
@@ -13,10 +13,10 @@ use Sowapps\File\TextFile;
 class DevLogViewController extends DevController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$file = $request->getParameter('file');
 		
@@ -111,7 +111,7 @@ class DevLogViewController extends DevController {
 		$this->addRouteToBreadcrumb(ROUTE_DEV_LOGS);
 		$this->addThisToBreadcrumb($file);
 		
-		return $this->renderHTML('developer/dev_logfile', [
+		return $this->renderHtml('developer/dev_logfile', [
 			'file'          => $filePath,
 			'filePathInfo'  => $filePathInfo,
 			'format'        => $format,

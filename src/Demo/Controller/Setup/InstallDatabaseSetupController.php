@@ -5,21 +5,23 @@
 
 namespace Demo\Controller\Setup;
 
-use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
+use Orpheus\EntityDescriptor\PermanentEntity;
+use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySql;
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
+use Orpheus\SQLAdapter\SqlAdapter;
 
 class InstallDatabaseSetupController extends SetupController {
 	
 	protected static $routeName = 'setup_installdb';
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$formToken = new FormToken();
 		$env = [
@@ -30,20 +32,22 @@ class InstallDatabaseSetupController extends SetupController {
 		try {
 			if( is_array($request->getData('entities')) ) {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
+					$defaultAdapter = SqlAdapter::getInstance();
 					$output = $output == OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
 						$formToken->validateForm($request);
 					}
-					$generator	= new SQLGeneratorMySQL();
-					$result		= '';
+					$generator = new SQLGeneratorMySql();
+					$result = [];
+					/** @var PermanentEntity $entityClass */
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
-						$query	= $generator->matchEntity($entityClass::getValidator());
+						$query = $generator->matchEntity($entityClass::getValidator(), $entityClass::getSqlAdapter());
 						if( $query ) {
-							$result[$entityClass]	= $query;
+							$result[$entityClass] = $query;
 						}
 					}
 					
-					if( empty($result) ) {
+					if( !$result ) {
 						$env['allowContinue'] = true;
 						throw new UserException('errorNoChanges', DOMAIN_SETUP);
 					}
@@ -52,14 +56,14 @@ class InstallDatabaseSetupController extends SetupController {
 						$env['requireEntityValidation'] = 1;
 					} elseif( $output == OUTPUT_APPLY ) {
 						foreach( $result as $query ) {
-							pdo_query(strip_tags($query), PDOEXEC);
+							$defaultAdapter->query(strip_tags($query), PDOEXEC);
 						}
 						$env['allowContinue'] = true;
 						reportSuccess('successSQLApply', DOMAIN_SETUP);
 					}
 				}
 			}
-		
+			
 		} catch( UserException $e ) {
 			if( $e->getMessage() === 'errorNoChanges' ) {
 				reportSuccess($e, $e->getDomain());
@@ -71,13 +75,13 @@ class InstallDatabaseSetupController extends SetupController {
 		if( $env['allowContinue'] ) {
 			$this->validateStep();
 		}
-	
-		return $this->renderHTML('setup/setup_installdb', $env);
+		
+		return $this->renderHtml('setup/setup_installdb', $env);
 	}
-
+	
 }
 
-define('OUTPUT_APPLY',		1);
-define('OUTPUT_DISPLAY',	2);
-define('OUTPUT_DLRAW',		3);
-define('OUTPUT_DLZIP',		4);
+define('OUTPUT_APPLY', 1);
+define('OUTPUT_DISPLAY', 2);
+define('OUTPUT_DLRAW', 3);
+define('OUTPUT_DLZIP', 4);

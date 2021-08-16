@@ -2,30 +2,31 @@
 
 abstract class AbstractFile {
 	
-	protected $path;
-
-	protected $mode;
+	protected ?string $path;
+	
+	protected ?string $mode;
+	
 	protected $handle;
 	
-	abstract function open();
-	abstract function getNextLine();
-	abstract function write($data);
-	abstract function getContents();
-	abstract function close();
-	
-	public function __construct($path=null) {
+	public function __construct($path = null) {
 		$this->setPath($path);
 	}
+	
+	abstract function open();
+	
+	abstract function getNextLine();
+	
+	abstract function write($data);
+	
+	abstract function getContents();
+	
+	abstract function close();
 	
 	public function __destruct() {
 		$this->ensureClosed();
 	}
 	
-	public function getAnotherHandler($path) {
-		return new static($path);
-	}
-	
-	public function ensureOpen($mode=null) {
+	public function ensureOpen(?string $mode = null) {
 		if( $this->isOpen() ) {
 			if( $mode && $mode !== $this->mode ) {
 				$this->close();
@@ -52,7 +53,7 @@ abstract class AbstractFile {
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param string|AbstractFile $newFile
 	 * @return boolean
 	 */
@@ -66,54 +67,58 @@ abstract class AbstractFile {
 		}
 		if( rename($this->getPath(), $newFile) ) {
 			$this->path = $newFile;
+			
 			return true;
 		} else {
 			return false;
 		}
 	}
-
-	public function isCompressible() {
+	
+	public function isCompressible(): bool {
 		return true;
 	}
-
-	public function isOpen() {
+	
+	public function isOpen(): bool {
 		return $this->handle !== null;
 	}
-
-	public function exists() {
+	
+	public function exists(): bool {
 		return file_exists($this->getPath());
 	}
-
-	public function isReadable() {
+	
+	public function isReadable(): bool {
 		return is_readable($this->getPath());
 	}
-
-	public function isWritable() {
+	
+	public function isWritable(): bool {
 		return is_writable($this->getPath());
 	}
-
-	public function getPath() {
+	
+	public function getPath(): ?string {
 		return $this->path;
 	}
-
-	public function setPath($path) {
+	
+	public function setPath(string $path): AbstractFile {
 		if( $this->path ) {
 			throw new Exception('This file already has a path');
 		}
 		$this->path = $path;
+		
 		return $this;
 	}
-
-	public function getMode() {
+	
+	public function getMode(): ?string {
 		return $this->mode;
 	}
-
-	protected function setMode($mode) {
+	
+	protected function setMode(?string $mode): AbstractFile {
 		$this->mode = $mode;
+		
 		return $this;
 	}
-
+	
 	public function getHandle() {
 		return $this->handle;
 	}
+	
 }

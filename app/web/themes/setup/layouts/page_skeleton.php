@@ -1,15 +1,15 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPController $controller
- * @var HTTPRequest $request
- * @var HTTPRoute $route
+ * @var HttpController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
  *
  * @var string $CONTROLLER_OUTPUT
  * @var string $content
  */
 
-use Demo\User;use Orpheus\InputController\HTTPController\HTTPController;use Orpheus\InputController\HTTPController\HTTPRequest;use Orpheus\InputController\HTTPController\HTTPRoute;use Orpheus\Rendering\HTMLRendering;
+use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orpheus\InputController\HttpController\HttpRequest;use Orpheus\InputController\HttpController\HttpRoute;use Orpheus\Rendering\HTMLRendering;
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
@@ -20,21 +20,21 @@ use Demo\User;use Orpheus\InputController\HTTPController\HTTPController;use Orph
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
 	<meta name="application-name" content="<?php _t('app_name'); ?>"/>
-	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>" />
+	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>"/>
 	<meta name="Keywords" content="carnet"/>
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
-	<link rel="icon" type="image/png" href="<?php echo STATIC_URL.'images/icon.png'; ?>" />
-<?php
-foreach($this->listMetaProperties() as $property => $content) {
-	echo '
-	<meta property="'.$property.'" content="'.$content.'"/>';
-}
-?>
-
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen" />
+	<link rel="icon" type="image/png" href="<?php echo STATIC_ASSETS_URL . 'images/icon.png'; ?>"/>
+	<?php
+	foreach( $this->listMetaProperties() as $property => $content ) {
+		echo '
+	<meta property="' . $property . '" content="' . $content . '"/>';
+	}
+	?>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css" media="screen"/>
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen"/>

@@ -5,22 +5,22 @@
 
 namespace Demo\Controller\Setup;
 
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class EndSetupController extends SetupController {
 	
 	protected static $routeName = 'setup_end';
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$this->validateStep();
 		
-		return $this->renderHTML('setup/setup_end', []);
+		return $this->renderHtml('setup/setup_end', []);
 	}
 	
 }

@@ -8,19 +8,20 @@ namespace Demo\Controller\Setup;
 use Exception;
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 use Orpheus\Publisher\Fixture\FixtureRepository;
+use Orpheus\Publisher\PermanentObject\PermanentObject;
 
 class InstallFixturesSetupController extends SetupController {
 	
 	protected static $routeName = 'setup_installfixtures';
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$formToken = new FormToken();
 		$env = [
@@ -35,6 +36,7 @@ class InstallFixturesSetupController extends SetupController {
 				foreach( FixtureRepository::listAll() as $class ) {
 					$t++;
 					try {
+						/** @var PermanentObject $class */
 						$class::loadFixtures();
 						$c++;
 					} catch( Exception $e ) {
@@ -58,8 +60,8 @@ class InstallFixturesSetupController extends SetupController {
 			reportWarning('fixturesAlreadyLoaded', DOMAIN_SETUP);
 			$env['allowContinue'] = true;
 		}
-	
-		return $this->renderHTML('setup/setup_installfixtures', $env);
+		
+		return $this->renderHtml('setup/setup_installfixtures', $env);
 	}
 
 }

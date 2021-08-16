@@ -5,22 +5,22 @@
 
 namespace Demo\Controller;
 
-use DemoEntity;
+use Demo\DemoEntity;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HtmlHttpResponse;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
-class HomeController extends HTTPController {
+class HomeController extends HttpController {
 	
 	/**
 	 * Controller declaration
 	 *
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		try {
 			if( $data = $request->getData('data') ) {
 				$testID = DemoEntity::create($data);
@@ -36,7 +36,8 @@ class HomeController extends HTTPController {
 		} catch( UserException $e ) {
 			reportError($e);
 		}
-		return HTMLHTTPResponse::render('app/home');
+		
+		return HtmlHttpResponse::render('app/home');
 	}
 
 }

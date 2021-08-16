@@ -1,20 +1,23 @@
 <?php
 
+namespace Demo;
+
 use Orpheus\Exception\UserException;
 use Orpheus\Publisher\PermanentObject\PermanentObject;
 
 /** A sample demo test class
  * Example of how to use the permanent object.
-*/
+ */
 class DemoTest extends PermanentObject {
 	
 	//Attributes
-	protected static $table = 'test';
-	protected static $fields = array('id', 'name');
+	protected static string $table = 'test';
 	
-	protected static $editableFields = array('name');
+	protected static array $fields = ['id', 'name'];
 	
-	protected static $validator = array('name'=>'checkName');
+	protected static ?array $editableFields = ['name'];
+	
+	protected static $validator = ['name' => 'checkName'];
 	
 	// *** OVERLOADED METHODS ***
 	
@@ -24,33 +27,39 @@ class DemoTest extends PermanentObject {
 	// 		** CHECK METHODS **
 	
 	/** Checks Field 'name'
-	 * @param $inputData The user input.
-	 * @param $ref The reference to check the field from.
-	 * @return a valid field 'name'.
+	 *
+	 * @param array $input The user input.
+	 * @param PermanentObject|null $ref The reference to check the field from.
+	 * @return string a valid field 'name'.
 	 */
-	public static function checkName($inputData, $ref=null) {
-		if( empty($inputData['name']) ) {
+	public static function checkName(array $input, $ref = null) {
+		if( empty($input['name']) ) {
 			throw new UserException('emptyName');
 		}
-		if( strlen($inputData['name'])<10 ) {
+		if( strlen($input['name']) < 10 ) {
 			throw new UserException('tooShortName');
 		}
-		return strip_tags($inputData['name']);
+		
+		return strip_tags($input['name']);
 	}
 	
-	/** Checks for object
-	 * \sa PermanentObject::checkForObject()
-	*/
-	public static function checkForObject($data, $ref=null) {
+	/**
+	 * @param array $data
+	 * @param PermanentObject|null $ref
+	 */
+	public static function checkForObject($data, $ref = null) {
 		if( empty($data['name']) ) {
 			return;//Nothing to check.
 		}
-		$options = array(
-			'number'=> 1,
-			'where'	=> 'name='.static::formatValue($data['name']),
-		);
+		$options = [
+			'number' => 1,
+			'where'  => 'name=' . static::formatValue($data['name']),
+		];
 		$data = static::get($options);
-		if( empty($data) ) { return; }// No data got 
+		if( empty($data) ) {
+			return;
+		}
 		throw new UserException("existingObject");
 	}
+	
 }

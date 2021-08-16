@@ -1,9 +1,9 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPController $controller
- * @var HTTPRequest $request
- * @var HTTPRoute $route
+ * @var HttpController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
  *
  * @var string $CONTROLLER_OUTPUT
  * @var string $content
@@ -11,9 +11,9 @@
  */
 
 use Demo\User;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
 
@@ -47,7 +47,7 @@ $invertedStyle = $controller->getOption('invertedStyle', 1);
 	<meta name="Keywords" content="projet"/>
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
-	<link rel="icon" type="image/png" href="<?php echo STATIC_URL . 'images/icon.png'; ?>"/>
+	<link rel="icon" type="image/png" href="<?php echo STATIC_ASSETS_URL . 'images/icon.png'; ?>"/>
 	<?php
 	foreach( $this->listMetaProperties() as $property => $content ) {
 		echo '
@@ -69,7 +69,7 @@ $invertedStyle = $controller->getOption('invertedStyle', 1);
 	?>
 	
 	<link rel="stylesheet" href="<?php echo VENDOR_URL; ?>/sb-admin/sb-admin-6.0.2/css/styles.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="<?php echo STATIC_URL . 'style/base.css'; ?>" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo STATIC_ASSETS_URL . 'style/base.css'; ?>" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="<?php echo $rendering->getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
 	foreach( $this->listCSSURLs() as $url ) {

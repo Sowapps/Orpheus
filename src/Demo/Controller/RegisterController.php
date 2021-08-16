@@ -5,19 +5,19 @@
 
 namespace Demo\Controller;
 
+use Demo\User;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
-use User;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
-class RegisterController extends HTTPController {
+class RegisterController extends HttpController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		/* @var $user User */
 		try {
 			if( $request->hasParameter('ac') && is_id($userID = $request->getParameter('u')) ) {
@@ -29,19 +29,19 @@ class RegisterController extends HTTPController {
 				redirectTo(u(ROUTE_USERPROJECTS));
 			}
 			if( $data = $request->getData('user') ) {
-				$data['published']			= 0;
-				$data['activation_code']	= generatePassword(30);
-				$user	= User::createAndGet($data, array('fullname', 'email', 'password', 'published', 'activation_code'));
+				$data['published'] = 0;
+				$data['activation_code'] = generatePassword(30);
+				$user = User::createAndGet($data, ['fullname', 'email', 'password', 'published', 'activation_code']);
 				sendUserRegistrationEmail($user);
 				unset($user);
 				reportSuccess(User::text('successRegister'));
 			}
 			
-		} catch (UserException $e) {
+		} catch( UserException $e ) {
 			reportError($e);
 		}
 		
-		return $this->renderHTML('app/user_login');
+		return $this->renderHtml('app/user_login');
 	}
 	
 	

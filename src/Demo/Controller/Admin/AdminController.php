@@ -6,15 +6,15 @@
 namespace Demo\Controller\Admin;
 
 use Exception;
-use Orpheus\InputController\HTTPController\HTTPController;
+use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\Rendering\HTMLRendering;
 
-abstract class AdminController extends HTTPController {
+abstract class AdminController extends HttpController {
 	
 	protected $breadcrumb = [];
 	
-	public function addBreadcrumb($label, $link = null) {
-		$this->breadcrumb[] = (object) ['label' => $label, 'link' => $link];
+	public function addThisToBreadcrumb($label = null, $link = false) {
+		$this->addRouteToBreadcrumb($this->getRouteName(), $label, $link);
 	}
 	
 	/**
@@ -46,12 +46,12 @@ abstract class AdminController extends HTTPController {
 		$this->addBreadcrumb($label ? $label : t($route), $link);
 	}
 	
-	public function getValues() {
+	public function getValues(): array {
 		return [];
 	}
 	
-	public function addThisToBreadcrumb($label = null, $link = false) {
-		$this->addRouteToBreadcrumb($this->getRouteName(), $label, $link);
+	public function addBreadcrumb($label, $link = null) {
+		$this->breadcrumb[] = (object) ['label' => $label, 'link' => $link];
 	}
 	
 	public function preRun($request) {
@@ -62,11 +62,12 @@ abstract class AdminController extends HTTPController {
 		$this->addRouteToBreadcrumb(ROUTE_ADM_HOME);
 	}
 	
-	public function render($response, $layout, $values=array()) {
+	public function render($response, $layout, $values = []) {
 		if( isset($GLOBALS['USER']) ) {
-			$values['USER']	= $GLOBALS['USER'];
+			$values['USER'] = $GLOBALS['USER'];
 		}
 		$values['Breadcrumb'] = $this->breadcrumb;
+		
 		return parent::render($response, $layout, $values);
 	}
 	

@@ -4,20 +4,21 @@ namespace Demo\Controller\Developer;
 
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 use ZipArchive;
 
 class DevAppTranslateController extends DevController {
 	
 	protected $fallbackLocale;
+	
 	protected $translatingLocale;
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		$this->fallbackLocale = DEFAULT_LOCALE;
 		
 		/**
@@ -59,11 +60,9 @@ class DevAppTranslateController extends DevController {
 									if( empty($currentDomain[$key]) ) {
 										$created++;
 										$editedDomains[$domain] = 1;
-									} else {
-										if( $value !== $currentDomain[$key] ) {
-											$updated++;
-											$editedDomains[$domain] = 1;
-										}
+									} elseif( $value !== $currentDomain[$key] ) {
+										$updated++;
+										$editedDomains[$domain] = 1;
 									}
 								}
 							}
@@ -72,43 +71,41 @@ class DevAppTranslateController extends DevController {
 					reportInfo(t('translationAnalyzeReport', DOMAIN_TRANSLATIONS, $created, $updated));
 					unset($currentDomain, $value, $created, $updated);
 					
-				} else {
-					if( $request->hasData('submitDownload') ) {
-						$formToken->validateForm($request);
-						if( !$translatingFile ) {
-							throw new UserException('noDataToTranslationArchive', DOMAIN_TRANSLATIONS);
-						}
-						$arch = new ZipArchive();
-						if( !$arch->open($translatingZIPPath, ZipArchive::CREATE) ) {
-							throw new UserException('unableToOpenAppTranslationArchive', DOMAIN_TRANSLATIONS);
-						}
-						foreach( $translatingFile as $domain => $domainData ) {
-							$domainContent = '
+				} elseif( $request->hasData('submitDownload') ) {
+					$formToken->validateForm($request);
+					if( !$translatingFile ) {
+						throw new UserException('noDataToTranslationArchive', DOMAIN_TRANSLATIONS);
+					}
+					$arch = new ZipArchive();
+					if( !$arch->open($translatingZIPPath, ZipArchive::CREATE) ) {
+						throw new UserException('unableToOpenAppTranslationArchive', DOMAIN_TRANSLATIONS);
+					}
+					foreach( $translatingFile as $domain => $domainData ) {
+						$domainContent = '
 ; Language ini file for domain ' . strtoupper($domain) . '
 ; The current locale is ' . $this->translatingLocale . '
 		
 ';
-							foreach( $domainData as $key => $text ) {
-								$domainContent .= "{$key} = \"{$text}\"\n";
-							}
-							$arch->addFromString($domain . '.ini', $domainContent);
+						foreach( $domainData as $key => $text ) {
+							$domainContent .= "{$key} = \"{$text}\"\n";
 						}
-						$arch->close();
-						unset($arch);
-						
-						session_write_close();
-						ob_clean();
-						
-						header('Content-Type: application/zip');
-						header('Content-Disposition: attachment; filename="' . $this->translatingLocale . '-' . date('YmdHis') . '.zip"');
-						header('Content-length: ' . filesize($translatingZIPPath));
-						header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($translatingZIPPath)) . ' GMT');
-						header('Cache-Control: private, max-age=86400');
-						header('Pragma: public');
-						
-						readfile($translatingZIPPath);
-						die();
+						$arch->addFromString($domain . '.ini', $domainContent);
 					}
+					$arch->close();
+					unset($arch);
+					
+					session_write_close();
+					ob_clean();
+					
+					header('Content-Type: application/zip');
+					header('Content-Disposition: attachment; filename="' . $this->translatingLocale . '-' . date('YmdHis') . '.zip"');
+					header('Content-length: ' . filesize($translatingZIPPath));
+					header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($translatingZIPPath)) . ' GMT');
+					header('Cache-Control: private, max-age=86400');
+					header('Pragma: public');
+					
+					readfile($translatingZIPPath);
+					die();
 				}
 			}
 			
@@ -116,7 +113,7 @@ class DevAppTranslateController extends DevController {
 			reportError($e);
 		}
 		
-		return $this->renderHTML('developer/dev_apptranslate', [
+		return $this->renderHtml('developer/dev_apptranslate', [
 			'formToken'           => $formToken,
 			'editedDomains'       => $editedDomains,
 			'fallbackLocale'      => $this->fallbackLocale,

@@ -668,18 +668,6 @@ function text($message = '', $html = true) {
 	}
 }
 
-/**
- * @param $s
- * @param int $d
- * @deprecated No more used
- */
-function debug($s, $d = -1) {
-	if( $d !== -1 ) {
-		$s .= ': ' . toHtml($d);
-	}
-	text($s);
-}
-
 /** Limits the length of a string
  *
  * @param string $string The string to limit length.
@@ -689,7 +677,7 @@ function debug($s, $d = -1) {
  * Limits the length of a string and append $strend.
  * This function do it cleanly, it tries to cut before a word.
  */
-function str_limit($string, $max, $strend = '...') {
+function str_limit($string, $max, $strend = '...'): string {
 	$max = (int) $max;
 	if( $max <= 0 ) {
 		return '';

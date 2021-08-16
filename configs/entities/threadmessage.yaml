@@ -11,4 +11,3 @@ fields:
 indexes:
      - INDEX(user_id)
 #     - FULLTEXT(content)
-     

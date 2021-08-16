@@ -1,17 +1,17 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPRequest $request
- * @var HTTPRoute $route
- * @var HTTPController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
+ * @var HttpController $controller
  *
  * @var FormToken $formToken
  */
 
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
 $rendering->useLayout('page_skeleton');
@@ -39,7 +39,7 @@ if( $translatingLocale ) {
 				<p><?php _t('lastUpdateText', DOMAIN_TRANSLATIONS, dt(filemtime($translatingFilePath))); ?></p>
 				<div class="text-right clearfix mb10">
 				<form method="POST" role="form"><?php echo $formToken; ?>
-					<button name="submitAnalyze" class="btn btn-default" type="submit"><?php _t('analyzeTranslations', DOMAIN_TRANSLATIONS); ?></button>
+					<button name="submitAnalyze" class="btn btn-outline-secondary" type="submit"><?php _t('analyzeTranslations', DOMAIN_TRANSLATIONS); ?></button>
 					<button name="submitDownload" class="btn btn-primary" type="submit"><?php _t('download'); ?></button>
 				</form>
 				</div><?php

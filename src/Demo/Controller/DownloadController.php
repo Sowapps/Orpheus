@@ -6,23 +6,24 @@
 namespace Demo\Controller;
 
 use Orpheus\Config\AppConfig;
-use Orpheus\InputController\HTTPController\HTMLHTTPResponse;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\RedirectHTTPResponse;
+use Orpheus\InputController\HttpController\HtmlHttpResponse;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
+use Orpheus\InputController\HttpController\RedirectHttpResponse;
 
-class DownloadController extends HTTPController {
+class DownloadController extends HttpController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTMLHTTPResponse|RedirectHTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HtmlHttpResponse|RedirectHttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		$downloadURL = AppConfig::instance()->get($request->hasParameter('releases') ? 'releases_url' : 'download_url');
 		if( $downloadURL ) {
-			return new RedirectHTTPResponse($downloadURL);
+			return new RedirectHttpResponse($downloadURL);
 		}
 		
-		return HTMLHTTPResponse::render('app/home');
+		return HtmlHttpResponse::render('app/home');
 	}
 }

@@ -5,18 +5,18 @@
 
 namespace Demo\Controller\Setup;
 
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class CheckFileSystemSetupController extends SetupController {
 	
 	protected static $routeName = 'setup_checkfs';
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$env = [
 			'folders'       => [],
@@ -75,7 +75,7 @@ class CheckFileSystemSetupController extends SetupController {
 			$this->validateStep();
 		}
 		
-		return $this->renderHTML('setup/setup_checkfs', $env);
+		return $this->renderHtml('setup/setup_checkfs', $env);
 	}
 	
 }

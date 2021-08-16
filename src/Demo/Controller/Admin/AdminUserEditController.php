@@ -8,16 +8,16 @@ namespace Demo\Controller\Admin;
 use Demo\User;
 use Orpheus\Exception\ForbiddenException;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class AdminUserEditController extends AdminController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		/* @var $USER User */
 		global $USER, $formData;
@@ -32,8 +32,8 @@ class AdminUserEditController extends AdminController {
 		$this->addRouteToBreadcrumb(ROUTE_ADM_USERS);
 		$this->addThisToBreadcrumb($user);
 		
-		$USER_CAN_USER_EDIT		= !CHECK_MODULE_ACCESS || $USER->canUserEdit();
-		$USER_CAN_USER_DELETE	= $USER->canUserDelete();
+		$USER_CAN_USER_EDIT = !CHECK_MODULE_ACCESS || $USER->canUserEdit();
+		$USER_CAN_USER_DELETE = $USER->canUserDelete();
 		
 		try {
 			if( $request->hasData('submitUpdate') ) {
@@ -67,7 +67,7 @@ class AdminUserEditController extends AdminController {
 		
 		includeHTMLAdminFeatures();
 		
-		return $this->renderHTML('app/admin_useredit', [
+		return $this->renderHtml('app/admin_useredit', [
 			'USER_CAN_USER_EDIT'   => $USER_CAN_USER_EDIT,
 			'USER_CAN_USER_DELETE' => $USER_CAN_USER_DELETE,
 			'USER_CAN_USER_GRANT'  => true,

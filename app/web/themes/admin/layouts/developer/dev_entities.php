@@ -1,23 +1,22 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPRequest $request
- * @var HTTPRoute $route
- * @var HTTPController $controller
+ * @var HttpController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
  *
  * @var FormToken $formToken
- * @var ?string $resultingSQL
+ * @var string|null $resultingSQL
  */
 
 use Orpheus\EntityDescriptor\PermanentEntity;
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
 $rendering->useLayout('page_skeleton');
-
 ?>
 <div class="row">
 	<?php
@@ -38,7 +37,7 @@ $rendering->useLayout('page_skeleton');
 						<ul class="list-group">
 						<?php
 						foreach( $unknownTables as $table => $on ) {
-					echo '
+							echo '
 					<li class="list-group-item">
 						<label class="wf">
 							<input class="entitycb" type="checkbox" name="removeTable[' . $table . ']"/> ' . $table . '
@@ -59,44 +58,45 @@ $rendering->useLayout('page_skeleton');
 	}
 	?>
 	
-	
 	<div class="col-lg-6">
 		<form method="POST" role="form" class="form-horizontal"><?php echo $formToken; ?>
 			<?php $rendering->useLayout('panel-default'); ?>
-			<button class="btn btn-info btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);"><i class="fa fa-fw fa-check-square-o"></i> <?php _t('checkall'); ?></button>
-			<button class="btn btn-info btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);"><i class="fa fa-fw fa-square-o"></i> <?php _t('uncheckall'); ?></button>
+			<button class="btn btn-info btn-sm" type="button" onclick="$('.entitycb').prop('checked', true);"><i class="far fa-fw fa-check-square"></i> <?php _t('checkall'); ?></button>
+			<button class="btn btn-info btn-sm" type="button" onclick="$('.entitycb').prop('checked', false);"><i class="far fa-fw fa-square"></i> <?php _t('uncheckall'); ?></button>
 			
-			<ul class="list-group">
+			<ul class="list-group mt-2 mb-2">
 				<?php
 				foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
 					echo '
 			<li class="list-group-item">
-				<label class="wf">
+				<label class="wf mb-0">
 					<input class="entitycb" type="checkbox" name="entities[' . $entityClass . ']"' . (!isPOST() || isPOST('entities/' . $entityClass) ? ' checked' : '')
-						.' title="'.$entityClass.'"/> '.$entityClass.'
+						. ' title="' . $entityClass . '"/> ' . $entityClass . '
 				</label>
 			</li>';
-		}
-		?>
-		</ul>
-		
-		<div class="form-group">
-			<label class="col-sm-4 control-label">SQL</label>
-			<div class="col-sm-3">
-				<button type="submit" class="btn btn-primary" name="submitGenerateSQL[<?php echo OUTPUT_DISPLAY; ?>]">Generate</button>
+				}
+				?>
+			</ul>
+			
+			<div class="form-group row">
+				<label class="col-sm-4 control-label">SQL</label>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary" name="submitGenerateSQL[<?php echo OUTPUT_DISPLAY; ?>]">Generate</button>
+				</div>
 			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-sm-4 control-label">Validation Errors</label>
-			<div class="col-sm-3">
-				<select name="ve_output" class="form-control">
-					<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
-					<option value="<?php echo OUTPUT_DLRAW; ?>">Download (TXT)</option>
-				</select>
+			
+			<div class="form-group row">
+				<label class="col-sm-4 control-label">Validation Errors</label>
+				<div class="col-sm-3">
+					<select name="ve_output" class="form-control">
+						<option value="<?php echo OUTPUT_DISPLAY; ?>" selected>Display</option>
+						<option value="<?php echo OUTPUT_DLRAW; ?>">Download (TXT)</option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<button type="submit" class="btn btn-primary" name="submitGenerateVE">Generate</button>
+				</div>
 			</div>
-			<button type="submit" class="btn btn-primary" name="submitGenerateVE">Generate</button>
-		</div>
 			
 			<?php $rendering->endCurrentLayout(['title' => 'Toutes les entités']); ?>
 		</form>
@@ -111,36 +111,5 @@ $rendering->useLayout('page_skeleton');
 	background-color: #f7f7f9;
 	border-radius: 4px;
 	margin-bottom: 20px;
-}
-.table-operation {
-	margin-bottom:	10px;
-	white-space:	pre;
-	tab-size:		4;
-	-moz-tab-size:	4;
-	font-size:		12px;
-}
-.query_reservedWord {
-	text-transform: uppercase;
-	font-weight: bold;
-	color: #31b0d5;
-}
-.query_command {
-	color: #025aa5;
-}
-.query_subCommand {
-	color: #025aa5;
-}
-
-.query_identifier {
-	color: #5cb85c;
-}
-
-.query_columnType {
-	color: #f0ad4e;
-}
-
-.tabulation {
-	display: inline;
-	width: 3rem;
 }
 </style>

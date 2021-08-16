@@ -15,7 +15,6 @@
   },
   "require": {
 	"orpheus/orpheus-core": "1.*",
-	"orpheus/orpheus-hook": "1.*",
 	"orpheus/orpheus-cache": "1.*",
 	"orpheus/orpheus-yaml": "1.*",
 	"orpheus/orpheus-initernationalization": "1.*",

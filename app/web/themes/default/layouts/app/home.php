@@ -26,25 +26,26 @@ $this->display('reports-bootstrap3');
 
 <div class="row">
 	<div class="col-xs-8">
-
+		
 		<div class="row">
 			<div class="col-xs-4">
-<h3>Persistant Entity System</h3>
-<p>The framework allow you to do not manipulate SQL queries anymore. It includes a SQL Adapter system with a full object entity handling for PHP.</p>
+				<h3>Persistant Entity System</h3>
+				<p>The framework allow you to do not manipulate SQL queries anymore. It includes a SQL Adapter system with a full object entity handling for PHP.</p>
 			</div>
 			<div class="col-xs-4">
-<h3>A Light &amp; Powerful Rendering system</h3>
-<p>You can define the renderer on-the-fly from PHP, as the theme you want. Basically, it includes a Raw Renderer, a HTML Renderer and a Twig Rendering Adapter.</p>
+				<h3>A Light &amp; Powerful Rendering system</h3>
+				<p>You can define the renderer on-the-fly from PHP, as the theme you want. Basically, it includes a simple & powerful raw php renderer, so no exotic thing, just what you already know
+					!</p>
 			</div>
 			<div class="col-xs-4">
-<h3>i18n - Internationalization</h3>
-<p>All features allow you to translate contents using our easy-to-use internationalization library. The translation functions also allow you to pass replacement values from PHP.</p>
+				<h3>i18n - Internationalization</h3>
+				<p>All features allow you to translate contents using our easy-to-use internationalization library. The translation functions also allow you to pass replacement values from PHP.</p>
 			</div>
 		</div>
-
+		
 		<div class="row">
 			<div class="col-xs-4">
-<h3>Debug Tools Provided</h3>
+				<h3>Debug Tools Provided</h3>
 <p>This PHP framework provides you all tools to debug your application, it catches all error that occurred running your scripts and log it for you.</p>
 			</div>
 			<div class="col-xs-4">

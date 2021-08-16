@@ -1,48 +1,57 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPRequest $request
- * @var HTTPRoute $route
- * @var HTTPController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
+ * @var HttpController $controller
+ *
+ * @var array $composerConfig
+ * @var string $applicationFolder
+ * @var string $composerFile
+ * @var string $composerHome
  */
 
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
-
-/* @var array $composerConfig */
+use Sowapps\Controller\Admin\AdminController;
 
 $rendering->useLayout('page_skeleton');
-HTMLRendering::addJsFile('model.js', HTMLRendering::LINK_TYPE_CUSTOM);
+$rendering->addJSFile('model.js', HTMLRendering::LINK_TYPE_CUSTOM);
 
 global $formData;
 $formData = ['composer' => (array) $composerConfig];
-if( isset($formData['composer']['keywords']) ) {
-	// 	$formData['composer']['keywords'] = implode(',', $formData['composer']['keywords']);
+if( !isset($formData['composer']['keywords']) ) {
 	apath_setp($formData, 'composer/keywords', [], false);
+}
+if( !isset($formData['composer']['minimum-stability']) ) {
 	apath_setp($formData, 'composer/minimum-stability', 'stable', false);
+}
+if( !isset($formData['composer']['authors']) ) {
 	apath_setp($formData, 'composer/authors', [], false);
+}
+if( !isset($formData['composer']['require']) ) {
 	apath_setp($formData, 'composer/require', [], false);
 }
 
-includeHTMLAdminFeatures();
+includeAdminComponents();
 
 ?>
 <form method="POST" role="form">
 	<input type="hidden" class="input-authors" name="composer[authors]" value="<?php echo htmlFormATtr((array) $formData['composer']['authors']); ?>"/>
 	<input type="hidden" class="input-require" name="composer[require]" value="<?php echo htmlFormATtr((object) $formData['composer']['require']); ?>"/>
 	
-	<ul class="nav nav-tabs mb15" role="tablist">
-		<li role="presentation" class="active">
-			<a href="#ComposerGeneral" aria-controls="ComposerGeneral" role="tab" data-toggle="tab"><?php _t('tab_general', DOMAIN_COMPOSER) ?></a>
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" href="#ComposerGeneral" aria-controls="ComposerGeneral" role="tab" data-toggle="tab"><?php _t('tab_general', DOMAIN_COMPOSER) ?></a>
 		</li>
-		<li role="presentation">
-			<a href="#ComposerDependencies" aria-controls="ComposerDependencies" role="tab" data-toggle="tab"><?php _t('tab_dependencies', DOMAIN_COMPOSER) ?></a>
+		<li class="nav-item">
+			<a class="nav-link" href="#ComposerDependencies" aria-controls="ComposerDependencies" role="tab" data-toggle="tab"><?php _t('tab_dependencies', DOMAIN_COMPOSER) ?></a>
 		</li>
 	</ul>
 	
-	<div class="tab-content">
+	<div class="tab-content mt-3">
 		<div role="tabpanel" class="tab-pane active" id="ComposerGeneral">
 			
 			<div class="row">
@@ -71,11 +80,6 @@ includeHTMLAdminFeatures();
 							}
 							?>
 						</select>
-						
-						<?php /*
-				<?php _adm_htmlTextInput('composer/keywords', '', 'id="InputComposerKeywords"'); ?>
-	<!-- 			<input name="composer[keywords]" id="InputComposerKeywords" class="form-control" value=""/> -->
-				*/ ?>
 					</div>
 					<div class="form-group">
 						<label><?php _t('license', DOMAIN_COMPOSER); ?></label>
@@ -146,8 +150,8 @@ includeHTMLAdminFeatures();
 							<span data-model_require="role"> ({{role}})</span>
 							<span data-model_require="homepage"> - <a href="{{homepage}}" target="_blank">{{homepage|url_host}}</a></span>
 							<div class="pull-right">
-								<button class="btn btn-default btn-sm action-update" type="button"><i class="fa fa-fw fa-edit"></i></button>
-								<button class="btn btn-default btn-sm action-delete" type="button"><i class="fa fa-fw fa-times"></i></button>
+								<button class="btn btn-outline-secondary btn-sm action-update" type="button"><i class="fa fa-fw fa-edit"></i></button>
+								<button class="btn btn-outline-secondary btn-sm action-delete" type="button"><i class="fa fa-fw fa-times"></i></button>
 							</div>
 						</li>
 						<li class="list-group-item item item-authors model_placeholder">
@@ -170,9 +174,7 @@ includeHTMLAdminFeatures();
 		<div role="tabpanel" class="tab-pane" id="ComposerDependencies">
 			<div class="row">
 				<div class="col-lg-6">
-					<?php
-					$rendering->useLayout('panel-default');
-					?>
+					<?php $rendering->useLayout('panel-default'); ?>
 					
 					<ul class="list-group list-require">
 						<li class="list-group-item item item-require item_model" data-model_type="require">
@@ -210,12 +212,9 @@ includeHTMLAdminFeatures();
 		<div class="modal-content">
 			
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
 				<h4 class="modal-title visible-create"><?php _t('addNewAuthor', DOMAIN_COMPOSER); ?></h4>
 				<h4 class="modal-title visible-update author_name"></h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="<?php _t('close'); ?>"><span aria-hidden="true">&times;</span></button>
 			</div>
 			
 			<form method="POST">
@@ -223,28 +222,25 @@ includeHTMLAdminFeatures();
 					
 					<div class="form-group">
 						<label for="InputAuthorName"><?php _t('author_name', DOMAIN_COMPOSER); ?></label>
-						<input type="text" class="form-control author_name" data-field="name"
-							   id="InputAuthorName" required>
+						<input type="text" class="form-control author_name" data-field="name" id="InputAuthorName" required>
 					</div>
 					<div class="form-group">
 						<label for="InputAuthorName"><?php _t('author_email', DOMAIN_COMPOSER); ?></label>
-						<input type="email" class="form-control author_email" data-field="email"
-							   id="InputAuthorName">
+						<input type="email" class="form-control author_email" data-field="email" id="InputAuthorName">
 					</div>
 					<div class="form-group">
 						<label for="InputAuthorRole"><?php _t('author_role', DOMAIN_COMPOSER); ?></label>
-						<input type="text" class="form-control author_role" data-field="role"
-							   id="InputAuthorRole">
+						<input type="text" class="form-control author_role" data-field="role" id="InputAuthorRole">
 					</div>
 					<div class="form-group">
 						<label for="InputAuthorHomepage"><?php _t('author_homepage', DOMAIN_COMPOSER); ?></label>
 						<div class="input-group">
-							<input type="url" class="form-control author_homepage" data-field="homepage"
-								   data-linkbtn="#BtnAuthorHomepage" id="InputAuthorHomepage"> <span
-									class="input-group-btn"> <a class="btn btn-default"
-																target="_blank" id="BtnAuthorHomepage"><i
-											class="fa fa-fw fa-external-link"></i></a>
-						</span>
+							<input type="url" class="form-control author_homepage" data-field="homepage" data-linkbtn="#BtnAuthorHomepage" id="InputAuthorHomepage">
+							<span class="input-group-btn">
+								<a class="btn btn-default" target="_blank" id="BtnAuthorHomepage">
+									<i class="fa fa-fw fa-external-link"></i>
+								</a>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -264,12 +260,9 @@ includeHTMLAdminFeatures();
 			<form method="POST">
 				
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 					<h4 class="modal-title visible-create"><?php _t('addNewDependency', DOMAIN_COMPOSER); ?></h4>
 					<h4 class="modal-title visible-update dependency_name"></h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="<?php _t('close'); ?>"><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div class="modal-body">
 					
@@ -326,8 +319,6 @@ $(function () {
 	$(".list-authors").on("click", ".item-authors .action-delete", function () {
 		var itemRow = $(this).closest(".model_item.item-authors");
 		itemRow.model("removeItem");
-// 		itemRow.remove();
-// 		saveItems();
 	});
 	
 	EditAuthorDialog.find(".save_author").click(function () {
@@ -346,20 +337,12 @@ $(function () {
 		if( !itemData.name ) {
 			return;
 		}
-		if( update ) {
+		if( update && itemRow ) {
 			itemRow.model("updateItem", itemData);
 		} else {
-// 			$(this).data("itemtype")
-// 			itemRow.model("addItem", itemData);
 			Model.get($(this).data("itemtype")).model("addItem", itemData);
 		}
-// 		if( update ) {
-// 			modelItemUpdate(itemRow, itemData);
-// 		} else {
-// 			modelItemAdd($(this).data("itemtype"), itemData);
-// 		}
 		EditAuthorDialog.modal("hide");
-// 		saveItems();
 	});
 	
 	EditDependencyDialog = $("#EditDependencyDialog").modal({show: false});
@@ -406,7 +389,7 @@ $(function () {
 		if( !itemData._key_ || !itemData._value_ ) {
 			return;
 		}
-		if( update ) {
+		if( update && itemRow ) {
 			itemRow.model("updateItem", itemData);
 		} else {
 			Model.get($(this).data("itemtype")).model("addItem", itemData);
@@ -416,7 +399,7 @@ $(function () {
 	
 	$("#InputDependencyName").select2({
 		ajax: {
-			//https://packagist.org/apidoc
+			// https://packagist.org/apidoc
 			url: 'https://packagist.org/search.json',
 			dataType: 'json',
 			delay: 250,
@@ -445,7 +428,6 @@ $(function () {
 						id: item.name,
 						text: "<b>" + item.name + "</b><br>" + item.description
 					});
-// 					items.push({id:item.name, text:item.description+" ("+item.name+")"});
 				}
 				
 				return {
@@ -459,7 +441,6 @@ $(function () {
 			cache: true
 		},
 		templateSelection: function (data, container) {
-// 			console.log("templateSelection - data", data, data.item);
 			return data.item.name;
 		},
 		escapeMarkup: function (markup) {

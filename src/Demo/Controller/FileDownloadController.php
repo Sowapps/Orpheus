@@ -5,21 +5,20 @@
 
 namespace Demo\Controller;
 
-use Demo\File;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
-class FileDownloadController extends HTTPController {
+class FileDownloadController extends HttpController {
 	
 	/**
 	 * Controller declaration
 	 *
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
-	 * @see HTTPController::run()
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
+	 * @see HttpController::run()
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		/* @var File $file */
 		$file = File::load($request->getPathValue('fileID'), false);
@@ -27,7 +26,8 @@ class FileDownloadController extends HTTPController {
 		$file->download($request->getParameter('k'), $request->hasParameter('download'));
 		
 		// Stop the script, the download feature take response in
-		return null;
+		// TODO Use a file download response
+		return new HttpResponse();
 	}
 	
 }

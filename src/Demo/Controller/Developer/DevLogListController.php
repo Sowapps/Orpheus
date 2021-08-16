@@ -2,16 +2,16 @@
 
 namespace Demo\Controller\Developer;
 
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class DevLogListController extends DevController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$logs = [
 			'sys'   => (object) ['label' => t('file_system_title', DOMAIN_LOGS), 'file' => LOGFILE_SYSTEM],
@@ -33,7 +33,8 @@ class DevLogListController extends DevController {
 		}
 		
 		$this->addThisToBreadcrumb();
-		return $this->renderHTML('developer/dev_loglist', [
+		
+		return $this->renderHtml('developer/dev_loglist', [
 			'logs' => $logs,
 		]);
 	}

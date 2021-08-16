@@ -6,20 +6,20 @@
 namespace Demo\Controller;
 
 use Demo\User;
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
-use Orpheus\InputController\HTTPController\RedirectHTTPResponse;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
+use Orpheus\InputController\HttpController\RedirectHttpResponse;
 
-class RedirectController extends HTTPController {
+class RedirectController extends HttpController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
-		return new RedirectHTTPResponse(u(User::isLogged() ? DEFAULTMEMBERROUTE : DEFAULT_ROUTE));
+		return new RedirectHttpResponse(u(User::isLogged() ? DEFAULTMEMBERROUTE : DEFAULT_ROUTE));
 	}
 	
 	

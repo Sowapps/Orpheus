@@ -8,16 +8,16 @@ namespace Demo\Controller\Admin;
 use Demo\User;
 use Orpheus\Config\Config;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class AdminUserListController extends AdminController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		/* @var $USER User */
 		global $USER;
@@ -43,12 +43,12 @@ class AdminUserListController extends AdminController {
 		}
 		
 		$users = User::get()
-			->orderby('fullname ASC');
+			->orderBy('fullname ASC');
 		if( !$USER_CAN_DEV_SEE ) {
 			$users->where('accesslevel<=' . Config::get('user_roles/administrator'));
 		}
 		
-		return $this->renderHTML('app/admin_userlist', [
+		return $this->renderHtml('app/admin_userlist', [
 			'USER_CAN_USER_EDIT' => $USER_CAN_USER_EDIT,
 			'users'              => $users,
 		]);

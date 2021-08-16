@@ -1,28 +1,31 @@
 <?php
+/**
+ * @author Florent HAZARD <f.hazard@sowapps.com>
+ */
 
 namespace Demo\Controller\Developer;
 
 use Orpheus\EntityDescriptor\EntityDescriptor;
 use Orpheus\EntityDescriptor\LangGenerator;
 use Orpheus\EntityDescriptor\PermanentEntity;
-use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySQL;
+use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySql;
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 use Orpheus\Publisher\Exception\InvalidFieldException;
 use Orpheus\SQLAdapter\Exception\SQLException;
-use Orpheus\SQLAdapter\SQLAdapter;
+use Orpheus\SQLAdapter\SqlAdapter;
 use PDO;
 use PDOStatement;
 
 class DevEntitiesController extends DevController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		$this->addThisToBreadcrumb();
 		
@@ -34,22 +37,24 @@ class DevEntitiesController extends DevController {
 		try {
 			if( is_array($request->getData('entities')) ) {
 				if( $request->hasDataKey('submitGenerateSQL', $output) ) {
+					$defaultAdapter = SqlAdapter::getInstance();
 					$output = $output == OUTPUT_APPLY ? OUTPUT_APPLY : OUTPUT_DISPLAY;
 					if( $output == OUTPUT_APPLY ) {
 						$formToken->validateForm($request);
 					}
-					$generator = new SQLGeneratorMySQL();
+					$generator = new SQLGeneratorMySql();
 					$result = [];
+					/** @var PermanentEntity $entityClass */
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
-						$query = $generator->matchEntity($entityClass::getValidator());
+						$query = $generator->matchEntity($entityClass::getValidator(), $entityClass::getSqlAdapter());
 						if( $query ) {
 							$result[$entityClass] = $query;
 						}
 					}
-					
+					// List all unknown tables
 					$env['unknownTables'] = [];
 					/* @var PDOStatement $statement */
-					$statement = pdo_query('SHOW TABLES', PDOSTMT);
+					$statement = $defaultAdapter->query('SHOW TABLES', PDOSTMT);
 					$knownTables = [];
 					foreach( PermanentEntity::listKnownEntities() as $entityClass ) {
 						$knownTables[$entityClass::getTable()] = 1;
@@ -69,9 +74,11 @@ class DevEntitiesController extends DevController {
 					if( $output == OUTPUT_DISPLAY ) {
 						$env['requireEntityValidation'] = 1;
 					} elseif( $output == OUTPUT_APPLY ) {
+						// Apply for selected entities
 						foreach( $result as $query ) {
-							pdo_query(strip_tags($query), PDOEXEC);
+							$defaultAdapter->query(strip_tags($query), PDOEXEC);
 						}
+						// Remove non-managed tables
 						$tablesToRemove = $request->getData('removeTable');
 						foreach( $env['unknownTables'] as $table => $on ) {
 							if( empty($tablesToRemove[$table]) ) {
@@ -79,21 +86,23 @@ class DevEntitiesController extends DevController {
 								continue;
 							}
 							try {
-								pdo_query('DROP TABLE ' . SQLAdapter::doEscapeIdentifier($table), PDOEXEC);
+								$defaultAdapter->query(sprintf('DROP TABLE %s', $defaultAdapter->escapeIdentifier($table)), PDOEXEC);
 							} catch( SQLException $e ) {
-								reportError('Unable to drop table ' . $table . ', cause: ' . $e->getMessage());
+								reportError(sprintf('Unable to drop table %s, cause: %s', $table, $e->getMessage()));
 							}
 						}
-						reportSuccess('successSQLApply', DOMAIN_SETUP);
+						reportSuccess('successSQLApply');
 					}
 				} elseif( $request->hasData('submitGenerateVE') ) {
 					$output = $request->getData('ve_output') == OUTPUT_DLRAW ? OUTPUT_DLRAW : OUTPUT_DISPLAY;
 					$generator = new LangGenerator();
 					$result = '';
+					/** @var PermanentEntity $entityClass */
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
 						$entityName = $entityClass::getTable();
 						$result .= "\n\n\t$entityName.ini\n";
-						foreach( $generator->getRows(EntityDescriptor::load($entityName)) as $k => $exc ) {
+						$entityDescriptor = EntityDescriptor::load($entityName, $entityClass);
+						foreach( $generator->getRows($entityDescriptor) as $k => $exc ) {
 							/* @var $exc InvalidFieldException */
 							$exc->setDomain('entity_model');
 							$exc->removeArgs();//Does not replace arguments
@@ -101,7 +110,7 @@ class DevEntitiesController extends DevController {
 							$result .= $k . str_repeat("\t", 11 - floor(strlen($k) / 4)) . '= "' . $exc->getText() . "\"\n";
 						}
 					}
-					if( $output === OUTPUT_APPLY ) {
+					if( $output == OUTPUT_APPLY ) {
 						reportError('Output not implemented !');
 					} else {
 						echo '<pre style="tab-size: 4; -moz-tab-size: 4;">' . $result . '</pre>';
@@ -116,7 +125,8 @@ class DevEntitiesController extends DevController {
 				reportError($e);
 			}
 		}
-		return $this->renderHTML('developer/dev_entities', $env);
+		
+		return $this->renderHtml('app/dev_entities', $env);
 	}
 	
 }

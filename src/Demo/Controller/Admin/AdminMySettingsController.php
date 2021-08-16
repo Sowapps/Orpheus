@@ -7,16 +7,16 @@ namespace Demo\Controller\Admin;
 
 use Demo\User;
 use Orpheus\Exception\UserException;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPResponse;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 
 class AdminMySettingsController extends AdminController {
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @param HttpRequest $request The input HTTP request
+	 * @return HttpResponse The output HTTP response
 	 */
-	public function run($request) {
+	public function run($request): HttpResponse {
 		
 		/* @var $USER User */
 		global $USER, $formData;
@@ -49,7 +49,7 @@ class AdminMySettingsController extends AdminController {
 		
 		require_once ORPHEUSPATH . LIBSDIR . 'src/admin-form.php';
 		
-		return $this->renderHTML('app/admin_useredit', [
+		return $this->renderHtml('app/admin_useredit', [
 			'USER_CAN_USER_EDIT'   => $USER_CAN_USER_EDIT,
 			'USER_CAN_USER_GRANT'  => false,
 			'USER_CAN_USER_DELETE' => false,

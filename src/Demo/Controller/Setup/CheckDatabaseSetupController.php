@@ -5,7 +5,9 @@
 
 namespace Demo\Controller\Setup;
 
-use Orpheus\InputController\HTTPController\HTTPRequest;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\Pdo\PdoErrorAnalyzer;
+use Orpheus\Pdo\PdoPermissionAnalyzer;
 
 /*
  * Check writing on FS
@@ -20,11 +22,10 @@ class CheckDatabaseSetupController extends SetupController {
 	protected static $routeName = 'setup_checkdb';
 	
 	/**
-	 * @param HTTPRequest $request The input HTTP request
+	 * @param HttpRequest $request The input HTTP request
 	 * @return HTTPResponse The output HTTP response
 	 */
-	public function run($request) {
-		
+	public function run($request): HttpResponse {
 		
 		$env = [
 			'folders'       => [],
@@ -32,25 +33,43 @@ class CheckDatabaseSetupController extends SetupController {
 		];
 		
 		pdo_loadConfig();
-		$DB_SETTINGS = (object) pdo_getSettings(pdo_getDefaultInstance());
-		$env['DB_SETTINGS'] = &$DB_SETTINGS;
+		$instance = pdo_getDefaultInstance();
+		$settings = pdo_getSettings($instance);
+		$env['DB_SETTINGS'] = (object) $settings;
 		
-		// 		startReportStream('checkdb');
-// 		$allowContinue = false;
 		try {
-			ensure_pdoinstance();
+			pdo_connect($settings);
 			$env['allowContinue'] = true;
 			reportSuccess('successDBAccess', DOMAIN_SETUP);
-		} catch( SQLException $e ) {
+		} catch( PDOException $e ) {
 			reportError($e->getMessage(), DOMAIN_SETUP);
+			$this->resolveError($e, $settings);
 		}
-// 		endReportStream();
 		
 		if( $env['allowContinue'] ) {
 			$this->validateStep();
 		}
 		
-		return $this->renderHTML('setup/setup_checkdb', $env);
+		return $this->renderHtml('setup/setup_checkdb', $env);
+	}
+	
+	protected function resolveError($exception, array $settings) {
+		$analyzer = PdoErrorAnalyzer::fromDriver($exception, $settings['driver']);
+		switch( $analyzer->getCodeReference() ) {
+			case PdoErrorAnalyzer::CODE_UNKNOWN_DATABASE:
+				$this->checkCreateDatabase($settings);
+				break;
+		}
+	}
+	
+	protected function checkCreateDatabase($settings) {
+		$permissionAnalyzer = PdoPermissionAnalyzer::fromSettings($settings);
+		if( !$permissionAnalyzer->canDatabaseCreate() ) {
+			reportError(sprintf('Current database user "%s" has no permission to create database "%s" on "%s"', $settings['user'], $settings['dbname'], $settings['host']));
+			
+			return;
+		}
+		$this->setOption('allowCreateDatabase', true);
 	}
 	
 }

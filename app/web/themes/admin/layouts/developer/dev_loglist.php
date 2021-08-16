@@ -1,26 +1,25 @@
 <?php
 /**
  * @var HTMLRendering $rendering
- * @var HTTPRequest $request
- * @var HTTPRoute $route
- * @var HTTPController $controller
+ * @var HttpController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
+ *
+ * @var array $logs
  */
 
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
 $rendering->useLayout('page_skeleton');
 
-?>
-<div class="panel-group">
-	<?php
-	
-	foreach( $logs as $logID => $log ) {
-		?>
-		<div class="panel panel-default">
-			<div class="panel-heading"><?php echo $log->label; ?></div>
+foreach( $logs as $logID => $log ) {
+	?>
+	<div class="card border-default mb-3">
+		<div class="card-header"><?php echo $log->label; ?></div>
+		<div class="card-body">
 			<div class="list-group">
 				<?php
 				$c = 0;
@@ -35,27 +34,28 @@ $rendering->useLayout('page_skeleton');
 					<?php
 					$c++;
 				}
-		if( !$c ) {
-			?>
-			<div class="list-group-item"><?php _t('no_logs', DOMAIN_LOGS); ?></div>
-			<?php
-		}
-		?>
+				if( !$c ) {
+					?>
+					<div class="list-group-item"><?php _t('no_logs', DOMAIN_LOGS); ?></div>
+					<?php
+				}
+				?>
+			</div>
 		</div>
 	</div>
 	<?php
-	}
+}
 ?>
-</div>
 <style>
 .log_hover {
 	display: none;
 }
+
 .log_file:hover .log_hover {
 	display: inline-block;
 }
+
 .log_file:hover .log_nothover {
 	display: none;
 }
--->
 </style>

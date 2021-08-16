@@ -1,24 +1,26 @@
 <?php
 /**
+ * @var string $CONTROLLER_OUTPUT
  * @var HTMLRendering $rendering
- * @var HTTPRequest $request
- * @var HTTPRoute $route
- * @var HTTPController $controller
+ * @var HttpController $controller
+ * @var HttpRequest $request
+ * @var HttpRoute $route
+ *
+ * @var string $file
+ * @var object $filePathInfo
+ * @var string $format
+ * @var AbstractFile $fileHandler
+ * @var bool $hideDuplicate
  */
 
-use Orpheus\InputController\HTTPController\HTTPController;
-use Orpheus\InputController\HTTPController\HTTPRequest;
-use Orpheus\InputController\HTTPController\HTTPRoute;
+use Orpheus\InputController\HttpController\HttpController;
+use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
-/* @var string $file */
-/* @var string $filePathInfo */
-/* @var string $format */
-/* @var AbstractFile $fileHandler */
 
 $rendering->useLayout('page_skeleton');
 
-// $filePathInfo = (object) pathinfo($file);
 ?>
 
 <div class="row">
@@ -26,33 +28,33 @@ $rendering->useLayout('page_skeleton');
 		<?php $rendering->useLayout('panel-default'); ?>
 		
 		<div class="form-horizontal">
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><?php _t('file_name', DOMAIN_LOGS); ?></label>
-				<div class="col-sm-10">
+			<div class="form-group row">
+				<label class="col-sm-3 control-label"><?php _t('file_name', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-9">
 					<p class="form-control-static"><?php echo $filePathInfo->basename; ?></p>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><?php _t('file_path', DOMAIN_LOGS); ?></label>
-					<div class="col-sm-10">
-						<p class="form-control-static"><?php echo $file; ?></p>
-					</div>
+			<div class="form-group row">
+				<label class="col-sm-3 control-label"><?php _t('file_path', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-9">
+					<p class="form-control-static"><?php echo $file; ?></p>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php _t('file_format', DOMAIN_LOGS); ?></label>
-					<div class="col-sm-10">
-						<p class="form-control-static"><?php echo $format; ?></p>
-					</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-3 control-label"><?php _t('file_format', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-9">
+					<p class="form-control-static"><?php echo $format; ?></p>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php _t('file_size', DOMAIN_LOGS); ?></label>
-					<div class="col-sm-10">
-						<p class="form-control-static"><?php echo formatInt(filesize($file)); ?> bytes</p>
-					</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-3 control-label"><?php _t('file_size', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-9">
+					<p class="form-control-static"><?php echo formatInt(filesize($file)); ?> bytes</p>
 				</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label"><?php _t('file_mtime', DOMAIN_LOGS); ?></label>
-				<div class="col-sm-10">
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-3 control-label"><?php _t('file_mtime', DOMAIN_LOGS); ?></label>
+				<div class="col-sm-9">
 					<p class="form-control-static"><?php echo dt(filemtime($file)); ?></p>
 				</div>
 			</div>
@@ -68,7 +70,7 @@ $rendering->useLayout('page_skeleton');
 	<div class="col-lg-12">
 		<?php $rendering->useLayout('panel-default'); ?>
 		
-		<div class="panel-group" id="LogList" role="tablist" aria-multiselectable="true">
+		<div id="LogList">
 			<?php
 			if( $hideDuplicate ) {
 				$shownLogs = [];
@@ -77,12 +79,24 @@ $rendering->useLayout('page_skeleton');
 			while( ($line = $fileHandler->getNextLine()) !== false ) {
 				try {
 					$log = (object) json_decode($line, 1);
-					if( !isset($log->id) )		{ $log->id		= 'LL'.$lineCount; }
-					if( !isset($log->date) )	{ $log->date	= 'N/A'; }
-					if( !isset($log->action) )	{ $log->action	= 'N/A'; }
-					if( !isset($log->report) )	{ $log->report	= 'N/A'; }
-					if( !isset($log->crc32) )	{ $log->crc32	= crc32($log->report); }
-					if( !isset($log->trace) )	{ $log->trace	= 'There is no trace'; }
+					if( !isset($log->id) ) {
+						$log->id = 'LL' . $lineCount;
+					}
+					if( !isset($log->date) ) {
+						$log->date = 'N/A';
+					}
+					if( !isset($log->action) ) {
+						$log->action = 'N/A';
+					}
+					if( !isset($log->report) ) {
+						$log->report = 'N/A';
+					}
+					if( !isset($log->crc32) ) {
+						$log->crc32 = crc32($log->report);
+					}
+					if( !isset($log->trace) ) {
+						$log->trace = 'There is no trace';
+					}
 					
 					if( $hideDuplicate ) {
 						if( isset($shownLogs[$log->crc32]) ) {
@@ -92,62 +106,62 @@ $rendering->useLayout('page_skeleton');
 							$shownLogs[$log->crc32] = 1;
 						}
 					}
-					$panelID = 'log_'.str_replace('.', '_', $log->id);
+					$panelID = 'log_' . str_replace('.', '_', $log->id);
 					?>
-				<div class="panel panel-default log">
-					<div class="panel-heading" role="tab" id="<?php echo $panelID; ?>_heading">
-						<h4 class="panel-title">
-							<a role="button" data-toggle="collapse" data-parent="#LogList" href="#<?php echo $panelID; ?>" aria-expanded="false" aria-controls="<?php echo $panelID; ?>">
-								<?php echo str_limit(strip_tags($log->report), 200); ?>
-							</a>
-						</h4>
-					</div>
-					<div id="<?php echo $panelID; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="<?php echo $panelID; ?>_heading">
-						<div class="panel-body">
-							<div class="form-horizontal">
-								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php _t('log_date', DOMAIN_LOGS); ?></label>
-									<div class="col-sm-10">
-										<p class="form-control-static"><?php echo $log->date; ?></p>
+					<div class="card border-default log mb-3">
+						<div class="card-header" id="<?php echo $panelID; ?>_heading">
+							<h4 class="mb-0">
+								<button class="btn btn-link" data-toggle="collapse" data-target="#<?php echo $panelID; ?>" aria-expanded="false" aria-controls="<?php echo $panelID; ?>">
+									<?php echo str_limit(strip_tags($log->report), 200); ?>
+								</button>
+							</h4>
+						</div>
+						<div id="<?php echo $panelID; ?>" class="collapse" aria-labelledby="<?php echo $panelID; ?>_heading" data-parent="#LogList">
+							<div class="card-body">
+								<div class="form-horizontal">
+									<div class="form-group row">
+										<label class="col-sm-2 control-label"><?php _t('log_date', DOMAIN_LOGS); ?></label>
+										<div class="col-sm-10">
+											<p class="form-control-static"><?php echo $log->date; ?></p>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php _t('log_action', DOMAIN_LOGS); ?></label>
-									<div class="col-sm-10">
-										<p class="form-control-static"><?php echo $log->action; ?></p>
+									<div class="form-group row">
+										<label class="col-sm-2 control-label"><?php _t('log_action', DOMAIN_LOGS); ?></label>
+										<div class="col-sm-10">
+											<p class="form-control-static"><?php echo $log->action; ?></p>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php _t('log_crc32', DOMAIN_LOGS); ?></label>
-									<div class="col-sm-10">
-										<p class="form-control-static"><?php echo $log->crc32; ?></p>
+									<div class="form-group row">
+										<label class="col-sm-2 control-label"><?php _t('log_crc32', DOMAIN_LOGS); ?></label>
+										<div class="col-sm-10">
+											<p class="form-control-static"><?php echo $log->crc32; ?></p>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php _t('log_report', DOMAIN_LOGS); ?></label>
-									<div class="col-sm-10">
-										<p class="form-control-static"><?php echo $log->report; ?></p>
+									<div class="form-group row">
+										<label class="col-sm-2 control-label"><?php _t('log_report', DOMAIN_LOGS); ?></label>
+										<div class="col-sm-10">
+											<p class="form-control-static"><?php echo $log->report; ?></p>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label"><?php _t('log_trace', DOMAIN_LOGS); ?></label>
-									<div class="col-sm-12">
-										<?php is_array($log->trace) ? displayStackTrace($log->trace) : print($log->trace); ?>
-<!-- 										<p class="form-control-static"></p> -->
+									<div class="form-group row">
+										<label class="col-sm-2 control-label"><?php _t('log_trace', DOMAIN_LOGS); ?></label>
+										<div class="col-sm-12">
+											<?php is_array($log->trace) ? displayStackTrace($log->trace) : print($log->trace); ?>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="panel-footer text-right">
-							<button class="btn btn-primary"
-								data-confirm_title="<?php _t('removeOneConfirmTitle', DOMAIN_LOGS); ?>"
-								data-confirm_message="<?php _t('removeOneConfirmMessage', DOMAIN_LOGS); ?>"
-								data-confirm_submit_name="submitRemoveByCRC"
-								data-confirm_submit_value="<?php echo $log->crc32; ?>"
-								><?php _t('removeOneButton', DOMAIN_LOGS); ?></button>
+							<div class="card-footer text-right">
+								<button class="btn btn-primary"
+										data-confirm_title="<?php _t('removeOneConfirmTitle', DOMAIN_LOGS); ?>"
+										data-confirm_message="<?php _t('removeOneConfirmMessage', DOMAIN_LOGS); ?>"
+										data-confirm_submit_name="submitRemoveByCRC"
+										data-confirm_submit_value="<?php echo $log->crc32; ?>">
+									<?php _t('removeOneButton', DOMAIN_LOGS); ?>
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
 					<?php
 					$lineCount++;
 				} catch( Exception $e ) {
@@ -158,36 +172,38 @@ $rendering->useLayout('page_skeleton');
 			$fileHandler->ensureClosed();
 			?>
 		</div>
+		<?php $rendering->startNewBlock('title'); ?>
+		<?php echo t('file_logs', DOMAIN_LOGS); ?>
+		<a href="#lastLog" class="pull-right">
+			<i class="fa fa-arrow-circle-o-down"></i> <?php echo t('goToLastOneButton', DOMAIN_LOGS); ?>
+		</a>
+		<?php $rendering->startNewBlock('footer'); ?>
+		<div class="panel-footer text-right">
+			<?php
+			if( $fileHandler->isCompressible() ) {
+				?>
+				<button class="btn btn-primary" data-confirm_title="<?php echo t('archiveFileConfirmTitle', DOMAIN_LOGS); ?>"
+						data-confirm_message="<?php echo t('archiveFileConfirmMessage', DOMAIN_LOGS); ?>" data-confirm_submit_name="submitArchive">
+					<?php echo t('archiveFileButton', DOMAIN_LOGS); ?>
+				</button>
+				<?php
+			}
+			?>
+			<button class="btn btn-danger" data-confirm_title="<?php echo t('removeAllConfirmTitle', DOMAIN_LOGS); ?>"
+					data-confirm_message="<?php echo t('removeAllConfirmMessage', DOMAIN_LOGS); ?>" data-confirm_submit_name="submitRemoveAll">
+				<?php echo t('removeAllButton', DOMAIN_LOGS); ?>
+			</button>
+		</div>
 		
-		<?php $rendering->endCurrentLayout(array(
-			'title'  => t('file_logs', DOMAIN_LOGS) . ' <a href="#lastLog" class="pull-right">
-				<i class="fa fa-arrow-circle-o-down"></i> ' . t('goToLastOneButton', DOMAIN_LOGS) . '
-			</a>',
-			'footer' => '
-				<div class="panel-footer text-right">' .
-				($fileHandler->isCompressible() ?
-					'
-					<button class="btn btn-primary"
-						data-confirm_title="' . t('archiveFileConfirmTitle', DOMAIN_LOGS) . '"
-						data-confirm_message="' . t('archiveFileConfirmMessage', DOMAIN_LOGS) . '"
-						data-confirm_submit_name="submitArchive"
-						>'.t('archiveFileButton', DOMAIN_LOGS).'</button>' : '').
-					'
-					<button class="btn btn-danger"
-						data-confirm_title="'.t('removeAllConfirmTitle', DOMAIN_LOGS).'"
-						data-confirm_message="'.t('removeAllConfirmMessage', DOMAIN_LOGS).'"
-						data-confirm_submit_name="submitRemoveAll"
-						>'.t('removeAllButton', DOMAIN_LOGS).'</button>
-				</div>'
-		)); ?>
+		<?php $rendering->endCurrentLayout(); ?>
 	</div>
 </div>
 
 <script>
-$(function() {
-	var lastLog = $(".panel.log").last();
+$(function () {
+	var lastLog = $('.panel.log').last();
 	if( lastLog.length ) {
-		lastLog.attr("id", "lastLog");
+		lastLog.attr('id', 'lastLog');
 	}
 });
 </script>
