@@ -9,6 +9,6 @@ namespace Demo;
 class DemoTest_MSSQL extends DemoTest {
 	
 	//Attributes
-	protected static $DBInstance = 'mssql';
+	protected static ?string $instanceName = 'mssql';
 	
 }
