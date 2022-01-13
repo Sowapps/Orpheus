@@ -51,7 +51,7 @@ abstract class SetupController extends HttpController {
 		
 		$availClass = static::getStepClass(static::getAvailableStepTo($step));
 		if( $stepClass !== $availClass ) {
-			return new RedirectHTTPResponse($availClass::getDefaultRoute());
+			return new RedirectHttpResponse($availClass::getDefaultRoute());
 		}
 		
 		return null;
