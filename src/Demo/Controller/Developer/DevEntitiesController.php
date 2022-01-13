@@ -8,7 +8,7 @@ namespace Demo\Controller\Developer;
 use Orpheus\EntityDescriptor\EntityDescriptor;
 use Orpheus\EntityDescriptor\LangGenerator;
 use Orpheus\EntityDescriptor\PermanentEntity;
-use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySql;
+use Orpheus\EntityDescriptor\SqlGenerator\SqlGeneratorMySql;
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
 use Orpheus\InputController\HttpController\HttpRequest;
@@ -42,7 +42,7 @@ class DevEntitiesController extends DevController {
 					if( $output == OUTPUT_APPLY ) {
 						$formToken->validateForm($request);
 					}
-					$generator = new SQLGeneratorMySql();
+					$generator = new SqlGeneratorMySql();
 					$result = [];
 					/** @var PermanentEntity $entityClass */
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
@@ -91,7 +91,7 @@ class DevEntitiesController extends DevController {
 								reportError(sprintf('Unable to drop table %s, cause: %s', $table, $e->getMessage()));
 							}
 						}
-						reportSuccess('successSQLApply');
+						reportSuccess('successSqlApply');
 					}
 				} elseif( $request->hasData('submitGenerateVE') ) {
 					$output = $request->getData('ve_output') == OUTPUT_DLRAW ? OUTPUT_DLRAW : OUTPUT_DISPLAY;

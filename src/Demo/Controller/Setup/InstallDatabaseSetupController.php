@@ -6,7 +6,7 @@
 namespace Demo\Controller\Setup;
 
 use Orpheus\EntityDescriptor\PermanentEntity;
-use Orpheus\EntityDescriptor\SQLGenerator\SQLGeneratorMySql;
+use Orpheus\EntityDescriptor\SqlGenerator\SqlGeneratorMySql;
 use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
 use Orpheus\InputController\HttpController\HttpRequest;
@@ -37,7 +37,7 @@ class InstallDatabaseSetupController extends SetupController {
 					if( $output == OUTPUT_APPLY ) {
 						$formToken->validateForm($request);
 					}
-					$generator = new SQLGeneratorMySql();
+					$generator = new SqlGeneratorMySql();
 					$result = [];
 					/** @var PermanentEntity $entityClass */
 					foreach( $request->getArrayData('entities') as $entityClass => $on ) {
@@ -59,7 +59,7 @@ class InstallDatabaseSetupController extends SetupController {
 							$defaultAdapter->query(strip_tags($query), PDOEXEC);
 						}
 						$env['allowContinue'] = true;
-						reportSuccess('successSQLApply', DOMAIN_SETUP);
+						reportSuccess('successSqlApply', DOMAIN_SETUP);
 					}
 				}
 			}
