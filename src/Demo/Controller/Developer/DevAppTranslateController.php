@@ -34,6 +34,7 @@ class DevAppTranslateController extends DevController {
 		
 		$editedDomains = [];
 		try {
+			$translatingZIPPath = null;
 			if( $request->hasParameter('locale') ) {
 				$this->translatingLocale = $request->getParameter('locale');
 				$translatingFilePath = TRANSLATIONS_PATH . $this->translatingLocale . '.json';
@@ -73,7 +74,7 @@ class DevAppTranslateController extends DevController {
 					
 				} elseif( $request->hasData('submitDownload') ) {
 					$formToken->validateForm($request);
-					if( !$translatingFile ) {
+					if( !$translatingFile || !$translatingZIPPath ) {
 						throw new UserException('noDataToTranslationArchive', DOMAIN_TRANSLATIONS);
 					}
 					$arch = new ZipArchive();

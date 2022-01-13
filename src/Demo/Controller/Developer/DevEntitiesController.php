@@ -14,8 +14,8 @@ use Orpheus\Form\FormToken;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpResponse;
 use Orpheus\Publisher\Exception\InvalidFieldException;
-use Orpheus\SQLAdapter\Exception\SQLException;
-use Orpheus\SQLAdapter\SqlAdapter;
+use Orpheus\SqlAdapter\Exception\SqlException;
+use Orpheus\SqlAdapter\SqlAdapter;
 use PDO;
 use PDOStatement;
 
@@ -86,8 +86,8 @@ class DevEntitiesController extends DevController {
 								continue;
 							}
 							try {
-								$defaultAdapter->query(sprintf('DROP TABLE %s', $defaultAdapter->escapeIdentifier($table)), PDOEXEC);
-							} catch( SQLException $e ) {
+								$defaultAdapter->query(sprintf('DROP TABLE `%s`', $defaultAdapter->escapeIdentifier($table)), PDOEXEC);
+							} catch( SqlException $e ) {
 								reportError(sprintf('Unable to drop table %s, cause: %s', $table, $e->getMessage()));
 							}
 						}

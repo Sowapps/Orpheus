@@ -11,7 +11,7 @@ use Orpheus\Exception\UserException;
 use Orpheus\Form\FormToken;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpResponse;
-use Orpheus\SQLAdapter\SqlAdapter;
+use Orpheus\SqlAdapter\SqlAdapter;
 
 class InstallDatabaseSetupController extends SetupController {
 	

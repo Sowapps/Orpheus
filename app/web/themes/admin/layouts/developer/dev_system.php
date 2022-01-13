@@ -7,14 +7,14 @@
  *
  * @var boolean $allowCreate
  * @var boolean $allowUpdate
- * @var SQLSelectRequest $query
+ * @var SqlSelectRequest $query
  */
 
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
-use Orpheus\SQLRequest\SQLSelectRequest;
+use Orpheus\SqlRequest\SqlSelectRequest;
 
 
 $rendering->useLayout('page_skeleton');
