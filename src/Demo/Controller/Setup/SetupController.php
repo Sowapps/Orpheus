@@ -31,7 +31,7 @@ abstract class SetupController extends HttpController {
 	/** @var string */
 	private $step;
 	
-	public function preRun($request) {
+	public function preRun($request): ?RedirectHttpResponse {
 		parent::preRun($request);
 		HTMLRendering::setDefaultTheme('setup');
 		

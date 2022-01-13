@@ -6,8 +6,10 @@
 namespace Demo\Controller\Setup;
 
 use Orpheus\InputController\HttpController\HttpRequest;
+use Orpheus\InputController\HttpController\HttpResponse;
 use Orpheus\Pdo\PdoErrorAnalyzer;
 use Orpheus\Pdo\PdoPermissionAnalyzer;
+use PDOException;
 
 /*
  * Check writing on FS
@@ -23,7 +25,7 @@ class CheckDatabaseSetupController extends SetupController {
 	
 	/**
 	 * @param HttpRequest $request The input HTTP request
-	 * @return HTTPResponse The output HTTP response
+	 * @return HttpResponse The output HTTP response
 	 */
 	public function run($request): HttpResponse {
 		

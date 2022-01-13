@@ -5,6 +5,7 @@
 
 namespace Demo\Controller;
 
+use Demo\File\File;
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpResponse;
