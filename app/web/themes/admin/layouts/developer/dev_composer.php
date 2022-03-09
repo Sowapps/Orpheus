@@ -1,6 +1,6 @@
 <?php
 /**
- * @var HTMLRendering $rendering
+ * @var HtmlRendering $rendering
  * @var HttpRequest $request
  * @var HttpRoute $route
  * @var HttpController $controller
@@ -14,11 +14,11 @@
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 use Sowapps\Controller\Admin\AdminController;
 
 $rendering->useLayout('page_skeleton');
-$rendering->addJSFile('model.js', HTMLRendering::LINK_TYPE_CUSTOM);
+$rendering->addJSFile('model.js', HtmlRendering::LINK_TYPE_CUSTOM);
 
 global $formData;
 $formData = ['composer' => (array) $composerConfig];

@@ -35,7 +35,7 @@ function getModuleAccess($module = null) {
  */
 function sendAdminRegistrationEmail($user) {
 	$SITENAME = t('app_name');
-	$SITEURL = DEFAULTLINK;
+	$SITEURL = WEB_ROOT;
 	$e = new Email('Orpheus - Registration of ' . $user->fullname);
 	$e->setText(<<<BODY
 Hi master !
@@ -50,5 +50,5 @@ BODY
 
 
 function includeHTMLAdminFeatures() {
-	require_once ORPHEUSPATH . 'src/admin-form.php';
+	require_once ORPHEUS_PATH . 'src/admin-form.php';
 }

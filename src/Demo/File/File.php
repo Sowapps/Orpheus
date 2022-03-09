@@ -198,7 +198,7 @@ class File extends PermanentEntity {
 	 * @return string
 	 */
 	public static function getFolderPath() {
-		return FILESTOREPATH;
+		return FILESTORE_PATH;
 	}
 	
 	/**

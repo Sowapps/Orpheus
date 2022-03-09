@@ -15,10 +15,10 @@ class DevComposerController extends DevController {
 	public function run($request): HttpResponse {
 		
 		define('DOMAIN_COMPOSER', 'composer');
-		defifn('COMPOSER_HOME', INSTANCEPATH . '.composer');
-		// 		define('COMPOSER_HOME', APPLICATIONPATH.'.composer');
+		defifn('COMPOSER_HOME', INSTANCE_PATH . '.composer');
+		// 		define('COMPOSER_HOME', APPLICATION_PATH.'.composer');
 		
-		$composerFile = APPLICATIONPATH . 'composer.json';
+		$composerFile = APPLICATION_PATH . 'composer.json';
 		
 		if( !file_exists($composerFile) ) {
 			throw new UserException('Unable to find composer.json file');
@@ -73,14 +73,14 @@ class DevComposerController extends DevController {
 				// 			debug('CWD => '.getcwd());
 				putenv('COMPOSER_HOME=' . COMPOSER_HOME);
 				
-				$cmd = 'cd "' . APPLICATIONPATH . '"; php composer.phar ' . $command . ' ' . $devOpt . ' ' . $optiOpt . ' 2>&1';
-				// 			$cmd = 'php '.APPLICATIONPATH.'composer.phar '.$command.' '.$devOpt.' '.$optiOpt.' --no-progress';
+				$cmd = 'cd "' . APPLICATION_PATH . '"; php composer.phar ' . $command . ' ' . $devOpt . ' ' . $optiOpt . ' 2>&1';
+				// 			$cmd = 'php '.APPLICATION_PATH.'composer.phar '.$command.' '.$devOpt.' '.$optiOpt.' --no-progress';
 				// 				debug('Command => '.$cmd);
 				
 				ob_start();
 				$return = null;
 				system($cmd, $return);
-				// 			system('php '.APPLICATIONPATH.'composer.phar '.$command.' '.$devOpt.' '.$optiOpt.' --no-progress');
+				// 			system('php '.APPLICATION_PATH.'composer.phar '.$command.' '.$devOpt.' '.$optiOpt.' --no-progress');
 				$output = ob_get_clean();
 				
 				reportInfo(nl2br(t('outputLog', DOMAIN_COMPOSER, $cmd, $output)));
@@ -102,7 +102,7 @@ class DevComposerController extends DevController {
 		
 		return $this->renderHtml('developer/dev_composer', [
 			'composerConfig'    => $composerConfig,
-			'applicationFolder' => APPLICATIONPATH,
+			'applicationFolder' => APPLICATION_PATH,
 			'composerFile'      => $composerFile,
 			'composerHome'      => COMPOSER_HOME,
 		]);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @var HTMLRendering $rendering
+ * @var HtmlRendering $rendering
  * @var HttpRequest $request
  * @var HttpRoute $route
  * @var HttpController $controller
@@ -12,7 +12,7 @@
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 
 $rendering->useLayout('page_skeleton');
 
@@ -37,31 +37,31 @@ function collapsiblePanelHTML($id, $title, $description, $panelClass, $open = 0)
 ?>
 <form method="POST">
 <div class="row">
-
+	
 	<div class="col-lg-8 col-lg-offset-2">
-
+		
 		<h1><?php _t('checkfs_title', DOMAIN_SETUP, t('app_name')); ?></h1>
-		<p class="lead"><?php echo text2HTML(t('checkfs_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
-
+		<p class="lead"><?php echo text2HTML(t('checkfs_description', DOMAIN_SETUP, ['APP_NAME' => t('app_name')])); ?></p>
+		
 		<div class="form-horizontal">
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><?php _t('pathToFolder', DOMAIN_SETUP, t('folder_application', DOMAIN_SETUP)); ?></label>
 				<div class="col-sm-9">
-					<p class="form-control-static"><?php echo INSTANCEPATH; ?></p>
+					<p class="form-control-static"><?php echo INSTANCE_PATH; ?></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label"><?php _t('pathToFolder', DOMAIN_SETUP, t('folder_webaccess', DOMAIN_SETUP)); ?></label>
 				<div class="col-sm-9">
-					<p class="form-control-static"><?php echo ACCESSPATH; ?></p>
+					<p class="form-control-static"><?php echo ACCESS_PATH; ?></p>
 				</div>
 			</div>
 		</div>
-
+		
 		<div class="panel-group" id="CheckFSAccordion" role="tablist" aria-multiselectable="true">
 			<?php
 			foreach( $folders as $folder => $fi ) {
-				collapsiblePanelHTML($folder, $fi->title, $fi->description,  $fi->panel,  $fi->open);
+				collapsiblePanelHTML($folder, $fi->title, $fi->description, $fi->panel, $fi->open);
 			}
 			?>
 		</div>

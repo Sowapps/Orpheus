@@ -1,10 +1,10 @@
 <?php
 /**
- * @var HTMLRendering $rendering
+ * @var HtmlRendering $rendering
  * @var string $Content
  */
 
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 
 if( !isset($title) ) {
 	$title = '';

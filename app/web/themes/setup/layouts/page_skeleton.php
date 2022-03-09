@@ -1,6 +1,6 @@
 <?php
 /**
- * @var HTMLRendering $rendering
+ * @var HtmlRendering $rendering
  * @var HttpController $controller
  * @var HttpRequest $request
  * @var HttpRoute $route
@@ -9,7 +9,7 @@
  * @var string $content
  */
 
-use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orpheus\InputController\HttpController\HttpRequest;use Orpheus\InputController\HttpController\HttpRoute;use Orpheus\Rendering\HTMLRendering;
+use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orpheus\InputController\HttpController\HttpRequest;use Orpheus\InputController\HttpController\HttpRoute;use Orpheus\Rendering\HtmlRendering;
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
@@ -20,7 +20,7 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 	<meta name="Description" content=""/>
 	<meta name="Author" content="<?php echo AUTHORNAME; ?>"/>
 	<meta name="application-name" content="<?php _t('app_name'); ?>"/>
-	<meta name="msapplication-starturl" content="<?php echo DEFAULTLINK; ?>"/>
+	<meta name="msapplication-starturl" content="<?php echo WEB_ROOT; ?>"/>
 	<meta name="Keywords" content="carnet"/>
 	<meta name="Robots" content="Index, Follow"/>
 	<meta name="revisit-after" content="16 days"/>
@@ -39,14 +39,14 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen"/>
 	<?php
-	foreach( $this->listCssUrls(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
+	foreach( $this->listCssUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
 		echo '
 	<link rel="stylesheet" href="' . $url . '" type="text/css" media="screen" />';
 	}
 	?>
 	
 	<link rel="stylesheet" href="<?php echo WEB_ROOT; ?>static/style/base.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="<?php echo HTMLRendering::getCssUrl(); ?>style.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo HtmlRendering::getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
 	foreach( $this->listCssUrls() as $url ) {
 		echo '
@@ -99,7 +99,7 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 	<script type="text/javascript" src="/js/orpheus.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
 <?php
-foreach( $this->listJsUrls(HTMLRendering::LINK_TYPE_PLUGIN) as $url ) {
+foreach( $this->listJsUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
 	echo '
 	<script type="text/javascript" src="' . $url . '"></script>';
 }

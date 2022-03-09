@@ -7,7 +7,7 @@ namespace Demo\Controller\Admin;
 
 use Exception;
 use Orpheus\InputController\HttpController\HttpController;
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 
 abstract class AdminController extends HttpController {
 	
@@ -56,7 +56,7 @@ abstract class AdminController extends HttpController {
 	
 	public function preRun($request) {
 		parent::preRun($request);
-		HTMLRendering::setDefaultTheme('admin');
+		HtmlRendering::setDefaultTheme('admin');
 		
 		$this->addRouteToBreadcrumb(DEFAULT_ROUTE);
 		$this->addRouteToBreadcrumb(ROUTE_ADM_HOME);

@@ -23,25 +23,25 @@ class CheckFileSystemSetupController extends SetupController {
 			'allowContinue' => true,
 		];
 		
-		if( is_writable(ACCESSPATH) ) {
+		if( is_writable(ACCESS_PATH) ) {
 			$env['folders']['accesspath'] = (object) [
 				'title'       => t('folderWritable_error_title', DOMAIN_SETUP, t('folder_webaccess', DOMAIN_SETUP)),
-				'description' => t('folderWritable_error_description', DOMAIN_SETUP, ACCESSPATH),
+				'description' => t('folderWritable_error_description', DOMAIN_SETUP, ACCESS_PATH),
 				'panel'       => PANEL_WARNING,
 				'open'        => 1,
 			];
 		} else {
 			$env['folders']['accesspath'] = (object) [
 				'title'       => t('folderNotWritable_success_title', DOMAIN_SETUP, t('folder_webaccess', DOMAIN_SETUP)),
-				'description' => t('folderNotWritable_success_description', DOMAIN_SETUP, ACCESSPATH),
+				'description' => t('folderNotWritable_success_description', DOMAIN_SETUP, ACCESS_PATH),
 				'panel'       => PANEL_SUCCESS,
 				'open'        => 0,
 			];
 		}
-		if( is_writable(STOREPATH) ) {
+		if( is_writable(STORE_PATH) ) {
 			$env['folders']['storepath'] = (object) [
 				'title'       => t('folderWritable_success_title', DOMAIN_SETUP, t('folder_store', DOMAIN_SETUP)),
-				'description' => t('folderWritable_success_description', DOMAIN_SETUP, STOREPATH),
+				'description' => t('folderWritable_success_description', DOMAIN_SETUP, STORE_PATH),
 				'panel'       => PANEL_SUCCESS,
 				'open'        => 0,
 			];
@@ -49,15 +49,15 @@ class CheckFileSystemSetupController extends SetupController {
 			$env['allowContinue'] = false;
 			$env['folders']['storepath'] = (object) [
 				'title'       => t('folderNotWritable_error_title', DOMAIN_SETUP, t('folder_store', DOMAIN_SETUP)),
-				'description' => t('folderNotWritable_error_description', DOMAIN_SETUP, STOREPATH),
+				'description' => t('folderNotWritable_error_description', DOMAIN_SETUP, STORE_PATH),
 				'panel'       => PANEL_DANGER,
 				'open'        => 1,
 			];
 		}
-		if( is_writable(LOGSPATH) ) {
+		if( is_writable(LOGS_PATH) ) {
 			$env['folders']['logspath'] = (object) [
 				'title'       => t('folderWritable_success_title', DOMAIN_SETUP, t('folder_logs', DOMAIN_SETUP)),
-				'description' => t('folderWritable_success_description', DOMAIN_SETUP, LOGSPATH),
+				'description' => t('folderWritable_success_description', DOMAIN_SETUP, LOGS_PATH),
 				'panel'       => PANEL_SUCCESS,
 				'open'        => 0,
 			];
@@ -65,7 +65,7 @@ class CheckFileSystemSetupController extends SetupController {
 			$env['allowContinue'] = false;
 			$env['folders']['logspath'] = (object) [
 				'title'       => t('folderNotWritable_error_title', DOMAIN_SETUP, t('folder_logs', DOMAIN_SETUP)),
-				'description' => t('folderNotWritable_error_description', DOMAIN_SETUP, LOGSPATH),
+				'description' => t('folderNotWritable_error_description', DOMAIN_SETUP, LOGS_PATH),
 				'panel'       => PANEL_DANGER,
 				'open'        => 1,
 			];

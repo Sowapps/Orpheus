@@ -1,6 +1,6 @@
 <?php
 /**
- * @var HTMLRendering $rendering
+ * @var HtmlRendering $rendering
  * @var HttpRequest $Request
  * @var HttpRoute $Route
  * @var HttpController $Controller
@@ -9,7 +9,7 @@
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 
 $rendering->addJsUrl('https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js');
 $rendering->addCssUrl('https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css');

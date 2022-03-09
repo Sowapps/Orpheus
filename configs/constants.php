@@ -26,9 +26,9 @@ defifn('LAYOUT_MENU', 'menu-bootstrap3');
 defifn('LANGDIR', 'languages/');
 defifn('DEFAULT_LOCALE', 'en_US');
 
-defifn('CACHEPATH', STOREPATH . 'cache/');
-defifn('TEMPPATH', STOREPATH . 'temp/');
-defifn('FILESTOREPATH', STOREPATH . 'files/');
+defifn('CACHE_PATH', STORE_PATH . 'cache/');
+defifn('TEMPPATH', STORE_PATH . 'temp/');
+defifn('FILESTORE_PATH', STORE_PATH . 'files/');
 
 // Static medias
 defifn('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
@@ -78,5 +78,5 @@ function listFileSourceTypes() {
 
 defifn('DOMAIN_TRANSLATIONS', 'translations');
 
-defifn('TRANSLATIONS_PATH', STOREPATH . 'translations/');
+defifn('TRANSLATIONS_PATH', STORE_PATH . 'translations/');
 

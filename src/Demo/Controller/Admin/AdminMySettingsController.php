@@ -47,7 +47,7 @@ class AdminMySettingsController extends AdminController {
 		
 		$USER_CAN_USER_EDIT = !CHECK_MODULE_ACCESS || $USER->canUserEdit();
 		
-		require_once ORPHEUSPATH . LIBSDIR . 'src/admin-form.php';
+		require_once ORPHEUS_PATH . LIBRARY_FOLDER . '/src/admin-form.php';
 		
 		return $this->renderHtml('app/admin_useredit', [
 			'USER_CAN_USER_EDIT'   => $USER_CAN_USER_EDIT,

@@ -6,7 +6,7 @@ use Exception;
 use Orpheus\Cache\FSCache;
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\RedirectHttpResponse;
-use Orpheus\Rendering\HTMLRendering;
+use Orpheus\Rendering\HtmlRendering;
 
 abstract class SetupController extends HttpController {
 	
@@ -33,7 +33,7 @@ abstract class SetupController extends HttpController {
 	
 	public function preRun($request): ?RedirectHttpResponse {
 		parent::preRun($request);
-		HTMLRendering::setDefaultTheme('setup');
+		HtmlRendering::setDefaultTheme('setup');
 		
 		if( self::$setupData === null ) {
 			self::$setupCache = new FSCache('setup', 'data');
