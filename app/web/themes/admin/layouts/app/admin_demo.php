@@ -200,7 +200,7 @@ $rendering->useLayout('page_skeleton');
 			</div>
 			<div class="panel-body">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped tablesorter">
+					<table class="table table-bordered table-hover table-striped">
 						<thead>
 						<tr>
 							<th>Order # <i class="fa fa-sort"></i></th>

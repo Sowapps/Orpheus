@@ -2,7 +2,7 @@
 
 namespace Demo\Controller\Developer;
 
-use Sowapps\Controller\Admin\AdminController;
+use Demo\Controller\Admin\AdminController;
 
 abstract class DevController extends AdminController {
 	

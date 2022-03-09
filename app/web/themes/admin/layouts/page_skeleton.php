@@ -173,7 +173,6 @@ $invertedStyle = $controller->getOption('invertedStyle', 1);
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/i18n/fr.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.5/js/jquery.tablesorter.js"></script>
 
 <?php
 foreach( $this->listJSURLs(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {

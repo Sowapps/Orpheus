@@ -10,6 +10,7 @@
  */
 
 use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orpheus\InputController\HttpController\HttpRequest;use Orpheus\InputController\HttpController\HttpRoute;use Orpheus\Rendering\HtmlRendering;
+
 ?><!DOCTYPE html>
 <html lang="<?php echo LANGBASE; ?>">
 <head>
@@ -96,8 +97,8 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2_locale_fr.min.js"></script>
 
 <!-- Our JS scripts -->
-	<script type="text/javascript" src="/js/orpheus.js"></script>
-	<script type="text/javascript" src="/js/script.js"></script>
+<script type="text/javascript" src="/js/orpheus.js"></script>
+<script type="text/javascript" src="/js/script.js"></script>
 <?php
 foreach( $this->listJsUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
 	echo '

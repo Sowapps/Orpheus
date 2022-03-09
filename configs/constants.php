@@ -19,9 +19,6 @@ defifn('ERROR_LEVEL', DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD
 
 defifn('DEV_TOOLS', DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
 
-// Theme
-defifn('LAYOUT_MENU', 'menu-bootstrap3');
-
 // LIB Initernationalization
 defifn('LANGDIR', 'languages/');
 defifn('DEFAULT_LOCALE', 'en_US');
@@ -76,6 +73,7 @@ function listFileSourceTypes() {
 	return [FILE_SOURCETYPE_UPLOAD, FILE_SOURCETYPE_UPLOAD_CONVERTED, FILE_SOURCETYPE_PHPQRCODE, FILE_SOURCETYPE_WKPDF, FILE_SOURCETYPE_LOCALDEMO, FILE_SOURCETYPE_FACEBOOK];
 }
 
+defifn('DOMAIN_SETUP', 'setup');
 defifn('DOMAIN_TRANSLATIONS', 'translations');
 
 defifn('TRANSLATIONS_PATH', STORE_PATH . 'translations/');

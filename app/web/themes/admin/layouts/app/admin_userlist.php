@@ -34,7 +34,7 @@ $rendering->useLayout('page_skeleton');
 					<?php
 				}
 				?>
-				<table class="table table-bordered table-hover tablesorter">
+				<table class="table table-bordered table-hover">
 					<thead>
 					<tr>
 						<th><?php _t('idColumn'); ?> <i class="fa fa-sort" title="<?php _t('sortByID'); ?>"></i></th>
