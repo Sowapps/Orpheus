@@ -27,7 +27,7 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 	<meta name="revisit-after" content="16 days"/>
 	<link rel="icon" type="image/png" href="<?php echo STATIC_ASSETS_URL . 'images/icon.png'; ?>"/>
 	<?php
-	foreach( $this->listMetaProperties() as $property => $content ) {
+	foreach( $rendering->listMetaProperties() as $property => $content ) {
 		echo '
 	<meta property="' . $property . '" content="' . $content . '"/>';
 	}
@@ -40,16 +40,16 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2.min.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/select2-bootstrap.min.css" type="text/css" media="screen"/>
 	<?php
-	foreach( $this->listCssUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
+	foreach( $rendering->listCssUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
 		echo '
 	<link rel="stylesheet" href="' . $url . '" type="text/css" media="screen" />';
 	}
 	?>
 	
 	<link rel="stylesheet" href="<?php echo WEB_ROOT; ?>static/style/base.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="<?php echo HtmlRendering::getCssUrl(); ?>style.css" type="text/css" media="screen"/>
+	<link rel="stylesheet" href="<?php echo $rendering->getCssUrl(); ?>style.css" type="text/css" media="screen"/>
 	<?php
-	foreach( $this->listCssUrls() as $url ) {
+	foreach( $rendering->listCssUrls() as $url ) {
 		echo '
 	<link rel="stylesheet" type="text/css" href="' . $url . '" media="screen" />';
 	}
@@ -73,8 +73,8 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 		</div>
 		<div class="collapse navbar-collapse">
 			<?php
-			// User::isLogged() ? $this->showMenu('topmenu_member') : $this->showMenu('topmenu');
-			$this->showMenu(User::isLogged() ? 'adminmenu' : 'topmenu');
+			// User::isLogged() ? $rendering->showMenu('topmenu_member') : $rendering->showMenu('topmenu');
+			$rendering->showMenu(User::isLogged() ? 'adminmenu' : 'topmenu');
 			if( !empty($TOPBAR_CONTENTS) ) {
 				echo $TOPBAR_CONTENTS;
 			}
@@ -100,23 +100,30 @@ use Demo\User;use Orpheus\InputController\HttpController\HttpController;use Orph
 <script type="text/javascript" src="/js/orpheus.js"></script>
 <script type="text/javascript" src="/js/script.js"></script>
 <?php
-foreach( $this->listJsUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
+foreach( $rendering->listJsUrls(HtmlRendering::LINK_TYPE_PLUGIN) as $url ) {
 	echo '
 	<script type="text/javascript" src="' . $url . '"></script>';
 }
+
 if( !DEV_VERSION && HOST === 'orpheus-framework.com' ) {
 	// Replace by your own & remove HOST condition
 	?>
-	
-	
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m);
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-54516318-1', 'auto'); ga('send', 'pageview');
-</script>
-<?php
+	<script>
+	(function (i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function () {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o),
+			m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m);
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+	ga('create', 'UA-54516318-1', 'auto');
+	ga('send', 'pageview');
+	</script>
+	<?php
 }
 ?>
 
