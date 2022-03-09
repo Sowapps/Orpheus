@@ -43,7 +43,7 @@ class DevLogListController extends DevController {
 		$files = [];
 		foreach( cleanscandir(LOGS_PATH) as $file ) {
 			if( strpos($file, $logFile) === 0 ) {
-				$files[] = LOGS_PATH . $file;
+				$files[] = LOGS_PATH . '/' . $file;
 			}
 		}
 		return $files;

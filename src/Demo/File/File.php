@@ -74,8 +74,8 @@ class File extends PermanentEntity {
 	 *
 	 * @return string
 	 */
-	public function getPath() {
-		return static::getFolderPath() . $this->id() . '.' . $this->extension;
+	public function getPath(): string {
+		return static::getFolderPath() . '/' . $this->id() . '.' . $this->extension;
 	}
 	
 	/**
@@ -197,8 +197,8 @@ class File extends PermanentEntity {
 	 *
 	 * @return string
 	 */
-	public static function getFolderPath() {
-		return FILESTORE_PATH;
+	public static function getFolderPath(): string {
+		return FILE_STORE_PATH;
 	}
 	
 	/**
@@ -282,14 +282,14 @@ class File extends PermanentEntity {
 	}
 	
 	public static function importFromURL(array $input, $url) {
-		if( !is_dir(TEMPPATH) ) {
-			mkdir(TEMPPATH, 0777, true);
+		if( !is_dir(TEMP_PATH) ) {
+			mkdir(TEMP_PATH, 0777, true);
 		}
 		if( !isset($input['extension']) ) {
 			$input['extension'] = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
 		}
 		do {
-			$tmpFile = TEMPPATH . generatePassword() . '.tmp';
+			$tmpFile = TEMP_PATH . '/' . generatePassword() . '.tmp';
 		} while( file_exists($tmpFile) );
 		try {
 			copy($url, $tmpFile);

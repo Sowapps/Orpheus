@@ -24,7 +24,7 @@ class DevLogViewController extends DevController {
 			throw new NotFoundException('Invalid log file');
 		}
 		
-		$filePath = LOGS_PATH . $file;
+		$filePath = LOGS_PATH . '/' . $file;
 		
 		$filePathInfo = (object) pathinfo($file);
 		$format = strtoupper($filePathInfo->extension);

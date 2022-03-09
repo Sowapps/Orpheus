@@ -1,11 +1,6 @@
 <?php
 /**
- * @file Orpheus/loader.php
- * @brief The Orpheus Loader
- * @author Florent Hazard
- * @copyright The MIT License, see LICENSE.txt
- *
- * PHP File for the website core.
+ * @author Florent HAZARD <f.hazard@sowapps.com>
  */
 
 use Orpheus\Controller\DelayedPageController;
@@ -45,7 +40,7 @@ function defifn($name, $value): bool {
 function dirpath(string $path): string {
 	$dirName = dirname($path);
 	
-	return $dirName === '/' ? '/' : $dirName . '/';
+	return $dirName === '/' ? '' : $dirName;
 }
 
 /**
@@ -68,7 +63,7 @@ function pathOf(string $commonPath, bool $silent = false): ?string {
 	if( $silent ) {
 		return null;
 	}
-	throw new Exception('Path not found: ' . $commonPath);
+	throw new Exception(sprintf('Path not found: "%s"', $commonPath));
 }
 
 /**
@@ -143,6 +138,7 @@ function includeFolder(string $folder, array $importants = []): int {
 			}
 		}
 	}
+	
 	return $i;
 }
 
@@ -265,6 +261,7 @@ function typeOf($var) {
 	if( $type === 'object' ) {
 		return get_class($var);
 	}
+	
 	return $type;
 }
 
@@ -277,6 +274,7 @@ function findFileInTree($filename, $from = null) {
 		}
 		$from = dirname($from);
 	}
+	
 	return null;
 }
 
@@ -368,15 +366,15 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 	</head>
 	<body>
 	
 	<div class="container">
 		
 		<header class="align-items-center d-flex mt-2 py-2">
-			<h3 class="mr-auto text-muted">Orpheus</h3>
+			<h3 class="me-auto text-muted">Orpheus</h3>
 			<nav class="my-2 my-md-0">
 				<a class="p-2 text-dark" href="<?php echo WEB_ROOT; ?>">Home</a>
 			</nav>
@@ -392,10 +390,14 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 						<small> - <?php echo getClassName($exception); ?></small>
 					</h3>
 					
-					<blockquote class="blockquote exception_message">
-						<?php echo $exception->getMessage(); ?>
-						<footer class="blockquote-footer">In <cite><?php echo $exception->getFile(); ?></cite> at line <?php echo $exception->getLine(); ?></footer>
-					</blockquote>
+					<figure>
+						<blockquote class="blockquote exception_message">
+							<p><?php echo $exception->getMessage(); ?></p>
+						</blockquote>
+						<figcaption class="blockquote-footer">
+							In <cite><?php echo $exception->getFile(); ?></cite> at line <?php echo $exception->getLine(); ?>
+						</figcaption>
+					</figure>
 					
 					<div class="sourcecode">
 						<ul class="sourcecode_lines px-1">
@@ -480,7 +482,8 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 	}
 	
 	.sourcecode {
-		height: 176px; /* 10+1 lines * line-height */
+		height: 17rem; /* 10+1 lines * line-height */
+		resize: vertical;
 		line-height: 16px;
 		overflow-y: scroll;
 		display: flex;
@@ -522,8 +525,8 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 	}
 	</style>
 	
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" type="text/javascript"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(function () {
 		$(".arg_value").click(function () {
@@ -580,6 +583,7 @@ function convertExceptionAsText(Throwable $Exception, $code) {
    In " . (isset($trace['file']) ? $trace['file'] . ' at line ' . $trace['line'] : 'an unknown file') . "\n";
 	}
 	echo "\n";
+	
 	return ob_get_clean();
 }
 
@@ -595,6 +599,7 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter): stri
 	}
 	
 	$string = highlight_source($string, true);
+	
 	return <<<EOF
 <div class="sourcecode">
 	<ul class="sourcecode_lines">{$lines}</ul>
@@ -614,6 +619,7 @@ function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter)
 		$result .=
 			'| ' . str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT) . ($lineNumber == $activeLineNumber ? ' >' : '  ') . ' | ' . $line;
 	}
+	
 	return $result;
 }
 
@@ -638,6 +644,7 @@ function getFileLines($file, $from, $to, &$count = 0, $asArray = false) {
 		}
 	}
 	$count = count($lines);
+	
 	return $asArray ? $lines : implode('', $lines);
 }
 
@@ -689,5 +696,6 @@ function str_limit($string, $max, $strend = '...'): string {
 			$subStr = substr($string, 0, $lSpaceInd);
 		}
 	}
+	
 	return $subStr . $strend;
 }

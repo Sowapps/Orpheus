@@ -19,13 +19,9 @@ defifn('ERROR_LEVEL', DEV_VERSION && !defined('FORCE_ERRORS') ? DEV_LEVEL : PROD
 
 defifn('DEV_TOOLS', DEV_VERSION && (defined('TERMINAL') || !empty($_SERVER['PHP_AUTH_USER'])));
 
-// LIB Initernationalization
-defifn('LANGDIR', 'languages/');
+// Initernationalization
+defifn('LANG_FOLDER', '/languages');
 defifn('DEFAULT_LOCALE', 'en_US');
-
-defifn('CACHE_PATH', STORE_PATH . 'cache/');
-defifn('TEMPPATH', STORE_PATH . 'temp/');
-defifn('FILESTORE_PATH', STORE_PATH . 'files/');
 
 // Static medias
 defifn('THEMES_URL', WEB_ROOT . THEMES_FOLDER);
@@ -36,7 +32,6 @@ defifn('IMAGES_URL', STATIC_ASSETS_URL . '/images');
 defifn('JS_URL', STATIC_ASSETS_URL . '/js');
 
 // Contact
-
 defifn('AUTHORNAME', 'Your name');
 defifn('SITENAME', 'Your App Name');// See also translation app_name
 defifn('ADMINEMAIL', 'contact@yourdomain.com');
@@ -55,7 +50,7 @@ define('CRAC_CONTEXT_RESOURCE', 3);
 define('FILE_USAGE_USER_PICTURE', 'user_picture');
 define('FILE_USAGE_INVOICE', 'invoice');
 
-function listFileUsages() {
+function listFileUsages(): array {
 	return [
 		FILE_USAGE_USER_PICTURE => ['type' => 'image'],
 	];
@@ -76,5 +71,5 @@ function listFileSourceTypes() {
 defifn('DOMAIN_SETUP', 'setup');
 defifn('DOMAIN_TRANSLATIONS', 'translations');
 
-defifn('TRANSLATIONS_PATH', STORE_PATH . 'translations/');
+defifn('TRANSLATIONS_PATH', STORE_PATH . '/translations');
 

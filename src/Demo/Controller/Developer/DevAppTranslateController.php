@@ -127,8 +127,9 @@ class DevAppTranslateController extends DevController {
 	public function listDomains() {
 		$domainsFiles = [];
 		foreach( listSrcPath() as $path ) {
-			if( is_dir($path . LANGDIR . $this->fallbackLocale) ) {
-				foreach( cleanscandir($path . LANGDIR . $this->fallbackLocale) as $file ) {
+			$localePath = $path . LANG_FOLDER . '/' . $this->fallbackLocale;
+			if( is_dir($localePath) ) {
+				foreach( cleanscandir($localePath) as $file ) {
 					$pathInfo = (object) pathinfo($file);
 					if( isset($pathInfo->extension) && $pathInfo->extension === 'ini' ) {
 						$domainsFiles[$pathInfo->filename] = 1;
@@ -139,12 +140,13 @@ class DevAppTranslateController extends DevController {
 		return array_keys($domainsFiles);
 	}
 	
-	public function listAllLocales() {
+	public function listAllLocales(): array {
 		$locales = [];
 		foreach( listSrcPath() as $path ) {
-			if( is_dir($path . LANGDIR) ) {
-				foreach( cleanscandir($path . LANGDIR) as $folder ) {
-					if( !is_dir($path . LANGDIR . $folder) ) {
+			$sourcePath = $path . LANG_FOLDER;
+			if( is_dir($sourcePath) ) {
+				foreach( cleanscandir($sourcePath) as $folder ) {
+					if( !is_dir($sourcePath . '/' . $folder) ) {
 						continue;
 					}
 					$locales[$folder] = 1;

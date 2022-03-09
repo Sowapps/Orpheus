@@ -1,17 +1,12 @@
 <?php
+/**
+ * @author Florent HAZARD <f.hazard@sowapps.com>
+ */
 
 use Orpheus\Config\IniConfig;
 use Orpheus\Core\RequestHandler;
 use Orpheus\Hook\Hook;
 
-/**
- * @file Bootstrap.php
- * @brief The Orpheus Core
- * @author Florent Hazard
- * @copyright The MIT License, see LICENSE.txt
- *
- * Website core.
- */
 
 define('IS_CONSOLE', PHP_SAPI === 'cli');
 define('IS_WEB', !IS_CONSOLE);
@@ -86,8 +81,8 @@ if( isset($t) ) {
 	unset($t);
 }
 
-defifn('CONSTANTS_FILE_PATH', pathOf('configs/constants.php'));
-defifn('DEFAULTS_FILE_PATH', pathOf('configs/defaults.php', true));
+defifn('CONSTANTS_FILE_PATH', pathOf('/configs/constants.php'));
+defifn('DEFAULTS_FILE_PATH', pathOf('/configs/defaults.php', true));
 
 // Edit the constant file according to the system context (OS, directory tree ...).
 if( DEFAULTS_FILE_PATH !== null ) {
@@ -103,11 +98,14 @@ defifn('TIME', $_SERVER['REQUEST_TIME']);
 defifn('CONFIG_FOLDER', '/configs');
 defifn('LIBRARY_FOLDER', '/libs');
 defifn('THEMES_FOLDER', '/themes');
+defifn('LANG_FOLDER', '/languages');
 
-defifn('SRC_PATH', 'src');
-defifn('LOGS_PATH', pathOf('logs/'));
-defifn('STORE_PATH', pathOf('store/'));
-defifn('CACHE_PATH', STORE_PATH . 'cache/');
+defifn('SRC_PATH', '/src');
+defifn('LOGS_PATH', pathOf('/logs'));
+defifn('STORE_PATH', pathOf('/store'));
+defifn('CACHE_PATH', STORE_PATH . '/cache');
+defifn('TEMP_PATH', STORE_PATH . '/temp');
+defifn('FILE_STORE_PATH', STORE_PATH . '/files');
 
 // Defaults
 if( !defined('DEFAULT_PATH') ) {
@@ -230,15 +228,15 @@ $coreAction = 'initializing_core';
 try {
 	ob_start();
 	
-	defifn('VENDORPATH', APPLICATION_PATH . 'vendor/');
+	defifn('VENDOR_PATH', APPLICATION_PATH . '/vendor');
 	
 	// Before lib loading, they can not define it
 	// This class MUST extends Orpheus\Config\ConfigCore
 	defifn('DEFAULT_CONFIG_CLASS', 'Orpheus\Config\IniConfig');
 	
-	if( is_file(VENDORPATH . 'autoload.php') ) {
+	if( is_file(VENDOR_PATH . '/autoload.php') ) {
 		/* @var Composer\Autoload\ClassLoader $PackageLoader */
-		$PackageLoader = require VENDORPATH . 'autoload.php';
+		$PackageLoader = require VENDOR_PATH . '/autoload.php';
 	}
 	
 	if( existsPathOf(SRC_PATH . '/_loader.php', $path) ) {
@@ -246,7 +244,7 @@ try {
 	}
 	
 	try {
-		require_once pathOf('configs/libraries.php');
+		require_once pathOf('/configs/libraries.php');
 	} catch( Exception $e ) {
 		// Ignore
 	}
