@@ -109,14 +109,17 @@ defifn('FILE_STORE_PATH', STORE_PATH . '/files');
 
 // Defaults
 if( !defined('DEFAULT_PATH') ) {
-	define('DEFAULT_PATH', '');
+	define('DEFAULT_PATH', '/');
 }
 
 // Routing
 defifn('HTTPS', !empty($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] === 'https' : (defined('DEFAULT_IS_SECURE') && DEFAULT_IS_SECURE));
 defifn('SCHEME', HTTPS ? 'https' : 'http');
 defifn('HOST', !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULT_HOST);
-defifn('PATH', !defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULT_PATH);
+// Web path to app, by default, always "/", you must define it manually to change it in defaults.php file
+// This is used to generate URL from routes
+// This is also used by session's cookie, so session won't be available out of this path
+defifn('PATH', DEFAULT_PATH);
 
 defifn('WEB_ROOT', SCHEME . '://' . HOST . (PATH !== '/' ? PATH : ''));
 
