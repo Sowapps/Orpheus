@@ -32,5 +32,5 @@ define('ROUTE_DEV_APPTRANSLATE', 'dev_app_translate');
 defifn('DEFAULT_ROUTE', ROUTE_HOME);
 defifn('DEFAULT_MEMBER_ROUTE', ROUTE_ADM_DEMO);
 defifn('DEFAULT_HOST', 'yourdomain.com');
-defifn('DEFAULT_PATH', '');
+defifn('DEFAULT_PATH', '/');
 

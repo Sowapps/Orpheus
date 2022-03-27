@@ -342,6 +342,34 @@ function getClassName($var) {
 	return array_pop($hierarchy);
 }
 
+function processException(Throwable $exception, $log = null) {
+	if( $log !== false && function_exists('log_error') ) {
+		log_error($exception, $log);
+	}
+	if( DEV_VERSION ) {
+		displayException($exception);
+	} else {
+		die('A fatal error occurred.');
+	}
+}
+
+function getErrorException(array $error) {
+	$class = null;
+	$severity = E_ERROR;
+	if( $error['type'] === E_COMPILE_ERROR || $error['type'] === E_COMPILE_WARNING ) {
+		$class = 'Orpheus\Exception\CompilerException';
+		$severity = $error['type'] === E_COMPILE_WARNING ? E_WARNING : E_ERROR;
+	}
+	
+	if( $class ) {
+		$exception = new $class($error['message'], $error['type'], $severity, $error['file'], $error['line']);
+	} else {
+		$exception = new ErrorException($error['message'], $error['type'], $severity, $error['file'], $error['line']);
+	}
+	
+	return $exception;
+}
+
 /**
  * @param Throwable $exception
  * @param $code

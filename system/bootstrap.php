@@ -109,26 +109,25 @@ defifn('FILE_STORE_PATH', STORE_PATH . '/files');
 
 // Defaults
 if( !defined('DEFAULT_PATH') ) {
-	define('DEFAULT_PATH', '');
+	define('DEFAULT_PATH', '/');
 }
 
 // Routing
 defifn('HTTPS', !empty($_SERVER['REQUEST_SCHEME']) ? $_SERVER['REQUEST_SCHEME'] === 'https' : (defined('DEFAULT_IS_SECURE') && DEFAULT_IS_SECURE));
 defifn('SCHEME', HTTPS ? 'https' : 'http');
 defifn('HOST', !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DEFAULT_HOST);
-defifn('PATH', !defined('TERMINAL') ? dirpath($_SERVER['SCRIPT_NAME']) : DEFAULT_PATH);
+// Web path to app, by default, always "/", you must define it manually to change it in defaults.php file
+// This is used to generate URL from routes
+// This is also used by session's cookie, so session won't be available out of this path
+defifn('PATH', DEFAULT_PATH);
 
 defifn('WEB_ROOT', SCHEME . '://' . HOST . (PATH !== '/' ? PATH : ''));
 
 // Edit the global constants
 try {
 	require_once CONSTANTS_FILE_PATH;
-} catch( Exception $e ) {
-	if( !defined('DEV_VERSION') || !DEV_VERSION ) {
-		displayException($e);
-	} else {
-		die('A fatal error occurred.');
-	}
+} catch( Exception $exception ) {
+	processException($exception, false);
 }
 
 // Static medias
@@ -154,21 +153,17 @@ set_error_handler(
  *
  * System function to handle PHP errors and convert it into exceptions.
  */
-	function ($errno, $errstr, $errfile, $errline) {
-		$exception = new ErrorException($errstr, 0, $errno, $errfile, $errline);
-		if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION'] === ERROR_THROW_EXCEPTION) ) {//ERROR_THROW_EXCEPTION
+	function ($type, $message, $file, $line) {
+		$exception = new ErrorException($message, 0, $type, $file, $line);
+		if( empty($GLOBALS['NO_EXCEPTION']) && (empty($GLOBALS['ERROR_ACTION']) || $GLOBALS['ERROR_ACTION'] === ERROR_THROW_EXCEPTION) ) {
+			// ERROR_THROW_EXCEPTION
 			throw $exception;
-		} elseif( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] === ERROR_IGNORE ) {//ERROR_IGNORE
+		} elseif( !empty($GLOBALS['ERROR_ACTION']) && $GLOBALS['ERROR_ACTION'] === ERROR_IGNORE ) {
+			// ERROR_IGNORE
 			return;
-		} else {//ERROR_DISPLAY_RAW
-			if( !function_exists('log_error') ) {
-				if( DEV_VERSION ) {
-					displayException($exception);
-				} else {
-					die('A fatal error occurred.');
-				}
-			}
-			log_error($exception, 'Handling error', true);
+		} else {
+			// ERROR_DISPLAY_RAW
+			processException($exception);
 		}
 	});
 
@@ -188,18 +183,8 @@ register_shutdown_function(
 	function () {
 		// If there is an error
 		$error = error_get_last();
-		
 		if( $error ) {
-			$exception = new ErrorException($error['message'], 1, $error['type'], $error['file'], $error['line']);
-			
-			if( !function_exists('log_error') ) {
-				if( DEV_VERSION ) {
-					displayException($exception);
-				} else {
-					die('A fatal error occurred.');
-				}
-			}
-			log_error($exception, 'Shutdown script', true);
+			processException(getErrorException($error));
 		}
 	});
 
@@ -211,14 +196,7 @@ set_exception_handler(
  */
 	function ($exception) {
 		global $coreAction;
-		if( !function_exists('log_error') ) {
-			if( DEV_VERSION ) {
-				displayException($exception);
-			} else {
-				die('A fatal error occurred.');
-			}
-		}
-		log_error($exception, $coreAction, true);
+		processException($exception, $coreAction);
 	});
 
 $AUTOLOADS = [];
@@ -273,6 +251,6 @@ try {
 	// Handle current request
 	RequestHandler::handleCurrentRequest(IS_CONSOLE ? RequestHandler::TYPE_CONSOLE : RequestHandler::TYPE_HTTP);
 	
-} catch( Exception $e ) {
-	log_error($e, $coreAction, true);
+} catch( Exception $exception ) {
+	processException($exception, $coreAction);
 }
