@@ -636,7 +636,7 @@ function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter): stri
 EOF;
 }
 
-function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter) {
+function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter): string {
 	$from = max($activeLineNumber - $linesBefore, 0);
 	$to = $activeLineNumber + $linesAfter;
 	$count = 0;
