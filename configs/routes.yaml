@@ -12,7 +12,7 @@
 # - redirect : Redirect to the given URL, using RedirectController.
 # - url_config : Redirect to the URL provided by the configurable url_config, using RedirectController & AppConfig. Require orpheus/orpheus-webtools.
 # - render : The template to render this route, using StaticPageController. Processed as option.
-# Other fields will be send as options to the controller, controller can access to all this configuration.
+# Other fields will be sent as options to the controller, controller can access to all this configuration.
 #
 # Known roles: visitor, member, moderator, administrator, developer
 # Unspecified role does not restrict access, "visitor" restricts to not-logged user only.
