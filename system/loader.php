@@ -317,7 +317,7 @@ function displayStackTrace($backtrace) {
 			}
 			?>
 			<li class="trace">
-				Call <?php echo $trace['class'] . $trace['type'] . $trace['function'] . '(' . $args . ')' ?><br/>
+				Call <?php echo $trace['class'] . $trace['type'] . $trace['function'] . '(' . $args . ($args ? ' ' : '') . ')' ?><br/>
 				<address>In <?php echo isset($trace['file']) ? $trace['file'] . ' at line ' . $trace['line'] : 'an unknown file'; ?></address>
 			</li>
 			<?php
