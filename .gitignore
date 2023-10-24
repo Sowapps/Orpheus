@@ -1,13 +1,17 @@
-/configs/database.ini
-/configs/environment.json
+# Environment files
+/config/database.ini
+/config/environment.json
 /instance.php
+/.env.local
+# Generated files
 /.composer
 /logs/*
 node_modules/*
 /store/*
 /temp/*
-vendor/*
+/vendor/
 composer.phar
+# Non-project files
 .DS_Store
 # But keep empty folder containing gitkeep & htaccess
 !.gitkeep

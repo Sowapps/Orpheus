@@ -1,39 +1,52 @@
 {
-  "name": "orpheus/orpheus-framework",
-  "description": "Orpheus PHP Framework",
-  "type": "project",
-  "license": "MIT",
-  "minimum-stability": "stable",
-  "keywords": [
-	"framework",
-	"php"
-  ],
-  "autoload": {
-	"psr-4": {
-	  "": "src/"
-	}
-  },
-  "require": {
-	"orpheus/orpheus-core": "1.*",
-	"orpheus/orpheus-cache": "1.*",
-	"orpheus/orpheus-yaml": "1.*",
-	"orpheus/orpheus-initernationalization": "1.*",
-	"orpheus/orpheus-rendering": "1.*",
-	"orpheus/orpheus-inputcontroller": "1.*",
-	"orpheus/orpheus-sqladapter": "1.*",
-	"orpheus/orpheus-publisher": "1.*",
-	"orpheus/orpheus-entitydescriptor": "1.*",
-	"orpheus/orpheus-form": "1.*",
-	"orpheus/orpheus-webtools": "1.*",
-	"ext-pdo": "*",
-	"ext-json": "*"
-  },
-  "authors": [
-	{
-	  "name": "Florent HAZARD",
-	  "email": "contact@sowapps.com",
-	  "homepage": "http://sowapps.com",
-	  "role": "Developer"
-	}
-  ]
+	"name": "orpheus/orpheus-framework",
+	"description": "Orpheus PHP Framework",
+	"type": "project",
+	"license": "MIT",
+	"minimum-stability": "stable",
+	"keywords": [
+		"framework",
+		"php"
+	],
+	"autoload": {
+		"psr-4": {
+			"": "src/"
+		}
+	},
+	"require": {
+		"php": ">=8.2",
+		"orpheus/orpheus-composer-plugin": "^4.0.0",
+		"orpheus/orpheus-core": "^4.0.0",
+		"orpheus/orpheus-hook": "^4.0.0",
+		"orpheus/orpheus-cache": "^4.0.0",
+		"orpheus/orpheus-yaml": "^4.0.0",
+		"orpheus/orpheus-initernationalization": "^4.0.0",
+		"orpheus/orpheus-rendering": "^4.0.0",
+		"orpheus/orpheus-inputcontroller": "^4.0.0",
+		"orpheus/orpheus-sqladapter": "^4.0.0",
+		"orpheus/orpheus-publisher": "^4.0.0",
+		"orpheus/orpheus-entitydescriptor": "^4.0.0",
+		"orpheus/orpheus-form": "^4.0.0",
+		"orpheus/orpheus-webtools": "^4.0.0",
+		"ext-pdo": "*",
+		"ext-json": "*",
+		"ext-readline": "*"
+	},
+	"suggest": {
+		"ext-zlib": "GZ compatibility for logs",
+		"ext-zip": "Zip compatibility for app translate"
+	},
+	"config": {
+		"allow-plugins": {
+			"orpheus/orpheus-composer-plugin": true
+		}
+	},
+	"authors": [
+		{
+			"name": "Florent HAZARD",
+			"email": "contact@sowapps.com",
+			"homepage": "https://sowapps.com",
+			"role": "Developer"
+		}
+	]
 }

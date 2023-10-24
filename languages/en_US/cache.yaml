@@ -1,0 +1,21 @@
+property:
+    class: "Class"
+    name: "Name"
+    size: "Size"
+    hits: "Hits"
+    contents: "Contents"
+
+empty: "Empty cache."
+notAvailable: "N/A"
+
+manager:
+    fs: "Filesystem"
+    apc: "APC"
+
+action:
+    clearAll:
+        label: "Clear all"
+        processing: "Clearing..."
+        success: 'Cleared all cache of "%s".'
+        errorInvalid: 'Unable to clear an invalid cache "%s".'
+        errorFailure: 'Unable to clear the cache "%s" due to an cache adapter.'

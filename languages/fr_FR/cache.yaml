@@ -1,0 +1,21 @@
+property:
+    class: "Classe"
+    name: "Nom"
+    size: "Taille"
+    hits: "Hits"
+    contents: "Contenu"
+
+empty: "Cache vide."
+notAvailable: "N/A"
+
+manager:
+    fs: "Filesystem"
+    apc: "APC"
+
+action:
+    clearAll:
+        label: "Tout supprimer"
+        processing: "Suppression..."
+        success: 'Le cache "%s" a été entièrement supprimé.'
+        errorInvalid: 'Impossible de vider un cache invalide "%s".'
+        errorFailure: 'Impossible de vide le cache "%s".'

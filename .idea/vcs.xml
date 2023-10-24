@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
-    <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-entitydescriptor" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-form" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-hook" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-initernationalization" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-inputcontroller" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-publisher" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-rendering" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-setup" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-sqladapter" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-ssh2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-webtools" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../orpheus-yaml" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>

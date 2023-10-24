@@ -1,0 +1,70 @@
+login:
+    legend: "Avez-vous un compte ?"
+
+register:
+    legend: "Est-ce votre première fois ici ?"
+    gdprDisclaimer: |
+        [Modifiez votre disclaimer RGPD]
+        Nous ne conservons aucune donnée sensible sur vous ou votre appareil.
+        Votre mot de passe est encodé de manière à ce que nous ne pouvons pas le restaurer, mais vous serez en mesure de le modifier par la suite.
+
+home:
+    title: "Bienvenue sur votre site web !"
+    description: ""
+    introduction:
+        title: "Bienvenue sur votre site web !"
+        legend: |
+            Merci d'utiliser votre humble framework Orpheus pour créer votre application PHP.
+            Ce qui suit expliquera comment fonctionne Orpheus et comment commencer.
+    information:
+        title: "Comment fonctionne Orpheus ?"
+        usingMvc: |
+            En utilisant l'architecture MVC, Orpheus contrôle comment une route mène à un contrôleur.
+            Dans ce contrôleur, vous pouvez utiliser l'ORM et la mise en page pour traiter la requête.
+        usingTheming: |
+            Votre application peut avoir plusieurs facettes, voire plusieurs accès, alors assurez-vous que votre thème contient toutes les ressources dont vous avez besoin.
+            Les thèmes peuvent contenir des assets et des views (layouts). Le thème par défaut est "default" \o/
+            Les ressources globales sont stockées dans #code_start#app/web/static/#code_end#.
+            En utilisant les thèmes, le panneau d'administration et la configuration sont entièrement personnalisables, leurs contrôleurs font également entièrement parti de votre application.
+        usingInternationalization: |
+            Votre application est livrée avec de nombreux outils pour vous aider à la traduire, vous pouvez donc jeter un œil au dossier #code_start#languages/#code_end#".
+            Orpheus sépare les traductions par langue et par domaine. Consultez la fonction #code_start#t(string)#code_end#", elle permet de remplacer les valeurs et de formater votre contenu.
+        usingBackOffice: |
+            Votre application est livrée avec une authentification utilisateur donnant accès à un back-office. Votre panneau d'administration est prêt !
+        usingBootstrap: |
+            Tout le contenu fourni utilise Twitter Bootstrap comme framework CSS. Votre application est déjà adaptée aux mobiles !
+        usingFontAwesome: |
+            Nous adorons FontAwesome, alors nous voulons partager cet amour avec vous, nous l'utilisons pour les icônes. Mais n'hésitez pas à utiliser celle que vous préférez !
+    start:
+        title: "Comment commencer ?"
+        legend: |
+            Orpheus est un framework conçu pour être prêt à l'emploi après installation, mais il ne sait pas quelle application vous souhaitez créer, vous devrez donc le configurer.
+        stepActiveLanguages: |
+            Il est livré avec les langues française et anglaise, mais créez celles dont vous avez besoin dans le dossier #code_start#languages/#code_end#.
+        stepSetApplicationName: |
+            Modifiez les fichiers #code_start#global.ini#code_end# des locales que vous souhaitez pour changer la valeur de #code_start#app_name#code_end#.
+        stepConfigureDefaultLanguage: |
+            Définissez la langue par défaut dans le fichier #code_start#.env#code_end#.
+            Il existe des moyens de configurer une langue dynamiquement à partir de la demande en créant votre propre bibliothèque Orpheus, consultez le Github du site web d'Orpheus > src/App/OrpheusApplicationLibrary.php.
+        stepCompleteTranslations: |
+            Si vous souhaitez conserver notre contenu, il manque des traductions, consultez le fichier de traduction, tel que #code_start#application.yaml#code_end#.
+        stepConfigureDatabase: |
+            Copiez le fichier #code_start#config/database.model.ini#code_end# vers #code_start#config/database.ini#code_end# et modifiez la configuration pour vous connecter à votre base de données.
+        stepCreateDatabaseStructure: |
+            Concevez la structure de votre base de données en utilisant notre PermanentEntity du paquet #code_start#orpheus/orpheus-entitydescriptor#code_end#.
+            Toutes les entités sont configurées dans #code_start#config/entities#code_end# en utilisant un fichier yaml par entité.
+            Consultez la fonction requestSelect() de votre entité pour interroger des objets depuis votre base de données, la POO dans la peau.
+        stepConfigureFixtures: |
+            Le programme d'installation charge des données d'exemple lors de l'utilisation de la configuration, veuillez configurer votre premier utilisateur dans la base de données à l'aide des données d'exemple, voir #code_start#User::loadFixtures()#code_end#.
+        stepRunSetup: |
+            Nous vous avons fourni #link_setup#un programme d'installation#link_end#, nommé Setup, pour vous aider davantage.
+            Il vérifiera votre installation, validera votre connexion à la base de données, installera vos données d'exemple, ...
+            Pensez à désactiver l'accès au setup dans le fichier de configuration #code_start#config/routes.yaml#code_end# avant de le déployer en production.
+        stepCreateControllers: |
+            Une page, un contrôleur, une méthode d'action run().
+            Ajoutez des contrôleurs dans #code_start#src/App/Controller#code_end#.
+            Ajoutez des vues dans #code_start#app/web/themes/default/layouts#code_end#.
+            Configurez les routes dans #code_start#config/routes.yaml#code_end#.
+            Votre site est prêt, c'est si facile !
+        stepCleanInstallationHelp: |
+            Modifiez votre fichier #code_start#layout/home.php#code_end# et supprimez ces traductions dans #code_start#application.yaml#code_end#, gardez-le simple, gardez-le propre.

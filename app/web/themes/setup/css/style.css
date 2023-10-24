@@ -1,12 +1,25 @@
 /** Common bootstrap modification **/
 
-body {
-/* 	padding-bottom: 40px; Cause issue, page height is too high */
-	padding-top: 60px;
-}
-
 .container {
 	clear: both;
+}
+
+.navbar-brand {
+	/* 	padding: 0; */
+	padding: 10px 15px;
+	line-height: 30px;
+}
+
+.navbar-brand img {
+	height: 100%;
+	/* 	padding: 15px; */
+	width: auto;
+	display: inline;
+}
+
+.navbar-brand span {
+	margin-left: 4px;
+	display: none;
 }
 
 #demotest {
@@ -30,13 +43,6 @@ a, .btn {
 	text-decoration: none;
 }
 
-/*
-section {
-	margin-top: 30px;
-	padding-top: 30px;
-}
-*/
-
 /** Global **/
 
 .left {
@@ -50,15 +56,15 @@ section {
 
 .report {
 	clear:	both;
-    margin:	10px 0px;
-    padding:	15px 10px 15px 10px;
-/*     padding:	15px 10px 15px 50px; */
-    border:	1px solid;
-    background-repeat:	no-repeat;
-    background-position:	10px center;
-    
-    position: relative;
-    display: table;
+	margin: 10px 0;
+	padding: 15px 10px 15px 10px;
+	/*     padding:	15px 10px 15px 50px; */
+	border: 1px solid;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	
+	position: relative;
+	display: table;
 }
 .report .fa {
 	float: left;
@@ -72,24 +78,24 @@ section {
 	vertical-align:	middle;
 }
 .report a {
-    font-weight:	bold;
-    text-decoration:	underline;
-    color:	inherit;
+	font-weight: bold;
+	text-decoration: underline;
+	color: inherit;
 }
 
 .info {
-    color: #00529B;
-    background-color: #BDE5F8;
+	color: #00529B;
+	background-color: #BDE5F8;
 }
 .success {
-    color: #4F8A10;
-    background-color: #DFF2BF;
+	color: #4F8A10;
+	background-color: #DFF2BF;
 }
 .warning {
-    color: #9F6000;
-    background-color: #FEEFB3;
+	color: #9F6000;
+	background-color: #FEEFB3;
 }
 .error {
-    color: #D8000C;
-    background-color: #FFBABA;
+	color: #D8000C;
+	background-color: #FFBABA;
 }

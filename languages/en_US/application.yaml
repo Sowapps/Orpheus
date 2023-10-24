@@ -1,0 +1,70 @@
+login:
+    legend: "Do you already have an account?"
+
+register:
+    legend: "Is this you first time here?"
+    gdprDisclaimer: |
+        [Edit your GDPR disclaimer]
+        We don't retain any sensitive information about you or your device. 
+        Your password is encrypted in a way, we can not restore it but you will be able to change it later.
+
+home:
+    title: "Welcome to your website!"
+    description: ""
+    introduction:
+        title: "Welcome to your website!"
+        legend: |
+            Thank you for using your humble Orpheus framework to create your PHP application.
+            The following will explain how orpheus works and how to get started.
+    information:
+        title: "How is Orpheus working?"
+        usingMvc: |
+            By using MVC architecture, Orpheus controls how a route is leading to a controller.
+            In this controller, you could use the ORM and templating to process the input request.
+        usingTheming: |
+            Your app could have multiple facets and even multiple accesses, so ensure your theme contains all resources you need.
+            Themes could contain assets and views (layout). The default theme is "default" \o/
+            Global assets are stored in #code_start#app/web/static/#code_end#.
+            Using theming the admin panel and the setup are totally customizable, their controllers are also entirely part of your application.
+        usingInternationalization: |
+            Your app comes with many tools to help you to translate it, so you could have a look on the folder #code_start#languages/#code_end#".
+            Orpheus separates translations by language and domain. See the function #code_start#t(string)#code_end#" which is allowing replacement values and to format your contents.
+        usingBackOffice: |
+            You app comes with an user authentication giving access to a back-office. Your admin panel is ready!
+        usingBootstrap: |
+            All provided contents is using the Twitter Bootstrap as CSS framework. Your app is already responsive!
+        usingFontAwesome: |
+            We love FontAwesome, so we want to share this love with you, we are using it for icons. But feel free to use the one you want!
+    start:
+        title: "How to start?"
+        legend: |
+            Orpheus is a framework designed to be ready when installed but it does not know what is the app you want, you will need to configure it.
+        stepActiveLanguages: |
+            It comes with French and English languages but create the ones you want in folder #code_start#languages/#code_end#.
+        stepSetApplicationName: |
+            Edit the files #code_start#global.ini#code_end# of locales you want to change the value of #code_start#app_name#code_end#.
+        stepConfigureDefaultLanguage: |
+            Set the default locale in #code_start#.env#code_end# file.
+            There are ways to configure dynamically a locale from request by creating you own Orpheus' library, see Github of Orpheus Website > src/App/OrpheusApplicationLibrary.php.
+        stepCompleteTranslations: |
+            If you want to keep our contents, there are missing translations, see translations file, as #code_start#application.yaml#code_end#.
+        stepConfigureDatabase: |
+            Copy the file #code_start#config/database.model.ini#code_end# to #code_start#config/database.ini#code_end# and edit the configuration to connect to your database.
+        stepCreateDatabaseStructure: |
+            Design the structure of your database using our PermanentEntity from package #code_start#orpheus/orpheus-entitydescriptor#code_end#.
+            All entities are configured in #code_start#config/entities#code_end# using one yaml file per entity.
+            See requestSelect() of your entity to query objects from your database, the loop in the OOP.
+        stepConfigureFixtures: |
+            The setup program is loading fixtures while using setup, please configure your first user in database using fixtures, see #code_start#User::loadFixtures()#code_end#.
+        stepRunSetup: |
+            We have provided you with #link_setup#an installation program#link_end# to assist you further.
+            It will check your install, validate your database connection, install your fixtures, ...
+            Think to disable access to setup in the config file #code_start#config/routes.yaml#code_end# before pushing it to production.
+        stepCreateControllers: |
+            One page, one controller, one run() action method.
+            Add controllers in #code_start#src/App/Controller#code_end#.
+            Add views in #code_start#app/web/themes/default/layouts#code_end#.
+            Configure routes in #code_start#config/routes.yaml#code_end#.
+            Your website is ready, it's so easy!
+        stepCleanInstallationHelp: |
+            Edit your file #code_start#layout/home.php#code_end# and remove theses translations in #code_start#application.yaml#code_end#, keep it simple, keep it clean.

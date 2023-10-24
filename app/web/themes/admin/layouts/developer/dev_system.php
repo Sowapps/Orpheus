@@ -17,16 +17,16 @@ use Orpheus\Rendering\HtmlRendering;
 use Orpheus\SqlRequest\SqlSelectRequest;
 
 
-$rendering->useLayout('page_skeleton');
+$rendering->useLayout('layout.admin');
 
-function displayByteRow($label, $value) {
-	displayRow($label, formatInt($value) . ' bytes');
+function displayByteRow(string $label, int $value): void {
+	displayRow($label, formatNumber($value) . ' bytes');
 }
 
-function displayRow($label, $value) {
+function displayRow(string $label, string $value): void {
 	?>
 	<div class="form-horizontal">
-		<div class="form-group row">
+		<div class="mb-3 row">
 			<label class="col-sm-2 control-label"><?php echo $label; ?></label>
 			<div class="col-sm-10">
 				<p class="form-control-static"><?php echo $value; ?></p>

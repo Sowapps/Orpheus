@@ -1,0 +1,32 @@
+# User descriptor
+
+fields:
+    
+    # Header
+    create_date: datetime=now()
+    create_ip: ip=clientIp()
+    create_user_id: ref=userId()
+    login_date: datetime[nullable]
+    login_ip: ip[nullable]
+    activity_date: datetime[nullable]
+    activity_ip: ip[nullable]
+    activation_date: datetime[nullable]
+    activation_ip: ip[nullable]
+    auth_token: string(64)
+
+    # Account
+    email: email[nullable]
+    password: password[nullable]
+    fullname: string(4,30)
+    published: boolean=true
+
+    # System infos
+    accesslevel: natural(999)=0 # Access level for admin panel
+    recovery_code: string(30)[nullable] # Password recovery code
+    activation_code: string(30)[nullable] # Activation code
+    #    timezone:           enum(listTimezones)[nullable]=DEFAULT_TIMEZONE  # Timezone
+    #    language_id:        ref(language)=0
+
+
+indexes:
+    - UNIQUE(email)

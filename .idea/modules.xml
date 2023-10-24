@@ -3,19 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/orpheus.iml" filepath="$PROJECT_DIR$/.idea/orpheus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-core/.idea/orpheus-core.iml" filepath="$PROJECT_DIR$/../orpheus-core/.idea/orpheus-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-entitydescriptor/.idea/orpheus-entitydescriptor.iml" filepath="$PROJECT_DIR$/../orpheus-entitydescriptor/.idea/orpheus-entitydescriptor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-form/.idea/orpheus-form.iml" filepath="$PROJECT_DIR$/../orpheus-form/.idea/orpheus-form.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-hook/.idea/orpheus-hook.iml" filepath="$PROJECT_DIR$/../orpheus-hook/.idea/orpheus-hook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-initernationalization/.idea/orpheus-initernationalization.iml" filepath="$PROJECT_DIR$/../orpheus-initernationalization/.idea/orpheus-initernationalization.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-inputcontroller/.idea/orpheus-inputcontroller.iml" filepath="$PROJECT_DIR$/../orpheus-inputcontroller/.idea/orpheus-inputcontroller.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-publisher/.idea/orpheus-publisher.iml" filepath="$PROJECT_DIR$/../orpheus-publisher/.idea/orpheus-publisher.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-rendering/.idea/orpheus-rendering.iml" filepath="$PROJECT_DIR$/../orpheus-rendering/.idea/orpheus-rendering.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-setup/.idea/orpheus-setup.iml" filepath="$PROJECT_DIR$/../orpheus-setup/.idea/orpheus-setup.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-sqladapter/.idea/orpheus-sqladapter.iml" filepath="$PROJECT_DIR$/../orpheus-sqladapter/.idea/orpheus-sqladapter.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-ssh2/.idea/orpheus-ssh2.iml" filepath="$PROJECT_DIR$/../orpheus-ssh2/.idea/orpheus-ssh2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-webtools/.idea/orpheus-webtools.iml" filepath="$PROJECT_DIR$/../orpheus-webtools/.idea/orpheus-webtools.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../orpheus-yaml/.idea/orpheus-yaml.iml" filepath="$PROJECT_DIR$/../orpheus-yaml/.idea/orpheus-yaml.iml" />
     </modules>
   </component>
 </project>

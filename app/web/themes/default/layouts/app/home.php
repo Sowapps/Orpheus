@@ -6,86 +6,63 @@
  * @var HttpRoute $route
  */
 
+use App\Entity\User;
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HtmlRendering;
 
-$rendering->useLayout('page_skeleton');
-?>
-<div class="jumbotron">
-	<h1>Hello PHP developer !</h1>
-	<p>
-		Get the power with the new Orpheus, the PHP framework from your dreams, coming with all features you need !
-		This framework is made for you, you want to develop your website quickly with something easy-to-use, optimized,
-		secured and standardized by easiest way to use it and the maximum customizing capabilities.
-	</p>
-	<p class="cb tac mt30">
-		<a href="<?php _u('gettingstarted'); ?>" class="btn btn-primary btn-lg"><i class="fa fa-star-o"></i> Getting Started</a>
-		<?php /*
-		<a href="<?php _u(ROUTE_DOWNLOAD_LATEST); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
-		<a href="<?php _u(ROUTE_DOWNLOAD_RELEASES); ?>" target="_blank" class="btn btn-link fs16">All releases</a>
-		<a href="<?php echo u('download'); ?>" class="btn btn-primary btn-large"><i class="fa fa-download"></i> Download latest</a>
-		<a href="<?php echo u('download').'?releases'; ?>" class="link fs16 ml10">All releases</a>
-		*/ ?>
-	</p>
-</div>
-<?php
-$this->display('reports-bootstrap3');
+$user = User::getActiveUser();
+$rendering->useLayout('layout.public');
+
+$home = [
+	'link_setup' => '<a href="' . u('setup_start') . '">',
+	'link_end'   => '</a>',
+	'code_start' => '<span class="text-secondary fst-italic">',
+	'code_end'   => '</span>',
+];
 ?>
 
-<div class="row">
-	<div class="col-xs-8">
-		
-		<div class="row">
-			<div class="col-xs-4">
-				<h3>Persistant Entity System</h3>
-				<p>The framework allow you to do not manipulate SQL queries anymore. It includes a SQL Adapter system with a full object entity handling for PHP.</p>
-			</div>
-			<div class="col-xs-4">
-				<h3>A Light &amp; Powerful Rendering system</h3>
-				<p>You can define the renderer on-the-fly from PHP, as the theme you want. Basically, it includes a simple & powerful raw php renderer, so no exotic thing, just what you already know
-					!</p>
-			</div>
-			<div class="col-xs-4">
-				<h3>i18n - Internationalization</h3>
-				<p>All features allow you to translate contents using our easy-to-use internationalization library. The translation functions also allow you to pass replacement values from PHP.</p>
-			</div>
+<div class="container py-4">
+	
+	<div class="p-5 mb-5 bg-light border rounded-3">
+		<div class="px-3">
+			<h1 class="display-5 fw-bold mb-3">
+				<?php echo t('home.introduction.title', DOMAIN_APP, $home); ?>
+			</h1>
+			<p class="col-md-10 fs-4">
+				<?php echo nl2br(t('home.introduction.legend', DOMAIN_APP, $home)); ?>
+			</p>
 		</div>
-		
-		<div class="row">
-			<div class="col-xs-4">
-				<h3>Debug Tools Provided</h3>
-<p>This PHP framework provides you all tools to debug your application, it catches all error that occurred running your scripts and log it for you.</p>
-			</div>
-			<div class="col-xs-4">
-<h3>Edit the content online <span class="badge">In progress</span></h3>
-<p>The framework will provide a CMS library soon, you will be able to edit your application online &amp; inline, no need to edit PHP sources.</p>
-			</div>
-			<div class="col-xs-4">
-<h3>Speak about it <span class="badge">In progress</span></h3>
-<p>We are developing a PHP forum library for our framework, you will be able to create and integrate a forum in your App !</p>
-			</div>
-		</div>
-<!--
-badge
-label label-warning
--->
 	</div>
-	<div class="col-xs-4">
+	
+	<section class="mb-4">
+		<h2 class="border-start border-5 border-info ps-3">
+			<?php echo t('home.information.title', DOMAIN_APP, $home); ?>
+		</h2>
+		<p><?php echo nl2br(t('home.information.usingMvc', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.information.usingTheming', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.information.usingInternationalization', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.information.usingBackOffice', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.information.usingBootstrap', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.information.usingFontAwesome', DOMAIN_APP, $home)); ?></p>
+	</section>
+	
+	<section class="mb-4">
+		<h2 class="border-start border-5 border-info ps-3">
+			<?php echo t('home.start.title', DOMAIN_APP, $home); ?>
+		</h2>
+		<p><?php echo nl2br(t('home.start.legend', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepActiveLanguages', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepSetApplicationName', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepConfigureDefaultLanguage', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepCompleteTranslations', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepConfigureDatabase', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepCreateDatabaseStructure', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepConfigureFixtures', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepRunSetup', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepCreateControllers', DOMAIN_APP, $home)); ?></p>
+		<p><?php echo nl2br(t('home.start.stepCleanInstallationHelp', DOMAIN_APP, $home)); ?></p>
+	</section>
 
-<section id="demotest">
-	<form method="POST">
-	<fieldset>
-		<legend>Try to create you own DemoTest object</legend>
-		<div class="form-group">
-			<label for="inputValue">Create it from a new value</label>
-			<input class="form-control" type="text" name="data[name]" placeholder="Type new value, longer than 3 characters" id="inputValue">
-		</div>
-		<span class="help-block">Submit a new value to see this working test in action.</span>
-		<button id="submitDemoTest" type="submit" class="btn btn-primary">Insert it !</button>
-	</fieldset>
-	</form>
-</section>
-	</div>
 </div>

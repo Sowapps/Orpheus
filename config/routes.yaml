@@ -1,0 +1,178 @@
+# 
+# Usage:
+# Route Access Type > Route > Route Config
+# 
+# This Yaml configuration file is made to work with package orpheus/orpheus-inputcontroller
+# 
+# HTTP Route allows the following config:
+# - path : The relative path to this route. Mandatory config.
+# - method : Restrict path access to the given HTTP method.
+# - controller : The controller to use to process this route
+# - restrictTo : Restriction configuration for this route, you can customize accessibility, the common field is "role".
+# - redirect : Redirect to the given URL, using RedirectController.
+# - url_config : Redirect to the URL provided by the configurable url_config, using RedirectController & AppConfig. Require orpheus/orpheus-webtools.
+# - render : The template to render this route, using StaticPageController. Processed as option.
+# Other fields will be sent as options to the controller, controller can access to all this configuration.
+#
+# Known roles: visitor, member, moderator, administrator, developer
+# Unspecified role does not restrict access, "visitor" restricts to not-logged user only.
+#
+# Examples :
+#    home:
+#        path: "/path/in/array/config"
+#        method: "POST|GET"
+#        method: "GET"
+#        controller: App\Controller\HomeController
+#    home2: "/path/with/all/methods->HomeController"
+#    home3: "POST(/path/for/POST/method)->HomeController"
+
+require-packages:
+    -   name: "orpheus/orpheus-cache"
+    -   name: "orpheus/orpheus-entitydescriptor"
+    -   name: "orpheus/orpheus-initernationalization"
+    -   name: "orpheus/orpheus-webtools"
+
+http:
+    home:
+        path: "/"
+        controller: App\Controller\HomeController
+        
+    user_login:
+        path: "/user-login.html"
+        controller: App\Controller\Authentication\LoginController
+
+    logout:
+        path: "/user-logout.html"
+        controller: App\Controller\Authentication\LogoutController
+        restrictTo:
+            role: member
+
+    file_download:
+        path: "/download/{id:fileId}"
+        controller: App\Controller\FileDownloadController
+
+    # Administrator's Area
+
+    admin_index:
+        path: "/admin"
+        controller: Orpheus\Controller\RedirectController
+        redirect: admin_home
+        restrictTo:
+            role: member
+
+    admin_home:
+        path: "/admin/home.html"
+        controller: App\Controller\Admin\AdminHomeController
+        restrictTo:
+            role: administrator
+
+    adm_my_settings:
+        path: "/admin/my_settings.html"
+        controller: App\Controller\Admin\AdminMySettingsController
+        restrictTo:
+            role: administrator
+
+    adm_user_list:
+        path: "/admin/users.html"
+        controller: App\Controller\Admin\AdminUserListController
+        restrictTo:
+          role: administrator
+        
+    adm_user:
+        path: "/admin/user/{id:userId}.html"
+        controller: App\Controller\Admin\AdminUserEditController
+        restrictTo:
+          role: administrator
+
+    # Developer's Area
+
+    dev_index:
+        path: "/developer/"
+        redirect: "dev_home"
+
+    dev_home:
+        path: "/developer/home.html"
+        controller: App\Controller\Developer\DevHomeController
+        restrictTo:
+            role: developer
+
+    dev_system:
+        path: "/developer/system.html"
+        controller: App\Controller\Developer\DevSystemController
+        restrictTo:
+            role: developer
+
+    dev_phpinfo:
+        path: "/developer/phpinfo.html"
+        controller: App\Controller\Developer\DevPhpInfoController
+        restrictTo:
+            role: developer
+
+    dev_cache:
+        path: "/developer/cache.html"
+        controller: App\Controller\Developer\DevCacheController
+        restrictTo:
+            role: developer
+
+    dev_composer:
+        path: "/developer/composer.html"
+        controller: App\Controller\Developer\DevComposerController
+        restrictTo:
+            role: developer
+
+    dev_entities:
+        path: "/developer/entities.html"
+        controller: App\Controller\Developer\DevEntitiesController
+        restrictTo:
+          role: developer
+
+    dev_logs:
+        path: "/developer/logs.html"
+        controller: App\Controller\Developer\DevLogListController
+        restrictTo:
+          role: developer
+        
+    dev_log_view:
+        path: "/developer/view_log.html"
+        controller: App\Controller\Developer\DevLogViewController
+        restrictTo:
+          role: developer
+
+    dev_translate:
+        path: "/developer/translate_application.html"
+        controller: App\Controller\Developer\DevTranslateController
+        restrictTo:
+          role: developer
+        
+    dev_config:
+        path: "/developer/config.html"
+        controller: App\Controller\Developer\DevConfigController
+        restrictTo:
+          role: developer
+    
+    
+    # Setup
+    
+    setup_start:
+        path: "/setup/"
+        controller: App\Controller\Setup\StartSetupController
+
+    setup_check_filesystem:
+        path: "/setup/check-filesystem.html"
+        controller: App\Controller\Setup\CheckFileSystemSetupController
+
+    setup_check_database:
+        path: "/setup/check-database.html"
+        controller: App\Controller\Setup\CheckDatabaseSetupController
+
+    setup_install_database:
+        path: "/setup/install-database.html"
+        controller: App\Controller\Setup\InstallDatabaseSetupController
+
+    setup_install_fixtures:
+        path: "/setup/install-fixtures.html"
+        controller: App\Controller\Setup\InstallFixturesSetupController
+        
+    setup_end:
+        path: "/setup/finish.html"
+        controller: App\Controller\Setup\EndSetupController

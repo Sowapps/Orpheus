@@ -1,8 +1,24 @@
 Change Log
 
+* 4.0.0 - 22/09/2023
+- Orpheus recognizes its libraries
+- Add lifecycle through library classes & kernel
+- Remove hooks
+- Allow translations using YAML
+- Generic cache adapters
+- Update default, admin & setup themes
+- EnvConfig is now used to get local & environment configs
+- Compile array to php file
+- Update Orpheus to PHP 8.2
+- Remove jQuery
+- Update bootstrap to 5.2.3
+- Update FontAwesome to 6.4.2
+- Website is now multilingual with English (US) and French (FR)
+- [Doc] Remove redundant type hinting in phpdoc
+
 * 3.0.0 - 21/05/2016
 - Major update of all Orpheus
-- Rename most of library file
+- Rename most of the library files
 
 * 2.0.1 - 17/08/2014 - R1074
 - Fixing some bugs

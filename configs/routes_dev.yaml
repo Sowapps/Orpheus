@@ -1,6 +1,0 @@
-
-
-http:
-    delayedpage:
-        path: "/delayedpage/{slug:page}.html"
-        controller: "Orpheus\\Controller\\DelayedPageController"

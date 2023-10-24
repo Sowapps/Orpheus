@@ -1,31 +1,42 @@
 <?php
 
-class TextFile extends AbstractFile {
+namespace Orpheus\File;
 
-	public function isCompressible() {
+use RuntimeException;
+
+/**
+ * Class to manipulate Text files
+ */
+class TextFile extends AbstractFile {
+	
+	public function isCompressible(): bool {
 		return true;
 	}
-
-	function open() {
-		$this->handle = fopen($this->getPath(), $this->getMode());
+	
+	function open(): void {
+		$handle = fopen($this->getPath(), $this->getMode());
+		if( !$handle ) {
+			throw new RuntimeException(sprintf('Unable to open file "%s" using GZ', $this->getPath()));
+		}
+		$this->handle = $handle;
 	}
 	
-	function getNextLine() {
+	function getNextLine(): false|string {
 		$this->ensureOpen('r');
 		return fgets($this->handle);
 	}
 	
-	function write($data) {
+	function write($data): void {
 		$this->ensureOpen('w');
 		fwrite($this->handle, $data);
 	}
 	
-	function getContents() {
+	function getContents(): false|string {
 		$this->ensureClosed();
 		return file_get_contents($this->getPath());
 	}
 	
-	function close() {
+	function close(): bool {
 		$r = fclose($this->handle);
 		$this->handle = null;
 		return $r;

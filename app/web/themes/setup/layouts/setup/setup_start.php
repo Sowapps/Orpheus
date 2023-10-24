@@ -11,30 +11,30 @@ use Orpheus\InputController\HttpController\HttpRequest;
 use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HtmlRendering;
 
-$rendering->useLayout('page_skeleton');
+$rendering->useLayout('layout.setup');
 
 ?>
 <form method="POST">
-	<div class="row">
-		
-		<div class="col-lg-10 col-lg-offset-1">
-			
-			<div class="jumbotron">
-			<h1><?php _t('start_title', DOMAIN_SETUP, t('app_name')); ?></h1>
-			<p class="lead"><?php echo text2HTML(t('start_description', DOMAIN_SETUP, array('APP_NAME'=>t('app_name')))); ?></p>
-			
-			<?php
-			$this->display('reports-bootstrap3');
-			?>
-			<p>
-				<a class="btn btn-lg btn-primary" href="<?php _u('setup_checkfs'); ?>" role="button">
-					<?php _t('start_install', DOMAIN_SETUP); ?>
-					<i class="fa fa-chevron-right"></i>
-				</a>
-			</p>
+	<div class="container py-4">
+		<div class="p-5 mb-4 bg-light border rounded-3">
+			<div class="p-3">
+				<h1 class="fw-bold mb-3">
+					<?php echo t('start_title', DOMAIN_SETUP, [t('app_name')]); ?>
+				</h1>
+				<p class="lead">
+					<?php echo html(t('start_description', DOMAIN_SETUP, ['APP_NAME' => t('app_name')])); ?>
+				</p>
+				
+				<?php
+				$this->display('reports');
+				?>
+				<div class="mt-5 text-end">
+					<a class="btn btn-lg btn-primary" href="<?php echo u('setup_check_filesystem'); ?>" role="button">
+						<?php echo t('start_install', DOMAIN_SETUP); ?>
+						<i class="fa fa-chevron-right"></i>
+					</a>
+				</div>
+			</div>
 		</div>
-
 	</div>
-	
-</div>
 </form>

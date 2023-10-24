@@ -5,22 +5,17 @@
 
 use Orpheus\Controller\DelayedPageController;
 
-if( !isset($APP_SOURCE_PATHS) ) {
-	$APP_SOURCE_PATHS = [];
-}
+const ERROR_DEBUG_LEVEL = E_ALL;//Development
+const ERROR_PROD_LEVEL = E_CORE_ERROR;//Production
 
-define('DEV_LEVEL', E_ALL | E_STRICT);//Development
-define('PROD_LEVEL', 0);//Production
-
-/** Defines an undefined constant.
+/**
+ * Define an undefined constant.
  *
  * @param string $name The name of the constant.
- * @param int|string $value The value of the constant.
+ * @param string|int|bool $value The value of the constant.
  * @return True if the constant was defined successfully, else False.
- *
- *  Defines a constant if this one is not defined yet.
  */
-function defifn($name, $value): bool {
+function defifn(string $name, string|int|bool $value): bool {
 	if( !defined($name) ) {
 		define($name, $value);
 		
@@ -31,13 +26,21 @@ function defifn($name, $value): bool {
 }
 
 /**
+ * Get the nullable value of the constant
+ * @return mixed|null The value of constant or null if undefined
+ */
+function safeConstant(string $name): mixed {
+	return defined($name) ? constant($name) : null;
+}
+
+/**
  * Gets the directory path
  *
  * @param string $path The path get parent directory
  * @return string The secured path
  * @see dirname()
  */
-function dirpath(string $path): string {
+function getParentPath(string $path): string {
 	$dirName = dirname($path);
 	
 	return $dirName === '/' ? '' : $dirName;
@@ -48,23 +51,27 @@ function dirpath(string $path): string {
  * This function uses global variable $APP_SOURCE_PATHS to get the known paths.
  * It allows developers to get a dynamic path to a file.
  *
- * @param string $commonPath The common path
- * @param boolean $silent Do not throw exception if path does not exist
+ * @param string $relativePath The common path
+ * @param bool $silent Do not throw exception if path does not exist
  * @return string|null The first valid path or null if there is no valid one.
  * @see addSrcPath()
  */
-function pathOf(string $commonPath, bool $silent = false): ?string {
+function pathOf(string $relativePath, bool $silent = false): ?string {
 	global $APP_SOURCE_PATHS;
+	$APP_SOURCE_PATHS ??= [];
 	for( $i = count($APP_SOURCE_PATHS) - 1; $i >= 0; $i-- ) {
-		if( file_exists($APP_SOURCE_PATHS[$i] . $commonPath) ) {
-			return $APP_SOURCE_PATHS[$i] . $commonPath;
+		$path = $APP_SOURCE_PATHS[$i] . $relativePath;
+		if( file_exists($path) ) {
+			return $path;
 		}
 	}
 	if( $silent ) {
 		return null;
 	}
-	throw new Exception(sprintf('Path not found: "%s"', $commonPath));
+	throw new RuntimeException(sprintf('Path not found: "%s"', $relativePath));
 }
+
+const DEFAULT_PACKAGES = ['@application'];
 
 /**
  * Checks if the path exists.
@@ -72,7 +79,6 @@ function pathOf(string $commonPath, bool $silent = false): ?string {
  *
  * @param string $commonPath The common path
  * @param string|null $path The output parameter to get the first valid path
- * @return bool
  * @throws Exception
  * @see pathOf()
  */
@@ -89,6 +95,7 @@ function existsPathOf(string $commonPath, ?string &$path = null): bool {
  */
 function addSrcPath(string $path): bool {
 	global $APP_SOURCE_PATHS;
+	$APP_SOURCE_PATHS ??= [];
 	if( in_array($path, $APP_SOURCE_PATHS) ) {
 		return false;
 	}
@@ -104,6 +111,7 @@ function addSrcPath(string $path): bool {
  */
 function listSrcPath(): array {
 	global $APP_SOURCE_PATHS;
+	$APP_SOURCE_PATHS ??= [];
 	
 	return $APP_SOURCE_PATHS;
 }
@@ -143,21 +151,6 @@ function includeFolder(string $folder, array $importants = []): int {
 }
 
 /**
- * Include a directory by source path
- *
- * @param string $path The directory to include
- * @param array $importants The files in that are importants to load first
- * @return int The number of files included
- * @see includeFolder()
- *
- * Include all files with a name beginning by '_' in the directory $dir.
- * It browses recursively through sub folders.
- */
-function includePath(string $path, array $importants = []): int {
-	return includeFolder(pathOf($path), $importants);
-}
-
-/**
  * Escape the text $str from special characters
  *
  * @param string $str The string to escape
@@ -171,15 +164,15 @@ function escapeText(string $str, int $flags = ENT_NOQUOTES): string {
 /**
  * http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
  */
-define('HTTP_OK', 200);
-define('HTTP_MOVED_PERMANENTLY', 301);
-define('HTTP_FOUND', 302);
-define('HTTP_MOVED_TEMPORARILY', HTTP_FOUND);
-define('HTTP_BAD_REQUEST', 400);
-define('HTTP_UNAUTHORIZED', 401);
-define('HTTP_FORBIDDEN', 403);
-define('HTTP_NOT_FOUND', 404);
-define('HTTP_INTERNAL_SERVER_ERROR', 500);
+const HTTP_OK = 200;
+const HTTP_MOVED_PERMANENTLY = 301;
+const HTTP_FOUND = 302;
+const HTTP_MOVED_TEMPORARILY = HTTP_FOUND;
+const HTTP_BAD_REQUEST = 400;
+const HTTP_UNAUTHORIZED = 401;
+const HTTP_FORBIDDEN = 403;
+const HTTP_NOT_FOUND = 404;
+const HTTP_INTERNAL_SERVER_ERROR = 500;
 
 function http_response_code_text(?int $code = null) {
 	if( $code === null ) {
@@ -231,7 +224,7 @@ function http_response_code_text(?int $code = null) {
 	return $codeTexts[$code] ?? 'Unknown';
 }
 
-function displayException(Throwable $Exception) {
+function displayException(Throwable $Exception): never {
 	if( IS_CONSOLE ) {
 		displayExceptionAsText($Exception);
 	} else {
@@ -239,7 +232,7 @@ function displayException(Throwable $Exception) {
 	}
 }
 
-function displayExceptionAsHTML(Throwable $Exception) {
+function displayExceptionAsHTML(Throwable $Exception): never {
 	$code = $Exception->getCode();
 	if( $code < 100 ) {
 		$code = HTTP_INTERNAL_SERVER_ERROR;
@@ -248,7 +241,7 @@ function displayExceptionAsHTML(Throwable $Exception) {
 	die(convertExceptionAsHTMLPage($Exception, $code));
 }
 
-function displayExceptionAsText(Throwable $Exception) {
+function displayExceptionAsText(Throwable $Exception): never {
 	$code = $Exception->getCode();
 	if( $code < 100 ) {
 		$code = HTTP_INTERNAL_SERVER_ERROR;
@@ -256,7 +249,7 @@ function displayExceptionAsText(Throwable $Exception) {
 	die(convertExceptionAsText($Exception, $code));
 }
 
-function typeOf($var) {
+function typeOf($var): string {
 	$type = gettype($var);
 	if( $type === 'object' ) {
 		return get_class($var);
@@ -265,20 +258,7 @@ function typeOf($var) {
 	return $type;
 }
 
-function findFileInTree($filename, $from = null) {
-	$from = realpath($from ?: APPLICATION_PATH);
-	while( $from && $from !== '/' && is_readable($from) ) {
-		$filePath = $from . '/' . $filename;
-		if( is_readable($filePath) ) {
-			return $filePath;
-		}
-		$from = dirname($from);
-	}
-	
-	return null;
-}
-
-function displayRawException(Throwable $Exception) {
+function displayRawException(Throwable $Exception): void {
 	?>
 	<h3><?php echo get_class($Exception); ?></h3>
 	<blockquote class="exception_message">
@@ -289,7 +269,7 @@ function displayRawException(Throwable $Exception) {
 	displayExceptionStackTrace($Exception);
 }
 
-function displayStackTrace($backtrace) {
+function displayStackTraceAsHtml(array $backtrace): void {
 	?>
 	<ol>
 		<?php
@@ -308,6 +288,8 @@ function displayStackTrace($backtrace) {
 						$argTxt = '[' . count($arg) . ']';
 					} elseif( is_callable($arg) ) {
 						$argTxt = '{callable}';
+					} else if( $arg === null ) {
+						$argTxt = '';
 					} else {
 						$argTxt = ' "<span class="arg_value">' . escapeText((is_object($arg) && !method_exists($arg, '__toString')) ? get_class($arg) : $arg . '') . '</span>"';
 					}
@@ -327,33 +309,33 @@ function displayStackTrace($backtrace) {
 	<?php
 }
 
-function displayExceptionStackTrace(Throwable $Exception) {
+function displayExceptionStackTrace(Throwable $Exception): void {
 	$backtrace = $Exception->getTrace();
 	if( $Exception->getCode() == 1 && is_array($GLOBALS['DEBUG_BACKTRACE']) ) {
 		$backtrace = $GLOBALS['DEBUG_BACKTRACE'];
 	}
-	displayStackTrace($backtrace);
+	displayStackTraceAsHtml($backtrace);
 }
 
-function getClassName($var) {
+function getClassName(object|string $var): string {
 	$class = is_object($var) ? get_class($var) : $var;
 	$hierarchy = explode('\\', $class);
 	
 	return array_pop($hierarchy);
 }
 
-function processException(Throwable $exception, $log = null) {
+function processException(Throwable $exception, $log = null): void {
 	if( $log !== false && function_exists('log_error') ) {
 		log_error($exception, $log);
 	}
-	if( DEV_VERSION ) {
+	if( defined('DEBUG_ENABLED') && DEBUG_ENABLED ) {
 		displayException($exception);
 	} else {
 		die('A fatal error occurred.');
 	}
 }
 
-function getErrorException(array $error) {
+function getErrorException(array $error): ErrorException {
 	$class = null;
 	$severity = E_ERROR;
 	if( $error['type'] === E_COMPILE_ERROR || $error['type'] === E_COMPILE_WARNING ) {
@@ -370,15 +352,10 @@ function getErrorException(array $error) {
 	return $exception;
 }
 
-/**
- * @param Throwable $exception
- * @param $code
- * @return false|string
- */
-function convertExceptionAsHTMLPage(Throwable $exception, $code) {
+function convertExceptionAsHTMLPage(Throwable $exception, int $code): string {
 	// TODO: Add resubmit button
 	// TODO: Display already sent headers and contents
-	// TODO: Externalize this and allow developers to ovverride it
+	// TODO: Externalize this and allow developers to override it
 	// Clean all buffers
 	$buffer = '';
 	while( ob_get_level() ) {
@@ -394,8 +371,8 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	</head>
 	<body>
 	
@@ -434,8 +411,11 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 							$fileContent = file_get_contents($exception->getFile());
 							$lines = substr_count($fileContent, PHP_EOL);
 							for( $i = 0; $i <= $lines; $i++ ) {
-								echo '
-								<li' . ($excLine == $i + 1 ? ' class="active"' : '') . '>' . ($i + 1) . '</li>';
+								?>
+								<li <?php if($excLine === $i + 1) { ?>class="active"<?php } ?>>
+									<?php echo $i + 1; ?>
+								</li>
+								<?php
 							}
 							?>
 						</ul>
@@ -455,7 +435,7 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 			</div>
 			
 			<?php
-			if( trim($buffer) && class_exists('DelayedPageController', true) ) {
+			if( trim($buffer) && class_exists('DelayedPageController') ) {
 				try {
 					$bufferSrc = DelayedPageController::store(uniqid('error'), $buffer);
 					?>
@@ -483,6 +463,7 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 			?>
 		</main>
 	</div>
+	<?php /** @noinspection HtmlUnknownTag */ ?>
 	<style>
 	header {
 		border-bottom: 1px solid #e5e5e5;
@@ -534,6 +515,7 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 	.sourcecode_lines li.active {
 		background: #F2DEDE;
 		color: #a94442;
+		white-space: nowrap;
 	}
 	
 	.sourcecode_lines li.active:after {
@@ -553,17 +535,22 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 	}
 	</style>
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	$(function () {
-		$(".arg_value").click(function () {
-			$(this).toggleClass("nolimit");
-		});
-		$(".sourcecode").scrollTop(<?php
-			// Line height * (exception line - (1 + Lines before)
-			echo 16 * ($excLine - 6);
-			?>);
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+	<script>
+		<?php
+		// Line height * (exception line - (1 + Lines before)
+		$scrollTop = 16 * ($excLine - 6);
+		?>
+		window.addEventListener("DOMContentLoaded", () => {
+			document.querySelectorAll(".arg_value")
+				.forEach(($element) => {
+					$element.addEventListener("click", () => {
+						$element.classList.toggle("nolimit");
+					});
+				});
+			const $source = document.querySelector(".sourcecode");
+			const scrollTop = <?php echo $scrollTop; ?>;
+			$source.scrollTo(0, scrollTop);
 	});
 	</script>
 	</body>
@@ -572,12 +559,13 @@ function convertExceptionAsHTMLPage(Throwable $exception, $code) {
 	return ob_get_clean();
 }
 
-function convertExceptionAsText(Throwable $Exception, $code) {
+function convertExceptionAsText(Throwable $Exception, int $code): string {
 	// Clean all buffers
 	while( ob_get_level() ) {
 		ob_end_clean();
 	}
 	ob_start();
+	http_response_code($code);
 	?>
 	*****************************************
 	************* ~  Orpheus  ~ *************
@@ -594,14 +582,11 @@ function convertExceptionAsText(Throwable $Exception, $code) {
 	Stacktrace:<?php
 	foreach( $Exception->getTrace() as $trace ) {
 		// file, line, function, args
-		if( !isset($trace['class']) ) {
-			$trace['class'] = null;
-		}
-		if( !isset($trace['type']) ) {
-			$trace['type'] = null;
-		}
+		$trace['class'] ??= null;
+		$trace['type'] ??= null;
+		$trace['args'] ??= null;
 		$args = '';
-		if( !empty($trace['args']) ) {
+		if( $trace['args'] ) {
 			foreach( $trace['args'] as $i => $arg ) {
 				$args .= ($i ? ', ' : '') . typeOf($arg) . (is_array($arg) ? '[' . count($arg) . ']' : (is_string_convertible($arg) ? ' ' . $arg : ''));
 			}
@@ -615,28 +600,7 @@ function convertExceptionAsText(Throwable $Exception, $code) {
 	return ob_get_clean();
 }
 
-function formatSourceAsHTML($file, $lineNumber, $linesBefore, $linesAfter): string {
-	// Partial highlight not working, send all file
-	$from = max($lineNumber - $linesBefore, 0);
-	$to = $lineNumber + $linesAfter;
-	$count = 0;
-	$string = getFileLines($file, $from, $to, $count);
-	$lines = '';
-	for( $line = $from; $line < $from + $count; $line++ ) {
-		$lines .= '<li>' . $line . ($lineNumber == $line ? '&nbsp;&nbsp;>' : '') . '</li>';
-	}
-	
-	$string = highlight_source($string, true);
-	
-	return <<<EOF
-<div class="sourcecode">
-	<ul class="sourcecode_lines">{$lines}</ul>
-	{$string}
-</div>
-EOF;
-}
-
-function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter): string {
+function formatSourceAsText(mixed $file, int $activeLineNumber, int $linesBefore, int $linesAfter): string {
 	$from = max($activeLineNumber - $linesBefore, 0);
 	$to = $activeLineNumber + $linesAfter;
 	$count = 0;
@@ -645,17 +609,13 @@ function formatSourceAsText($file, $activeLineNumber, $linesBefore, $linesAfter)
 	$result = '';
 	foreach( $lines as $lineNumber => $line ) {
 		$result .=
-			'| ' . str_pad($lineNumber, $lineLen, ' ', STR_PAD_RIGHT) . ($lineNumber == $activeLineNumber ? ' >' : '  ') . ' | ' . $line;
+			'| ' . str_pad($lineNumber, $lineLen) . ($lineNumber === $activeLineNumber ? ' >' : '  ') . ' | ' . $line;
 	}
 	
 	return $result;
 }
 
-function highlight_source($string, $return = false) {
-	return highlight_string("<?php\n" . $string, true);
-}
-
-function getFileLines($file, $from, $to, &$count = 0, $asArray = false) {
+function getFileLines(mixed $file, int $from, int $to, int &$count = 0, bool $asArray = false): array|string {
 	if( is_string($file) ) {
 		$file = fopen($file, 'r');
 	}
@@ -676,41 +636,16 @@ function getFileLines($file, $from, $to, &$count = 0, $asArray = false) {
 	return $asArray ? $lines : implode('', $lines);
 }
 
-/** Displays a variable as HTML
- *
- * @param mixed $message The data to display. Default value is an empty string.
- * @param boolean $html True to add html tags. Default value is True.
- * @warning Use it only for debugs.
- * Displays a variable as HTML.
- * If the constant TERMINAL is defined, parameter $html is forced to False.
- */
-function text($message = '', $html = true) {
-	if( IS_CONSOLE ) {
-		$html = false;
-	}
-	if( !is_scalar($message) ) {
-		$message = print_r($message, 1);
-		if( $html ) {
-			$message = '<pre>' . $message . '</pre>';
-		}
-	}
-	echo $message . ($html ? '<br />' : '') . "\n";
-	if( IS_CONSOLE ) {
-		flush();
-	}
-}
-
-/** Limits the length of a string
+/**
+ * Limits the length of a string and append $end.
+ * This function do it cleanly, it tries to cut before a word.
  *
  * @param string $string The string to limit length.
  * @param int $max The maximum length of the string.
- * @param int $strend A string to append to the shortened string.
+ * @param string $end A string to append to the shortened string.
  * @return string The shortened string.
- * Limits the length of a string and append $strend.
- * This function do it cleanly, it tries to cut before a word.
  */
-function str_limit($string, $max, $strend = '...'): string {
-	$max = (int) $max;
+function str_limit(string $string, int $max, string $end = '...'): string {
 	if( $max <= 0 ) {
 		return '';
 	}
@@ -725,5 +660,5 @@ function str_limit($string, $max, $strend = '...'): string {
 		}
 	}
 	
-	return $subStr . $strend;
+	return $subStr . $end;
 }

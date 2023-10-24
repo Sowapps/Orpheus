@@ -1,0 +1,5 @@
+http:
+    # Debug only
+    delayed_page:
+        path: "/delayed-page/{slug:page}.html"
+        controller: Orpheus\Controller\DelayedPageController

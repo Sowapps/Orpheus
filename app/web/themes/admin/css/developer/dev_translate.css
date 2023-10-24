@@ -1,0 +1,22 @@
+.cellkey {
+	max-width: 33%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.cellfallback {
+	position: relative;
+}
+
+.cellfallback button {
+	float: right;
+}
+
+.celltranslation {
+	width: 33%;
+}
+
+.celltranslation textarea {
+	height: 100%;
+}
