@@ -19,11 +19,16 @@ class LoginController extends HttpController {
 	public function preRun($request): ?HttpResponse {
 		$security = SecurityService::get();
 		if( $security->isAuthenticated() ) {
-			$navigationKey = $request->getParameter('rnk');
-			$navigationTarget = $navigationKey ? $security->consumeNavigationKey($navigationKey) : u(DEFAULT_MEMBER_ROUTE);
-			return new RedirectHttpResponse($navigationTarget);
+			return $this->getAuthenticatedUserRedirection($request);
 		}
 		return null;
+	}
+	
+	protected function getAuthenticatedUserRedirection($request): RedirectHttpResponse {
+		$security = SecurityService::get();
+		$navigationKey = $request->getParameter('rnk');
+		$navigationTarget = $navigationKey ? $security->consumeNavigationKey($navigationKey) : u(DEFAULT_MEMBER_ROUTE);
+		return new RedirectHttpResponse($navigationTarget);
 	}
 	
 	/**
@@ -34,18 +39,13 @@ class LoginController extends HttpController {
 		$formToken = new FormToken();
 		
 		try {
-			//			$request->hasData() && $formToken->validateForm($request);
+			$request->hasData() && $formToken->validateForm($request);
 			
 			if( $request->hasData('submitLogin') ) {
 				$input = $request->getData('login');
 				$user = User::getUserByLogin($input['email'] ?? null, $input['password'] ?? null);
 				SecurityService::get()->setPersistentAuthentication($user);
-				reportSuccess(User::text('successLogin'));
-				$navigationKey = $request->getParameter('rnk');
-				$navigationTarget = $navigationKey ? SecurityService::get()->consumeNavigationKey($navigationKey) : null;
-				if( $navigationTarget ) {
-					return new RedirectHttpResponse($navigationTarget);
-				}
+				return $this->getAuthenticatedUserRedirection($request);
 				
 			} else if( $request->hasData('submitRegister') ) {
 				startReportStream('register');
