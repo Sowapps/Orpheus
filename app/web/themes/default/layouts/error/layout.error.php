@@ -23,7 +23,7 @@ $rendering->useLayout('layout.public');
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-lg-6">
-			<div class="text-center my-4">
+			<div class="text-center my-5">
 				<?php
 				if( !empty($title) ) {
 					?>
@@ -32,7 +32,7 @@ $rendering->useLayout('layout.public');
 				}
 				if( !empty($image) ) {
 					?>
-					<img class="mb-4 img-error" src="<?php echo $image; ?>" alt="Error"/>
+					<img class="mb-4 error-image" src="<?php echo $image; ?>" alt=""/>
 					<?php
 				}
 				if( !empty($message) ) {
@@ -41,11 +41,16 @@ $rendering->useLayout('layout.public');
 					<?php
 				}
 				?>
-				<a href="<?php echo u(ROUTE_HOME); ?>">
+				<a href="<?php echo u(DEFAULT_ROUTE); ?>">
 					<i class="fas fa-arrow-left me-1"></i>
-					Return to Home Page
+					<?php echo t('user_error_back'); ?>
 				</a>
 			</div>
 		</div>
 	</div>
 </div>
+<style>
+	.error-image {
+		max-width: 20rem;
+	}
+</style>

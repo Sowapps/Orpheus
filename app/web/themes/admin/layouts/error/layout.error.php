@@ -27,7 +27,7 @@ $backLinkRoute = DEFAULT_ROUTE;
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-6">
-						<div class="text-center mt-4">
+						<div class="text-center mt-5">
 							<?php
 							if( !empty($title) ) {
 								?>
@@ -36,7 +36,7 @@ $backLinkRoute = DEFAULT_ROUTE;
 							}
 							if( !empty($image) ) {
 								?>
-								<img class="mb-4 img-error" src="<?php echo $image; ?>" alt="<?php echo $title; ?>"/>
+								<img class="mb-4 error-image" src="<?php echo $image; ?>" alt="<?php echo $title; ?>"/>
 								<?php
 							}
 							if( !empty($message) ) {
@@ -47,7 +47,7 @@ $backLinkRoute = DEFAULT_ROUTE;
 							?>
 							<a href="<?php echo u($backLinkRoute); ?>">
 								<i class="fas fa-arrow-left me-1"></i>
-								Return to Dashboard
+								<?php echo t('user_error_back'); ?>
 							</a>
 						</div>
 					</div>
