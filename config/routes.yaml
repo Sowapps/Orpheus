@@ -41,7 +41,7 @@ http:
         path: "/user-login.html"
         controller: App\Controller\Authentication\LoginController
 
-    logout:
+    user_logout:
         path: "/user-logout.html"
         controller: App\Controller\Authentication\LogoutController
         restrictTo:

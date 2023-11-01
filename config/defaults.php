@@ -7,8 +7,8 @@ defifn('ENTITY_CLASS_CHECK', false);
 
 // Routes
 const ROUTE_HOME = 'home';
-const ROUTE_USER_LOGIN = 'login';
-const ROUTE_USER_LOGOUT = 'logout';
+const ROUTE_USER_LOGIN = 'user_login';
+const ROUTE_USER_LOGOUT = 'user_logout';
 const ROUTE_FILE_DOWNLOAD = 'file_download';
 const ROUTE_DOWNLOAD_LATEST = 'download_latest';
 const ROUTE_DOWNLOAD_RELEASES = 'download_releases';

@@ -17,7 +17,7 @@ use Orpheus\InputController\HttpController\HttpRoute;
 use Orpheus\Rendering\HTMLRendering;
 
 
-$rendering->useLayout('layout.public');
+$rendering->useLayout('layout.setup');
 ?>
 
 <div class="container">

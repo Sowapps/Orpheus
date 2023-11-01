@@ -77,7 +77,7 @@ $rendering->useLayout('layout.admin');
 			$lineCount = 0;
 			while( ($line = $logFile->getNextLine()) !== false ) {
 				try {
-					$log = (object)json_decode($line, 1);
+					$log = (object) json_decode($line, 1);
 					if( !isset($log->id) ) {
 						$log->id = 'LL' . $lineCount;
 					}

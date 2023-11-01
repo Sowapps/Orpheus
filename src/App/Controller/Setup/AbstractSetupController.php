@@ -5,9 +5,12 @@ namespace App\Controller\Setup;
 use Exception;
 use Orpheus\Cache\Cache;
 use Orpheus\Cache\FileSystemCache;
+use Orpheus\Config\EnvConfig;
+use Orpheus\Exception\ForbiddenRouteException;
 use Orpheus\InputController\HttpController\HttpController;
 use Orpheus\InputController\HttpController\RedirectHttpResponse;
 use Orpheus\Rendering\HtmlRendering;
+use Orpheus\Service\ApplicationKernel;
 
 abstract class AbstractSetupController extends HttpController {
 	
@@ -31,6 +34,13 @@ abstract class AbstractSetupController extends HttpController {
 	public function preRun($request): ?RedirectHttpResponse {
 		parent::preRun($request);
 		HtmlRendering::setDefaultTheme('setup');
+		
+		$kernel = ApplicationKernel::get();
+		$setupEnabled = EnvConfig::get('SETUP_ENABLED', $kernel->isDebugEnabled());
+		
+		if( !$setupEnabled ) {
+			throw new ForbiddenRouteException($this->route, 'Setup is disabled');
+		}
 		
 		self::$setupCache = new FileSystemCache('setup', 'data');
 		if( !isset(self::$setupData) ) {

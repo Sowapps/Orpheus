@@ -32,20 +32,20 @@ class InstallFixturesSetupController extends AbstractSetupController {
 				$countProcessed = $countTotal = 0;
 				foreach( FixtureRepository::listAll() as $class ) {
 					$countTotal++;
-					try {
-						/** @var FixtureInterface $class */
-						$class::loadFixtures();
-						$countProcessed++;
-					} catch( Exception ) {
-						//						throw $e;
-					}
+					//					try {
+					/** @var FixtureInterface $class */
+					$class::loadFixtures();
+					$countProcessed++;
+					//					} catch( Exception ) {
+					//						//						throw $e;
+					//					}
 				}
 				$allowContinue = true;
 				$this->validateStep();
 				if( $countProcessed ) {
 					reportSuccess(t('successInstallFixtures', DOMAIN_SETUP, ['PROCESSED' => $countProcessed, 'TOTAL' => $countTotal]));
 				}
-	
+				
 			} catch(UserException $e) {
 				reportError($e);
 			}

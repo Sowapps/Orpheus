@@ -82,11 +82,7 @@ use Orpheus\Rendering\HtmlRendering;
 	</div>
 </nav>
 
-<?php
-echo $content;
-// If report was not be reported
-$this->display('reports');
-?>
+<?php echo $content; ?>
 
 <!-- JS libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>

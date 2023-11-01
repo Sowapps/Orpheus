@@ -13,6 +13,13 @@ http://orpheus-framework.com/
 ## Getting started
 http://orpheus-framework.com/getting-started.html
 
+### Configuration
+
+Configure your .env file (or .env.local) for environment specific configuration.
+Check for constants in config/constants.php and config/defaults.php.
+
+You can find more configuration in engine.ini.
+
 ## Warning !
 We are actively looking for contributors. I, Florent HAZARD, am currently the only one to contribute on this project and I am working hard on it.<br>
 I am working more and more on stability but the project still have only one contributor.<br>

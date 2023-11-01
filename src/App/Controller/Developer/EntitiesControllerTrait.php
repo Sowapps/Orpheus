@@ -61,12 +61,8 @@ trait EntitiesControllerTrait {
 	
 	protected function applyRemoveUnknownTables(array $unknownTables): void {
 		foreach( $unknownTables as $table ) {
-			if( empty($tablesToRemove[$table]) ) {
-				// Not selected
-				continue;
-			}
 			try {
-				$this->adapter->query(sprintf('DROP TABLE `%s`', $this->adapter->escapeIdentifier($table)), AbstractSqlAdapter::PROCESS_EXEC);
+				$this->adapter->query(sprintf('DROP TABLE %s', $this->adapter->escapeIdentifier($table)), AbstractSqlAdapter::PROCESS_EXEC);
 			} catch( SqlException $e ) {
 				reportError(sprintf('Unable to drop table %s, cause: %s', $table, $e->getMessage()));
 			}
@@ -83,7 +79,7 @@ trait EntitiesControllerTrait {
 			if( !$queries ) {
 				reportInfo('errorNoChanges', DOMAIN_SETUP);
 			}
-			$requireEntityValidation = true;
+			$requireEntityValidation = $removableTables || $queries;
 		} else if( $processGeneration === self::OUTPUT_APPLY ) {
 			if( !$queries && !$removableTables ) {
 				throw new UserException('errorNoChanges', DOMAIN_SETUP);
