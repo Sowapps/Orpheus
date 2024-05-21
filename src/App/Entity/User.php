@@ -7,6 +7,7 @@ namespace App\Entity;
 
 use Orpheus\EntityDescriptor\User\AbstractUser;
 use Orpheus\Publisher\Fixture\FixtureInterface;
+use Orpheus\Publisher\Validation\Validation;
 
 /** The site user class
  *
@@ -163,11 +164,9 @@ class User extends AbstractUser implements FixtureInterface {
 			->asObject()->run();
 	}
 	
-	public static function onValidCreate(array &$input, int &$newErrors): bool {
-		if( empty($input['auth_token']) ) {
-			$input['auth_token'] = generateRandomString();
-		}
-		return parent::onValidCreate($input, $newErrors);
+	public static function onValidCreate(array &$input, Validation $validation): bool {
+		$input['auth_token'] ??= generateRandomString();
+		return parent::onValidCreate($input, $validation);
 	}
 	
 	public static function generateAuthenticationToken(): string {
@@ -178,14 +177,14 @@ class User extends AbstractUser implements FixtureInterface {
 		return $token;
 	}
 	
-	public static function create(array $input = [], ?array $fields = null, int &$errCount = 0): int {
+	public static function create(array $input = [], ?array $fields = null, ?Validation $validation = null): int {
 		if( empty($input['auth_token']) ) {
 			$input['auth_token'] = static::generateAuthenticationToken();
 			if( $fields ) {
 				$fields[] = 'auth_token';
 			}
 		}
-		return parent::create($input, $fields, $errCount);
+		return parent::create($input, $fields, $validation);
 	}
 	
 	public static function loadFixtures(): void {

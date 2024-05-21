@@ -12,6 +12,7 @@ use Orpheus\Exception\UserException;
 use Orpheus\File\UploadedFile;
 use Orpheus\Publisher\PasswordGenerator;
 use Orpheus\Publisher\SlugGenerator;
+use Orpheus\Publisher\Validation\Validation;
 
 /**
  * The File class to save file's information in database
@@ -299,13 +300,13 @@ class File extends PermanentEntity {
 		return $file;
 	}
 	
-	public static function createAndGet(array $input = [], ?array $fields = null, int &$errCount = 0): static {
+	public static function createAndGet(array $input = [], ?array $fields = null, ?Validation $validation = null): static {
 		$input['passkey'] = (new PasswordGenerator())->generate(30);
 		if( is_array($fields) ) {
 			$fields[] = 'passkey';
 		}
 		
-		return parent::createAndGet($input, $fields, $errCount);
+		return parent::createAndGet($input, $fields, $validation);
 	}
 	
 	public static function getMimeTypeExtension($mimetype): string {
