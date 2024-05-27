@@ -6,34 +6,51 @@
 
 require_once 'includes/console.php';
 
-function run(string $command): void {
-	//	echo "RUN: $command\n";
+function run(string $command, bool $verbose): void {
+	if($verbose) {
+		printf("RUN: $command\n");
+	}
 	passthru($command);
 }
 
 # Change working directory to this file's folder
 chdir(__DIR__);
 
-$cmdOptions = getopt('lv', ['local', 'verbose']);
+$commandOptions = getopt('hlv', ['help', 'local', 'verbose']);
+$help = isset($commandOptions['h']) || isset($commandOptions['help']);
 
 $projectPath = realpath("../");
 $scriptPath = __DIR__;
 $composerPath = "$scriptPath/composer.phar";
 $currentUser = $_SERVER['USER'] ?? null;
 
+
+if( $help ) {
+	printf(<<<OUT
+./%s
+Update composer for your project, install composer if missing and allow using local version of composer file.
+This script can now be ran as root user.
+Options:
+ - -v / --verbose : Verbose mode
+ - -l / --local : Use composer.local.json file instead of classic composer.json
+ - -h --help : Show this help
+OUT, basename(__FILE__));
+	exit;
+}
+
 if( $currentUser === 'root' ) {
 	writeError("Please, don't use root to update the project, use your own project user !");
 	exit(1);
 }
 
-$useLocalConfig = isset($cmdOptions['l']) || isset($cmdOptions['local']);
-$verbose = isset($cmdOptions['v']) || isset($cmdOptions['verbose']);
+$useLocalConfig = isset($commandOptions['l']) || isset($commandOptions['local']);
+$verbose = isset($commandOptions['v']) || isset($commandOptions['verbose']);
 
 //$configFile = $useLocalConfig ? $projectPath . '/composer.local.json' : null; // Else use default one
 $configFile = $useLocalConfig ? $projectPath . '/composer.local.json' : null; // Else use default one
 $environmentPrefix = 'COMPOSER_ALLOW_XDEBUG=1';
 if( $configFile ) {
-	$environmentPrefix .= sprintf(' COMPOSER=%s ', $configFile) . $environmentPrefix;
+	$environmentPrefix .= sprintf(' COMPOSER=%s ', $configFile);
 }
 $updateOptions = '';
 if( $useLocalConfig ) {
@@ -64,4 +81,4 @@ if( $verbose ) {
 }
 
 //echo "$environmentPrefix php $composerPath update $updateOptions\n";
-run("$environmentPrefix php $composerPath update $updateOptions");
+run("$environmentPrefix php $composerPath update $updateOptions", $verbose);

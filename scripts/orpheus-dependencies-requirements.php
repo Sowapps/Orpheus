@@ -124,7 +124,7 @@ if( $saving ) {
 }
 
 if( $dryRun ) {
-	printf('This a dry run, no changes will be made.' . $ln, $path, $version);
+	writeInfo('This a dry run, no changes will be made.');
 	$apply = $forceYes || parseYesNoValue(readline('Do you want to continue ? [Y/n] '));
 } else {
 	$apply = $forceYes || parseYesNoValue(readline('Do you want to proceed now ? [Y/n] '));
